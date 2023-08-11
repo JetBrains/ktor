@@ -5,3 +5,5 @@ public expect open class IOException(message: String, cause: Throwable?) : Excep
 }
 
 public expect open class EOFException(message: String) : IOException
+
+public expect open class UnknownServiceException(message: String) : IOException
