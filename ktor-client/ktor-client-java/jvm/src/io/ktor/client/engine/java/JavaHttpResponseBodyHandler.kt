@@ -47,7 +47,7 @@ internal class JavaHttpResponseBodyHandler(
         val headers = HeadersImpl(response.headers().map())
 
         val body: Any = if (requestData.isSseRequest()) {
-            DefaultClientSSESession(requestData.body as SSEContent, responseChannel, callContext, status, headers)
+            DefaultClientSSESession(requestData.body as SSEClientContent, responseChannel, callContext, status, headers)
         } else {
             responseChannel
         }

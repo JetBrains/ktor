@@ -10,7 +10,7 @@ import io.ktor.util.*
 import kotlin.time.*
 
 @InternalAPI
-public class SSEContent(
+public class SSEClientContent(
     public val reconnectionTime: Duration,
     public val showCommentEvents: Boolean,
     public val showRetryEvents: Boolean,
@@ -21,5 +21,5 @@ public class SSEContent(
         append(HttpHeaders.CacheControl, "no-store")
     }.build()
 
-    override fun toString(): String = "SSEContent"
+    override fun toString(): String = "SSEClientContent"
 }

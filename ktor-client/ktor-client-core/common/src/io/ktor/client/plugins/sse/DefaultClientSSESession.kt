@@ -13,7 +13,7 @@ import kotlin.coroutines.*
 
 @OptIn(InternalAPI::class)
 public class DefaultClientSSESession(
-    content: SSEContent,
+    content: SSEClientContent,
     private var input: ByteReadChannel,
     override val coroutineContext: CoroutineContext,
     status: HttpStatusCode,
@@ -28,12 +28,8 @@ public class DefaultClientSSESession(
         while (true) {
             val event = input.parseEvent() ?: break
 
-            if (event.isCommentsEvent() && !showCommentEvents) {
-                continue
-            }
-            if (event.isRetryEvent() && !showRetryEvents) {
-                continue
-            }
+            if (event.isCommentsEvent() && !showCommentEvents) continue
+            if (event.isRetryEvent() && !showRetryEvents) continue
 
             send(event)
         }
@@ -49,7 +45,7 @@ public class DefaultClientSSESession(
 
         if (headers[HttpHeaders.ContentType] != ContentType.Text.EventStream.toString()) {
             throw SSEException(
-                "Content type must be `text/event-stream` but it was: ${headers[HttpHeaders.ContentType]}"
+                "Content type must be `text/event-stream` but was: ${headers[HttpHeaders.ContentType]}"
             )
         }
     }
@@ -99,7 +95,7 @@ public class DefaultClientSSESession(
                         "event" -> eventType = value
                         "data" -> {
                             wasData = true
-                            data.append(value).append(LF)
+                            data.append(value).append(END_OF_LINE)
                         }
 
                         "retry" -> {
@@ -120,10 +116,10 @@ public class DefaultClientSSESession(
     }
 
     private fun StringBuilder.appendComment(comment: String) {
-        append(comment.removePrefix(COLON).removePrefix(SPACE)).append(LF)
+        append(comment.removePrefix(COLON).removePrefix(SPACE)).append(END_OF_LINE)
     }
 
-    private fun StringBuilder.toText() = toString().removeSuffix(LF)
+    private fun StringBuilder.toText() = toString().removeSuffix(END_OF_LINE)
 
     private fun ServerSentEvent.isEmpty() =
         data == null && id == null && event == null && retry == null && comments == null
@@ -135,7 +131,4 @@ public class DefaultClientSSESession(
         data == null && event == null && id == null && comments == null && retry != null
 }
 
-private const val COLON = ":"
-private const val SPACE = " "
-private const val LF = "\n"
 private const val NULL = "\u0000"

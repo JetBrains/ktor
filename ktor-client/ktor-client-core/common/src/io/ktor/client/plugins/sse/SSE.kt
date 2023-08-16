@@ -50,7 +50,7 @@ public val SSE: ClientPlugin<SSEConfig> = createClientPlugin(
         val localShowCommentEvents = getAttributeValue(request, showCommentEventsAttr)
         val localShowRetryEvents = getAttributeValue(request, showRetryEventsAttr)
 
-        SSEContent(
+        SSEClientContent(
             localReconnectionTime ?: reconnectionTime,
             localShowCommentEvents ?: showCommentEvents,
             localShowRetryEvents ?: showRetryEvents

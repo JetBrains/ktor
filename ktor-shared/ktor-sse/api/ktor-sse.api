@@ -15,3 +15,9 @@ public final class io/ktor/sse/ServerSentEvent {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class io/ktor/sse/ServerSentEventKt {
+	public static final field COLON Ljava/lang/String;
+	public static final field END_OF_LINE Ljava/lang/String;
+	public static final field SPACE Ljava/lang/String;
+}
+

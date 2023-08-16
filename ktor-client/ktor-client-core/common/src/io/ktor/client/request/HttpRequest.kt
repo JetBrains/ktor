@@ -308,5 +308,5 @@ public fun HttpRequestData.isUpgradeRequest(): Boolean {
 @InternalAPI
 @Suppress("KDocMissingDocumentation")
 public fun HttpRequestData.isSseRequest(): Boolean {
-    return body is SSEContent
+    return body is SSEClientContent
 }

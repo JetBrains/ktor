@@ -194,7 +194,7 @@ internal suspend fun readResponse(
         }
 
         val responseBody: Any = if (request.isSseRequest()) {
-            DefaultClientSSESession(request.body as SSEContent, body, callContext, status, headers)
+            DefaultClientSSESession(request.body as SSEClientContent, body, callContext, status, headers)
         } else {
             body
         }

@@ -4,14 +4,16 @@
 
 package io.ktor.sse
 
+import io.ktor.util.*
+
 /**
  *  Server-sent event.
  *
- *  @property data - a data field of the event.
- *  @property event - a string identifying the type of event.
- *  @property id - an event ID.
- *  @property retry - a reconnection time, in milliseconds to wait before reconnecting.
- *  @property comments - a comment lines starting with a ':' character.
+ *  @property data data field of the event.
+ *  @property event string identifying the type of event.
+ *  @property id event ID.
+ *  @property retry reconnection time, in milliseconds to wait before reconnecting.
+ *  @property comments comment lines starting with a ':' character.
  */
 public class ServerSentEvent(
     public val data: String? = null,
@@ -37,8 +39,18 @@ public class SSEException : IllegalStateException {
     public constructor(message: String) : super(message)
 }
 
+@OptIn(InternalAPI::class)
 private fun <T> StringBuilder.appendField(name: String, value: T?) {
     if (value != null) {
-        append("$name: $value\n")
+        append("$name$COLON$SPACE$value$END_OF_LINE")
     }
 }
+
+@InternalAPI
+public const val COLON: String = ":"
+
+@InternalAPI
+public const val SPACE: String = " "
+
+@InternalAPI
+public const val END_OF_LINE: String = "\r\n"

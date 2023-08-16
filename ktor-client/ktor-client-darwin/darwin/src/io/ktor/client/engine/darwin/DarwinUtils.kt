@@ -9,13 +9,10 @@ import io.ktor.client.engine.*
 import io.ktor.http.content.*
 import io.ktor.util.*
 import io.ktor.utils.io.*
-import io.ktor.utils.io.core.*
 import io.ktor.utils.io.errors.*
 import kotlinx.cinterop.*
-import kotlinx.cinterop.ByteVar
 import kotlinx.coroutines.*
 import platform.Foundation.*
-import platform.darwin.*
 import platform.posix.*
 
 @OptIn(DelicateCoroutinesApi::class, UnsafeNumber::class, InternalAPI::class)
@@ -53,10 +50,19 @@ internal suspend fun OutgoingContent.toDataOrStream(): Any? {
                     var offset = 0
                     val read = channel.readAvailable(buffer, 0, 4096)
                     while (offset < read) {
+                        while (!outputStream.hasSpaceAvailable) {
+                            yield()
+                        }
                         @Suppress("UNCHECKED_CAST")
                         val written = outputStream
-                            .write(buffer.plus(offset) as CPointer<UByteVar>, (read - offset).convert()).convert<Int>()
+                            .write(buffer.plus(offset) as CPointer<UByteVar>, (read - offset).convert())
+                            .convert<Int>()
                         offset += written
+                        if (written < 0) {
+                            throw outputStream.streamError?.let { DarwinHttpRequestException(it) }
+                                ?: inputStream.streamError?.let { DarwinHttpRequestException(it) }
+                                ?: IOException("Failed to write to the network")
+                        }
                     }
                 }
             }

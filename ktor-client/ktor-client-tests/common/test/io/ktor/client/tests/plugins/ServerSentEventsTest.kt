@@ -44,7 +44,10 @@ class ServerSentEventsTest : ClientLoader() {
             session.incoming.single().apply {
                 assertEquals("0", id)
                 assertEquals("hello 0", event)
-                assertEquals("hello\nfrom server", data)
+                val lines = data?.lines() ?: emptyList()
+                assertEquals(2, lines.size)
+                assertEquals("hello", lines[0])
+                assertEquals("from server", lines[1])
             }
             session.cancel()
         }
@@ -64,7 +67,10 @@ class ServerSentEventsTest : ClientLoader() {
                     session.incoming.collectIndexed { i, it ->
                         assertEquals("$i", it.id)
                         assertEquals("hello $i", it.event)
-                        assertEquals("hello\nfrom server", it.data)
+                        val lines = it.data?.lines() ?: emptyList()
+                        assertEquals(2, lines.size)
+                        assertEquals("hello", lines[0])
+                        assertEquals("from server", lines[1])
                         size++
                     }
                     assertEquals(100, size)
@@ -76,7 +82,10 @@ class ServerSentEventsTest : ClientLoader() {
                     session.incoming.collectIndexed { i, it ->
                         assertEquals("$i", it.id)
                         assertEquals("hello $i", it.event)
-                        assertEquals("hello\nfrom server", it.data)
+                        val lines = it.data?.lines() ?: emptyList()
+                        assertEquals(2, lines.size)
+                        assertEquals("hello", lines[0])
+                        assertEquals("from server", lines[1])
                         size++
                     }
                     assertEquals(50, size)
