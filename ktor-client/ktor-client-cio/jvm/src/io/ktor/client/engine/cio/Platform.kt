@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException
 
 internal actual object Platform {
     /**
-     * his explicit check avoids activating in Android Studio with Android specific classes available when running plugins inside the IDE.
+     * This explicit check avoids activating in Android Studio with Android specific classes available when running plugins inside the IDE.
      */
     private val isAndroid: Boolean = System.getProperty("java.vm.name") == "Dalvik"
 
