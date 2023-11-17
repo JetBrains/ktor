@@ -6,6 +6,7 @@ package io.ktor.server.cio
 
 import io.ktor.events.*
 import io.ktor.http.*
+import io.ktor.http.cio.*
 import io.ktor.server.application.*
 import io.ktor.server.cio.backend.*
 import io.ktor.server.cio.internal.*
@@ -17,13 +18,22 @@ import io.ktor.utils.io.*
 import kotlinx.atomicfu.*
 import kotlinx.coroutines.*
 
+public interface CIOApplicationEngineInterface : ApplicationEngine {
+    @InternalAPI
+    public fun CoroutineScope.startHttpServer(
+        connectorConfig: EngineConnectorConfig,
+        connectionIdleTimeoutSeconds: Long,
+        handleRequest: suspend ServerRequestScope.(Request) -> Unit
+    ): HttpServer
+}
+
 /**
  * Engine that based on CIO backend
  */
 public class CIOApplicationEngine(
     environment: ApplicationEngineEnvironment,
     configure: Configuration.() -> Unit
-) : BaseApplicationEngine(environment) {
+) : BaseApplicationEngine(environment), CIOApplicationEngineInterface {
 
     /**
      * CIO-based server configuration
@@ -109,10 +119,15 @@ public class CIOApplicationEngine(
         }
     }
 
-    private fun CoroutineScope.startConnector(host: String, port: Int): HttpServer {
+    @InternalAPI
+    override fun CoroutineScope.startHttpServer(
+        connectorConfig: EngineConnectorConfig,
+        connectionIdleTimeoutSeconds: Long,
+        handleRequest: suspend ServerRequestScope.(Request) -> Unit
+    ): HttpServer {
         val settings = HttpServerSettings(
-            host = host,
-            port = port,
+            host = connectorConfig.host,
+            port = connectorConfig.port,
             connectionIdleTimeoutSeconds = configuration.connectionIdleTimeoutSeconds.toLong(),
             reuseAddress = configuration.reuseAddress
         )
@@ -155,7 +170,7 @@ public class CIOApplicationEngine(
         return transferEncoding != null || (contentLength != null && contentLength > 0)
     }
 
-    private suspend fun ServerRequestScope.handleRequest(request: io.ktor.http.cio.Request) {
+    private suspend fun ServerRequestScope.handleRequest(request: Request) {
         withContext(userDispatcher) {
             val call = CIOApplicationCall(
                 application,
@@ -180,6 +195,7 @@ public class CIOApplicationEngine(
         }
     }
 
+    @OptIn(InternalAPI::class)
     private fun initServerJob(): Job {
         val environment = environment
         val userDispatcher = userDispatcher
@@ -207,7 +223,10 @@ public class CIOApplicationEngine(
                 }
 
                 val connectorsAndServers = environment.connectors.map { connectorSpec ->
-                    connectorSpec to startConnector(connectorSpec.host, connectorSpec.port)
+                    connectorSpec to startHttpServer(
+                        connectorConfig = connectorSpec,
+                        connectionIdleTimeoutSeconds = configuration.connectionIdleTimeoutSeconds.toLong()
+                    ) { handleRequest(it) }
                 }
                 connectors.addAll(connectorsAndServers.map { it.second })
 

@@ -45,8 +45,8 @@ buildscript {
     extra["native_targets_enabled"] = rootProject.properties["disable_native_targets"] == null
 
     repositories {
-        mavenLocal()
         mavenCentral()
+        mavenLocal()
         google()
         gradlePluginPortal()
         maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")

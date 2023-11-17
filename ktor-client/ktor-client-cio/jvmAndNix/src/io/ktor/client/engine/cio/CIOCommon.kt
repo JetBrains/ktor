@@ -6,6 +6,7 @@
 package io.ktor.client.engine.cio
 
 import io.ktor.client.engine.*
+import io.ktor.utils.io.*
 
 /**
  * An asynchronous coroutine-based engine that can be used on JVM, Android, and Kotlin/Native.
@@ -30,6 +31,7 @@ public object CIO : HttpClientEngineFactory<CIOEngineConfig> {
         addToLoader()
     }
 
+    @OptIn(InternalAPI::class)
     override fun create(block: CIOEngineConfig.() -> Unit): HttpClientEngine =
         CIOEngine(CIOEngineConfig().apply(block))
 

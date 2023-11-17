@@ -4,6 +4,17 @@ public final class io/ktor/client/engine/cio/CIO : io/ktor/client/engine/HttpCli
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class io/ktor/client/engine/cio/CIOEngine : io/ktor/client/engine/HttpClientEngineBase, io/ktor/client/engine/cio/CIOHttpClientEngine {
+	public fun <init> (Lio/ktor/client/engine/cio/CIOEngineConfig;)V
+	public fun close ()V
+	public fun createAddress (Ljava/lang/String;I)Lio/ktor/network/sockets/SocketAddress;
+	public fun execute (Lio/ktor/client/request/HttpRequestData;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun getConfig ()Lio/ktor/client/engine/HttpClientEngineConfig;
+	public fun getConfig ()Lio/ktor/client/engine/cio/CIOEngineConfig;
+	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
+	public fun getSupportedCapabilities ()Ljava/util/Set;
+}
+
 public final class io/ktor/client/engine/cio/CIOEngineConfig : io/ktor/client/engine/HttpClientEngineConfig {
 	public fun <init> ()V
 	public final fun getEndpoint ()Lio/ktor/client/engine/cio/EndpointConfig;
@@ -23,6 +34,15 @@ public final class io/ktor/client/engine/cio/CIOEngineContainer : io/ktor/client
 	public fun <init> ()V
 	public fun getFactory ()Lio/ktor/client/engine/HttpClientEngineFactory;
 	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class io/ktor/client/engine/cio/CIOHttpClientEngine : io/ktor/client/engine/HttpClientEngine {
+	public abstract fun createAddress (Ljava/lang/String;I)Lio/ktor/network/sockets/SocketAddress;
+}
+
+public final class io/ktor/client/engine/cio/CIOHttpClientEngine$DefaultImpls {
+	public static fun getSupportedCapabilities (Lio/ktor/client/engine/cio/CIOHttpClientEngine;)Ljava/util/Set;
+	public static fun install (Lio/ktor/client/engine/cio/CIOHttpClientEngine;Lio/ktor/client/HttpClient;)V
 }
 
 public final class io/ktor/client/engine/cio/EndpointConfig {

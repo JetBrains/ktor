@@ -24,30 +24,53 @@ public fun CoroutineScope.httpServer(
     settings: HttpServerSettings,
     handler: HttpRequestHandler
 ): HttpServer {
+    val selector = SelectorManager(coroutineContext)
+    return httpServer(
+        createServer = {
+            aSocket(selector).tcp().bind(
+                hostname = settings.host,
+                port = settings.port
+            ) {
+                reuseAddress = settings.reuseAddress
+            }
+        },
+        serverJobName = CoroutineName("server-root-${settings.port}"),
+        acceptJobName = CoroutineName("accept-${settings.port}"),
+        timeout = WeakTimeoutQueue(settings.connectionIdleTimeoutSeconds * 1000L),
+        selector = selector,
+        handler = handler
+    )
+}
+
+/**
+ * Start an http server with [settings] invoking [handler] for every request
+ */
+@InternalAPI
+public fun CoroutineScope.httpServer(
+    createServer: () -> ServerSocket,
+    timeout: WeakTimeoutQueue,
+    serverJobName: CoroutineName,
+    acceptJobName: CoroutineName,
+    selector: SelectorManager,
+    handler: HttpRequestHandler
+): HttpServer {
     val socket = CompletableDeferred<ServerSocket>()
 
     val serverLatch: CompletableJob = Job()
 
     val serverJob = launch(
-        context = CoroutineName("server-root-${settings.port}"),
+        context = serverJobName,
         start = CoroutineStart.UNDISPATCHED
     ) {
         serverLatch.join()
     }
 
-    val selector = SelectorManager(coroutineContext)
-    val timeout = WeakTimeoutQueue(
-        settings.connectionIdleTimeoutSeconds * 1000L
-    )
-
     val logger = KtorSimpleLogger(
         HttpServer::class.simpleName ?: HttpServer::class.qualifiedName ?: HttpServer::class.toString()
     )
 
-    val acceptJob = launch(serverJob + CoroutineName("accept-${settings.port}")) {
-        aSocket(selector).tcp().bind(settings.host, settings.port) {
-            reuseAddress = settings.reuseAddress
-        }.use { server ->
+    val acceptJob = launch(serverJob + acceptJobName) {
+        createServer().use { server ->
             socket.complete(server)
 
             val exceptionHandler = coroutineContext[CoroutineExceptionHandler]

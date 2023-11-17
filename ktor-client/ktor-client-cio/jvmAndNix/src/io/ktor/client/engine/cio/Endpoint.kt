@@ -21,8 +21,8 @@ import kotlinx.coroutines.channels.*
 import kotlin.coroutines.*
 
 internal class Endpoint(
-    private val host: String,
-    private val port: Int,
+    private val address: Lazy<SocketAddress>,
+    timeoutName: CoroutineName,
     private val proxy: ProxyConfig?,
     private val secure: Boolean,
     private val config: CIOEngineConfig,
@@ -35,7 +35,7 @@ internal class Endpoint(
     private val deliveryPoint: Channel<RequestTask> = Channel()
     private val maxEndpointIdleTime: Long = 2 * config.endpoint.connectTimeout
 
-    private val timeout = launch(coroutineContext + CoroutineName("Endpoint timeout($host:$port)")) {
+    private val timeout = launch(coroutineContext + timeoutName) {
         try {
             while (true) {
                 val remaining = (lastActivity.value + maxEndpointIdleTime) - getTimeMillis()
@@ -199,7 +199,7 @@ internal class Endpoint(
 
         try {
             repeat(connectAttempts) {
-                val address = InetSocketAddress(host, port)
+                val address = address.value
 
                 val connect: suspend CoroutineScope.() -> Socket = {
                     connectionFactory.connect(address) {
@@ -227,12 +227,12 @@ internal class Endpoint(
                         startTunnel(requestData, connection.output, connection.input)
                     }
                     val realAddress = when (proxy) {
-                        null -> address
+                        null -> address as? InetSocketAddress
                         else -> InetSocketAddress(requestData.url.host, requestData.url.port)
                     }
                     val tlsSocket = connection.tls(coroutineContext) {
                         takeFrom(config.https)
-                        serverName = serverName ?: realAddress.hostname
+                        serverName = serverName ?: realAddress?.hostname
                     }
                     return tlsSocket.connection()
                 } catch (cause: Throwable) {
@@ -282,7 +282,7 @@ internal class Endpoint(
     }
 
     private fun releaseConnection() {
-        val address = InetSocketAddress(host, port)
+        val address = address.value
         connectionFactory.release(address)
         connections.decrementAndGet()
     }

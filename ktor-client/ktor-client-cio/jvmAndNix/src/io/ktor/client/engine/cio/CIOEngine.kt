@@ -11,6 +11,7 @@ import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.network.selector.*
+import io.ktor.network.sockets.*
 import io.ktor.util.*
 import io.ktor.util.collections.*
 import io.ktor.util.network.*
@@ -19,12 +20,19 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
 import kotlin.coroutines.*
 
-@OptIn(InternalAPI::class, DelicateCoroutinesApi::class)
-internal class CIOEngine(
-    override val config: CIOEngineConfig
-) : HttpClientEngineBase("ktor-cio") {
+public interface CIOHttpClientEngine : HttpClientEngine {
+    public fun createAddress(host: String, port: Int): SocketAddress
+}
 
-    override val supportedCapabilities =
+@InternalAPI
+@OptIn(DelicateCoroutinesApi::class)
+public class CIOEngine(
+    override val config: CIOEngineConfig
+) : HttpClientEngineBase("ktor-cio"), CIOHttpClientEngine {
+
+
+
+    override val supportedCapabilities: Set<HttpClientEngineCapability<*>> =
         setOf(HttpTimeoutCapability, WebSocketCapability, WebSocketExtensionsCapability, SSECapability)
 
     private val endpoints = ConcurrentMap<String, Endpoint>()
@@ -102,6 +110,8 @@ internal class CIOEngine(
         (requestsJob[Job] as CompletableJob).complete()
     }
 
+    public override fun createAddress(host: String, port: Int): SocketAddress = InetSocketAddress(host, port)
+
     private fun selectEndpoint(url: Url, proxy: ProxyConfig?): Endpoint {
         val host: String
         val port: Int
@@ -121,8 +131,8 @@ internal class CIOEngine(
         return endpoints.computeIfAbsent(endpointId) {
             val secure = (protocol.isSecure())
             Endpoint(
-                host,
-                port,
+                lazy { createAddress(host, port) },
+                CoroutineName("Endpoint timeout($host:$port)"),
                 proxy,
                 secure,
                 config,

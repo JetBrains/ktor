@@ -16,8 +16,8 @@ internal class CIOApplicationRequest(
     call: PipelineCall,
     remoteAddress: NetworkAddress?,
     localAddress: NetworkAddress?,
-    private val input: ByteReadChannel,
-    private val request: io.ktor.http.cio.Request
+    input: ByteReadChannel,
+    private val request: Request
 ) : BaseApplicationRequest(call) {
     override val cookies: RequestCookies by lazy { RequestCookies(this) }
 

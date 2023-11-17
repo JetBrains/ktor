@@ -4,9 +4,10 @@ public final class io/ktor/server/cio/CIO : io/ktor/server/engine/ApplicationEng
 	public synthetic fun create (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/engine/ApplicationEngine;
 }
 
-public final class io/ktor/server/cio/CIOApplicationEngine : io/ktor/server/engine/BaseApplicationEngine {
+public final class io/ktor/server/cio/CIOApplicationEngine : io/ktor/server/engine/BaseApplicationEngine, io/ktor/server/cio/CIOApplicationEngineInterface {
 	public fun <init> (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)V
 	public fun start (Z)Lio/ktor/server/engine/ApplicationEngine;
+	public fun startHttpServer (Lkotlinx/coroutines/CoroutineScope;Lio/ktor/server/engine/EngineConnectorConfig;JLkotlin/jvm/functions/Function3;)Lio/ktor/server/cio/HttpServer;
 	public fun stop (JJ)V
 }
 
@@ -16,6 +17,14 @@ public final class io/ktor/server/cio/CIOApplicationEngine$Configuration : io/kt
 	public final fun getReuseAddress ()Z
 	public final fun setConnectionIdleTimeoutSeconds (I)V
 	public final fun setReuseAddress (Z)V
+}
+
+public abstract interface class io/ktor/server/cio/CIOApplicationEngineInterface : io/ktor/server/engine/ApplicationEngine {
+	public abstract fun startHttpServer (Lkotlinx/coroutines/CoroutineScope;Lio/ktor/server/engine/EngineConnectorConfig;JLkotlin/jvm/functions/Function3;)Lio/ktor/server/cio/HttpServer;
+}
+
+public final class io/ktor/server/cio/CIOApplicationEngineInterface$DefaultImpls {
+	public static fun getApplication (Lio/ktor/server/cio/CIOApplicationEngineInterface;)Lio/ktor/server/application/Application;
 }
 
 public final class io/ktor/server/cio/EngineMain {
@@ -51,6 +60,7 @@ public final class io/ktor/server/cio/HttpServerSettings {
 
 public final class io/ktor/server/cio/backend/HttpServerKt {
 	public static final fun httpServer (Lkotlinx/coroutines/CoroutineScope;Lio/ktor/server/cio/HttpServerSettings;Lkotlin/jvm/functions/Function3;)Lio/ktor/server/cio/HttpServer;
+	public static final fun httpServer (Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function0;Lio/ktor/server/cio/internal/WeakTimeoutQueue;Lkotlinx/coroutines/CoroutineName;Lkotlinx/coroutines/CoroutineName;Lio/ktor/network/selector/SelectorManager;Lkotlin/jvm/functions/Function3;)Lio/ktor/server/cio/HttpServer;
 }
 
 public final class io/ktor/server/cio/backend/ServerIncomingConnection {

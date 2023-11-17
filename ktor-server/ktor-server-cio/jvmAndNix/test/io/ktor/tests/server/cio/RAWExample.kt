@@ -8,6 +8,7 @@ import io.ktor.http.*
 import io.ktor.http.cio.*
 import io.ktor.server.cio.*
 import io.ktor.server.cio.backend.*
+import io.ktor.util.*
 import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
@@ -28,7 +29,7 @@ private val notFound404_11 = RequestResponseBuilder().apply {
 /**
  * This is just an example demonstrating how to create CIO low-level http server
  */
-@OptIn(DelicateCoroutinesApi::class)
+@OptIn(InternalAPI::class, DelicateCoroutinesApi::class)
 fun main() {
     val settings = HttpServerSettings()
 
