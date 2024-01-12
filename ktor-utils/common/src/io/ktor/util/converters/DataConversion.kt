@@ -6,6 +6,7 @@ package io.ktor.util.converters
 
 import io.ktor.util.*
 import io.ktor.util.reflect.*
+import io.ktor.utils.io.*
 import kotlin.reflect.*
 
 /**

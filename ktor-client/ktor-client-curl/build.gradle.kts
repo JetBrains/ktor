@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.*
-import org.jetbrains.kotlin.gradle.tasks.*
-
 apply<test.server.TestServerPlugin>()
 
 val paths = listOf(
@@ -35,6 +32,11 @@ kotlin {
     createCInterop("libcurl", listOf("macosArm64")) {
         defFile = File(projectDir, "desktop/interop/libcurl_arm64.def")
         includeDirs.headerFilterOnly(paths)
+    }
+
+    createCInterop("libcurl", listOf("linuxArm64")) {
+        defFile = File(projectDir, "desktop/interop/libcurl_linux_arm64.def")
+        includeDirs.headerFilterOnly(listOf("desktop/interop/linuxArm64/include/"))
     }
 
     sourceSets {

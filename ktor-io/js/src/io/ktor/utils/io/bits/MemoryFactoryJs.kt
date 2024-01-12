@@ -43,8 +43,10 @@ public fun Memory(view: ArrayBufferView, offset: Int = 0, length: Int = view.byt
 
 @PublishedApi
 internal actual object DefaultAllocator : Allocator {
-    override fun alloc(size: Int): Memory = Memory(DataView(ArrayBuffer(size)))
-    override fun alloc(size: Long): Memory = Memory(DataView(ArrayBuffer(size.toIntOrFail("size"))))
-    override fun free(instance: Memory) {
+    actual override fun alloc(size: Int): Memory = Memory(DataView(ArrayBuffer(size)))
+
+    actual override fun alloc(size: Long): Memory = Memory(DataView(ArrayBuffer(size.toIntOrFail("size"))))
+
+    actual override fun free(instance: Memory) {
     }
 }

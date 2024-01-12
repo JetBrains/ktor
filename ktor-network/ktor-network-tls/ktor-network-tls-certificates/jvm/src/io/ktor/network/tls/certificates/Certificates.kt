@@ -174,8 +174,12 @@ public fun KeyStore.generateCertificate(
  *
  *  If [file] is set, all certificates are stored in a JKS keystore in [file] with [password].
  */
-public fun KeyStore.trustStore(file: File? = null, password: CharArray = "changeit".toCharArray()): KeyStore {
-    val trustStore = KeyStore.getInstance("JKS")!!
+public fun KeyStore.trustStore(
+    file: File? = null,
+    password: CharArray = "changeit".toCharArray(),
+    keyStoreType: String = "JKS"
+): KeyStore {
+    val trustStore = KeyStore.getInstance(keyStoreType)!!
     trustStore.load(null, null)
     aliases().toList().forEach { alias ->
         val cert: Certificate = getCertificate(alias)

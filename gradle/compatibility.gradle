@@ -5,13 +5,14 @@ apiValidation {
         'ktor',
         'ktor-client-tests',
         'ktor-client-js',
-        'ktor-client-json-tests',
         'ktor-client-content-negotiation-tests',
         'ktor-serialization-kotlinx-tests',
         'ktor-serialization-tests',
         'ktor-client',
         'ktor-client-plugins',
         'ktor-server-test-suites',
+        "ktor-server-test-host",
+        'ktor-junit',
     ].toSet()
 
     if (rootProject.ext.native_targets_enabled) {

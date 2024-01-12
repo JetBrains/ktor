@@ -18,6 +18,8 @@ import kotlin.math.*
 
 internal const val DEFAULT_CLOSE_MESSAGE: String = "Byte channel was closed"
 private const val BYTE_BUFFER_CAPACITY: Int = 4088
+private val DEFAULT_CLOSE_CAUSE = ClosedWriteChannelException(DEFAULT_CLOSE_MESSAGE)
+private val DEFAULT_CANCELLATION_EXCEPTION: CancellationException = CancellationException("Channel has been cancelled")
 
 // implementation for ByteChannel
 @Suppress("DEPRECATION", "OverridingDeprecatedMember")
@@ -153,7 +155,7 @@ internal open class ByteBufferChannel(
 
         // any further attempt to suspend should be resumed immediately
         // with exception for write
-        writeSuspendContinuationCache.close(ClosedWriteChannelException(DEFAULT_CLOSE_MESSAGE))
+        writeSuspendContinuationCache.close(DEFAULT_CLOSE_CAUSE)
 
         // and with computed result for read
         readSuspendContinuationCache.close(state.capacity.flush())
@@ -161,7 +163,7 @@ internal open class ByteBufferChannel(
     }
 
     override fun cancel(cause: Throwable?): Boolean {
-        return close(cause ?: CancellationException("Channel has been cancelled"))
+        return close(cause ?: DEFAULT_CANCELLATION_EXCEPTION)
     }
 
     private fun flushImpl(minWriteSize: Int) {
@@ -1171,6 +1173,10 @@ internal open class ByteBufferChannel(
         src.awaitClose()
     }
 
+    // prevent from boxing
+    private var partSize = 0
+    private var copied: Long = 0L
+
     internal suspend fun copyDirect(src: ByteBufferChannel, limit: Long, joined: JoiningState?): Long {
         assert(limit > 0)
 
@@ -1191,7 +1197,7 @@ internal open class ByteBufferChannel(
         val autoFlush = autoFlush
 
         try {
-            var copied = 0L
+            copied = 0
             while (copied < limit) {
                 writing { dstBuffer, state ->
                     while (copied < limit) {
@@ -1204,7 +1210,7 @@ internal open class ByteBufferChannel(
 
                         dstBuffer.prepareBuffer(writePosition, avWBefore)
 
-                        var partSize = 0
+                        partSize = 0
 
                         src.reading { srcState ->
                             val srcBuffer = this

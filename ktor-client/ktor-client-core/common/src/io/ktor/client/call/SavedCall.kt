@@ -8,7 +8,6 @@ import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.util.*
 import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
@@ -44,7 +43,7 @@ internal class SavedHttpRequest(
 
 internal class SavedHttpResponse(
     override val call: SavedHttpCall,
-    body: ByteArray,
+    private val body: ByteArray,
     origin: HttpResponse
 ) : HttpResponse() {
     private val context = Job()
@@ -62,7 +61,7 @@ internal class SavedHttpResponse(
     override val coroutineContext: CoroutineContext = origin.coroutineContext + context
 
     @OptIn(InternalAPI::class)
-    override val content: ByteReadChannel = ByteReadChannel(body)
+    override val content: ByteReadChannel get() = ByteReadChannel(body)
 }
 
 /**

@@ -20,37 +20,37 @@ public actual class ConcurrentMap<Key, Value> public actual constructor(initialC
         block()
     }
 
-    override val size: Int
+    actual override val size: Int
         get() = delegate.size
 
-    override fun containsKey(key: Key): Boolean = delegate.containsKey(key)
+    actual override fun containsKey(key: Key): Boolean = delegate.containsKey(key)
 
-    override fun containsValue(value: Value): Boolean = delegate.containsValue(value)
+    actual override fun containsValue(value: Value): Boolean = delegate.containsValue(value)
 
-    override fun get(key: Key): Value? = delegate[key]
+    actual override fun get(key: Key): Value? = delegate[key]
 
-    override fun isEmpty(): Boolean = delegate.isEmpty()
+    actual override fun isEmpty(): Boolean = delegate.isEmpty()
 
-    override val entries: MutableSet<MutableMap.MutableEntry<Key, Value>>
+    actual override val entries: MutableSet<MutableMap.MutableEntry<Key, Value>>
         get() = delegate.entries
 
-    override val keys: MutableSet<Key>
+    actual override val keys: MutableSet<Key>
         get() = delegate.keys
 
-    override val values: MutableCollection<Value>
+    actual override val values: MutableCollection<Value>
         get() = delegate.values
 
-    override fun clear() {
+    actual override fun clear() {
         delegate.clear()
     }
 
-    override fun put(key: Key, value: Value): Value? = delegate.put(key, value)
+    actual override fun put(key: Key, value: Value): Value? = delegate.put(key, value)
 
-    override fun putAll(from: Map<out Key, Value>) {
+    actual override fun putAll(from: Map<out Key, Value>) {
         delegate.putAll(from)
     }
 
-    override fun remove(key: Key): Value? = delegate.remove(key)
+    actual override fun remove(key: Key): Value? = delegate.remove(key)
 
     actual override fun remove(key: Key, value: Value): Boolean = delegate.remove(key, value)
 

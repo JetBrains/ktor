@@ -40,7 +40,7 @@ public fun URLBuilder(builder: URLBuilder): URLBuilder = URLBuilder().takeFrom(b
  * Take components from another [url] builder
  */
 public fun URLBuilder.takeFrom(url: URLBuilder): URLBuilder {
-    protocol = url.protocol
+    protocolOrNull = url.protocolOrNull
     host = url.host
     port = url.port
     encodedPathSegments = url.encodedPathSegments
@@ -57,7 +57,7 @@ public fun URLBuilder.takeFrom(url: URLBuilder): URLBuilder {
  * Take components from another [url]
  */
 public fun URLBuilder.takeFrom(url: Url): URLBuilder {
-    protocol = url.protocol
+    protocolOrNull = url.protocolOrNull
     host = url.host
     port = url.port
     encodedPath = url.encodedPath
@@ -80,6 +80,15 @@ public val Url.fullPath: String
  * Host:port pair, not normalized so port is always specified even if the port is schema's default
  */
 public val Url.hostWithPort: String get() = "$host:$port"
+
+/**
+ * Returns "host:port" when port is specified. Else, returns host.
+ */
+public val Url.hostWithPortIfSpecified: String get() =
+    when (specifiedPort) {
+        DEFAULT_PORT, protocol.defaultPort -> host
+        else -> hostWithPort
+    }
 
 internal fun Appendable.appendUrlFullPath(
     encodedPath: String,

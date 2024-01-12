@@ -90,9 +90,7 @@ class TestApplicationTestJvm {
 
     @Test
     fun testCustomEnvironmentKeepsDefaultProperties() = testApplication {
-        environment {
-            rootPath = "root/path"
-        }
+        environment { }
         routing {
             val config = environment.config
             get("a") {
@@ -100,7 +98,7 @@ class TestApplicationTestJvm {
             }
         }
 
-        val response = client.get("root/path/a")
+        val response = client.get("a")
         assertEquals("test_value", response.bodyAsText())
     }
 
@@ -176,7 +174,7 @@ class TestApplicationTestJvm {
                 error = exception
             }
         }
-        environment {
+        testApplicationProperties {
             parentCoroutineContext = exceptionHandler
         }
         application {

@@ -7,14 +7,14 @@ package io.ktor.util
 import kotlinx.cinterop.*
 import platform.windows.*
 
-@OptIn(ExperimentalUnsignedTypes::class)
+@OptIn(ExperimentalUnsignedTypes::class, ExperimentalForeignApi::class)
 internal actual fun secureRandom(bytes: ByteArray) {
     bytes.toUByteArray().usePinned { pinned ->
         val result = BCryptGenRandom(
             null,
             pinned.addressOf(0),
             bytes.size.convert(),
-            BCRYPT_USE_SYSTEM_PREFERRED_RNG
+            BCRYPT_USE_SYSTEM_PREFERRED_RNG.convert()
         )
         if (result != 0) {
             error("Can't generate random values using BCryptGenRandom: $result")

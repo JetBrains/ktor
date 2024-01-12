@@ -5,7 +5,6 @@
 package io.ktor.server.plugins.ratelimit
 
 import io.ktor.util.date.*
-import kotlin.jvm.*
 import kotlin.time.*
 
 /**

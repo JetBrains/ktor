@@ -7,40 +7,38 @@ package io.ktor.tests.server.cio
 import io.ktor.http.*
 import io.ktor.server.cio.backend.*
 import io.ktor.server.cio.internal.*
-import io.ktor.util.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.debug.junit4.*
-import kotlinx.coroutines.scheduling.*
-import org.junit.*
-import org.junit.rules.*
+import kotlinx.coroutines.debug.junit5.*
+import org.junit.jupiter.api.*
 import java.util.concurrent.*
 import java.util.concurrent.atomic.*
 import kotlin.coroutines.*
 import kotlin.test.*
 import kotlin.test.Test
+import kotlin.time.*
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(InternalAPI::class)
 class ServerPipelineTest : CoroutineScope {
-    @get:Rule
-    val testName = TestName()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val dispatcher = Dispatchers.IO.limitedParallelism(8)
 
     private val job: CompletableJob = SupervisorJob()
-    private val name: CoroutineName = CoroutineName("PipelineTest.${testName.methodName}")
+    private var name: CoroutineName = CoroutineName("PipelineTest")
 
     override val coroutineContext: CoroutineContext by lazy {
         (dispatcher as CoroutineContext) + (job as CoroutineContext.Element) + (name as AbstractCoroutineContextElement)
     }
 
-    @get:Rule
-    val timeout = CoroutinesTimeout(2000L, true)
+    @BeforeEach
+    fun setUp(testInfo: TestInfo) {
+        name = CoroutineName("PipelineTest:${testInfo.testMethod.map { it.name }.orElse("")}")
+    }
 
-    @OptIn(InternalCoroutinesApi::class)
-    @AfterTest
+    @AfterEach
     fun cleanup() {
         job.cancel()
         runBlocking {
@@ -51,8 +49,7 @@ class ServerPipelineTest : CoroutineScope {
     @Test
     fun testSmoke(): Unit = runBlocking {
         val connection = ServerIncomingConnection(ByteChannel(), ByteChannel(), null, null)
-        val queue = WeakTimeoutQueue(10L) { 1L }
-        val job = startServerConnectionPipeline(connection, queue) {
+        val job = startServerConnectionPipeline(connection, timeout = Duration.INFINITE) {
             error("Shouldn't reach here")
         }
 
@@ -67,8 +64,7 @@ class ServerPipelineTest : CoroutineScope {
         val requestsReceived = ArrayList<String>()
 
         val connection = ServerIncomingConnection(input, output, null, null)
-        val queue = WeakTimeoutQueue(10L) { 1L }
-        startServerConnectionPipeline(connection, queue) { request ->
+        startServerConnectionPipeline(connection, timeout = Duration.INFINITE) { request ->
             requestsReceived += request.uri.toString()
             assertEquals("/", request.uri.toString())
             assertEquals("GET", request.method.value)
@@ -102,8 +98,7 @@ class ServerPipelineTest : CoroutineScope {
         val requestsReceived = ArrayList<String>()
 
         val connection = ServerIncomingConnection(input, output, null, null)
-        val queue = WeakTimeoutQueue(10L) { 1L }
-        startServerConnectionPipeline(connection, queue) { request ->
+        startServerConnectionPipeline(connection, timeout = Duration.INFINITE) { request ->
             requestsReceived += request.uri.toString()
             assertEquals("/", request.uri.toString())
             assertEquals("GET", request.method.value)
@@ -139,8 +134,7 @@ class ServerPipelineTest : CoroutineScope {
         val latch = Job()
 
         val connection = ServerIncomingConnection(input, output, null, null)
-        val queue = WeakTimeoutQueue(1L)
-        startServerConnectionPipeline(connection, queue) { request ->
+        startServerConnectionPipeline(connection, timeout = 1.milliseconds) { request ->
             requestsReceived += request.uri.toString()
             assertEquals("/", request.uri.toString())
             assertEquals("GET", request.method.value)
@@ -168,7 +162,6 @@ class ServerPipelineTest : CoroutineScope {
         assertEquals("/", requestsReceived.single())
 
         delay(100)
-        queue.process() // shouldn't be cancelled here because it is upgraded and running
         latch.complete()
 
         input.close()
@@ -180,22 +173,10 @@ class ServerPipelineTest : CoroutineScope {
         val input = ByteChannel()
         val output = ByteChannel()
 
-        val clock = AtomicLong(1L)
-
         val connection = ServerIncomingConnection(input, output, null, null)
-        val queue = WeakTimeoutQueue(10L) { clock.get() }
         supervisorScope {
-            val job = startServerConnectionPipeline(connection, queue) {
+            startServerConnectionPipeline(connection, Duration.ZERO) {
                 error("Shouldn't reach here")
-            }
-
-            // the timeout queue is only working when there is at least small activity
-            launch(CoroutineName("poller")) {
-                do {
-                    queue.process()
-                    delay(50)
-                    clock.addAndGet(11L)
-                } while (job.isActive)
             }
 
             // it's important to close the joint channel as it happens in real networks
@@ -215,13 +196,11 @@ class ServerPipelineTest : CoroutineScope {
         val input = ByteChannel()
         val output = ByteChannel()
 
-        val clock = AtomicLong(1L)
         val requestHandled = Job()
 
         val connection = ServerIncomingConnection(input, output, null, null)
-        val queue = WeakTimeoutQueue(10L) { clock.get() }
         supervisorScope {
-            val job = startServerConnectionPipeline(connection, queue) { request ->
+            startServerConnectionPipeline(connection, timeout = 100.milliseconds) { request ->
                 requestHandled.complete()
                 request.release()
                 input.cancel()
@@ -234,15 +213,6 @@ class ServerPipelineTest : CoroutineScope {
 
             // after processing the request, the idle timeout machinery should cancel all the stuff
             requestHandled.join()
-
-            // the timeout queue is only working when there is at least small activity
-            launch(CoroutineName("poller")) {
-                do {
-                    queue.process()
-                    delay(50)
-                    clock.addAndGet(11L)
-                } while (job.isActive)
-            }
 
             // it's important to close the joint channel as it happens in real networks
             // this is really only a test specific thing
@@ -259,11 +229,10 @@ class ServerPipelineTest : CoroutineScope {
     @Test
     fun testParentJobAndTimerCancellation() {
         val l = CountDownLatch(1)
-        val queue = WeakTimeoutQueue(100000L)
 
         val root = launch(coroutineContext) {
             val connection = ServerIncomingConnection(ByteChannel(), ByteChannel(), null, null)
-            startServerConnectionPipeline(connection, queue) {
+            startServerConnectionPipeline(connection, timeout = Duration.INFINITE) {
                 error("Shouldn't reach here")
             }
             l.countDown()
@@ -274,7 +243,6 @@ class ServerPipelineTest : CoroutineScope {
 
         runBlocking {
             root.cancel()
-            queue.cancel()
 
             root.join()
         }
@@ -283,11 +251,10 @@ class ServerPipelineTest : CoroutineScope {
     @Test
     fun testParentJobAndTimeoutCancellation(): Unit = runBlocking(coroutineContext) {
         val l = Job()
-        val queue = WeakTimeoutQueue(10L)
 
         val root = launch {
             val connection = ServerIncomingConnection(ByteChannel(), ByteChannel(), null, null)
-            startServerConnectionPipeline(connection, queue) {
+            startServerConnectionPipeline(connection, timeout = 10.milliseconds) {
                 error("Shouldn't reach here")
             }
             l.complete()
@@ -295,10 +262,6 @@ class ServerPipelineTest : CoroutineScope {
 
         l.join()
         delay(100) // we need this delay because launching a coroutine takes time
-
-        launch {
-            queue.cancel()
-        }
 
         delay(1)
         root.cancelAndJoin()

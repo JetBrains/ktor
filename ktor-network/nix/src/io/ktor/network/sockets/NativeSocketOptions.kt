@@ -20,6 +20,7 @@ internal fun assignOptions(descriptor: Int, options: SocketOptions) {
     }
 }
 
+@OptIn(ExperimentalForeignApi::class)
 private fun setSocketFlag(
     descriptor: Int,
     optionName: Int,

@@ -43,7 +43,10 @@ public inline fun ChunkBuffer.readDirect(block: (ByteBuffer) -> Unit): Int {
 public inline fun ChunkBuffer.writeDirect(size: Int, block: (ByteBuffer) -> Unit): Int {
     val rem = writeRemaining
     require(size <= rem) { "size $size is greater than buffer's remaining capacity $rem" }
-    val buffer = memory.buffer.duplicate()!!
+    val buffer = memory.buffer
+    val oldPosition = buffer.position()
+    val oldLimit = buffer.limit()
+
     val writePosition = writePosition
     val limit = limit
     buffer.limit(limit)
@@ -52,6 +55,8 @@ public inline fun ChunkBuffer.writeDirect(size: Int, block: (ByteBuffer) -> Unit
     block(buffer)
 
     val delta = buffer.position() - writePosition
+    buffer.position(oldPosition)
+    buffer.limit(oldLimit)
     if (delta < 0 || delta > rem) wrongBufferPositionChangeError(delta, size)
 
     commitWritten(delta)

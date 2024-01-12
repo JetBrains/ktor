@@ -33,28 +33,7 @@ public class JacksonConverter(
     private val streamRequestBody: Boolean = true
 ) : ContentConverter {
 
-    @Deprecated(
-        "Use JacksonConverter(objectMapper, streamRequestBody) instead.",
-        level = DeprecationLevel.HIDDEN,
-    )
-    public constructor(objectMapper: ObjectMapper = jacksonObjectMapper()) : this(objectMapper, true)
-
-    @Suppress("OverridingDeprecatedMember")
-    @Deprecated(
-        "Please override and use serializeNullable instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith("serializeNullable(charset, typeInfo, contentType, value)")
-    )
     override suspend fun serialize(
-        contentType: ContentType,
-        charset: Charset,
-        typeInfo: TypeInfo,
-        value: Any
-    ): OutgoingContent {
-        return serializeNullable(contentType, charset, typeInfo, value)
-    }
-
-    override suspend fun serializeNullable(
         contentType: ContentType,
         charset: Charset,
         typeInfo: TypeInfo,
@@ -159,19 +138,6 @@ public class JacksonConverter(
         prettyPrinter = MinimalPrettyPrinter("") // avoid single space between items
         codec = objectMapper
     }
-}
-
-/**
- * Registers the `application/json` content type to the [ContentNegotiation] plugin using Jackson.
- *
- * You can learn more from [Content negotiation and serialization](https://ktor.io/docs/serialization.html).
- */
-@Deprecated("This will be removed.", level = DeprecationLevel.HIDDEN)
-public fun Configuration.jackson(
-    contentType: ContentType = ContentType.Application.Json,
-    block: ObjectMapper.() -> Unit = {}
-) {
-    jackson(contentType, true, block)
 }
 
 /**

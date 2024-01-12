@@ -9,6 +9,7 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.util.*
 import io.ktor.util.logging.*
+import io.ktor.utils.io.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
@@ -128,7 +129,7 @@ public class WebSockets private constructor(
                     contentConverter
                 )
 
-                pipeline.environment.monitor.subscribe(ApplicationStopPreparing) {
+                pipeline.monitor.subscribe(ApplicationStopPreparing) {
                     LOGGER.trace("Shutdown WebSockets due to application stop")
                     webSockets.shutdown()
                 }

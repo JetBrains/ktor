@@ -1,6 +1,6 @@
 public final class io/ktor/server/sse/RoutingKt {
-	public static final fun sse (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
-	public static final fun sse (Lio/ktor/server/routing/RoutingBuilder;Lkotlin/jvm/functions/Function2;)V
+	public static final fun sse (Lio/ktor/server/routing/Route;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
+	public static final fun sse (Lio/ktor/server/routing/Route;Lkotlin/jvm/functions/Function2;)V
 }
 
 public final class io/ktor/server/sse/SSEKt {
@@ -12,7 +12,6 @@ public final class io/ktor/server/sse/SSEServerContent : io/ktor/http/content/Ou
 	public final fun getCall ()Lio/ktor/server/application/ApplicationCall;
 	public fun getContentType ()Lio/ktor/http/ContentType;
 	public final fun getHandle ()Lkotlin/jvm/functions/Function2;
-	public fun getHeaders ()Lio/ktor/http/Headers;
 	public fun toString ()Ljava/lang/String;
 	public fun writeTo (Lio/ktor/utils/io/ByteWriteChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

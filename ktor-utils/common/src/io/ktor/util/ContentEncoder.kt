@@ -4,6 +4,9 @@
 
 package io.ktor.util
 
+import io.ktor.utils.io.*
+import kotlin.coroutines.*
+
 /**
  * A request/response content encoder.
  */
@@ -22,12 +25,46 @@ public interface ContentEncoder : Encoder {
 /**
  * Implementation of [ContentEncoder] using gzip algorithm
  */
-public expect object GZipEncoder : ContentEncoder
+public expect object GZipEncoder : ContentEncoder {
+    override val name: String
+
+    override fun encode(
+        source: ByteReadChannel,
+        coroutineContext: CoroutineContext
+    ): ByteReadChannel
+
+    override fun encode(
+        source: ByteWriteChannel,
+        coroutineContext: CoroutineContext
+    ): ByteWriteChannel
+
+    override fun decode(
+        source: ByteReadChannel,
+        coroutineContext: CoroutineContext
+    ): ByteReadChannel
+}
 
 /**
  * Implementation of [ContentEncoder] using deflate algorithm
  */
-public expect object DeflateEncoder : ContentEncoder
+public expect object DeflateEncoder : ContentEncoder {
+    override val name: String
+
+    override fun encode(
+        source: ByteReadChannel,
+        coroutineContext: CoroutineContext
+    ): ByteReadChannel
+
+    override fun encode(
+        source: ByteWriteChannel,
+        coroutineContext: CoroutineContext
+    ): ByteWriteChannel
+
+    override fun decode(
+        source: ByteReadChannel,
+        coroutineContext: CoroutineContext
+    ): ByteReadChannel
+}
 
 /**
  * Implementation of [ContentEncoder] using identity algorithm

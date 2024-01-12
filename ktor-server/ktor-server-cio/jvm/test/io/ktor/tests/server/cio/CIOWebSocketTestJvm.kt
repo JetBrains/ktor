@@ -6,10 +6,8 @@ package io.ktor.tests.server.cio
 
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
-import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.testing.*
-import io.ktor.server.testing.suites.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.debug.*
 import kotlin.test.*

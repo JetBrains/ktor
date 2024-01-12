@@ -5,34 +5,30 @@
 package io.ktor.client.plugins
 
 import io.ktor.client.*
+import io.ktor.client.plugins.api.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.util.*
 import io.ktor.util.logging.*
+import io.ktor.utils.io.*
 
 private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.UserAgent")
+
+@KtorDsl
+public class UserAgentConfig(public var agent: String = "Ktor http-client")
 
 /**
  * A plugin that adds a `User-Agent` header to all requests.
  *
  * @property agent a `User-Agent` header value.
  */
-public class UserAgent private constructor(public val agent: String) {
+public val UserAgent: ClientPlugin<UserAgentConfig> = createClientPlugin("UserAgent", ::UserAgentConfig) {
 
-    @KtorDsl
-    public class Config(public var agent: String = "Ktor http-client")
+    val agent = pluginConfig.agent
 
-    public companion object Plugin : HttpClientPlugin<Config, UserAgent> {
-        override val key: AttributeKey<UserAgent> = AttributeKey("UserAgent")
-
-        override fun prepare(block: Config.() -> Unit): UserAgent = UserAgent(Config().apply(block).agent)
-
-        override fun install(plugin: UserAgent, scope: HttpClient) {
-            scope.requestPipeline.intercept(HttpRequestPipeline.State) {
-                LOGGER.trace("Adding User-Agent header: ${plugin.agent} for ${context.url}")
-                context.header(HttpHeaders.UserAgent, plugin.agent)
-            }
-        }
+    onRequest { request, _ ->
+        LOGGER.trace("Adding User-Agent header: agent for ${request.url}")
+        request.header(HttpHeaders.UserAgent, agent)
     }
 }
 

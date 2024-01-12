@@ -40,6 +40,7 @@ public expect class InetSocketAddress(
      * Note that this may trigger a name service reverse lookup.
      */
     public fun copy(hostname: String = this.hostname, port: Int = this.port): InetSocketAddress
+
     override fun equals(other: Any?): Boolean
     override fun hashCode(): Int
     override fun toString(): String

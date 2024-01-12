@@ -44,6 +44,7 @@ public actual interface ByteReadChannel {
      */
     public actual suspend fun readAvailable(dst: ByteArray, offset: Int, length: Int): Int
 
+    @Suppress("DEPRECATION")
     public actual suspend fun readAvailable(dst: ChunkBuffer): Int
 
     public suspend fun readAvailable(dst: ArrayBuffer, offset: Int, length: Int): Int
@@ -54,6 +55,7 @@ public actual interface ByteReadChannel {
      */
     public actual suspend fun readFully(dst: ByteArray, offset: Int, length: Int)
 
+    @Suppress("DEPRECATION")
     public actual suspend fun readFully(dst: ChunkBuffer, n: Int)
 
     public suspend fun readFully(dst: ArrayBuffer, offset: Int, length: Int)
@@ -199,6 +201,7 @@ public actual interface ByteReadChannel {
     ): Long
 
     public actual companion object {
+        @Suppress("DEPRECATION")
         public actual val Empty: ByteReadChannel by lazy {
             ByteChannelJS(ChunkBuffer.Empty, false).apply {
                 close(null)

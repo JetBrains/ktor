@@ -21,11 +21,11 @@ class SessionTransportCookieTest {
     @Test
     fun testClearBypassExtensions() {
         val configuration = CookieConfiguration().apply {
-            extensions["SameSite"] = "None"
+            sameSite = SameSite.None
         }
 
         val cookie = SessionTransportCookie("session", configuration, emptyList())
-        assertEquals("None", cookie.clearCookie().extensions["SameSite"])
+        assertEquals("None", cookie.clearCookie().sameSite)
     }
 
     @Test

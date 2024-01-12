@@ -29,7 +29,7 @@ public fun Path.normalizeAndRelativize(): Path =
 
 private fun Path.dropLeadingTopDirs(): Path {
     val startIndex = indexOfFirst { it.toString() != ".." }
-    if (startIndex == 0) return this
+    if (startIndex <= 0) return this
     return subpath(startIndex, nameCount)
 }
 

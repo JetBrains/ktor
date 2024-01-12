@@ -24,15 +24,18 @@ import kotlinx.serialization.json.*
 
 private val Logger: Logger = KtorSimpleLogger("io.ktor.auth.oauth")
 
-internal suspend fun ApplicationCall.oauth2HandleCallback(): OAuthCallback.TokenSingle? {
+internal suspend fun ApplicationCall.oauth2HandleCallback(): OAuthCallback? {
     val params = when (request.contentType()) {
         ContentType.Application.FormUrlEncoded -> receiveParameters()
         else -> parameters
     }
     val code = params[OAuth2RequestParameters.Code]
     val state = params[OAuth2RequestParameters.State]
+    val error = params[OAuth2RequestParameters.Error]
+    val errorDescription = params[OAuth2RequestParameters.ErrorDescription]
 
     return when {
+        error != null -> OAuthCallback.Error(error, errorDescription)
         code != null && state != null -> OAuthCallback.TokenSingle(code, state)
         else -> null
     }
@@ -300,6 +303,8 @@ public object OAuth2RequestParameters {
     public const val ClientSecret: String = "client_secret"
     public const val GrantType: String = "grant_type"
     public const val Code: String = "code"
+    public const val Error: String = "error"
+    public const val ErrorDescription: String = "error_description"
     public const val State: String = "state"
     public const val RedirectUri: String = "redirect_uri"
     public const val ResponseType: String = "response_type"

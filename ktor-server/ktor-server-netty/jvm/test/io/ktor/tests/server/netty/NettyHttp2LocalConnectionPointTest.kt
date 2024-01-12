@@ -10,7 +10,7 @@ import io.netty.handler.codec.http2.*
 import java.net.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 class NettyHttp2LocalConnectionPointTest {
     @Test
     fun testMethod() {

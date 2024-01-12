@@ -13,7 +13,7 @@ import java.security.*
  */
 public val ApplicationRequest.javaSecurityPrincipal: Principal?
     get() = when (this) {
-        is RoutingRequest -> call.applicationCall.request.javaSecurityPrincipal
+        is RoutingRequest -> call.pipelineCall.request.javaSecurityPrincipal
         is ServletApplicationRequest -> servletRequest.userPrincipal
         is RoutingPipelineRequest -> engineRequest.javaSecurityPrincipal
         else -> null

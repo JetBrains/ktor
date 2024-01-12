@@ -3,9 +3,8 @@
  */
 package io.ktor.util.collections
 
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.atomicfu.*
-import kotlin.native.concurrent.*
 
 private typealias Core<E> = LockFreeMPSCQueueCore<E>
 

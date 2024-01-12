@@ -6,6 +6,7 @@ package io.ktor.client.plugins.api
 
 import io.ktor.client.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 
 /**

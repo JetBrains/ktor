@@ -10,13 +10,16 @@ import io.ktor.util.*
 /**
  * Attribute that could be added to an application call to prevent its response from being compressed
  */
-@Deprecated("Please use suppressCompression() and isCompressionSuppressed) instead")
+@Deprecated(
+    "Please use suppressCompression() and isCompressionSuppressed) instead",
+    level = DeprecationLevel.ERROR
+)
 public val SuppressionAttribute: AttributeKey<Boolean> = AttributeKey("preventCompression")
 
 /**
  * Suppress response body compression plugin for this [ApplicationCall].
  */
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 public fun ApplicationCall.suppressCompression() {
     attributes.put(SuppressionAttribute, true)
 }
@@ -24,5 +27,5 @@ public fun ApplicationCall.suppressCompression() {
 /**
  * Checks if response body compression is suppressed for this [ApplicationCall].
  */
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 public val ApplicationCall.isCompressionSuppressed: Boolean get() = SuppressionAttribute in attributes

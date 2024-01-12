@@ -36,7 +36,7 @@ abstract class AbstractClientContentNegotiationTest : TestWithKtor() {
         User("y", 45)
     )
 
-    override val server: ApplicationEngine = embeddedServer(io.ktor.server.cio.CIO, serverPort) {
+    override val server: EmbeddedServer<*, *> = embeddedServer(io.ktor.server.cio.CIO, serverPort) {
         install(WebSockets)
         routing {
             createRoutes(this)
@@ -65,9 +65,9 @@ abstract class AbstractClientContentNegotiationTest : TestWithKtor() {
         respondText(receiveText(), contentType)
     }
 
-    protected abstract fun ContentNegotiation.Config.configureContentNegotiation(contentType: ContentType)
+    protected abstract fun ContentNegotiationConfig.configureContentNegotiation(contentType: ContentType)
     protected fun TestClientBuilder<*>.configureClient(
-        block: ContentNegotiation.Config.() -> Unit = {}
+        block: ContentNegotiationConfig.() -> Unit = {}
     ) {
         config {
             install(ContentNegotiation) {
@@ -80,7 +80,7 @@ abstract class AbstractClientContentNegotiationTest : TestWithKtor() {
         }
     }
 
-    protected open fun createRoutes(routing: RoutingBuilder): Unit = with(routing) {
+    protected open fun createRoutes(routing: Route): Unit = with(routing) {
         post("/echo") {
             call.respondWithRequestBody(call.request.contentType())
         }

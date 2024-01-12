@@ -3,10 +3,12 @@ package io.ktor.server.webjars
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
+import io.ktor.server.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.util.*
 import io.ktor.util.date.*
+import io.ktor.utils.io.*
 import org.webjars.*
 import org.webjars.WebJarAssetLocator.*
 import kotlin.time.*
@@ -102,6 +104,7 @@ public val Webjars: ApplicationPlugin<WebjarsConfig> = createApplicationPlugin("
 
         val resourcePath = fullPath.removePrefix(webjarsPrefix)
         try {
+            call.attributes.put(StaticFileLocationProperty, resourcePath)
             val (location, info) = extractWebJar(resourcePath, knownWebJars, locator)
             val stream = WebjarsConfig::class.java.classLoader.getResourceAsStream(location) ?: return@onCall
             val content = InputStreamContent(stream, ContentType.defaultForFilePath(fullPath)).apply {

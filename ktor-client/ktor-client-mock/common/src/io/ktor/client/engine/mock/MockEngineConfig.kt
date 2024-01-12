@@ -40,7 +40,12 @@ public class MockEngineConfig : HttpClientEngineConfig() {
     /**
      * Dispatcher to use with [MockEngine].
      */
-    public var dispatcher: CoroutineDispatcher = Dispatchers.Default
+    @Deprecated(
+        "The [dispatcher] is no longer configurable, Dispatchers.IO is used by default",
+        level = DeprecationLevel.ERROR
+    )
+    public var dispatcher: CoroutineDispatcher get() = error("The [dispatcher] is no longer configurable")
+        set(_) = error("The [dispatcher] is no longer configurable")
 
     /**
      * Add request handler to [MockEngine]

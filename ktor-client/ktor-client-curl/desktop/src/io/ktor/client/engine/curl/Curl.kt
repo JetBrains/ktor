@@ -5,7 +5,7 @@
 package io.ktor.client.engine.curl
 
 import io.ktor.client.engine.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.cinterop.*
 import libcurl.*
 
@@ -19,6 +19,7 @@ import libcurl.*
 @EagerInitialization
 private val curlGlobalInitReturnCode = curlInitBridge()
 
+@OptIn(ExperimentalForeignApi::class)
 internal fun curlInitBridge(): Int = curl_global_init(CURL_GLOBAL_ALL.convert()).convert()
 
 @OptIn(ExperimentalStdlibApi::class)

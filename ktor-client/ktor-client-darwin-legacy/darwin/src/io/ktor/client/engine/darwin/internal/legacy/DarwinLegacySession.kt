@@ -6,11 +6,10 @@ package io.ktor.client.engine.darwin.internal.legacy
 
 import io.ktor.client.engine.darwin.*
 import io.ktor.client.request.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import kotlinx.atomicfu.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.*
 import platform.Foundation.*
 import kotlin.coroutines.*
 

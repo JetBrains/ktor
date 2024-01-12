@@ -5,25 +5,17 @@
 package io.ktor.server.servlet
 
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.http.content.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlin.random.*
 
 /**
  * Web resources serve configuration
  */
-public class WebResourcesConfig
-@Deprecated(
-    "Direct instantiation will be impossible in 2.0.0. " +
-        "Use RoutingBuilder.webResources {} function instead " +
-        "or file an issue describing why do you need it.",
-    level = DeprecationLevel.ERROR
-)
-constructor() {
+public class WebResourcesConfig internal constructor() {
     /**
      * Path predicates to be included. All files will be served if no include rules specified.
      * A path provided to a predicate is always slash-separated (`/`).
@@ -68,8 +60,7 @@ constructor() {
  * @param subPath slash-delimited web resources root path (relative to webapp directory)
  */
 @OptIn(InternalAPI::class)
-public fun RoutingBuilder.webResources(subPath: String = "/", configure: WebResourcesConfig.() -> Unit = {}) {
-    @Suppress("DEPRECATION_ERROR")
+public fun Route.webResources(subPath: String = "/", configure: WebResourcesConfig.() -> Unit = {}) {
     val config = WebResourcesConfig().apply(configure)
     val pathParameterName = pathParameterName + "_" + Random.nextInt(0, Int.MAX_VALUE)
     val prefix = subPath.split('/', '\\').filter { it.isNotEmpty() }

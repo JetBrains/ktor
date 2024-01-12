@@ -17,9 +17,12 @@ public object EngineMain {
      */
     @JvmStatic
     public fun main(args: Array<String>) {
-        val applicationEnvironment = commandLineEnvironment(args)
-        val engine = JettyApplicationEngine(applicationEnvironment) { loadConfiguration(applicationEnvironment.config) }
-        engine.start(true)
+        val config = CommandLineConfig(args)
+        val server = EmbeddedServer(config.applicationProperties, Jetty) {
+            takeFrom(config.engineConfig)
+            loadConfiguration(config.applicationProperties.environment.config)
+        }
+        server.start(true)
     }
 
     private fun JettyApplicationEngineBase.Configuration.loadConfiguration(config: ApplicationConfig) {

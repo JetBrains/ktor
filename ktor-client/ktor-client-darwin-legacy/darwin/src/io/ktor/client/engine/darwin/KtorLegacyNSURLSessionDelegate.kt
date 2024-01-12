@@ -16,6 +16,7 @@ import kotlin.coroutines.*
 /**
  * Creates an instance of [KtorLegacyNSURLSessionDelegate]
  */
+@OptIn(UnsafeNumber::class)
 public fun KtorLegacyNSURLSessionDelegate(): KtorLegacyNSURLSessionDelegate {
     return KtorLegacyNSURLSessionDelegate(null)
 }

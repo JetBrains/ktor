@@ -13,8 +13,9 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.client.*
-import io.ktor.util.*
 import io.ktor.util.pipeline.*
+import io.ktor.utils.io.*
+import kotlinx.atomicfu.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
 
@@ -55,22 +56,40 @@ public class TestApplication internal constructor(
     private val builder: ApplicationTestBuilder
 ) : ClientProvider by builder {
 
-    internal val engine by lazy { builder.engine }
+    internal enum class State {
+        Created, Starting, Started, Stopped
+    }
+
+    internal val state = atomic(State.Created)
+
+    internal val externalApplications by lazy { builder.externalServices.externalApplications }
+    internal val server by lazy { builder.embeddedServer }
+    private val applicationStarting by lazy { Job(server.engine.coroutineContext[Job]) }
 
     /**
      * Starts this [TestApplication] instance.
      */
     public fun start() {
-        if (builder.engine.state.value != TestApplicationEngine.State.Created) return
-        builder.engine.start()
-        builder.externalServices.externalApplications.values.forEach { it.start() }
+        if (state.compareAndSet(State.Created, State.Starting)) {
+            try {
+                builder.embeddedServer.start()
+                builder.externalServices.externalApplications.values.forEach { it.start() }
+            } finally {
+                state.value = State.Started
+                applicationStarting.complete()
+            }
+        }
+        if (state.value == State.Starting) {
+            runBlocking { applicationStarting.join() }
+        }
     }
 
     /**
      * Stops this [TestApplication] instance.
      */
     public fun stop() {
-        builder.engine.stop(0, 0)
+        state.value = State.Stopped
+        builder.embeddedServer.stop()
         builder.externalServices.externalApplications.values.forEach { it.stop() }
         client.close()
     }
@@ -96,9 +115,6 @@ public fun TestApplication(
  */
 @KtorDsl
 public class ExternalServicesBuilder internal constructor(private val testApplicationBuilder: TestApplicationBuilder) {
-
-    @Deprecated(message = "This constructor will be removed from public API", level = DeprecationLevel.HIDDEN)
-    public constructor() : this(TestApplicationBuilder())
 
     private val externalApplicationBuilders = mutableMapOf<String, () -> TestApplication>()
     internal val externalApplications: Map<String, TestApplication> by lazy {
@@ -135,25 +151,35 @@ public open class TestApplicationBuilder {
 
     internal val externalServices = ExternalServicesBuilder(this)
     internal val applicationModules = mutableListOf<Application.() -> Unit>()
-    internal var environmentBuilder: ApplicationEngineEnvironmentBuilder.() -> Unit = {}
+    internal var engineConfig: TestApplicationEngine.Configuration.() -> Unit = {}
+    internal var environmentBuilder: ApplicationEnvironmentBuilder.() -> Unit = {}
+    internal var applicationProperties: ApplicationPropertiesBuilder.() -> Unit = {}
     internal val job = Job()
 
-    internal val environment by lazy {
+    internal val properties by lazy {
         built = true
-        createTestEnvironment {
-            modules.addAll(this@TestApplicationBuilder.applicationModules)
-            developmentMode = true
+        val environment = createTestEnvironment {
             val oldConfig = config
             this@TestApplicationBuilder.environmentBuilder(this)
             if (config == oldConfig) { // the user did not set config. load the default one
                 config = DefaultTestConfig()
             }
+        }
+        applicationProperties(environment) {
+            this@TestApplicationBuilder.applicationModules.forEach { module(it) }
             parentCoroutineContext += this@TestApplicationBuilder.job
+            watchPaths = emptyList()
+            developmentMode = true
+            this@TestApplicationBuilder.applicationProperties(this)
         }
     }
 
+    internal val embeddedServer by lazy {
+        EmbeddedServer(properties, TestEngine, engineConfig)
+    }
+
     internal val engine by lazy {
-        TestApplicationEngine(environment)
+        embeddedServer.engine
     }
 
     /**
@@ -167,11 +193,33 @@ public open class TestApplicationBuilder {
     }
 
     /**
+     * Adds a configuration block for the [TestApplicationEngine].
+     * @see [testApplication]
+     */
+    @KtorDsl
+    public fun engine(block: TestApplicationEngine.Configuration.() -> Unit) {
+        checkNotBuilt()
+        val oldBuilder = engineConfig
+        engineConfig = { oldBuilder(); block() }
+    }
+
+    /**
+     * Adds a configuration block for the [ApplicationProperties].
+     * @see [testApplication]
+     */
+    @KtorDsl
+    public fun testApplicationProperties(block: ApplicationPropertiesBuilder.() -> Unit) {
+        checkNotBuilt()
+        val oldBuilder = applicationProperties
+        applicationProperties = { oldBuilder(); block() }
+    }
+
+    /**
      * Builds an environment using [block].
      * @see [testApplication]
      */
     @KtorDsl
-    public fun environment(block: ApplicationEngineEnvironmentBuilder.() -> Unit) {
+    public fun environment(block: ApplicationEnvironmentBuilder.() -> Unit) {
         checkNotBuilt()
         val oldBuilder = environmentBuilder
         environmentBuilder = { oldBuilder(); block() }
@@ -204,7 +252,7 @@ public open class TestApplicationBuilder {
      * Installs routing into [TestApplication]
      */
     @KtorDsl
-    public fun routing(configuration: RoutingBuilder.() -> Unit) {
+    public fun routing(configuration: Route.() -> Unit) {
         checkNotBuilt()
         applicationModules.add { routing(configuration) }
     }
@@ -225,6 +273,8 @@ public class ApplicationTestBuilder : TestApplicationBuilder(), ClientProvider {
 
     override val client by lazy { createClient { } }
 
+    internal val application by lazy { TestApplication(this) }
+
     /**
      * Starts instance of [TestApplication].
      * Usually, users do not need to call this method because application will start on the first client call.
@@ -233,8 +283,7 @@ public class ApplicationTestBuilder : TestApplicationBuilder(), ClientProvider {
      * After calling this method, no modification of the application is allowed.
      */
     public fun startApplication() {
-        val testApplication = TestApplication(this)
-        testApplication.start()
+        application.start()
     }
 
     @KtorDsl
@@ -243,8 +292,7 @@ public class ApplicationTestBuilder : TestApplicationBuilder(), ClientProvider {
     ): HttpClient = HttpClient(DelegatingTestClientEngine) {
         engine {
             parentJob = this@ApplicationTestBuilder.job
-            appEngineProvider = { this@ApplicationTestBuilder.engine }
-            externalApplicationsProvider = { this@ApplicationTestBuilder.externalServices.externalApplications }
+            testApplicationProvder = this@ApplicationTestBuilder::application
         }
         block()
     }
@@ -315,7 +363,7 @@ public fun testApplication(block: suspend ApplicationTestBuilder.() -> Unit) {
  * ```
  *
  * _Note: If you have the `application.conf` file in the `resources` folder,
- * [testApplication] loads all modules and properties specified in the configuration file automatically._
+ * [testApplication] loads all modules and properties specified in the configuration file automatically.
  *
  * You can learn more from [Testing](https://ktor.io/docs/testing.html).
  */
@@ -328,7 +376,7 @@ public fun testApplication(
         .apply {
             runBlocking(parentCoroutineContext) {
                 if (parentCoroutineContext != EmptyCoroutineContext) {
-                    environment {
+                    testApplicationProperties {
                         this.parentCoroutineContext = parentCoroutineContext
                     }
                 }
@@ -336,7 +384,7 @@ public fun testApplication(
             }
         }
 
-    val testApplication = TestApplication(builder)
+    val testApplication = builder.application
     testApplication.start()
     testApplication.stop()
 }

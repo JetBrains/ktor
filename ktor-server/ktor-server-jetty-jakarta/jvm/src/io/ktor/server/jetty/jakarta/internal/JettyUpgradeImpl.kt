@@ -5,9 +5,7 @@
 package io.ktor.server.jetty.jakarta.internal
 
 import io.ktor.http.content.*
-import io.ktor.server.engine.*
 import io.ktor.server.servlet.jakarta.*
-import io.ktor.util.*
 import io.ktor.utils.io.*
 import jakarta.servlet.http.*
 import kotlinx.coroutines.*

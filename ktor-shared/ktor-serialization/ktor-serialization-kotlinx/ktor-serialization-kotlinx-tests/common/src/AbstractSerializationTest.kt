@@ -129,7 +129,10 @@ public abstract class AbstractSerializationTest<T : SerialFormat> {
 
     @OptIn(DelicateCoroutinesApi::class)
     protected suspend inline fun <reified T : Any> ContentConverter.testSerialize(data: T): ByteArray {
-        return when (val content = serializeNullable(defaultContentType, Charsets.UTF_8, typeInfo<T>(), data)) {
+        return when (
+            val content =
+                serialize(defaultContentType, Charsets.UTF_8, typeInfo<T>(), data)
+        ) {
             is OutgoingContent.ByteArrayContent -> content.bytes()
             is ChannelWriterContent -> {
                 val channel = ByteChannel()

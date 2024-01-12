@@ -1,3 +1,94 @@
+# 3.0.0-beta-1
+> Published 23 November 2023
+
+### Bugfixes
+* OkHttp: SSE client throws confusing "Unexpected error" on non 200 status ([KTOR-6390](https://youtrack.jetbrains.com/issue/KTOR-6390))
+* Logging plugin blocks response body streaming when level is BODY ([KTOR-6482](https://youtrack.jetbrains.com/issue/KTOR-6482))
+* HttpResponseValidator consumes HTTP response body ([KTOR-4225](https://youtrack.jetbrains.com/issue/KTOR-4225))
+* CIO: Unable to perform WebSocket upgrade when Content-Type header is sent in the request ([KTOR-6366](https://youtrack.jetbrains.com/issue/KTOR-6366))
+* ContentNegotiation: Adding charset to content type of JacksonConverter breaks request matching ([KTOR-6420](https://youtrack.jetbrains.com/issue/KTOR-6420))
+* DOS via OOM due to unbound request body size ([KTOR-2682](https://youtrack.jetbrains.com/issue/KTOR-2682))
+* AcceptAllCookiesStorage ignores cookie's max-age ([KTOR-2023](https://youtrack.jetbrains.com/issue/KTOR-2023))
+* Inconsistent behavior for different engines when exception is thrown in the writer of WriteChannelContent ([KTOR-3266](https://youtrack.jetbrains.com/issue/KTOR-3266))
+* Server doesn't send a response when a status code is passed to call.respond and the custom serializer throws an exception ([KTOR-6150](https://youtrack.jetbrains.com/issue/KTOR-6150))
+* contentLength() returns null on Android ([KTOR-1540](https://youtrack.jetbrains.com/issue/KTOR-1540))
+
+### Improvements
+* Kotlin/JS: Allow passing custom Agent ([KTOR-5861](https://youtrack.jetbrains.com/issue/KTOR-5861))
+* Update Kotlin to 1.9.0 ([KTOR-6123](https://youtrack.jetbrains.com/issue/KTOR-6123))
+* Update Kotlin to 1.9.20 ([KTOR-6447](https://youtrack.jetbrains.com/issue/KTOR-6447))
+* Deprecate Locations with Level.ERROR ([KTOR-6029](https://youtrack.jetbrains.com/issue/KTOR-6029))
+* HSTS plugin hard codes port 443 ([KTOR-4168](https://youtrack.jetbrains.com/issue/KTOR-4168))
+* API to use java.nio.Path as resources ([KTOR-4275](https://youtrack.jetbrains.com/issue/KTOR-4275))
+* Ability to serve static resources from a .zip file ([KTOR-6385](https://youtrack.jetbrains.com/issue/KTOR-6385))
+* Make DefaultHeaders plugin Kotlin native compatible ([KTOR-6356](https://youtrack.jetbrains.com/issue/KTOR-6356))
+* Disable compression for SSE requests ([KTOR-6327](https://youtrack.jetbrains.com/issue/KTOR-6327))
+* Drop http timeout for sse requests ([KTOR-6312](https://youtrack.jetbrains.com/issue/KTOR-6312))
+* Add deprecations for old IO API ([KTOR-6036](https://youtrack.jetbrains.com/issue/KTOR-6036))
+* Drop old deprecations ([KTOR-6262](https://youtrack.jetbrains.com/issue/KTOR-6262))
+* Drop actual modifier for Memory class in jvm for compatibility with K2 ([KTOR-6006](https://youtrack.jetbrains.com/issue/KTOR-6006))
+* Remove @Suppress("NO_ACTUAL_CLASS_MEMBER_FOR_EXPECTED_CLASS") in preparation for Kotlin 2.0 ([KTOR-5824](https://youtrack.jetbrains.com/issue/KTOR-5824))
+* Migrate client plugins to new API ([KTOR-6303](https://youtrack.jetbrains.com/issue/KTOR-6303))
+* Jetty Server no idle timeout configuration possible ([KTOR-6288](https://youtrack.jetbrains.com/issue/KTOR-6288))
+* AttributeKey equality comparison breaks type safety ([KTOR-6122](https://youtrack.jetbrains.com/issue/KTOR-6122))
+* Darwin: Support accessing NSURLSessionDelegate ([KTOR-5688](https://youtrack.jetbrains.com/issue/KTOR-5688))
+* Remove writing multipart data to temp file ([KTOR-5881](https://youtrack.jetbrains.com/issue/KTOR-5881))
+* Netty: Allow listening only for HTTP/1.1 protocol SSL connections ([KTOR-6098](https://youtrack.jetbrains.com/issue/KTOR-6098))
+* Persistent Cookie Storage: Make Cookie.matches and Cookie.fillDefaults methods public ([KTOR-6119](https://youtrack.jetbrains.com/issue/KTOR-6119))
+* Decompressed response/request should unset Content-Encoding header ([KTOR-6080](https://youtrack.jetbrains.com/issue/KTOR-6080))
+* renderSetCookieHeader shouldn't ignore maxAge = 0 ([KTOR-6007](https://youtrack.jetbrains.com/issue/KTOR-6007))
+* Webjars plugin should include caching headers and ETag by default ([KTOR-6073](https://youtrack.jetbrains.com/issue/KTOR-6073))
+* SessionsConfig.cookie problem with reified type argument ([KTOR-5905](https://youtrack.jetbrains.com/issue/KTOR-5905))
+* Make LDAP Auth return generic Principal instead of UserIdPrincipal ([KTOR-793](https://youtrack.jetbrains.com/issue/KTOR-793))
+* Logger name should be prefixed with io.ktor ([KTOR-938](https://youtrack.jetbrains.com/issue/KTOR-938))
+
+### Features
+* Add Server-sent events (SSE) plugin for client and support for OkHttp engine ([KTOR-505](https://youtrack.jetbrains.com/issue/KTOR-505))
+* Client support for SSE plugin (CIO, Apache, Java) ([KTOR-5963](https://youtrack.jetbrains.com/issue/KTOR-5963))
+* SSE plugin support in Js, Android, Curl, Darwin, WinHttp client engine ([KTOR-6217](https://youtrack.jetbrains.com/issue/KTOR-6217))
+* Add Server-sent events (SSE) plugin for server ([KTOR-6172](https://youtrack.jetbrains.com/issue/KTOR-6172))
+* Support UTF-8 BOM character ([KTOR-5812](https://youtrack.jetbrains.com/issue/KTOR-5812))
+* Support Compression of Request Body with ContentEncoding Client Plugin ([KTOR-4502](https://youtrack.jetbrains.com/issue/KTOR-4502))
+
+# 2.3.6
+> Published 7 November 2023
+
+### Bugfixes
+* Resolved connectors job does not complete in TestApplicationEngine ([KTOR-6411](https://youtrack.jetbrains.com/issue/KTOR-6411))
+* Darwin: Even a coroutine Job is canceled network load keeps high ([KTOR-6243](https://youtrack.jetbrains.com/issue/KTOR-6243))
+* Darwin: EOFException when sending multipart data using Ktor 2.3.4 ([KTOR-6281](https://youtrack.jetbrains.com/issue/KTOR-6281))
+* Ktor JS client unconfigurable logging in node ([KTOR-6275](https://youtrack.jetbrains.com/issue/KTOR-6275))
+* CIO: getEngineHeaderValues() returns duplicated values ([KTOR-6352](https://youtrack.jetbrains.com/issue/KTOR-6352))
+* "Server sent a subprotocol but none was requested" when using Node WebSockets ([KTOR-4001](https://youtrack.jetbrains.com/issue/KTOR-4001))
+* YAML properties with literal value null cannot be read since 2.3.1 ([KTOR-6357](https://youtrack.jetbrains.com/issue/KTOR-6357))
+* AndroidClientEngine cannot handle content length that exceeds Int range ([KTOR-6344](https://youtrack.jetbrains.com/issue/KTOR-6344))
+* Client unable to make subsequent requests after the network disconnection and connection when ResponseObserver is installed ([KTOR-6252](https://youtrack.jetbrains.com/issue/KTOR-6252))
+* Outdated Gradle jib plubin does not support application/vnd.oci.image.index.v1+json media type ([KTOR-6280](https://youtrack.jetbrains.com/issue/KTOR-6280))
+* KTor 2.3.5 Kotlin 1.9.x upgrade is a breaking change ([KTOR-6354](https://youtrack.jetbrains.com/issue/KTOR-6354))
+* WebSockets (CIO): Connection Failure Due to Lowercase 'upgrade' in 'Connection: upgrade' Header ([KTOR-6388](https://youtrack.jetbrains.com/issue/KTOR-6388))
+* WinHttp: ArrayIndexOutOfBoundsException when sending WS frame with empty body ([KTOR-6394](https://youtrack.jetbrains.com/issue/KTOR-6394))
+* Update dependency com.auth0:jwks-rsa to v0.22.1
+
+# 2.3.5
+> Published 5 October 2023
+
+### Bugfixes
+* 300+ ktor-client-java threads eat up lots of memory ([KTOR-6292](https://youtrack.jetbrains.com/issue/KTOR-6292))
+* Apache5 engine limits concurrent requests to individual route to 5 ([KTOR-6221](https://youtrack.jetbrains.com/issue/KTOR-6221))
+* DarwinClientEngine WebSocket rejects all received pongs ([KTOR-5540](https://youtrack.jetbrains.com/issue/KTOR-5540))
+
+# 2.3.4
+> Published 31 August 2023
+
+### Bugfixes
+* The "charset=UTF-8" part is automatically added to the `application/json` Content-Type ([KTOR-6183](https://youtrack.jetbrains.com/issue/KTOR-6183))
+* MicrometerMetricsConfig default registry leaks coroutine ([KTOR-6178](https://youtrack.jetbrains.com/issue/KTOR-6178))
+* Darwin: App hangs when sending a huge MultiPart request without access to network ([KTOR-6147](https://youtrack.jetbrains.com/issue/KTOR-6147))
+* NPE in JavaClientEngine body() call ([KTOR-6190](https://youtrack.jetbrains.com/issue/KTOR-6190))
+* Digest Auth: algorithm isn't specified in the Authorization header ([KTOR-3391](https://youtrack.jetbrains.com/issue/KTOR-3391))
+* Confusing NoTransformationFoundException ([KTOR-6064](https://youtrack.jetbrains.com/issue/KTOR-6064))
+* Cookie name-value pairs should be separated by a semicolon instead of a comma ([KTOR-5868](https://youtrack.jetbrains.com/issue/KTOR-5868))
+
 # 2.3.3
 > Published 1 August 2023
 

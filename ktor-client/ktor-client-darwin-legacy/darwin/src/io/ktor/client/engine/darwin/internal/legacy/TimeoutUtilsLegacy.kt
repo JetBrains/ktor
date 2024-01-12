@@ -15,8 +15,8 @@ import platform.Foundation.*
  */
 internal fun NSMutableURLRequest.setupSocketTimeout(requestData: HttpRequestData) {
     // Darwin timeout works like a socket timeout.
-    requestData.getCapabilityOrNull(HttpTimeout)?.socketTimeoutMillis?.let {
-        if (it != HttpTimeout.INFINITE_TIMEOUT_MS) {
+    requestData.getCapabilityOrNull(HttpTimeoutCapability)?.socketTimeoutMillis?.let {
+        if (it != HttpTimeoutConfig.INFINITE_TIMEOUT_MS) {
             // Timeout should be specified in seconds.
             setTimeoutInterval(it / 1000.0)
         } else {

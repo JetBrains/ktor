@@ -12,11 +12,11 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.test.dispatcher.*
 import kotlinx.coroutines.*
-import org.junit.*
-import org.junit.Assert.*
+import org.junit.jupiter.api.*
 import java.net.*
+import kotlin.test.*
+import kotlin.test.Test
 
 abstract class ConnectionTestSuite(val engine: ApplicationEngineFactory<*, *>) {
 
@@ -25,11 +25,10 @@ abstract class ConnectionTestSuite(val engine: ApplicationEngineFactory<*, *>) {
     fun testNetworkAddresses() = runBlocking {
         val server = embeddedServer(
             engine,
-            applicationEngineEnvironment {
-                connector { port = 0 }
-                connector { port = ServerSocket(0).use { it.localPort } }
-            }
+            applicationProperties {}
         ) {
+            connector { port = 0 }
+            connector { port = ServerSocket(0).use { it.localPort } }
         }
 
         GlobalScope.launch {
@@ -37,7 +36,7 @@ abstract class ConnectionTestSuite(val engine: ApplicationEngineFactory<*, *>) {
         }
 
         val addresses = withTimeout(15000) {
-            server.resolvedConnectors()
+            server.engine.resolvedConnectors()
         }
 
         assertEquals(2, addresses.size)
@@ -50,21 +49,22 @@ abstract class ConnectionTestSuite(val engine: ApplicationEngineFactory<*, *>) {
     fun testServerReadyEvent() = runBlocking {
         val serverStarted = CompletableDeferred<Unit>()
         val serverPort = withContext(Dispatchers.IO) { ServerSocket(0).use { it.localPort } }
-        val env = applicationEngineEnvironment {
-            connector { port = serverPort }
-
-            module {
-                routing {
-                    get("/") {
-                        call.respond(HttpStatusCode.OK)
+        val server = embeddedServer(
+            engine,
+            applicationProperties(applicationEnvironment()) {
+                module {
+                    routing {
+                        get("/") {
+                            call.respond(HttpStatusCode.OK)
+                        }
                     }
                 }
             }
+        ) {
+            connector { port = serverPort }
         }
 
-        val server = embeddedServer(engine, env)
-
-        server.environment.monitor.subscribe(ServerReady) {
+        server.monitor.subscribe(ServerReady) {
             serverStarted.complete(Unit)
         }
 

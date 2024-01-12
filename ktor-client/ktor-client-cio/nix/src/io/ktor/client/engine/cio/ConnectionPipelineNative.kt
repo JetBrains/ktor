@@ -18,7 +18,7 @@ internal actual class ConnectionPipeline actual constructor(
     tasks: Channel<RequestTask>,
     parentContext: CoroutineContext
 ) : CoroutineScope {
-    override val coroutineContext: CoroutineContext = parentContext
+    actual override val coroutineContext: CoroutineContext = parentContext
 
     init {
         error("Pipelining is not supported in native CIO")

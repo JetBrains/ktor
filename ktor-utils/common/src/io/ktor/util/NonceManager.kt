@@ -4,6 +4,8 @@
 
 package io.ktor.util
 
+import io.ktor.utils.io.*
+
 /**
  * Represents a nonce manager. Its responsibility is to produce nonce values
  * and verify nonce values from untrusted sources that they are provided by this manager.
@@ -35,21 +37,5 @@ public object GenerateOnlyNonceManager : NonceManager {
 
     override suspend fun verifyNonce(nonce: String): Boolean {
         return true
-    }
-}
-
-/**
- * Stub implementation that always fails.
- * Will be removed so no public signatures should rely on it
- */
-@Deprecated("This should be removed with OAuth2StateProvider", level = DeprecationLevel.ERROR)
-@InternalAPI
-public object AlwaysFailNonceManager : NonceManager {
-    override suspend fun newNonce(): String {
-        throw UnsupportedOperationException("This manager should never be used")
-    }
-
-    override suspend fun verifyNonce(nonce: String): Boolean {
-        throw UnsupportedOperationException("This manager should never be used")
     }
 }

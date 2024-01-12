@@ -5,7 +5,6 @@
 package io.ktor.client.tests
 
 import io.ktor.client.*
-import io.ktor.client.call.*
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
@@ -13,13 +12,11 @@ import io.ktor.client.statement.*
 import io.ktor.client.tests.utils.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.test.dispatcher.*
 import io.ktor.util.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
@@ -30,7 +27,7 @@ import kotlin.test.*
 
 @Suppress("KDocMissingDocumentation")
 abstract class HttpClientTest(private val factory: HttpClientEngineFactory<*>) : TestWithKtor() {
-    override val server: ApplicationEngine = embeddedServer(CIO, serverPort) {
+    override val server: EmbeddedServer<*, *> = embeddedServer(CIO, serverPort) {
         routing {
             get("/empty") {
                 call.respondText("")
@@ -77,9 +74,9 @@ abstract class HttpClientTest(private val factory: HttpClientEngineFactory<*>) :
     fun testClientSSE() = runBlocking {
         val client = HttpClient(factory) {
             install(HttpTimeout) {
-                requestTimeoutMillis = HttpTimeout.INFINITE_TIMEOUT_MS
-                socketTimeoutMillis = HttpTimeout.INFINITE_TIMEOUT_MS
-                connectTimeoutMillis = HttpTimeout.INFINITE_TIMEOUT_MS
+                requestTimeoutMillis = HttpTimeoutConfig.INFINITE_TIMEOUT_MS
+                socketTimeoutMillis = HttpTimeoutConfig.INFINITE_TIMEOUT_MS
+                connectTimeoutMillis = HttpTimeoutConfig.INFINITE_TIMEOUT_MS
             }
         }
 
@@ -172,19 +169,6 @@ abstract class HttpClientTest(private val factory: HttpClientEngineFactory<*>) :
 
         // check the new custom plugin is there too
         assertTrue(newClient.attributes.contains(anotherCustomPluginKey), "no other custom plugin installed")
-    }
-
-    @Test
-    fun testErrorInWritingPropagates() = testSuspend {
-        val client = HttpClient(factory)
-        val channel = ByteChannel(true)
-        channel.writeAvailable("text".toByteArray())
-        channel.close(SendException())
-        assertFailsWith<SendException>("Error on write") {
-            client.post("http://localhost:$serverPort/echo") {
-                setBody(channel)
-            }.body<String>()
-        }
     }
 
     private class SendException : RuntimeException("Error on write")

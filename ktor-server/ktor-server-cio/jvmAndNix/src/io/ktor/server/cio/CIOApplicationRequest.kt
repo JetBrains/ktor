@@ -97,4 +97,8 @@ internal class CIOConnectionPoint(
 
     override val remoteAddress: String
         get() = remoteNetworkAddress?.address ?: "unknown"
+
+    override fun toString(): String =
+        "CIOConnectionPoint(uri=$uri, method=$method, version=$version, localAddress=$localAddress, " +
+            "localPort=$localPort, remoteAddress=$remoteAddress, remotePort=$remotePort)"
 }

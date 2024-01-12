@@ -6,7 +6,7 @@ package io.ktor.client.engine.darwin.internal.legacy
 
 import io.ktor.client.engine.*
 import io.ktor.client.request.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.cinterop.*
 import platform.Foundation.*
 

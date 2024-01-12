@@ -8,9 +8,7 @@ import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.debug.junit4.*
-import org.junit.*
-import org.junit.Test
+import kotlinx.coroutines.debug.junit5.*
 import java.io.*
 import java.nio.channels.*
 import java.util.concurrent.*
@@ -18,7 +16,9 @@ import java.util.concurrent.CancellationException
 import kotlin.concurrent.*
 import kotlin.coroutines.*
 import kotlin.test.*
+import kotlin.test.Test
 
+@CoroutinesTimeout(15_000)
 class ServerSocketTest : CoroutineScope {
     private val testJob = Job()
     private val exec = Executors.newCachedThreadPool()
@@ -36,9 +36,6 @@ class ServerSocketTest : CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = testJob
-
-    @get:Rule
-    val timeout = CoroutinesTimeout.seconds(15)
 
     @AfterTest
     fun tearDown() {

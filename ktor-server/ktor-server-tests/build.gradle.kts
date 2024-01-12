@@ -17,6 +17,7 @@ kotlin.sourceSets {
             implementation(libs.jansi)
             api(project(":ktor-server:ktor-server-core", configuration = "testOutput"))
             api(libs.logback.classic)
+            api(project(":ktor-server:ktor-server-plugins:ktor-server-sse"))
         }
     }
 }

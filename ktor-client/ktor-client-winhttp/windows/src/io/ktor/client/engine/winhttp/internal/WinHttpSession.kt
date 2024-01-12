@@ -13,8 +13,10 @@ import kotlinx.atomicfu.*
 import kotlinx.cinterop.*
 import platform.winhttp.*
 
+@OptIn(ExperimentalForeignApi::class)
 internal class WinHttpSession(private val config: WinHttpClientEngineConfig) : Closeable {
 
+    @OptIn(ExperimentalForeignApi::class)
     private var hSession: COpaquePointer
     private val closed = atomic(false)
     private val timeoutConfigured = atomic(false)
@@ -22,7 +24,7 @@ internal class WinHttpSession(private val config: WinHttpClientEngineConfig) : C
     init {
         hSession = WinHttpOpen(
             WINHTTP_NO_USER_AGENT,
-            WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
+            WINHTTP_ACCESS_TYPE_DEFAULT_PROXY.convert(),
             WINHTTP_NO_PROXY_NAME,
             WINHTTP_NO_PROXY_BYPASS,
             WINHTTP_FLAG_ASYNC.convert()
@@ -49,7 +51,7 @@ internal class WinHttpSession(private val config: WinHttpClientEngineConfig) : C
         var sendTimeout = 30_000
         var receiveTimeout = 30_000
 
-        data.getCapabilityOrNull(HttpTimeout)?.let { timeoutExtension ->
+        data.getCapabilityOrNull(HttpTimeoutCapability)?.let { timeoutExtension ->
             timeoutExtension.connectTimeoutMillis?.let { value ->
                 connectTimeout = value.toInt()
             }
@@ -67,7 +69,7 @@ internal class WinHttpSession(private val config: WinHttpClientEngineConfig) : C
             value = protocol.value.convert()
         }
         val dwSize = sizeOf<UIntVar>().convert<UInt>()
-        WinHttpSetOption(hSession, WINHTTP_OPTION_SECURE_PROTOCOLS, options.ptr, dwSize)
+        WinHttpSetOption(hSession, WINHTTP_OPTION_SECURE_PROTOCOLS.convert(), options.ptr, dwSize)
     }
 
     private fun setTimeouts(resolveTimeout: Int, connectTimeout: Int, sendTimeout: Int, receiveTimeout: Int) {
@@ -86,7 +88,7 @@ internal class WinHttpSession(private val config: WinHttpClientEngineConfig) : C
 
                 if (WinHttpSetOption(
                         hSession,
-                        WINHTTP_OPTION_PROXY,
+                        WINHTTP_OPTION_PROXY.convert(),
                         proxyInfo.ptr,
                         sizeOf<WINHTTP_PROXY_INFO>().convert()
                     ) == 0

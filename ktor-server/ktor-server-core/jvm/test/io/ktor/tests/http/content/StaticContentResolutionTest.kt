@@ -7,13 +7,12 @@ package io.ktor.tests.http.content
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.http.content.*
-import io.ktor.server.application.*
 import io.ktor.server.http.content.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import java.io.*
 import java.net.*
@@ -69,5 +68,23 @@ class StaticContentResolutionTest {
         assertEquals(HttpStatusCode.NotFound, secretEscaped2.status)
         val secretEncoded = client.get("/static/%2e%2e/secret.txt")
         assertEquals(HttpStatusCode.BadRequest, secretEncoded.status)
+    }
+
+    @Test
+    fun resourceUrlsAreCached() = testApplication {
+        application {
+            var callCount = 0
+            val countingClassLoader = object : ClassLoader(environment.classLoader) {
+                override fun findResources(name: String?) = super.findResources(name).also {
+                    callCount++
+                }
+            }
+            repeat(5) {
+                resolveResource("test-config.yaml", classLoader = countingClassLoader) {
+                    ContentType.defaultForFileExtension("yaml")
+                }
+            }
+            assertEquals(1, callCount)
+        }
     }
 }

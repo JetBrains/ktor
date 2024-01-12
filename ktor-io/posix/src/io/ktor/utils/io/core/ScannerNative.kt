@@ -3,6 +3,8 @@ package io.ktor.utils.io.core
 import kotlinx.cinterop.*
 import platform.posix.*
 
+@Suppress("DEPRECATION")
+@OptIn(ExperimentalForeignApi::class)
 internal actual fun Buffer.discardUntilDelimiterImpl(delimiter: Byte): Int {
     val content = content
     var idx = readPosition
@@ -18,6 +20,8 @@ internal actual fun Buffer.discardUntilDelimiterImpl(delimiter: Byte): Int {
     return idx - start
 }
 
+@Suppress("DEPRECATION")
+@OptIn(ExperimentalForeignApi::class)
 internal actual fun Buffer.discardUntilDelimitersImpl(delimiter1: Byte, delimiter2: Byte): Int {
     val content = content
     var idx = readPosition
@@ -34,6 +38,7 @@ internal actual fun Buffer.discardUntilDelimitersImpl(delimiter1: Byte, delimite
     return idx - start
 }
 
+@Suppress("DEPRECATION")
 internal actual fun Buffer.readUntilDelimiterImpl(
     delimiter: Byte,
     dst: ByteArray,
@@ -47,6 +52,7 @@ internal actual fun Buffer.readUntilDelimiterImpl(
     return readUntilImpl({ it == delimiter }, dst, offset, length)
 }
 
+@Suppress("DEPRECATION")
 internal actual fun Buffer.readUntilDelimitersImpl(
     delimiter1: Byte,
     delimiter2: Byte,
@@ -62,17 +68,20 @@ internal actual fun Buffer.readUntilDelimitersImpl(
     return readUntilImpl({ it == delimiter1 || it == delimiter2 }, dst, offset, length)
 }
 
+@Suppress("DEPRECATION")
 internal actual fun Buffer.readUntilDelimiterImpl(delimiter: Byte, dst: Output): Int {
     return readUntilImpl({ it == delimiter }, dst)
 }
 
+@Suppress("DEPRECATION")
 internal actual fun Buffer.readUntilDelimitersImpl(delimiter1: Byte, delimiter2: Byte, dst: Output): Int {
     check(delimiter1 != delimiter2)
 
     return readUntilImpl({ it == delimiter1 || it == delimiter2 }, dst)
 }
 
-@OptIn(UnsafeNumber::class)
+@Suppress("DEPRECATION")
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 private inline fun Buffer.readUntilImpl(
     predicate: (Byte) -> Boolean,
     dst: ByteArray,
@@ -103,7 +112,8 @@ private inline fun Buffer.readUntilImpl(
     return copied
 }
 
-@OptIn(UnsafeNumber::class)
+@Suppress("DEPRECATION")
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 private inline fun Buffer.readUntilImpl(
     predicate: (Byte) -> Boolean,
     dst: Output
@@ -136,4 +146,6 @@ private inline fun Buffer.readUntilImpl(
     return copiedTotal
 }
 
+@Suppress("DEPRECATION")
+@OptIn(ExperimentalForeignApi::class)
 internal inline val Buffer.content: CPointer<ByteVar> get() = memory.pointer

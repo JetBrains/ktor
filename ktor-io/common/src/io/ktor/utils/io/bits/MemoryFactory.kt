@@ -1,9 +1,6 @@
 package io.ktor.utils.io.bits
 
-import io.ktor.utils.io.*
 import io.ktor.utils.io.IO_DEPRECATION_MESSAGE
-import io.ktor.utils.io.core.*
-import io.ktor.utils.io.core.internal.*
 import kotlin.contracts.*
 
 // TODO: length default argument should be this.size - offset but it doesn't work due to KT-29920
@@ -59,7 +56,13 @@ public inline fun <R> withMemory(size: Long, block: (Memory) -> R): R {
 }
 
 @PublishedApi
-internal expect object DefaultAllocator : Allocator
+internal expect object DefaultAllocator : Allocator {
+    override fun alloc(size: Int): Memory
+
+    override fun alloc(size: Long): Memory
+
+    override fun free(instance: Memory)
+}
 
 public interface Allocator {
     public fun alloc(size: Int): Memory

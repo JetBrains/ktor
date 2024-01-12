@@ -1,7 +1,7 @@
 /*
  * Copyright 2014-2022 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION", "DEPRECATION_ERROR")
 
 package io.ktor.client.plugins.gson
 
@@ -16,7 +16,8 @@ import io.ktor.utils.io.core.*
  * [JsonSerializer] using [Gson] as backend.
  */
 @Deprecated(
-    "Please use ContentNegotiation plugin and its converters: https://ktor.io/docs/migrating-2.html#serialization-client" // ktlint-disable max-line-length
+    "Please use ContentNegotiation plugin and its converters: https://ktor.io/docs/migrating-2.html#serialization-client", // ktlint-disable max-line-length
+    level = DeprecationLevel.ERROR
 )
 public class GsonSerializer(block: GsonBuilder.() -> Unit = {}) : JsonSerializer {
     private val backend: Gson = GsonBuilder().apply(block).create()

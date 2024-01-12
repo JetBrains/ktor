@@ -54,7 +54,7 @@ private suspend fun convertBody(
     receiveType: TypeInfo,
     requestContentType: ContentType
 ): Any? {
-    if (!requestContentType.match(registration.contentType)) {
+    if (!requestContentType.match(registration.contentType.withoutParameters())) {
         LOGGER.trace(
             "Skipping content converter for request type ${receiveType.type} because " +
                 "content type $requestContentType does not match ${registration.contentType}"
@@ -71,7 +71,7 @@ private suspend fun convertBody(
 
     return when {
         convertedBody != null -> convertedBody
-        !body.isClosedForRead -> body
+        !body.isClosedForRead -> null
         receiveType.kotlinType?.isMarkedNullable == true -> NullBody
         else -> null
     }

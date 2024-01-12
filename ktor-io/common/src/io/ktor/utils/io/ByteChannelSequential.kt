@@ -4,9 +4,9 @@ import io.ktor.utils.io.bits.*
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.core.internal.*
 import io.ktor.utils.io.internal.*
+import io.ktor.utils.io.locks.*
 import io.ktor.utils.io.pool.*
 import kotlinx.atomicfu.*
-import kotlinx.atomicfu.locks.*
 import kotlin.math.*
 
 private const val EXPECTED_CAPACITY: Long = 4088L
@@ -66,6 +66,7 @@ public abstract class ByteChannelSequentialBase(
             error("Closed cause shouldn't be changed directly")
         }
 
+    @OptIn(InternalAPI::class)
     private val flushMutex = SynchronizedObject()
     private val flushBuffer: BytePacketBuilder = BytePacketBuilder()
 
@@ -109,6 +110,7 @@ public abstract class ByteChannelSequentialBase(
      *
      * This method is writer-only safe.
      */
+    @OptIn(InternalAPI::class)
     private fun flushWrittenBytes() {
         synchronized(flushMutex) {
             val size = writable.size
@@ -123,6 +125,7 @@ public abstract class ByteChannelSequentialBase(
      *
      * This method is reader-only safe.
      */
+    @OptIn(InternalAPI::class)
     protected fun prepareFlushedBytes() {
         synchronized(flushMutex) {
             readable.unsafeAppend(flushBuffer)
@@ -740,7 +743,7 @@ public abstract class ByteChannelSequentialBase(
             return false
         }
 
-        return close(cause ?: io.ktor.utils.io.CancellationException("Channel cancelled"))
+        return close(cause ?: CancellationException("Channel cancelled"))
     }
 
     override fun close(cause: Throwable?): Boolean {
@@ -753,6 +756,7 @@ public abstract class ByteChannelSequentialBase(
             flushBuffer.release()
         } else {
             flush()
+            writable.release()
         }
 
         slot.cancel(cause)

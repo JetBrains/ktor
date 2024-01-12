@@ -4,6 +4,9 @@
 
 package io.ktor.server.sessions
 
+import io.ktor.server.sessions.serialization.*
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
 import kotlin.reflect.*
 
 /**
@@ -32,4 +35,6 @@ public inline fun <reified T : Any> defaultSessionSerializer(): SessionSerialize
 /**
  * Creates the default [SessionSerializer] by [typeInfo].
  */
-public expect fun <T : Any> defaultSessionSerializer(typeInfo: KType): SessionSerializer<T>
+@Suppress("UNCHECKED_CAST")
+public fun <T : Any> defaultSessionSerializer(typeInfo: KType): SessionSerializer<T> =
+    KotlinxSessionSerializer(serializer(typeInfo) as KSerializer<T>, Json)

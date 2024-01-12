@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.*
  * One of the most typical examples of content converter is a JSON content converter that provides both
  * serialization and deserialization
  *
- * Implementations must override at least one of [serialize] or [serializeNullable] methods.
+ * Implementations must override at least one of [serialize] or [serialize] methods.
  */
 public interface ContentConverter {
 
@@ -37,38 +37,12 @@ public interface ContentConverter {
      *
      * @return a converted [OutgoingContent] value, or null if [value] isn't suitable for this converter
      */
-    @Deprecated(
-        "Please override and use serializeNullable instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith("serializeNullable(charset, typeInfo, contentType, value)")
-    )
     public suspend fun serialize(
         contentType: ContentType,
         charset: Charset,
         typeInfo: TypeInfo,
-        value: Any
-    ): OutgoingContent? = serializeNullable(contentType, charset, typeInfo, value)
-
-    /**
-     * Serializes a [value] to the specified [contentType] to a [OutgoingContent].
-     * This function could ignore value if it is not suitable for conversion and return `null` so in this case
-     * other registered converters could be tried or this function could be invoked with other content types
-     * it the converted has been registered multiple times with different content types.
-     *
-     * @param charset response charset
-     * @param typeInfo response body typeInfo
-     * @param contentType to which this data converter has been registered and that matches the client's [Accept] header
-     * @param value to be converted
-     *
-     * @return a converted [OutgoingContent] value, or null if [value] isn't suitable for this converter
-     */
-    @Suppress("DEPRECATION")
-    public suspend fun serializeNullable(
-        contentType: ContentType,
-        charset: Charset,
-        typeInfo: TypeInfo,
         value: Any?
-    ): OutgoingContent? = serialize(contentType, charset, typeInfo, value!!)
+    ): OutgoingContent?
 
     /**
      * Deserializes [content] to the value of type [typeInfo]

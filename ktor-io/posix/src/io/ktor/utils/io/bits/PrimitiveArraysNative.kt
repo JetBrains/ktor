@@ -1,9 +1,10 @@
-@file:Suppress("NOTHING_TO_INLINE", "ConstantConditionIf")
+@file:Suppress("ConstantConditionIf")
 
 package io.ktor.utils.io.bits
 
 import kotlinx.cinterop.*
 import platform.posix.*
+import kotlin.experimental.*
 
 /**
  * Copies short integers from this memory range from the specified [offset] and [count]
@@ -24,7 +25,7 @@ public actual fun Memory.loadShortArray(
  * to the [destination] at [destinationOffset] interpreting numbers in the network order (Big Endian).
  * @param destinationOffset items
  */
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class, ExperimentalNativeApi::class)
 public actual fun Memory.loadShortArray(
     offset: Long,
     destination: ShortArray,
@@ -80,7 +81,7 @@ public actual fun Memory.loadIntArray(
  * to the [destination] at [destinationOffset] interpreting numbers in the network order (Big Endian).
  * @param destinationOffset items
  */
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class, ExperimentalNativeApi::class)
 public actual fun Memory.loadIntArray(
     offset: Long,
     destination: IntArray,
@@ -140,7 +141,7 @@ public actual fun Memory.loadLongArray(
  * to the [destination] at [destinationOffset] interpreting numbers in the network order (Big Endian).
  * @param destinationOffset items
  */
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class, ExperimentalNativeApi::class)
 public actual fun Memory.loadLongArray(
     offset: Long,
     destination: LongArray,
@@ -196,7 +197,7 @@ public actual fun Memory.loadFloatArray(
  * to the [destination] at [destinationOffset] interpreting numbers in the network order (Big Endian).
  * @param destinationOffset items
  */
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class, ExperimentalNativeApi::class)
 public actual fun Memory.loadFloatArray(
     offset: Long,
     destination: FloatArray,
@@ -252,7 +253,7 @@ public actual fun Memory.loadDoubleArray(
  * to the [destination] at [destinationOffset] interpreting numbers in the network order (Big Endian).
  * @param destinationOffset items
  */
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class, ExperimentalNativeApi::class)
 public actual fun Memory.loadDoubleArray(
     offset: Long,
     destination: DoubleArray,
@@ -308,6 +309,7 @@ public actual fun Memory.storeShortArray(
  * interpreting numbers in the network order (Big Endian).
  * @param sourceOffset items
  */
+@OptIn(ExperimentalForeignApi::class, ExperimentalNativeApi::class)
 public actual fun Memory.storeShortArray(
     offset: Long,
     source: ShortArray,
@@ -353,6 +355,7 @@ public actual fun Memory.storeIntArray(
  * interpreting numbers in the network order (Big Endian).
  * @param sourceOffset items
  */
+@OptIn(ExperimentalForeignApi::class, ExperimentalNativeApi::class)
 public actual fun Memory.storeIntArray(
     offset: Long,
     source: IntArray,
@@ -398,6 +401,7 @@ public actual fun Memory.storeLongArray(
  * interpreting numbers in the network order (Big Endian).
  * @param sourceOffset items
  */
+@OptIn(ExperimentalForeignApi::class, ExperimentalNativeApi::class)
 public actual fun Memory.storeLongArray(
     offset: Long,
     source: LongArray,
@@ -443,6 +447,7 @@ public actual fun Memory.storeFloatArray(
  * interpreting numbers in the network order (Big Endian).
  * @param sourceOffset items
  */
+@OptIn(ExperimentalForeignApi::class, ExperimentalNativeApi::class)
 public actual fun Memory.storeFloatArray(
     offset: Long,
     source: FloatArray,
@@ -488,6 +493,7 @@ public actual fun Memory.storeDoubleArray(
  * interpreting numbers in the network order (Big Endian).
  * @param sourceOffset items
  */
+@OptIn(ExperimentalForeignApi::class, ExperimentalNativeApi::class)
 public actual fun Memory.storeDoubleArray(
     offset: Long,
     source: DoubleArray,
@@ -538,11 +544,16 @@ internal inline fun requireRange(offset: Long, length: Long, size: Long, name: S
     }
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal inline fun Memory.isAlignedShort(offset: Long) = (pointer.toLong() + offset) and 0b1 == 0L
+
+@OptIn(ExperimentalForeignApi::class)
 internal inline fun Memory.isAlignedInt(offset: Long) = (pointer.toLong() + offset) and 0b11 == 0L
+
+@OptIn(ExperimentalForeignApi::class)
 internal inline fun Memory.isAlignedLong(offset: Long) = (pointer.toLong() + offset) and 0b111 == 0L
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 private fun copy(
     source: IntArray,
     destinationPointer: CPointer<ByteVar>,
@@ -554,7 +565,7 @@ private fun copy(
     }
 }
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 private fun copy(
     source: ShortArray,
     destinationPointer: CPointer<ByteVar>,
@@ -566,7 +577,7 @@ private fun copy(
     }
 }
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 private fun copy(
     source: LongArray,
     destinationPointer: CPointer<ByteVar>,
@@ -578,7 +589,7 @@ private fun copy(
     }
 }
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 private fun copy(
     source: FloatArray,
     destinationPointer: CPointer<ByteVar>,
@@ -590,7 +601,7 @@ private fun copy(
     }
 }
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 private fun copy(
     source: DoubleArray,
     destinationPointer: CPointer<ByteVar>,

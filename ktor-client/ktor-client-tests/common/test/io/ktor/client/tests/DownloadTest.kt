@@ -7,7 +7,6 @@ package io.ktor.client.tests
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.tests.utils.*
-import io.ktor.utils.io.*
 import kotlin.test.*
 
 class DownloadTest : ClientLoader() {

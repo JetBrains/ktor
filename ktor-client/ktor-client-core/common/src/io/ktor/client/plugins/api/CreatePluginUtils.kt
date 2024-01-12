@@ -7,6 +7,7 @@ package io.ktor.client.plugins.api
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 
 /**
  * Client plugins factory.

@@ -18,6 +18,7 @@ import kotlinx.coroutines.*
 import libcurl.*
 import kotlin.coroutines.*
 
+@OptIn(ExperimentalForeignApi::class)
 internal suspend fun HttpRequestData.toCurlRequest(config: CurlClientEngineConfig): CurlRequestData = CurlRequestData(
     url = url.toString(),
     method = method.value,
@@ -25,7 +26,7 @@ internal suspend fun HttpRequestData.toCurlRequest(config: CurlClientEngineConfi
     proxy = config.proxy,
     content = body.toByteChannel(),
     contentLength = body.contentLength ?: headers[HttpHeaders.ContentLength]?.toLongOrNull() ?: -1L,
-    connectTimeout = getCapabilityOrNull(HttpTimeout)?.connectTimeoutMillis,
+    connectTimeout = getCapabilityOrNull(HttpTimeoutCapability)?.connectTimeoutMillis,
     executionContext = executionContext,
     forceProxyTunneling = config.forceProxyTunneling,
     sslVerify = config.sslVerify,
@@ -33,7 +34,7 @@ internal suspend fun HttpRequestData.toCurlRequest(config: CurlClientEngineConfi
     caPath = config.caPath
 )
 
-internal class CurlRequestData(
+internal class CurlRequestData @OptIn(ExperimentalForeignApi::class) constructor(
     val url: String,
     val method: String,
     val headers: CPointer<curl_slist>,
@@ -53,7 +54,10 @@ internal class CurlRequestData(
 
 internal class CurlResponseBuilder(val request: CurlRequestData) {
     val headersBytes = BytePacketBuilder()
-    val bodyChannel = ByteChannel(true).apply { attachJob(request.executionContext) }
+    val bodyChannel = ByteChannel(true).apply {
+        @Suppress("DEPRECATION")
+        attachJob(request.executionContext)
+    }
 }
 
 internal sealed class CurlResponseData

@@ -7,7 +7,7 @@ package io.ktor.client.plugins.cache.storage
 import io.ktor.client.plugins.cache.*
 import io.ktor.http.*
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 internal object DisabledCacheStorage : HttpCacheStorage() {
     override fun store(url: Url, value: HttpCacheEntry) {}
 

@@ -2,11 +2,12 @@ package io.ktor.utils.io.core
 
 import org.khronos.webgl.*
 
-@Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE")
+@Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE", "DEPRECATION")
 public fun Input.readFully(dst: Int8Array, offset: Int = 0, length: Int = dst.length - offset) {
     readFully(dst as ArrayBufferView, offset, length)
 }
 
+@Suppress("DEPRECATION")
 public fun Input.readFully(dst: ArrayBuffer, offset: Int = 0, length: Int = dst.byteLength - offset) {
     if (remaining < length) {
         throw IllegalArgumentException("Not enough bytes available ($remaining) to read $length bytes")
@@ -20,6 +21,7 @@ public fun Input.readFully(dst: ArrayBuffer, offset: Int = 0, length: Int = dst.
     }
 }
 
+@Suppress("DEPRECATION")
 public fun Input.readFully(dst: ArrayBufferView, byteOffset: Int = 0, byteLength: Int = dst.byteLength - byteOffset) {
     require(byteLength <= dst.byteLength) {
         throw IndexOutOfBoundsException("length $byteLength is greater than view size ${dst.byteLength}")
@@ -28,7 +30,7 @@ public fun Input.readFully(dst: ArrayBufferView, byteOffset: Int = 0, byteLength
     return readFully(dst.buffer, dst.byteOffset + byteOffset, byteLength)
 }
 
-@Suppress("unused")
+@Suppress("unused", "DEPRECATION")
 public fun Input.readAvailable(dst: Int8Array, offset: Int = 0, length: Int = dst.length - offset): Int {
     val remaining = remaining
     if (remaining == 0L) return -1
@@ -37,6 +39,7 @@ public fun Input.readAvailable(dst: Int8Array, offset: Int = 0, length: Int = ds
     return size
 }
 
+@Suppress("DEPRECATION")
 public fun Input.readAvailable(dst: ArrayBuffer, offset: Int = 0, length: Int = dst.byteLength - offset): Int {
     val remaining = remaining
     if (remaining == 0L) return -1
@@ -45,7 +48,7 @@ public fun Input.readAvailable(dst: ArrayBuffer, offset: Int = 0, length: Int = 
     return size
 }
 
-@Suppress("unused")
+@Suppress("unused", "DEPRECATION")
 public fun Input.readAvailable(
     dst: ArrayBufferView,
     byteOffset: Int = 0,

@@ -6,6 +6,7 @@ import io.ktor.utils.io.bits.*
 import org.khronos.webgl.*
 import kotlin.contracts.*
 
+@Suppress("DEPRECATION")
 public fun Buffer.readFully(dst: ArrayBuffer, offset: Int = 0, length: Int = dst.byteLength - offset) {
     read { memory, start, endExclusive ->
         if (endExclusive - start < length) {
@@ -17,6 +18,7 @@ public fun Buffer.readFully(dst: ArrayBuffer, offset: Int = 0, length: Int = dst
     }
 }
 
+@Suppress("DEPRECATION")
 public fun Buffer.readFully(dst: ArrayBufferView, offset: Int = 0, length: Int = dst.byteLength - offset) {
     read { memory, start, endExclusive ->
         if (endExclusive - start < length) {
@@ -28,6 +30,7 @@ public fun Buffer.readFully(dst: ArrayBufferView, offset: Int = 0, length: Int =
     }
 }
 
+@Suppress("DEPRECATION")
 public fun Buffer.readAvailable(dst: ArrayBuffer, offset: Int = 0, length: Int = dst.byteLength - offset): Int {
     if (!canRead()) return -1
     val readSize = minOf(length, readRemaining)
@@ -35,6 +38,7 @@ public fun Buffer.readAvailable(dst: ArrayBuffer, offset: Int = 0, length: Int =
     return readSize
 }
 
+@Suppress("DEPRECATION")
 public fun Buffer.readAvailable(dst: ArrayBufferView, offset: Int = 0, length: Int = dst.byteLength - offset): Int {
     if (!canRead()) return -1
     val readSize = minOf(length, readRemaining)
@@ -42,6 +46,7 @@ public fun Buffer.readAvailable(dst: ArrayBufferView, offset: Int = 0, length: I
     return readSize
 }
 
+@Suppress("DEPRECATION")
 public fun Buffer.writeFully(src: ArrayBuffer, offset: Int = 0, length: Int = src.byteLength) {
     write { memory, start, endExclusive ->
         if (endExclusive - start < length) {
@@ -53,6 +58,7 @@ public fun Buffer.writeFully(src: ArrayBuffer, offset: Int = 0, length: Int = sr
     }
 }
 
+@Suppress("DEPRECATION")
 public fun Buffer.writeFully(src: ArrayBufferView, offset: Int = 0, length: Int = src.byteLength - offset) {
     write { memory, dstOffset, endExclusive ->
         if (endExclusive - dstOffset < length) {
@@ -64,6 +70,7 @@ public fun Buffer.writeFully(src: ArrayBufferView, offset: Int = 0, length: Int 
     }
 }
 
+@Suppress("DEPRECATION")
 @OptIn(ExperimentalContracts::class)
 public inline fun Buffer.writeDirect(block: (DataView) -> Int): Int {
     contract {
@@ -75,6 +82,7 @@ public inline fun Buffer.writeDirect(block: (DataView) -> Int): Int {
     }
 }
 
+@Suppress("DEPRECATION")
 @OptIn(ExperimentalContracts::class)
 public inline fun Buffer.readDirect(block: (DataView) -> Int): Int {
     contract {
@@ -86,6 +94,7 @@ public inline fun Buffer.readDirect(block: (DataView) -> Int): Int {
     }
 }
 
+@Suppress("DEPRECATION")
 @OptIn(ExperimentalContracts::class)
 public inline fun Buffer.writeDirectInt8Array(block: (Int8Array) -> Int): Int {
     contract {
@@ -97,6 +106,7 @@ public inline fun Buffer.writeDirectInt8Array(block: (Int8Array) -> Int): Int {
     }
 }
 
+@Suppress("DEPRECATION")
 @OptIn(ExperimentalContracts::class)
 public inline fun Buffer.readDirectInt8Array(block: (Int8Array) -> Int): Int {
     contract {

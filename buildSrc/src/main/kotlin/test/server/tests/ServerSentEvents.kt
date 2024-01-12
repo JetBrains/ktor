@@ -9,12 +9,16 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.utils.io.*
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 internal fun Application.serverSentEvents() {
     routing {
         route("/sse") {
             get("/hello") {
+                val delayMillis = call.parameters["delay"]?.toLong() ?: 0
+                delay(delayMillis)
+
                 val times = call.parameters["times"]?.toInt() ?: 1
                 val events = flow {
                     repeat(times) {
@@ -41,6 +45,29 @@ internal fun Application.serverSentEvents() {
                     }
                 }
                 call.respondSseEvents(events)
+            }
+            get("/auth") {
+                val token = call.request.headers["Authorization"]
+                if (token.isNullOrEmpty() || token.contains("invalid")) {
+                    call.response.header(HttpHeaders.WWWAuthenticate, "Bearer realm=\"TestServer\"")
+                    call.respond(HttpStatusCode.Unauthorized)
+                    return@get
+                }
+
+                call.respondSseEvents(
+                    flow {
+                        emit(SseEvent("hello after refresh"))
+                    }
+                )
+            }
+            get("/content_type_with_charset") {
+                val events = flow {
+                    emit(SseEvent("hello\nfrom server", "hello 0", "0"))
+                }
+                val contentType = ContentType.Text.EventStream.withCharset(Charsets.UTF_8)
+                call.respondBytesWriter(contentType = contentType) {
+                    writeSseEvents(events)
+                }
             }
         }
     }

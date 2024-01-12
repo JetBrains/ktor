@@ -6,7 +6,7 @@ package io.ktor.utils.io
 
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.streams.*
-import org.junit.*
+import org.junit.jupiter.api.AfterEach
 import java.util.*
 import kotlin.test.*
 import kotlin.test.Test
@@ -14,7 +14,7 @@ import kotlin.test.Test
 class BytePacketReaderWriterTest {
     internal val pool = VerifyingChunkBufferPool()
 
-    @After
+    @AfterEach
     fun assertEmpty() {
         pool.assertEmpty()
     }

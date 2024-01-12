@@ -92,3 +92,18 @@ public class UnsupportedMediaTypeException(
         it.initCauseBridge(this)
     }
 }
+
+/**
+ * Thrown when request body is larger than the set limit.
+ * HTTP status 413 Payload Too Large will be replied when this exception is thrown and not caught.
+ */
+@OptIn(ExperimentalCoroutinesApi::class)
+public class PayloadTooLargeException(
+    private val sizeLimit: Long
+) : ContentTransformationException("Request is larger than the limit of $sizeLimit bytes"),
+    CopyableThrowable<PayloadTooLargeException> {
+
+    override fun createCopy(): PayloadTooLargeException = PayloadTooLargeException(sizeLimit).also {
+        it.initCauseBridge(this)
+    }
+}

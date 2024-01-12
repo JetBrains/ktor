@@ -29,11 +29,6 @@ public class SSEServerContent(
 ) : OutgoingContent.WriteChannelContent() {
     override val contentType: ContentType = ContentType.Text.EventStream
 
-    override val headers: Headers = HeadersBuilder().apply {
-        append(HttpHeaders.CacheControl, "no-store")
-        append(HttpHeaders.Connection, "keep-alive")
-    }.build()
-
     override suspend fun writeTo(channel: ByteWriteChannel) {
         LOGGER.trace("Starting sse session for ${call.request.uri}")
 

@@ -9,7 +9,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 /**
  *  A configuration for the [HSTS] settings for a host.
@@ -52,11 +52,20 @@ public class HSTSConfig : HSTSHostConfig() {
      */
     internal val hostSpecific: MutableMap<String, HSTSHostConfig> = HashMap()
 
+    internal var filter: ((ApplicationCall) -> Boolean)? = null
+
     /**
      * Set specific configuration for a [host].
      */
     public fun withHost(host: String, configure: HSTSHostConfig.() -> Unit) {
         this.hostSpecific[host] = HSTSHostConfig().apply(configure)
+    }
+
+    /**
+     * Sets a filter that determines whether the plugin should be applied to a specific call.
+     */
+    public fun filter(block: (ApplicationCall) -> Boolean) {
+        this.filter = block
     }
 }
 
@@ -104,8 +113,12 @@ public val HSTS: RouteScopedPlugin<HSTSConfig> = createRouteScopedPlugin("HSTS",
 
     val hostHeaderValues: Map<String, String> = pluginConfig.hostSpecific.mapValues { constructHeaderValue(it.value) }
 
+    val filter = pluginConfig.filter ?: { call ->
+        call.request.origin.run { scheme == "https" && serverPort == 443 }
+    }
+
     onCallRespond { call ->
-        if (call.request.origin.run { scheme == "https" && serverPort == 443 }) {
+        if (filter(call)) {
             call.response.header(
                 HttpHeaders.StrictTransportSecurity,
                 hostHeaderValues[call.request.host()] ?: headerValue

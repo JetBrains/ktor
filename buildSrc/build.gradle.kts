@@ -3,8 +3,8 @@
 */
 
 plugins {
-    kotlin("plugin.serialization") version "1.8.20"
-    id("org.gradle.kotlin.kotlin-dsl") version "4.0.14"
+    kotlin("plugin.serialization") version "1.9.20"
+    id("org.gradle.kotlin.kotlin-dsl") version "4.2.1"
 }
 
 val buildSnapshotTrain = properties["build_snapshot_train"]?.toString()?.toBoolean() == true
@@ -12,6 +12,7 @@ val buildSnapshotTrain = properties["build_snapshot_train"]?.toString()?.toBoole
 repositories {
     maven("https://plugins.gradle.org/m2")
     maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
+    maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
 
     if (buildSnapshotTrain) {
         mavenLocal()
@@ -21,11 +22,11 @@ repositories {
 sourceSets.main {
 }
 
-val ktor_version = "2.3.2"
+val ktor_version = "3.0.0-eap-852"
 
 dependencies {
-    implementation(kotlin("gradle-plugin", "1.8.22"))
-    implementation(kotlin("serialization", "1.8.22"))
+    implementation(kotlin("gradle-plugin", "1.9.20"))
+    implementation(kotlin("serialization", "1.9.20"))
 
     val ktlint_version = libs.versions.ktlint.version.get()
     implementation("org.jmailen.gradle:kotlinter-gradle:$ktlint_version")
@@ -42,6 +43,7 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx:$ktor_version")
     implementation("io.ktor:ktor-network-tls-certificates:$ktor_version")
+    implementation("io.ktor:ktor-utils:$ktor_version")
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.logback.classic)

@@ -11,6 +11,7 @@ import io.ktor.server.routing.*
 import io.ktor.util.*
 import io.ktor.util.logging.*
 import io.ktor.util.pipeline.*
+import io.ktor.utils.io.*
 
 internal val LOGGER = KtorSimpleLogger("io.ktor.server.auth.Authentication")
 
@@ -200,11 +201,11 @@ public enum class AuthenticationStrategy { Optional, FirstSuccessful, Required }
  * @throws MissingApplicationPluginException if no [Authentication] plugin installed first.
  * @throws IllegalArgumentException if there are no registered providers referred by [configurations] names.
  */
-public fun RoutingBuilder.authenticate(
-    vararg configurations: String? = arrayOf(null),
+public fun Route.authenticate(
+    vararg configurations: String? = arrayOf<String?>(null),
     optional: Boolean = false,
-    build: RoutingBuilder.() -> Unit
-): RoutingBuilder {
+    build: Route.() -> Unit
+): Route {
     return authenticate(
         configurations = configurations,
         strategy = if (optional) AuthenticationStrategy.Optional else AuthenticationStrategy.FirstSuccessful,
@@ -228,11 +229,11 @@ public fun RoutingBuilder.authenticate(
  * @throws MissingApplicationPluginException if no [Authentication] plugin installed first.
  * @throws IllegalArgumentException if there are no registered providers referred by [configurations] names.
  */
-public fun RoutingBuilder.authenticate(
-    vararg configurations: String? = arrayOf(null),
+public fun Route.authenticate(
+    vararg configurations: String? = arrayOf<String?>(null),
     strategy: AuthenticationStrategy,
-    build: RoutingBuilder.() -> Unit
-): RoutingBuilder {
+    build: Route.() -> Unit
+): Route {
     require(configurations.isNotEmpty()) { "At least one configuration name or null for default need to be provided" }
 
     val configurationNames = configurations.distinct().toList()
@@ -264,7 +265,7 @@ public class RouteAuthenticationConfig {
 
 /**
  * An authentication route node that is used by [Authentication] plugin
- * and usually created by the [RoutingBuilder.authenticate] DSL function,
+ * and usually created by the [Route.authenticate] DSL function,
  * so generally there is no need to instantiate it directly unless you are writing an extension.
  * @param names of authentication providers to be applied to this route.
  */

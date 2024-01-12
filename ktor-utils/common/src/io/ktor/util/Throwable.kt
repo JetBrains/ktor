@@ -4,6 +4,8 @@
 
 package io.ktor.util
 
+import io.ktor.utils.io.*
+
 /**
  * Root cause of the [Throwable].
  */

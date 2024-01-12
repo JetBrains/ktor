@@ -17,9 +17,12 @@ public object EngineMain {
      */
     @JvmStatic
     public fun main(args: Array<String>) {
-        val applicationEnvironment = commandLineEnvironment(args)
-        val engine = CIOApplicationEngine(applicationEnvironment) { loadConfiguration(applicationEnvironment.config) }
-        engine.start(true)
+        val config = CommandLineConfig(args)
+        val server = EmbeddedServer(config.applicationProperties, CIO) {
+            takeFrom(config.engineConfig)
+            loadConfiguration(config.applicationProperties.environment.config)
+        }
+        server.start(true)
     }
 
     private fun CIOApplicationEngine.Configuration.loadConfiguration(config: ApplicationConfig) {

@@ -1,11 +1,11 @@
 /*
  * Copyright 2014-2021 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
-@file:Suppress("UNUSED_VARIABLE")
 
 import org.gradle.api.*
 import org.gradle.api.tasks.testing.*
 import org.gradle.jvm.tasks.*
+import org.gradle.jvm.toolchain.*
 import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.*
 
@@ -14,11 +14,6 @@ fun Project.configureJvm() {
         in jdk11Modules -> 11
         else -> 8
     }
-
-    val kotlin_version: String by extra
-    val slf4j_version: String by extra
-    val junit_version: String by extra
-    val coroutines_version: String by extra
 
     val configuredVersion: String by rootProject.extra
 
@@ -29,11 +24,11 @@ fun Project.configureJvm() {
             val jvmMain by getting {
                 dependencies {
                     if (jdk > 6) {
-                        api("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
+                        api("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}")
                     }
                     if (jdk > 7) {
-                        api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
-                        api("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutines_version") {
+                        api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}")
+                        api("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${Versions.coroutines}") {
                             exclude(module = "kotlin-stdlib")
                             exclude(module = "kotlin-stdlib-jvm")
                             exclude(module = "kotlin-stdlib-jdk8")
@@ -41,15 +36,15 @@ fun Project.configureJvm() {
                         }
                     }
 
-                    api("org.slf4j:slf4j-api:$slf4j_version")
+                    api("org.slf4j:slf4j-api:${Versions.slf4j}")
                 }
             }
 
             val jvmTest by getting {
                 dependencies {
-                    implementation("junit:junit:$junit_version")
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-debug:$coroutines_version")
-                    implementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+                    implementation(kotlin("test-junit5"))
+                    implementation("org.junit.jupiter:junit-jupiter:${Versions.junit}")
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-debug:${Versions.coroutines}")
                 }
             }
         }
@@ -74,7 +69,9 @@ fun Project.configureJvm() {
     val jvmTest: KotlinJvmTest = tasks.getByName<KotlinJvmTest>("jvmTest") {
         ignoreFailures = true
         maxHeapSize = "2g"
-        exclude("**/*StressTest *")
+        exclude("**/*StressTest*")
+        useJUnitPlatform()
+        configureJavaLauncher(jdk)
     }
 
     tasks.create<Test>("stressTest") {
@@ -87,6 +84,8 @@ fun Project.configureJvm() {
         setForkEvery(1)
         systemProperty("enable.stress.tests", "true")
         include("**/*StressTest*")
+        useJUnitPlatform()
+        configureJavaLauncher(jdk)
     }
 
     tasks.getByName<Jar>("jvmJar").apply {
@@ -98,6 +97,19 @@ fun Project.configureJvm() {
             val name = project.javaModuleName()
             attributes("Automatic-Module-Name" to name)
         }
+    }
+}
+
+/**
+ * JUnit 5 requires Java 11+
+ */
+fun Test.configureJavaLauncher(jdk: Int) {
+    if (jdk < 11) {
+        val javaToolchains = project.extensions.getByType<JavaToolchainService>()
+        val customLauncher = javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of("11")
+        }
+        javaLauncher = customLauncher
     }
 }
 

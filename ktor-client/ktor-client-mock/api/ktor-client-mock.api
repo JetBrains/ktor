@@ -5,7 +5,6 @@ public final class io/ktor/client/engine/mock/MockEngine : io/ktor/client/engine
 	public fun execute (Lio/ktor/client/request/HttpRequestData;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun getConfig ()Lio/ktor/client/engine/HttpClientEngineConfig;
 	public fun getConfig ()Lio/ktor/client/engine/mock/MockEngineConfig;
-	public fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public final fun getRequestHistory ()Ljava/util/List;
 	public final fun getResponseHistory ()Ljava/util/List;
 	public fun getSupportedCapabilities ()Ljava/util/Set;

@@ -8,7 +8,6 @@ import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.serialization.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
@@ -27,7 +26,7 @@ class WebSocketWithContentNegotiationTest {
         application.install(WebSockets)
         application.install(ContentNegotiation) {
             val converter = object : ContentConverter {
-                override suspend fun serializeNullable(
+                override suspend fun serialize(
                     contentType: ContentType,
                     charset: Charset,
                     typeInfo: TypeInfo,

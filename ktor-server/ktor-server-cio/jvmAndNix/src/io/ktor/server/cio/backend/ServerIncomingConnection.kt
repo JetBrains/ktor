@@ -4,7 +4,6 @@
 
 package io.ktor.server.cio.backend
 
-import io.ktor.util.*
 import io.ktor.util.network.*
 import io.ktor.utils.io.*
 

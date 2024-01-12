@@ -26,37 +26,11 @@ public expect abstract class CharsetEncoder
 
 public expect val CharsetEncoder.charset: Charset
 
-@Suppress("DEPRECATION")
-@Deprecated(
-    "Use writeText on Output instead.",
-    level = DeprecationLevel.ERROR,
-    replaceWith = ReplaceWith(
-        "dst.writeText(input, fromIndex, toIndex, charset)",
-        "io.ktor.utils.io.core.writeText"
-    )
-)
-public fun CharsetEncoder.encode(input: CharSequence, fromIndex: Int, toIndex: Int, dst: Output) {
-    encodeToImpl(dst, input, fromIndex, toIndex)
-}
-
 public expect fun CharsetEncoder.encodeToByteArray(
     input: CharSequence,
     fromIndex: Int = 0,
     toIndex: Int = input.length
 ): ByteArray
-
-@Deprecated(
-    "Internal API. Will be hidden in future releases. Use encodeToByteArray instead.",
-    level = DeprecationLevel.ERROR,
-    replaceWith = ReplaceWith("encodeToByteArray(input, fromIndex, toIndex)")
-)
-public fun CharsetEncoder.encodeToByteArrayImpl(
-    input: CharSequence,
-    fromIndex: Int = 0,
-    toIndex: Int = input.length
-): ByteArray {
-    return encodeToByteArray(input, fromIndex, toIndex)
-}
 
 @Suppress("DEPRECATION")
 public expect fun CharsetEncoder.encodeUTF8(input: ByteReadPacket, dst: Output)
@@ -146,7 +120,7 @@ internal expect fun CharsetDecoder.decodeBuffer(
     max: Int = Int.MAX_VALUE
 ): Int
 
-internal expect fun CharsetEncoder.encodeToByteArrayImpl1(
+internal expect fun CharsetEncoder.encodeToByteArrayImpl(
     input: CharSequence,
     fromIndex: Int = 0,
     toIndex: Int = input.length

@@ -6,7 +6,6 @@
 package io.ktor.client.engine.cio
 
 import io.ktor.client.engine.*
-import io.ktor.util.*
 
 /**
  * An asynchronous coroutine-based engine that can be used on JVM, Android, and Kotlin/Native.

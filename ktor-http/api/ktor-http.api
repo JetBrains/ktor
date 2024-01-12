@@ -40,6 +40,7 @@ public final class io/ktor/http/CacheControl$NoStore : io/ktor/http/CacheControl
 public final class io/ktor/http/CacheControl$Visibility : java/lang/Enum {
 	public static final field Private Lio/ktor/http/CacheControl$Visibility;
 	public static final field Public Lio/ktor/http/CacheControl$Visibility;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/http/CacheControl$Visibility;
 	public static fun values ()[Lio/ktor/http/CacheControl$Visibility;
 }
@@ -52,7 +53,8 @@ public final class io/ktor/http/CodecsKt {
 	public static final fun encodeOAuth (Ljava/lang/String;)Ljava/lang/String;
 	public static final fun encodeURLParameter (Ljava/lang/String;Z)Ljava/lang/String;
 	public static synthetic fun encodeURLParameter$default (Ljava/lang/String;ZILjava/lang/Object;)Ljava/lang/String;
-	public static final fun encodeURLPath (Ljava/lang/String;)Ljava/lang/String;
+	public static final fun encodeURLPath (Ljava/lang/String;ZZ)Ljava/lang/String;
+	public static synthetic fun encodeURLPath$default (Ljava/lang/String;ZZILjava/lang/Object;)Ljava/lang/String;
 	public static final fun encodeURLPathPart (Ljava/lang/String;)Ljava/lang/String;
 	public static final fun encodeURLQueryComponent (Ljava/lang/String;ZZLjava/nio/charset/Charset;)Ljava/lang/String;
 	public static synthetic fun encodeURLQueryComponent$default (Ljava/lang/String;ZZLjava/nio/charset/Charset;ILjava/lang/Object;)Ljava/lang/String;
@@ -294,6 +296,7 @@ public final class io/ktor/http/CookieEncoding : java/lang/Enum {
 	public static final field DQUOTES Lio/ktor/http/CookieEncoding;
 	public static final field RAW Lio/ktor/http/CookieEncoding;
 	public static final field URI_ENCODING Lio/ktor/http/CookieEncoding;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/http/CookieEncoding;
 	public static fun values ()[Lio/ktor/http/CookieEncoding;
 }
@@ -314,20 +317,6 @@ public final class io/ktor/http/DateUtilsKt {
 	public static final fun fromCookieToGmtDate (Ljava/lang/String;)Lio/ktor/util/date/GMTDate;
 	public static final fun fromHttpToGmtDate (Ljava/lang/String;)Lio/ktor/util/date/GMTDate;
 	public static final fun toHttpDate (Lio/ktor/util/date/GMTDate;)Ljava/lang/String;
-}
-
-public final class io/ktor/http/EmptyHeaders : io/ktor/http/Headers {
-	public static final field INSTANCE Lio/ktor/http/EmptyHeaders;
-	public fun contains (Ljava/lang/String;)Z
-	public fun contains (Ljava/lang/String;Ljava/lang/String;)Z
-	public fun entries ()Ljava/util/Set;
-	public fun forEach (Lkotlin/jvm/functions/Function2;)V
-	public fun get (Ljava/lang/String;)Ljava/lang/String;
-	public fun getAll (Ljava/lang/String;)Ljava/util/List;
-	public fun getCaseInsensitiveName ()Z
-	public fun isEmpty ()Z
-	public fun names ()Ljava/util/Set;
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class io/ktor/http/FileContentTypeJvmKt {
@@ -574,10 +563,8 @@ public final class io/ktor/http/HttpMessagePropertiesKt {
 	public static final fun cacheControl (Lio/ktor/http/HttpMessage;)Ljava/util/List;
 	public static final fun charset (Lio/ktor/http/HttpMessage;)Ljava/nio/charset/Charset;
 	public static final fun charset (Lio/ktor/http/HttpMessageBuilder;)Ljava/nio/charset/Charset;
-	public static final fun charset (Lio/ktor/http/HttpMessageBuilder;Ljava/nio/charset/Charset;)Lkotlin/Unit;
 	public static final fun contentLength (Lio/ktor/http/HttpMessage;)Ljava/lang/Long;
 	public static final fun contentLength (Lio/ktor/http/HttpMessageBuilder;)Ljava/lang/Long;
-	public static final fun contentLength (Lio/ktor/http/HttpMessageBuilder;I)V
 	public static final fun contentType (Lio/ktor/http/HttpMessage;)Lio/ktor/http/ContentType;
 	public static final fun contentType (Lio/ktor/http/HttpMessageBuilder;)Lio/ktor/http/ContentType;
 	public static final fun contentType (Lio/ktor/http/HttpMessageBuilder;Lio/ktor/http/ContentType;)V
@@ -718,7 +705,6 @@ public final class io/ktor/http/HttpStatusCode$Companion {
 }
 
 public final class io/ktor/http/HttpStatusCodeKt {
-	public static final fun getExceptionFailed (Lio/ktor/http/HttpStatusCode$Companion;)Lio/ktor/http/HttpStatusCode;
 	public static final fun isSuccess (Lio/ktor/http/HttpStatusCode;)Z
 }
 
@@ -837,6 +823,7 @@ public final class io/ktor/http/QueryKt {
 public final class io/ktor/http/RangeUnits : java/lang/Enum {
 	public static final field Bytes Lio/ktor/http/RangeUnits;
 	public static final field None Lio/ktor/http/RangeUnits;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getUnitToken ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/http/RangeUnits;
 	public static fun values ()[Lio/ktor/http/RangeUnits;
@@ -903,6 +890,7 @@ public final class io/ktor/http/URLBuilder {
 	public final fun getPathSegments ()Ljava/util/List;
 	public final fun getPort ()I
 	public final fun getProtocol ()Lio/ktor/http/URLProtocol;
+	public final fun getProtocolOrNull ()Lio/ktor/http/URLProtocol;
 	public final fun getTrailingQuery ()Z
 	public final fun getUser ()Ljava/lang/String;
 	public final fun setEncodedFragment (Ljava/lang/String;)V
@@ -916,6 +904,7 @@ public final class io/ktor/http/URLBuilder {
 	public final fun setPathSegments (Ljava/util/List;)V
 	public final fun setPort (I)V
 	public final fun setProtocol (Lio/ktor/http/URLProtocol;)V
+	public final fun setProtocolOrNull (Lio/ktor/http/URLProtocol;)V
 	public final fun setTrailingQuery (Z)V
 	public final fun setUser (Ljava/lang/String;)V
 	public fun toString ()Ljava/lang/String;
@@ -933,9 +922,7 @@ public final class io/ktor/http/URLBuilderKt {
 	public static final field DEFAULT_PORT I
 	public static final fun appendEncodedPathSegments (Lio/ktor/http/URLBuilder;Ljava/util/List;)Lio/ktor/http/URLBuilder;
 	public static final fun appendEncodedPathSegments (Lio/ktor/http/URLBuilder;[Ljava/lang/String;)Lio/ktor/http/URLBuilder;
-	public static final synthetic fun appendPathSegments (Lio/ktor/http/URLBuilder;Ljava/util/List;)Lio/ktor/http/URLBuilder;
 	public static final fun appendPathSegments (Lio/ktor/http/URLBuilder;Ljava/util/List;Z)Lio/ktor/http/URLBuilder;
-	public static final synthetic fun appendPathSegments (Lio/ktor/http/URLBuilder;[Ljava/lang/String;)Lio/ktor/http/URLBuilder;
 	public static final fun appendPathSegments (Lio/ktor/http/URLBuilder;[Ljava/lang/String;Z)Lio/ktor/http/URLBuilder;
 	public static synthetic fun appendPathSegments$default (Lio/ktor/http/URLBuilder;Ljava/util/List;ZILjava/lang/Object;)Lio/ktor/http/URLBuilder;
 	public static synthetic fun appendPathSegments$default (Lio/ktor/http/URLBuilder;[Ljava/lang/String;ZILjava/lang/Object;)Lio/ktor/http/URLBuilder;
@@ -1007,6 +994,7 @@ public final class io/ktor/http/URLUtilsKt {
 	public static final fun appendUrlFullPath (Ljava/lang/Appendable;Ljava/lang/String;Lio/ktor/http/ParametersBuilder;Z)V
 	public static final fun getFullPath (Lio/ktor/http/Url;)Ljava/lang/String;
 	public static final fun getHostWithPort (Lio/ktor/http/Url;)Ljava/lang/String;
+	public static final fun getHostWithPortIfSpecified (Lio/ktor/http/Url;)Ljava/lang/String;
 	public static final fun isAbsolutePath (Lio/ktor/http/URLBuilder;)Z
 	public static final fun isAbsolutePath (Lio/ktor/http/Url;)Z
 	public static final fun isRelativePath (Lio/ktor/http/URLBuilder;)Z
@@ -1035,6 +1023,7 @@ public final class io/ktor/http/Url {
 	public final fun getPathSegments ()Ljava/util/List;
 	public final fun getPort ()I
 	public final fun getProtocol ()Lio/ktor/http/URLProtocol;
+	public final fun getProtocolOrNull ()Lio/ktor/http/URLProtocol;
 	public final fun getSpecifiedPort ()I
 	public final fun getTrailingQuery ()Z
 	public final fun getUser ()Ljava/lang/String;
@@ -1046,8 +1035,6 @@ public final class io/ktor/http/Url$Companion {
 }
 
 public final class io/ktor/http/UrlKt {
-	public static final fun copy (Lio/ktor/http/Url;Lio/ktor/http/URLProtocol;Ljava/lang/String;ILjava/lang/String;Lio/ktor/http/Parameters;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lio/ktor/http/Url;
-	public static synthetic fun copy$default (Lio/ktor/http/Url;Lio/ktor/http/URLProtocol;Ljava/lang/String;ILjava/lang/String;Lio/ktor/http/Parameters;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lio/ktor/http/Url;
 	public static final fun getAuthority (Lio/ktor/http/Url;)Ljava/lang/String;
 	public static final fun getProtocolWithAuthority (Lio/ktor/http/Url;)Ljava/lang/String;
 }
@@ -1065,6 +1052,7 @@ public final class io/ktor/http/auth/HeaderValueEncoding : java/lang/Enum {
 	public static final field QUOTED_ALWAYS Lio/ktor/http/auth/HeaderValueEncoding;
 	public static final field QUOTED_WHEN_REQUIRED Lio/ktor/http/auth/HeaderValueEncoding;
 	public static final field URI_ENCODE Lio/ktor/http/auth/HeaderValueEncoding;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/http/auth/HeaderValueEncoding;
 	public static fun values ()[Lio/ktor/http/auth/HeaderValueEncoding;
 }
@@ -1345,6 +1333,7 @@ public final class io/ktor/http/content/VersionCheckResult : java/lang/Enum {
 	public static final field NOT_MODIFIED Lio/ktor/http/content/VersionCheckResult;
 	public static final field OK Lio/ktor/http/content/VersionCheckResult;
 	public static final field PRECONDITION_FAILED Lio/ktor/http/content/VersionCheckResult;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getStatusCode ()Lio/ktor/http/HttpStatusCode;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/http/content/VersionCheckResult;
 	public static fun values ()[Lio/ktor/http/content/VersionCheckResult;

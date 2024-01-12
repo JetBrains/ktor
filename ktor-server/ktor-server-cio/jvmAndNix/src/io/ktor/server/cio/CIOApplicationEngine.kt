@@ -6,7 +6,6 @@ package io.ktor.server.cio
 
 import io.ktor.events.*
 import io.ktor.http.*
-import io.ktor.http.cio.*
 import io.ktor.server.application.*
 import io.ktor.server.cio.backend.*
 import io.ktor.server.cio.internal.*
@@ -22,9 +21,12 @@ import kotlinx.coroutines.*
  * Engine that based on CIO backend
  */
 public class CIOApplicationEngine(
-    environment: ApplicationEngineEnvironment,
-    configure: Configuration.() -> Unit
-) : BaseApplicationEngine(environment) {
+    environment: ApplicationEnvironment,
+    monitor: Events,
+    developmentMode: Boolean,
+    public val configuration: Configuration,
+    private val applicationProvider: () -> Application
+) : BaseApplicationEngine(environment, monitor, developmentMode) {
 
     /**
      * CIO-based server configuration
@@ -42,8 +44,6 @@ public class CIOApplicationEngine(
         public var reuseAddress: Boolean = false
     }
 
-    private val configuration: Configuration = Configuration().apply(configure)
-
     private val engineDispatcher = Dispatchers.IOBridge
 
     private val userDispatcher = Dispatchers.IOBridge
@@ -58,12 +58,11 @@ public class CIOApplicationEngine(
         serverJob.invokeOnCompletion { cause ->
             cause?.let { stopRequest.completeExceptionally(cause) }
             cause?.let { startupJob.completeExceptionally(cause) }
-            environment.stop()
         }
     }
 
     override fun start(wait: Boolean): ApplicationEngine {
-        addShutdownHook {
+        addShutdownHook(monitor) {
             stop(configuration.shutdownGracePeriod, configuration.shutdownTimeout)
         }
 
@@ -71,7 +70,7 @@ public class CIOApplicationEngine(
 
         runBlocking {
             startupJob.await()
-            environment.monitor.raiseCatching(ServerReady, environment, environment.log)
+            monitor.raiseCatching(ServerReady, environment, environment.log)
 
             if (wait) {
                 serverJob.join()
@@ -98,13 +97,8 @@ public class CIOApplicationEngine(
                 // timeout
                 serverJob.cancel()
 
-                val forceShutdown = withTimeoutOrNull(timeoutMillis - gracePeriodMillis) {
+                withTimeoutOrNull(timeoutMillis - gracePeriodMillis) {
                     serverJob.join()
-                    false
-                } ?: true
-
-                if (forceShutdown) {
-                    environment.stop()
                 }
             }
         }
@@ -159,7 +153,7 @@ public class CIOApplicationEngine(
     private suspend fun ServerRequestScope.handleRequest(request: io.ktor.http.cio.Request) {
         withContext(userDispatcher) {
             val call = CIOApplicationCall(
-                application,
+                applicationProvider(),
                 request,
                 input,
                 output,
@@ -189,12 +183,12 @@ public class CIOApplicationEngine(
         val cioConnectors = resolvedConnectors
 
         return CoroutineScope(
-            environment.parentCoroutineContext + engineDispatcher
+            applicationProvider().parentCoroutineContext + engineDispatcher
         ).launch(start = CoroutineStart.LAZY) {
-            val connectors = ArrayList<HttpServer>(environment.connectors.size)
+            val connectors = ArrayList<HttpServer>(configuration.connectors.size)
 
             try {
-                environment.connectors.forEach { connectorSpec ->
+                configuration.connectors.forEach { connectorSpec ->
                     if (connectorSpec.type == ConnectorType.HTTPS) {
                         throw UnsupportedOperationException(
                             "CIO Engine does not currently support HTTPS. Please " +
@@ -203,11 +197,7 @@ public class CIOApplicationEngine(
                     }
                 }
 
-                withContext(userDispatcher) {
-                    environment.start()
-                }
-
-                val connectorsAndServers = environment.connectors.map { connectorSpec ->
+                val connectorsAndServers = configuration.connectors.map { connectorSpec ->
                     connectorSpec to startConnector(connectorSpec.host, connectorSpec.port)
                 }
                 connectors.addAll(connectorsAndServers.map { it.second })
@@ -230,7 +220,7 @@ public class CIOApplicationEngine(
             connectors.forEach { it.acceptJob.cancel() }
 
             withContext(userDispatcher) {
-                environment.monitor.raise(ApplicationStopPreparing, environment)
+                monitor.raise(ApplicationStopPreparing, environment)
             }
         }
     }

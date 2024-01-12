@@ -24,12 +24,12 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
 import io.ktor.server.util.*
-import io.ktor.util.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
 import kotlin.test.*
+import kotlin.test.Test
 
 abstract class HttpServerCommonTestSuite<TEngine : ApplicationEngine, TConfiguration : ApplicationEngine.Configuration>(
     hostFactory: ApplicationEngineFactory<TEngine, TConfiguration>
@@ -77,6 +77,25 @@ abstract class HttpServerCommonTestSuite<TEngine : ApplicationEngine, TConfigura
             assertEquals("test-etag", headers[HttpHeaders.ETag])
             assertNull(headers[HttpHeaders.TransferEncoding])
             assertEquals("5", headers[HttpHeaders.ContentLength])
+        }
+    }
+
+    @Test
+    fun testAllHeaders() {
+        createAndStartServer {
+            handle {
+                call.response.headers.append("Name-1", "value-1")
+                call.response.headers.append("Name-1", "value-2")
+                call.response.headers.append("Name-2", "value")
+                call.respondText(call.response.headers.allValues().toString())
+            }
+        }
+
+        withUrl("/") {
+            assertEquals(200, status.value)
+            val body = call.response.bodyAsText()
+            assertTrue(body.contains("Name-1=[value-1, value-2]"))
+            assertTrue(body.contains("Name-2=[value]"))
         }
     }
 
@@ -241,11 +260,11 @@ abstract class HttpServerCommonTestSuite<TEngine : ApplicationEngine, TConfigura
     }
 
     @Test
-    fun testRemoteHost() {
+    fun testRemoteAddress() {
         createAndStartServer {
             handle {
                 call.respondText {
-                    call.request.local.remoteHost
+                    call.request.local.remoteAddress
                 }
             }
         }
@@ -253,7 +272,7 @@ abstract class HttpServerCommonTestSuite<TEngine : ApplicationEngine, TConfigura
         withUrl("/") {
             bodyAsText().also { text ->
                 assertNotNull(
-                    listOf("localhost", "127.0.0.1", "::1", "0:0:0:0:0:0:0:1").find {
+                    listOf("localhost", "127.0.0.1", "::1", "0:0:0:0:0:0:0:1", "0.0.0.0").find {
                         it == text
                     }
                 )
@@ -480,7 +499,7 @@ abstract class HttpServerCommonTestSuite<TEngine : ApplicationEngine, TConfigura
             parent = TestData("parent")
         ) {
             get("/") {
-                val valueFromContext = coroutineContext[TestData]!!.name
+                val valueFromContext = kotlin.coroutines.coroutineContext[TestData]!!.name
                 call.respond(HttpStatusCode.OK, valueFromContext)
             }
         }
@@ -683,7 +702,7 @@ abstract class HttpServerCommonTestSuite<TEngine : ApplicationEngine, TConfigura
                     call.respondText { "From plugin" }
                 }
             }
-            check(this is Route)
+            check(this is RouteNode)
             application.install(plugin)
             application.install(HSTS)
 
@@ -749,7 +768,7 @@ abstract class HttpServerCommonTestSuite<TEngine : ApplicationEngine, TConfigura
     }
 
     @Test
-    fun testErrorInBodyClosesConnectionWithContentLength() {
+    open fun testErrorInBodyClosesConnectionWithContentLength() {
         createAndStartServer {
             get("/") {
                 call.respond(

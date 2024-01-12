@@ -86,7 +86,8 @@ public class BytePacketBuilder(
         }
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun toString(): String {
-        return "BytePacketBuilder($size bytes written)"
+        return "BytePacketBuilder[0x${hashCode().toHexString()}]"
     }
 }

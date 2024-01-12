@@ -1,0 +1,46 @@
+package=io.ktor.utils.io.interop.mutex
+---
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+typedef struct ktor_lock_support {
+    volatile int locked;
+    pthread_mutex_t mutex;
+    pthread_cond_t cond;
+} ktor_lock_support_t;
+
+typedef struct mutex_node {
+    ktor_lock_support_t* mutex;
+    struct mutex_node* next;
+} ktor_mutex_node_t;
+
+ktor_lock_support_t* ktor_lock_support_init() {
+    ktor_lock_support_t * ls = (ktor_lock_support_t *) malloc(sizeof(ktor_lock_support_t));
+    ls->locked = 0;
+    pthread_mutex_init(&ls->mutex, NULL);
+    pthread_cond_init(&ls->cond, NULL);
+    return ls;
+}
+
+ktor_mutex_node_t* ktor_mutex_node_init(ktor_mutex_node_t* mutexNode) {
+    mutexNode->mutex = ktor_lock_support_init();
+    mutexNode->next = NULL;
+    return mutexNode;
+}
+
+void ktor_lock(ktor_lock_support_t* ls) {
+    pthread_mutex_lock(&ls->mutex);
+    while (ls->locked == 1) { // wait till locked are available
+        pthread_cond_wait(&ls->cond, &ls->mutex);
+    }
+    ls->locked = 1;
+    pthread_mutex_unlock(&ls->mutex);
+}
+
+void ktor_unlock(ktor_lock_support_t* ls) {
+    pthread_mutex_lock(&ls->mutex);
+    ls->locked = 0;
+    pthread_cond_broadcast(&ls->cond);
+    pthread_mutex_unlock(&ls->mutex);
+}

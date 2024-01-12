@@ -13,12 +13,12 @@ import io.ktor.server.testing.*
 import io.ktor.util.*
 import kotlin.test.*
 
-fun routing(rootPath: String = ""): Route =
-    Route(parent = null, selector = RootRouteSelector(rootPath), environment = createTestEnvironment())
+fun routing(rootPath: String = ""): RouteNode =
+    RouteNode(parent = null, selector = RootRouteSelector(rootPath), environment = createTestEnvironment())
 
 @Suppress("DEPRECATION")
 fun resolve(
-    routing: Route,
+    routing: RouteNode,
     path: String,
     parameters: Parameters = Parameters.Empty,
     headers: Headers = Headers.Empty
@@ -41,7 +41,7 @@ fun resolve(
     }
 }
 
-fun Route.handle(selector: RouteSelector) = createChild(selector).apply { handle {} }
+fun RouteNode.handle(selector: RouteSelector) = createChild(selector).apply { handle {} }
 
 @Suppress("DEPRECATION")
 class RoutingResolveTest {
@@ -409,8 +409,8 @@ class RoutingResolveTest {
             }
         }
 
-        on("resolving /foo") {
-            val result = resolve(root, "/foo")
+        on("resolving /foo/") {
+            val result = resolve(root, "/foo/")
 
             it("should successfully resolve") {
                 assertTrue(result is RoutingResolveResult.Success)
@@ -738,6 +738,25 @@ class RoutingResolveTest {
             assertSame(prefixChild, result.route)
             assertEquals(listOf("a", "b", "c"), result.parameters.getAll("param"))
         }
+    }
+
+    @Test
+    fun `tailcard allows trailing slash`() {
+        val routing = routing()
+        val prefixChild = routing.route("/foo/{param...}") {
+            handle {}
+        }
+        fun String.assertResolvedTo(vararg segments: String) {
+            val result = resolve(routing, this)
+            assertTrue(result is RoutingResolveResult.Success)
+            assertSame(prefixChild, result.route)
+            assertEquals(listOf(*segments), result.parameters.getAll("param"))
+        }
+        "/foo".assertResolvedTo()
+        "/foo/".assertResolvedTo("")
+        "/foo/bar/".assertResolvedTo("bar", "")
+        "/foo/bar/baz".assertResolvedTo("bar", "baz")
+        "/foo/bar/baz/".assertResolvedTo("bar", "baz", "")
     }
 
     @Test
@@ -1158,37 +1177,6 @@ class RoutingResolveTest {
             }
             it("/ should be called") {
                 assertEquals("bar", result.response.content)
-            }
-        }
-    }
-
-    @Test
-    fun testRoutingTrailingSlashWithTrailcard() = withTestApplication {
-        application.routing {
-            get("test/a{foo...}") {
-                call.respondText("foo")
-            }
-            get("test/a{foo...}/") {
-                call.respondText("foo/")
-            }
-        }
-
-        on("making /test/a{foo...} request") {
-            val result = handleRequest {
-                uri = "test/aB/C/D"
-                method = HttpMethod.Get
-            }
-            it("/test/a{foo...} should be called") {
-                assertEquals("foo", result.response.content)
-            }
-        }
-        on("making /test/a{foo...}/ request") {
-            val result = handleRequest {
-                uri = "test/aB/C/D/"
-                method = HttpMethod.Get
-            }
-            it("/test/a{foo...}/ should be called") {
-                assertEquals("foo/", result.response.content)
             }
         }
     }

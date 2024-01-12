@@ -13,7 +13,7 @@ import io.ktor.utils.io.charsets.*
 import kotlin.test.*
 
 internal fun alwaysFailingConverter(ignoreString: Boolean) = object : ContentConverter {
-    override suspend fun serializeNullable(
+    override suspend fun serialize(
         contentType: ContentType,
         charset: Charset,
         typeInfo: TypeInfo,

@@ -78,73 +78,7 @@ public sealed class OAuthServerSettings(public val name: String, public val vers
         public val extraTokenParameters: List<Pair<String, String>> = emptyList(),
         public val accessTokenInterceptor: HttpRequestBuilder.() -> Unit = {},
         public val onStateCreated: suspend (call: ApplicationCall, state: String) -> Unit = { _, _ -> }
-    ) : OAuthServerSettings(name, OAuthVersion.V20) {
-
-        @Deprecated("This constructor will be removed", level = DeprecationLevel.HIDDEN)
-        public constructor(
-            name: String,
-            authorizeUrl: String,
-            accessTokenUrl: String,
-            requestMethod: HttpMethod = HttpMethod.Get,
-            clientId: String,
-            clientSecret: String,
-            defaultScopes: List<String> = emptyList(),
-            accessTokenRequiresBasicAuth: Boolean = false,
-            nonceManager: NonceManager = GenerateOnlyNonceManager,
-            authorizeUrlInterceptor: URLBuilder.() -> Unit = {},
-            passParamsInURL: Boolean = false,
-            accessTokenInterceptor: HttpRequestBuilder.() -> Unit = {}
-        ) : this(
-            name,
-            authorizeUrl,
-            accessTokenUrl,
-            requestMethod,
-            clientId,
-            clientSecret,
-            defaultScopes,
-            accessTokenRequiresBasicAuth,
-            nonceManager,
-            authorizeUrlInterceptor,
-            passParamsInURL,
-            emptyList(),
-            emptyList(),
-            accessTokenInterceptor
-        )
-
-        @Deprecated("This constructor will be removed", level = DeprecationLevel.HIDDEN)
-        public constructor(
-            name: String,
-            authorizeUrl: String,
-            accessTokenUrl: String,
-            requestMethod: HttpMethod = HttpMethod.Get,
-            clientId: String,
-            clientSecret: String,
-            defaultScopes: List<String> = emptyList(),
-            accessTokenRequiresBasicAuth: Boolean = false,
-            nonceManager: NonceManager = GenerateOnlyNonceManager,
-            authorizeUrlInterceptor: URLBuilder.() -> Unit = {},
-            passParamsInURL: Boolean = false,
-            extraAuthParameters: List<Pair<String, String>> = emptyList(),
-            extraTokenParameters: List<Pair<String, String>> = emptyList(),
-            accessTokenInterceptor: HttpRequestBuilder.() -> Unit = {},
-        ) : this(
-            name,
-            authorizeUrl,
-            accessTokenUrl,
-            requestMethod,
-            clientId,
-            clientSecret,
-            defaultScopes,
-            accessTokenRequiresBasicAuth,
-            nonceManager,
-            authorizeUrlInterceptor,
-            passParamsInURL,
-            extraAuthParameters,
-            extraTokenParameters,
-            accessTokenInterceptor,
-            { _, _ -> }
-        )
-    }
+    ) : OAuthServerSettings(name, OAuthVersion.V20)
 }
 
 /**
@@ -164,6 +98,13 @@ public sealed class OAuthCallback {
      * @property state passed from a client (ktor server) during authorization startup
      */
     public data class TokenSingle(val token: String, val state: String) : OAuthCallback()
+
+    /**
+     * Oauth2 error callback parameters
+     * @property error the error code passed from the identity provider
+     * @property errorDescription optionally passed, human-readable description of the error code
+     */
+    public data class Error(val error: String, val errorDescription: String?) : OAuthCallback()
 }
 
 /**

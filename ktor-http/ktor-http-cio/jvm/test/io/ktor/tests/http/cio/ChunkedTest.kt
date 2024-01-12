@@ -8,18 +8,22 @@ import io.ktor.http.cio.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.streams.*
 import kotlinx.coroutines.*
+import org.junit.jupiter.api.*
 import java.io.*
 import java.nio.*
 import kotlin.test.*
+import kotlin.test.Test
 
 class ChunkedTest {
-    @Test(expected = EOFException::class)
-    fun testEmptyBroken() = runBlocking {
+    @Test
+    fun testEmptyBroken(): Unit = runBlocking {
         val bodyText = ""
         val ch = ByteReadChannel(bodyText.toByteArray())
         val parsed = ByteChannel()
 
-        decodeChunked(ch, parsed)
+        assertThrows<EOFException> {
+            decodeChunked(ch, parsed)
+        }
     }
 
     @Test
@@ -47,13 +51,15 @@ class ChunkedTest {
         assertEquals("a=1", content)
     }
 
-    @Test(expected = EOFException::class)
-    fun testEmptyWithoutCrLf() = runBlocking {
+    @Test
+    fun testEmptyWithoutCrLf(): Unit = runBlocking {
         val bodyText = "0"
         val ch = ByteReadChannel(bodyText.toByteArray())
         val parsed = ByteChannel()
 
-        decodeChunked(ch, parsed)
+        assertThrows<EOFException> {
+            decodeChunked(ch, parsed)
+        }
     }
 
     @Test

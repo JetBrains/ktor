@@ -36,7 +36,7 @@ public abstract class ResponseHeaders {
      * Builds a [Headers] instance from a response header values.
      */
     public fun allValues(): Headers = Headers.build {
-        getEngineHeaderNames().forEach {
+        getEngineHeaderNames().toSet().forEach {
             appendAll(it, getEngineHeaderValues(it))
         }
     }

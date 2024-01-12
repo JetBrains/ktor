@@ -329,7 +329,8 @@ public open class Buffer(public val memory: Memory) {
     }
 
     override fun toString(): String {
-        return "Buffer($readRemaining used, $writeRemaining free, ${startGap + endGap} reserved of $capacity)"
+        return "Buffer[0x${hashCode().toString(16)}]" +
+            "($readRemaining used, $writeRemaining free, ${startGap + endGap} reserved of $capacity)"
     }
 
     public companion object {

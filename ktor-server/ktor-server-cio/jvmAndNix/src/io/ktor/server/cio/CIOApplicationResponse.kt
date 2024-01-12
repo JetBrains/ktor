@@ -22,8 +22,7 @@ internal class CIOApplicationResponse(
     private val upgraded: CompletableDeferred<Boolean>?
 ) : BaseApplicationResponse(call) {
     private var statusCode: HttpStatusCode = HttpStatusCode.OK
-    private val headersNames = mutableListOf<String>()
-    private val headerValues = mutableListOf<String>()
+    private val headersBuilder = HeadersBuilder()
 
     private var chunkedChannel: ByteWriteChannel? = null
 
@@ -31,50 +30,15 @@ internal class CIOApplicationResponse(
 
     override val headers = object : ResponseHeaders() {
         override fun engineAppendHeader(name: String, value: String) {
-            headersNames.add(name)
-            headerValues.add(value)
+            headersBuilder.append(name, value)
         }
 
         override fun getEngineHeaderNames(): List<String> {
-            return headersNames
+            return headersBuilder.names().toList()
         }
 
         override fun getEngineHeaderValues(name: String): List<String> {
-            val names = headersNames
-            val values = headerValues
-            val size = headersNames.size
-            var firstIndex = -1
-
-            for (i in 0 until size) {
-                if (names[i].equals(name, ignoreCase = true)) {
-                    firstIndex = i
-                    break
-                }
-            }
-
-            if (firstIndex == -1) return emptyList()
-
-            var secondIndex = -1
-            for (i in firstIndex until size) {
-                if (names[i].equals(name, ignoreCase = true)) {
-                    secondIndex = i
-                    break
-                }
-            }
-
-            if (secondIndex == -1) return listOf(values[firstIndex])
-
-            val result = ArrayList<String>(size - secondIndex + 1)
-            result.add(values[firstIndex])
-            result.add(values[secondIndex])
-
-            for (i in secondIndex until size) {
-                if (names[i].equals(name, ignoreCase = true)) {
-                    result.add(values[i])
-                }
-            }
-
-            return result
+            return headersBuilder.getAll(name).orEmpty()
         }
     }
 
@@ -128,8 +92,10 @@ internal class CIOApplicationResponse(
         val builder = RequestResponseBuilder()
         try {
             builder.responseLine("HTTP/1.1", statusCode.value, statusCode.description)
-            for (i in 0 until headersNames.size) {
-                builder.headerLine(headersNames[i], headerValues[i])
+            for (name in headersBuilder.names()) {
+                for (value in headersBuilder.getAll(name)!!) {
+                    builder.headerLine(name, value)
+                }
             }
             builder.emptyLine()
             output.writePacket(builder.build())

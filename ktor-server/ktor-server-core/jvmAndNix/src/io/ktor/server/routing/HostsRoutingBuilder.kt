@@ -18,7 +18,7 @@ import io.ktor.server.plugins.*
  * @param host exact host name that is treated literally
  * @param port to be tested or `0` to pass all ports
  */
-public fun RoutingBuilder.host(host: String, port: Int = 0, build: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.host(host: String, port: Int = 0, build: Route.() -> Unit): Route {
     return host(listOf(host), emptyList(), if (port > 0) listOf(port) else emptyList(), build)
 }
 
@@ -32,7 +32,7 @@ public fun RoutingBuilder.host(host: String, port: Int = 0, build: RoutingBuilde
  * @param hostPattern is a  regular expression to match request host
  * @param port to be tested or `0` to pass all ports
  */
-public fun RoutingBuilder.host(hostPattern: Regex, port: Int = 0, build: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.host(hostPattern: Regex, port: Int = 0, build: Route.() -> Unit): Route {
     return host(emptyList(), listOf(hostPattern), if (port > 0) listOf(port) else emptyList(), build)
 }
 
@@ -48,11 +48,11 @@ public fun RoutingBuilder.host(hostPattern: Regex, port: Int = 0, build: Routing
  *
  * @throws IllegalArgumentException when no constraints were applied in [hosts] and [ports]
  */
-public fun RoutingBuilder.host(
+public fun Route.host(
     hosts: List<String>,
     ports: List<Int> = emptyList(),
-    build: RoutingBuilder.() -> Unit
-): RoutingBuilder {
+    build: Route.() -> Unit
+): Route {
     return host(hosts, emptyList(), ports, build)
 }
 
@@ -69,12 +69,12 @@ public fun RoutingBuilder.host(
  *
  * @throws IllegalArgumentException when no constraints were applied in [host], [hostPatterns] and [ports]
  */
-public fun RoutingBuilder.host(
+public fun Route.host(
     hosts: List<String>,
     hostPatterns: List<Regex>,
     ports: List<Int> = emptyList(),
-    build: RoutingBuilder.() -> Unit
-): RoutingBuilder {
+    build: Route.() -> Unit
+): Route {
     val selector = HostRouteSelector(hosts, hostPatterns, ports)
     return createChild(selector).apply(build)
 }
@@ -89,7 +89,7 @@ public fun RoutingBuilder.host(
  *
  * @throws IllegalArgumentException if no ports were specified
  */
-public fun RoutingBuilder.port(vararg ports: Int, build: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.port(vararg ports: Int, build: Route.() -> Unit): Route {
     require(ports.isNotEmpty()) { "At least one port need to be specified" }
 
     val selector = HostRouteSelector(emptyList(), emptyList(), ports.toList())

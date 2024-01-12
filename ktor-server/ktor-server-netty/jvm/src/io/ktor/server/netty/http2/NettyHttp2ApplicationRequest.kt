@@ -8,7 +8,6 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
 import io.ktor.server.request.*
-import io.ktor.util.*
 import io.ktor.utils.io.*
 import io.netty.channel.*
 import io.netty.handler.codec.http2.*

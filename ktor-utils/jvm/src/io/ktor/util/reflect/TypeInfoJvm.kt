@@ -8,10 +8,6 @@ import kotlin.reflect.*
 
 public actual typealias Type = java.lang.reflect.Type
 
-@PublishedApi
-@Deprecated("Will be removed")
-internal open class TypeBase<T>
-
 @OptIn(ExperimentalStdlibApi::class)
 public actual inline fun <reified T> typeInfo(): TypeInfo {
     val kType = typeOf<T>()

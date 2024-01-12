@@ -157,7 +157,7 @@ public class KeyStoreBuilder internal constructor() {
     }
 
     internal fun build(): KeyStore {
-        val store = KeyStore.getInstance("JKS")!!
+        val store = KeyStore.getInstance(KeyStore.getDefaultType())!!
         store.load(null, null)
 
         certificates.forEach { (alias, info) ->

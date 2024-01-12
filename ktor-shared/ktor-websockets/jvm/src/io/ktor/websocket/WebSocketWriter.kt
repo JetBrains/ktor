@@ -162,14 +162,6 @@ public class WebSocketWriter(
         }
     }.await()
 
-    /**
-     * Closes the message queue
-     */
-    @Deprecated("Will be removed", level = DeprecationLevel.ERROR)
-    public fun close() {
-        queue.close()
-    }
-
     private class FlushRequest(parent: Job?) {
         private val done: CompletableJob = Job(parent)
         public fun complete(): Boolean = done.complete()

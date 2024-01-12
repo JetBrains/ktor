@@ -10,7 +10,6 @@ import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.util.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import org.apache.http.*
@@ -21,7 +20,6 @@ import org.apache.http.client.methods.*
 import org.apache.http.client.utils.*
 import org.apache.http.entity.*
 import org.apache.http.nio.*
-import org.apache.http.nio.ContentEncoder
 import org.apache.http.nio.protocol.*
 import org.apache.http.protocol.*
 import java.nio.*
@@ -160,7 +158,7 @@ internal class ApacheRequestProducer(
 
 @OptIn(InternalAPI::class)
 private fun RequestConfig.Builder.setupTimeoutAttributes(requestData: HttpRequestData): RequestConfig.Builder = also {
-    requestData.getCapabilityOrNull(HttpTimeout)?.let { timeoutAttributes ->
+    requestData.getCapabilityOrNull(HttpTimeoutCapability)?.let { timeoutAttributes ->
         timeoutAttributes.connectTimeoutMillis?.let { setConnectTimeout(convertLongTimeoutToIntWithInfiniteAsZero(it)) }
         timeoutAttributes.socketTimeoutMillis?.let { setSocketTimeout(convertLongTimeoutToIntWithInfiniteAsZero(it)) }
     }

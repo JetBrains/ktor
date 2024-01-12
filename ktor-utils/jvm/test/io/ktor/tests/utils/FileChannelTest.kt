@@ -7,8 +7,7 @@ package io.ktor.tests.utils
 import io.ktor.util.cio.*
 import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.*
-import org.junit.*
-import org.junit.Ignore
+import org.junit.jupiter.api.*
 import java.io.*
 import kotlin.test.*
 import kotlin.test.Test
@@ -17,7 +16,7 @@ class FileChannelTest {
     private val sandbox = File("build/files")
     private lateinit var temp: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         if (!sandbox.mkdirs() && !sandbox.isDirectory) {
             fail()

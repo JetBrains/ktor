@@ -63,7 +63,7 @@ internal fun PluginBuilder<ContentNegotiationConfig>.convertResponseBody() = onC
                 registration.contentType.withCharset(charset)
             }
 
-            val result = registration.converter.serializeNullable(
+            val result = registration.converter.serialize(
                 contentType = contentType ?: registration.contentType,
                 charset = acceptCharset ?: Charsets.UTF_8,
                 typeInfo = responseType,

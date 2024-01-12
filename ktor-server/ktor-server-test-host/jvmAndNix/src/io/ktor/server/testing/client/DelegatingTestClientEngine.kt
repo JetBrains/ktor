@@ -10,9 +10,7 @@ import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
-import io.ktor.server.testing.internal.*
-import io.ktor.util.*
-import io.ktor.utils.io.concurrent.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
 
@@ -20,15 +18,15 @@ internal class DelegatingTestClientEngine(
     override val config: DelegatingTestHttpClientConfig
 ) : HttpClientEngineBase("delegating-test-engine") {
 
-    override val dispatcher = Dispatchers.IOBridge
-    override val supportedCapabilities = setOf<HttpClientEngineCapability<*>>(WebSocketCapability, HttpTimeout)
+    override val supportedCapabilities =
+        setOf<HttpClientEngineCapability<*>>(WebSocketCapability, HttpTimeoutCapability)
 
-    private val appEngine by lazy(config.appEngineProvider)
+    private val appEngine by lazy { config.testApplicationProvder().server.engine }
     private val externalEngines by lazy {
         val engines = mutableMapOf<String, TestHttpClientEngine>()
-        config.externalApplicationsProvider().forEach { (authority, testApplication) ->
+        config.testApplicationProvder().externalApplications.forEach { (authority, testApplication) ->
             engines[authority] = TestHttpClientEngine(
-                TestHttpClientConfig().apply { app = testApplication.engine }
+                TestHttpClientConfig().apply { app = testApplication.server.engine }
             )
         }
         engines.toMap()
@@ -46,15 +44,18 @@ internal class DelegatingTestClientEngine(
 
     @InternalAPI
     override suspend fun execute(data: HttpRequestData): HttpResponseData {
+        config.testApplicationProvder().start()
         val authority = data.url.protocolWithAuthority
         val hostWithPort = data.url.hostWithPort
         return when {
             externalEngines.containsKey(authority) -> {
                 externalEngines[authority]!!.execute(data)
             }
+
             hostWithPort in mainEngineHostWithPorts -> {
                 mainEngine.execute(data)
             }
+
             else -> {
                 throw InvalidTestRequestException(authority, externalEngines.keys, mainEngineHostWithPorts)
             }
@@ -89,7 +90,6 @@ public class InvalidTestRequestException(
 )
 
 internal class DelegatingTestHttpClientConfig : HttpClientEngineConfig() {
-    lateinit var externalApplicationsProvider: () -> Map<String, TestApplication>
-    lateinit var appEngineProvider: () -> TestApplicationEngine
+    lateinit var testApplicationProvder: () -> TestApplication
     lateinit var parentJob: Job
 }

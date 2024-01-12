@@ -1,0 +1,16 @@
+public final class io/ktor/i18n/I18nConfiguration {
+	public fun <init> ()V
+	public final fun getAvailableLanguages ()Ljava/util/List;
+	public final fun getDefaultLanguage ()Ljava/lang/String;
+	public final fun setAvailableLanguages (Ljava/util/List;)V
+	public final fun setDefaultLanguage (Ljava/lang/String;)V
+}
+
+public final class io/ktor/i18n/I18nKt {
+	public static final fun getI18n ()Lio/ktor/server/application/ApplicationPlugin;
+}
+
+public final class io/ktor/i18n/TranslateKt {
+	public static final fun i18n (Lio/ktor/server/routing/RoutingContext;Ljava/lang/String;)Ljava/lang/String;
+}
+

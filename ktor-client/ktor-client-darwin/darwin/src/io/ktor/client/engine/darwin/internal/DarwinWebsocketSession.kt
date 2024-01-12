@@ -17,7 +17,7 @@ import platform.Foundation.*
 import platform.darwin.*
 import kotlin.coroutines.*
 
-@OptIn(UnsafeNumber::class, ExperimentalCoroutinesApi::class)
+@OptIn(UnsafeNumber::class, ExperimentalCoroutinesApi::class, ExperimentalForeignApi::class)
 internal class DarwinWebsocketSession(
     callContext: CoroutineContext,
     private val task: NSURLSessionWebSocketTask,
@@ -35,6 +35,7 @@ internal class DarwinWebsocketSession(
         get() = true
         set(_) {}
 
+    @OptIn(ExperimentalForeignApi::class)
     override var maxFrameSize: Long
         get() = task.maximumMessageSize.convert()
         set(value) {
@@ -115,12 +116,13 @@ internal class DarwinWebsocketSession(
                 }
 
                 FrameType.PING -> {
+                    val payload = frame.readBytes()
                     task.sendPingWithPongReceiveHandler { error ->
                         if (error != null) {
                             cancel("Error receiving pong", DarwinHttpRequestException(error))
                             return@sendPingWithPongReceiveHandler
                         }
-                        _incoming.trySend(Frame.Pong(ByteReadPacket.Empty))
+                        _incoming.trySend(Frame.Pong(payload))
                     }
                 }
 
@@ -145,7 +147,7 @@ internal class DarwinWebsocketSession(
 
     fun didOpen() {
         val response = HttpResponseData(
-            HttpStatusCode.OK,
+            HttpStatusCode.SwitchingProtocols,
             requestTime,
             Headers.Empty,
             HttpProtocolVersion.HTTP_1_1,
@@ -166,6 +168,7 @@ internal class DarwinWebsocketSession(
         socketJob.completeExceptionally(exception)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun didClose(
         code: NSURLSessionWebSocketCloseCode,
         reason: NSData?,

@@ -13,7 +13,6 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
-import io.ktor.server.testing.internal.*
 import io.ktor.util.reflect.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
@@ -25,7 +24,7 @@ import kotlin.text.toByteArray
 
 class ContentNegotiationJvmTest {
     private val alwaysFailingConverter = object : ContentConverter {
-        override suspend fun serializeNullable(
+        override suspend fun serialize(
             contentType: ContentType,
             charset: Charset,
             typeInfo: TypeInfo,
@@ -54,7 +53,8 @@ class ContentNegotiationJvmTest {
                 }
                 post("/multipart") {
                     val multipart = call.receiveMultipart()
-                    val parts = multipart.readAllParts()
+
+                    @Suppress("DEPRECATION") val parts = multipart.readAllParts()
                     call.respondText("parts: ${parts.map { it.name }}")
                 }
             }

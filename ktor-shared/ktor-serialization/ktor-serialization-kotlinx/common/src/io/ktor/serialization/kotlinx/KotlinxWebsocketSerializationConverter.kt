@@ -31,7 +31,7 @@ public class KotlinxWebsocketSerializationConverter(
         }
     }
 
-    override suspend fun serializeNullable(charset: Charset, typeInfo: TypeInfo, value: Any?): Frame {
+    override suspend fun serialize(charset: Charset, typeInfo: TypeInfo, value: Any?): Frame {
         val serializer = try {
             format.serializersModule.serializerForTypeInfo(typeInfo)
         } catch (cause: SerializationException) {

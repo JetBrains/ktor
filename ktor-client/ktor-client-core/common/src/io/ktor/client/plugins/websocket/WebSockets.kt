@@ -14,8 +14,8 @@ import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.util.*
 import io.ktor.util.logging.*
+import io.ktor.utils.io.*
 import io.ktor.websocket.*
-import kotlin.native.concurrent.*
 
 private val REQUEST_EXTENSIONS_KEY = AttributeKey<List<WebSocketExtension<*>>>("Websocket extensions")
 
@@ -170,12 +170,26 @@ public class WebSockets internal constructor(
             }
 
             scope.responsePipeline.intercept(HttpResponsePipeline.Transform) { (info, session) ->
-                if (session !is WebSocketSession) {
+                val response = this.context.response
+                val status = response.status
+                val requestContent = response.request.content
+
+                if (requestContent !is WebSocketContent) {
                     LOGGER.trace("Skipping non-websocket response from ${context.request.url}: $session")
                     return@intercept
                 }
-                LOGGER.trace("Receive websocket session from ${context.request.url}: $session")
+                if (status != HttpStatusCode.SwitchingProtocols) {
+                    throw WebSocketException(
+                        "Handshake exception, expected status code ${HttpStatusCode.SwitchingProtocols.value} but was ${status.value}" // ktlint-disable max-line-length
+                    )
+                }
+                if (session !is WebSocketSession) {
+                    throw WebSocketException(
+                        "Handshake exception, expected `WebSocketSession` content but was $session"
+                    )
+                }
 
+                LOGGER.trace("Receive websocket session from ${context.request.url}: $session")
                 val clientSession: ClientWebSocketSession = when (info.type) {
                     DefaultClientWebSocketSession::class -> {
                         val defaultSession = plugin.convertSessionToDefault(session)
@@ -195,8 +209,7 @@ public class WebSockets internal constructor(
                     else -> DelegatingClientWebSocketSession(context, session)
                 }
 
-                val response = HttpResponseContainer(info, clientSession)
-                proceedWith(response)
+                proceedWith(HttpResponseContainer(info, clientSession))
             }
         }
     }

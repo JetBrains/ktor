@@ -23,6 +23,7 @@ public actual fun String(bytes: ByteArray, offset: Int, length: Int, charset: Ch
     @Suppress("DEPRECATION")
     val view = ChunkBuffer(Memory(buffer), null, ChunkBuffer.NoPool)
     view.resetForRead()
+    @Suppress("DEPRECATION")
     val packet = ByteReadPacket(view, ChunkBuffer.NoPoolManuallyManaged)
 
     return charset.newDecoder().decode(packet, Int.MAX_VALUE)

@@ -5,11 +5,11 @@
 package io.ktor.client.engine.darwin
 
 import io.ktor.client.engine.*
-import io.ktor.client.engine.darwin.internal.*
 import io.ktor.client.engine.darwin.internal.legacy.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import platform.Foundation.*
 
@@ -25,7 +25,7 @@ internal class DarwinLegacyClientEngine(
 
     override val dispatcher = Dispatchers.Unconfined
 
-    override val supportedCapabilities = setOf(HttpTimeout)
+    override val supportedCapabilities = setOf(HttpTimeoutCapability, SSECapability)
 
     private val session = DarwinLegacySession(config, requestQueue)
 

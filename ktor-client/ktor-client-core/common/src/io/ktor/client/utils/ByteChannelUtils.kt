@@ -22,12 +22,12 @@ internal fun ByteReadChannel.observable(
             val read = this@observable.readAvailable(byteArray)
             channel.writeFully(byteArray, offset = 0, length = read)
             bytesSend += read
-            listener(bytesSend, contentLength)
+            listener.onProgress(bytesSend, contentLength)
         }
         val closedCause = this@observable.closedCause
         channel.close(closedCause)
         if (closedCause == null && bytesSend == 0L) {
-            listener(bytesSend, contentLength)
+            listener.onProgress(bytesSend, contentLength)
         }
     }
 }.channel

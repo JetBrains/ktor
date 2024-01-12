@@ -127,22 +127,7 @@ public open class ChunkBuffer(
     }
 
     public companion object {
-        public val Pool: ObjectPool<ChunkBuffer> = object : ObjectPool<ChunkBuffer> {
-            override val capacity: Int
-                get() = DefaultChunkedBufferPool.capacity
-
-            override fun borrow(): ChunkBuffer {
-                return DefaultChunkedBufferPool.borrow()
-            }
-
-            override fun recycle(instance: ChunkBuffer) {
-                DefaultChunkedBufferPool.recycle(instance)
-            }
-
-            override fun dispose() {
-                DefaultChunkedBufferPool.dispose()
-            }
-        }
+        public val Pool: ObjectPool<ChunkBuffer> get() = DefaultChunkedBufferPool
 
         /**
          * A pool that always returns [ChunkBuffer.Empty]

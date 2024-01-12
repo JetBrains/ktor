@@ -13,6 +13,7 @@ import io.ktor.http.*
 import io.ktor.http.auth.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
+import io.ktor.server.engine.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -22,7 +23,7 @@ import io.ktor.server.testing.client.*
 import io.ktor.util.*
 import io.ktor.utils.io.charsets.*
 import io.ktor.utils.io.core.*
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import kotlin.test.*
 
@@ -52,7 +53,7 @@ class OAuth2Test {
         accessTokenUrl = "https://login-server-com/oauth/access_token",
         clientId = "clientId1",
         clientSecret = "clientSecret1",
-        extraAuthParameters = listOf("a" to "a1", "a" to "a2", "b" to "b1")
+        extraAuthParameters = listOf("a" to "a1", "a" to "a2", "b" to "b1"),
     )
 
     private val DefaultSettingsWithInterceptor = OAuthServerSettings.OAuth2ServerSettings(
@@ -169,6 +170,7 @@ class OAuth2Test {
             authenticate("login") {
                 route("/login") {
                     handle {
+                        @Suppress("DEPRECATION_ERROR")
                         val principal = call.authentication.principal as? OAuthAccessTokenResponse.OAuth2
                         call.respondText("Hej, $principal")
                     }
@@ -332,6 +334,24 @@ class OAuth2Test {
         assertEquals(HttpStatusCode.Found, call.response.status())
         assertNotNull(call.response.headers[HttpHeaders.Location])
         assertTrue { call.response.headers[HttpHeaders.Location]!!.startsWith("https://login-server-com/authorize") }
+    }
+
+    @Test
+    fun testRequestTokenErrorRedirect() = withTestApplication({ module() }) {
+        val call = handleRequest {
+            uri = "/login?" + listOf(
+                OAuth2RequestParameters.Error to "access_denied",
+                OAuth2RequestParameters.ErrorDescription to "User denied access"
+            ).formUrlEncode()
+        }
+
+        assertTrue { call.authentication.allFailures.all { it is OAuth2RedirectError && it.error == "access_denied" } }
+
+        assertEquals(HttpStatusCode.Found, call.response.status())
+        assertNotNull(call.response.headers[HttpHeaders.Location])
+        assertTrue {
+            call.response.headers[HttpHeaders.Location]!!.startsWith("https://login-server-com/authorize")
+        }
     }
 
     @Test
@@ -591,7 +611,8 @@ internal interface OAuth2Server {
 }
 
 internal fun createOAuth2Server(server: OAuth2Server): HttpClient {
-    val environment = createTestEnvironment {
+    val environment = createTestEnvironment {}
+    val props = applicationProperties(environment) {
         module {
             routing {
                 route("/oauth/access_token") {
@@ -663,11 +684,10 @@ internal fun createOAuth2Server(server: OAuth2Server): HttpClient {
             }
         }
     }
-    with(TestApplicationEngine(environment)) {
-        start()
-        return client.config {
-            expectSuccess = false
-        }
+    val embeddedServer = EmbeddedServer(props, TestEngine)
+    embeddedServer.start()
+    return embeddedServer.engine.client.config {
+        expectSuccess = false
     }
 }
 

@@ -9,6 +9,7 @@ import platform.posix.*
 
 private val KTOR_LOG_LEVEL_KEY = "KTOR_LOG_LEVEL"
 
+@OptIn(ExperimentalForeignApi::class)
 @Suppress("FunctionName")
 public actual fun KtorSimpleLogger(
     name: String
@@ -16,7 +17,7 @@ public actual fun KtorSimpleLogger(
 
     override val level: LogLevel = getenv(KTOR_LOG_LEVEL_KEY)?.let { rawLevel ->
         val level = rawLevel.toKString()
-        LogLevel.values().firstOrNull { it.name == level }
+        LogLevel.entries.firstOrNull { it.name == level }
     } ?: LogLevel.INFO
 
     private fun log(level: LogLevel, message: String) {

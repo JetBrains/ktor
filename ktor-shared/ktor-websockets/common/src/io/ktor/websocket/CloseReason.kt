@@ -4,7 +4,7 @@
 
 package io.ktor.websocket
 
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlin.jvm.*
 
 /**
@@ -56,7 +56,8 @@ public data class CloseReason(val code: Short, val message: String) {
                 ReplaceWith(
                     "INTERNAL_ERROR",
                     "io.ktor.websocket.CloseReason.Codes.INTERNAL_ERROR"
-                )
+                ),
+                level = DeprecationLevel.ERROR
             )
             @JvmField
             @Suppress("UNUSED")

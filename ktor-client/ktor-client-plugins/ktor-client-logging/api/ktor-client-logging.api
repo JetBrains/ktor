@@ -5,6 +5,7 @@ public final class io/ktor/client/plugins/logging/LogLevel : java/lang/Enum {
 	public static final field INFO Lio/ktor/client/plugins/logging/LogLevel;
 	public static final field NONE Lio/ktor/client/plugins/logging/LogLevel;
 	public final fun getBody ()Z
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getHeaders ()Z
 	public final fun getInfo ()Z
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/client/plugins/logging/LogLevel;
@@ -29,31 +30,13 @@ public final class io/ktor/client/plugins/logging/LoggerKt {
 	public static final fun getSIMPLE (Lio/ktor/client/plugins/logging/Logger$Companion;)Lio/ktor/client/plugins/logging/Logger;
 }
 
-public final class io/ktor/client/plugins/logging/Logging {
-	public static final field Companion Lio/ktor/client/plugins/logging/Logging$Companion;
-	public synthetic fun <init> (Lio/ktor/client/plugins/logging/Logger;Lio/ktor/client/plugins/logging/LogLevel;Ljava/util/List;Ljava/util/List;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getFilters ()Ljava/util/List;
-	public final fun getLevel ()Lio/ktor/client/plugins/logging/LogLevel;
-	public final fun getLogger ()Lio/ktor/client/plugins/logging/Logger;
-	public final fun setFilters (Ljava/util/List;)V
-	public final fun setLevel (Lio/ktor/client/plugins/logging/LogLevel;)V
-}
-
-public final class io/ktor/client/plugins/logging/Logging$Companion : io/ktor/client/plugins/HttpClientPlugin {
-	public fun getKey ()Lio/ktor/util/AttributeKey;
-	public fun install (Lio/ktor/client/plugins/logging/Logging;Lio/ktor/client/HttpClient;)V
-	public synthetic fun install (Ljava/lang/Object;Lio/ktor/client/HttpClient;)V
-	public fun prepare (Lkotlin/jvm/functions/Function1;)Lio/ktor/client/plugins/logging/Logging;
-	public synthetic fun prepare (Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
-}
-
-public final class io/ktor/client/plugins/logging/Logging$Config {
+public final class io/ktor/client/plugins/logging/LoggingConfig {
 	public fun <init> ()V
 	public final fun filter (Lkotlin/jvm/functions/Function1;)V
 	public final fun getLevel ()Lio/ktor/client/plugins/logging/LogLevel;
 	public final fun getLogger ()Lio/ktor/client/plugins/logging/Logger;
 	public final fun sanitizeHeader (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun sanitizeHeader$default (Lio/ktor/client/plugins/logging/Logging$Config;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun sanitizeHeader$default (Lio/ktor/client/plugins/logging/LoggingConfig;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun setLevel (Lio/ktor/client/plugins/logging/LogLevel;)V
 	public final fun setLogger (Lio/ktor/client/plugins/logging/Logger;)V
 }
@@ -61,6 +44,7 @@ public final class io/ktor/client/plugins/logging/Logging$Config {
 public final class io/ktor/client/plugins/logging/LoggingKt {
 	public static final fun Logging (Lio/ktor/client/HttpClientConfig;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun Logging$default (Lio/ktor/client/HttpClientConfig;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun getLogging ()Lio/ktor/client/plugins/api/ClientPlugin;
 }
 
 public final class io/ktor/client/plugins/logging/MessageLengthLimitingLogger : io/ktor/client/plugins/logging/Logger {

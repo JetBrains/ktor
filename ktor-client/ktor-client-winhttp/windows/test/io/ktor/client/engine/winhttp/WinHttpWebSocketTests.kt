@@ -31,4 +31,22 @@ class WinHttpWebSocketTests {
             }
         }
     }
+
+    @Test
+    fun testEmptyFrame() {
+        val client = HttpClient(WinHttp) {
+            install(WebSockets)
+        }
+
+        runBlocking {
+            client.webSocket("$TEST_WEBSOCKET_SERVER/websockets/echo") {
+                send(Frame.Text(""))
+
+                val actual = incoming.receive()
+
+                assertTrue(actual is Frame.Text)
+                assertEquals("", actual.readText())
+            }
+        }
+    }
 }

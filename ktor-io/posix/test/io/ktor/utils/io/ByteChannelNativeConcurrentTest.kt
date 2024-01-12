@@ -58,7 +58,7 @@ class ByteChannelNativeConcurrentTest {
 
     private fun createBlock(size: Int): ByteArray = ByteArray(size) { it.toByte() }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
     @Test
     fun testFlushBeforeAndAfterWrite() = runBlocking {
         val latch = Channel<Unit>()

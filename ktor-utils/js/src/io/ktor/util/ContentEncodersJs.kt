@@ -10,12 +10,12 @@ package io.ktor.util
  * Implementation of [ContentEncoder] using gzip algorithm
  */
 public actual object GZipEncoder : ContentEncoder, Encoder by Identity {
-    override val name: String = "gzip"
+    actual override val name: String = "gzip"
 }
 
 /**
  * Implementation of [ContentEncoder] using deflate algorithm
  */
 public actual object DeflateEncoder : ContentEncoder, Encoder by Identity {
-    override val name: String = "deflate"
+    actual override val name: String = "deflate"
 }

@@ -59,6 +59,7 @@ public final class io/ktor/network/tls/CipherSuite {
 public final class io/ktor/network/tls/CipherType : java/lang/Enum {
 	public static final field CBC Lio/ktor/network/tls/CipherType;
 	public static final field GCM Lio/ktor/network/tls/CipherType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/CipherType;
 	public static fun values ()[Lio/ktor/network/tls/CipherType;
 }
@@ -112,6 +113,7 @@ public final class io/ktor/network/tls/OIDKt {
 public final class io/ktor/network/tls/SecretExchangeType : java/lang/Enum {
 	public static final field ECDHE Lio/ktor/network/tls/SecretExchangeType;
 	public static final field RSA Lio/ktor/network/tls/SecretExchangeType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getJvmName ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/SecretExchangeType;
 	public static fun values ()[Lio/ktor/network/tls/SecretExchangeType;
@@ -123,6 +125,7 @@ public final class io/ktor/network/tls/ServerKeyExchangeType : java/lang/Enum {
 	public static final field ExplicitPrime Lio/ktor/network/tls/ServerKeyExchangeType;
 	public static final field NamedCurve Lio/ktor/network/tls/ServerKeyExchangeType;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/ServerKeyExchangeType;
 	public static fun values ()[Lio/ktor/network/tls/ServerKeyExchangeType;
 }
@@ -136,6 +139,7 @@ public final class io/ktor/network/tls/TLSAlertLevel : java/lang/Enum {
 	public static final field FATAL Lio/ktor/network/tls/TLSAlertLevel;
 	public static final field WARNING Lio/ktor/network/tls/TLSAlertLevel;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/TLSAlertLevel;
 	public static fun values ()[Lio/ktor/network/tls/TLSAlertLevel;
 }
@@ -172,6 +176,7 @@ public final class io/ktor/network/tls/TLSAlertType : java/lang/Enum {
 	public static final field UnsupportedExtension Lio/ktor/network/tls/TLSAlertType;
 	public static final field UserCanceled Lio/ktor/network/tls/TLSAlertType;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/TLSAlertType;
 	public static fun values ()[Lio/ktor/network/tls/TLSAlertType;
 }
@@ -230,6 +235,7 @@ public final class io/ktor/network/tls/TLSHandshakeType : java/lang/Enum {
 	public static final field ServerHello Lio/ktor/network/tls/TLSHandshakeType;
 	public static final field ServerKeyExchange Lio/ktor/network/tls/TLSHandshakeType;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/TLSHandshakeType;
 	public static fun values ()[Lio/ktor/network/tls/TLSHandshakeType;
 }
@@ -252,6 +258,7 @@ public final class io/ktor/network/tls/TLSRecordType : java/lang/Enum {
 	public static final field Companion Lio/ktor/network/tls/TLSRecordType$Companion;
 	public static final field Handshake Lio/ktor/network/tls/TLSRecordType;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/TLSRecordType;
 	public static fun values ()[Lio/ktor/network/tls/TLSRecordType;
 }
@@ -267,6 +274,7 @@ public final class io/ktor/network/tls/TLSVersion : java/lang/Enum {
 	public static final field TLS11 Lio/ktor/network/tls/TLSVersion;
 	public static final field TLS12 Lio/ktor/network/tls/TLSVersion;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/TLSVersion;
 	public static fun values ()[Lio/ktor/network/tls/TLSVersion;
 }
@@ -286,6 +294,7 @@ public final class io/ktor/network/tls/extensions/HashAlgorithm : java/lang/Enum
 	public static final field SHA384 Lio/ktor/network/tls/extensions/HashAlgorithm;
 	public static final field SHA512 Lio/ktor/network/tls/extensions/HashAlgorithm;
 	public final fun getCode ()B
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getMacName ()Ljava/lang/String;
 	public final fun getOpenSSLName ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/extensions/HashAlgorithm;
@@ -345,6 +354,7 @@ public final class io/ktor/network/tls/extensions/NamedCurve : java/lang/Enum {
 	public static final field sect571k1 Lio/ktor/network/tls/extensions/NamedCurve;
 	public static final field sect571r1 Lio/ktor/network/tls/extensions/NamedCurve;
 	public final fun getCode ()S
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getFieldSize ()I
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/extensions/NamedCurve;
 	public static fun values ()[Lio/ktor/network/tls/extensions/NamedCurve;
@@ -363,6 +373,7 @@ public final class io/ktor/network/tls/extensions/PointFormat : java/lang/Enum {
 	public static final field ANSIX962_COMPRESSED_PRIME Lio/ktor/network/tls/extensions/PointFormat;
 	public static final field UNCOMPRESSED Lio/ktor/network/tls/extensions/PointFormat;
 	public final fun getCode ()B
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/extensions/PointFormat;
 	public static fun values ()[Lio/ktor/network/tls/extensions/PointFormat;
 }
@@ -380,6 +391,7 @@ public final class io/ktor/network/tls/extensions/SignatureAlgorithm : java/lang
 	public static final field ED448 Lio/ktor/network/tls/extensions/SignatureAlgorithm;
 	public static final field RSA Lio/ktor/network/tls/extensions/SignatureAlgorithm;
 	public final fun getCode ()B
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/extensions/SignatureAlgorithm;
 	public static fun values ()[Lio/ktor/network/tls/extensions/SignatureAlgorithm;
 }
@@ -405,6 +417,7 @@ public final class io/ktor/network/tls/extensions/TLSExtensionType : java/lang/E
 	public static final field TRUNCATED_HMAC Lio/ktor/network/tls/extensions/TLSExtensionType;
 	public static final field TRUSTED_CA_KEYS Lio/ktor/network/tls/extensions/TLSExtensionType;
 	public final fun getCode ()S
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/extensions/TLSExtensionType;
 	public static fun values ()[Lio/ktor/network/tls/extensions/TLSExtensionType;
 }

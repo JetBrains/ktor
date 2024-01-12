@@ -29,9 +29,6 @@ public class HttpStatement(
     @PublishedApi
     internal val client: HttpClient
 ) {
-    init {
-        checkCapabilities()
-    }
 
     /**
      * Executes this statement and calls the [block] with the streaming [response].
@@ -44,7 +41,7 @@ public class HttpStatement(
      * Please note: the [response] instance will be canceled and shouldn't be passed outside of [block].
      */
     public suspend fun <T> execute(block: suspend (response: HttpResponse) -> T): T = unwrapRequestTimeoutException {
-        val response = executeUnsafe()
+        val response = fetchStreamingResponse()
 
         try {
             return block(response)
@@ -59,11 +56,7 @@ public class HttpStatement(
      *
      * To receive exact type, consider using [body<T>()] method.
      */
-    public suspend fun execute(): HttpResponse = execute {
-        val savedCall = it.call.save()
-
-        savedCall.response
-    }
+    public suspend fun execute(): HttpResponse = fetchResponse()
 
     /**
      * Executes this statement and runs [HttpClient.responsePipeline] with the response and expected type [T].
@@ -72,7 +65,7 @@ public class HttpStatement(
      */
     @OptIn(InternalAPI::class)
     public suspend inline fun <reified T> body(): T = unwrapRequestTimeoutException {
-        val response = executeUnsafe()
+        val response = fetchStreamingResponse()
         return try {
             response.body()
         } finally {
@@ -88,7 +81,7 @@ public class HttpStatement(
     public suspend inline fun <reified T, R> body(
         crossinline block: suspend (response: T) -> R
     ): R = unwrapRequestTimeoutException {
-        val response: HttpResponse = executeUnsafe()
+        val response: HttpResponse = fetchStreamingResponse()
         try {
             val result = response.body<T>()
             return block(result)
@@ -102,18 +95,33 @@ public class HttpStatement(
      */
     @PublishedApi
     @OptIn(InternalAPI::class)
-    internal suspend fun executeUnsafe(): HttpResponse = unwrapRequestTimeoutException {
+    internal suspend fun fetchStreamingResponse(): HttpResponse = unwrapRequestTimeoutException {
         val builder = HttpRequestBuilder().takeFromWithExecutionContext(builder)
+        builder.skipSavingBody()
 
         val call = client.execute(builder)
         return call.response
     }
 
     /**
-     * Completes [HttpResponse] and releases resources.
+     * Returns [HttpResponse] with saved body.
      */
     @PublishedApi
     @OptIn(InternalAPI::class)
+    internal suspend fun fetchResponse(): HttpResponse = unwrapRequestTimeoutException {
+        val builder = HttpRequestBuilder().takeFromWithExecutionContext(builder)
+        val call = client.execute(builder)
+        val result = call.save().response
+        call.response.cleanup()
+
+        return result
+    }
+
+    /**
+     * Completes [HttpResponse] and releases resources.
+     */
+    @PublishedApi
+    @OptIn(InternalAPI::class, InternalCoroutinesApi::class)
     internal suspend fun HttpResponse.cleanup() {
         val job = coroutineContext[Job]!! as CompletableJob
 
@@ -125,19 +133,6 @@ public class HttpStatement(
             }
             join()
         }
-    }
-
-    /**
-     * Checks that all request configuration related to client capabilities have correspondent plugin installed.
-     */
-    private fun checkCapabilities() {
-        builder.attributes.getOrNull(ENGINE_CAPABILITIES_KEY)?.keys
-            ?.filterIsInstance<HttpClientPlugin<*, *>>()
-            ?.forEach {
-                requireNotNull(client.pluginOrNull(it)) {
-                    "Consider installing $it plugin because the request requires it to be installed"
-                }
-            }
     }
 
     override fun toString(): String = "HttpStatement[${builder.url}]"

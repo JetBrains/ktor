@@ -13,6 +13,8 @@ import io.ktor.server.routing.*
 import io.ktor.util.*
 import java.io.*
 import java.net.*
+import java.nio.file.*
+import kotlin.io.path.*
 
 /**
  * Supported pre compressed file types and associated extensions
@@ -21,15 +23,12 @@ import java.net.*
  */
 public enum class CompressedFileType(public val extension: String, public val encoding: String = extension) {
     BROTLI("br"),
-    GZIP("gz", "gzip");
-
-    @Deprecated("This will become internal")
-    public fun file(plain: File): File = File("${plain.absolutePath}.$extension")
+    GZIP("gz", "gzip")
 }
 
 internal val compressedKey = AttributeKey<List<CompressedFileType>>("StaticContentCompressed")
 
-internal val RoutingBuilder.staticContentEncodedTypes: List<CompressedFileType>?
+internal val Route.staticContentEncodedTypes: List<CompressedFileType>?
     get() = attributes.getOrNull(compressedKey) ?: parent?.staticContentEncodedTypes
 
 internal class PreCompressedResponse(
@@ -61,10 +60,23 @@ internal fun bestCompressionFit(
 ): CompressedFileType? {
     val acceptedEncodings = acceptEncoding.map { it.value }.toSet()
     // We respect the order in compressedTypes, not the one in Accept header
-    @Suppress("DEPRECATION")
     return compressedTypes
         ?.filter { it.encoding in acceptedEncodings }
-        ?.firstOrNull { it.file(file).isFile }
+        ?.firstOrNull { File("${file.absolutePath}.${it.extension}").isFile }
+}
+
+internal fun bestCompressionFit(
+    fileSystem: FileSystem,
+    path: Path,
+    acceptEncoding: List<HeaderValue>,
+    compressedTypes: List<CompressedFileType>?
+): Pair<Path, CompressedFileType>? {
+    val acceptedEncodings = acceptEncoding.map { it.value }.toSet()
+    // We respect the order in compressedTypes, not the one in Accept header
+    return compressedTypes
+        ?.filter { it.encoding in acceptedEncodings }
+        ?.map { fileSystem.getPath("${path.pathString}.${it.extension}") to it }
+        ?.firstOrNull { it.first.exists() }
 }
 
 internal class CompressedResource(
@@ -107,6 +119,7 @@ internal suspend fun ApplicationCall.respondStaticFile(
     cacheControl: (File) -> List<CacheControl> = { emptyList() },
     modify: suspend (File, ApplicationCall) -> Unit = { _, _ -> }
 ) {
+    attributes.put(StaticFileLocationProperty, requestedFile.path)
     val bestCompressionFit = bestCompressionFit(requestedFile, request.acceptEncodingItems(), compressedTypes)
     val cacheControlValues = cacheControl(requestedFile).joinToString(", ")
     if (bestCompressionFit == null) {
@@ -118,12 +131,39 @@ internal suspend fun ApplicationCall.respondStaticFile(
         return
     }
     suppressCompression()
-    @Suppress("DEPRECATION")
-    val compressedFile = bestCompressionFit.file(requestedFile)
+    val compressedFile = File("${requestedFile.absolutePath}.${bestCompressionFit.extension}")
     if (cacheControlValues.isNotEmpty()) response.header(HttpHeaders.CacheControl, cacheControlValues)
     modify(requestedFile, this)
     val localFileContent = LocalFileContent(compressedFile, contentType(requestedFile))
     respond(PreCompressedResponse(localFileContent, bestCompressionFit.encoding))
+}
+
+internal suspend fun ApplicationCall.respondStaticPath(
+    fileSystem: FileSystem,
+    requestedPath: Path,
+    compressedTypes: List<CompressedFileType>?,
+    contentType: (Path) -> ContentType = { ContentType.defaultForPath(it) },
+    cacheControl: (Path) -> List<CacheControl> = { emptyList() },
+    modify: suspend (Path, ApplicationCall) -> Unit = { _, _ -> }
+) {
+    attributes.put(StaticFileLocationProperty, requestedPath.toString())
+    val bestCompressionFit =
+        bestCompressionFit(fileSystem, requestedPath, request.acceptEncodingItems(), compressedTypes)
+    val cacheControlValues = cacheControl(requestedPath).joinToString(", ")
+    if (bestCompressionFit == null) {
+        if (requestedPath.exists()) {
+            if (cacheControlValues.isNotEmpty()) response.header(HttpHeaders.CacheControl, cacheControlValues)
+            modify(requestedPath, this)
+            respond(LocalPathContent(requestedPath, contentType(requestedPath)))
+        }
+        return
+    }
+    suppressCompression()
+    val (compressedPath, compression) = bestCompressionFit
+    if (cacheControlValues.isNotEmpty()) response.header(HttpHeaders.CacheControl, cacheControlValues)
+    modify(requestedPath, this)
+    val localFileContent = LocalPathContent(compressedPath, contentType(requestedPath))
+    respond(PreCompressedResponse(localFileContent, compression.encoding))
 }
 
 internal suspend fun ApplicationCall.respondStaticResource(
@@ -135,6 +175,7 @@ internal suspend fun ApplicationCall.respondStaticResource(
     modifier: suspend (URL, ApplicationCall) -> Unit = { _, _ -> },
     exclude: (URL) -> Boolean = { false }
 ) {
+    attributes.put(StaticFileLocationProperty, requestedResource)
     val bestCompressionFit = bestCompressionFit(
         call = this,
         resource = requestedResource,

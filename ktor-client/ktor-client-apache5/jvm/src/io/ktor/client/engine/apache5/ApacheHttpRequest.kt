@@ -8,8 +8,8 @@ import io.ktor.client.plugins.*
 import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.util.*
 import io.ktor.util.date.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import org.apache.hc.client5.http.*
 import org.apache.hc.client5.http.impl.async.*
@@ -54,13 +54,11 @@ internal suspend fun CloseableHttpAsyncClient.sendRequest(
         )
 
         val headers = HeadersImpl(rawHeaders)
-        val body: Any = if (requestData.isSseRequest()) {
+        val body: Any = if (needToProcessSSE(requestData, status, headers)) {
             DefaultClientSSESession(
                 requestData.body as SSEClientContent,
                 bodyConsumer.responseChannel,
-                callContext,
-                status,
-                headers
+                callContext
             )
         } else {
             bodyConsumer.responseChannel

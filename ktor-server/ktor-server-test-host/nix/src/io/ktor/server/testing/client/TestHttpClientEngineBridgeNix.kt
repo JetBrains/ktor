@@ -18,7 +18,7 @@ internal actual class TestHttpClientEngineBridge actual constructor(
     app: TestApplicationEngine
 ) {
 
-    actual val supportedCapabilities: Set<HttpClientEngineCapability<*>> = setOf(HttpTimeout)
+    actual val supportedCapabilities: Set<HttpClientEngineCapability<*>> = setOf(HttpTimeoutCapability)
 
     actual suspend fun runWebSocketRequest(
         url: String,

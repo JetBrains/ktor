@@ -76,21 +76,7 @@ public class EndpointConfig {
     /**
      * Specifies a maximum time (in milliseconds) of inactivity between two data packets when exchanging data with a server.
      */
-    public var socketTimeout: Long = HttpTimeout.INFINITE_TIMEOUT_MS
-
-    /**
-     * Specifies a maximum number of connection attempts.
-     */
-    @Deprecated(
-        "This is deprecated due to the misleading name. Use connectAttempts instead.",
-        level = DeprecationLevel.ERROR,
-        replaceWith = ReplaceWith("connectAttempts")
-    )
-    public var connectRetryAttempts: Int
-        get() = connectAttempts
-        set(value) {
-            connectAttempts = value
-        }
+    public var socketTimeout: Long = HttpTimeoutConfig.INFINITE_TIMEOUT_MS
 
     /**
      * Specifies a maximum number of connection attempts.

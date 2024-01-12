@@ -42,15 +42,12 @@ libidn2.a \
 libpsl.a \
 libbrotlidec.a \
 libbrotlicommon.a \
-libnghttp2.a \
 libunistring.a \
 libzstd.a \
-libssl.a \
-libcrypto.a \
 
 libraryPaths = desktop/interop/mingwX64/lib
 
-linkerOpts.mingw_x64 = -Wl,-Bstatic -lstdc++ -static -fstack-protector \
+linkerOpts.mingw_x64 = -Wl,-Bstatic -lstdc++ -static  \
 -lbcrypt \
 -lcrypt32 \
 -liconv \

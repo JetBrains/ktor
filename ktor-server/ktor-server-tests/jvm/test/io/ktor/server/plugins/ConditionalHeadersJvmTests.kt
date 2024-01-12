@@ -16,56 +16,59 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.*
-import org.junit.*
-import org.junit.Test
-import org.junit.rules.*
-import org.junit.runner.*
-import org.junit.runners.*
-import java.io.*
+import org.junit.jupiter.api.io.*
+import org.junit.jupiter.params.*
+import org.junit.jupiter.params.provider.*
 import java.nio.file.*
+import java.nio.file.attribute.*
 import java.text.*
 import java.time.*
 import java.util.*
+import java.util.stream.*
+import kotlin.io.path.*
 import kotlin.test.*
 
-@RunWith(Parameterized::class)
-class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId) {
+class LastModifiedTest {
+
     companion object {
         @JvmStatic
-        @Parameterized.Parameters(name = "{0}")
-        fun zones(): List<Array<Any>> =
-            listOf(arrayOf("GMT", ZoneId.of("GMT")), arrayOf("SomeLocal", ZoneId.of("GMT+1")))
+        fun dateArguments(): Stream<Arguments> =
+            Stream.of("GMT", "GMT+1")
+                .map(ZoneId::of)
+                .map(ZonedDateTime::now)
+                .map(Arguments::of)
     }
 
-    private val date = ZonedDateTime.now(zone)!!
-
-    private fun withConditionalApplication(body: suspend ApplicationTestBuilder.() -> Unit) = testApplication {
-        application {
-            install(ConditionalHeaders) {
-                version { _, _ -> listOf(LastModifiedVersion(date)) }
-            }
-            routing {
-                handle {
-                    call.respondText("response")
+    private fun withConditionalApplication(date: ZonedDateTime, body: suspend ApplicationTestBuilder.() -> Unit) =
+        testApplication {
+            application {
+                install(ConditionalHeaders) {
+                    version { _, _ -> listOf(LastModifiedVersion(date)) }
+                }
+                routing {
+                    handle {
+                        call.respondText("response")
+                    }
                 }
             }
+
+            runBlocking {
+                body()
+            }
         }
 
-        runBlocking {
-            body()
-        }
-    }
-
-    @Test
-    fun testNoHeaders(): Unit = withConditionalApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testNoHeaders(date: ZonedDateTime): Unit = withConditionalApplication(date) {
         client.get("/").let { result ->
             assertEquals(HttpStatusCode.OK, result.status)
             assertEquals("response", result.bodyAsText())
         }
     }
 
-    @Test
-    fun testSubrouteInstall(): Unit = testApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testSubrouteInstall(date: ZonedDateTime): Unit = testApplication {
         application {
             routing {
                 route("1") {
@@ -92,8 +95,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testUseHeadersFromResponse(): Unit = testApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testUseHeadersFromResponse(date: ZonedDateTime): Unit = testApplication {
         application {
             install(ConditionalHeaders)
             routing {
@@ -118,8 +122,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testIfModifiedSinceEq(): Unit = withConditionalApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testIfModifiedSinceEq(date: ZonedDateTime): Unit = withConditionalApplication(date) {
         client.get("/") {
             header(
                 HttpHeaders.IfModifiedSince,
@@ -131,8 +136,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testIfModifiedSinceEqZoned() = testApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testIfModifiedSinceEqZoned(date: ZonedDateTime) = testApplication {
         application {
             install(ConditionalHeaders) {
                 version { _, _ -> listOf(LastModifiedVersion(date)) }
@@ -155,8 +161,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testIfModifiedSinceLess(): Unit = withConditionalApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testIfModifiedSinceLess(date: ZonedDateTime): Unit = withConditionalApplication(date) {
         client.get("/") {
             header(
                 HttpHeaders.IfModifiedSince,
@@ -168,8 +175,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testIfModifiedSinceGt(): Unit = withConditionalApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testIfModifiedSinceGt(date: ZonedDateTime): Unit = withConditionalApplication(date) {
         client.get("/") {
             header(
                 HttpHeaders.IfModifiedSince,
@@ -181,8 +189,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testIfUnModifiedSinceEq(): Unit = withConditionalApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testIfUnModifiedSinceEq(date: ZonedDateTime): Unit = withConditionalApplication(date) {
         client.get("/") {
             header(
                 HttpHeaders.IfUnmodifiedSince,
@@ -194,8 +203,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testIfUnModifiedSinceLess(): Unit = withConditionalApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testIfUnModifiedSinceLess(date: ZonedDateTime): Unit = withConditionalApplication(date) {
         client.get("/") {
             header(
                 HttpHeaders.IfUnmodifiedSince,
@@ -207,8 +217,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testIfUnModifiedSinceGt(): Unit = withConditionalApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testIfUnModifiedSinceGt(date: ZonedDateTime): Unit = withConditionalApplication(date) {
         client.get("/") {
             header(
                 HttpHeaders.IfUnmodifiedSince,
@@ -220,8 +231,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testIfUnmodifiedSinceIllegal(): Unit = withConditionalApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testIfUnmodifiedSinceIllegal(date: ZonedDateTime): Unit = withConditionalApplication(date) {
         client.get("/") {
             header(
                 HttpHeaders.IfUnmodifiedSince,
@@ -275,8 +287,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testIfUnmodifiedSinceMultiple(): Unit = withConditionalApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testIfUnmodifiedSinceMultiple(date: ZonedDateTime): Unit = withConditionalApplication(date) {
         client.get("/") {
             header(
                 HttpHeaders.IfUnmodifiedSince,
@@ -316,8 +329,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testIfModifiedSinceMultiple(): Unit = withConditionalApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testIfModifiedSinceMultiple(date: ZonedDateTime): Unit = withConditionalApplication(date) {
         client.get("/") {
             header(
                 HttpHeaders.IfModifiedSince,
@@ -357,8 +371,9 @@ class LastModifiedTest(@Suppress("UNUSED_PARAMETER") name: String, zone: ZoneId)
         }
     }
 
-    @Test
-    fun testBoth(): Unit = withConditionalApplication {
+    @ParameterizedTest
+    @MethodSource("dateArguments")
+    fun testBoth(date: ZonedDateTime): Unit = withConditionalApplication(date) {
         client.get("/") {
             header(
                 HttpHeaders.IfModifiedSince,
@@ -486,22 +501,22 @@ class LastModifiedVersionTest {
         }
     }
 
-    @get:Rule
-    val temporaryFolder: TemporaryFolder = TemporaryFolder()
+    @TempDir
+    lateinit var temporaryFolder: Path
 
     @Test
     fun lastModifiedHeaderFromFileTimeIsIndependentOfLocalTimezone() {
         checkLastModifiedHeaderIsIndependentOfLocalTimezone { input: Date ->
             // setup: create file
-            val file: File = temporaryFolder.newFile("foo.txt").apply {
-                setLastModified(input.time)
+            val path: Path = temporaryFolder.resolve("foo.txt").createFile().apply {
+                setLastModifiedTime(FileTime.fromMillis(input.time))
             }
 
             // guard: file lastmodified is actually set as expected
-            assertEquals(input.time, file.lastModified())
+            assertEquals(input.time, path.getLastModifiedTime().toMillis())
 
             // setup: object to test
-            LastModifiedVersion(Files.getLastModifiedTime(file.toPath()))
+            LastModifiedVersion(Files.getLastModifiedTime(path))
         }
     }
 }

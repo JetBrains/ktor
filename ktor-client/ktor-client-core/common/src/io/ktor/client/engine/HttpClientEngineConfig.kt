@@ -4,7 +4,7 @@
 
 package io.ktor.client.engine
 
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 /**
  * Base configuration for [HttpClientEngine].
@@ -14,6 +14,10 @@ public open class HttpClientEngineConfig {
     /**
      * Specifies network threads count advice.
      */
+    @Deprecated(
+        "The [threadsCount] property is deprecated. The [Dispatchers.IO] is used by default.",
+        level = DeprecationLevel.ERROR
+    )
     public var threadsCount: Int = 4
 
     /**

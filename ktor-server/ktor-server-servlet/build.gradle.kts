@@ -3,8 +3,7 @@ description = ""
 kotlin.sourceSets {
     jvmMain {
         dependencies {
-            api(project(":ktor-server:ktor-server-host-common"))
-
+            api(project(":ktor-server:ktor-server-core"))
             compileOnly(libs.javax.servlet)
         }
     }

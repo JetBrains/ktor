@@ -30,7 +30,7 @@ internal actual class ConnectionPipeline actual constructor(
     tasks: Channel<RequestTask>,
     parentContext: CoroutineContext
 ) : CoroutineScope {
-    override val coroutineContext: CoroutineContext = parentContext + Job()
+    actual override val coroutineContext: CoroutineContext = parentContext + Job()
 
     private val networkInput = connection.input
     private val networkOutput = connection.output

@@ -8,6 +8,7 @@ import kotlinx.cinterop.*
 import platform.posix.*
 import platform.windows.*
 
+@OptIn(ExperimentalForeignApi::class)
 @Suppress("FunctionName")
 internal actual fun system_time(tm: CValuesRef<tm>?): Long {
     return _mkgmtime(tm).convert()
@@ -17,6 +18,7 @@ internal actual fun system_time(tm: CValuesRef<tm>?): Long {
  * Gets current system time in milliseconds since a certain moment in the past,
  * only delta between two subsequent calls makes sense.
  */
+@OptIn(ExperimentalForeignApi::class)
 public actual fun getTimeMillis(): Long = memScoped {
     val timeHolder = alloc<FILETIME>()
     GetSystemTimeAsFileTime(timeHolder.ptr)

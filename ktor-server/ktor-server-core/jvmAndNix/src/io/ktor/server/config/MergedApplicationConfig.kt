@@ -8,7 +8,10 @@ package io.ktor.server.config
  * Merge configuration combining all their keys.
  * If key is not found in one of the configs, search will continue in the next config in the list.
  */
-@Deprecated("Use mergeWith/withFallback instead.")
+@Deprecated(
+    "Use mergeWith/withFallback instead.",
+    level = DeprecationLevel.ERROR
+)
 public fun List<ApplicationConfig>.merge(): ApplicationConfig {
     require(isNotEmpty()) { "List of configs can not be empty" }
     return foldRight(last()) { config, acc -> config.withFallback(acc) }

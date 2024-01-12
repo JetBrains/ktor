@@ -7,17 +7,14 @@ package io.ktor.utils.io
 import io.ktor.test.dispatcher.*
 import io.ktor.utils.io.core.EOFException
 import kotlinx.coroutines.*
-import kotlinx.coroutines.debug.junit4.*
-import org.junit.*
+import kotlinx.coroutines.debug.junit5.*
 import java.io.*
 import kotlin.test.*
 import kotlin.test.Test
 import kotlin.text.toByteArray
 
+@CoroutinesTimeout(60_000)
 class ByteBufferChannelTest {
-
-    @get:Rule
-    public val timeoutRule: CoroutinesTimeout by lazy { CoroutinesTimeout.seconds(60) }
 
     @Test
     @Suppress("DEPRECATION")

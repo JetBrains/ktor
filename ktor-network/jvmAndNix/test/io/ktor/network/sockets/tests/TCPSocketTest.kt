@@ -123,8 +123,6 @@ class TCPSocketTest {
             assertFailsWith<CancellationException> {
                 readChannel.readByte()
             }
-
-            assertTrue(client.isClosed)
         }
     }
 }

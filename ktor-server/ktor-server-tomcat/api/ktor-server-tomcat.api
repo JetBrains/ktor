@@ -5,13 +5,16 @@ public final class io/ktor/server/tomcat/EngineMain {
 
 public final class io/ktor/server/tomcat/Tomcat : io/ktor/server/engine/ApplicationEngineFactory {
 	public static final field INSTANCE Lio/ktor/server/tomcat/Tomcat;
-	public synthetic fun create (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/engine/ApplicationEngine;
-	public fun create (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/tomcat/TomcatApplicationEngine;
+	public synthetic fun configuration (Lkotlin/jvm/functions/Function1;)Lio/ktor/server/engine/ApplicationEngine$Configuration;
+	public fun configuration (Lkotlin/jvm/functions/Function1;)Lio/ktor/server/tomcat/TomcatApplicationEngine$Configuration;
+	public synthetic fun create (Lio/ktor/server/application/ApplicationEnvironment;Lio/ktor/events/Events;ZLio/ktor/server/engine/ApplicationEngine$Configuration;Lkotlin/jvm/functions/Function0;)Lio/ktor/server/engine/ApplicationEngine;
+	public fun create (Lio/ktor/server/application/ApplicationEnvironment;Lio/ktor/events/Events;ZLio/ktor/server/tomcat/TomcatApplicationEngine$Configuration;Lkotlin/jvm/functions/Function0;)Lio/ktor/server/tomcat/TomcatApplicationEngine;
 }
 
 public final class io/ktor/server/tomcat/TomcatApplicationEngine : io/ktor/server/engine/BaseApplicationEngine {
 	public static final field Companion Lio/ktor/server/tomcat/TomcatApplicationEngine$Companion;
-	public fun <init> (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)V
+	public fun <init> (Lio/ktor/server/application/ApplicationEnvironment;Lio/ktor/events/Events;ZLio/ktor/server/tomcat/TomcatApplicationEngine$Configuration;Lkotlin/jvm/functions/Function0;)V
+	public final fun getConfiguration ()Lio/ktor/server/tomcat/TomcatApplicationEngine$Configuration;
 	public synthetic fun start (Z)Lio/ktor/server/engine/ApplicationEngine;
 	public fun start (Z)Lio/ktor/server/tomcat/TomcatApplicationEngine;
 	public fun stop (JJ)V

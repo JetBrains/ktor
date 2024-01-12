@@ -8,12 +8,12 @@ import io.ktor.server.application.*
 
 /**
  * Represents a single entry in the [RoutingResolveTrace].
- * @param route specifies instance of [Route] for this entry.
+ * @param route specifies instance of [RouteNode] for this entry.
  * @param segmentIndex specifies index in [RoutingResolveTrace.segments] for this entry.
  * @param result specifies resolution result for this entry.
  */
 public open class RoutingResolveTraceEntry(
-    public val route: Route,
+    public val route: RouteNode,
     public val segmentIndex: Int,
     public var result: RoutingResolveResult? = null
 ) {
@@ -63,14 +63,14 @@ public class RoutingResolveTrace(public val call: PipelineCall, public val segme
     /**
      * Begins processing a [route] at segment with [segmentIndex] in [segments].
      */
-    public fun begin(route: Route, segmentIndex: Int) {
+    public fun begin(route: RouteNode, segmentIndex: Int) {
         stack.push(RoutingResolveTraceEntry(route, segmentIndex))
     }
 
     /**
      * Finishes processing a [route] at segment with [segmentIndex] in [segments] with the given [result].
      */
-    public fun finish(route: Route, segmentIndex: Int, result: RoutingResolveResult) {
+    public fun finish(route: RouteNode, segmentIndex: Int, result: RoutingResolveResult) {
         val entry = stack.pop()
         require(entry.route == route) { "end should be called for the same route as begin" }
         require(entry.segmentIndex == segmentIndex) { "end should be called for the same segmentIndex as begin" }
@@ -81,7 +81,7 @@ public class RoutingResolveTrace(public val call: PipelineCall, public val segme
     /**
      * Begins and finishes processing a [route] at segment with [segmentIndex] in [segments] with the given [result].
      */
-    public fun skip(route: Route, segmentIndex: Int, result: RoutingResolveResult) {
+    public fun skip(route: RouteNode, segmentIndex: Int, result: RoutingResolveResult) {
         register(RoutingResolveTraceEntry(route, segmentIndex, result))
     }
 

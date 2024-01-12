@@ -18,7 +18,7 @@ val nativeClassifier: String? = if (enableAlpnProp) {
 kotlin.sourceSets {
     jvmMain {
         dependencies {
-            api(project(":ktor-server:ktor-server-host-common"))
+            api(project(":ktor-server:ktor-server-core"))
 
             api(libs.netty.codec.http2)
             api(libs.jetty.alpn.api)

@@ -33,7 +33,7 @@ internal class JavaHttpRequestBodyPublisher(
                 subscriber
             )
             synchronized(subscription) { subscriber.onSubscribe(subscription) }
-        } catch (cause: Exception) {
+        } catch (cause: Throwable) {
             // subscribe() must return normally, so we need to signal the
             // failure to open via onError() once onSubscribe() is signaled.
             subscriber.onSubscribe(NullSubscription())
@@ -77,7 +77,7 @@ internal class JavaHttpRequestBodyPublisher(
                 if (writeInProgress.compareAndSet(expect = false, update = true)) {
                     readData()
                 }
-            } catch (cause: Exception) {
+            } catch (cause: Throwable) {
                 signalOnError(cause)
             }
         }
@@ -129,7 +129,7 @@ internal class JavaHttpRequestBodyPublisher(
         private fun closeChannel() {
             try {
                 inputChannel.cancel()
-            } catch (cause: Exception) {
+            } catch (cause: Throwable) {
                 signalOnError(cause)
             }
         }

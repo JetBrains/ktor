@@ -6,7 +6,6 @@ package io.ktor.tests.resources
 
 import io.ktor.resources.*
 import io.ktor.resources.serialization.*
-import kotlinx.serialization.*
 import kotlin.test.*
 
 class ResourceUrlBuilderTest {

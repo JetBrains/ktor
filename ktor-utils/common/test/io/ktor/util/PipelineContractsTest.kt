@@ -6,7 +6,6 @@ package io.ktor.util
 
 import io.ktor.util.collections.*
 import io.ktor.util.pipeline.*
-import io.ktor.utils.io.concurrent.*
 import kotlinx.atomicfu.*
 import kotlin.coroutines.*
 import kotlin.coroutines.intrinsics.*

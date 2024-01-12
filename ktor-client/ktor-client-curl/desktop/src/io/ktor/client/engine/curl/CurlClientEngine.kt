@@ -7,6 +7,7 @@ package io.ktor.client.engine.curl
 import io.ktor.client.engine.*
 import io.ktor.client.engine.curl.internal.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.cio.*
@@ -20,7 +21,7 @@ internal class CurlClientEngine(
 ) : HttpClientEngineBase("ktor-curl") {
     override val dispatcher = Dispatchers.Unconfined
 
-    override val supportedCapabilities = setOf(HttpTimeout)
+    override val supportedCapabilities = setOf(HttpTimeoutCapability, SSECapability)
 
     private val curlProcessor = CurlProcessor(coroutineContext)
 
@@ -44,12 +45,18 @@ internal class CurlClientEngine(
             val headers = HeadersImpl(rawHeaders.toMap())
             rawHeaders.release()
 
+            val responseBody: Any = if (needToProcessSSE(data, status, headers)) {
+                DefaultClientSSESession(data.body as SSEClientContent, bodyChannel, callContext)
+            } else {
+                bodyChannel
+            }
+
             HttpResponseData(
                 status,
                 requestTime,
                 headers,
                 version.fromCurl(),
-                bodyChannel,
+                responseBody,
                 callContext
             )
         }

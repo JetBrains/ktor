@@ -3,8 +3,10 @@
  */
 
 import org.jetbrains.dokka.gradle.*
+import org.jetbrains.kotlin.buildtools.api.*
 import org.jetbrains.kotlin.gradle.dsl.*
 import org.jetbrains.kotlin.gradle.targets.js.*
+import org.jetbrains.kotlin.gradle.targets.jvm.tasks.*
 import org.jetbrains.kotlin.konan.target.*
 
 buildscript {
@@ -73,7 +75,9 @@ val configuredVersion: String by extra
 
 apply(from = "gradle/verifier.gradle")
 
-extra["skipPublish"] = mutableListOf<String>()
+extra["skipPublish"] = mutableListOf(
+    "ktor-junit"
+)
 extra["nonDefaultProjectStructure"] = mutableListOf(
     "ktor-bom",
     "ktor-java-modules-test",
@@ -81,20 +85,24 @@ extra["nonDefaultProjectStructure"] = mutableListOf(
 
 val disabledExplicitApiModeProjects = listOf(
     "ktor-client-tests",
-    "ktor-client-json-tests",
     "ktor-server-test-host",
     "ktor-server-test-suites",
     "ktor-server-tests",
     "ktor-client-content-negotiation-tests",
+    "ktor-junit"
 )
 
 apply(from = "gradle/compatibility.gradle")
 
 plugins {
-    id("org.jetbrains.dokka") version "1.7.20" apply false
+    id("org.jetbrains.dokka") version "1.9.10" apply false
     id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.2"
-    id("kotlinx-atomicfu") version "0.21.0" apply false
-    id("com.osacky.doctor") version "0.8.1"
+    id("kotlinx-atomicfu") version "0.22.0" apply false
+    id("com.osacky.doctor") version "0.9.1"
+}
+
+doctor {
+    enableTestCaching = false
 }
 
 allprojects {
@@ -152,7 +160,7 @@ fun configureDokka() {
 
         val dokkaPlugin by configurations
         dependencies {
-            dokkaPlugin("org.jetbrains.dokka:versioning-plugin:1.7.20")
+            dokkaPlugin("org.jetbrains.dokka:versioning-plugin:1.9.10")
         }
     }
 
@@ -183,7 +191,7 @@ fun Project.setupJvmToolchain() {
     kotlin {
         jvmToolchain {
             check(this is JavaToolchainSpec)
-            languageVersion.set(JavaLanguageVersion.of(jdk))
+            languageVersion = JavaLanguageVersion.of(jdk)
         }
     }
 }

@@ -8,6 +8,7 @@ import io.ktor.server.application.*
 import io.ktor.util.*
 import io.ktor.util.collections.*
 import io.ktor.util.logging.*
+import io.ktor.utils.io.*
 
 internal val LOGGER = KtorSimpleLogger("io.ktor.server.plugins.ratelimit.RateLimit")
 internal val LIMITER_NAME_GLOBAL = RateLimitName("KTOR_GLOBAL_RATE_LIMITER")

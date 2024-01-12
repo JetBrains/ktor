@@ -24,11 +24,17 @@ internal class Http2LocalConnectionPoint(
     override val uri: String
         get() = nettyHeaders.path()?.toString() ?: "/"
 
-    @Deprecated("Use localHost or serverHost instead")
+    @Deprecated(
+        "Use localHost or serverHost instead",
+        level = DeprecationLevel.ERROR
+    )
     override val host: String
         get() = nettyHeaders.authority()?.toString()?.substringBefore(":") ?: "localhost"
 
-    @Deprecated("Use localPort or serverPort instead")
+    @Deprecated(
+        "Use localPort or serverPort instead",
+        level = DeprecationLevel.ERROR
+    )
     override val port: Int
         get() = nettyHeaders.authority()?.toString()
             ?.substringAfter(":", "")?.takeIf { it.isNotEmpty() }?.toInt()
@@ -63,4 +69,8 @@ internal class Http2LocalConnectionPoint(
         get() = remoteNetworkAddress?.port ?: 0
     override val remoteAddress: String
         get() = remoteNetworkAddress?.hostString ?: "unknown"
+
+    override fun toString(): String =
+        "Http2LocalConnectionPoint(uri=$uri, method=$method, version=$version, localAddress=$localAddress, " +
+            "localPort=$localPort, remoteAddress=$remoteAddress, remotePort=$remotePort)"
 }

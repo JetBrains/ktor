@@ -4,7 +4,7 @@
 
 package io.ktor.server.sessions
 
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 /**
  * A configuration for the [Sessions] plugin.

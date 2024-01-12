@@ -6,10 +6,9 @@ package io.ktor.client.tests
 
 import io.ktor.client.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.client.tests.utils.*
-import org.junit.*
 import java.io.*
+import kotlin.test.*
 
 class JvmContentTest : ClientLoader() {
     private val testSize = listOf(

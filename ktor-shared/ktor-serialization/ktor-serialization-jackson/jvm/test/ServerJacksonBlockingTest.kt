@@ -7,7 +7,6 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -23,9 +22,6 @@ import kotlin.test.*
 @Suppress("DEPRECATION")
 class ServerJacksonBlockingTest {
     private val dispatcher = UnsafeDispatcher()
-    private val environment = createTestEnvironment {
-        parentCoroutineContext = dispatcher
-    }
 
     @AfterTest
     fun cleanup() {
@@ -33,16 +29,21 @@ class ServerJacksonBlockingTest {
     }
 
     @Test
-    fun testReceive(): Unit = withApplication(environment) {
-        application.intercept(ApplicationCallPipeline.Setup) {
-            withContext(dispatcher) {
-                proceed()
+    fun testReceive(): Unit = testApplication {
+        testApplicationProperties {
+            parentCoroutineContext = dispatcher
+        }
+        application {
+            intercept(ApplicationCallPipeline.Setup) {
+                withContext(dispatcher) {
+                    proceed()
+                }
             }
         }
-        application.install(ContentNegotiation) {
+        install(ContentNegotiation) {
             jackson()
         }
-        application.routing {
+        routing {
             post("/") {
                 assertEquals(K(77), call.receive())
                 call.respondText("OK")

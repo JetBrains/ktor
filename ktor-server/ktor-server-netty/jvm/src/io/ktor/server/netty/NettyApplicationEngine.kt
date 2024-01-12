@@ -13,24 +13,26 @@ import io.netty.bootstrap.*
 import io.netty.channel.*
 import io.netty.channel.epoll.*
 import io.netty.channel.kqueue.*
-import io.netty.channel.nio.*
 import io.netty.channel.socket.*
 import io.netty.channel.socket.nio.*
 import io.netty.handler.codec.http.*
-import io.netty.util.concurrent.*
 import kotlinx.coroutines.*
-import java.lang.reflect.*
 import java.net.*
 import java.util.concurrent.*
 import kotlin.reflect.*
+
+private val AFTER_CALL_PHASE = PipelinePhase("After")
 
 /**
  * [ApplicationEngine] implementation for running in a standalone Netty
  */
 public class NettyApplicationEngine(
-    environment: ApplicationEngineEnvironment,
-    configure: Configuration.() -> Unit = {}
-) : BaseApplicationEngine(environment) {
+    environment: ApplicationEnvironment,
+    monitor: Events,
+    developmentMode: Boolean,
+    public val configuration: Configuration,
+    private val applicationProvider: () -> Application
+) : BaseApplicationEngine(environment, monitor, developmentMode) {
 
     /**
      * Configuration for the [NettyApplicationEngine]
@@ -111,8 +113,6 @@ public class NettyApplicationEngine(
         )
     }
 
-    private val configuration = Configuration().apply(configure)
-
     /**
      * [EventLoopGroupProxy] for accepting connections
      */
@@ -161,10 +161,10 @@ public class NettyApplicationEngine(
 
     private var channels: List<Channel>? = null
     internal val bootstraps: List<ServerBootstrap> by lazy {
-        environment.connectors.map(::createBootstrap)
+        configuration.connectors.map(::createBootstrap)
     }
 
-    private val userContext = environment.parentCoroutineContext +
+    private val userContext = applicationProvider().parentCoroutineContext +
         nettyDispatcher +
         NettyApplicationCallHandler.CallHandlerCoroutineName +
         DefaultUncaughtExceptionHandler(environment.log)
@@ -181,6 +181,7 @@ public class NettyApplicationEngine(
 
             childHandler(
                 NettyChannelInitializer(
+                    applicationProvider,
                     pipeline,
                     environment,
                     callEventGroup,
@@ -202,25 +203,22 @@ public class NettyApplicationEngine(
     }
 
     init {
-        val afterCall = PipelinePhase("After")
-        pipeline.insertPhaseAfter(EnginePipeline.Call, afterCall)
-        pipeline.intercept(afterCall) {
+        pipeline.insertPhaseAfter(EnginePipeline.Call, AFTER_CALL_PHASE)
+        pipeline.intercept(AFTER_CALL_PHASE) {
             (call as? NettyApplicationCall)?.finish()
         }
     }
 
     override fun start(wait: Boolean): NettyApplicationEngine {
-        addShutdownHook {
+        addShutdownHook(monitor) {
             stop(configuration.shutdownGracePeriod, configuration.shutdownTimeout)
         }
 
-        environment.start()
-
         try {
-            channels = bootstraps.zip(environment.connectors)
+            channels = bootstraps.zip(configuration.connectors)
                 .map { it.first.bind(it.second.host, it.second.port) }
                 .map { it.sync().channel() }
-            val connectors = channels!!.zip(environment.connectors)
+            val connectors = channels!!.zip(configuration.connectors)
                 .map { it.second.withPort(it.first.localAddress().port) }
             resolvedConnectors.complete(connectors)
         } catch (cause: BindException) {
@@ -228,10 +226,13 @@ public class NettyApplicationEngine(
             throw cause
         }
 
-        environment.monitor.raiseCatching(ServerReady, environment, environment.log)
+        monitor.raiseCatching(ServerReady, environment, environment.log)
 
-        cancellationDeferred =
-            stopServerOnCancellation(configuration.shutdownGracePeriod, configuration.shutdownTimeout)
+        cancellationDeferred = stopServerOnCancellation(
+            applicationProvider(),
+            configuration.shutdownGracePeriod,
+            configuration.shutdownTimeout
+        )
 
         if (wait) {
             channels?.map { it.closeFuture() }?.forEach { it.sync() }
@@ -247,7 +248,7 @@ public class NettyApplicationEngine(
 
     override fun stop(gracePeriodMillis: Long, timeoutMillis: Long) {
         cancellationDeferred?.complete()
-        environment.monitor.raise(ApplicationStopPreparing, environment)
+        monitor.raise(ApplicationStopPreparing, environment)
         val channelFutures = channels?.mapNotNull { if (it.isOpen) it.close() else null }.orEmpty()
 
         try {
@@ -265,8 +266,6 @@ public class NettyApplicationEngine(
                 shutdownWorkers.await()
                 shutdownCall.await()
             }
-
-            environment.stop()
         } finally {
             channelFutures.forEach { it.sync() }
         }
@@ -277,55 +276,7 @@ public class NettyApplicationEngine(
     }
 }
 
-/**
- * Transparently allows for the creation of [EventLoopGroup]'s utilising the optimal implementation for
- * a given operating system, subject to availability, or falling back to [NioEventLoopGroup] if none is available.
- */
-public class EventLoopGroupProxy(
-    public val channel: KClass<out ServerSocketChannel>,
-    group: EventLoopGroup
-) : EventLoopGroup by group {
-
-    public companion object {
-
-        public fun create(parallelism: Int): EventLoopGroupProxy {
-            val defaultFactory = DefaultThreadFactory(EventLoopGroupProxy::class.java, true)
-
-            val factory = ThreadFactory { runnable ->
-                defaultFactory.newThread {
-                    markParkingProhibited()
-                    runnable.run()
-                }
-            }
-
-            val channelClass = getChannelClass()
-
-            return when {
-                KQueue.isAvailable() -> EventLoopGroupProxy(channelClass, KQueueEventLoopGroup(parallelism, factory))
-                Epoll.isAvailable() -> EventLoopGroupProxy(channelClass, EpollEventLoopGroup(parallelism, factory))
-                else -> EventLoopGroupProxy(channelClass, NioEventLoopGroup(parallelism, factory))
-            }
-        }
-
-        private val prohibitParkingFunction: Method? by lazy {
-            try {
-                Class.forName("io.ktor.utils.io.jvm.javaio.PollersKt")
-                    .getMethod("prohibitParking")
-            } catch (cause: Throwable) {
-                null
-            }
-        }
-
-        private fun markParkingProhibited() {
-            try {
-                prohibitParkingFunction?.invoke(null)
-            } catch (_: Throwable) {
-            }
-        }
-    }
-}
-
-private fun getChannelClass(): KClass<out ServerSocketChannel> = when {
+internal fun getChannelClass(): KClass<out ServerSocketChannel> = when {
     KQueue.isAvailable() -> KQueueServerSocketChannel::class
     Epoll.isAvailable() -> EpollServerSocketChannel::class
     else -> NioServerSocketChannel::class

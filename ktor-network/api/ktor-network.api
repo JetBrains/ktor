@@ -29,6 +29,7 @@ public final class io/ktor/network/selector/SelectInterest : java/lang/Enum {
 	public static final field Companion Lio/ktor/network/selector/SelectInterest$Companion;
 	public static final field READ Lio/ktor/network/selector/SelectInterest;
 	public static final field WRITE Lio/ktor/network/selector/SelectInterest;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getFlag ()I
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/selector/SelectInterest;
 	public static fun values ()[Lio/ktor/network/selector/SelectInterest;

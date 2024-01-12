@@ -65,7 +65,7 @@ class ProtoBufSerializationTest {
     }
 
     private suspend inline fun <reified T : Any> ContentConverter.testSerialize(data: T): ByteArray {
-        val content = serializeNullable(ContentType.Application.ProtoBuf, Charsets.UTF_8, typeInfo<T>(), data)
+        val content = serialize(ContentType.Application.ProtoBuf, Charsets.UTF_8, typeInfo<T>(), data)
         return (content as? ByteArrayContent)?.bytes() ?: error("Failed to get serialized $data")
     }
 }

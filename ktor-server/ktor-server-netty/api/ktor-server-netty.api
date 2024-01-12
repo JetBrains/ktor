@@ -55,8 +55,10 @@ public final class io/ktor/server/netty/EventLoopGroupProxy$Companion {
 
 public final class io/ktor/server/netty/Netty : io/ktor/server/engine/ApplicationEngineFactory {
 	public static final field INSTANCE Lio/ktor/server/netty/Netty;
-	public synthetic fun create (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/engine/ApplicationEngine;
-	public fun create (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/netty/NettyApplicationEngine;
+	public synthetic fun configuration (Lkotlin/jvm/functions/Function1;)Lio/ktor/server/engine/ApplicationEngine$Configuration;
+	public fun configuration (Lkotlin/jvm/functions/Function1;)Lio/ktor/server/netty/NettyApplicationEngine$Configuration;
+	public synthetic fun create (Lio/ktor/server/application/ApplicationEnvironment;Lio/ktor/events/Events;ZLio/ktor/server/engine/ApplicationEngine$Configuration;Lkotlin/jvm/functions/Function0;)Lio/ktor/server/engine/ApplicationEngine;
+	public fun create (Lio/ktor/server/application/ApplicationEnvironment;Lio/ktor/events/Events;ZLio/ktor/server/netty/NettyApplicationEngine$Configuration;Lkotlin/jvm/functions/Function0;)Lio/ktor/server/netty/NettyApplicationEngine;
 }
 
 public abstract class io/ktor/server/netty/NettyApplicationCall : io/ktor/server/engine/BaseApplicationCall {
@@ -68,8 +70,8 @@ public abstract class io/ktor/server/netty/NettyApplicationCall : io/ktor/server
 }
 
 public final class io/ktor/server/netty/NettyApplicationEngine : io/ktor/server/engine/BaseApplicationEngine {
-	public fun <init> (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)V
-	public synthetic fun <init> (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lio/ktor/server/application/ApplicationEnvironment;Lio/ktor/events/Events;ZLio/ktor/server/netty/NettyApplicationEngine$Configuration;Lkotlin/jvm/functions/Function0;)V
+	public final fun getConfiguration ()Lio/ktor/server/netty/NettyApplicationEngine$Configuration;
 	public synthetic fun start (Z)Lio/ktor/server/engine/ApplicationEngine;
 	public fun start (Z)Lio/ktor/server/netty/NettyApplicationEngine;
 	public fun stop (JJ)V
@@ -155,7 +157,7 @@ public final class io/ktor/server/netty/NettyApplicationResponse$Companion {
 
 public final class io/ktor/server/netty/NettyChannelInitializer : io/netty/channel/ChannelInitializer {
 	public static final field Companion Lio/ktor/server/netty/NettyChannelInitializer$Companion;
-	public fun <init> (Lio/ktor/server/engine/EnginePipeline;Lio/ktor/server/engine/ApplicationEngineEnvironment;Lio/netty/util/concurrent/EventExecutorGroup;Lkotlin/coroutines/CoroutineContext;Lkotlin/coroutines/CoroutineContext;Lio/ktor/server/engine/EngineConnectorConfig;IIILkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Z)V
+	public fun <init> (Lkotlin/jvm/functions/Function0;Lio/ktor/server/engine/EnginePipeline;Lio/ktor/server/application/ApplicationEnvironment;Lio/netty/util/concurrent/EventExecutorGroup;Lkotlin/coroutines/CoroutineContext;Lkotlin/coroutines/CoroutineContext;Lio/ktor/server/engine/EngineConnectorConfig;IIILkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Z)V
 	public synthetic fun initChannel (Lio/netty/channel/Channel;)V
 }
 

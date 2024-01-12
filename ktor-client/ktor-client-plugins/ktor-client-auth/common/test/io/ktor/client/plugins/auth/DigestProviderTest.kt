@@ -64,7 +64,7 @@ class DigestProviderTest {
     fun addRequestHeadersMissingRealm() = testSuspend {
         if (!PlatformUtils.IS_JVM) return@testSuspend
 
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         val providerWithoutRealm = DigestAuthProvider("username", "pass", null)
         val authHeader = parseAuthorizationHeader(authAllFields)!!
 
@@ -79,7 +79,7 @@ class DigestProviderTest {
     fun addRequestHeadersChangedRealm() = testSuspend {
         if (!PlatformUtils.IS_JVM) return@testSuspend
 
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         val providerWithoutRealm = DigestAuthProvider("username", "pass", "wrong!")
         val authHeader = parseAuthorizationHeader(authAllFields)!!
 
@@ -102,6 +102,7 @@ class DigestProviderTest {
     fun testTokenWhenMissingRealmAndQop() = testSuspend {
         if (!PlatformUtils.IS_JVM) return@testSuspend
 
+        @Suppress("DEPRECATION_ERROR")
         val providerWithoutRealm = DigestAuthProvider("username", "pass", null)
         val authHeader = parseAuthorizationHeader(authMissingQopAndOpaque)!!
 

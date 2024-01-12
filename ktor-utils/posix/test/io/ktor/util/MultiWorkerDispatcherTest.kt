@@ -3,6 +3,7 @@
  */
 
 import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.intrinsics.*
 import kotlin.test.*

@@ -4,7 +4,6 @@
 
 package io.ktor.server.application
 
-import io.ktor.events.*
 import io.ktor.server.config.*
 import io.ktor.util.logging.*
 import kotlin.coroutines.*
@@ -22,11 +21,6 @@ public actual interface ApplicationEnvironment {
     public val classLoader: ClassLoader
 
     /**
-     * Parent coroutine context for an application
-     */
-    public actual val parentCoroutineContext: CoroutineContext
-
-    /**
      * Instance of [Logger] to be used for logging.
      */
     public actual val log: Logger
@@ -35,19 +29,33 @@ public actual interface ApplicationEnvironment {
      * Configuration for the [Application]
      */
     public actual val config: ApplicationConfig
+}
 
-    /**
-     * Provides events on Application lifecycle
-     */
-    public actual val monitor: Events
+internal actual class ApplicationPropertiesBridge actual constructor(
+    applicationProperties: ApplicationProperties,
+    parentCoroutineContext: CoroutineContext,
+) {
+    public actual val parentCoroutineContext: CoroutineContext = when {
+        applicationProperties.developmentMode && applicationProperties.watchPaths.isNotEmpty() ->
+            parentCoroutineContext + ClassLoaderAwareContinuationInterceptor
 
-    /**
-     * Application's root path (prefix, context path in servlet container).
-     */
-    public actual val rootPath: String
+        else -> parentCoroutineContext
+    }
+}
 
-    /**
-     * Indicates if development mode is enabled.
-     */
-    public actual val developmentMode: Boolean
+private object ClassLoaderAwareContinuationInterceptor : ContinuationInterceptor {
+    override val key: CoroutineContext.Key<*> =
+        object : CoroutineContext.Key<ClassLoaderAwareContinuationInterceptor> {}
+
+    override fun <T> interceptContinuation(continuation: Continuation<T>): Continuation<T> {
+        val classLoader = Thread.currentThread().contextClassLoader
+        return object : Continuation<T> {
+            override val context: CoroutineContext = continuation.context
+
+            override fun resumeWith(result: Result<T>) {
+                Thread.currentThread().contextClassLoader = classLoader
+                continuation.resumeWith(result)
+            }
+        }
+    }
 }

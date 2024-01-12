@@ -17,7 +17,7 @@ import kotlinx.serialization.*
  *
  * A class [T] **must** be annotated with [io.ktor.resources.Resource].
  */
-public inline fun <reified T : Any> RoutingBuilder.resource(noinline body: RoutingBuilder.() -> Unit): RoutingBuilder {
+public inline fun <reified T : Any> Route.resource(noinline body: Route.() -> Unit): Route {
     val serializer = serializer<T>()
     return resource(serializer, body)
 }
@@ -29,10 +29,10 @@ public inline fun <reified T : Any> RoutingBuilder.resource(noinline body: Routi
  *
  * @param body receives an instance of the typed resource [T] as the first parameter.
  */
-public inline fun <reified T : Any> RoutingBuilder.get(
+public inline fun <reified T : Any> Route.get(
     noinline body: suspend RoutingContext.(T) -> Unit
-): RoutingBuilder {
-    lateinit var builtRoute: RoutingBuilder
+): Route {
+    lateinit var builtRoute: Route
     resource<T> {
         builtRoute = method(HttpMethod.Get) {
             handle(body)
@@ -48,10 +48,10 @@ public inline fun <reified T : Any> RoutingBuilder.get(
  *
  * @param body receives an instance of the typed resource [T] as the first parameter.
  */
-public inline fun <reified T : Any> RoutingBuilder.options(
+public inline fun <reified T : Any> Route.options(
     noinline body: suspend RoutingContext.(T) -> Unit
-): RoutingBuilder {
-    lateinit var builtRoute: RoutingBuilder
+): Route {
+    lateinit var builtRoute: Route
     resource<T> {
         builtRoute = method(HttpMethod.Options) {
             handle(body)
@@ -67,10 +67,10 @@ public inline fun <reified T : Any> RoutingBuilder.options(
  *
  * @param body receives an instance of the typed resource [T] as the first parameter.
  */
-public inline fun <reified T : Any> RoutingBuilder.head(
+public inline fun <reified T : Any> Route.head(
     noinline body: suspend RoutingContext.(T) -> Unit
-): RoutingBuilder {
-    lateinit var builtRoute: RoutingBuilder
+): Route {
+    lateinit var builtRoute: Route
     resource<T> {
         builtRoute = method(HttpMethod.Head) {
             handle(body)
@@ -86,10 +86,10 @@ public inline fun <reified T : Any> RoutingBuilder.head(
  *
  * @param body receives an instance of the typed resource [T] as the first parameter.
  */
-public inline fun <reified T : Any> RoutingBuilder.post(
+public inline fun <reified T : Any> Route.post(
     noinline body: suspend RoutingContext.(T) -> Unit
-): RoutingBuilder {
-    lateinit var builtRoute: RoutingBuilder
+): Route {
+    lateinit var builtRoute: Route
     resource<T> {
         builtRoute = method(HttpMethod.Post) {
             handle(body)
@@ -106,9 +106,9 @@ public inline fun <reified T : Any> RoutingBuilder.post(
  * @param body receives an instance of the typed resource [T] as the first parameter
  * and typed request body [R] as second parameter.
  */
-public inline fun <reified T : Any, reified R : Any> RoutingBuilder.post(
+public inline fun <reified T : Any, reified R : Any> Route.post(
     noinline body: suspend RoutingContext.(T, R) -> Unit,
-): RoutingBuilder = post<T> { resource ->
+): Route = post<T> { resource ->
     body(resource, call.receive())
 }
 
@@ -119,10 +119,10 @@ public inline fun <reified T : Any, reified R : Any> RoutingBuilder.post(
  *
  * @param body receives an instance of the typed resource [T] as the first parameter.
  */
-public inline fun <reified T : Any> RoutingBuilder.put(
+public inline fun <reified T : Any> Route.put(
     noinline body: suspend RoutingContext.(T) -> Unit
-): RoutingBuilder {
-    lateinit var builtRoute: RoutingBuilder
+): Route {
+    lateinit var builtRoute: Route
     resource<T> {
         builtRoute = method(HttpMethod.Put) {
             handle(body)
@@ -139,9 +139,9 @@ public inline fun <reified T : Any> RoutingBuilder.put(
  * @param body receives an instance of the typed resource [T] as the first parameter
  * and typed request body [R] as second parameter.
  */
-public inline fun <reified T : Any, reified R : Any> RoutingBuilder.put(
+public inline fun <reified T : Any, reified R : Any> Route.put(
     noinline body: suspend RoutingContext.(T, R) -> Unit,
-): RoutingBuilder = put<T> { resource ->
+): Route = put<T> { resource ->
     body(resource, call.receive())
 }
 
@@ -152,10 +152,10 @@ public inline fun <reified T : Any, reified R : Any> RoutingBuilder.put(
  *
  * @param body receives an instance of the typed resource [T] as the first parameter.
  */
-public inline fun <reified T : Any> RoutingBuilder.delete(
+public inline fun <reified T : Any> Route.delete(
     noinline body: suspend RoutingContext.(T) -> Unit
-): RoutingBuilder {
-    lateinit var builtRoute: RoutingBuilder
+): Route {
+    lateinit var builtRoute: Route
     resource<T> {
         builtRoute = method(HttpMethod.Delete) {
             handle(body)
@@ -171,10 +171,10 @@ public inline fun <reified T : Any> RoutingBuilder.delete(
  *
  * @param body receives an instance of the typed resource [T] as the first parameter.
  */
-public inline fun <reified T : Any> RoutingBuilder.patch(
+public inline fun <reified T : Any> Route.patch(
     noinline body: suspend RoutingContext.(T) -> Unit
-): RoutingBuilder {
-    lateinit var builtRoute: RoutingBuilder
+): Route {
+    lateinit var builtRoute: Route
     resource<T> {
         builtRoute = method(HttpMethod.Patch) {
             handle(body)
@@ -191,9 +191,9 @@ public inline fun <reified T : Any> RoutingBuilder.patch(
  * @param body receives an instance of the typed resource [T] as the first parameter
  * and typed request body [R] as second parameter.
  */
-public inline fun <reified T : Any, reified R : Any> RoutingBuilder.patch(
+public inline fun <reified T : Any, reified R : Any> Route.patch(
     noinline body: suspend RoutingContext.(T, R) -> Unit,
-): RoutingBuilder = patch<T> { resource ->
+): Route = patch<T> { resource ->
     body(resource, call.receive())
 }
 
@@ -202,7 +202,7 @@ public inline fun <reified T : Any, reified R : Any> RoutingBuilder.patch(
  *
  * @param body receives an instance of the typed resource [T] as the first parameter.
  */
-public inline fun <reified T : Any> RoutingBuilder.handle(
+public inline fun <reified T : Any> Route.handle(
     noinline body: suspend RoutingContext.(T) -> Unit
 ) {
     val serializer = serializer<T>()
@@ -219,10 +219,10 @@ internal val ResourceInstanceKey: AttributeKey<Any> = AttributeKey("ResourceInst
  *
  * A class [T] **must** be annotated with [io.ktor.resources.Resource].
  */
-public fun <T : Any> RoutingBuilder.resource(
+public fun <T : Any> Route.resource(
     serializer: KSerializer<T>,
-    body: RoutingBuilder.() -> Unit
-): RoutingBuilder {
+    body: Route.() -> Unit
+): Route {
     val resources = plugin(Resources)
     val path = resources.resourcesFormat.encodeToPathPattern(serializer)
     val queryParameters = resources.resourcesFormat.encodeToQueryParameters(serializer)
@@ -244,7 +244,7 @@ public fun <T : Any> RoutingBuilder.resource(
  * @param serializer is used to decode the parameters of the request to an instance of the typed resource [T].
  * @param body receives an instance of the typed resource [T] as the first parameter.
  */
-public fun <T : Any> RoutingBuilder.handle(
+public fun <T : Any> Route.handle(
     serializer: KSerializer<T>,
     body: suspend RoutingContext.(T) -> Unit
 ) {

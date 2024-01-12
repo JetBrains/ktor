@@ -64,7 +64,11 @@ public open class ApplicationCallPipeline public constructor(
         /**
          * Phase for plugins. Most plugins should intercept this phase.
          */
-        @Deprecated("Renamed to Plugins", replaceWith = ReplaceWith("Plugins"))
+        @Deprecated(
+            "Renamed to Plugins",
+            replaceWith = ReplaceWith("Plugins"),
+            level = DeprecationLevel.ERROR
+        )
         public val Features: PipelinePhase = Plugins
     }
 }

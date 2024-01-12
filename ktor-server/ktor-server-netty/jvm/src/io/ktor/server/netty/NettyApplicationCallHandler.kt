@@ -13,8 +13,10 @@ import io.ktor.util.pipeline.*
 import io.ktor.utils.io.*
 import io.netty.channel.*
 import io.netty.handler.codec.http.*
+import io.netty.handler.timeout.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
+import kotlin.coroutines.cancellation.*
 
 private const val CHUNKED_VALUE = "chunked"
 
@@ -22,6 +24,8 @@ internal class NettyApplicationCallHandler(
     userCoroutineContext: CoroutineContext,
     private val enginePipeline: EnginePipeline
 ) : ChannelInboundHandlerAdapter(), CoroutineScope {
+    private var currentJob: Job? = null
+
     override val coroutineContext: CoroutineContext = userCoroutineContext
 
     override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
@@ -34,11 +38,12 @@ internal class NettyApplicationCallHandler(
     private fun handleRequest(context: ChannelHandlerContext, call: PipelineCall) {
         val callContext = CallHandlerCoroutineName + NettyDispatcher.CurrentContext(context)
 
-        launch(callContext, start = CoroutineStart.UNDISPATCHED) {
+        currentJob = launch(callContext, start = CoroutineStart.UNDISPATCHED) {
             when {
                 call is NettyHttp1ApplicationCall && !call.request.isValid() -> {
                     respondError400BadRequest(call)
                 }
+
                 else ->
                     try {
                         enginePipeline.execute(call)
@@ -47,6 +52,27 @@ internal class NettyApplicationCallHandler(
                     }
             }
         }
+    }
+
+    override fun exceptionCaught(ctx: ChannelHandlerContext, cause: Throwable) {
+        when (cause) {
+            is ReadTimeoutException -> {
+                currentJob?.let {
+                    respond408RequestTimeout(ctx)
+                    it.cancel(CancellationException(cause))
+                } ?: ctx.fireExceptionCaught(cause)
+            }
+
+            else -> ctx.fireExceptionCaught(cause)
+        }
+    }
+
+    private fun respond408RequestTimeout(ctx: ChannelHandlerContext) {
+        val response = DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.REQUEST_TIMEOUT)
+        response.headers().add(HttpHeaders.ContentLength, "0")
+        response.headers().add(HttpHeaders.Connection, "close")
+        ctx.writeAndFlush(response)
+        ctx.close()
     }
 
     private suspend fun respondError400BadRequest(call: NettyHttp1ApplicationCall) {
@@ -79,11 +105,7 @@ internal fun NettyHttp1ApplicationRequest.isValid(): Boolean {
     if (!headers.contains(HttpHeaders.TransferEncoding)) return true
 
     val encodings = headers.getAll(HttpHeaders.TransferEncoding) ?: return true
-    if (!encodings.hasValidTransferEncoding()) {
-        return false
-    }
-
-    return true
+    return encodings.hasValidTransferEncoding()
 }
 
 internal fun List<String>.hasValidTransferEncoding(): Boolean {
@@ -113,5 +135,4 @@ internal fun List<String>.hasValidTransferEncoding(): Boolean {
     return true
 }
 
-private fun Char.isSeparator(): Boolean =
-    (this == ' ' || this == ',')
+private fun Char.isSeparator(): Boolean = (this == ' ' || this == ',')

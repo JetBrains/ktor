@@ -52,6 +52,21 @@ internal fun Application.webSockets() {
                     }
                 }
             }
+            webSocket("sub-protocol", protocol = "test-protocol") {
+                for (frame in incoming) {
+                    when (frame) {
+                        is Frame.Text -> {
+                            val text = frame.readText()
+                            send(Frame.Text(text))
+                        }
+                        is Frame.Binary -> send(Frame.Binary(fin = true, frame.data))
+                        else -> error("Unsupported frame type: ${frame.frameType}.")
+                    }
+                }
+            }
+            get("500") {
+                throw IllegalStateException()
+            }
         }
     }
 }

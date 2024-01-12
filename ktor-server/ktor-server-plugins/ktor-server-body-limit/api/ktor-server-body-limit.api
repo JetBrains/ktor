@@ -1,0 +1,9 @@
+public final class io/ktor/server/plugins/bodylimit/RequestBodyLimitConfig {
+	public fun <init> ()V
+	public final fun bodyLimit (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/ktor/server/plugins/bodylimit/RequestBodyLimitKt {
+	public static final fun getRequestBodyLimit ()Lio/ktor/server/application/RouteScopedPlugin;
+}
+

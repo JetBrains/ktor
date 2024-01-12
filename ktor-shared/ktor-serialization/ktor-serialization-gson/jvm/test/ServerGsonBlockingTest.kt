@@ -22,9 +22,6 @@ import kotlin.test.*
 @Suppress("DEPRECATION")
 class ServerGsonBlockingTest {
     private val dispatcher = UnsafeDispatcher()
-    private val environment = createTestEnvironment {
-        parentCoroutineContext = dispatcher
-    }
 
     @AfterTest
     fun cleanup() {
@@ -32,16 +29,21 @@ class ServerGsonBlockingTest {
     }
 
     @Test
-    fun testReceive(): Unit = withApplication(environment) {
-        application.intercept(ApplicationCallPipeline.Setup) {
-            withContext(dispatcher) {
-                proceed()
+    fun testReceive(): Unit = testApplication {
+        testApplicationProperties {
+            parentCoroutineContext = dispatcher
+        }
+        application {
+            intercept(ApplicationCallPipeline.Setup) {
+                withContext(dispatcher) {
+                    proceed()
+                }
             }
         }
-        application.install(ContentNegotiation) {
+        install(ContentNegotiation) {
             gson()
         }
-        application.routing {
+        routing {
             post("/") {
                 assertEquals(K(77), call.receive())
                 call.respondText("OK")

@@ -7,7 +7,6 @@ package io.ktor.utils.io
 import io.ktor.utils.io.internal.*
 import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.*
-import org.junit.*
 import kotlin.test.*
 import kotlin.test.Test
 

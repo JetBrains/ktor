@@ -8,7 +8,3 @@ import io.ktor.utils.io.pool.*
 
 @Suppress("NOTHING_TO_INLINE")
 internal actual inline fun identityHashCode(instance: Any): Int = instance.hashCode()
-
-actual class VerifyingObjectPool<T : Any> actual constructor(delegate: ObjectPool<T>) : VerifyingPoolBase<T>(delegate) {
-    override val allocated = HashSet<IdentityWrapper<T>>()
-}

@@ -8,6 +8,7 @@ import io.ktor.client.utils.*
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
 
@@ -47,7 +48,8 @@ public fun mergeHeaders(
                 block(key, value)
             }
         } else {
-            block(key, values.joinToString(","))
+            val separator = if (HttpHeaders.Cookie == key) "; " else ","
+            block(key, values.joinToString(separator))
         }
     }
 
@@ -94,7 +96,7 @@ internal suspend inline fun attachToUserJob(callJob: Job) {
 
     val cleanupHandler = userJob.invokeOnCompletion(onCancelling = true) { cause ->
         cause ?: return@invokeOnCompletion
-        callJob.cancel(CancellationException(cause.message))
+        callJob.cancel(kotlinx.coroutines.CancellationException(cause.message))
     }
 
     callJob.invokeOnCompletion {

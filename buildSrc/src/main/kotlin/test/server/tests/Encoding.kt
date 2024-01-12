@@ -10,6 +10,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.compression.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.util.*
 import io.ktor.utils.io.*
 
 internal fun Application.encodingTestServer() {
@@ -43,7 +44,7 @@ internal fun Application.encodingTestServer() {
                     call.response.headers.append(HttpHeaders.ContentEncoding, "gzip")
                     call.respond(
                         object : OutgoingContent.ReadChannelContent() {
-                            override fun readFrom(): ByteReadChannel = GzipEncoder.compress(channel)
+                            override fun readFrom(): ByteReadChannel = GZipEncoder.encode(channel)
                             override val contentLength: Long = 294
                         }
                     )

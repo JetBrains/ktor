@@ -50,7 +50,7 @@ class ClientHeadersTest : ClientLoader() {
             }.let {
                 assertEquals(HttpStatusCode.OK, it.status)
                 assertEquals("JSON", it.bodyAsText())
-                assertEquals("application/json; charset=UTF-8", it.headers[HttpHeaders.ContentType])
+                assertEquals("application/json", it.headers[HttpHeaders.ContentType])
             }
 
             client.get("$TEST_SERVER/headers-merge") {
@@ -58,7 +58,7 @@ class ClientHeadersTest : ClientLoader() {
                 accept(ContentType.Application.Xml)
             }.let {
                 assertEquals("XML", it.bodyAsText())
-                assertEquals("application/xml; charset=UTF-8", it.headers[HttpHeaders.ContentType])
+                assertEquals("application/xml", it.headers[HttpHeaders.ContentType])
             }
         }
     }

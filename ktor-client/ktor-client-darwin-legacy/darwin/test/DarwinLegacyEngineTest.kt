@@ -1,3 +1,4 @@
+
 import io.ktor.client.*
 import io.ktor.client.engine.darwin.*
 import io.ktor.client.engine.darwin.internal.legacy.*
@@ -8,7 +9,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.*
 import platform.Foundation.*
 import platform.Foundation.NSHTTPCookieStorage.Companion.sharedHTTPCookieStorage
-import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.*
 import kotlin.test.*
 
 /*
@@ -68,9 +69,12 @@ class DarwinLegacyEngineTest {
             stringToNSUrlString("http://127.0.0.1/echo_query?привет")
         )
 
-        assertEquals(
+        val possibleResults = setOf(
             "http://%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82.%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82/",
-            stringToNSUrlString("http://привет.привет/")
+            "http://xn--b1agh1afp.xn--b1agh1afp/",
+        )
+        assertTrue(
+            stringToNSUrlString("http://привет.привет/") in possibleResults
         )
     }
 

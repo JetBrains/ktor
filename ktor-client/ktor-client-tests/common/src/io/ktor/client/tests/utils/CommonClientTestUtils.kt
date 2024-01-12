@@ -109,8 +109,8 @@ private suspend fun concurrency(level: Int, block: suspend (Int) -> Unit) {
     }
 }
 
-class TestClientBuilder<T : HttpClientEngineConfig>(
-    var config: HttpClientConfig<T>.() -> Unit = {},
+class TestClientBuilder<out T : HttpClientEngineConfig>(
+    var config: HttpClientConfig<@UnsafeVariance T>.() -> Unit = {},
     var test: suspend TestInfo.(client: HttpClient) -> Unit = {},
     var after: suspend (client: HttpClient) -> Unit = {},
     var repeatCount: Int = 1,

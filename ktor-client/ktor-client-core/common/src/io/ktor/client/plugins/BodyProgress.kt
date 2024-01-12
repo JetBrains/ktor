@@ -6,6 +6,7 @@ package io.ktor.client.plugins
 
 import io.ktor.client.*
 import io.ktor.client.content.*
+import io.ktor.client.plugins.api.*
 import io.ktor.client.plugins.observer.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -14,7 +15,7 @@ import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.util.*
 import io.ktor.util.pipeline.*
-import kotlin.native.concurrent.*
+import io.ktor.utils.io.*
 
 private val UploadProgressListenerAttributeKey =
     AttributeKey<ProgressListener>("UploadProgressListenerAttributeKey")
@@ -25,36 +26,42 @@ private val DownloadProgressListenerAttributeKey =
 /**
  * Plugin that provides observable progress for uploads and downloads
  */
-public class BodyProgress internal constructor() {
+public val BodyProgress: ClientPlugin<Unit> = createClientPlugin("BodyProgress") {
 
-    private fun handle(scope: HttpClient) {
-        val observableContentPhase = PipelinePhase("ObservableContent")
-        scope.requestPipeline.insertPhaseAfter(reference = HttpRequestPipeline.Render, phase = observableContentPhase)
-        scope.requestPipeline.intercept(observableContentPhase) { content ->
-            val listener = context.attributes
-                .getOrNull(UploadProgressListenerAttributeKey) ?: return@intercept
+    on(AfterRenderHook) { request, content ->
+        val listener = request.attributes
+            .getOrNull(UploadProgressListenerAttributeKey) ?: return@on null
 
-            val observableContent = ObservableContent(content as OutgoingContent, context.executionContext, listener)
-            proceedWith(observableContent)
-        }
-
-        scope.receivePipeline.intercept(HttpReceivePipeline.After) { response ->
-            val listener = response.call.request.attributes
-                .getOrNull(DownloadProgressListenerAttributeKey) ?: return@intercept
-            val observableResponse = response.withObservableDownload(listener)
-            proceedWith(observableResponse)
-        }
+        ObservableContent(content, request.executionContext, listener)
     }
 
-    public companion object Plugin : HttpClientPlugin<Unit, BodyProgress> {
-        override val key: AttributeKey<BodyProgress> = AttributeKey("BodyProgress")
+    on(AfterReceiveHook) { response ->
+        val listener = response.call.request.attributes
+            .getOrNull(DownloadProgressListenerAttributeKey) ?: return@on null
+        response.withObservableDownload(listener)
+    }
+}
 
-        override fun prepare(block: Unit.() -> Unit): BodyProgress {
-            return BodyProgress()
+internal object AfterReceiveHook : ClientHook<suspend (HttpResponse) -> HttpResponse?> {
+    override fun install(client: HttpClient, handler: suspend (HttpResponse) -> HttpResponse?) {
+        client.receivePipeline.intercept(HttpReceivePipeline.After) { response ->
+            val newResponse = handler(response)
+            if (newResponse != null) proceedWith(newResponse)
         }
+    }
+}
 
-        override fun install(plugin: BodyProgress, scope: HttpClient) {
-            plugin.handle(scope)
+internal object AfterRenderHook : ClientHook<suspend (HttpRequestBuilder, OutgoingContent) -> OutgoingContent?> {
+    override fun install(
+        client: HttpClient,
+        handler: suspend (HttpRequestBuilder, OutgoingContent) -> OutgoingContent?
+    ) {
+        val observableContentPhase = PipelinePhase("ObservableContent")
+        client.requestPipeline.insertPhaseAfter(reference = HttpRequestPipeline.Render, phase = observableContentPhase)
+        client.requestPipeline.intercept(observableContentPhase) { content ->
+            if (content !is OutgoingContent) return@intercept
+            val newContent = handler(context, content) ?: return@intercept
+            proceedWith(newContent)
         }
     }
 }

@@ -23,6 +23,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.*
 import kotlin.random.*
 import kotlin.test.*
+import kotlin.test.Test
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
@@ -34,9 +35,9 @@ abstract class WebSocketEngineSuite<TEngine : ApplicationEngine, TConfiguration 
     private val errors = mutableListOf<Throwable>()
     override val timeout = 30.seconds
 
-    override fun plugins(application: Application, routingConfigurer: RoutingBuilder.() -> Unit) {
+    override fun plugins(application: Application, routingConfig: Route.() -> Unit) {
         application.install(WebSockets)
-        super.plugins(application, routingConfigurer)
+        super.plugins(application, routingConfig)
     }
 
     @Test
@@ -405,6 +406,57 @@ abstract class WebSocketEngineSuite<TEngine : ApplicationEngine, TConfiguration 
     }
 
     @Test
+    fun testConnectionWithContentType() = runTest {
+        val count = 5
+        val template = (1..count).joinToString("") { (it and 0x0f).toString(16) }
+        val bytes = template.toByteArray()
+
+        val collected = Channel<String>(Channel.UNLIMITED)
+
+        createAndStartServer {
+            webSocket("/") {
+                try {
+                    incoming.consumeEach { frame ->
+                        if (frame is Frame.Text) {
+                            collected.send(frame.readText())
+                        }
+                    }
+                } catch (cancelled: CancellationException) {
+                } catch (cause: Throwable) {
+                    errors.add(cause)
+                    collected.send(cause.toString())
+                }
+            }
+        }
+
+        useSocket {
+            negotiateHttpWebSocket(listOf("Content-Type" to "application/json"))
+
+            output.apply {
+                for (i in 1..count) {
+                    writeHex("0x81")
+                    writeByte(i.toByte())
+                    writeFully(bytes, 0, i)
+                    flush()
+                }
+
+                // close frame with code 1000
+                writeHex("0x88 0x02 0x03 0xe8")
+                flush()
+            }
+
+            assertCloseFrame()
+        }
+
+        for (i in 1..count) {
+            val expected = template.substring(0, i)
+            assertEquals(expected, collected.receive())
+        }
+
+        assertNull(collected.tryReceive().getOrNull())
+    }
+
+    @Test
     fun testProduceMessages() = runTest {
         val count = 125
         val template = (1..count).joinToString("") { (it and 0x0f).toString(16) }
@@ -623,7 +675,7 @@ abstract class WebSocketEngineSuite<TEngine : ApplicationEngine, TConfiguration 
         checkFrame(second.await())
     }
 
-    private suspend fun Connection.negotiateHttpWebSocket() {
+    private suspend fun Connection.negotiateHttpWebSocket(additionalHeader: List<Pair<String, String>> = emptyList()) {
         // send upgrade request
         output.apply {
             writeFully(
@@ -636,10 +688,8 @@ abstract class WebSocketEngineSuite<TEngine : ApplicationEngine, TConfiguration 
                     Origin: http://localhost:$port
                     Sec-WebSocket-Protocol: chat
                     Sec-WebSocket-Version: 13
-                """.trimIndent().replace(
-                    "\n",
-                    "\r\n"
-                ).encodeToByteArray()
+                    ${additionalHeader.joinToString("\n") { "${it.first}: ${it.second}" }}
+                """.trimIndent().trim().replace("\n", "\r\n").encodeToByteArray()
             )
             writeFully("\r\n\r\n".encodeToByteArray())
             flush()
@@ -764,6 +814,7 @@ internal suspend fun ByteWriteChannel.writeFrameTest(frame: Frame, masking: Bool
             writeInt(maskKey)
             data.mask(maskKey)
         }
+
         false -> data
     }
     writePacket(maskedData)

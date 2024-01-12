@@ -4,7 +4,6 @@
 
 package io.ktor.server.sessions
 
-import io.ktor.util.collections.*
 import kotlinx.coroutines.*
 import java.lang.ref.*
 import java.util.*

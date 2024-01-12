@@ -12,6 +12,7 @@ import io.ktor.websocket.*
 import io.ktor.util.*
 import kotlinx.atomicfu.*
 import kotlinx.coroutines.*
+import io.ktor.utils.io.*
 
 /**
  * Engine with tracer that wraps request execution into tracing functionality. Calls correspondent [tracer] method on

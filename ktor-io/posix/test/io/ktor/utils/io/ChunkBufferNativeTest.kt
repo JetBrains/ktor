@@ -2,18 +2,20 @@ package io.ktor.utils.io
 
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.core.internal.*
-import io.ktor.utils.io.pool.*
 import kotlinx.cinterop.*
 import kotlin.test.*
 
 class ChunkBufferNativeTest {
+    @Suppress("DEPRECATION")
     private val buffer = ChunkBuffer.Pool.borrow()
 
     @AfterTest
     fun destroy() {
+        @Suppress("DEPRECATION")
         buffer.release(ChunkBuffer.Pool)
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     @Test
     fun testReadDirectOnEmpty() {
         var invoked: Boolean
@@ -26,6 +28,7 @@ class ChunkBufferNativeTest {
         assertTrue(invoked)
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     @Test
     fun testReadDirectNegativeResult() {
         assertFails {
@@ -35,6 +38,7 @@ class ChunkBufferNativeTest {
         }
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     @Test
     fun testReadDirectTooManyBytesResult() {
         assertFails {
@@ -44,6 +48,7 @@ class ChunkBufferNativeTest {
         }
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     @Test
     fun testReadDirect() {
         var result: Int
@@ -59,6 +64,7 @@ class ChunkBufferNativeTest {
         assertEquals(8, buffer.readByte().toInt())
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     @Test
     fun testReadDirectAtEnd() {
         while (buffer.writeRemaining > 0) {
@@ -78,6 +84,7 @@ class ChunkBufferNativeTest {
         }
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     @Test
     fun testWriteDirect() {
         buffer.writeDirect { ptr ->
@@ -93,6 +100,7 @@ class ChunkBufferNativeTest {
         assertEquals(2, buffer.readByte().toInt())
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     @Test
     fun testWriteDirectOnFull() {
         val size = buffer.writeRemaining

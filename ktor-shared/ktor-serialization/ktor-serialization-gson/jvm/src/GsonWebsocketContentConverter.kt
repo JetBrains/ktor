@@ -16,7 +16,7 @@ import kotlinx.coroutines.*
  * GSON converter for the [WebSockets] plugin
  */
 public class GsonWebsocketContentConverter(private val gson: Gson = Gson()) : WebsocketContentConverter {
-    override suspend fun serializeNullable(charset: Charset, typeInfo: TypeInfo, value: Any?): Frame {
+    override suspend fun serialize(charset: Charset, typeInfo: TypeInfo, value: Any?): Frame {
         return Frame.Text(gson.toJson(value))
     }
 

@@ -9,8 +9,8 @@ import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.application.hooks.*
 import io.ktor.server.http.content.*
-import io.ktor.server.response.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 
 /**
  * A configuration for the [ConditionalHeaders] plugin.
@@ -112,48 +112,6 @@ public val ConditionalHeaders: RouteScopedPlugin<ConditionalHeadersConfig> = cre
         }
     }
 }
-
-/**
- * Checks the current [etag] value and pass it through conditions supplied by the remote client.
- * Depending on the conditions, it produces `410 Precondition Failed` or `304 Not modified` responses when necessary.
- * Otherwise, sets the `ETag` header and delegates to the [block] function
- *
- * It never handles If-None-Match: *  as it is related to non-etag logic (for example, Last modified checks).
- * See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26 for more details
- */
-@Deprecated(
-    "Use configuration for ConditionalHeaders or configure block of call.respond function.",
-    level = DeprecationLevel.ERROR
-)
-public suspend fun ApplicationCall.withETag(etag: String, putHeader: Boolean = true, block: suspend () -> Unit) {
-    val version = EntityTagVersion(etag)
-    val result = version.check(request.headers)
-    if (putHeader) {
-        response.header(HttpHeaders.ETag, etag)
-    }
-    when (result) {
-        VersionCheckResult.NOT_MODIFIED,
-        VersionCheckResult.PRECONDITION_FAILED -> respond(result.statusCode)
-        VersionCheckResult.OK -> block()
-    }
-}
-
-/**
- * Retrieves the `LastModified` and `ETag` versions from this [OutgoingContent] headers.
- */
-@Deprecated(
-    "Use versions or headers.parseVersions()",
-    level = DeprecationLevel.ERROR
-)
-public val OutgoingContent.defaultVersions: List<Version>
-    get() {
-        val extensionVersions = versions
-        if (extensionVersions.isNotEmpty()) {
-            return extensionVersions
-        }
-
-        return headers.parseVersions()
-    }
 
 /**
  * Retrieves the `LastModified` and `ETag` versions from headers.

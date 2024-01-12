@@ -6,11 +6,10 @@ package io.ktor.network.sockets
 
 import io.ktor.network.selector.*
 import io.ktor.network.util.*
-import io.ktor.util.network.*
 import kotlinx.cinterop.*
 import platform.posix.*
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 internal actual fun UDPSocketBuilder.Companion.connectUDP(
     selector: SelectorManager,
     remoteAddress: SocketAddress,
@@ -39,7 +38,7 @@ internal actual fun UDPSocketBuilder.Companion.connectUDP(
     )
 }
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 internal actual fun UDPSocketBuilder.Companion.bindUDP(
     selector: SelectorManager,
     localAddress: SocketAddress?,

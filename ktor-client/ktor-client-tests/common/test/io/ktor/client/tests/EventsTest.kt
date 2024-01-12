@@ -77,7 +77,7 @@ class EventsTest : ClientLoader() {
     fun testRedirectEvent() = clientTests(listOf("js")) {
         test { client ->
             counter.value = 0
-            client.monitor.subscribe(HttpRedirect.HttpResponseRedirect) {
+            client.monitor.subscribe(HttpResponseRedirectEvent) {
                 counter.incrementAndGet()
             }
 

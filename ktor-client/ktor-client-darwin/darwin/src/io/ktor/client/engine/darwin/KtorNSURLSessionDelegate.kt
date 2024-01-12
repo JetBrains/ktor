@@ -19,6 +19,7 @@ private const val WS_REQUESTS_INITIAL_CAPACITY = 16
 /**
  * Creates an instance of [KtorNSURLSessionDelegate]
  */
+@OptIn(UnsafeNumber::class)
 public fun KtorNSURLSessionDelegate(): KtorNSURLSessionDelegate {
     return KtorNSURLSessionDelegate(null)
 }

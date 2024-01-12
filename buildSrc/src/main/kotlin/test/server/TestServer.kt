@@ -28,11 +28,11 @@ internal fun startServer(): Closeable {
             tests()
         }.start()
 
-        scope.use(Closeable { server.stop(0L, 0L, TimeUnit.MILLISECONDS) })
+        scope.use { server.stop(0L, 0L, TimeUnit.MILLISECONDS) }
 
         val tlsServer = setupTLSServer()
         tlsServer.start()
-        scope.use(Closeable { tlsServer.stop(0L, 0L, TimeUnit.MILLISECONDS) })
+        scope.use { tlsServer.stop(0L, 0L, TimeUnit.MILLISECONDS) }
 
         Thread.sleep(1000)
     } catch (cause: Throwable) {
@@ -42,28 +42,23 @@ internal fun startServer(): Closeable {
     return scope
 }
 
-private fun setupTLSServer(): ApplicationEngine {
+private fun setupTLSServer(): EmbeddedServer<*, *> {
     val file = File.createTempFile("server", "certificate")
     val testKeyStore = generateCertificate(file)
-    val tlsServer = embeddedServer(
-        Jetty,
-        applicationEngineEnvironment {
-            sslConnector(
-                testKeyStore,
-                "mykey",
-                { "changeit".toCharArray() },
-                { "changeit".toCharArray() },
-                {
-                    this.port = DEFAULT_TLS_PORT
-                    this.keyStorePath = file
-                }
-            )
-
-            module {
-                tlsTests()
+    val tlsServer = embeddedServer(Jetty, configure = {
+        sslConnector(
+            testKeyStore,
+            "mykey",
+            { "changeit".toCharArray() },
+            { "changeit".toCharArray() },
+            {
+                this.port = DEFAULT_TLS_PORT
+                this.keyStorePath = file
             }
-        }
-    )
+        )
+    }) {
+        tlsTests()
+    }
 
     return tlsServer
 }

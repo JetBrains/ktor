@@ -6,15 +6,15 @@ package io.ktor.network.selector
 
 import io.mockk.*
 import kotlinx.coroutines.*
-import org.junit.*
-import org.junit.Test
+import org.junit.jupiter.api.*
 import java.io.*
 import kotlin.test.*
+import kotlin.test.Test
 
 class ActorSelectorManagerTest {
     val manager = ActorSelectorManager(Dispatchers.Default)
 
-    @After
+    @AfterEach
     fun tearDown() {
         manager.close()
     }

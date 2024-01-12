@@ -5,11 +5,9 @@
 package io.ktor.server.application
 
 import io.ktor.server.routing.*
-import io.ktor.util.*
-import io.ktor.util.pipeline.*
 
 /**
- * Defines a [Plugin](https://ktor.io/docs/plugins.html) that can be installed into a [Route].
+ * Defines a [Plugin](https://ktor.io/docs/plugins.html) that can be installed into a [RouteNode].
  * @param TConfiguration is the configuration object type for this Plugin
  * @param TPlugin is the instance type of the Plugin object
  */
@@ -17,17 +15,17 @@ public interface BaseRouteScopedPlugin<TConfiguration : Any, TPlugin : Any> :
     Plugin<ApplicationCallPipeline, TConfiguration, TPlugin>
 
 /**
- * Defines a Plugin that can be installed into [Route]
+ * Defines a Plugin that can be installed into [RouteNode]
  * @param TConfiguration is the configuration object type for this Plugin
  */
 public interface RouteScopedPlugin<TConfiguration : Any> : BaseRouteScopedPlugin<TConfiguration, PluginInstance>
 
 /**
- * Finds the plugin [F] in the current [Route]. If not found, search in the parent [Route].
+ * Finds the plugin [F] in the current [RouteNode]. If not found, search in the parent [RouteNode].
  *
  * @return [F] instance or `null` if not found
  */
-public fun <F : Any> Route.findPluginInRoute(plugin: Plugin<*, *, F>): F? {
+public fun <F : Any> RouteNode.findPluginInRoute(plugin: Plugin<*, *, F>): F? {
     var current = this
     while (true) {
         val installedFeature = current.pluginOrNull(plugin)

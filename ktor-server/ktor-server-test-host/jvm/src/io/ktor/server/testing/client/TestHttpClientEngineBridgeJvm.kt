@@ -11,7 +11,6 @@ import io.ktor.client.plugins.websocket.*
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.testing.*
-import io.ktor.util.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
@@ -21,7 +20,7 @@ internal actual class TestHttpClientEngineBridge actual constructor(
     private val app: TestApplicationEngine
 ) {
 
-    actual val supportedCapabilities = setOf<HttpClientEngineCapability<*>>(WebSocketCapability, HttpTimeout)
+    actual val supportedCapabilities = setOf<HttpClientEngineCapability<*>>(WebSocketCapability, HttpTimeoutCapability)
 
     actual suspend fun runWebSocketRequest(
         url: String,

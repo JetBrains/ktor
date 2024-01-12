@@ -7,7 +7,6 @@ package io.ktor.client.tests
 import io.ktor.client.plugins.observer.*
 import io.ktor.client.request.*
 import io.ktor.client.tests.utils.*
-import io.ktor.utils.io.concurrent.*
 import kotlin.test.*
 
 class ResponseObserverTest : ClientLoader() {

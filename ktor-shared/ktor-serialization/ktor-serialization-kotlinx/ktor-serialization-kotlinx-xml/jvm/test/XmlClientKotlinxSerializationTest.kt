@@ -8,7 +8,7 @@ import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.serialization.kotlinx.*
 import io.ktor.serialization.kotlinx.xml.*
-import org.junit.*
+import kotlin.test.*
 
 class XmlClientKotlinxSerializationTest : AbstractClientContentNegotiationTest() {
     private val converter = KotlinxSerializationConverter(DefaultXml)
@@ -16,7 +16,7 @@ class XmlClientKotlinxSerializationTest : AbstractClientContentNegotiationTest()
     override val customContentType: ContentType = ContentType.parse("text/xml")
     override val webSocketsConverter: WebsocketContentConverter = KotlinxWebsocketSerializationConverter(DefaultXml)
 
-    override fun ContentNegotiation.Config.configureContentNegotiation(contentType: ContentType) {
+    override fun ContentNegotiationConfig.configureContentNegotiation(contentType: ContentType) {
         register(contentType, converter)
     }
 

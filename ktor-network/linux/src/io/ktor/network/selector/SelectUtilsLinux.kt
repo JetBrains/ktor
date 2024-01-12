@@ -6,8 +6,8 @@ package io.ktor.network.selector
 
 import kotlinx.cinterop.*
 import platform.linux.*
-import platform.posix.*
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual fun inetNtopBridge(
     type: Int,
     address: CPointer<*>,

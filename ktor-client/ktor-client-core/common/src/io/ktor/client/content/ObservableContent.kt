@@ -14,14 +14,19 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.*
 
 /**
- * Callback that can be registered to listen for upload/download progress
- * @param bytesSentTotal number of transmitted bytes
- * @param contentLength body size. Can be null if the size is unknown
+ * Callback that can be registered to listen for upload/download progress.
+ * @param bytesSentTotal number of transmitted bytes.
+ * @param contentLength body size. Can be null if the size is unknown.
  */
-public typealias ProgressListener = suspend (bytesSentTotal: Long, contentLength: Long?) -> Unit
+public fun interface ProgressListener {
+    /**
+     * Invokes every time some data is flushed through the [ByteReadChannel].
+     */
+    public suspend fun onProgress(bytesSentTotal: Long, contentLength: Long?)
+}
 
 internal class ObservableContent(
-    delegate: OutgoingContent,
+    private val delegate: OutgoingContent,
     private val callContext: CoroutineContext,
     private val listener: ProgressListener
 ) : OutgoingContent.ReadChannelContent() {
@@ -36,9 +41,6 @@ internal class ObservableContent(
             delegate.writeTo(channel)
         }.channel
     }
-
-    @Suppress("CanBePrimaryConstructorProperty") // required to avoid InvalidMutabilityException on native
-    private val delegate = delegate
 
     override val contentType: ContentType?
         get() = delegate.contentType

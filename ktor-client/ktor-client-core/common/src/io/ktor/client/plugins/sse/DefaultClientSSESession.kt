@@ -4,9 +4,7 @@
 
 package io.ktor.client.plugins.sse
 
-import io.ktor.http.*
 import io.ktor.sse.*
-import io.ktor.util.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.flow.*
 import kotlin.coroutines.*
@@ -16,8 +14,6 @@ public class DefaultClientSSESession(
     content: SSEClientContent,
     private var input: ByteReadChannel,
     override val coroutineContext: CoroutineContext,
-    status: HttpStatusCode,
-    headers: Headers,
 ) : ClientSSESession {
     private var lastEventId: String? = null
     private var reconnectionTimeMillis = content.reconnectionTime.inWholeMilliseconds
@@ -37,18 +33,6 @@ public class DefaultClientSSESession(
 
     override val incoming: Flow<ServerSentEvent>
         get() = _incoming
-
-    init {
-        if (status != HttpStatusCode.OK) {
-            throw SSEException("Expected status code 200 but was: $status")
-        }
-
-        if (headers[HttpHeaders.ContentType] != ContentType.Text.EventStream.toString()) {
-            throw SSEException(
-                "Content type must be `text/event-stream` but was: ${headers[HttpHeaders.ContentType]}"
-            )
-        }
-    }
 
     private suspend fun ByteReadChannel.parseEvent(): ServerSentEvent? {
         val data = StringBuilder()

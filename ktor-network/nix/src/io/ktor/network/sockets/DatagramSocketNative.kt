@@ -68,9 +68,11 @@ internal class DatagramSocketNative(
         sender.close()
     }
 
+    @Suppress("DEPRECATION")
     override fun attachForReading(channel: ByteChannel): WriterJob =
         attachForReadingImpl(channel, descriptor, selectable, selector)
 
+    @Suppress("DEPRECATION")
     override fun attachForWriting(channel: ByteChannel): ReaderJob =
         attachForWritingImpl(channel, descriptor, selectable, selector)
 
@@ -82,7 +84,7 @@ internal class DatagramSocketNative(
         }
     }
 
-    @OptIn(UnsafeNumber::class)
+    @OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
     private fun tryReadDatagram(): Datagram? = memScoped {
         val clientAddress = alloc<sockaddr_storage>()
         val clientAddressLength: UIntVarOf<UInt> = alloc()

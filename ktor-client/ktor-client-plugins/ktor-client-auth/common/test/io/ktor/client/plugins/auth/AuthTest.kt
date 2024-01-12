@@ -15,7 +15,6 @@ import io.ktor.client.tests.utils.*
 import io.ktor.http.*
 import io.ktor.http.auth.*
 import io.ktor.test.dispatcher.*
-import io.ktor.util.*
 import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.*
 import kotlin.test.*
@@ -83,7 +82,23 @@ class AuthTest : ClientLoader() {
         }
     }
 
-    @Suppress("DEPRECATION")
+    @Test
+    fun testDigestAuthSHA256() = clientTests(listOf("Js", "native")) {
+        config {
+            install(Auth) {
+                digest {
+                    algorithmName = "SHA-256"
+                    credentials { DigestAuthCredentials("MyName", "Circle Of Life") }
+                    realm = "testrealm@host.com"
+                }
+            }
+        }
+        test { client ->
+            assertTrue(client.get("$TEST_SERVER/auth/digest-SHA256").status.isSuccess())
+        }
+    }
+
+    @Suppress("DEPRECATION_ERROR")
     @Test
     fun testBasicAuthLegacy() = clientTests(listOf("Js")) {
         config {
@@ -184,7 +199,7 @@ class AuthTest : ClientLoader() {
         }
     }
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Test
     fun testUnauthorizedBasicAuthLegacy() = clientTests(listOf("Js")) {
         config {
@@ -657,7 +672,7 @@ class AuthTest : ClientLoader() {
             loadCount = 0
             client.get("$TEST_SERVER/auth/bearer/test-refresh")
                 .bodyAsText()
-            client.plugin(Auth).providers.filterIsInstance<BearerAuthProvider>().first().clearToken()
+            client.authProviders.filterIsInstance<BearerAuthProvider>().first().clearToken()
             client.get("$TEST_SERVER/auth/bearer/test-refresh")
                 .bodyAsText()
 

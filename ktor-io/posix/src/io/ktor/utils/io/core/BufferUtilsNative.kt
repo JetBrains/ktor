@@ -10,21 +10,25 @@ import kotlin.contracts.*
 @PublishedApi
 internal val MAX_SIZE: size_t = size_t.MAX_VALUE
 
+@OptIn(ExperimentalForeignApi::class)
 @Suppress("DEPRECATION")
 public fun ChunkBuffer(ptr: CPointer<*>, lengthInBytes: Int, origin: ChunkBuffer?): ChunkBuffer {
     return ChunkBuffer(Memory(ptr, lengthInBytes), origin, null)
 }
 
+@OptIn(ExperimentalForeignApi::class)
 @Suppress("DEPRECATION")
 public fun ChunkBuffer(ptr: CPointer<*>, lengthInBytes: Long, origin: ChunkBuffer?): ChunkBuffer {
     return ChunkBuffer(Memory(ptr, lengthInBytes), origin, null)
 }
 
+@OptIn(ExperimentalForeignApi::class)
 @Suppress("DEPRECATION")
 public fun Buffer.readFully(pointer: CPointer<ByteVar>, offset: Int, length: Int) {
     readFully(pointer, offset.toLong(), length)
 }
 
+@OptIn(ExperimentalForeignApi::class)
 @Suppress("DEPRECATION")
 public fun Buffer.readFully(pointer: CPointer<ByteVar>, offset: Long, length: Int) {
     requirePositiveIndex(offset, "offset")
@@ -34,11 +38,13 @@ public fun Buffer.readFully(pointer: CPointer<ByteVar>, offset: Long, length: In
     }
 }
 
+@OptIn(ExperimentalForeignApi::class)
 @Suppress("DEPRECATION")
 public fun Buffer.readAvailable(pointer: CPointer<ByteVar>, offset: Int, length: Int): Int {
     return readAvailable(pointer, offset.toLong(), length)
 }
 
+@OptIn(ExperimentalForeignApi::class)
 @Suppress("DEPRECATION")
 public fun Buffer.readAvailable(pointer: CPointer<ByteVar>, offset: Long, length: Int): Int {
     val available = readRemaining
@@ -48,6 +54,7 @@ public fun Buffer.readAvailable(pointer: CPointer<ByteVar>, offset: Long, length
     return resultSize
 }
 
+@OptIn(ExperimentalForeignApi::class)
 @Suppress("DEPRECATION")
 public fun Buffer.writeFully(pointer: CPointer<ByteVar>, offset: Int, length: Int) {
     requirePositiveIndex(offset, "offset")
@@ -58,6 +65,7 @@ public fun Buffer.writeFully(pointer: CPointer<ByteVar>, offset: Int, length: In
     }
 }
 
+@OptIn(ExperimentalForeignApi::class)
 @Suppress("DEPRECATION")
 public fun Buffer.writeFully(pointer: CPointer<ByteVar>, offset: Long, length: Int) {
     requirePositiveIndex(offset, "offset")
@@ -69,7 +77,7 @@ public fun Buffer.writeFully(pointer: CPointer<ByteVar>, offset: Long, length: I
 }
 
 @Suppress("DEPRECATION")
-@OptIn(ExperimentalContracts::class)
+@OptIn(ExperimentalContracts::class, ExperimentalForeignApi::class)
 public inline fun Buffer.readDirect(block: (CPointer<ByteVar>) -> Int): Int {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -81,7 +89,7 @@ public inline fun Buffer.readDirect(block: (CPointer<ByteVar>) -> Int): Int {
 }
 
 @Suppress("DEPRECATION")
-@OptIn(ExperimentalContracts::class)
+@OptIn(ExperimentalContracts::class, ExperimentalForeignApi::class)
 public inline fun Buffer.writeDirect(block: (CPointer<ByteVar>) -> Int): Int {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)

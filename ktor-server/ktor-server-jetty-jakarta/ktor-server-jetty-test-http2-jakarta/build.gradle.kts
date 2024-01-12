@@ -23,7 +23,7 @@ dependencies {
 
 val jvmTest: org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest by tasks
 jvmTest.apply {
-    useJUnit()
+    useJUnitPlatform()
 
     systemProperty("enable.http2", "true")
     exclude("**/*StressTest*")

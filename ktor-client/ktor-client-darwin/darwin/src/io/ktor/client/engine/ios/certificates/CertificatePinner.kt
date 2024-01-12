@@ -6,12 +6,14 @@ package io.ktor.client.engine.ios.certificates
 
 @Deprecated(
     "Please use 'Darwin' engine instead",
-    replaceWith = ReplaceWith("CertificatePinner", "io.ktor.client.engine.darwin.certificates.CertificatePinner")
+    replaceWith = ReplaceWith("CertificatePinner", "io.ktor.client.engine.darwin.certificates.CertificatePinner"),
+    level = DeprecationLevel.ERROR
 )
 public typealias CertificatePinner = io.ktor.client.engine.darwin.certificates.CertificatePinner
 
 @Deprecated(
     "Please use 'Darwin' engine instead",
-    replaceWith = ReplaceWith("PinnedCertificate", "io.ktor.client.engine.darwin.certificates.PinnedCertificate")
+    replaceWith = ReplaceWith("PinnedCertificate", "io.ktor.client.engine.darwin.certificates.PinnedCertificate"),
+    level = DeprecationLevel.ERROR
 )
 public typealias PinnedCertificate = io.ktor.client.engine.darwin.certificates.PinnedCertificate

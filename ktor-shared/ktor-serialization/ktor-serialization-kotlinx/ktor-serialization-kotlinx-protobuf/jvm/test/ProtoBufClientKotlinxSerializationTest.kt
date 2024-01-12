@@ -19,7 +19,7 @@ class ProtoBufClientKotlinxSerializationTest : AbstractClientContentNegotiationT
     override val webSocketsConverter: WebsocketContentConverter =
         KotlinxWebsocketSerializationConverter(DefaultProtoBuf)
 
-    override fun ContentNegotiation.Config.configureContentNegotiation(contentType: ContentType) {
+    override fun ContentNegotiationConfig.configureContentNegotiation(contentType: ContentType) {
         register(contentType, converter)
     }
 

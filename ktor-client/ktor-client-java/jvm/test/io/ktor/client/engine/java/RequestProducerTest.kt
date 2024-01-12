@@ -10,11 +10,11 @@ import io.ktor.http.content.*
 import io.ktor.util.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
-import org.junit.Test
 import java.nio.*
 import java.util.concurrent.*
 import kotlin.coroutines.*
 import kotlin.test.*
+import kotlin.test.Test
 
 class RequestProducerTest {
 

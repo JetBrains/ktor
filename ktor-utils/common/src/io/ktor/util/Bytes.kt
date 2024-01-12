@@ -4,6 +4,8 @@
 
 package io.ktor.util
 
+import io.ktor.utils.io.*
+
 /**
  * Read [Short] in network order(BE) with specified [offset] from [ByteArray].
  */

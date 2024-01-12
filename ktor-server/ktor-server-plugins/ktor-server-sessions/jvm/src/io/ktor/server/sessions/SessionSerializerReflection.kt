@@ -6,7 +6,10 @@
 package io.ktor.server.sessions
 
 import io.ktor.http.*
+import io.ktor.server.sessions.serialization.*
 import io.ktor.util.*
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
 import java.lang.reflect.*
 import java.math.*
 import java.util.*
@@ -18,56 +21,35 @@ import kotlin.reflect.jvm.*
 private const val TYPE_TOKEN_PARAMETER_NAME: String = "\$type"
 
 /**
- * Creates the default [SessionSerializer] for the type [T].
+ * A reflection-based session serializer. Can be used for backward compatibility with previous versions.
+ * A serialized format is textual and optimized for size as it could be transferred via HTTP headers or cookies.
+ *
+ * @property T is a session instance class handled by this serializer
  */
-@Suppress("DEPRECATION_ERROR", "UNUSED")
-@Deprecated(
-    "Use defaultSessionSerializer instead.",
-    ReplaceWith("defaultSessionSerializer<T>()"),
-    level = DeprecationLevel.ERROR
-)
-public inline fun <reified T : Any> autoSerializerOf(): SessionSerializerReflection<T> =
-    defaultSessionSerializer<T>() as SessionSerializerReflection<T>
+public inline fun <reified T : Any> reflectionSessionSerializer(): SessionSerializer<T> =
+    reflectionSessionSerializer(typeOf<T>())
 
 /**
- * Creates the default [SessionSerializer] for the class [type].
+ * A reflection-based session serializer. Can be used for backward compatibility with previous versions.
+ * A serialized format is textual and optimized for size as it could be transferred via HTTP headers or cookies.
+ *
+ * @property typeInfo is a session instance class handled by this serializer
  */
-@Suppress("DEPRECATION_ERROR")
-@Deprecated(
-    "Use defaultSessionSerializer<T> instead.",
-    replaceWith = ReplaceWith("defaultSessionSerializer<T>()"),
-    level = DeprecationLevel.ERROR
-)
-public fun <T : Any> autoSerializerOf(type: KClass<T>): SessionSerializerReflection<T> =
-    defaultSessionSerializer<T>(type.starProjectedType) as SessionSerializerReflection<T>
-
-/**
- * Creates the default [SessionSerializer] by [typeInfo].
- */
-@Suppress("DEPRECATION_ERROR")
-public actual fun <T : Any> defaultSessionSerializer(typeInfo: KType): SessionSerializer<T> =
+public fun <T : Any> reflectionSessionSerializer(typeInfo: KType): SessionSerializer<T> =
     SessionSerializerReflection(typeInfo)
 
 /**
- * A default reflection-based session serializer.
+ * A reflection-based session serializer.
  * A serialized format is textual and optimized for size as it could be transferred via HTTP headers or cookies.
  *
  * @property type is a session instance class handled by this serializer
  */
-@Deprecated(
-    "Don't refer to the implementation class directly. " +
-        "Use interface type if possible or use defaultSessionSerializer function to create.",
-    level = DeprecationLevel.ERROR
-)
-public class SessionSerializerReflection<T : Any> internal constructor(
-    internal val typeInfo: KType
+internal class SessionSerializerReflection<T : Any>(
+    typeInfo: KType
 ) : SessionSerializer<T> {
 
-    @Deprecated("Use defaultSessionSerializer() function instead", level = DeprecationLevel.ERROR)
-    public constructor(type: KClass<T>) : this(type.starProjectedType)
-
     @Suppress("UNCHECKED_CAST")
-    public val type: KClass<T> = typeInfo.jvmErasure as KClass<T>
+    val type: KClass<T> = typeInfo.jvmErasure as KClass<T>
 
     override fun deserialize(text: String): T {
         val values = parseQueryString(text)
@@ -101,6 +83,7 @@ public class SessionSerializerReflection<T : Any> internal constructor(
                     when (it.kind) {
                         KParameter.Kind.INSTANCE,
                         KParameter.Kind.EXTENSION_RECEIVER -> findParticularType(type, bundle)
+
                         KParameter.Kind.VALUE ->
                             coerceType(it.type, deserializeValue(it.type.jvmErasure, bundle[it.name!!]!!))
                     }
@@ -162,8 +145,10 @@ public class SessionSerializerReflection<T : Any> internal constructor(
                         addAll(value)
                     }
                 }
+
                 else -> throw IllegalStateException("Couldn't inject property ${p.name} from value $value")
             }
+
             isSetType(p.returnType) -> when {
                 value !is Set<*> -> assignValue(instance, p, coerceType(p.returnType, value))
                 p is KMutableProperty1<X, *> -> p.setter.call(instance, coerceType(p.returnType, value))
@@ -173,8 +158,10 @@ public class SessionSerializerReflection<T : Any> internal constructor(
                         addAll(value)
                     }
                 }
+
                 else -> throw IllegalStateException("Couldn't inject property ${p.name} from value $value")
             }
+
             isMapType(p.returnType) -> when {
                 value !is Map<*, *> -> assignValue(instance, p, coerceType(p.returnType, value))
                 p is KMutableProperty1<X, *> -> p.setter.call(instance, coerceType(p.returnType, value))
@@ -184,13 +171,17 @@ public class SessionSerializerReflection<T : Any> internal constructor(
                         putAll(value)
                     }
                 }
+
                 else -> throw IllegalStateException("Couldn't inject property ${p.name} from value $value")
             }
+
             p is KMutableProperty1<X, *> -> when {
                 value == null && !p.returnType.isMarkedNullable ->
                     throw IllegalArgumentException("Couldn't inject null to property ${p.name}")
+
                 else -> p.setter.call(instance, coerceType(p.returnType, value))
             }
+
             else -> {
             }
         }
@@ -220,6 +211,7 @@ public class SessionSerializerReflection<T : Any> internal constructor(
                         ?: throw IllegalArgumentException("Couldn't coerce type ${value::class.java} to $type")
                 }
             }
+
             isSetType(type) -> when {
                 value !is Set<*> && value is Iterable<*> -> coerceType(type, value.toSet())
                 value !is Set<*> -> throw IllegalArgumentException("Couldn't coerce type ${value::class.java} to $type")
@@ -239,6 +231,7 @@ public class SessionSerializerReflection<T : Any> internal constructor(
                         ?: throw IllegalArgumentException("Couldn't coerce type ${value::class.java} to $type")
                 }
             }
+
             isMapType(type) -> when (value) {
                 !is Map<*, *> -> throw IllegalArgumentException("Couldn't coerce type ${value::class.java} to $type")
                 else -> {
@@ -277,9 +270,11 @@ public class SessionSerializerReflection<T : Any> internal constructor(
                         ?: throw IllegalArgumentException("Couldn't coerce type ${value::class.java} to $type")
                 }
             }
+
             isEnumType(type) -> {
                 type.javaType.toJavaClass().enumConstants.first { (it as? Enum<*>)?.name == value }
             }
+
             type.toJavaClass() == Float::class.java && value is Number -> value.toFloat()
             type.toJavaClass() == UUID::class.java && value is String -> UUID.fromString(value)
             else -> value
@@ -339,15 +334,18 @@ public class SessionSerializerReflection<T : Any> internal constructor(
                         'f' -> false
                         else -> throw IllegalArgumentException("Unsupported bo-value ${value.take(4)}")
                     }
+
                     'd' -> BigDecimal(value.drop(3))
                     'i' -> BigInteger(value.drop(3))
                     else -> throw IllegalArgumentException("Unsupported b-type ${value.take(3)}")
                 }
+
                 'o' -> when (value.getOrNull(2)) {
                     'm' -> Optional.empty<Any?>()
                     'p' -> Optional.ofNullable(deserializeValue(owner, value.drop(3)))
                     else -> throw IllegalArgumentException("Unsupported o-value ${value.take(3)}")
                 }
+
                 's' -> value.drop(2)
                 'c' -> when (value.getOrNull(2)) {
                     'l' -> deserializeCollection(value.drop(3))
@@ -355,6 +353,7 @@ public class SessionSerializerReflection<T : Any> internal constructor(
                     'h' -> value.drop(3).first()
                     else -> throw IllegalArgumentException("Unsupported c-type ${value.take(3)}")
                 }
+
                 'm' -> deserializeMap(value.drop(2))
                 '#' -> deserializeObject(owner, value.drop(2))
                 else -> throw IllegalArgumentException("Unsupported type ${value.take(2)}")
@@ -376,6 +375,7 @@ public class SessionSerializerReflection<T : Any> internal constructor(
                 value.isPresent -> "#op${serializeValue(value.get())}"
                 else -> "#om"
             }
+
             is String -> "#s$value"
             is List<*> -> "#cl${serializeCollection(value)}"
             is Set<*> -> "#cs${serializeCollection(value)}"

@@ -10,12 +10,12 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.auth.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 /**
  * Installs the client's [BearerAuthProvider].
  */
-public fun Auth.bearer(block: BearerAuthConfig.() -> Unit) {
+public fun AuthConfig.bearer(block: BearerAuthConfig.() -> Unit) {
     with(BearerAuthConfig().apply(block)) {
         this@bearer.providers.add(BearerAuthProvider(_refreshTokens, _loadTokens, _sendWithoutRequest, realm))
     }
@@ -39,7 +39,7 @@ public class RefreshTokensParams(
      * Marks that this request is for refreshing auth tokens, resulting in a special handling of it.
      */
     public fun HttpRequestBuilder.markAsRefreshTokenRequest() {
-        attributes.put(Auth.AuthCircuitBreaker, Unit)
+        attributes.put(AuthCircuitBreaker, Unit)
     }
 }
 
@@ -93,7 +93,7 @@ public class BearerAuthProvider(
 ) : AuthProvider {
 
     @Suppress("OverridingDeprecatedMember")
-    @Deprecated("Please use sendWithoutRequest function instead")
+    @Deprecated("Please use sendWithoutRequest function instead", level = DeprecationLevel.ERROR)
     override val sendWithoutRequest: Boolean
         get() = error("Deprecated")
 

@@ -127,8 +127,9 @@ class HttpTimeoutTest : ClientLoader() {
 
                 client.prepareRequest(requestBuilder).body<ByteReadChannel>().cancel()
 
-                delay(5000) // Channel is closing asynchronously.
-                assertTrue { requestBuilder.executionContext.getActiveChildren().none() }
+                waitForCondition("all children to be cancelled") {
+                    requestBuilder.executionContext.getActiveChildren().none()
+                }
             }
         }
     }
@@ -509,34 +510,34 @@ class HttpTimeoutTest : ClientLoader() {
     @Test
     fun testNonPositiveTimeout() {
         assertFailsWith<IllegalArgumentException> {
-            HttpTimeout.HttpTimeoutCapabilityConfiguration(
+            HttpTimeoutConfig(
                 requestTimeoutMillis = -1
             )
         }
         assertFailsWith<IllegalArgumentException> {
-            HttpTimeout.HttpTimeoutCapabilityConfiguration(
+            HttpTimeoutConfig(
                 requestTimeoutMillis = 0
             )
         }
 
         assertFailsWith<IllegalArgumentException> {
-            HttpTimeout.HttpTimeoutCapabilityConfiguration(
+            HttpTimeoutConfig(
                 socketTimeoutMillis = -1
             )
         }
         assertFailsWith<IllegalArgumentException> {
-            HttpTimeout.HttpTimeoutCapabilityConfiguration(
+            HttpTimeoutConfig(
                 socketTimeoutMillis = 0
             )
         }
 
         assertFailsWith<IllegalArgumentException> {
-            HttpTimeout.HttpTimeoutCapabilityConfiguration(
+            HttpTimeoutConfig(
                 connectTimeoutMillis = -1
             )
         }
         assertFailsWith<IllegalArgumentException> {
-            HttpTimeout.HttpTimeoutCapabilityConfiguration(
+            HttpTimeoutConfig(
                 connectTimeoutMillis = 0
             )
         }

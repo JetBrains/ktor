@@ -72,6 +72,7 @@ public sealed class PosixException(public val errno: Int, message: String) : Exc
          * @param posixFunctionName optional function name to be included to the exception message
          * @return an instance of [PosixException] or it's subtype
          */
+        @OptIn(ExperimentalForeignApi::class)
         public fun forErrno(
             errno: Int = platform.posix.errno,
             posixFunctionName: String? = null
@@ -117,4 +118,5 @@ public sealed class PosixException(public val errno: Int, message: String) : Exc
 internal fun PosixException.wrapIO(): IOException =
     IOException("I/O operation failed due to posix error code $errno", this)
 
+@OptIn(ExperimentalForeignApi::class)
 private fun posixErrorToString(errno: Int): String = strerror(errno)?.toKString() ?: "Unknown error code: $errno"

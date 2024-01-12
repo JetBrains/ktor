@@ -15,6 +15,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
 import io.ktor.util.pipeline.*
+import kotlin.coroutines.*
 import kotlin.test.*
 
 @Suppress("DEPRECATION")
@@ -261,7 +262,10 @@ class CallIdTest {
     fun testCustomVerifier(): Unit = withTestApplication {
         application.install(CallId) {
             header(HttpHeaders.XRequestId)
-            verify { if (it.length < 3) throw RejectedCallIdException(it); it.length > 4 }
+            verify {
+                if (it.length < 3) throw RejectedCallIdException(it)
+                return@verify it.length > 4
+            }
         }
         handle {
             call.respond(call.callId.toString())

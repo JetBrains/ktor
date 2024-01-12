@@ -7,6 +7,7 @@ import io.ktor.utils.io.core.internal.*
 import io.ktor.utils.io.pool.*
 import kotlinx.cinterop.*
 
+@OptIn(ExperimentalForeignApi::class)
 public actual fun ByteReadPacket(
     array: ByteArray,
     offset: Int,
@@ -18,6 +19,7 @@ public actual fun ByteReadPacket(
         return ByteReadPacket.Empty
     }
 
+    @Suppress("DEPRECATION")
     val pool = object : SingleInstancePool<ChunkBuffer>() {
         private var pinned: Pinned<*>? = null
 

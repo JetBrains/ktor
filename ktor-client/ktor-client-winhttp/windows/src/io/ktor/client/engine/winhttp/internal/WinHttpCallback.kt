@@ -9,6 +9,7 @@ import platform.windows.*
 import platform.windows.HINTERNET
 import platform.winhttp.*
 
+@OptIn(ExperimentalForeignApi::class)
 internal enum class WinHttpCallbackStatus(val value: UInt) {
     SecureFailure(WINHTTP_CALLBACK_STATUS_SECURE_FAILURE.convert<UInt>()),
     HeadersAvailable(WINHTTP_CALLBACK_STATUS_HEADERS_AVAILABLE.convert<UInt>()),
@@ -20,6 +21,7 @@ internal enum class WinHttpCallbackStatus(val value: UInt) {
     CloseComplete(WINHTTP_CALLBACK_STATUS_CLOSE_COMPLETE.convert<UInt>())
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal fun winHttpCallback(
     @Suppress("UNUSED_PARAMETER")
     hInternet: HINTERNET?,

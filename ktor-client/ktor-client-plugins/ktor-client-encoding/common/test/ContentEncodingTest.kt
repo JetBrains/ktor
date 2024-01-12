@@ -94,4 +94,19 @@ class ContentEncodingTest : ClientLoader() {
             assertContentEquals(ByteArray(500) { it.toByte() }, body)
         }
     }
+
+    @Test
+    fun testDisableDecompression() = clientTests(listOf("OkHttp")) {
+        config {
+            ContentEncoding(mode = ContentEncodingConfig.Mode.CompressRequest) {
+                gzip()
+            }
+        }
+
+        test { client ->
+            val response = client.get("$TEST_URL/gzip-precompressed")
+            assertEquals(HttpStatusCode.OK, response.status)
+            assertEquals("gzip", response.headers[HttpHeaders.ContentEncoding])
+        }
+    }
 }

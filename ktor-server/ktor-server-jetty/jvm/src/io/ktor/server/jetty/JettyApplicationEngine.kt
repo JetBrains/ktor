@@ -4,23 +4,26 @@
 
 package io.ktor.server.jetty
 
+import io.ktor.events.*
+import io.ktor.server.application.*
 import io.ktor.server.engine.*
-import io.ktor.server.util.*
-import io.ktor.util.*
 import kotlinx.coroutines.*
 
 /**
  * [ApplicationEngine] implementation for running in a standalone Jetty
  */
 public class JettyApplicationEngine(
-    environment: ApplicationEngineEnvironment,
-    configure: Configuration.() -> Unit
-) : JettyApplicationEngineBase(environment, configure) {
+    environment: ApplicationEnvironment,
+    monitor: Events,
+    developmentMode: Boolean,
+    configuration: Configuration,
+    private val applicationProvider: () -> Application
+) : JettyApplicationEngineBase(environment, monitor, developmentMode, configuration, applicationProvider) {
 
     private val dispatcher = server.threadPool.asCoroutineDispatcher()
 
     override fun start(wait: Boolean): JettyApplicationEngine {
-        server.handler = JettyKtorHandler(environment, this::pipeline, dispatcher, configuration)
+        server.handler = JettyKtorHandler(environment, pipeline, dispatcher, configuration, applicationProvider)
         super.start(wait)
         return this
     }

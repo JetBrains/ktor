@@ -11,21 +11,19 @@ import kotlin.test.*
 class TestConnectorInterfaceUsed {
     @Test
     fun testConnectorListenHost() {
-        val engine = CIOApplicationEngine(
-            applicationEngineEnvironment {
-                connector {
-                    host = "some/illegal/host/name"
-                    port = 9091
-                }
+        val server = embeddedServer(CIO, applicationEnvironment(), {
+            connector {
+                host = "some/illegal/host/name"
+                port = 9091
             }
-        ) {}
+        })
 
         assertFails {
-            engine.start()
+            server.start()
 
             // this shouldn't happen
             try {
-                engine.stop(50, 2000)
+                server.stop(50, 2000)
             } catch (_: Throwable) {
             }
         }

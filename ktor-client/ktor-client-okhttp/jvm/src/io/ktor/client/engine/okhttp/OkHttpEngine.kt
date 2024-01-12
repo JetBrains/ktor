@@ -10,7 +10,6 @@ import io.ktor.client.plugins.*
 import io.ktor.client.plugins.sse.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
-import io.ktor.client.utils.*
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.util.*
@@ -22,7 +21,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.internal.http.HttpMethod
 import okio.*
-import java.io.Closeable
 import java.util.concurrent.*
 import kotlin.coroutines.*
 
@@ -30,15 +28,8 @@ import kotlin.coroutines.*
 @OptIn(InternalAPI::class, DelicateCoroutinesApi::class)
 public class OkHttpEngine(override val config: OkHttpConfig) : HttpClientEngineBase("ktor-okhttp") {
 
-    public override val dispatcher: CoroutineDispatcher by lazy {
-        Dispatchers.clientDispatcher(
-            config.threadsCount,
-            "ktor-okhttp-dispatcher"
-        )
-    }
-
     override val supportedCapabilities: Set<HttpClientEngineCapability<*>> =
-        setOf(HttpTimeout, WebSocketCapability, SSECapability)
+        setOf(HttpTimeoutCapability, WebSocketCapability, SSECapability)
 
     private val requestsJob: CoroutineContext
 
@@ -63,7 +54,6 @@ public class OkHttpEngine(override val config: OkHttpConfig) : HttpClientEngineB
                     client.connectionPool.evictAll()
                     client.dispatcher.executorService.shutdown()
                 }
-                (dispatcher as Closeable).close()
             }
         }
     }
@@ -72,7 +62,7 @@ public class OkHttpEngine(override val config: OkHttpConfig) : HttpClientEngineB
         val callContext = callContext()
         val engineRequest = data.convertToOkHttpRequest(callContext)
 
-        val requestEngine = clientCache[data.getCapabilityOrNull(HttpTimeout)]
+        val requestEngine = clientCache[data.getCapabilityOrNull(HttpTimeoutCapability)]
             ?: error("OkHttpClient can't be constructed because HttpTimeout plugin is not installed")
 
         return when {
@@ -159,7 +149,7 @@ public class OkHttpEngine(override val config: OkHttpConfig) : HttpClientEngineB
         }
     }
 
-    private fun createOkHttpClient(timeoutExtension: HttpTimeout.HttpTimeoutCapabilityConfiguration?): OkHttpClient {
+    private fun createOkHttpClient(timeoutExtension: HttpTimeoutConfig?): OkHttpClient {
         val builder = (config.preconfigured ?: okHttpClientPrototype).newBuilder()
 
         builder.dispatcher(Dispatcher())
@@ -240,7 +230,7 @@ internal fun OutgoingContent.convertToOkHttpBody(callContext: CoroutineContext):
  */
 @OptIn(InternalAPI::class)
 private fun OkHttpClient.Builder.setupTimeoutAttributes(
-    timeoutAttributes: HttpTimeout.HttpTimeoutCapabilityConfiguration
+    timeoutAttributes: HttpTimeoutConfig
 ): OkHttpClient.Builder {
     timeoutAttributes.connectTimeoutMillis?.let {
         connectTimeout(convertLongTimeoutToLongWithInfiniteAsZero(it), TimeUnit.MILLISECONDS)

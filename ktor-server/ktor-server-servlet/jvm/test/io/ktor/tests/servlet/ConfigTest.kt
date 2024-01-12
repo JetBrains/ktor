@@ -7,8 +7,9 @@ package io.ktor.tests.servlet
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.servlet.*
-import io.ktor.server.servlet.ServletApplicationEngine.Companion.ApplicationEngineEnvironmentAttributeKey
+import io.ktor.server.servlet.ServletApplicationEngine.Companion.ApplicationAttributeKey
 import io.ktor.server.servlet.ServletApplicationEngine.Companion.ApplicationEnginePipelineAttributeKey
+import io.ktor.server.servlet.ServletApplicationEngine.Companion.EnvironmentAttributeKey
 import io.mockk.*
 import java.util.*
 import javax.servlet.*
@@ -33,7 +34,8 @@ class ConfigTest {
             every { initParameterNames } returns Collections.enumeration(listOf("io.ktor.ktor.config"))
             every { classLoader } returns this::class.java.classLoader
             every { contextPath } returns "/"
-            every { getAttribute(ApplicationEngineEnvironmentAttributeKey) } returns null
+            every { getAttribute(ApplicationAttributeKey) } returns null
+            every { getAttribute(EnvironmentAttributeKey) } returns null
         }
 
         val config = mockk<ServletConfig> {
@@ -66,40 +68,8 @@ class ConfigTest {
             every { initParameterNames } returns Collections.enumeration(listOf("io.ktor.ktor.config"))
             every { classLoader } returns this::class.java.classLoader
             every { contextPath } returns "/"
-            every { getAttribute(ApplicationEngineEnvironmentAttributeKey) } returns null
-        }
-
-        val config = mockk<ServletConfig> {
-            every { getInitParameter("io.ktor.ktor.config") } returns "custom-config.yaml"
-            every { servletContext } returns context
-            every { servletName } returns "ktor-test"
-            every { initParameterNames } returns Collections.enumeration(emptyList())
-        }
-
-        engine.init(config)
-        engine.service(getRequest(), getResponse())
-        engine.destroy()
-        assertTrue(interceptorCalled)
-    }
-
-    @Test
-    fun resolveYamlFromDefaultConfig() {
-        val engine = ServletApplicationEngine()
-        val pipeline = EnginePipeline()
-
-        var interceptorCalled = false
-        pipeline.intercept(EnginePipeline.Call) {
-            val value = call.application.environment.config.property("property").getString()
-            assertEquals("a", value)
-            interceptorCalled = true
-        }
-
-        val context = mockk<ServletContext> {
-            every { getAttribute(ApplicationEnginePipelineAttributeKey) } returns pipeline
-            every { initParameterNames } returns Collections.enumeration(emptyList())
-            every { classLoader } returns this::class.java.classLoader
-            every { contextPath } returns "/"
-            every { getAttribute(ApplicationEngineEnvironmentAttributeKey) } returns null
+            every { getAttribute(ApplicationAttributeKey) } returns null
+            every { getAttribute(EnvironmentAttributeKey) } returns null
         }
 
         val config = mockk<ServletConfig> {

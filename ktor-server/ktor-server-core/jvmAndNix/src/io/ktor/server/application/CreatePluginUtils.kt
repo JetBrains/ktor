@@ -92,7 +92,7 @@ public fun <PluginConfigT : Any> createApplicationPlugin(
 }
 
 /**
- * Creates a [RouteScopedPlugin] that can be installed into a [io.ktor.server.routing.Route].
+ * Creates a [RouteScopedPlugin] that can be installed into a [io.ktor.server.routing.RouteNode].
  *
  * The example below creates a plugin that prints a requested URL each time your application receives a call:
  * ```
@@ -129,7 +129,7 @@ public fun <PluginConfigT : Any> createRouteScopedPlugin(
         configure: PluginConfigT.() -> Unit
     ): PluginInstance {
         val application = when (pipeline) {
-            is Route -> pipeline.application
+            is RouteNode -> pipeline.application
             is Application -> pipeline
             else -> error("Unsupported pipeline type: ${pipeline::class}")
         }
@@ -139,7 +139,7 @@ public fun <PluginConfigT : Any> createRouteScopedPlugin(
 }
 
 /**
- * Creates a [RouteScopedPlugin] that can be installed into a [io.ktor.server.routing.Route].
+ * Creates a [RouteScopedPlugin] that can be installed into a [io.ktor.server.routing.RouteNode].
  *
  * The example below creates a plugin that prints a requested URL each time your application receives a call:
  * ```
@@ -186,7 +186,7 @@ public fun <PluginConfigT : Any> createRouteScopedPlugin(
         }
 
         val application = when (pipeline) {
-            is Route -> pipeline.application
+            is RouteNode -> pipeline.application
             is Application -> pipeline
             else -> error("Unsupported pipeline type: ${pipeline::class}")
         }
@@ -221,7 +221,7 @@ public fun createApplicationPlugin(
 ): ApplicationPlugin<Unit> = createApplicationPlugin(name, {}, body)
 
 /**
- * Creates a [RouteScopedPlugin] that can be installed into a [io.ktor.server.routing.Route].
+ * Creates a [RouteScopedPlugin] that can be installed into a [io.ktor.server.routing.RouteNode].
  *
  * The example below creates a plugin that prints a requested URL each time your application receives a call:
  * ```
@@ -238,7 +238,7 @@ public fun createApplicationPlugin(
  *
  * You can learn more from [Custom plugins](https://ktor.io/docs/custom-plugins.html).
  *
- * @param name A name of a plugin that is used to get an instance of the plugin installed to the [io.ktor.server.routing.Route].
+ * @param name A name of a plugin that is used to get an instance of the plugin installed to the [io.ktor.server.routing.RouteNode].
  * @param body Allows you to define handlers ([onCall], [onCallReceive], [onCallRespond] and so on) that
  * can modify the behaviour of an [Application] where your plugin is installed.
  **/
@@ -287,7 +287,7 @@ private fun <
         override val application: Application = application
         override val pipeline: ApplicationCallPipeline = pipeline
         override val pluginConfig: PluginConfigT = config
-        override val route: Route? = pipeline as? Route
+        override val route: RouteNode? = pipeline as? RouteNode
     }
 
     pluginBuilder.setupPlugin(body)
@@ -317,27 +317,3 @@ private fun <Configuration : Any, Builder : PluginBuilder<Configuration>> Builde
 
     hooks.forEach { it.install(pipeline) }
 }
-
-@Deprecated("This will be removed", level = DeprecationLevel.HIDDEN)
-@kotlin.jvm.JvmName("createRouteScopedPluginOld")
-public fun createRouteScopedPlugin(
-    name: String,
-    body: PluginBuilder<Unit>.() -> Unit
-): RouteScopedPlugin<Unit> = createRouteScopedPlugin(name, {}, body)
-
-@Deprecated("This will be removed", level = DeprecationLevel.HIDDEN)
-@kotlin.jvm.JvmName("createRouteScopedPluginOld")
-public fun <PluginConfigT : Any> createRouteScopedPlugin(
-    name: String,
-    createConfiguration: () -> PluginConfigT,
-    body: PluginBuilder<PluginConfigT>.() -> Unit
-): RouteScopedPlugin<PluginConfigT> = createRouteScopedPlugin(name, createConfiguration, body)
-
-@Deprecated("This will be removed", level = DeprecationLevel.HIDDEN)
-@kotlin.jvm.JvmName("createRouteScopedPluginOld")
-public fun <PluginConfigT : Any> createRouteScopedPlugin(
-    name: String,
-    configurationPath: String,
-    createConfiguration: (config: ApplicationConfig) -> PluginConfigT,
-    body: PluginBuilder<PluginConfigT>.() -> Unit
-): RouteScopedPlugin<PluginConfigT> = createRouteScopedPlugin(name, configurationPath, createConfiguration, body)

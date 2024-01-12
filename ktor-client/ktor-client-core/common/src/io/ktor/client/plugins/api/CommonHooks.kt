@@ -10,6 +10,8 @@ import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.events.*
 import io.ktor.http.content.*
+import kotlinx.coroutines.*
+import kotlin.coroutines.*
 
 /**
  * A hook that executes first in request processing.
@@ -28,7 +30,10 @@ public object SetupRequest : ClientHook<suspend (HttpRequestBuilder) -> Unit> {
  */
 public object Send : ClientHook<suspend Send.Sender.(HttpRequestBuilder) -> HttpClientCall> {
 
-    public class Sender internal constructor(private val httpSendSender: io.ktor.client.plugins.Sender) {
+    public class Sender internal constructor(
+        private val httpSendSender: io.ktor.client.plugins.Sender,
+        override val coroutineContext: CoroutineContext
+    ) : CoroutineScope {
         /**
          * Continues execution of the request.
          */
@@ -38,7 +43,7 @@ public object Send : ClientHook<suspend Send.Sender.(HttpRequestBuilder) -> Http
 
     override fun install(client: HttpClient, handler: suspend Sender.(HttpRequestBuilder) -> HttpClientCall) {
         client.plugin(HttpSend).intercept { request ->
-            handler(Sender(this), request)
+            handler(Sender(this, client.coroutineContext), request)
         }
     }
 }

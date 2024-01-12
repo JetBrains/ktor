@@ -9,11 +9,15 @@ import kotlinx.cinterop.*
 import platform.windows.*
 import platform.winhttp.*
 
+@OptIn(ExperimentalForeignApi::class)
 private val winHttpModuleHandle by lazy {
     GetModuleHandleW("winhttp.dll")
 }
+
+@OptIn(ExperimentalForeignApi::class)
 private val languageId = makeLanguageId(LANG_NEUTRAL.convert(), SUBLANG_DEFAULT.convert())
 
+@OptIn(ExperimentalForeignApi::class)
 private val ERROR_INSUFFICIENT_BUFFER: UInt = platform.windows.ERROR_INSUFFICIENT_BUFFER.convert()
 
 /**
@@ -42,6 +46,7 @@ internal fun getWinHttpException(message: String, errorCode: UInt): Exception {
 /**
  * Creates an error message from WinAPI error code.
  */
+@OptIn(ExperimentalForeignApi::class)
 internal fun getErrorMessage(errorCode: UInt): String {
     return formatMessage(errorCode, winHttpModuleHandle)
         ?: formatMessage(errorCode)
@@ -54,6 +59,7 @@ internal fun getErrorMessage(errorCode: UInt): String {
  * @param errorCode is error code.
  * @param moduleHandle is DLL handle to look for message.
  */
+@OptIn(ExperimentalForeignApi::class)
 private fun formatMessage(errorCode: UInt, moduleHandle: HMODULE? = null): String? = memScoped {
     val formatSourceFlag = if (moduleHandle != null) {
         FORMAT_MESSAGE_FROM_HMODULE
@@ -96,7 +102,7 @@ private fun formatMessage(errorCode: UInt, moduleHandle: HMODULE? = null): Strin
         errorCode,
         languageId,
         bufferPtr.reinterpret(),
-        0,
+        0.convert(),
         null
     )
 
@@ -112,6 +118,7 @@ private fun formatMessage(errorCode: UInt, moduleHandle: HMODULE? = null): Strin
     }
 }
 
+@OptIn(ExperimentalForeignApi::class)
 private fun CPointer<UShortVar>.toKStringFromUtf16(size: Int): String {
     val nativeBytes = this
 

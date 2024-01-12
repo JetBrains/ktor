@@ -19,6 +19,7 @@ kotlin.sourceSets {
         dependencies {
             api(project(":ktor-client:ktor-client-mock"))
             api(project(":ktor-test-dispatcher"))
+            api(libs.kotlin.test)
         }
     }
     commonTest {
@@ -33,6 +34,7 @@ kotlin.sourceSets {
             api(project(":ktor-client:ktor-client-plugins:ktor-client-json:ktor-client-serialization"))
             api(project(":ktor-shared:ktor-serialization:ktor-serialization-kotlinx"))
             api(project(":ktor-shared:ktor-serialization:ktor-serialization-kotlinx:ktor-serialization-kotlinx-json"))
+            api(libs.kotlin.test)
         }
     }
     jvmMain {
@@ -47,7 +49,7 @@ kotlin.sourceSets {
             api(project(":ktor-shared:ktor-serialization:ktor-serialization-kotlinx"))
             api(libs.logback.classic)
             api(libs.junit)
-            api(libs.kotlin.test.junit)
+            api(kotlin("test-junit5"))
             implementation(libs.kotlinx.coroutines.debug)
         }
     }
@@ -63,6 +65,7 @@ kotlin.sourceSets {
             }
             implementation(project(":ktor-client:ktor-client-plugins:ktor-client-logging"))
             implementation(libs.kotlinx.coroutines.slf4j)
+            implementation(libs.junit)
         }
     }
 

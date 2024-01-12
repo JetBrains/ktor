@@ -46,6 +46,7 @@ public actual interface ByteWriteChannel {
      */
     public actual suspend fun writeAvailable(src: ByteArray, offset: Int, length: Int): Int
 
+    @Suppress("DEPRECATION")
     public actual suspend fun writeAvailable(src: ChunkBuffer): Int
 
     /**
@@ -54,6 +55,7 @@ public actual interface ByteWriteChannel {
      */
     public actual suspend fun writeFully(src: ByteArray, offset: Int, length: Int)
 
+    @Suppress("DEPRECATION")
     public actual suspend fun writeFully(src: Buffer)
 
     public actual suspend fun writeFully(memory: Memory, startIndex: Int, endIndex: Int)

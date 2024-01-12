@@ -70,12 +70,14 @@ internal fun Application.contentTestServer() {
                 call.respond("success")
             }
             post("/upload") {
-                val parts = call.receiveMultipart().readAllParts()
-                parts.forEach { part ->
+                val response = StringBuilder()
+                call.receiveMultipart().forEachPart { part ->
                     check(part.contentDisposition?.disposition == "form-data")
+                    response.append(part.makeString())
+                    part.dispose()
                 }
 
-                call.respondText(parts.makeString())
+                call.respondText(response.toString())
             }
             put("/file-upload") {
                 val parts = call.receiveMultipart().readAllParts()

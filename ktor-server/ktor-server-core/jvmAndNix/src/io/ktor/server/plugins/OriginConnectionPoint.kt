@@ -8,8 +8,6 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.util.*
-import io.ktor.utils.io.concurrent.*
-import kotlin.native.concurrent.*
 import kotlin.reflect.*
 
 /**
@@ -43,15 +41,15 @@ public class MutableOriginConnectionPoint internal constructor(
     override var method: HttpMethod by AssignableWithDelegate { delegate.method }
     override var scheme: String by AssignableWithDelegate { delegate.scheme }
 
-    @Suppress("DEPRECATION")
-    @Deprecated("Use localHost or serverHost instead")
+    @Suppress("DEPRECATION_ERROR")
+    @Deprecated("Use localHost or serverHost instead", level = DeprecationLevel.ERROR)
     override var host: String by AssignableWithDelegate { delegate.host }
     override var localHost: String by AssignableWithDelegate { delegate.localHost }
     override var serverHost: String by AssignableWithDelegate { delegate.serverHost }
     override var localAddress: String by AssignableWithDelegate { delegate.localAddress }
 
-    @Suppress("DEPRECATION")
-    @Deprecated("Use localPort or serverPort instead")
+    @Suppress("DEPRECATION_ERROR")
+    @Deprecated("Use localPort or serverPort instead", level = DeprecationLevel.ERROR)
     override var port: Int by AssignableWithDelegate { delegate.port }
     override var localPort: Int by AssignableWithDelegate { delegate.localPort }
     override var serverPort: Int by AssignableWithDelegate { delegate.serverPort }
@@ -83,7 +81,7 @@ internal class OriginConnectionPoint(
     override val version: String
         get() = local.version
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated("Use localHost or serverHost instead")
     override val port: Int
         get() = hostHeaderValue?.substringAfter(":", "80")
@@ -95,7 +93,7 @@ internal class OriginConnectionPoint(
     override val serverPort: Int
         get() = local.serverPort
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated("Use localHost or serverHost instead")
     override val host: String
         get() = hostHeaderValue?.substringBefore(":")
@@ -119,6 +117,10 @@ internal class OriginConnectionPoint(
         get() = local.remotePort
     override val remoteAddress: String
         get() = local.remoteAddress
+
+    override fun toString(): String =
+        "OriginConnectionPoint(uri=$uri, method=$method, version=$version, localAddress=$localAddress, " +
+            "localPort=$localPort, remoteAddress=$remoteAddress, remotePort=$remotePort)"
 }
 
 /**

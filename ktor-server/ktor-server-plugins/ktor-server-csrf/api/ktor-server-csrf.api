@@ -1,0 +1,13 @@
+public final class io/ktor/server/plugins/csrf/CSRFConfig {
+	public fun <init> ()V
+	public final fun allowOrigin (Ljava/lang/String;)V
+	public final fun checkHeader (Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun checkHeader$default (Lio/ktor/server/plugins/csrf/CSRFConfig;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public final fun onFailure (Lkotlin/jvm/functions/Function3;)V
+	public final fun originMatchesHost ()V
+}
+
+public final class io/ktor/server/plugins/csrf/CSRFKt {
+	public static final fun getCSRF ()Lio/ktor/server/application/RouteScopedPlugin;
+}
+

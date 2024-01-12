@@ -9,8 +9,7 @@ import io.ktor.util.cio.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.debug.junit4.*
-import org.junit.*
+import kotlinx.coroutines.debug.junit5.*
 import java.io.*
 import java.nio.*
 import java.util.zip.*
@@ -18,12 +17,10 @@ import kotlin.random.*
 import kotlin.test.*
 import kotlin.test.Test
 
+@CoroutinesTimeout(60_000)
 class DeflaterReadChannelTest : CoroutineScope {
     private val testJob = Job()
     override val coroutineContext get() = testJob + Dispatchers.Unconfined
-
-    @get:Rule
-    val timeout = CoroutinesTimeout.seconds(60)
 
     @AfterTest
     fun after() {

@@ -29,6 +29,7 @@ public final class io/ktor/websocket/CloseReason$Codes : java/lang/Enum {
 	public static final field UNEXPECTED_CONDITION Lio/ktor/websocket/CloseReason$Codes;
 	public static final field VIOLATED_POLICY Lio/ktor/websocket/CloseReason$Codes;
 	public final fun getCode ()S
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/websocket/CloseReason$Codes;
 	public static fun values ()[Lio/ktor/websocket/CloseReason$Codes;
 }
@@ -142,6 +143,7 @@ public final class io/ktor/websocket/FrameParser$State : java/lang/Enum {
 	public static final field HEADER0 Lio/ktor/websocket/FrameParser$State;
 	public static final field LENGTH Lio/ktor/websocket/FrameParser$State;
 	public static final field MASK_KEY Lio/ktor/websocket/FrameParser$State;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/websocket/FrameParser$State;
 	public static fun values ()[Lio/ktor/websocket/FrameParser$State;
 }
@@ -162,6 +164,7 @@ public final class io/ktor/websocket/FrameType : java/lang/Enum {
 	public static final field PONG Lio/ktor/websocket/FrameType;
 	public static final field TEXT Lio/ktor/websocket/FrameType;
 	public final fun getControlFrame ()Z
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getOpcode ()I
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/websocket/FrameType;
 	public static fun values ()[Lio/ktor/websocket/FrameType;
@@ -315,7 +318,6 @@ public final class io/ktor/websocket/WebSocketSessionKt {
 public final class io/ktor/websocket/WebSocketWriter : kotlinx/coroutines/CoroutineScope {
 	public fun <init> (Lio/ktor/utils/io/ByteWriteChannel;Lkotlin/coroutines/CoroutineContext;ZLio/ktor/utils/io/pool/ObjectPool;)V
 	public synthetic fun <init> (Lio/ktor/utils/io/ByteWriteChannel;Lkotlin/coroutines/CoroutineContext;ZLio/ktor/utils/io/pool/ObjectPool;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun close ()V
 	public final fun flush (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
 	public final fun getMasking ()Z

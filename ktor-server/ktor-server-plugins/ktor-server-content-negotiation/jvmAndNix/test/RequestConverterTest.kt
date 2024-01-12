@@ -7,8 +7,8 @@ package io.ktor.server.plugins.contentnegotiation
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.http.content.*
 import io.ktor.serialization.*
-import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -30,6 +30,15 @@ class RequestConverterTest {
             register(
                 ContentType.Application.Json,
                 object : ContentConverter {
+                    override suspend fun serialize(
+                        contentType: ContentType,
+                        charset: Charset,
+                        typeInfo: TypeInfo,
+                        value: Any?
+                    ): OutgoingContent? {
+                        error("Not yet implemented")
+                    }
+
                     override suspend fun deserialize(
                         charset: Charset,
                         typeInfo: TypeInfo,

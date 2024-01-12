@@ -4,11 +4,23 @@
 
 package io.ktor.util.collections
 
-@Deprecated("Will be dropped with new memory model enabled by default", ReplaceWith("mutableListOf(values)"))
+@Deprecated(
+    "Will be dropped with new memory model enabled by default",
+    ReplaceWith("mutableListOf(values)"),
+    level = DeprecationLevel.ERROR
+)
 public fun <T> sharedListOf(vararg values: T): MutableList<T> = mutableListOf(*values)
 
-@Deprecated("Will be dropped with new memory model enabled by default", ReplaceWith("mutableMapOf()"))
+@Deprecated(
+    "Will be dropped with new memory model enabled by default",
+    ReplaceWith("mutableMapOf()"),
+    level = DeprecationLevel.ERROR
+)
 public fun <K : Any, V : Any> sharedMap(initialCapacity: Int = 8): MutableMap<K, V> = LinkedHashMap(initialCapacity)
 
-@Deprecated("Will be dropped with new memory model enabled by default", ReplaceWith("mutableListOf<V>()"))
+@Deprecated(
+    "Will be dropped with new memory model enabled by default",
+    ReplaceWith("mutableListOf<V>()"),
+    level = DeprecationLevel.ERROR
+)
 public fun <V> sharedList(): MutableList<V> = mutableListOf()

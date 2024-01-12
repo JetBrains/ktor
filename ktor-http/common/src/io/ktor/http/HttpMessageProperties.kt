@@ -14,19 +14,6 @@ import io.ktor.utils.io.charsets.*
 public fun HttpMessageBuilder.contentType(type: ContentType): Unit =
     headers.set(HttpHeaders.ContentType, type.toString())
 
-@Deprecated(
-    "Content-Length is controlled by underlying engine. Don't specify it explicitly.",
-    level = DeprecationLevel.ERROR
-)
-@Suppress("KDocMissingDocumentation", "unused", "PublicApiImplicitType", "DeprecatedCallableAddReplaceWith")
-public fun HttpMessageBuilder.contentLength(length: Int): Unit =
-    headers.set(HttpHeaders.ContentLength, length.toString())
-
-@Deprecated("Use content with particular content type and charset instead", level = DeprecationLevel.ERROR)
-@Suppress("KDocMissingDocumentation", "unused", "PublicApiImplicitType", "DeprecatedCallableAddReplaceWith")
-public fun HttpMessageBuilder.charset(charset: Charset): Unit? =
-    contentType()?.let { contentType(it.withCharset(charset)) }
-
 /**
  * Append `Max-Age` header value.
  */

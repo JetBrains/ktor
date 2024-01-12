@@ -5,6 +5,7 @@
 package io.ktor.server.plugins.callloging
 
 import io.ktor.server.application.*
+import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.slf4j.*
 import org.slf4j.*
@@ -28,11 +29,16 @@ internal suspend inline fun withMDC(
 internal fun List<MDCEntry>.setup(call: ApplicationCall): Map<String, String> {
     val result = HashMap<String, String>()
 
-    forEach { entry ->
-        val provider = runCatching { entry.provider(call) }.getOrNull()
-        provider?.let { mdcValue ->
-            result[entry.name] = mdcValue
+    val savedEntries = call.attributes.computeIfAbsent(MdcEntriesKey) { mutableMapOf() }
+    for (entry in this) {
+        val savedValue = savedEntries[entry.name]
+        if (savedValue != null) {
+            result[entry.name] = savedValue
+            continue
         }
+        val value = runCatching { entry.provider(call) }.getOrNull() ?: continue
+        result[entry.name] = value
+        savedEntries[entry.name] = value
     }
 
     return result
@@ -43,3 +49,5 @@ internal fun List<MDCEntry>.cleanup() {
         MDC.remove(it.name)
     }
 }
+
+private val MdcEntriesKey = AttributeKey<MutableMap<String, String>>("io.ktor.MDCEntries")

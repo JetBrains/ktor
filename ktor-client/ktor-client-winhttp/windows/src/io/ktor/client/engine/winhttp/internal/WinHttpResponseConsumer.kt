@@ -10,7 +10,7 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
 
-@OptIn(DelicateCoroutinesApi::class)
+@OptIn(DelicateCoroutinesApi::class, ExperimentalForeignApi::class)
 internal fun WinHttpRequest.readBody(callContext: CoroutineContext): ByteReadChannel {
     return GlobalScope.writer(callContext) {
         val readBuffer = ByteArrayPool.borrow()

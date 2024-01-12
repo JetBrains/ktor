@@ -4,7 +4,6 @@
 
 package io.ktor.websocket
 
-import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
 
@@ -71,7 +70,8 @@ public interface WebSocketSession : CoroutineScope {
      */
     @Deprecated(
         "Use cancel() instead.",
-        ReplaceWith("cancel()", "kotlinx.coroutines.cancel")
+        ReplaceWith("cancel()", "kotlinx.coroutines.cancel"),
+        level = DeprecationLevel.ERROR
     )
     public fun terminate()
 }
@@ -126,7 +126,10 @@ public suspend fun WebSocketSession.close(reason: CloseReason = CloseReason(Clos
 /**
  * Closes with the reason depending on [cause] or normally if the [cause] is `null`.
  */
-@Deprecated("Close with reason or terminate instead.")
+@Deprecated(
+    "Close with reason or terminate instead.",
+    level = DeprecationLevel.ERROR
+)
 public suspend fun WebSocketSession.close(cause: Throwable?) {
     if (cause == null) {
         close()

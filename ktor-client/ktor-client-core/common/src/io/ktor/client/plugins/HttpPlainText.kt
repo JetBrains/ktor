@@ -6,8 +6,8 @@ package io.ktor.client.plugins
 
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.plugins.api.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.util.*
@@ -20,25 +20,58 @@ import kotlin.math.*
 private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.HttpPlainText")
 
 /**
+ * Charset configuration for [HttpPlainText] plugin.
+ */
+@KtorDsl
+public class HttpPlainTextConfig {
+    internal val charsets: MutableSet<Charset> = mutableSetOf()
+    internal val charsetQuality: MutableMap<Charset, Float> = mutableMapOf()
+
+    /**
+     * Add [charset] to allowed list with selected [quality].
+     */
+    public fun register(charset: Charset, quality: Float? = null) {
+        quality?.let { check(it in 0.0..1.0) }
+
+        charsets.add(charset)
+
+        if (quality == null) {
+            charsetQuality.remove(charset)
+        } else {
+            charsetQuality[charset] = quality
+        }
+    }
+
+    /**
+     * Explicit [Charset] for sending content.
+     *
+     * Use first with the highest quality from [register] charset if null.
+     */
+    public var sendCharset: Charset? = null
+
+    /**
+     * Fallback charset for the response.
+     * Use it if no charset specified.
+     */
+    public var responseCharsetFallback: Charset = Charsets.UTF_8
+}
+
+/**
  * [HttpClient] plugin that encodes [String] request bodies to [TextContent]
  * and processes the response body as [String].
  *
  * To configure charsets set following properties in [HttpPlainText.Config].
  */
-public class HttpPlainText internal constructor(
-    charsets: Set<Charset>,
-    charsetQuality: Map<Charset, Float>,
-    sendCharset: Charset?,
-    private val responseCharsetFallback: Charset
-) {
-    private val requestCharset: Charset
-    private val acceptCharsetHeader: String
+public val HttpPlainText: ClientPlugin<HttpPlainTextConfig> =
+    createClientPlugin("HttpPlainText", ::HttpPlainTextConfig) {
 
-    init {
-        val withQuality = charsetQuality.toList().sortedByDescending { it.second }
-        val withoutQuality = charsets.filter { !charsetQuality.containsKey(it) }.sortedBy { it.name }
+        val withQuality = pluginConfig.charsetQuality.toList().sortedByDescending { it.second }
+        val responseCharsetFallback = pluginConfig.responseCharsetFallback
+        val withoutQuality = pluginConfig.charsets
+            .filter { !pluginConfig.charsetQuality.containsKey(it) }
+            .sortedBy { it.name }
 
-        acceptCharsetHeader = buildString {
+        val acceptCharsetHeader = buildString {
             withoutQuality.forEach {
                 if (isNotEmpty()) append(",")
                 append(it.name)
@@ -58,107 +91,61 @@ public class HttpPlainText internal constructor(
             }
         }
 
-        requestCharset = sendCharset
+        val requestCharset = pluginConfig.sendCharset
             ?: withoutQuality.firstOrNull() ?: withQuality.firstOrNull()?.first ?: Charsets.UTF_8
-    }
 
-    /**
-     * Charset configuration for [HttpPlainText] plugin.
-     */
-    @KtorDsl
-    public class Config {
-        internal val charsets: MutableSet<Charset> = mutableSetOf()
-        internal val charsetQuality: MutableMap<Charset, Float> = mutableMapOf()
+        fun wrapContent(
+            request: HttpRequestBuilder,
+            content: String,
+            requestContentType: ContentType?
+        ): OutgoingContent {
+            val contentType: ContentType = requestContentType ?: ContentType.Text.Plain
+            val charset = requestContentType?.charset() ?: requestCharset
 
-        /**
-         * Add [charset] to allowed list with selected [quality].
-         */
-        public fun register(charset: Charset, quality: Float? = null) {
-            quality?.let { check(it in 0.0..1.0) }
-
-            charsets.add(charset)
-
-            if (quality == null) {
-                charsetQuality.remove(charset)
-            } else {
-                charsetQuality[charset] = quality
-            }
+            LOGGER.trace("Sending request body to ${request.url} as text/plain with charset $charset")
+            return TextContent(content, contentType.withCharset(charset))
         }
 
-        /**
-         * Explicit [Charset] for sending content.
-         *
-         * Use first with the highest quality from [register] charset if null.
-         */
-        public var sendCharset: Charset? = null
-
-        /**
-         * Fallback charset for the response.
-         * Use it if no charset specified.
-         */
-        public var responseCharsetFallback: Charset = Charsets.UTF_8
-    }
-
-    @Suppress("KDocMissingDocumentation")
-    public companion object Plugin : HttpClientPlugin<Config, HttpPlainText> {
-        override val key: AttributeKey<HttpPlainText> = AttributeKey("HttpPlainText")
-
-        override fun prepare(block: Config.() -> Unit): HttpPlainText {
-            val config = Config().apply(block)
-
-            with(config) {
-                return HttpPlainText(
-                    charsets,
-                    charsetQuality,
-                    sendCharset,
-                    responseCharsetFallback
-                )
-            }
+        @Suppress("DEPRECATION")
+        fun read(call: HttpClientCall, body: Input): String {
+            val actualCharset = call.response.charset() ?: responseCharsetFallback
+            LOGGER.trace("Reading response body for ${call.request.url} as String with charset $actualCharset")
+            return body.readText(charset = actualCharset)
         }
 
-        override fun install(plugin: HttpPlainText, scope: HttpClient) {
-            scope.requestPipeline.intercept(HttpRequestPipeline.Render) { content ->
-                plugin.addCharsetHeaders(context)
+        fun addCharsetHeaders(context: HttpRequestBuilder) {
+            if (context.headers[HttpHeaders.AcceptCharset] != null) return
+            LOGGER.trace("Adding Accept-Charset=$acceptCharsetHeader to ${context.url}")
+            context.headers[HttpHeaders.AcceptCharset] = acceptCharsetHeader
+        }
 
-                if (content !is String) return@intercept
+        on(RenderRequestHook) { request, content ->
+            addCharsetHeaders(request)
 
-                val contentType = context.contentType()
-                if (contentType != null && contentType.contentType != ContentType.Text.Plain.contentType) {
-                    return@intercept
-                }
+            if (content !is String) return@on null
 
-                proceedWith(plugin.wrapContent(context, content, contentType))
+            val contentType = request.contentType()
+            if (contentType != null && contentType.contentType != ContentType.Text.Plain.contentType) {
+                return@on null
             }
 
-            scope.responsePipeline.intercept(HttpResponsePipeline.Transform) { (info, body) ->
-                if (info.type != String::class || body !is ByteReadChannel) return@intercept
+            wrapContent(request, content, contentType)
+        }
 
-                val bodyBytes = body.readRemaining()
-                val content = plugin.read(context, bodyBytes)
-                proceedWith(HttpResponseContainer(info, content))
-            }
+        transformResponseBody { response, content, requestedType ->
+            if (requestedType.type != String::class) return@transformResponseBody null
+
+            val bodyBytes = content.readRemaining()
+            read(response.call, bodyBytes)
         }
     }
 
-    private fun wrapContent(request: HttpRequestBuilder, content: String, requestContentType: ContentType?): Any {
-        val contentType: ContentType = requestContentType ?: ContentType.Text.Plain
-        val charset = requestContentType?.charset() ?: requestCharset
-
-        LOGGER.trace("Sending request body to ${request.url} as text/plain with charset $charset")
-        return TextContent(content, contentType.withCharset(charset))
-    }
-
-    @Suppress("DEPRECATION")
-    internal fun read(call: HttpClientCall, body: Input): String {
-        val actualCharset = call.response.charset() ?: responseCharsetFallback
-        LOGGER.trace("Reading response body for ${call.request.url} as String with charset $actualCharset")
-        return body.readText(charset = actualCharset)
-    }
-
-    internal fun addCharsetHeaders(context: HttpRequestBuilder) {
-        if (context.headers[HttpHeaders.AcceptCharset] != null) return
-        LOGGER.trace("Adding Accept-Charset=$acceptCharsetHeader to ${context.url}")
-        context.headers[HttpHeaders.AcceptCharset] = acceptCharsetHeader
+internal object RenderRequestHook : ClientHook<suspend (HttpRequestBuilder, Any) -> OutgoingContent?> {
+    override fun install(client: HttpClient, handler: suspend (HttpRequestBuilder, Any) -> OutgoingContent?) {
+        client.requestPipeline.intercept(HttpRequestPipeline.Render) { content ->
+            val result = handler(context, content)
+            if (result != null) proceedWith(result)
+        }
     }
 }
 
@@ -175,6 +162,6 @@ public class HttpPlainText internal constructor(
  * ```
  */
 @Suppress("FunctionName")
-public fun HttpClientConfig<*>.Charsets(block: HttpPlainText.Config.() -> Unit) {
+public fun HttpClientConfig<*>.Charsets(block: HttpPlainTextConfig.() -> Unit) {
     install(HttpPlainText, block)
 }

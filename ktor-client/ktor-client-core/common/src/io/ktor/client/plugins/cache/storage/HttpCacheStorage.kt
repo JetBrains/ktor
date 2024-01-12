@@ -22,7 +22,8 @@ import kotlin.coroutines.*
 /**
  * Cache storage interface.
  */
-@Deprecated("Use new [CacheStorage] instead.")
+@Deprecated("Use new [CacheStorage] instead.", level = DeprecationLevel.ERROR)
+@Suppress("DEPRECATION_ERROR")
 public abstract class HttpCacheStorage {
 
     /**
@@ -53,6 +54,7 @@ public abstract class HttpCacheStorage {
     }
 }
 
+@Suppress("DEPRECATION_ERROR")
 internal suspend fun HttpCacheStorage.store(url: Url, value: HttpResponse, isShared: Boolean): HttpCacheEntry {
     val result = HttpCacheEntry(isShared, value)
     store(url, result)
@@ -97,19 +99,11 @@ public interface CacheStorage {
  */
 @Deprecated(
     message = "Please use method with `response.varyKeys()` and `isShared` arguments",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith("store(response, response.varyKeys(), isShared)")
 )
 public suspend fun CacheStorage.store(response: HttpResponse): CachedResponseData {
     return store(response, response.varyKeys())
-}
-
-/**
- * Store [response] with [varyKeys] in cache storage.
- */
-@Deprecated("Please use method with `isShared` argument", level = DeprecationLevel.HIDDEN)
-public suspend fun CacheStorage.store(response: HttpResponse, varyKeys: Map<String, String>): CachedResponseData {
-    return store(response, varyKeys)
 }
 
 /**

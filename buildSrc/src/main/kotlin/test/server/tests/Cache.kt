@@ -110,6 +110,10 @@ internal fun Application.cacheTestServer() {
             get("/cache_${"a".repeat(3000)}") {
                 call.respondText { "abc" }
             }
+            get("/set-max-age") {
+                call.response.header(HttpHeaders.CacheControl, "max-age=${Long.MAX_VALUE}000")
+                call.respond(HttpStatusCode.OK)
+            }
         }
     }
 }

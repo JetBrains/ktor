@@ -5,8 +5,10 @@
 package io.ktor.client.engine.darwin.internal
 
 import io.ktor.client.engine.darwin.*
+import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.util.*
 import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.CancellationException
@@ -41,7 +43,7 @@ internal class DarwinTaskHandler(
     fun receiveData(dataTask: NSURLSessionDataTask, data: NSData) {
         if (!response.isCompleted) {
             val result = dataTask.response as NSHTTPURLResponse
-            response.complete(result.toResponseData())
+            response.complete(result.toResponseData(requestData))
         }
 
         val content = data.toByteArray()
@@ -62,19 +64,29 @@ internal class DarwinTaskHandler(
 
         if (!response.isCompleted) {
             val result = task.response as NSHTTPURLResponse
-            response.complete(result.toResponseData())
+            response.complete(result.toResponseData(requestData))
         }
 
         bodyChunks.close()
     }
 
-    @OptIn(UnsafeNumber::class)
-    fun NSHTTPURLResponse.toResponseData(): HttpResponseData = HttpResponseData(
-        HttpStatusCode.fromValue(statusCode.convert()),
-        requestTime,
-        readHeaders(),
-        HttpProtocolVersion.HTTP_1_1,
-        body,
-        callContext
-    )
+    @OptIn(UnsafeNumber::class, ExperimentalForeignApi::class, InternalAPI::class)
+    fun NSHTTPURLResponse.toResponseData(requestData: HttpRequestData): HttpResponseData {
+        val status = HttpStatusCode.fromValue(statusCode.convert())
+        val headers = readHeaders()
+        val responseBody: Any = if (needToProcessSSE(requestData, status, headers)) {
+            DefaultClientSSESession(requestData.body as SSEClientContent, body, callContext)
+        } else {
+            body
+        }
+
+        return HttpResponseData(
+            status,
+            requestTime,
+            headers,
+            HttpProtocolVersion.HTTP_1_1,
+            responseBody,
+            callContext
+        )
+    }
 }

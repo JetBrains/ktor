@@ -12,11 +12,11 @@ import io.ktor.websocket.*
 import io.ktor.http.content.*
 import io.ktor.util.*
 import io.ktor.util.date.*
-import junit.framework.Assert.*
 import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.*
-import org.junit.*
+import kotlin.test.*
 import kotlin.coroutines.*
+import io.ktor.utils.io.*
 
 class TracingWrapperTest {
     @Test

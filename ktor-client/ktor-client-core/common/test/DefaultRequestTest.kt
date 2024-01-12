@@ -121,6 +121,7 @@ class DefaultRequestTest {
         assertEquals("https://other.host/", client.get("//other.host/").bodyAsText())
         assertEquals("ws://other.host/", client.get("ws://other.host/").bodyAsText())
         assertEquals("ws://other.host:123", client.get("ws://other.host:123").bodyAsText())
+        assertEquals("http://other.host", client.get("http://other.host").bodyAsText())
     }
 
     @Test

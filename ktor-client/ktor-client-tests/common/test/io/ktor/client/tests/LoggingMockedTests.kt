@@ -13,7 +13,10 @@ import io.ktor.client.statement.*
 import io.ktor.client.tests.utils.*
 import io.ktor.http.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import kotlin.test.*
 
 class LoggingMockedTests {
@@ -337,6 +340,46 @@ class LoggingMockedTests {
 
         after {
             testLogger.verify()
+        }
+    }
+
+    @Test
+    fun testCanStream() = testWithEngine(MockEngine) {
+        val channel = ByteChannel(autoFlush = true)
+        config {
+            engine {
+                addHandler {
+                    respond(
+                        content = channel,
+                        status = HttpStatusCode.OK
+                    )
+                }
+            }
+            install(Logging) {
+                level = LogLevel.BODY
+                logger = Logger.DEFAULT
+            }
+        }
+        test { client ->
+            val content = channelFlow {
+                launch {
+                    client.preparePost("/").execute {
+                        val ch = it.bodyAsChannel()
+                        while (!ch.isClosedForRead) {
+                            ch.awaitContent()
+                            send(ch.readUTF8Line())
+                        }
+                    }
+                }
+            }
+
+            channel.writeStringUtf8("Hello world!\n")
+
+            withTimeout(5_000) { // the bug will cause this to timeout
+                content.collect {
+                    channel.close()
+                }
+            }
         }
     }
 }

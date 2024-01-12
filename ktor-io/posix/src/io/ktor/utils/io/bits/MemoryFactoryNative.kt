@@ -12,7 +12,7 @@ import kotlin.contracts.*
  * By default, if neither [offset] nor [length] specified, the whole array is used.
  * An instance of [Memory] provided into the [block] should be never captured and used outside of lambda.
  */
-@OptIn(ExperimentalContracts::class)
+@OptIn(ExperimentalContracts::class, ExperimentalForeignApi::class)
 public actual inline fun <R> ByteArray.useMemory(offset: Int, length: Int, block: (Memory) -> R): R {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -32,7 +32,7 @@ public actual inline fun <R> ByteArray.useMemory(offset: Int, length: Int, block
  * Create an instance of [Memory] view for memory region starting at
  * the specified [pointer] and having the specified [size] in bytes.
  */
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 public inline fun Memory(pointer: CPointer<*>, size: size_t): Memory {
     require(size.convert<ULong>() <= Long.MAX_VALUE.convert<ULong>()) {
         "At most ${Long.MAX_VALUE} (kotlin.Long.MAX_VALUE) bytes range is supported."
@@ -45,6 +45,7 @@ public inline fun Memory(pointer: CPointer<*>, size: size_t): Memory {
  * Create an instance of [Memory] view for memory region starting at
  * the specified [pointer] and having the specified [size] in bytes.
  */
+@OptIn(ExperimentalForeignApi::class)
 public inline fun Memory(pointer: CPointer<*>, size: Int): Memory {
     return Memory(pointer.reinterpret(), size.toLong())
 }
@@ -53,6 +54,7 @@ public inline fun Memory(pointer: CPointer<*>, size: Int): Memory {
  * Create an instance of [Memory] view for memory region starting at
  * the specified [pointer] and having the specified [size] in bytes.
  */
+@OptIn(ExperimentalForeignApi::class)
 public inline fun Memory(pointer: CPointer<*>, size: Long): Memory {
     return Memory(pointer.reinterpret(), size)
 }
@@ -65,6 +67,7 @@ public inline fun Memory(pointer: CPointer<*>, size: Long): Memory {
  * once the scope is leaved, all produced instances should be discarded and should be never used after the scope.
  * On the contrary instances created using [nativeHeap] do require release via [nativeHeap.free].
  */
+@OptIn(ExperimentalForeignApi::class)
 public fun NativePlacement.allocMemory(size: Int): Memory {
     return allocMemory(size.toLong())
 }
@@ -77,6 +80,7 @@ public fun NativePlacement.allocMemory(size: Int): Memory {
  * once the scope is leaved, all produced instances should be discarded and should be never used after the scope.
  * On the contrary instances created using [nativeHeap] do require release via [nativeHeap.free].
  */
+@OptIn(ExperimentalForeignApi::class)
 public fun NativePlacement.allocMemory(size: Long): Memory {
     return Memory(allocArray(size), size)
 }
@@ -86,19 +90,25 @@ public fun NativePlacement.allocMemory(size: Long): Memory {
  * This function should be only used for memory instances that are produced by [allocMemory] function
  * otherwise an undefined behaviour may occur including crash or data corruption.
  */
+@OptIn(ExperimentalForeignApi::class)
 public fun NativeFreeablePlacement.free(memory: Memory) {
     free(memory.pointer)
 }
 
-internal value class PlacementAllocator(private val placement: NativeFreeablePlacement) : Allocator {
+internal value class PlacementAllocator @OptIn(ExperimentalForeignApi::class) constructor(
+    private val placement: NativeFreeablePlacement
+) : Allocator {
     override fun alloc(size: Int): Memory = alloc(size.toLong())
 
+    @OptIn(ExperimentalForeignApi::class)
     override fun alloc(size: Long): Memory = Memory(placement.allocArray(size), size)
 
+    @OptIn(ExperimentalForeignApi::class)
     override fun free(instance: Memory) {
         placement.free(instance.pointer)
     }
 }
 
+@OptIn(ExperimentalForeignApi::class)
 @PublishedApi
 internal actual object DefaultAllocator : Allocator by PlacementAllocator(nativeHeap)

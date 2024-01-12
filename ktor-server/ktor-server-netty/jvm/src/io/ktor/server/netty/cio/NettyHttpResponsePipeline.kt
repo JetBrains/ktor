@@ -6,8 +6,6 @@ package io.ktor.server.netty.cio
 
 import io.ktor.http.*
 import io.ktor.server.netty.*
-import io.ktor.server.netty.http1.*
-import io.ktor.util.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
 import io.netty.channel.*
@@ -315,7 +313,7 @@ internal class NettyHttpResponsePipeline(
         call: NettyApplicationCall,
         response: NettyApplicationResponse,
         requestMessageFuture: ChannelFuture,
-        shouldFlush: (channel: ByteReadChannel, unflushedBytes: Int) -> Boolean
+        shouldFlush: ShouldFlush
     ) {
         val channel = response.responseChannel
 
@@ -365,3 +363,7 @@ private fun NettyApplicationResponse.isUpgradeResponse() =
     status()?.value == HttpStatusCode.SwitchingProtocols.value
 
 public class NettyResponsePipelineException(message: String) : Exception(message)
+
+internal fun interface ShouldFlush {
+    fun invoke(channel: ByteReadChannel, unflushedBytes: Int): Boolean
+}

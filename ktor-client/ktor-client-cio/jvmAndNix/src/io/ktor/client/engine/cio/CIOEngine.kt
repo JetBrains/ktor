@@ -9,12 +9,12 @@ import io.ktor.client.plugins.*
 import io.ktor.client.plugins.sse.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
-import io.ktor.client.utils.*
 import io.ktor.http.*
 import io.ktor.network.selector.*
 import io.ktor.util.*
 import io.ktor.util.collections.*
 import io.ktor.util.network.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
 import kotlin.coroutines.*
@@ -24,11 +24,8 @@ internal class CIOEngine(
     override val config: CIOEngineConfig
 ) : HttpClientEngineBase("ktor-cio") {
 
-    override val dispatcher: CoroutineDispatcher =
-        Dispatchers.clientDispatcher(config.threadsCount, "ktor-cio-dispatcher")
-
     override val supportedCapabilities =
-        setOf(HttpTimeout, WebSocketCapability, WebSocketExtensionsCapability, SSECapability)
+        setOf(HttpTimeoutCapability, WebSocketCapability, WebSocketExtensionsCapability, SSECapability)
 
     private val endpoints = ConcurrentMap<String, Endpoint>()
 
@@ -136,11 +133,3 @@ internal class CIOEngine(
         }
     }
 }
-
-@Suppress("KDocMissingDocumentation")
-@Deprecated(
-    "Use ClientEngineClosedException instead",
-    level = DeprecationLevel.ERROR,
-    replaceWith = ReplaceWith("ClientEngineClosedException")
-)
-public class ClientClosedException(cause: Throwable? = null) : IllegalStateException("Client already closed", cause)

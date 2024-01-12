@@ -6,7 +6,6 @@ package io.ktor.tests.server.tomcat.jakarta
 
 import io.ktor.client.statement.*
 import io.ktor.network.tls.certificates.*
-import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -61,6 +60,9 @@ class TomcatHttpServerCommonTest :
             Logger.getLogger(it).apply { level = Level.WARNING }
         }
     }
+
+    @Ignore // KTOR-6480
+    override fun testErrorInBodyClosesConnectionWithContentLength() {}
 }
 
 class TomcatHttpServerJvmTest :

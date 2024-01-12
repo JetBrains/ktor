@@ -10,17 +10,23 @@ import io.ktor.util.*
  * Hostname of current origin.
  *
  * It uses "localhost" for all platforms except js.
+ *
+ * Note that not all platforms have location set. React Native platofrms expose window without a location.
  */
 public actual val URLBuilder.Companion.origin: String
     get() = when (PlatformUtils.platform) {
         Platform.Browser -> {
             js(
                 """
-                var origin = ""
+                var tmpLocation = null
                 if (typeof window !== 'undefined') {
-                  origin = window.location.origin 
-                } else {
-                  origin = self.location.origin 
+                  tmpLocation = window.location
+                } else if (typeof self !== 'undefined') {
+                  tmpLocation = self.location
+                }
+                var origin = ""
+                if (tmpLocation) {
+                  origin = tmpLocation.origin
                 }
                 origin && origin != "null" ? origin : "http://localhost"
                 """

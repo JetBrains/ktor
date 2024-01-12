@@ -39,6 +39,7 @@ public actual fun YamlConfig(path: String?): YamlConfig? {
     return YamlConfig(yaml).apply { checkEnvironmentVariables() }
 }
 
+@OptIn(ExperimentalForeignApi::class)
 private fun readFile(path: String): String {
     val fileDescriptor = fopen(path, "rb") ?: throw ApplicationConfigurationException("Can not read $path")
     val bytes = ByteArrayPool.borrow()
@@ -62,7 +63,7 @@ private fun readFile(path: String): String {
     return packet.readText()
 }
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 private fun CPointer<FILE>.readFileChunk(
     bytes: ByteArray,
     size: Int
@@ -70,4 +71,5 @@ private fun CPointer<FILE>.readFileChunk(
     fread(pinned.addressOf(0), 1.convert(), size.convert(), this)
 }.convert()
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual fun getEnvironmentValue(key: String): String? = getenv(key)?.toKString()

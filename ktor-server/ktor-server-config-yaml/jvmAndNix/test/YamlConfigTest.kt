@@ -17,6 +17,7 @@ class YamlConfigTest {
             auth:
                 hashAlgorithm: SHA-256
                 salt: ktor
+                nullable: null
                 users:
                     - name: test
                 values: 
@@ -46,6 +47,8 @@ class YamlConfigTest {
         assertEquals(null, config.propertyOrNull("auth.missingProperty"))
         assertEquals("SHA-256", config.propertyOrNull("auth.hashAlgorithm")?.getString())
         assertEquals(listOf("a", "b", "c"), config.propertyOrNull("auth.listValues")?.getList())
+
+        assertEquals(null, config.propertyOrNull("auth.nullable"))
     }
 
     @Test

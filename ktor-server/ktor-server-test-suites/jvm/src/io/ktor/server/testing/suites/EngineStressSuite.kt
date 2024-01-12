@@ -2,15 +2,12 @@
 * Copyright 2014-2021 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
 */
 
-@file:Suppress("NO_EXPLICIT_RETURN_TYPE_IN_API_MODE_WARNING")
-
 package io.ktor.server.testing.suites
 
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.cio.*
 import io.ktor.http.content.*
-import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -18,21 +15,18 @@ import io.ktor.server.testing.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.streams.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.debug.junit4.*
-import org.junit.*
-import org.junit.Assert.*
-import org.junit.runner.*
-import org.junit.runners.model.*
+import org.junit.jupiter.api.extension.*
 import java.net.*
 import java.nio.*
 import java.util.*
 import java.util.concurrent.*
 import kotlin.concurrent.*
 import kotlin.coroutines.*
+import kotlin.test.*
 import kotlin.time.*
 import kotlin.time.Duration.Companion.seconds
 
-@RunWith(StressSuiteRunner::class)
+@ExtendWith(StressTestCondition::class)
 abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : ApplicationEngine.Configuration>(
     hostFactory: ApplicationEngineFactory<TEngine, TConfiguration>
 ) : EngineTestBase<TEngine, TConfiguration>(hostFactory) {
@@ -126,7 +120,7 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
                         out.write(request)
                         out.flush()
                     }
-                } catch (expected: InterruptedException) {
+                } catch (_: InterruptedException) {
                 } catch (t: Throwable) {
                     writerFailure = t
                 }
@@ -152,7 +146,9 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
 
             sender.join()
             if (readerFailure != null && writerFailure != null) {
-                throw MultipleFailureException(listOf(readerFailure, writerFailure))
+                val failureMessages = listOfNotNull(readerFailure, writerFailure)
+                    .joinToString { it::class.simpleName ?: "<no name>" }
+                throw RuntimeException("Exceptions thrown: $failureMessages")
             }
             readerFailure?.let { throw it }
             writerFailure?.let { throw it }

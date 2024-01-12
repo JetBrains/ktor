@@ -8,8 +8,8 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.util.*
 import io.ktor.util.date.*
+import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import kotlin.collections.*
 
@@ -70,7 +70,7 @@ internal fun HttpResponse.cacheExpires(isShared: Boolean, fallback: () -> GMTDat
 
     val maxAge = cacheControl.firstOrNull { it.value.startsWith(maxAgeKey) }
         ?.value?.split("=")
-        ?.get(1)?.toInt()
+        ?.get(1)?.toLongOrNull()
 
     if (maxAge != null) {
         return requestTime + maxAge * 1000L

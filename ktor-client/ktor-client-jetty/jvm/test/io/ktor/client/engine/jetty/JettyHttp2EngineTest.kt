@@ -28,47 +28,47 @@ class JettyHttp2EngineTest {
     fun testReuseClientsInCache() = testSuspend {
         val engine = JettyHttp2Engine(JettyEngineConfig())
 
-        val timeoutConfig11 = HttpTimeout.HttpTimeoutCapabilityConfiguration(
+        val timeoutConfig11 = HttpTimeoutConfig(
             requestTimeoutMillis = 1,
             connectTimeoutMillis = 1,
             socketTimeoutMillis = 1
         )
-        val timeoutConfig12 = HttpTimeout.HttpTimeoutCapabilityConfiguration(
+        val timeoutConfig12 = HttpTimeoutConfig(
             requestTimeoutMillis = 1,
             connectTimeoutMillis = 1,
             socketTimeoutMillis = 1
         )
-        val timeoutConfig21 = HttpTimeout.HttpTimeoutCapabilityConfiguration(
+        val timeoutConfig21 = HttpTimeoutConfig(
             requestTimeoutMillis = 2,
             connectTimeoutMillis = 2,
             socketTimeoutMillis = 2
         )
-        val timeoutConfig22 = HttpTimeout.HttpTimeoutCapabilityConfiguration(
+        val timeoutConfig22 = HttpTimeoutConfig(
             requestTimeoutMillis = 2,
             connectTimeoutMillis = 2,
             socketTimeoutMillis = 2
         )
 
         val request11 = HttpRequestBuilder().apply {
-            setCapability(HttpTimeout, timeoutConfig11)
+            setCapability(HttpTimeoutCapability, timeoutConfig11)
         }.build()
         engine.getOrCreateClient(request11)
         assertEquals(1, engine.clientCache.size)
 
         val request12 = HttpRequestBuilder().apply {
-            setCapability(HttpTimeout, timeoutConfig12)
+            setCapability(HttpTimeoutCapability, timeoutConfig12)
         }.build()
         engine.getOrCreateClient(request12)
         assertEquals(1, engine.clientCache.size)
 
         val request21 = HttpRequestBuilder().apply {
-            setCapability(HttpTimeout, timeoutConfig21)
+            setCapability(HttpTimeoutCapability, timeoutConfig21)
         }.build()
         engine.getOrCreateClient(request21)
         assertEquals(2, engine.clientCache.size)
 
         val request22 = HttpRequestBuilder().apply {
-            setCapability(HttpTimeout, timeoutConfig22)
+            setCapability(HttpTimeoutCapability, timeoutConfig22)
         }.build()
         engine.getOrCreateClient(request22)
         assertEquals(2, engine.clientCache.size)

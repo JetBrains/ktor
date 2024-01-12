@@ -4,9 +4,6 @@
 
 package io.ktor.server.auth
 
-import io.ktor.server.config.*
-import io.ktor.util.*
-
 /**
  * A user's principal identified by [name].
  *

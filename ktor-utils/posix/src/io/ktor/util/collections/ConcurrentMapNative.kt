@@ -5,11 +5,13 @@
 
 package io.ktor.util.collections
 
-import kotlinx.atomicfu.locks.*
+import io.ktor.utils.io.*
+import io.ktor.utils.io.locks.*
 
 /**
  * Ktor concurrent map implementation. Please do not use it.
  */
+@OptIn(InternalAPI::class)
 public actual class ConcurrentMap<Key, Value> public actual constructor(
     initialCapacity: Int
 ) : MutableMap<Key, Value> {
@@ -26,41 +28,41 @@ public actual class ConcurrentMap<Key, Value> public actual constructor(
         return value
     }
 
-    override val size: Int
+    actual override val size: Int
         get() = delegate.size
 
-    override fun containsKey(key: Key): Boolean = synchronized(lock) { delegate.containsKey(key) }
+    actual override fun containsKey(key: Key): Boolean = synchronized(lock) { delegate.containsKey(key) }
 
-    override fun containsValue(value: Value): Boolean = synchronized(lock) { delegate.containsValue(value) }
+    actual override fun containsValue(value: Value): Boolean = synchronized(lock) { delegate.containsValue(value) }
 
-    override fun get(key: Key): Value? = synchronized(lock) { delegate[key] }
+    actual override fun get(key: Key): Value? = synchronized(lock) { delegate[key] }
 
-    override fun isEmpty(): Boolean = delegate.isEmpty()
+    actual override fun isEmpty(): Boolean = delegate.isEmpty()
 
-    override val entries: MutableSet<MutableMap.MutableEntry<Key, Value>>
+    actual override val entries: MutableSet<MutableMap.MutableEntry<Key, Value>>
         get() = synchronized(lock) { delegate.entries }
 
-    override val keys: MutableSet<Key>
+    actual override val keys: MutableSet<Key>
         get() = synchronized(lock) { delegate.keys }
 
-    override val values: MutableCollection<Value>
+    actual override val values: MutableCollection<Value>
         get() = synchronized(lock) { delegate.values }
 
-    override fun clear() {
+    actual override fun clear() {
         synchronized(lock) {
             delegate.clear()
         }
     }
 
-    override fun put(key: Key, value: Value): Value? = synchronized(lock) { delegate.put(key, value) }
+    actual override fun put(key: Key, value: Value): Value? = synchronized(lock) { delegate.put(key, value) }
 
-    override fun putAll(from: Map<out Key, Value>) {
+    actual override fun putAll(from: Map<out Key, Value>) {
         synchronized(lock) {
             delegate.putAll(from)
         }
     }
 
-    override fun remove(key: Key): Value? = synchronized(lock) { delegate.remove(key) }
+    actual override fun remove(key: Key): Value? = synchronized(lock) { delegate.remove(key) }
 
     public actual fun remove(key: Key, value: Value): Boolean = synchronized(lock) {
         if (delegate[key] != value) return false

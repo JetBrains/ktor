@@ -13,7 +13,7 @@ internal val SocketAddress.address: NativeSocketAddress get() {
     return explicitAddress as? NativeSocketAddress ?: error("Failed to resolve address for $this")
 }
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 internal fun SocketAddress.resolve(): List<NativeSocketAddress> = when (this) {
     is InetSocketAddress -> getAddressInfo(hostname, port)
     is UnixSocketAddress -> listOf(NativeUnixSocketAddress(AF_UNIX.convert(), path))

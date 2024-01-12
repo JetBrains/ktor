@@ -4,8 +4,8 @@
 
 package io.ktor.server.util
 
-import io.ktor.util.*
 import io.ktor.util.date.*
+import io.ktor.utils.io.*
 import java.time.*
 import java.util.*
 import java.util.concurrent.*

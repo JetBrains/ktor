@@ -246,5 +246,17 @@ class CookiesTest : ClientLoader() {
         }
     }
 
+    @Test
+    fun testSeparatedBySemicolon() = clientTests(listOf("Js")) {
+        test { client ->
+            client.get("$TEST_HOST/encoded") {
+                cookie("firstCookie", "first")
+                header("Cookie", "secondCookie=second")
+            }.bodyAsText().also {
+                assertEquals("firstCookie=first; secondCookie=second", it)
+            }
+        }
+    }
+
     private suspend fun HttpClient.getId() = cookies(hostname)["id"]!!.value.toInt()
 }

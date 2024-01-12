@@ -10,7 +10,6 @@ import io.ktor.client.statement.*
 import io.ktor.client.tests.utils.*
 import io.ktor.client.utils.*
 import io.ktor.http.*
-import io.ktor.util.*
 import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import kotlin.coroutines.*
@@ -27,18 +26,18 @@ class ClientPipelinesTest : ClientLoader() {
                         appendAll(response.headers)
                         append(HttpHeaders.WWWAuthenticate, "Bearer")
                     }
-                    proceedWith(
-                        object : HttpResponse() {
-                            override val call: HttpClientCall = response.call
-                            override val status: HttpStatusCode = response.status
-                            override val version: HttpProtocolVersion = response.version
-                            override val requestTime: GMTDate = response.requestTime
-                            override val responseTime: GMTDate = response.responseTime
-                            override val content: ByteReadChannel = response.content
-                            override val headers get() = headers
-                            override val coroutineContext: CoroutineContext = response.coroutineContext
-                        }
-                    )
+                    val responseWithHeaders = object : HttpResponse() {
+                        override val call: HttpClientCall = response.call
+                        override val status: HttpStatusCode = response.status
+                        override val version: HttpProtocolVersion = response.version
+                        override val requestTime: GMTDate = response.requestTime
+                        override val responseTime: GMTDate = response.responseTime
+                        override val content: ByteReadChannel = response.content
+                        override val headers get() = headers
+                        override val coroutineContext: CoroutineContext = response.coroutineContext
+                    }
+
+                    proceedWith(responseWithHeaders)
                 }
             }
         }

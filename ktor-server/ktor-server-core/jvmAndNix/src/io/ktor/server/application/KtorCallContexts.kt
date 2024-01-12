@@ -4,7 +4,6 @@
 package io.ktor.server.application
 
 import io.ktor.server.response.*
-import io.ktor.util.*
 import io.ktor.util.pipeline.*
 import io.ktor.util.reflect.*
 import io.ktor.utils.io.*

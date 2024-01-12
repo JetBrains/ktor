@@ -7,7 +7,6 @@ package io.ktor.server.testing
 import org.slf4j.*
 import java.net.*
 import java.util.*
-import kotlin.collections.*
 import kotlin.concurrent.*
 
 internal object FreePorts {

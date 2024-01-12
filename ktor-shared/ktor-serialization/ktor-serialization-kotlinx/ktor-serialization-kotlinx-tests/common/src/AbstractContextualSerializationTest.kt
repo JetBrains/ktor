@@ -72,7 +72,7 @@ public abstract class AbstractContextualSerializationTest<T : SerialFormat> {
     }
 
     private suspend inline fun <reified T : Any> ContentConverter.testSerialize(data: T): ByteArray {
-        val content = serializeNullable(defaultContentType, Charsets.UTF_8, typeInfo<T>(), data)
+        val content = serialize(defaultContentType, Charsets.UTF_8, typeInfo<T>(), data)
         return (content as? OutgoingContent.ByteArrayContent)?.bytes() ?: error("Failed to get serialized $data")
     }
 }

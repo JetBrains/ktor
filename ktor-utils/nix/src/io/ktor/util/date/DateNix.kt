@@ -8,14 +8,14 @@ import kotlinx.cinterop.*
 import platform.posix.*
 
 @Suppress("FunctionName")
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 internal actual fun system_time(tm: CValuesRef<tm>?): Long = timegm(tm).convert()
 
 /**
  * Gets current system time in milliseconds since a certain moment in the past,
  * only delta between two subsequent calls makes sense.
  */
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 public actual fun getTimeMillis(): Long = memScoped {
     val timeHolder = alloc<timespec>()
     clock_gettime(CLOCK_REALTIME.convert(), timeHolder.ptr)

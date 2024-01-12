@@ -11,8 +11,11 @@ import kotlin.test.*
 
 class PosixIoTest {
     private val filename = "build/test.tmp"
+
+    @Suppress("DEPRECATION")
     private lateinit var buffer: Buffer
 
+    @Suppress("DEPRECATION")
     @BeforeTest
     fun setup() {
         buffer = Buffer(DefaultAllocator.alloc(4096))
@@ -28,12 +31,14 @@ class PosixIoTest {
         unlink(filename)
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     @Suppress("unused")
     internal fun Int.checkError(action: String = ""): Int = when {
         this < 0 -> memScoped { throw PosixException.forErrno(posixFunctionName = action) }
         else -> this
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     @Suppress("unused")
     internal fun Long.checkError(action: String = ""): Long = when {
         this < 0 -> memScoped { throw PosixException.forErrno(posixFunctionName = action) }
@@ -42,6 +47,7 @@ class PosixIoTest {
 
     private val ZERO: size_t = 0u
 
+    @OptIn(ExperimentalForeignApi::class, UnsafeNumber::class)
     @Suppress("unused")
     internal fun size_t.checkError(action: String = ""): size_t = when (this) {
         ZERO -> errno.let { errno ->

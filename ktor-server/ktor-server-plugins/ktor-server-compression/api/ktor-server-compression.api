@@ -5,6 +5,17 @@ public final class io/ktor/server/plugins/compression/CompressionConfig : io/kto
 	public static synthetic fun encoder$default (Lio/ktor/server/plugins/compression/CompressionConfig;Lio/ktor/util/ContentEncoder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public fun getConditions ()Ljava/util/List;
 	public final fun getEncoders ()Ljava/util/Map;
+	public final fun getMode ()Lio/ktor/server/plugins/compression/CompressionConfig$Mode;
+	public final fun setMode (Lio/ktor/server/plugins/compression/CompressionConfig$Mode;)V
+}
+
+public final class io/ktor/server/plugins/compression/CompressionConfig$Mode : java/lang/Enum {
+	public static final field All Lio/ktor/server/plugins/compression/CompressionConfig$Mode;
+	public static final field CompressResponse Lio/ktor/server/plugins/compression/CompressionConfig$Mode;
+	public static final field DecompressRequest Lio/ktor/server/plugins/compression/CompressionConfig$Mode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/ktor/server/plugins/compression/CompressionConfig$Mode;
+	public static fun values ()[Lio/ktor/server/plugins/compression/CompressionConfig$Mode;
 }
 
 public final class io/ktor/server/plugins/compression/CompressionEncoderBuilder : io/ktor/server/plugins/compression/ConditionsHolderBuilder {

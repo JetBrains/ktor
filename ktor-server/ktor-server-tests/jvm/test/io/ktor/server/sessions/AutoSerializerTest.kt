@@ -12,7 +12,7 @@ import kotlin.test.*
 class AutoSerializerTest {
     @Test
     fun testSimple() {
-        val serializer = defaultSessionSerializer<TestSession>()
+        val serializer = reflectionSessionSerializer<TestSession>()
         val result = serializer.deserialize("test=#i1&list=#cl${"#sa&#sb&#sc".encodeURLParameter()}")
 
         assertEquals(1, result.test)
@@ -23,60 +23,60 @@ class AutoSerializerTest {
 
     @Test
     fun testPrimitive() {
-        assertSerializeDeserialize(PrimitiveSession(), defaultSessionSerializer())
+        assertSerializeDeserialize(PrimitiveSession(), reflectionSessionSerializer())
     }
 
     @Test
     fun testLists() {
-        assertSerializeDeserialize(ListSession(), defaultSessionSerializer())
+        assertSerializeDeserialize(ListSession(), reflectionSessionSerializer())
     }
 
     @Test
     fun testSets() {
-        assertSerializeDeserialize(SetSession(), defaultSessionSerializer())
+        assertSerializeDeserialize(SetSession(), reflectionSessionSerializer())
     }
 
     @Test
     fun testMaps() {
-        assertSerializeDeserialize(MapSession(), defaultSessionSerializer())
+        assertSerializeDeserialize(MapSession(), reflectionSessionSerializer())
     }
 
     @Test
     fun testAdditionalTypes() {
-        assertSerializeDeserialize(AdditionalTypesSession(), defaultSessionSerializer())
+        assertSerializeDeserialize(AdditionalTypesSession(), reflectionSessionSerializer())
         // TODO randomize values
     }
 
     @Test
     fun testEnum() {
-        assertSerializeDeserialize(EnumTypeSession(), defaultSessionSerializer())
+        assertSerializeDeserialize(EnumTypeSession(), reflectionSessionSerializer())
     }
 
     @Test
     fun testEnumInCollection() {
-        assertSerializeDeserialize(EnumCollectionSession(), defaultSessionSerializer())
+        assertSerializeDeserialize(EnumCollectionSession(), reflectionSessionSerializer())
     }
 
     @Test
     fun testCompoundClasses() {
-        assertSerializeDeserialize(CompoundSession(), defaultSessionSerializer())
+        assertSerializeDeserialize(CompoundSession(), reflectionSessionSerializer())
     }
 
     @Test
     fun testSealedSession() {
-        assertSerializeDeserialize(SealedSession.SS(), defaultSessionSerializer())
-        assertSerializeDeserialize(SealedSession.SS(), defaultSessionSerializer<SealedSession>())
+        assertSerializeDeserialize(SealedSession.SS(), reflectionSessionSerializer())
+        assertSerializeDeserialize(SealedSession.SS(), reflectionSessionSerializer<SealedSession>())
     }
 
     @Test
     fun testSealedSessionObject() {
-        assertSerializeDeserialize(SealedSession.E, defaultSessionSerializer())
-        assertSerializeDeserialize(SealedSession.E, defaultSessionSerializer<SealedSession>())
+        assertSerializeDeserialize(SealedSession.E, reflectionSessionSerializer())
+        assertSerializeDeserialize(SealedSession.E, reflectionSessionSerializer<SealedSession>())
     }
 
     @Test
     fun testSessionWithSealedMember() {
-        assertSerializeDeserialize(SessionWithSealedMember(), defaultSessionSerializer())
+        assertSerializeDeserialize(SessionWithSealedMember(), reflectionSessionSerializer())
     }
 
     private fun <T : Any> assertSerializeDeserialize(session: T, serializer: SessionSerializer<T>) {

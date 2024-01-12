@@ -5,7 +5,7 @@
 package io.ktor.tests.auth
 
 import io.ktor.http.auth.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlin.random.*
 import kotlin.test.*
 

@@ -16,8 +16,6 @@ import io.ktor.websocket.*
  * Could provide bi-directional conversion implementation.
  * One of the most typical examples of the content converter is a JSON converter that provides
  * both serialization and deserialization
- *
- * Implementations must override at least one of [serialize] or [serializeNullable] methods.
  */
 public interface WebsocketContentConverter {
     /**
@@ -31,22 +29,6 @@ public interface WebsocketContentConverter {
      * @return a converted [Frame] value, or null if [value] isn't suitable for this converter
      */
     public suspend fun serialize(
-        charset: Charset,
-        typeInfo: TypeInfo,
-        value: Any
-    ): Frame = serializeNullable(charset, typeInfo, value)
-
-    /**
-     * Serializes a [value] to a WebSocket [Frame].
-     * This function could throw `WebsocketConverterNotFoundException` if the value is not suitable for conversion
-     *
-     * @param charset response charset
-     * @param typeInfo response body typeInfo
-     * @param value to be converted
-     *
-     * @return a converted [Frame] value, or null if [value] isn't suitable for this converter
-     */
-    public suspend fun serializeNullable(
         charset: Charset,
         typeInfo: TypeInfo,
         value: Any?
@@ -83,7 +65,7 @@ public interface WebsocketContentConverter {
 public suspend inline fun <reified T> WebsocketContentConverter.serialize(
     value: T,
     charset: Charset = Charsets.UTF_8
-): Frame = serializeNullable(charset, typeInfo<T>(), value)
+): Frame = serialize(charset, typeInfo<T>(), value)
 
 /**
  * Deserializes [content] to the value of type [T]

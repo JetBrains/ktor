@@ -43,6 +43,16 @@ internal fun Application.authTestServer() {
             }
         }
 
+        digest("digest-SHA256") {
+            val password = "Circle Of Life"
+            algorithmName = "SHA-256"
+            realm = "testrealm@host.com"
+
+            digestProvider { userName, realm ->
+                digest(MessageDigest.getInstance(algorithmName), "$userName:$realm:$password")
+            }
+        }
+
         basic("basic") {
             validate { credential ->
                 check("MyUser" == credential.name)
@@ -83,6 +93,11 @@ internal fun Application.authTestServer() {
             }
             authenticate("digest-2") {
                 get("digest-2") {
+                    call.respondText("ok")
+                }
+            }
+            authenticate("digest-SHA256") {
+                get("digest-SHA256") {
                     call.respondText("ok")
                 }
             }

@@ -5,18 +5,19 @@
 package io.ktor.client.tests.plugins
 
 import io.ktor.client.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.auth.*
+import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.sse.*
 import io.ktor.client.tests.utils.*
 import io.ktor.sse.*
 import io.ktor.test.dispatcher.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlin.coroutines.*
 import kotlin.test.*
 
-internal val ENGINES_WITHOUT_SSE =
-    listOf("Android", "Curl", "Darwin", "DarwinLegacy", "Js", "WinHttp")
-
-class ServerSentEventsTest : ClientLoader() {
+class ServerSentEventsTest : ClientLoader(timeoutSeconds = 120) {
 
     @Test
     fun testExceptionIfSseIsNotInstalled() = testSuspend {
@@ -24,17 +25,17 @@ class ServerSentEventsTest : ClientLoader() {
         kotlin.test.assertFailsWith<IllegalStateException> {
             client.serverSentEventsSession()
         }.let {
-            assertContains(it.message!!, SSE.key.name)
+            kotlin.test.assertContains(it.message!!, SSE.key.name)
         }
         kotlin.test.assertFailsWith<IllegalStateException> {
             client.serverSentEvents {}
         }.let {
-            assertContains(it.message!!, SSE.key.name)
+            kotlin.test.assertContains(it.message!!, SSE.key.name)
         }
     }
 
     @Test
-    fun testSseSession() = clientTests(ENGINES_WITHOUT_SSE) {
+    fun testSseSession() = clientTests {
         config {
             install(SSE)
         }
@@ -54,7 +55,7 @@ class ServerSentEventsTest : ClientLoader() {
     }
 
     @Test
-    fun testParallelSseSessions() = clientTests(ENGINES_WITHOUT_SSE) {
+    fun testParallelSseSessions() = clientTests {
         config {
             install(SSE)
         }
@@ -96,7 +97,7 @@ class ServerSentEventsTest : ClientLoader() {
     }
 
     @Test
-    fun testSseSessionWithError() = clientTests(ENGINES_WITHOUT_SSE) {
+    fun testSseSessionWithError() = clientTests(listOf("Darwin", "DarwinLegacy")) {
         config {
             install(SSE)
         }
@@ -109,7 +110,7 @@ class ServerSentEventsTest : ClientLoader() {
     }
 
     @Test
-    fun testExceptionSse() = clientTests(ENGINES_WITHOUT_SSE) {
+    fun testExceptionSse() = clientTests {
         config {
             install(SSE)
         }
@@ -118,13 +119,35 @@ class ServerSentEventsTest : ClientLoader() {
             kotlin.test.assertFailsWith<SSEException> {
                 client.serverSentEvents("$TEST_SERVER/sse/hello") { error("error") }
             }.let {
-                assertContains(it.message!!, "error")
+                kotlin.test.assertContains(it.message!!, "error")
             }
         }
     }
 
     @Test
-    fun testNoCommentsByDefault() = clientTests(ENGINES_WITHOUT_SSE) {
+    fun testCancellationExceptionSse() = clientTests {
+        config {
+            install(SSE)
+        }
+
+        test { client ->
+            coroutineScope {
+                val job: Job
+                suspendCoroutine { cont ->
+                    job = launch {
+                        client.serverSentEvents("$TEST_SERVER/sse/hello") {
+                            cont.resume(Unit)
+                            awaitCancellation()
+                        }
+                    }
+                }
+                job.cancelAndJoin()
+            }
+        }
+    }
+
+    @Test
+    fun testNoCommentsByDefault() = clientTests {
         config {
             install(SSE)
         }
@@ -142,7 +165,7 @@ class ServerSentEventsTest : ClientLoader() {
     }
 
     @Test
-    fun testShowComments() = clientTests(ENGINES_WITHOUT_SSE + "OkHttp") {
+    fun testShowComments() = clientTests(listOf("OkHttp")) {
         config {
             install(SSE) {
                 showCommentEvents()
@@ -166,7 +189,7 @@ class ServerSentEventsTest : ClientLoader() {
     }
 
     @Test
-    fun testDifferentConfigs() = clientTests(ENGINES_WITHOUT_SSE + "OkHttp") {
+    fun testDifferentConfigs() = clientTests(listOf("OkHttp")) {
         config {
             install(SSE) {
                 showCommentEvents()
@@ -195,6 +218,81 @@ class ServerSentEventsTest : ClientLoader() {
                 }
                 assertEquals(100, size)
             }
+        }
+    }
+
+    @Test
+    fun testRequestTimeoutIsNotApplied() = clientTests {
+        config {
+            install(SSE)
+
+            install(HttpTimeout) {
+                requestTimeoutMillis = 10
+            }
+        }
+
+        test { client ->
+            client.sse("$TEST_SERVER/sse/hello?delay=20") {
+                val result = incoming.single()
+                assertEquals("hello 0", result.event)
+            }
+        }
+    }
+
+    @Test
+    fun testWithAuthPlugin() = clientTests {
+        config {
+            install(Auth) {
+                bearer {
+                    refreshTokens { BearerTokens("valid", "refresh") }
+                    loadTokens { BearerTokens("invalid", "refresh") }
+                    realm = "TestServer"
+                }
+            }
+
+            install(SSE)
+        }
+
+        test { client ->
+            client.sse("$TEST_SERVER/sse/auth") {
+                val result = incoming.single()
+                assertEquals("hello after refresh", result.data)
+            }
+        }
+    }
+
+    @Test
+    fun testSseExceptionOn404Response() = clientTests(listOf("CIO", "Apache", "Apache5", "Android", "Java")) {
+        config {
+            install(SSE)
+        }
+
+        test { client ->
+            kotlin.test.assertFailsWith<SSEException> {
+                client.sse("$TEST_SERVER/sse/404") {}
+            }.let {
+                kotlin.test.assertContains(it.message!!, "Expected status code 200 but was: 404")
+            }
+        }
+    }
+
+    @Test
+    fun testContentTypeWithCharset() = clientTests {
+        config {
+            install(SSE)
+        }
+
+        test { client ->
+            val session = client.serverSentEventsSession("$TEST_SERVER/sse/content_type_with_charset")
+            session.incoming.single().apply {
+                assertEquals("0", id)
+                assertEquals("hello 0", event)
+                val lines = data?.lines() ?: emptyList()
+                assertEquals(2, lines.size)
+                assertEquals("hello", lines[0])
+                assertEquals("from server", lines[1])
+            }
+            session.cancel()
         }
     }
 }

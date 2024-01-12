@@ -8,11 +8,11 @@ import io.ktor.utils.io.*
 import io.netty.buffer.*
 import io.netty.channel.*
 import io.netty.handler.codec.http.*
+import io.netty.handler.timeout.*
 import io.netty.util.*
 import kotlinx.atomicfu.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import java.lang.Integer.*
 import kotlin.coroutines.*
 
 @Suppress("DEPRECATION")
@@ -34,9 +34,13 @@ internal class RequestBodyHandler(
 
         try {
             while (true) {
-                val event = queue.tryReceive().getOrNull()
-                    ?: run { current?.flush(); queue.receiveCatching().getOrNull() }
-                    ?: break
+                var event = queue.tryReceive().getOrNull()
+                if (event == null) {
+                    current?.flush()
+                    event = queue.receiveCatching().getOrNull()
+                }
+
+                event ?: break
 
                 when (event) {
                     is ByteBufHolder -> {
@@ -49,15 +53,18 @@ internal class RequestBodyHandler(
                         }
                         requestMoreEvents()
                     }
+
                     is ByteBuf -> {
                         val channel = current ?: error("No current channel but received a byte buf")
                         processContent(channel, event)
                         requestMoreEvents()
                     }
+
                     is ByteWriteChannel -> {
                         current?.close()
                         current = event
                     }
+
                     is Upgrade -> {
                         upgraded = true
                     }
@@ -122,18 +129,18 @@ internal class RequestBodyHandler(
         }
     }
 
-    private suspend fun processContent(current: ByteWriteChannel, event: ByteBufHolder): Int {
+    private suspend fun processContent(current: ByteWriteChannel, event: ByteBufHolder) {
         try {
             val buf = event.content()
-            return copy(buf, current)
+            copy(buf, current)
         } finally {
             event.release()
         }
     }
 
-    private suspend fun processContent(current: ByteWriteChannel, buf: ByteBuf): Int {
+    private suspend fun processContent(current: ByteWriteChannel, buf: ByteBuf) {
         try {
-            return copy(buf, current)
+            copy(buf, current)
         } finally {
             buf.release()
         }
@@ -163,14 +170,12 @@ internal class RequestBodyHandler(
         }
     }
 
-    private suspend fun copy(buf: ByteBuf, dst: ByteWriteChannel): Int {
+    private suspend fun copy(buf: ByteBuf, dst: ByteWriteChannel) {
         val length = buf.readableBytes()
         if (length > 0) {
             val buffer = buf.internalNioBuffer(buf.readerIndex(), length)
             dst.writeFully(buffer)
         }
-
-        return max(length, 0)
     }
 
     private fun handleBytesRead(content: ReferenceCounted) {
@@ -183,8 +188,16 @@ internal class RequestBodyHandler(
 
     @Suppress("OverridingDeprecatedMember")
     override fun exceptionCaught(ctx: ChannelHandlerContext?, cause: Throwable) {
-        handlerJob.completeExceptionally(cause)
-        queue.close(cause)
+        when (cause) {
+            is ReadTimeoutException -> {
+                ctx?.fireExceptionCaught(cause)
+            }
+
+            else -> {
+                handlerJob.completeExceptionally(cause)
+                queue.close(cause)
+            }
+        }
     }
 
     override fun handlerRemoved(ctx: ChannelHandlerContext?) {

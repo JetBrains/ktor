@@ -8,6 +8,7 @@ import java.nio.charset.*
 
 private const val DECODE_CHAR_BUFFER_SIZE = 8192
 
+@Suppress("ACTUAL_CLASSIFIER_MUST_HAVE_THE_SAME_MEMBERS_AS_NON_FINAL_EXPECT_CLASSIFIER_WARNING")
 public actual typealias Charset = java.nio.charset.Charset
 
 /**
@@ -192,7 +193,7 @@ internal actual fun CharsetDecoder.decodeBuffer(
     return charactersCopied
 }
 
-internal actual fun CharsetEncoder.encodeToByteArrayImpl1(
+internal actual fun CharsetEncoder.encodeToByteArrayImpl(
     input: CharSequence,
     fromIndex: Int,
     toIndex: Int

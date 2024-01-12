@@ -3,6 +3,7 @@
  */
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.sse.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.client.tests.utils.*
@@ -13,6 +14,7 @@ import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import kotlin.test.*
 
 class CIOEngineTest {
@@ -40,6 +42,25 @@ class CIOEngineTest {
             assertEquals("Hello", response.readText())
         }
 
+        assertTrue(received)
+    }
+
+    @Test
+    fun testRequestTimeoutIgnoredWithSSE(): Unit = runBlocking {
+        val client = HttpClient(CIO) {
+            engine {
+                requestTimeout = 10
+            }
+
+            install(SSE)
+        }
+
+        var received = false
+        client.sse("$TEST_SERVER/sse/hello?delay=20") {
+            val response = incoming.single()
+            received = true
+            assertEquals("hello\r\nfrom server", response.data)
+        }
         assertTrue(received)
     }
 
@@ -147,6 +168,21 @@ class CIOEngineTest {
                 assertFalse(newRequest.contains(EXPECT_HEADER))
                 assertTrue(newRequest.contains(body))
                 writeOkResponse(writeChannel)
+            }
+        }
+    }
+
+    @Test
+    fun testErrorMessageWhenServerDontRespondWithUpgrade() = testWithEngine(CIO) {
+        config {
+            install(WebSockets)
+        }
+
+        test { client ->
+            kotlin.test.assertFailsWith<WebSocketException> {
+                client.webSocket("$TEST_WEBSOCKET_SERVER/websockets/500") {}
+            }.apply {
+                assertEquals(message, "Handshake exception, expected status code 101 but was 500")
             }
         }
     }

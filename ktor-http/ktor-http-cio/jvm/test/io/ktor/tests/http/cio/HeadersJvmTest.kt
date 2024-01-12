@@ -186,18 +186,6 @@ class HeadersJvmTest {
     }
 
     @Test
-    fun testExpectHttpBodyPostContentType() = runBlocking {
-        ch.writeStringUtf8("POST / HTTP/1.1\nContent-Type: application/json\n\n")
-        val request = parseRequest(ch)!!
-
-        try {
-            assertTrue { expectHttpBody(request) }
-        } finally {
-            request.release()
-        }
-    }
-
-    @Test
     fun testExpectHttpBodyPostOnly() = runBlocking {
         ch.writeStringUtf8("POST / HTTP/1.1\nX: 0\n\n")
         val request = parseRequest(ch)!!

@@ -77,12 +77,12 @@ class YamlConfigTestNix {
         return result
     }
 
-    @OptIn(UnsafeNumber::class)
+    @OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
     private fun writeFile(path: String, content: String) {
         val file = fopen(path, "w")
         val bytes = content.toByteArray()
         bytes.usePinned { pinned ->
-            fwrite(pinned.addressOf(0), 1, bytes.size.convert(), file)
+            fwrite(pinned.addressOf(0), 1.convert(), bytes.size.convert(), file)
         }
         fclose(file)
     }

@@ -18,9 +18,7 @@ import io.ktor.utils.io.core.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
-import kotlinx.coroutines.debug.junit4.*
-import org.junit.*
-import org.junit.Test
+import kotlinx.coroutines.debug.junit5.*
 import java.nio.*
 import java.nio.charset.*
 import java.time.*
@@ -29,14 +27,12 @@ import java.util.concurrent.CancellationException
 import kotlin.test.*
 
 @Suppress("DEPRECATION")
+@CoroutinesTimeout(30_000)
 class WebSocketTest {
-    @get:Rule
-    val timeout = CoroutinesTimeout.seconds(30)
-
     class Data(val string: String)
 
     private val customContentConverter = object : WebsocketContentConverter {
-        override suspend fun serializeNullable(
+        override suspend fun serialize(
             charset: Charset,
             typeInfo: TypeInfo,
             value: Any?

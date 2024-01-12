@@ -1,6 +1,7 @@
 kotlin.sourceSets {
     jvmAndNixMain {
         dependencies {
+            api(project(":ktor-http"))
             api(project(":ktor-network"))
             api(project(":ktor-utils"))
         }

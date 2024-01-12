@@ -50,13 +50,15 @@ private class CharsetDarwin(name: String) : Charset(name) {
     }
 }
 
+@Suppress("DEPRECATION")
 @OptIn(UnsafeNumber::class)
 internal actual fun CharsetEncoder.encodeImpl(input: CharSequence, fromIndex: Int, toIndex: Int, dst: Buffer): Int {
     val charset = _charset as? CharsetDarwin ?: error("Charset $this is not supported by darwin.")
 
-    @Suppress("CAST_NEVER_SUCCEEDS")
     val max = dst.writeRemaining
     val endIndex = min(toIndex, fromIndex + max)
+
+    @Suppress("CAST_NEVER_SUCCEEDS")
     val content = input.substring(fromIndex, endIndex) as? NSString ?: error("Failed to convert input to NSString.")
 
     val data = content.dataUsingEncoding(charset.encoding)
@@ -67,8 +69,8 @@ internal actual fun CharsetEncoder.encodeImpl(input: CharSequence, fromIndex: In
     return data.size
 }
 
-@Suppress("CAST_NEVER_SUCCEEDS")
-@OptIn(UnsafeNumber::class)
+@Suppress("CAST_NEVER_SUCCEEDS", "DEPRECATION")
+@OptIn(UnsafeNumber::class, BetaInteropApi::class)
 public actual fun CharsetDecoder.decode(input: Input, dst: Appendable, max: Int): Int {
     if (max != Int.MAX_VALUE) {
         throw IOException("Max argument is deprecated")
@@ -85,30 +87,38 @@ public actual fun CharsetDecoder.decode(input: Input, dst: Appendable, max: Int)
     return content.length
 }
 
+@OptIn(BetaInteropApi::class, UnsafeNumber::class)
+@Suppress("DEPRECATION")
 public actual fun CharsetEncoder.encodeUTF8(input: ByteReadPacket, dst: Output) {
     val charset = _charset as? CharsetDarwin ?: error("Charset $this is not supported by darwin.")
     val source: ByteArray = input.readBytes()
 
     val data = source.toNSData()
+
+    @Suppress("CAST_NEVER_SUCCEEDS")
     val content = NSString.create(data, charset.encoding) as? String
         ?: throw MalformedInputException("Failed to convert Bytes to String using $charset")
 
     dst.writeFully(content.toByteArray())
 }
 
-@OptIn(UnsafeNumber::class)
+@Suppress("DEPRECATION")
+@OptIn(UnsafeNumber::class, BetaInteropApi::class)
 public actual fun CharsetDecoder.decodeExactBytes(input: Input, inputLength: Int): String {
     val charset = _charset as? CharsetDarwin ?: error("Charset $this is not supported by darwin.")
     val source = input.readBytes(inputLength)
 
     val data = source.toNSData()
+
+    @Suppress("CAST_NEVER_SUCCEEDS")
     val content = NSString.create(data, charset.encoding) as? String
         ?: throw MalformedInputException("Failed to convert Bytes to String using $charset")
 
     return content
 }
 
-@OptIn(UnsafeNumber::class)
+@Suppress("DEPRECATION")
+@OptIn(UnsafeNumber::class, BetaInteropApi::class)
 internal actual fun CharsetDecoder.decodeBuffer(
     input: Buffer,
     out: Appendable,
@@ -119,6 +129,8 @@ internal actual fun CharsetDecoder.decodeBuffer(
 
     val count = input.readBytes(min(input.readRemaining, max))
     val data = count.toNSData()
+
+    @Suppress("CAST_NEVER_SUCCEEDS")
     val content = NSString.create(data, charset.encoding) as? String
         ?: throw MalformedInputException("Failed to convert Bytes to String using $charset")
 
@@ -127,12 +139,14 @@ internal actual fun CharsetDecoder.decodeBuffer(
 }
 
 @OptIn(UnsafeNumber::class)
-internal actual fun CharsetEncoder.encodeToByteArrayImpl1(
+internal actual fun CharsetEncoder.encodeToByteArrayImpl(
     input: CharSequence,
     fromIndex: Int,
     toIndex: Int
 ): ByteArray {
     val charset = _charset as? CharsetDarwin ?: error("Charset $this is not supported by darwin.")
+
+    @Suppress("CAST_NEVER_SUCCEEDS")
     val content = input.substring(fromIndex, toIndex) as? NSString ?: error("Failed to convert input to NSString.")
 
     return content.dataUsingEncoding(charset.encoding)
@@ -140,7 +154,7 @@ internal actual fun CharsetEncoder.encodeToByteArrayImpl1(
         ?: throw MalformedInputException("Failed to convert String to Bytes using $charset")
 }
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 private fun ByteArray.toNSData(): NSData = NSMutableData().apply {
     if (isEmpty()) return@apply
     this@toNSData.usePinned {
@@ -148,7 +162,7 @@ private fun ByteArray.toNSData(): NSData = NSMutableData().apply {
     }
 }
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 private fun NSData.toByteArray(): ByteArray {
     val result = ByteArray(length.toInt())
     if (result.isEmpty()) return result

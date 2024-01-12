@@ -5,8 +5,10 @@ public final class io/ktor/server/jetty/EngineMain {
 
 public final class io/ktor/server/jetty/Jetty : io/ktor/server/engine/ApplicationEngineFactory {
 	public static final field INSTANCE Lio/ktor/server/jetty/Jetty;
-	public synthetic fun create (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/engine/ApplicationEngine;
-	public fun create (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/jetty/JettyApplicationEngine;
+	public synthetic fun configuration (Lkotlin/jvm/functions/Function1;)Lio/ktor/server/engine/ApplicationEngine$Configuration;
+	public fun configuration (Lkotlin/jvm/functions/Function1;)Lio/ktor/server/jetty/JettyApplicationEngineBase$Configuration;
+	public synthetic fun create (Lio/ktor/server/application/ApplicationEnvironment;Lio/ktor/events/Events;ZLio/ktor/server/engine/ApplicationEngine$Configuration;Lkotlin/jvm/functions/Function0;)Lio/ktor/server/engine/ApplicationEngine;
+	public fun create (Lio/ktor/server/application/ApplicationEnvironment;Lio/ktor/events/Events;ZLio/ktor/server/jetty/JettyApplicationEngineBase$Configuration;Lkotlin/jvm/functions/Function0;)Lio/ktor/server/jetty/JettyApplicationEngine;
 }
 
 public final class io/ktor/server/jetty/JettyApplicationCall : io/ktor/server/servlet/AsyncServletApplicationCall {
@@ -19,15 +21,15 @@ public final class io/ktor/server/jetty/JettyApplicationCall : io/ktor/server/se
 }
 
 public final class io/ktor/server/jetty/JettyApplicationEngine : io/ktor/server/jetty/JettyApplicationEngineBase {
-	public fun <init> (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)V
+	public fun <init> (Lio/ktor/server/application/ApplicationEnvironment;Lio/ktor/events/Events;ZLio/ktor/server/jetty/JettyApplicationEngineBase$Configuration;Lkotlin/jvm/functions/Function0;)V
 	public synthetic fun start (Z)Lio/ktor/server/engine/ApplicationEngine;
 	public fun start (Z)Lio/ktor/server/jetty/JettyApplicationEngine;
 	public synthetic fun start (Z)Lio/ktor/server/jetty/JettyApplicationEngineBase;
 }
 
 public class io/ktor/server/jetty/JettyApplicationEngineBase : io/ktor/server/engine/BaseApplicationEngine {
-	public fun <init> (Lio/ktor/server/engine/ApplicationEngineEnvironment;Lkotlin/jvm/functions/Function1;)V
-	protected final fun getConfiguration ()Lio/ktor/server/jetty/JettyApplicationEngineBase$Configuration;
+	public fun <init> (Lio/ktor/server/application/ApplicationEnvironment;Lio/ktor/events/Events;ZLio/ktor/server/jetty/JettyApplicationEngineBase$Configuration;Lkotlin/jvm/functions/Function0;)V
+	public final fun getConfiguration ()Lio/ktor/server/jetty/JettyApplicationEngineBase$Configuration;
 	protected final fun getServer ()Lorg/eclipse/jetty/server/Server;
 	public synthetic fun start (Z)Lio/ktor/server/engine/ApplicationEngine;
 	public fun start (Z)Lio/ktor/server/jetty/JettyApplicationEngineBase;
@@ -38,7 +40,9 @@ public class io/ktor/server/jetty/JettyApplicationEngineBase : io/ktor/server/en
 public final class io/ktor/server/jetty/JettyApplicationEngineBase$Configuration : io/ktor/server/engine/BaseApplicationEngine$Configuration {
 	public fun <init> ()V
 	public final fun getConfigureServer ()Lkotlin/jvm/functions/Function1;
+	public final fun getIdleTimeout-UwyO8pc ()J
 	public final fun setConfigureServer (Lkotlin/jvm/functions/Function1;)V
+	public final fun setIdleTimeout-LRDsOJo (J)V
 }
 
 public final class io/ktor/server/jetty/JettyApplicationResponse : io/ktor/server/servlet/AsyncServletApplicationResponse {

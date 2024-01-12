@@ -23,7 +23,8 @@ private object WinHttpWebSocketBuffer {
     val Close = WINHTTP_WEB_SOCKET_CLOSE_BUFFER_TYPE
 }
 
-internal class WinHttpWebSocket(
+@OptIn(ExperimentalForeignApi::class)
+internal class WinHttpWebSocket @OptIn(ExperimentalForeignApi::class) constructor(
     private val hWebSocket: COpaquePointer,
     private val connect: WinHttpConnect,
     callContext: CoroutineContext
@@ -103,9 +104,11 @@ internal class WinHttpWebSocket(
                 }
             }
 
+            val data = if (buffer.get().isEmpty()) null else buffer.addressOf(0)
+
             if (WinHttpWebSocketReceive(
                     hWebSocket,
-                    buffer.addressOf(0),
+                    data,
                     buffer.get().size.convert(),
                     null,
                     null
@@ -194,10 +197,12 @@ internal class WinHttpWebSocket(
                 continuation.resume(Unit)
             }
 
+            val data = if (buffer.get().isEmpty()) null else buffer.addressOf(0)
+
             if (WinHttpWebSocketSend(
                     hWebSocket,
                     type,
-                    buffer.addressOf(0),
+                    data,
                     buffer.get().size.convert()
                 ) != 0u
             ) {
@@ -236,7 +241,7 @@ internal class WinHttpWebSocket(
                     hWebSocket,
                     status.ptr,
                     null,
-                    0,
+                    0.convert(),
                     reasonLengthConsumed.ptr
                 ) != 0u
             ) {
@@ -260,7 +265,8 @@ internal class WinHttpWebSocket(
 
     @Deprecated(
         "Use cancel() instead.",
-        ReplaceWith("cancel()", "kotlinx.coroutines.cancel")
+        ReplaceWith("cancel()", "kotlinx.coroutines.cancel"),
+        level = DeprecationLevel.ERROR
     )
     override fun terminate() {
         socketJob.cancel()
@@ -280,7 +286,7 @@ internal class WinHttpWebSocket(
             hWebSocket,
             WINHTTP_WEB_SOCKET_SUCCESS_CLOSE_STATUS.convert(),
             NULL,
-            0
+            0.convert()
         )
         WinHttpCloseHandle(hWebSocket)
         connect.close()

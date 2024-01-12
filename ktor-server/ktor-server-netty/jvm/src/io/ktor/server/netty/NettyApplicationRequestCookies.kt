@@ -6,7 +6,6 @@ package io.ktor.server.netty
 
 import io.ktor.server.request.*
 import io.netty.handler.codec.http.cookie.*
-import java.util.*
 
 internal class NettyApplicationRequestCookies(request: PipelineRequest) : RequestCookies(request) {
     override fun fetchCookies(): Map<String, String> {

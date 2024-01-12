@@ -8,7 +8,7 @@ import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
 import io.ktor.util.*
 import io.ktor.util.collections.*
-import io.ktor.utils.io.concurrent.*
+import io.ktor.utils.io.*
 import kotlin.collections.set
 
 /**

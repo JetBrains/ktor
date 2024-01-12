@@ -3,6 +3,8 @@
 */
 package io.ktor.util
 
+import io.ktor.utils.io.*
+
 @InternalAPI
 public class CaseInsensitiveSet() : MutableSet<String> {
     private val backingMap = CaseInsensitiveMap<Boolean>()

@@ -4,7 +4,7 @@
 
 package io.ktor.server.application
 
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 /**
  * A hook that can be registered in [PluginBuilder].

@@ -9,6 +9,7 @@ import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import io.ktor.util.*
 import io.ktor.util.pipeline.*
 import io.ktor.util.reflect.*
@@ -53,13 +54,18 @@ public object CallFailed : Hook<suspend (call: ApplicationCall, cause: Throwable
 }
 
 /**
- * A shortcut hook for [ApplicationEnvironment.monitor] subscription.
+ * A shortcut hook for [Application.monitor] subscription.
  */
 public class MonitoringEvent<Param : Any, Event : EventDefinition<Param>>(
     private val event: Event
 ) : Hook<(Param) -> Unit> {
     override fun install(pipeline: ApplicationCallPipeline, handler: (Param) -> Unit) {
-        pipeline.environment.monitor.subscribe(event) {
+        val application = when (pipeline) {
+            is Application -> pipeline
+            is Route -> pipeline.application
+            else -> error("Unsupported pipeline: $pipeline")
+        }
+        application.monitor.subscribe(event) {
             handler(it)
         }
     }

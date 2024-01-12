@@ -5,14 +5,13 @@
 package io.ktor.tests.utils
 
 import io.ktor.util.*
-import org.junit.Assert.*
 import kotlin.test.*
 
 class HexFunctionsTest {
     @Test
     fun testEmpty() {
         assertEquals("", hex(ByteArray(0)))
-        assertArrayEquals(ByteArray(0), hex(""))
+        assertEquals(ByteArray(0).toList(), hex("").toList())
     }
 
     @Test
@@ -43,6 +42,6 @@ class HexFunctionsTest {
 
     private fun test(byteArray: ByteArray, text: String) {
         assertEquals(text, hex(byteArray))
-        assertArrayEquals(byteArray, hex(text))
+        assertEquals(byteArray.toList(), hex(text).toList())
     }
 }

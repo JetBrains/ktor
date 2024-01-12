@@ -4,7 +4,7 @@
 
 import io.ktor.client.plugins.json.*
 import io.ktor.client.plugins.kotlinx.serializer.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 @OptIn(ExperimentalStdlibApi::class)
 @InternalAPI
@@ -15,7 +15,7 @@ public val initializer: SerializerInitializer = SerializerInitializer
 @InternalAPI
 public object SerializerInitializer {
     init {
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         serializersStore += KotlinxSerializer()
     }
 }

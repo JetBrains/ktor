@@ -6,7 +6,6 @@ package io.ktor.client.engine
 
 import io.ktor.client.plugins.*
 import io.ktor.util.*
-import kotlin.native.concurrent.*
 
 /**
  * Key required to access capabilities.
@@ -17,7 +16,7 @@ internal val ENGINE_CAPABILITIES_KEY =
 /**
  * Default capabilities expected to be supported by engine.
  */
-public val DEFAULT_CAPABILITIES: Set<HttpTimeout.Plugin> = setOf(HttpTimeout)
+public val DEFAULT_CAPABILITIES: Set<HttpClientEngineCapability<*>> = setOf(HttpTimeoutCapability)
 
 /**
  * Capability required by request to be supported by [HttpClientEngine] with [T] representing type of the capability

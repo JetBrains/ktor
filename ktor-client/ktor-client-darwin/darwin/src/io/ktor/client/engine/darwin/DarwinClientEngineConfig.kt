@@ -30,7 +30,8 @@ public class DarwinClientEngineConfig : HttpClientEngineConfig() {
     public var requestConfig: NSMutableURLRequest.() -> Unit = {}
         @Deprecated(
             "[requestConfig] property is deprecated. Consider using [configureRequest] instead",
-            replaceWith = ReplaceWith("this.configureRequest(value)")
+            replaceWith = ReplaceWith("this.configureRequest(value)"),
+            level = DeprecationLevel.ERROR
         )
         set(value) {
             field = value
@@ -42,7 +43,8 @@ public class DarwinClientEngineConfig : HttpClientEngineConfig() {
     public var sessionConfig: NSURLSessionConfiguration.() -> Unit = {}
         @Deprecated(
             "[sessionConfig] property is deprecated. Consider using [configureSession] instead",
-            replaceWith = ReplaceWith("this.configureSession(value)")
+            replaceWith = ReplaceWith("this.configureSession(value)"),
+            level = DeprecationLevel.ERROR
         )
         set(value) {
             field = value
@@ -72,7 +74,7 @@ public class DarwinClientEngineConfig : HttpClientEngineConfig() {
     public fun configureRequest(block: NSMutableURLRequest.() -> Unit) {
         val old = requestConfig
 
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         requestConfig = {
             old()
             block()
@@ -85,7 +87,7 @@ public class DarwinClientEngineConfig : HttpClientEngineConfig() {
     public fun configureSession(block: NSURLSessionConfiguration.() -> Unit) {
         val old = sessionConfig
 
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         sessionConfig = {
             old()
             block()
@@ -96,7 +98,7 @@ public class DarwinClientEngineConfig : HttpClientEngineConfig() {
      * Set a [session] to be used to make HTTP requests, [null] to create default session.
      * If the preconfigured session is set, [configureSession] block will be ignored.
      */
-    @Deprecated("Please use method with delegate parameter")
+    @Deprecated("Please use method with delegate parameter", level = DeprecationLevel.ERROR)
     public fun usePreconfiguredSession(session: NSURLSession?) {
         preconfiguredSession = session
     }

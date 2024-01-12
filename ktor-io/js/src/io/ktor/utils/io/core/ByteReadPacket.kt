@@ -19,6 +19,7 @@ public actual fun ByteReadPacket(
         else -> content.buffer.slice(offset, offset + length)
     }
 
+    @Suppress("DEPRECATION")
     val pool = object : SingleInstancePool<ChunkBuffer>() {
         override fun produceInstance(): ChunkBuffer =
             ChunkBuffer(Memory(sub), null, this)

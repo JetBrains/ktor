@@ -9,6 +9,7 @@ import io.ktor.http.*
 import io.ktor.http.auth.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
+import io.ktor.server.engine.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -302,6 +303,7 @@ class OAuth1aFlowTest {
         routing {
             authenticate {
                 get("/login") {
+                    @Suppress("DEPRECATION_ERROR")
                     call.respondText("Ho, ${call.authentication.principal}")
                 }
             }
@@ -346,7 +348,8 @@ private interface TestingOAuthServer {
 }
 
 private fun createOAuthServer(server: TestingOAuthServer): HttpClient {
-    val environment = createTestEnvironment {
+    val environment = createTestEnvironment {}
+    val props = applicationProperties(environment) {
         module {
             routing {
                 post("/oauth/request_token") {
@@ -460,11 +463,10 @@ private fun createOAuthServer(server: TestingOAuthServer): HttpClient {
             }
         }
     }
-    with(TestApplicationEngine(environment)) {
-        start()
-        return client.config {
-            expectSuccess = false
-        }
+    val embeddedServer = EmbeddedServer(props, TestEngine)
+    embeddedServer.start()
+    return embeddedServer.engine.client.config {
+        expectSuccess = false
     }
 }
 

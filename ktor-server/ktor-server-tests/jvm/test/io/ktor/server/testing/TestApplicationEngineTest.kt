@@ -17,7 +17,7 @@ import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
-import java.lang.Runnable
+import kotlinx.serialization.Serializable
 import java.util.concurrent.atomic.*
 import kotlin.coroutines.*
 import kotlin.system.*
@@ -190,6 +190,7 @@ class TestApplicationEngineTest {
 
     @Test
     fun testCookiesSession() {
+        @Serializable
         data class CountSession(val count: Int)
 
         withTestApplication {

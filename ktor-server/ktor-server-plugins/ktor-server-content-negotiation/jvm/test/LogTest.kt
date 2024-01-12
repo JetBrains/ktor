@@ -6,7 +6,7 @@ package io.ktor.server.plugins.contentnegotiation
 
 import ch.qos.logback.classic.*
 import ch.qos.logback.classic.spi.*
-import ch.qos.logback.core.read.ListAppender
+import ch.qos.logback.core.read.*
 import io.ktor.client.request.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*

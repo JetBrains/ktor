@@ -4,7 +4,7 @@
 
 package io.ktor.sse
 
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 /**
  *  Server-sent event.

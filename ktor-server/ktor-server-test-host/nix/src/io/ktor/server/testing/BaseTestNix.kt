@@ -5,7 +5,8 @@
 package io.ktor.server.testing
 
 import io.ktor.test.dispatcher.*
-import kotlinx.atomicfu.locks.*
+import io.ktor.utils.io.*
+import io.ktor.utils.io.locks.*
 import kotlinx.coroutines.*
 import kotlin.test.*
 import kotlin.time.*
@@ -16,8 +17,11 @@ actual abstract class BaseTest actual constructor() {
     actual open val timeout: Duration = 10.seconds
 
     private val errors = mutableListOf<Throwable>()
+
+    @OptIn(InternalAPI::class)
     private val errorsLock = SynchronizedObject()
 
+    @OptIn(InternalAPI::class)
     actual fun collectUnhandledException(error: Throwable) {
         synchronized(errorsLock) {
             errors.add(error)

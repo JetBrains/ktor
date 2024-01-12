@@ -20,6 +20,7 @@ kotlin {
         jvmTest {
             dependencies {
                 api(project(":ktor-network:ktor-network-tls:ktor-network-tls-certificates"))
+                api(project(":ktor-shared:ktor-junit"))
             }
         }
     }

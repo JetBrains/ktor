@@ -120,15 +120,6 @@ public data class HttpStatusCode(val value: Int, val description: String) : Comp
     }
 }
 
-@Suppress("UNUSED", "KDocMissingDocumentation")
-@Deprecated(
-    "Use ExpectationFailed instead",
-    ReplaceWith("ExpectationFailed", "io.ktor.http.HttpStatusCode.Companion.ExpectationFailed"),
-    level = DeprecationLevel.ERROR
-)
-public inline val HttpStatusCode.Companion.ExceptionFailed: HttpStatusCode
-    get() = ExpectationFailed
-
 internal fun allStatusCodes(): List<HttpStatusCode> = listOf(
     HttpStatusCode.Continue,
     HttpStatusCode.SwitchingProtocols,

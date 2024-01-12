@@ -8,6 +8,7 @@ import kotlinx.cinterop.ByteVar
 import platform.darwin.*
 import platform.posix.*
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual fun ktor_inet_ntop(
     family: Int,
     src: CValuesRef<*>?,

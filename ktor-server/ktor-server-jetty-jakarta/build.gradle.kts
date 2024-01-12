@@ -4,7 +4,7 @@ kotlin {
     sourceSets {
         jvmMain {
             dependencies {
-                api(project(":ktor-server:ktor-server-host-common"))
+                api(project(":ktor-server:ktor-server-core"))
                 api(project(":ktor-server:ktor-server-servlet-jakarta"))
                 api(libs.jetty.server.jakarta)
                 api(libs.jetty.servlets.jakarta)
@@ -16,6 +16,7 @@ kotlin {
         }
         jvmTest {
             dependencies {
+                api(kotlin("test-junit5"))
                 api(project(":ktor-server:ktor-server-core"))
                 api(project(":ktor-server:ktor-server-test-host"))
                 api(project(":ktor-server:ktor-server-test-suites"))

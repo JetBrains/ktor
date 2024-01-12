@@ -33,8 +33,8 @@ public final class io/ktor/network/tls/certificates/CertificatesKt {
 	public static synthetic fun generateCertificate$default (Ljava/io/File;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILio/ktor/network/tls/certificates/KeyType;ILjava/lang/Object;)Ljava/security/KeyStore;
 	public static synthetic fun generateCertificate$default (Ljava/security/KeyStore;Ljava/io/File;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Lio/ktor/network/tls/certificates/KeyType;ILjava/lang/Object;)Ljava/security/KeyStore;
 	public static final fun getTrustManagers (Ljava/security/KeyStore;)Ljava/util/List;
-	public static final fun trustStore (Ljava/security/KeyStore;Ljava/io/File;[C)Ljava/security/KeyStore;
-	public static synthetic fun trustStore$default (Ljava/security/KeyStore;Ljava/io/File;[CILjava/lang/Object;)Ljava/security/KeyStore;
+	public static final fun trustStore (Ljava/security/KeyStore;Ljava/io/File;[CLjava/lang/String;)Ljava/security/KeyStore;
+	public static synthetic fun trustStore$default (Ljava/security/KeyStore;Ljava/io/File;[CLjava/lang/String;ILjava/lang/Object;)Ljava/security/KeyStore;
 }
 
 public final class io/ktor/network/tls/certificates/KeyStoreBuilder {
@@ -45,6 +45,7 @@ public final class io/ktor/network/tls/certificates/KeyType : java/lang/Enum {
 	public static final field CA Lio/ktor/network/tls/certificates/KeyType;
 	public static final field Client Lio/ktor/network/tls/certificates/KeyType;
 	public static final field Server Lio/ktor/network/tls/certificates/KeyType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/network/tls/certificates/KeyType;
 	public static fun values ()[Lio/ktor/network/tls/certificates/KeyType;
 }

@@ -5,14 +5,14 @@
 package io.ktor.client.plugins.kotlinx.serializer
 
 import io.ktor.client.plugins.json.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 @OptIn(ExperimentalStdlibApi::class)
 @Suppress("unused", "DEPRECATION")
 @EagerInitialization
 private val initHook = SerializerInitializer
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 @OptIn(InternalAPI::class)
 private object SerializerInitializer {
     init {

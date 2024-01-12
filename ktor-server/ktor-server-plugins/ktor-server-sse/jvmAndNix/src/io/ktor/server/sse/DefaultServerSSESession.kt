@@ -6,7 +6,6 @@ package io.ktor.server.sse
 
 import io.ktor.server.application.*
 import io.ktor.sse.*
-import io.ktor.util.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.sync.*
 import kotlin.coroutines.*

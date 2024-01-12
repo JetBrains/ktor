@@ -7,17 +7,17 @@ package io.ktor.server.cio.backend
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import io.ktor.server.cio.*
-import io.ktor.server.cio.internal.WeakTimeoutQueue
 import io.ktor.server.engine.*
 import io.ktor.server.engine.internal.*
-import io.ktor.util.*
 import io.ktor.util.logging.*
+import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.*
+import kotlin.time.Duration.Companion.seconds
 
 /**
- * Start an http server with [settings] invoking [handler] for every request
+ * Start a http server with [settings] invoking [handler] for every request
  */
 @OptIn(InternalAPI::class)
 public fun CoroutineScope.httpServer(
@@ -36,9 +36,7 @@ public fun CoroutineScope.httpServer(
     }
 
     val selector = SelectorManager(coroutineContext)
-    val timeout = WeakTimeoutQueue(
-        settings.connectionIdleTimeoutSeconds * 1000L
-    )
+    val timeout = settings.connectionIdleTimeoutSeconds.seconds
 
     val logger = KtorSimpleLogger(
         HttpServer::class.simpleName ?: HttpServer::class.qualifiedName ?: HttpServer::class.toString()
@@ -98,13 +96,8 @@ public fun CoroutineScope.httpServer(
     acceptJob.invokeOnCompletion { cause ->
         cause?.let { socket.completeExceptionally(it) }
         serverLatch.complete()
-        timeout.process()
     }
 
-    @OptIn(InternalCoroutinesApi::class) // TODO it's attach child?
-    serverJob.invokeOnCompletion(onCancelling = true) {
-        timeout.cancel()
-    }
     serverJob.invokeOnCompletion {
         selector.close()
     }

@@ -53,10 +53,10 @@ public open class ApplicationReceivePipeline(
 @Deprecated(
     "receiveOrNull is ambiguous with receiveNullable and going to be removed in 3.0.0. " +
         "Please consider replacing it with runCatching with receive or receiveNullable",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith("kotlin.runCatching { this.receiveNullable<T>() }.getOrNull()")
 )
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 public suspend inline fun <reified T : Any> ApplicationCall.receiveOrNull(): T? = receiveOrNull(typeInfo<T>())
 
 /**
@@ -102,7 +102,7 @@ public suspend fun <T> ApplicationCall.receive(typeInfo: TypeInfo): T = receiveN
 @Deprecated(
     "receiveOrNull is ambiguous with receiveNullable and going to be removed in 3.0.0. " +
         "Please consider replacing it with runCatching with receive or receiveNullable",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith("kotlin.runCatching { this.receiveNullable<T>() }.getOrNull()")
 )
 public suspend fun <T : Any> ApplicationCall.receiveOrNull(typeInfo: TypeInfo): T? {
@@ -122,7 +122,7 @@ public suspend fun <T : Any> ApplicationCall.receiveOrNull(typeInfo: TypeInfo): 
 @Deprecated(
     "receiveOrNull is ambiguous with receiveNullable and going to be removed in 3.0.0. " +
         "Please consider replacing it with runCatching with receive or receiveNullable",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith("kotlin.runCatching { this.receiveNullable<T>() }.getOrNull()")
 )
 public suspend fun <T : Any> ApplicationCall.receiveOrNull(type: KClass<T>): T? = try {

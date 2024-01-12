@@ -5,10 +5,7 @@ public final class io/ktor/server/plugins/conditionalheaders/ConditionalHeadersC
 
 public final class io/ktor/server/plugins/conditionalheaders/ConditionalHeadersKt {
 	public static final fun getConditionalHeaders ()Lio/ktor/server/application/RouteScopedPlugin;
-	public static final fun getDefaultVersions (Lio/ktor/http/content/OutgoingContent;)Ljava/util/List;
 	public static final fun parseVersions (Lio/ktor/http/Headers;)Ljava/util/List;
 	public static final fun versionsFor (Lio/ktor/server/application/ApplicationCall;Lio/ktor/http/content/OutgoingContent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun withETag (Lio/ktor/server/application/ApplicationCall;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun withETag$default (Lio/ktor/server/application/ApplicationCall;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 

@@ -7,6 +7,7 @@ package io.ktor.client.engine.cio
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 
 @OptIn(InternalAPI::class)
 internal actual fun Throwable.mapToKtor(request: HttpRequestData): Throwable = when (cause?.rootCause) {

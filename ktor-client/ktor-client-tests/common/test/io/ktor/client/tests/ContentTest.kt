@@ -248,6 +248,26 @@ class ContentTest : ClientLoader(5 * 60) {
     }
 
     @Test
+    fun testLargeFormWithBinaryData() = clientTests {
+        val formData = {
+            formData {
+                append(
+                    key = "image",
+                    value = ByteArray(100 * 1024) { 0 },
+                    headers = Headers.build {
+                        append(HttpHeaders.ContentType, "image/jpeg")
+                        append(HttpHeaders.ContentDisposition, "filename=image.jpeg")
+                    },
+                )
+            }
+        }
+
+        test { client ->
+            client.submitFormWithBinaryData("$TEST_SERVER/content/upload", formData()).body<ByteArray>()
+        }
+    }
+
+    @Test
     fun testMultipartWithByteReadChannel() = clientTests {
         test { client ->
             val response = client.submitFormWithBinaryData(

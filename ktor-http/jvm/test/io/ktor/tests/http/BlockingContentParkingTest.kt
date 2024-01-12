@@ -14,6 +14,7 @@ import kotlin.test.*
 @Suppress("BlockingMethodInNonBlockingContext")
 @OptIn(DelicateCoroutinesApi::class)
 class BlockingContentParkingTest {
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val dispatcher = newSingleThreadContext("BlockingContentParkingTest")
     private val channel = ByteChannel(true)
     private val consumer = GlobalScope.launch {

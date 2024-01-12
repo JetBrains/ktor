@@ -19,25 +19,9 @@ class TestApplicationCall(
     override val coroutineContext: CoroutineContext
 ) : BaseApplicationCall(application), CoroutineScope {
 
-    /**
-     * Set to `true` when the request has been handled and a response has been produced.
-     */
-    @Suppress("DeprecatedCallableAddReplaceWith", "unused")
-    @Deprecated(
-        "This property may have unpredictable behaviour. " +
-            "Please use asserts on response status, headers or content",
-        level = DeprecationLevel.ERROR
-    )
-    val requestHandled: Boolean
-        get() = error(
-            "This property may have unpredictable behaviour. " +
-                "Please use asserts on response status, headers or content"
-        )
-
     override val request: TestApplicationRequest = TestApplicationRequest(this, closeRequest)
     override val response: TestApplicationResponse = TestApplicationResponse(this, readResponse)
 
-    @Suppress("DEPRECATION")
     override fun toString(): String = "TestApplicationCall(uri=${request.uri})"
 
     init {

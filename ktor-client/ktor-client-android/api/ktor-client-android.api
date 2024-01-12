@@ -8,7 +8,6 @@ public final class io/ktor/client/engine/android/AndroidClientEngine : io/ktor/c
 	public fun execute (Lio/ktor/client/request/HttpRequestData;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun getConfig ()Lio/ktor/client/engine/HttpClientEngineConfig;
 	public fun getConfig ()Lio/ktor/client/engine/android/AndroidEngineConfig;
-	public fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public fun getSupportedCapabilities ()Ljava/util/Set;
 }
 

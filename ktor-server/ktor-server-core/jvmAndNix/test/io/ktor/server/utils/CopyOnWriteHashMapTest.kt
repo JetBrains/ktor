@@ -5,7 +5,7 @@
 package io.ktor.tests.utils
 
 import io.ktor.server.util.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlin.test.*
 
 @OptIn(InternalAPI::class)

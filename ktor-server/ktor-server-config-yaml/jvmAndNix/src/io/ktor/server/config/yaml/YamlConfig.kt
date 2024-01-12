@@ -58,6 +58,7 @@ constructor(
         val yaml = parts.dropLast(1).fold(yaml) { yaml, part -> yaml[part] as? YamlMap ?: return null }
         val value = yaml[parts.last()] ?: return null
         return when (value) {
+            is YamlNull -> null
             is YamlLiteral -> resolveValue(value.content, root)?.let { LiteralConfigValue(key = path, value = it) }
 
             is YamlList -> {
@@ -65,7 +66,7 @@ constructor(
                     element.asLiteralOrNull()?.content?.let { resolveValue(it, root) }
                         ?: throw ApplicationConfigurationException("Value at path $path can not be resolved.")
                 }
-                return ListConfigValue(key = path, values = values)
+                ListConfigValue(key = path, values = values)
             }
 
             else -> throw ApplicationConfigurationException(

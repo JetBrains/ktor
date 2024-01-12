@@ -8,6 +8,8 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
+import io.ktor.server.engine.*
+import io.ktor.server.plugins.*
 import io.ktor.server.plugins.forwardedheaders.*
 import io.ktor.server.plugins.hsts.*
 import io.ktor.server.response.*
@@ -103,6 +105,27 @@ class HSTSTest {
             header(HttpHeaders.XForwardedHost, "some:8443")
         }.let {
             assertNull(it.headers[HttpHeaders.StrictTransportSecurity])
+        }
+    }
+
+    @Test
+    fun testSetCustomPort() = testApplication {
+        application {
+            testApp {
+                filter { call ->
+                    call.request.origin.run { scheme == "https" && serverPort == 8443 }
+                }
+            }
+        }
+
+        client.get("/") {
+            header(HttpHeaders.XForwardedProto, "https")
+            header(HttpHeaders.XForwardedHost, "some:8443")
+        }.let {
+            assertEquals(
+                "max-age=10; includeSubDomains; preload; some=\"va=lue\"",
+                it.headers[HttpHeaders.StrictTransportSecurity]
+            )
         }
     }
 

@@ -6,7 +6,9 @@ package io.ktor.client.engine.curl
 
 import io.ktor.client.engine.curl.internal.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.atomicfu.*
+import kotlinx.cinterop.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
 import kotlin.coroutines.*
@@ -57,6 +59,7 @@ internal class CurlProcessor(coroutineContext: CoroutineContext) {
         }
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     private suspend fun drainRequestQueue(api: CurlMultiApiHandler) {
         while (true) {
             val container = if (api.hasHandlers()) {
@@ -91,6 +94,7 @@ internal class CurlProcessor(coroutineContext: CoroutineContext) {
         }
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     private fun cancelRequest(easyHandle: EasyHandle, cause: Throwable) {
         curlScope.launch {
             curlApi!!.cancelRequest(easyHandle, cause)

@@ -14,7 +14,7 @@ import io.ktor.util.pipeline.*
 import kotlin.test.*
 
 @Suppress("DEPRECATION")
-class RoutingBuilderTest {
+class RouteTest {
 
     @Test
     fun testCanInstallPlugin() = testApplication {

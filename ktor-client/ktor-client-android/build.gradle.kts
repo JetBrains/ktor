@@ -19,7 +19,7 @@ kotlin.sourceSets {
 val jvmTest: org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest by tasks
 
 jvmTest.apply {
-    useJUnit()
+    useJUnitPlatform()
 
     jvmArgs("-Dhttp.maxConnections=32")
 }

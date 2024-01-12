@@ -12,6 +12,7 @@ import io.ktor.client.statement.*
 import io.ktor.client.utils.*
 import io.ktor.events.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import kotlinx.atomicfu.*
 import kotlinx.coroutines.*
@@ -149,6 +150,7 @@ public class HttpClient(
         with(userConfig) {
             config.install(HttpRequestLifecycle)
             config.install(BodyProgress)
+            config.install(SaveBodyPlugin)
 
             if (useDefaultTransformers) {
                 config.install("DefaultTransformers") { defaultTransformers() }

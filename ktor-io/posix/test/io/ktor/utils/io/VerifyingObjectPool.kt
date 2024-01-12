@@ -5,11 +5,9 @@
 package io.ktor.utils.io
 
 import io.ktor.utils.io.pool.*
+import kotlin.experimental.*
 import kotlin.native.*
 
+@OptIn(ExperimentalNativeApi::class)
 @Suppress("NOTHING_TO_INLINE")
 internal actual inline fun identityHashCode(instance: Any): Int = instance.identityHashCode()
-
-actual class VerifyingObjectPool<T : Any> actual constructor(delegate: ObjectPool<T>) : VerifyingPoolBase<T>(delegate) {
-    override val allocated = HashSet<IdentityWrapper<T>>()
-}

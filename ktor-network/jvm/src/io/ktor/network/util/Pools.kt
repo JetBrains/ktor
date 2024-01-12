@@ -5,9 +5,7 @@
 package io.ktor.network.util
 
 import io.ktor.network.sockets.*
-import io.ktor.util.*
 import io.ktor.utils.io.pool.*
-import io.ktor.utils.io.pool.DirectByteBufferPool
 import java.nio.*
 
 @Suppress("KDocMissingDocumentation")
@@ -27,23 +25,3 @@ public val DefaultByteBufferPool: ObjectPool<ByteBuffer> =
  */
 public val DefaultDatagramByteBufferPool: ObjectPool<ByteBuffer> =
     DirectByteBufferPool(2048, MAX_DATAGRAM_SIZE)
-
-@Deprecated(
-    level = DeprecationLevel.ERROR,
-    message = "ByteBufferPool is moved to `io` module",
-    replaceWith = ReplaceWith("ByteBufferPool", "io.ktor.utils.io.pool.ByteBufferPool")
-)
-internal class DirectByteBufferPool(private val bufferSize: Int, size: Int) : DefaultPool<ByteBuffer>(size) {
-    override fun produceInstance(): ByteBuffer = ByteBuffer.allocateDirect(bufferSize)
-
-    override fun clearInstance(instance: ByteBuffer): ByteBuffer {
-        instance.clear()
-        instance.order(ByteOrder.BIG_ENDIAN)
-        return instance
-    }
-
-    override fun validateInstance(instance: ByteBuffer) {
-        require(instance.isDirect)
-        require(instance.capacity() == bufferSize)
-    }
-}

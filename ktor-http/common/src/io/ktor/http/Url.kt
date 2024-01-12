@@ -19,7 +19,7 @@ package io.ktor.http
  * @property trailingQuery keep trailing question character even if there are no query parameters
  */
 public class Url internal constructor(
-    public val protocol: URLProtocol,
+    protocol: URLProtocol?,
     public val host: String,
     public val specifiedPort: Int,
     public val pathSegments: List<String>,
@@ -31,11 +31,13 @@ public class Url internal constructor(
     private val urlString: String
 ) {
     init {
-        require(
-            specifiedPort in 0..65535 ||
-                specifiedPort == DEFAULT_PORT
-        ) { "port must be between 0 and 65535, or $DEFAULT_PORT if not set" }
+        require(specifiedPort in 0..65535) {
+            "Port must be between 0 and 65535, or $DEFAULT_PORT if not set. Provided: $specifiedPort"
+        }
     }
+
+    public val protocolOrNull: URLProtocol? = protocol
+    public val protocol: URLProtocol = protocolOrNull ?: URLProtocol.HTTP
 
     public val port: Int get() = specifiedPort.takeUnless { it == DEFAULT_PORT } ?: protocol.defaultPort
 
@@ -43,7 +45,7 @@ public class Url internal constructor(
         if (pathSegments.isEmpty()) {
             return@lazy ""
         }
-        val pathStartIndex = urlString.indexOf('/', protocol.name.length + 3)
+        val pathStartIndex = urlString.indexOf('/', this.protocol.name.length + 3)
         if (pathStartIndex == -1) {
             return@lazy ""
         }
@@ -65,7 +67,7 @@ public class Url internal constructor(
     }
 
     public val encodedPathAndQuery: String by lazy {
-        val pathStart = urlString.indexOf('/', protocol.name.length + 3)
+        val pathStart = urlString.indexOf('/', this.protocol.name.length + 3)
         if (pathStart == -1) {
             return@lazy ""
         }
@@ -79,7 +81,7 @@ public class Url internal constructor(
     public val encodedUser: String? by lazy {
         if (user == null) return@lazy null
         if (user.isEmpty()) return@lazy ""
-        val usernameStart = protocol.name.length + 3
+        val usernameStart = this.protocol.name.length + 3
         val usernameEnd = urlString.indexOfAny(charArrayOf(':', '@'), usernameStart)
         urlString.substring(usernameStart, usernameEnd)
     }
@@ -87,7 +89,7 @@ public class Url internal constructor(
     public val encodedPassword: String? by lazy {
         if (password == null) return@lazy null
         if (password.isEmpty()) return@lazy ""
-        val passwordStart = urlString.indexOf(':', protocol.name.length + 3) + 1
+        val passwordStart = urlString.indexOf(':', this.protocol.name.length + 3) + 1
         val passwordEnd = urlString.indexOf('@')
         urlString.substring(passwordStart, passwordEnd)
     }
@@ -119,36 +121,13 @@ public class Url internal constructor(
     public companion object
 }
 
-@Suppress("UNUSED_PARAMETER")
-@Deprecated(
-    "Url is not a data class anymore. Please use URLBuilder(url)",
-    level = DeprecationLevel.ERROR,
-    replaceWith = ReplaceWith("URLBuilder(this)")
-)
-public fun Url.copy(
-    protocol: URLProtocol = this.protocol,
-    host: String = this.host,
-    specifiedPort: Int = this.specifiedPort,
-    encodedPath: String = this.encodedPath,
-    parameters: Parameters = this.parameters,
-    fragment: String = this.fragment,
-    user: String? = this.user,
-    password: String? = this.password,
-    trailingQuery: Boolean = this.trailingQuery
-): Url = error("Please use URLBuilder(url)")
-
 /**
  * [Url] authority.
  */
 public val Url.authority: String
     get() = buildString {
         append(encodedUserAndPassword)
-
-        if (specifiedPort == DEFAULT_PORT || specifiedPort == protocol.defaultPort) {
-            append(host)
-        } else {
-            append(hostWithPort)
-        }
+        append(hostWithPortIfSpecified)
     }
 
 /**

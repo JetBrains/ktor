@@ -12,7 +12,6 @@ import io.ktor.client.utils.*
 import io.ktor.http.*
 import io.ktor.http.cio.*
 import io.ktor.http.content.*
-import io.ktor.util.*
 import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.CancellationException
@@ -193,8 +192,8 @@ internal suspend fun readResponse(
             }
         }
 
-        val responseBody: Any = if (request.isSseRequest()) {
-            DefaultClientSSESession(request.body as SSEClientContent, body, callContext, status, headers)
+        val responseBody: Any = if (needToProcessSSE(request, status, headers)) {
+            DefaultClientSSESession(request.body as SSEClientContent, body, callContext)
         } else {
             body
         }
@@ -273,7 +272,7 @@ internal fun ByteWriteChannel.withoutClosePropagation(
     if (closeOnCoroutineCompletion) {
         // Pure output represents a socket output channel that is closed when request fully processed or after
         // request sent in case TCP half-close is allowed.
-        coroutineContext[Job]!!.invokeOnCompletion {
+        coroutineContext.job.invokeOnCompletion {
             close(it)
         }
     }

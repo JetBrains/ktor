@@ -8,6 +8,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.websocket.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 
 private const val WEBSOCKET_VERSION = "13"
 private const val NONCE_SIZE = 16
@@ -21,7 +22,7 @@ internal class WebSocketContent : ClientUpgradeContent() {
 
     override val headers: Headers = HeadersBuilder().apply {
         append(HttpHeaders.Upgrade, "websocket")
-        append(HttpHeaders.Connection, "upgrade")
+        append(HttpHeaders.Connection, "Upgrade")
 
         append(HttpHeaders.SecWebSocketKey, nonce)
         append(HttpHeaders.SecWebSocketVersion, WEBSOCKET_VERSION)

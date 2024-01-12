@@ -29,6 +29,7 @@ public fun BytePacketBuilder.writeFully(src: Int8Array, offset: Int = 0, length:
     var rem = length
 
     while (rem > 0) {
+        @Suppress("DEPRECATION")
         write(1) { bb: Buffer ->
             val size = minOf(bb.writeRemaining, rem)
             bb.writeFully(src, written + offset, size)

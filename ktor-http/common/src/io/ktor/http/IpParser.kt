@@ -6,7 +6,6 @@ package io.ktor.http
 
 import io.ktor.http.parsing.*
 import io.ktor.http.parsing.regex.*
-import kotlin.native.concurrent.*
 
 /**
  * Check if [host] is IPv4 or IPv6 address.

@@ -12,40 +12,28 @@ import io.ktor.server.auth.ldap.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
+import org.apache.directory.api.ldap.codec.api.LdapApiService
 import org.apache.directory.api.ldap.util.*
-import org.apache.directory.server.annotations.*
-import org.apache.directory.server.core.integ.*
-import org.apache.directory.server.core.integ.IntegrationUtils.*
-import org.apache.directory.server.ldap.*
-import org.junit.runner.*
 import java.net.*
 import java.util.*
 import javax.naming.directory.*
 import javax.naming.ldap.*
 import kotlin.test.*
 
+// TODO unauthorized
 @Suppress("DEPRECATION")
-@RunWith(FrameworkRunner::class)
-@CreateLdapServer(transports = arrayOf(CreateTransport(protocol = "LDAP")))
+@LDAPServerExtensionTest
 @Ignore("LdapAuthTest is ignored because it is very slow. Run it explicitly when you need.")
 class LdapAuthTest {
-    @BeforeTest
-    fun setUp() {
-        // notice: it is just a test: never keep user password but message digest or hash with salt
-        apply(
-            ldapServer.directoryService,
-            getUserAddLdif("uid=user-test,ou=users,ou=system", "test".toByteArray(), "Test user", "test")
-        )
-    }
 
     @Test
-    fun testLoginToServer() {
+    fun testLoginToServer(port: Int) {
         withTestApplication {
             application.install(Authentication) {
                 basic {
                     realm = "realm"
                     validate { credential ->
-                        ldapAuthenticate(credential, "ldap://$localhost:${ldapServer.port}", "uid=%s,ou=system")
+                        ldapAuthenticate(credential, "ldap://$localhost:$port", "uid=%s,ou=system")
                     }
                 }
             }
@@ -110,10 +98,10 @@ class LdapAuthTest {
     }
 
     @Test
-    fun testCustomLogin() {
+    fun testCustomLogin(port: Int) {
         withTestApplication {
             application.install(Authentication) {
-                val ldapUrl = "ldap://$localhost:${ldapServer.port}"
+                val ldapUrl = "ldap://$localhost:$port"
                 val configure: (MutableMap<String, Any?>) -> Unit = { env ->
                     env.put("java.naming.security.principal", "uid=admin,ou=system")
                     env.put("java.naming.security.credentials", "secret")
@@ -185,10 +173,10 @@ class LdapAuthTest {
     }
 
     @Test
-    fun testEnsureUser() {
+    fun testEnsureUser(port: Int, ldapCodecService: LdapApiService) {
         val env = Hashtable<String, String>()
         env.put("java.naming.factory.initial", "com.sun.jndi.ldap.LdapCtxFactory")
-        env.put("java.naming.provider.url", "ldap://$localhost:${ldapServer.port}")
+        env.put("java.naming.provider.url", "ldap://$localhost:$port")
         env.put("java.naming.security.principal", "uid=admin,ou=system")
         env.put("java.naming.security.credentials", "secret")
         env.put("java.naming.security.authentication", "simple")
@@ -196,7 +184,7 @@ class LdapAuthTest {
         val ctx = (
             InitialLdapContext(
                 env,
-                JndiUtils.toJndiControls(ldapServer.directoryService.ldapCodecService)
+                JndiUtils.toJndiControls(ldapCodecService)
             ).lookup("ou=system") as LdapContext
             ).lookup("ou=users") as LdapContext
 
@@ -215,9 +203,4 @@ class LdapAuthTest {
             } catch (any: Throwable) {
                 "127.0.0.1"
             }
-
-    companion object {
-        @JvmStatic
-        lateinit var ldapServer: LdapServer
-    }
 }

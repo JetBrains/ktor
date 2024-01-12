@@ -9,7 +9,7 @@ package io.ktor.server.routing
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlin.jvm.*
 
 /**
@@ -17,7 +17,7 @@ import kotlin.jvm.*
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.route(path: String, build: RoutingBuilder.() -> Unit): RoutingBuilder =
+public fun Route.route(path: String, build: Route.() -> Unit): Route =
     createRouteFromPath(path).apply(build)
 
 /**
@@ -25,7 +25,7 @@ public fun RoutingBuilder.route(path: String, build: RoutingBuilder.() -> Unit):
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.route(path: String, method: HttpMethod, build: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.route(path: String, method: HttpMethod, build: Route.() -> Unit): Route {
     val selector = HttpMethodRouteSelector(method)
     return createRouteFromPath(path).createChild(selector).apply(build)
 }
@@ -35,7 +35,7 @@ public fun RoutingBuilder.route(path: String, method: HttpMethod, build: Routing
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.method(method: HttpMethod, body: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.method(method: HttpMethod, body: Route.() -> Unit): Route {
     val selector = HttpMethodRouteSelector(method)
     return createChild(selector).apply(body)
 }
@@ -45,7 +45,7 @@ public fun RoutingBuilder.method(method: HttpMethod, body: RoutingBuilder.() -> 
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.param(name: String, value: String, build: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.param(name: String, value: String, build: Route.() -> Unit): Route {
     val selector = ConstantParameterRouteSelector(name, value)
     return createChild(selector).apply(build)
 }
@@ -55,7 +55,7 @@ public fun RoutingBuilder.param(name: String, value: String, build: RoutingBuild
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.param(name: String, build: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.param(name: String, build: Route.() -> Unit): Route {
     val selector = ParameterRouteSelector(name)
     return createChild(selector).apply(build)
 }
@@ -65,7 +65,7 @@ public fun RoutingBuilder.param(name: String, build: RoutingBuilder.() -> Unit):
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.optionalParam(name: String, build: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.optionalParam(name: String, build: Route.() -> Unit): Route {
     val selector = OptionalParameterRouteSelector(name)
     return createChild(selector).apply(build)
 }
@@ -75,19 +75,9 @@ public fun RoutingBuilder.optionalParam(name: String, build: RoutingBuilder.() -
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.header(name: String, value: String, build: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.header(name: String, value: String, build: Route.() -> Unit): Route {
     val selector = HttpHeaderRouteSelector(name, value)
     return createChild(selector).apply(build)
-}
-
-/**
- * Builds a route to match requests with the [HttpHeaders.Accept] header matching the specified [contentType].
- * @see [Application.routing]
- */
-@KtorDsl
-@Deprecated("Please use method with vararg parameter", level = DeprecationLevel.HIDDEN)
-public fun RoutingBuilder.accept(contentType: ContentType, build: RoutingBuilder.() -> Unit): RoutingBuilder {
-    return accept(contentType) { build() }
 }
 
 /**
@@ -95,7 +85,7 @@ public fun RoutingBuilder.accept(contentType: ContentType, build: RoutingBuilder
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.accept(vararg contentTypes: ContentType, build: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.accept(vararg contentTypes: ContentType, build: Route.() -> Unit): Route {
     val selector = HttpMultiAcceptRouteSelector(listOf(*contentTypes))
     return createChild(selector).apply(build)
 }
@@ -105,7 +95,7 @@ public fun RoutingBuilder.accept(vararg contentTypes: ContentType, build: Routin
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.contentType(contentType: ContentType, build: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.contentType(contentType: ContentType, build: Route.() -> Unit): Route {
     val selector = ContentTypeHeaderRouteSelector(contentType)
     return createChild(selector).apply(build)
 }
@@ -115,7 +105,7 @@ public fun RoutingBuilder.contentType(contentType: ContentType, build: RoutingBu
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.get(path: String, body: RoutingHandler): RoutingBuilder {
+public fun Route.get(path: String, body: RoutingHandler): Route {
     return route(path, HttpMethod.Get) { handle(body) }
 }
 
@@ -124,7 +114,7 @@ public fun RoutingBuilder.get(path: String, body: RoutingHandler): RoutingBuilde
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.get(body: RoutingHandler): RoutingBuilder {
+public fun Route.get(body: RoutingHandler): Route {
     return method(HttpMethod.Get) { handle(body) }
 }
 
@@ -133,7 +123,7 @@ public fun RoutingBuilder.get(body: RoutingHandler): RoutingBuilder {
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.post(path: String, body: RoutingHandler): RoutingBuilder {
+public fun Route.post(path: String, body: RoutingHandler): Route {
     return route(path, HttpMethod.Post) { handle(body) }
 }
 
@@ -143,9 +133,9 @@ public fun RoutingBuilder.post(path: String, body: RoutingHandler): RoutingBuild
  */
 @KtorDsl
 @JvmName("postTyped")
-public inline fun <reified R : Any> RoutingBuilder.post(
+public inline fun <reified R : Any> Route.post(
     crossinline body: suspend RoutingContext.(R) -> Unit
-): RoutingBuilder = post {
+): Route = post {
     body(call.receive())
 }
 
@@ -155,10 +145,10 @@ public inline fun <reified R : Any> RoutingBuilder.post(
  */
 @KtorDsl
 @JvmName("postTypedPath")
-public inline fun <reified R : Any> RoutingBuilder.post(
+public inline fun <reified R : Any> Route.post(
     path: String,
     crossinline body: suspend RoutingContext.(R) -> Unit
-): RoutingBuilder = post(path) {
+): Route = post(path) {
     body(call.receive())
 }
 
@@ -167,7 +157,7 @@ public inline fun <reified R : Any> RoutingBuilder.post(
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.post(body: RoutingHandler): RoutingBuilder {
+public fun Route.post(body: RoutingHandler): Route {
     return method(HttpMethod.Post) { handle(body) }
 }
 
@@ -176,7 +166,7 @@ public fun RoutingBuilder.post(body: RoutingHandler): RoutingBuilder {
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.head(path: String, body: RoutingHandler): RoutingBuilder {
+public fun Route.head(path: String, body: RoutingHandler): Route {
     return route(path, HttpMethod.Head) { handle(body) }
 }
 
@@ -185,7 +175,7 @@ public fun RoutingBuilder.head(path: String, body: RoutingHandler): RoutingBuild
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.head(body: RoutingHandler): RoutingBuilder {
+public fun Route.head(body: RoutingHandler): Route {
     return method(HttpMethod.Head) { handle(body) }
 }
 
@@ -194,7 +184,7 @@ public fun RoutingBuilder.head(body: RoutingHandler): RoutingBuilder {
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.put(path: String, body: RoutingHandler): RoutingBuilder {
+public fun Route.put(path: String, body: RoutingHandler): Route {
     return route(path, HttpMethod.Put) { handle(body) }
 }
 
@@ -203,7 +193,7 @@ public fun RoutingBuilder.put(path: String, body: RoutingHandler): RoutingBuilde
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.put(body: RoutingHandler): RoutingBuilder {
+public fun Route.put(body: RoutingHandler): Route {
     return method(HttpMethod.Put) { handle(body) }
 }
 
@@ -213,9 +203,9 @@ public fun RoutingBuilder.put(body: RoutingHandler): RoutingBuilder {
  */
 @KtorDsl
 @JvmName("putTyped")
-public inline fun <reified R : Any> RoutingBuilder.put(
+public inline fun <reified R : Any> Route.put(
     crossinline body: suspend RoutingContext.(R) -> Unit
-): RoutingBuilder = put {
+): Route = put {
     body(call.receive())
 }
 
@@ -225,10 +215,10 @@ public inline fun <reified R : Any> RoutingBuilder.put(
  */
 @KtorDsl
 @JvmName("putTypedPath")
-public inline fun <reified R : Any> RoutingBuilder.put(
+public inline fun <reified R : Any> Route.put(
     path: String,
     crossinline body: suspend RoutingContext.(R) -> Unit
-): RoutingBuilder = put(path) {
+): Route = put(path) {
     body(call.receive())
 }
 
@@ -237,7 +227,7 @@ public inline fun <reified R : Any> RoutingBuilder.put(
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.patch(path: String, body: RoutingHandler): RoutingBuilder {
+public fun Route.patch(path: String, body: RoutingHandler): Route {
     return route(path, HttpMethod.Patch) { handle(body) }
 }
 
@@ -246,7 +236,7 @@ public fun RoutingBuilder.patch(path: String, body: RoutingHandler): RoutingBuil
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.patch(body: RoutingHandler): RoutingBuilder {
+public fun Route.patch(body: RoutingHandler): Route {
     return method(HttpMethod.Patch) { handle(body) }
 }
 
@@ -256,9 +246,9 @@ public fun RoutingBuilder.patch(body: RoutingHandler): RoutingBuilder {
  */
 @KtorDsl
 @JvmName("patchTyped")
-public inline fun <reified R : Any> RoutingBuilder.patch(
+public inline fun <reified R : Any> Route.patch(
     crossinline body: suspend RoutingContext.(R) -> Unit
-): RoutingBuilder = patch {
+): Route = patch {
     body(call.receive())
 }
 
@@ -268,10 +258,10 @@ public inline fun <reified R : Any> RoutingBuilder.patch(
  */
 @KtorDsl
 @JvmName("patchTypedPath")
-public inline fun <reified R : Any> RoutingBuilder.patch(
+public inline fun <reified R : Any> Route.patch(
     path: String,
     crossinline body: suspend RoutingContext.(R) -> Unit
-): RoutingBuilder = patch(path) {
+): Route = patch(path) {
     body(call.receive())
 }
 
@@ -280,7 +270,7 @@ public inline fun <reified R : Any> RoutingBuilder.patch(
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.delete(path: String, body: RoutingHandler): RoutingBuilder {
+public fun Route.delete(path: String, body: RoutingHandler): Route {
     return route(path, HttpMethod.Delete) { handle(body) }
 }
 
@@ -289,7 +279,7 @@ public fun RoutingBuilder.delete(path: String, body: RoutingHandler): RoutingBui
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.delete(body: RoutingHandler): RoutingBuilder {
+public fun Route.delete(body: RoutingHandler): Route {
     return method(HttpMethod.Delete) { handle(body) }
 }
 
@@ -298,7 +288,7 @@ public fun RoutingBuilder.delete(body: RoutingHandler): RoutingBuilder {
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.options(path: String, body: RoutingHandler): RoutingBuilder {
+public fun Route.options(path: String, body: RoutingHandler): Route {
     return route(path, HttpMethod.Options) { handle(body) }
 }
 
@@ -307,16 +297,16 @@ public fun RoutingBuilder.options(path: String, body: RoutingHandler): RoutingBu
  * @see [Application.routing]
  */
 @KtorDsl
-public fun RoutingBuilder.options(body: RoutingHandler): RoutingBuilder {
+public fun Route.options(body: RoutingHandler): Route {
     return method(HttpMethod.Options) { handle(body) }
 }
 
 /**
  * Creates a routing entry for the specified path.
  */
-public fun RoutingBuilder.createRouteFromPath(path: String): RoutingBuilder {
+public fun Route.createRouteFromPath(path: String): Route {
     val parts = RoutingPath.parse(path).parts
-    var current: RoutingBuilder = this
+    var current: Route = this
     for (index in parts.indices) {
         val (value, kind) = parts[index]
         val selector = when (kind) {
@@ -361,34 +351,12 @@ public object PathSegmentSelectorBuilder {
     }
 
     /**
-     * Builds a [RouteSelector] to match a path segment parameter with a prefix/suffix, name, and trailing slash, if any.
-     */
-    @Deprecated(
-        "hasTrailingSlash is not used anymore. This is going to be removed",
-        level = DeprecationLevel.ERROR,
-        replaceWith = ReplaceWith("parseParameter(value)")
-    )
-    @Suppress("UNUSED_PARAMETER")
-    public fun parseParameter(value: String, hasTrailingSlash: Boolean): RouteSelector = parseParameter(value)
-
-    /**
      * Builds a [RouteSelector] to match a constant or wildcard segment parameter.
      */
     public fun parseConstant(value: String): RouteSelector = when (value) {
         "*" -> PathSegmentWildcardRouteSelector
         else -> PathSegmentConstantRouteSelector(value)
     }
-
-    /**
-     * Builds a [RouteSelector] to match a constant or wildcard segment parameter and trailing slash, if any.
-     */
-    @Deprecated(
-        "hasTrailingSlash is not used anymore. This is going to be removed",
-        level = DeprecationLevel.ERROR,
-        replaceWith = ReplaceWith("parseConstant(value)")
-    )
-    @Suppress("UNUSED_PARAMETER")
-    public fun parseConstant(value: String, hasTrailingSlash: Boolean): RouteSelector = parseConstant(value)
 
     /**
      * Parses a name out of segment specification.

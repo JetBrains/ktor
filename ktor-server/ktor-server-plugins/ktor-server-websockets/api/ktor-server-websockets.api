@@ -24,22 +24,18 @@ public final class io/ktor/server/websocket/KotlinDurationsKt {
 }
 
 public final class io/ktor/server/websocket/RoutingKt {
-	public static final fun webSocket (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
-	public static final fun webSocket (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
-	public static final fun webSocket (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/Void;)V
-	public static synthetic fun webSocket$default (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
-	public static synthetic fun webSocket$default (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
-	public static synthetic fun webSocket$default (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/Void;ILjava/lang/Object;)V
-	public static final fun webSocketRaw (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
-	public static final fun webSocketRaw (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;)V
-	public static final fun webSocketRaw (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
-	public static final fun webSocketRaw (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/Void;)V
-	public static final fun webSocketRaw (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;)V
-	public static synthetic fun webSocketRaw$default (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
-	public static synthetic fun webSocketRaw$default (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
-	public static synthetic fun webSocketRaw$default (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
-	public static synthetic fun webSocketRaw$default (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/Void;ILjava/lang/Object;)V
-	public static synthetic fun webSocketRaw$default (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static final fun webSocket (Lio/ktor/server/routing/Route;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
+	public static final fun webSocket (Lio/ktor/server/routing/Route;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun webSocket$default (Lio/ktor/server/routing/Route;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static synthetic fun webSocket$default (Lio/ktor/server/routing/Route;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static final fun webSocketRaw (Lio/ktor/server/routing/Route;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
+	public static final fun webSocketRaw (Lio/ktor/server/routing/Route;Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;)V
+	public static final fun webSocketRaw (Lio/ktor/server/routing/Route;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
+	public static final fun webSocketRaw (Lio/ktor/server/routing/Route;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;)V
+	public static synthetic fun webSocketRaw$default (Lio/ktor/server/routing/Route;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static synthetic fun webSocketRaw$default (Lio/ktor/server/routing/Route;Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static synthetic fun webSocketRaw$default (Lio/ktor/server/routing/Route;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static synthetic fun webSocketRaw$default (Lio/ktor/server/routing/Route;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
 }
 
 public abstract interface class io/ktor/server/websocket/WebSocketServerSession : io/ktor/websocket/WebSocketSession {

@@ -6,9 +6,8 @@ package io.ktor.server.plugins.dataconversion
 
 import io.ktor.server.application.*
 import io.ktor.util.*
-import io.ktor.util.converters.ConversionService
+import io.ktor.util.converters.*
 import io.ktor.util.converters.DataConversion
-import io.ktor.util.converters.DefaultConversionService
 
 /**
  * Object for installing [io.ktor.util.converters.DataConversion] plugin

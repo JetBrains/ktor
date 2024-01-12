@@ -158,7 +158,6 @@ public class HttpRequestBuilder : HttpMessageBuilder {
     /**
      * Sets capability configuration.
      */
-    @OptIn(InternalAPI::class)
     public fun <T : Any> setCapability(key: HttpClientEngineCapability<T>, capability: T) {
         val capabilities = attributes.computeIfAbsent(ENGINE_CAPABILITIES_KEY) { mutableMapOf() }
         capabilities[key] = capability
@@ -295,7 +294,7 @@ public operator fun HttpRequestBuilder.Companion.invoke(
 /**
  * Sets the [HttpRequestBuilder.url] from [urlString].
  */
-public fun HttpRequestBuilder.url(urlString: String): Unit { // ktlint-disable filename no-unit-return
+public fun HttpRequestBuilder.url(urlString: String) { // ktlint-disable filename
     url.takeFrom(urlString)
 }
 
@@ -309,4 +308,13 @@ public fun HttpRequestData.isUpgradeRequest(): Boolean {
 @Suppress("KDocMissingDocumentation")
 public fun HttpRequestData.isSseRequest(): Boolean {
     return body is SSEClientContent
+}
+
+@InternalAPI
+@Suppress("KDocMissingDocumentation")
+public fun needToProcessSSE(data: HttpRequestData, status: HttpStatusCode, headers: Headers): Boolean {
+    val contentType = headers[HttpHeaders.ContentType]?.let { ContentType.parse(it) }
+    return data.isSseRequest() &&
+        status == HttpStatusCode.OK &&
+        contentType?.withoutParameters() == ContentType.Text.EventStream
 }

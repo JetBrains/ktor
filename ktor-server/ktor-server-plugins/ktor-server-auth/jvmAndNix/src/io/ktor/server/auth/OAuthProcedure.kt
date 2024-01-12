@@ -69,17 +69,30 @@ public fun AuthenticationConfig.oauth(
     register(provider)
 }
 
+/**
+ * Error container for when the upstream identity provider does not respond with the token credentials, and instead
+ * responds with error query parameters.
+ */
+public class OAuth2RedirectError(public val error: String, public val errorDescription: String?) :
+    AuthenticationFailedCause.Error(if (errorDescription == null) error else "$error: $errorDescription")
+
 internal suspend fun OAuthAuthenticationProvider.oauth2(authProviderName: String?, context: AuthenticationContext) {
     val call = context.call
     val provider = call.providerLookup()
     if (provider !is OAuthServerSettings.OAuth2ServerSettings) return
 
-    val token = call.oauth2HandleCallback()
+    val callbackResponse = call.oauth2HandleCallback()
     val callbackRedirectUrl = call.urlProvider(provider)
-    val cause: AuthenticationFailedCause? = if (token == null) {
-        AuthenticationFailedCause.NoCredentials
-    } else {
-        oauth2RequestToken(authProviderName, provider, callbackRedirectUrl, token, context)
+    val cause: AuthenticationFailedCause? = when (callbackResponse) {
+        is OAuthCallback.TokenSingle -> oauth2RequestToken(
+            authProviderName,
+            provider,
+            callbackRedirectUrl,
+            callbackResponse,
+            context
+        )
+        is OAuthCallback.Error -> OAuth2RedirectError(callbackResponse.error, callbackResponse.errorDescription)
+        else -> AuthenticationFailedCause.NoCredentials
     }
 
     cause ?: return

@@ -4,6 +4,7 @@
 
 package io.ktor.server.netty
 
+import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.http1.*
 import io.ktor.server.netty.http2.*
@@ -26,8 +27,9 @@ import kotlin.coroutines.*
  * A [ChannelInitializer] implementation that sets up the default ktor channel pipeline
  */
 public class NettyChannelInitializer(
+    private val applicationProvider: () -> Application,
     private val enginePipeline: EnginePipeline,
-    private val environment: ApplicationEngineEnvironment,
+    private val environment: ApplicationEnvironment,
     private val callEventGroup: EventExecutorGroup,
     private val engineContext: CoroutineContext,
     private val userContext: CoroutineContext,
@@ -108,7 +110,7 @@ public class NettyChannelInitializer(
             ApplicationProtocolNames.HTTP_2 -> {
                 val handler = NettyHttp2Handler(
                     enginePipeline,
-                    environment.application,
+                    applicationProvider(),
                     callEventGroup,
                     userContext,
                     runningLimit
@@ -123,6 +125,7 @@ public class NettyChannelInitializer(
 
             ApplicationProtocolNames.HTTP_1_1 -> {
                 val handler = NettyHttp1Handler(
+                    applicationProvider,
                     enginePipeline,
                     environment,
                     callEventGroup,
@@ -134,7 +137,7 @@ public class NettyChannelInitializer(
                 with(pipeline) {
                     //                    addLast(LoggingHandler(LogLevel.WARN))
                     if (requestReadTimeout > 0) {
-                        addLast("readTimeout", ReadTimeoutHandler(requestReadTimeout))
+                        addLast("readTimeout", KtorReadTimeoutHandler(requestReadTimeout))
                     }
                     addLast("codec", httpServerCodec())
                     addLast("continue", HttpServerExpectContinueHandler())
@@ -158,7 +161,7 @@ public class NettyChannelInitializer(
     private fun EngineSSLConnectorConfig.trustManagerFactory(): TrustManagerFactory? {
         val trustStore = trustStore ?: trustStorePath?.let { file ->
             FileInputStream(file).use { fis ->
-                KeyStore.getInstance("JKS").also { it.load(fis, null) }
+                KeyStore.getInstance(KeyStore.getDefaultType()).also { it.load(fis, null) }
             }
         }
         return trustStore?.let { store ->
@@ -200,6 +203,17 @@ public class NettyChannelInitializer(
             }
 
             return null
+        }
+    }
+}
+
+internal class KtorReadTimeoutHandler(requestReadTimeout: Int) : ReadTimeoutHandler(requestReadTimeout) {
+    private var closed = false
+
+    override fun readTimedOut(ctx: ChannelHandlerContext?) {
+        if (!closed) {
+            ctx?.fireExceptionCaught(ReadTimeoutException.INSTANCE)
+            closed = true
         }
     }
 }

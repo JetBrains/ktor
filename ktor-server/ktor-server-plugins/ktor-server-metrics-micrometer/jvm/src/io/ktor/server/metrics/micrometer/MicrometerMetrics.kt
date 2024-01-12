@@ -10,6 +10,7 @@ import io.ktor.server.application.hooks.Metrics
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 import io.micrometer.core.instrument.*
 import io.micrometer.core.instrument.Tag.*
 import io.micrometer.core.instrument.binder.*
@@ -163,7 +164,7 @@ public val MicrometerMetrics: ApplicationPlugin<MicrometerMetricsConfig> =
             throw cause
         }
 
-        environment!!.monitor.subscribe(Routing.RoutingCallStarted) { call ->
+        application.monitor.subscribe(Routing.RoutingCallStarted) { call ->
             call.attributes[measureKey].route = call.route.parent.toString()
         }
     }

@@ -10,7 +10,6 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.util.*
-import io.ktor.util.collections.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 
@@ -32,7 +31,6 @@ public interface Sender {
 /**
  * This is an internal plugin that is always installed.
  */
-@Suppress("DEPRECATION")
 public class HttpSend private constructor(
     private val maxSendCount: Int = 20
 ) {
@@ -45,24 +43,7 @@ public class HttpSend private constructor(
         public var maxSendCount: Int = 20
     }
 
-    @OptIn(InternalAPI::class)
     private val interceptors: MutableList<HttpSendInterceptor> = mutableListOf()
-
-    /**
-     * Install send pipeline starter interceptor
-     */
-    @Deprecated(
-        "This interceptors do not allow to intercept first network call. " +
-            "Please use another overload and replace HttpClientCall parameter using `val call = execute(request)`",
-        level = DeprecationLevel.ERROR
-    )
-    @Suppress("UNUSED_PARAMETER")
-    public fun intercept(block: suspend Sender.(HttpClientCall, HttpRequestBuilder) -> HttpClientCall) {
-        error(
-            "This interceptors do not allow to intercept original call. " +
-                "Please use another overload and call `this.execute(request)` manually"
-        )
-    }
 
     /**
      * Install send pipeline starter interceptor
@@ -97,8 +78,7 @@ public class HttpSend private constructor(
 
                 val realSender: Sender = DefaultSender(plugin.maxSendCount, scope)
                 var interceptedSender = realSender
-                (plugin.interceptors.lastIndex downTo 0).forEach {
-                    val interceptor = plugin.interceptors[it]
+                for (interceptor in plugin.interceptors.reversed()) {
                     interceptedSender = InterceptedSender(interceptor, interceptedSender)
                 }
                 val call = interceptedSender.execute(context)

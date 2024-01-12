@@ -357,7 +357,7 @@ open class BytePacketStringTest {
         val encoder = Charsets.UTF_8.newEncoder()
         assertEquals(
             byteArrayOf(0xF0.toByte(), 0xA6.toByte(), 0x88.toByte(), 0x98.toByte()).hexdump(),
-            encoder.encodeToByteArrayImpl1("\uD858\uDE18").hexdump()
+            encoder.encodeToByteArrayImpl("\uD858\uDE18").hexdump()
         )
     }
 
@@ -366,7 +366,7 @@ open class BytePacketStringTest {
         val encoder = Charsets.UTF_8.newEncoder()
         assertEquals(
             byteArrayOf(0xF0.toByte(), 0xA6.toByte(), 0x88.toByte(), 0x98.toByte()).hexdump(),
-            encoder.encodeToByteArrayImpl1(StringBuilder().apply { append("\uD858\uDE18") }).hexdump()
+            encoder.encodeToByteArrayImpl(StringBuilder().apply { append("\uD858\uDE18") }).hexdump()
         )
     }
 

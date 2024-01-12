@@ -8,16 +8,15 @@ import com.codahale.metrics.*
 import com.codahale.metrics.jvm.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.junit.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
-import org.hamcrest.CoreMatchers.*
-import org.hamcrest.MatcherAssert.*
-import org.junit.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertAll
 import kotlin.test.*
 
 @Suppress("DEPRECATION")
@@ -97,7 +96,9 @@ class DropwizardMetricsTests {
 
         handleRequest { uri = "/uri" }
 
-        assertThat(registry.names, everyItem(startsWith(prefix)))
+        assertAll(registry.names, "All registry names should start with prefix $prefix") { name ->
+            name.startsWith(prefix)
+        }
     }
 
     @Test

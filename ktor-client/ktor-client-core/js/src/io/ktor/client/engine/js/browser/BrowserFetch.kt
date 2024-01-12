@@ -38,7 +38,7 @@ internal suspend fun ReadableStreamDefaultReader<Uint8Array>.readChunk(): Uint8A
     suspendCancellableCoroutine { continuation ->
         read().then {
             val chunk = it.value
-            val result = if (it.done || chunk == null) null else chunk
+            val result = if (it.done) null else chunk
             continuation.resumeWith(Result.success(result))
         }.catch { cause ->
             continuation.resumeWithException(cause)

@@ -22,7 +22,7 @@ kotlin.sourceSets {
             implementation(project(":ktor-server:ktor-server-plugins:ktor-server-default-headers"))
             implementation(project(":ktor-server:ktor-server-plugins:ktor-server-request-validation"))
 
-            implementation(kotlin("test-junit"))
+            implementation(kotlin("test-junit5"))
 
             implementation(libs.kotlinx.coroutines.debug)
         }

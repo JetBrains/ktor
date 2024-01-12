@@ -112,6 +112,7 @@ public data class CertificatePinner internal constructor(
     private val validateTrust: Boolean
 ) : ChallengeHandler {
 
+    @OptIn(ExperimentalForeignApi::class)
     override fun invoke(
         session: NSURLSession,
         task: NSURLSessionTask,
@@ -180,6 +181,7 @@ public data class CertificatePinner internal constructor(
     /**
      * Confirms that at least one of the certificates is pinned
      */
+    @OptIn(ExperimentalForeignApi::class)
     private fun hasOnePinnedCertificate(
         certificates: List<SecCertificateRef>
     ): Boolean = certificates.any { certificate ->
@@ -215,6 +217,7 @@ public data class CertificatePinner internal constructor(
     /**
      * Build an error string to display
      */
+    @OptIn(ExperimentalForeignApi::class)
     private fun buildErrorMessage(
         certificates: List<SecCertificateRef>,
         hostname: String
@@ -257,6 +260,7 @@ public data class CertificatePinner internal constructor(
     /**
      * Evaluates trust for the specified certificate and policies.
      */
+    @OptIn(ExperimentalForeignApi::class)
     private fun SecTrustRef.trustIsValid(): Boolean {
         var isValid = false
 
@@ -287,6 +291,7 @@ public data class CertificatePinner internal constructor(
     /**
      * Gets the public key from the SecCertificate
      */
+    @OptIn(ExperimentalForeignApi::class)
     private fun SecCertificateRef.getPublicKeyBytes(): ByteArray? {
         val publicKeyRef = SecCertificateCopyKey(this) ?: return null
 
@@ -320,6 +325,7 @@ public data class CertificatePinner internal constructor(
     /**
      * Checks that we support the key type and size
      */
+    @OptIn(ExperimentalForeignApi::class)
     private fun checkValidKeyType(publicKeyType: NSString, publicKeySize: NSNumber): Boolean {
         val keyTypeRSA = CFBridgingRelease(kSecAttrKeyTypeRSA) as NSString
         val keyTypeECSECPrimeRandom = CFBridgingRelease(kSecAttrKeyTypeECSECPrimeRandom) as NSString
@@ -338,6 +344,7 @@ public data class CertificatePinner internal constructor(
      * Get the [IntArray] of Asn1 headers needed to prepend to the public key to create the
      * encoding [ASN1Header](https://docs.oracle.com/middleware/11119/opss/SCRPJ/oracle/security/crypto/asn1/ASN1Header.html)
      */
+    @OptIn(ExperimentalForeignApi::class)
     private fun getAsn1HeaderBytes(publicKeyType: NSString, publicKeySize: NSNumber): IntArray {
         val keyTypeRSA = CFBridgingRelease(kSecAttrKeyTypeRSA) as NSString
         val keyTypeECSECPrimeRandom = CFBridgingRelease(kSecAttrKeyTypeECSECPrimeRandom) as NSString
@@ -355,7 +362,7 @@ public data class CertificatePinner internal constructor(
     /**
      * Converts a [ByteArray] into sha256 base 64 encoded string
      */
-    @OptIn(ExperimentalUnsignedTypes::class)
+    @OptIn(ExperimentalUnsignedTypes::class, ExperimentalForeignApi::class)
     private fun ByteArray.toSha256String(): String {
         val digest = UByteArray(CC_SHA256_DIGEST_LENGTH)
 
@@ -371,7 +378,7 @@ public data class CertificatePinner internal constructor(
     /**
      * Converts a [ByteArray] into sha1 base 64 encoded string
      */
-    @OptIn(ExperimentalUnsignedTypes::class)
+    @OptIn(ExperimentalUnsignedTypes::class, ExperimentalForeignApi::class)
     private fun ByteArray.toSha1String(): String {
         val digest = UByteArray(CC_SHA1_DIGEST_LENGTH)
 

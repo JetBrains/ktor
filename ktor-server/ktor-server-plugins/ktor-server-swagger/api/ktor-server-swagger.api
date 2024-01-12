@@ -8,13 +8,9 @@ public final class io/ktor/server/plugins/swagger/SwaggerConfig {
 }
 
 public final class io/ktor/server/plugins/swagger/SwaggerKt {
-	public static final synthetic fun swaggerUI (Lio/ktor/server/routing/Routing;Ljava/lang/String;Ljava/io/File;Lkotlin/jvm/functions/Function1;)V
-	public static final synthetic fun swaggerUI (Lio/ktor/server/routing/Routing;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public static final fun swaggerUI (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Ljava/io/File;Lkotlin/jvm/functions/Function1;)V
-	public static final fun swaggerUI (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun swaggerUI$default (Lio/ktor/server/routing/Routing;Ljava/lang/String;Ljava/io/File;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static synthetic fun swaggerUI$default (Lio/ktor/server/routing/Routing;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static synthetic fun swaggerUI$default (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Ljava/io/File;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static synthetic fun swaggerUI$default (Lio/ktor/server/routing/RoutingBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun swaggerUI (Lio/ktor/server/routing/Route;Ljava/lang/String;Ljava/io/File;Lkotlin/jvm/functions/Function1;)V
+	public static final fun swaggerUI (Lio/ktor/server/routing/Route;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun swaggerUI$default (Lio/ktor/server/routing/Route;Ljava/lang/String;Ljava/io/File;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun swaggerUI$default (Lio/ktor/server/routing/Route;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 

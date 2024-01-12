@@ -61,16 +61,22 @@ public fun String.encodeURLQueryComponent(
 }
 
 /**
- * Encodes URL path. It escapes all illegal or ambiguous characters keeping all "/" symbols.
- */
-public fun String.encodeURLPath(): String = encodeURLPath(encodeSlash = false)
-
-/**
  * Encodes URL path segment. It escapes all illegal or ambiguous characters
  */
 public fun String.encodeURLPathPart(): String = encodeURLPath(encodeSlash = true)
 
-internal fun String.encodeURLPath(encodeSlash: Boolean): String = buildString {
+/**
+ * Get the URL-encoding of this string, with options to skip / characters or to prevent
+ * encoding already-encoded characters (%hh items).
+ *
+ * @see [RFC-3986](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1)
+ * @param encodeSlash / characters will be encoded as %2F; defaults to false
+ * @param encodeEncoded %hh will be encoded as %25hh; defaults to true
+ */
+public fun String.encodeURLPath(
+    encodeSlash: Boolean = false,
+    encodeEncoded: Boolean = true,
+): String = buildString {
     val charset = Charsets.UTF_8
 
     var index = 0
@@ -82,7 +88,7 @@ internal fun String.encodeURLPath(encodeSlash: Boolean): String = buildString {
             continue
         }
 
-        if (current == '%' &&
+        if (!encodeEncoded && current == '%' &&
             index + 2 < this@encodeURLPath.length &&
             this@encodeURLPath[index + 1] in HEX_ALPHABET &&
             this@encodeURLPath[index + 2] in HEX_ALPHABET

@@ -5,7 +5,6 @@ val jetty_alpn_boot_version: String? by extra
 kotlin.sourceSets {
     jvmAndNixMain {
         dependencies {
-            api(project(":ktor-server:ktor-server-host-common"))
             api(project(":ktor-server:ktor-server-core"))
             api(project(":ktor-client:ktor-client-core"))
             api(project(":ktor-client:ktor-client-cio"))
@@ -20,6 +19,7 @@ kotlin.sourceSets {
             api(project(":ktor-client:ktor-client-apache"))
             api(project(":ktor-network:ktor-network-tls:ktor-network-tls-certificates"))
             api(project(":ktor-server:ktor-server-plugins:ktor-server-call-logging"))
+            api(project(":ktor-shared:ktor-junit"))
 
             // Not ideal, but prevents an additional artifact, and this is usually just included for testing,
             // so shouldn"t increase the size of the final artifact.
@@ -29,6 +29,7 @@ kotlin.sourceSets {
                 api(libs.jetty.alpn.boot)
             }
 
+            api(kotlin("test"))
             api(libs.junit)
             implementation(libs.kotlinx.coroutines.debug)
         }
@@ -37,6 +38,7 @@ kotlin.sourceSets {
     jvmTest {
         dependencies {
             api(project(":ktor-server:ktor-server-core", configuration = "testOutput"))
+            api(kotlin("test"))
         }
     }
 

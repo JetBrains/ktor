@@ -7,8 +7,8 @@ package io.ktor.server.plugins.callloging
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
-import io.ktor.util.*
 import io.ktor.util.date.*
+import io.ktor.utils.io.*
 import org.fusesource.jansi.*
 import org.slf4j.*
 import org.slf4j.event.*

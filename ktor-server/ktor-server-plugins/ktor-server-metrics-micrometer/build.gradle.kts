@@ -3,7 +3,7 @@ kotlin {
         jvmMain {
             dependencies {
                 api(libs.micrometer)
-                implementation(project(":ktor-server:ktor-server-host-common"))
+                implementation(project(":ktor-server:ktor-server-core"))
             }
         }
         jvmTest {

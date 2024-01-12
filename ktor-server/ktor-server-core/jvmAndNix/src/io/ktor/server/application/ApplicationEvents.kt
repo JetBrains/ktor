@@ -9,7 +9,7 @@ package io.ktor.server.application
  */
 @Deprecated(
     "ApplicationEvents has been renamed to Events.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith("Events", "io.ktor.events.Events")
 )
 public typealias ApplicationEvents = io.ktor.events.Events
@@ -19,7 +19,7 @@ public typealias ApplicationEvents = io.ktor.events.Events
  */
 @Deprecated(
     "EventHandler has been moved to package io.ktor.events",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith("EventHandler<T>", "io.ktor.events.EventHandler")
 )
 public typealias EventHandler<T> = io.ktor.events.EventHandler<T>
@@ -34,7 +34,7 @@ public typealias EventHandler<T> = io.ktor.events.EventHandler<T>
  */
 @Deprecated(
     "EventDefinition<T> has been moved to io.ktor.events",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith("EventDefinition<T>", "io.ktor.events.EventDefinition")
 )
 public typealias EventDefinition<T> = io.ktor.events.EventDefinition<T>

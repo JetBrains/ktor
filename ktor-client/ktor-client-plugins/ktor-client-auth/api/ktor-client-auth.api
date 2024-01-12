@@ -1,19 +1,14 @@
-public final class io/ktor/client/plugins/auth/Auth {
-	public static final field Plugin Lio/ktor/client/plugins/auth/Auth$Plugin;
+public final class io/ktor/client/plugins/auth/AuthConfig {
+	public fun <init> ()V
 	public final fun getProviders ()Ljava/util/List;
-}
-
-public final class io/ktor/client/plugins/auth/Auth$Plugin : io/ktor/client/plugins/HttpClientPlugin {
-	public final fun getAuthCircuitBreaker ()Lio/ktor/util/AttributeKey;
-	public fun getKey ()Lio/ktor/util/AttributeKey;
-	public fun install (Lio/ktor/client/plugins/auth/Auth;Lio/ktor/client/HttpClient;)V
-	public synthetic fun install (Ljava/lang/Object;Lio/ktor/client/HttpClient;)V
-	public fun prepare (Lkotlin/jvm/functions/Function1;)Lio/ktor/client/plugins/auth/Auth;
-	public synthetic fun prepare (Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 }
 
 public final class io/ktor/client/plugins/auth/AuthKt {
 	public static final fun Auth (Lio/ktor/client/HttpClientConfig;Lkotlin/jvm/functions/Function1;)V
+	public static final fun getAuth ()Lio/ktor/client/plugins/api/ClientPlugin;
+	public static final fun getAuthCircuitBreaker ()Lio/ktor/util/AttributeKey;
+	public static final fun getAuthProviders (Lio/ktor/client/HttpClient;)Ljava/util/List;
+	public static final fun getAuthProvidersKey ()Lio/ktor/util/AttributeKey;
 }
 
 public abstract interface class io/ktor/client/plugins/auth/AuthProvider {
@@ -65,7 +60,7 @@ public final class io/ktor/client/plugins/auth/providers/BasicAuthProvider : io/
 }
 
 public final class io/ktor/client/plugins/auth/providers/BasicAuthProviderKt {
-	public static final fun basic (Lio/ktor/client/plugins/auth/Auth;Lkotlin/jvm/functions/Function1;)V
+	public static final fun basic (Lio/ktor/client/plugins/auth/AuthConfig;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class io/ktor/client/plugins/auth/providers/BearerAuthConfig {
@@ -89,7 +84,7 @@ public final class io/ktor/client/plugins/auth/providers/BearerAuthProvider : io
 }
 
 public final class io/ktor/client/plugins/auth/providers/BearerAuthProviderKt {
-	public static final fun bearer (Lio/ktor/client/plugins/auth/Auth;Lkotlin/jvm/functions/Function1;)V
+	public static final fun bearer (Lio/ktor/client/plugins/auth/AuthConfig;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class io/ktor/client/plugins/auth/providers/BearerTokens {
@@ -124,17 +119,15 @@ public final class io/ktor/client/plugins/auth/providers/DigestAuthProvider : io
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun addRequestHeaders (Lio/ktor/client/request/HttpRequestBuilder;Lio/ktor/http/auth/HttpAuthHeader;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getAlgorithmName ()Ljava/lang/String;
-	public final fun getPassword ()Ljava/lang/String;
 	public final fun getRealm ()Ljava/lang/String;
 	public fun getSendWithoutRequest ()Z
-	public final fun getUsername ()Ljava/lang/String;
 	public fun isApplicable (Lio/ktor/http/auth/HttpAuthHeader;)Z
 	public fun refreshToken (Lio/ktor/client/statement/HttpResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun sendWithoutRequest (Lio/ktor/client/request/HttpRequestBuilder;)Z
 }
 
 public final class io/ktor/client/plugins/auth/providers/DigestAuthProviderKt {
-	public static final fun digest (Lio/ktor/client/plugins/auth/Auth;Lkotlin/jvm/functions/Function1;)V
+	public static final fun digest (Lio/ktor/client/plugins/auth/AuthConfig;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class io/ktor/client/plugins/auth/providers/RefreshTokensParams {

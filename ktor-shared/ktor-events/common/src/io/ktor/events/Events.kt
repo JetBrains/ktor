@@ -4,9 +4,9 @@
 
 package io.ktor.events
 
-import io.ktor.util.*
 import io.ktor.util.collections.*
 import io.ktor.util.logging.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.internal.*
 

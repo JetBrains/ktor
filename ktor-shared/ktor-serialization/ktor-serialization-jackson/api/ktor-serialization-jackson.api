@@ -1,18 +1,13 @@
 public final class io/ktor/serialization/jackson/JacksonConverter : io/ktor/serialization/ContentConverter {
 	public fun <init> ()V
-	public synthetic fun <init> (Lcom/fasterxml/jackson/databind/ObjectMapper;)V
-	public synthetic fun <init> (Lcom/fasterxml/jackson/databind/ObjectMapper;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lcom/fasterxml/jackson/databind/ObjectMapper;Z)V
 	public synthetic fun <init> (Lcom/fasterxml/jackson/databind/ObjectMapper;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun deserialize (Ljava/nio/charset/Charset;Lio/ktor/util/reflect/TypeInfo;Lio/ktor/utils/io/ByteReadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun serialize (Lio/ktor/http/ContentType;Ljava/nio/charset/Charset;Lio/ktor/util/reflect/TypeInfo;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun serializeNullable (Lio/ktor/http/ContentType;Ljava/nio/charset/Charset;Lio/ktor/util/reflect/TypeInfo;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class io/ktor/serialization/jackson/JacksonConverterKt {
-	public static final synthetic fun jackson (Lio/ktor/serialization/Configuration;Lio/ktor/http/ContentType;Lkotlin/jvm/functions/Function1;)V
 	public static final fun jackson (Lio/ktor/serialization/Configuration;Lio/ktor/http/ContentType;ZLkotlin/jvm/functions/Function1;)V
-	public static synthetic fun jackson$default (Lio/ktor/serialization/Configuration;Lio/ktor/http/ContentType;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static synthetic fun jackson$default (Lio/ktor/serialization/Configuration;Lio/ktor/http/ContentType;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
@@ -23,6 +18,5 @@ public final class io/ktor/serialization/jackson/JacksonWebsocketContentConverte
 	public fun deserialize (Ljava/nio/charset/Charset;Lio/ktor/util/reflect/TypeInfo;Lio/ktor/websocket/Frame;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun isApplicable (Lio/ktor/websocket/Frame;)Z
 	public fun serialize (Ljava/nio/charset/Charset;Lio/ktor/util/reflect/TypeInfo;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun serializeNullable (Ljava/nio/charset/Charset;Lio/ktor/util/reflect/TypeInfo;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

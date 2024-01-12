@@ -15,6 +15,7 @@ import io.ktor.server.testing.*
 import io.ktor.server.util.*
 import io.ktor.server.websocket.*
 import io.ktor.server.websocket.WebSockets
+import kotlinx.serialization.Serializable
 import java.text.*
 import java.time.*
 import java.time.format.*
@@ -75,6 +76,7 @@ class CookiesTest {
 class SecureCookiesTest {
     @Test
     fun `consider wss and https to be secure contexts`(): Unit = testApplication {
+        @Serializable
         data class User(val id: String)
 
         install(WebSockets)

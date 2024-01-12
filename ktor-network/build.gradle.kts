@@ -20,6 +20,7 @@ kotlin {
 
         jvmTest {
             dependencies {
+                implementation(project(":ktor-shared:ktor-junit"))
                 implementation(libs.mockk)
             }
         }

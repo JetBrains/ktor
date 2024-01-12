@@ -24,9 +24,11 @@ class DirectorySessionStorageTest {
     fun testSetup() {
     }
 
-    @Test(expected = NoSuchElementException::class)
+    @Test
     fun testMissingSession(): Unit = runBlocking {
-        storage.read("id0")
+        assertFailsWith<NoSuchElementException> {
+            storage.read("id0")
+        }
     }
 
     @Test

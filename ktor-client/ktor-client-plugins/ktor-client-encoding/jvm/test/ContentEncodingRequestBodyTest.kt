@@ -9,7 +9,6 @@ import io.ktor.client.request.*
 import io.ktor.client.tests.utils.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -42,7 +41,7 @@ class ContentEncodingRequestBodyTest {
 
         val body = ByteArray(500) { it.toByte() }
         val client = createClient {
-            ContentEncoding()
+            ContentEncoding(mode = ContentEncodingConfig.Mode.All)
         }
 
         val gzipResponse = client.post("/gzip") {

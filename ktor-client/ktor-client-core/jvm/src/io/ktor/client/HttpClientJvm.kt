@@ -5,6 +5,7 @@
 package io.ktor.client
 
 import io.ktor.client.engine.*
+import io.ktor.utils.io.*
 import java.util.*
 
 /**
@@ -16,6 +17,7 @@ import java.util.*
  *
  * See https://ktor.io/docs/http-client-engines.html
  */
+@KtorDsl
 public actual fun HttpClient(
     block: HttpClientConfig<*>.() -> Unit
 ): HttpClient = HttpClient(FACTORY, block)

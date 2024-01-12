@@ -6,7 +6,6 @@ package io.ktor.server.request
 
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.util.*
 import io.ktor.utils.io.*
 
 /**
@@ -50,6 +49,11 @@ public interface ApplicationRequest {
      * Provides access to cookies for this request.
      */
     public val cookies: RequestCookies
+
+    /**
+     * Receives a raw body payload as a channel.
+     */
+    public fun receiveChannel(): ByteReadChannel
 }
 
 /**
@@ -68,11 +72,6 @@ public interface PipelineRequest : ApplicationRequest {
      * A pipeline for receiving content.
      */
     public val pipeline: ApplicationReceivePipeline
-
-    /**
-     * Receives a raw body payload as a channel.
-     */
-    public fun receiveChannel(): ByteReadChannel
 
     /**
      * Overrides request headers. Will remove header [name] if passed [values] is `null` or set [values] otherwise.

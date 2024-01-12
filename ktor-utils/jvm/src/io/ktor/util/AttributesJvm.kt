@@ -16,19 +16,19 @@ private abstract class AttributesJvmBase : Attributes {
     protected abstract val map: MutableMap<AttributeKey<*>, Any?>
 
     @Suppress("UNCHECKED_CAST")
-    public final override fun <T : Any> getOrNull(key: AttributeKey<T>): T? = map[key] as T?
+    final override fun <T : Any> getOrNull(key: AttributeKey<T>): T? = map[key] as T?
 
-    public final override operator fun contains(key: AttributeKey<*>): Boolean = map.containsKey(key)
+    final override operator fun contains(key: AttributeKey<*>): Boolean = map.containsKey(key)
 
-    public final override fun <T : Any> put(key: AttributeKey<T>, value: T) {
+    final override fun <T : Any> put(key: AttributeKey<T>, value: T) {
         map[key] = value
     }
 
-    public final override fun <T : Any> remove(key: AttributeKey<T>) {
+    final override fun <T : Any> remove(key: AttributeKey<T>) {
         map.remove(key)
     }
 
-    public final override val allKeys: List<AttributeKey<*>>
+    final override val allKeys: List<AttributeKey<*>>
         get() = map.keys.toList()
 }
 

@@ -10,20 +10,20 @@ import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 
 /**
- * Represents a multipart/form-data entry. Could be a [FormItem] or [FileItem]
+ * Represents a multipart/form-data entry. Could be a [FormItem] or [FileItem].
  * @property dispose to be invoked when this part is no longed needed
  * @property headers of this part, could be inaccurate on some engines
  */
 public sealed class PartData(public val dispose: () -> Unit, public val headers: Headers) {
     /**
-     * Represents a multipart form item
+     * Represents a multipart form item.
      * @property value of this field
      */
     public class FormItem(public val value: String, dispose: () -> Unit, partHeaders: Headers) :
         PartData(dispose, partHeaders)
 
     /**
-     * Represents a file item
+     * Represents a file item.
      * @property provider of content bytes
      */
     @Suppress("DEPRECATION")
@@ -39,7 +39,7 @@ public sealed class PartData(public val dispose: () -> Unit, public val headers:
     }
 
     /**
-     * Represents a binary item
+     * Represents a binary item.
      * @property provider of content bytes
      */
     @Suppress("DEPRECATION")
@@ -50,7 +50,7 @@ public sealed class PartData(public val dispose: () -> Unit, public val headers:
     ) : PartData(dispose, partHeaders)
 
     /**
-     * Represents a binary part with a provider that supplies [ByteReadChannel]
+     * Represents a binary part with a provider that supplies [ByteReadChannel].
      * @property provider supplies a channel to read data from
      */
     public class BinaryChannelItem(
@@ -59,14 +59,14 @@ public sealed class PartData(public val dispose: () -> Unit, public val headers:
     ) : PartData({}, partHeaders)
 
     /**
-     * Parsed `Content-Disposition` header or `null` if missing
+     * Parsed `Content-Disposition` header or `null` if missing.
      */
     public val contentDisposition: ContentDisposition? by lazy(LazyThreadSafetyMode.NONE) {
         headers[HttpHeaders.ContentDisposition]?.let { ContentDisposition.parse(it) }
     }
 
     /**
-     * Parsed `Content-Type` header or `null` if missing
+     * Parsed `Content-Type` header or `null` if missing.
      */
     public val contentType: ContentType? by lazy(LazyThreadSafetyMode.NONE) {
         headers[HttpHeaders.ContentType]?.let {
@@ -77,22 +77,22 @@ public sealed class PartData(public val dispose: () -> Unit, public val headers:
     }
 
     /**
-     * Optional part name based on `Content-Disposition` header
+     * Optional part name based on `Content-Disposition` header.
      */
     public val name: String? get() = contentDisposition?.name
 }
 
 /**
- * Represents a multipart data stream that could be received from a call
+ * Represents a multipart data stream that could be received from a call.
  */
 public interface MultiPartData {
     /**
-     * Reads next part data or `null` if the end of multipart stream encountered
+     * Reads next part data or `null` if the end of multipart stream encountered.
      */
     public suspend fun readPart(): PartData?
 
     /**
-     * An empty multipart data stream
+     * An empty multipart data stream.
      */
     public object Empty : MultiPartData {
         override suspend fun readPart(): PartData? {
@@ -102,7 +102,7 @@ public interface MultiPartData {
 }
 
 /**
- * Parse multipart data stream and invoke [partHandler] for each [PartData] encountered
+ * Parse multipart data stream and invoke [partHandler] for each [PartData] encountered.
  * @param partHandler to be invoked for every part item
  */
 public suspend fun MultiPartData.forEachPart(partHandler: suspend (PartData) -> Unit) {
@@ -113,9 +113,10 @@ public suspend fun MultiPartData.forEachPart(partHandler: suspend (PartData) -> 
 }
 
 /**
- * Parse multipart data stream and put all parts into a list
- * @return a list of part data
+ * Parse multipart data stream and put all parts into a list.
+ * @return a list of [PartData]
  */
+@Deprecated("This method can deadlock on large requests. Use `forEachPart` instead.")
 public suspend fun MultiPartData.readAllParts(): List<PartData> {
     var part = readPart() ?: return emptyList()
     val parts = ArrayList<PartData>()

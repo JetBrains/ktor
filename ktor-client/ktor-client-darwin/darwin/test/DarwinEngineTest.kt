@@ -6,6 +6,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.client.tests.utils.*
 import io.ktor.http.*
+import io.ktor.test.dispatcher.*
 import io.ktor.websocket.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.*
@@ -96,9 +97,12 @@ class DarwinEngineTest {
             stringToNSUrlString("http://127.0.0.1/echo_query?привет")
         )
 
-        assertEquals(
+        val possibleResults = setOf(
             "http://%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82.%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82/",
-            stringToNSUrlString("http://привет.привет/")
+            "http://xn--b1agh1afp.xn--b1agh1afp/",
+        )
+        assertTrue(
+            stringToNSUrlString("http://привет.привет/") in possibleResults
         )
     }
 
@@ -200,7 +204,7 @@ class DarwinEngineTest {
         assertEquals("my header value", response.bodyAsText())
     }
 
-    @OptIn(UnsafeNumber::class)
+    @OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
     @Test
     fun testConfigureWebsocketRequest(): Unit = runBlocking {
         var customChallengeCalled = false
@@ -226,6 +230,24 @@ class DarwinEngineTest {
         assertEquals("test", response.readText())
         assertTrue(customChallengeCalled)
         session.close()
+    }
+
+    @Test
+    fun testWebSocketPingInterval() = testSuspend {
+        val client = HttpClient(Darwin) {
+            install(WebSockets) {
+                pingInterval = 1000
+            }
+        }
+
+        assertFailsWith<TimeoutCancellationException> {
+            client.webSocket("$TEST_WEBSOCKET_SERVER/websockets/echo") {
+                withTimeout(5000) {
+                    for (frame in incoming) {
+                    }
+                }
+            }
+        }
     }
 
     private fun stringToNSUrlString(value: String): String {

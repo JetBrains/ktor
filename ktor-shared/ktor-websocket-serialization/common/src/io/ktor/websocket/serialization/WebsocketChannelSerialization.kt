@@ -7,6 +7,7 @@ package io.ktor.websocket.serialization
 import io.ktor.serialization.*
 import io.ktor.util.*
 import io.ktor.util.reflect.*
+import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
 import io.ktor.websocket.*
 
@@ -47,7 +48,7 @@ public suspend fun WebSocketSession.sendSerializedBase(
     converter: WebsocketContentConverter,
     charset: Charset
 ) {
-    val serializedData = converter.serializeNullable(
+    val serializedData = converter.serialize(
         charset = charset,
         typeInfo = typeInfo,
         value = data

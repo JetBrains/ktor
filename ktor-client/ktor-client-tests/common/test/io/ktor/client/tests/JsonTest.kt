@@ -5,7 +5,6 @@
 package io.ktor.client.tests
 
 import io.ktor.client.call.*
-import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.tests.utils.*

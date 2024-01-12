@@ -25,17 +25,10 @@ public final class io/ktor/client/engine/cio/CIOEngineContainer : io/ktor/client
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/ktor/client/engine/cio/ClientClosedException : java/lang/IllegalStateException {
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/Throwable;)V
-	public synthetic fun <init> (Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-}
-
 public final class io/ktor/client/engine/cio/EndpointConfig {
 	public fun <init> ()V
 	public final fun getAllowHalfClose ()Z
 	public final fun getConnectAttempts ()I
-	public final fun getConnectRetryAttempts ()I
 	public final fun getConnectTimeout ()J
 	public final fun getKeepAliveTime ()J
 	public final fun getMaxConnectionsPerRoute ()I
@@ -43,7 +36,6 @@ public final class io/ktor/client/engine/cio/EndpointConfig {
 	public final fun getSocketTimeout ()J
 	public final fun setAllowHalfClose (Z)V
 	public final fun setConnectAttempts (I)V
-	public final fun setConnectRetryAttempts (I)V
 	public final fun setConnectTimeout (J)V
 	public final fun setKeepAliveTime (J)V
 	public final fun setMaxConnectionsPerRoute (I)V

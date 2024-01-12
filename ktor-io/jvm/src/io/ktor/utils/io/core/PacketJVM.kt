@@ -1,10 +1,7 @@
 package io.ktor.utils.io.core
 
-import io.ktor.utils.io.charsets.*
-import io.ktor.utils.io.core.internal.*
 import io.ktor.utils.io.utils.*
 import java.nio.*
-import java.nio.charset.CharsetDecoder
 
 public actual val PACKET_MAX_COPY_SIZE: Int = getIOIntProperty("max.copy.size", 500)
 
@@ -22,9 +19,4 @@ public fun ByteReadPacket.readByteBuffer(
     readFully(bb)
     bb.clear()
     return bb
-}
-
-@Deprecated("Migrate parameters order", ReplaceWith("readText(out, decoder, max)"), DeprecationLevel.ERROR)
-public fun ByteReadPacket.readText(decoder: CharsetDecoder, out: Appendable, max: Int = Int.MAX_VALUE): Int {
-    return decoder.decode(this, out, max)
 }

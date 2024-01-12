@@ -29,6 +29,8 @@ import javax.crypto.spec.*
  * @property ivGenerator is a function that generates input vectors
  * @property encryptAlgorithm is an encryption algorithm name
  * @property signAlgorithm is a signing algorithm name
+ * @property backwardCompatibleRead before Ktor 3.0.0, MAC was calculated over decrypted data.
+ * Set to true to support old clients.
  */
 public class SessionTransportTransformerEncrypt(
     public val encryptionKeySpec: SecretKeySpec,
@@ -36,7 +38,8 @@ public class SessionTransportTransformerEncrypt(
     public val ivGenerator: (size: Int) -> ByteArray =
         { size -> ByteArray(size).apply { SecureRandom().nextBytes(this) } },
     public val encryptAlgorithm: String = encryptionKeySpec.algorithm,
-    public val signAlgorithm: String = signKeySpec.algorithm
+    public val signAlgorithm: String = signKeySpec.algorithm,
+    private val backwardCompatibleRead: Boolean = false,
 ) : SessionTransportTransformer {
     public companion object {
         private val log = LoggerFactory.getLogger(SessionTransportTransformerEncrypt::class.qualifiedName)
@@ -60,22 +63,29 @@ public class SessionTransportTransformerEncrypt(
         signKey: ByteArray,
         ivGenerator: (size: Int) -> ByteArray = { size -> ByteArray(size).apply { SecureRandom().nextBytes(this) } },
         encryptAlgorithm: String = "AES",
-        signAlgorithm: String = "HmacSHA256"
+        signAlgorithm: String = "HmacSHA256",
+        backwardCompatibleRead: Boolean = false,
     ) : this(
-        SecretKeySpec(encryptionKey, encryptAlgorithm),
-        SecretKeySpec(signKey, signAlgorithm),
-        ivGenerator
+        encryptionKeySpec = SecretKeySpec(encryptionKey, encryptAlgorithm),
+        signKeySpec = SecretKeySpec(signKey, signAlgorithm),
+        ivGenerator = ivGenerator,
+        backwardCompatibleRead = backwardCompatibleRead
     )
 
     override fun transformRead(transportValue: String): String? {
         try {
-            val encryptedMac = transportValue.substringAfterLast('/', "")
+            val encryptedAndMac = transportValue.substringAfterLast('/', "")
+            val macHex = encryptedAndMac.substringAfterLast(':', "")
+            val encrypted = hex(encryptedAndMac.substringBeforeLast(':'))
+            val macCheck = hex(mac(encrypted)) == macHex
+            if (!macCheck && !backwardCompatibleRead) {
+                return null
+            }
+
             val iv = hex(transportValue.substringBeforeLast('/'))
-            val encrypted = hex(encryptedMac.substringBeforeLast(':'))
-            val macHex = encryptedMac.substringAfterLast(':', "")
             val decrypted = decrypt(iv, encrypted)
 
-            if (hex(mac(decrypted)) != macHex) {
+            if (!macCheck && hex(mac(decrypted)) != macHex) {
                 return null
             }
 
@@ -94,7 +104,7 @@ public class SessionTransportTransformerEncrypt(
         val iv = ivGenerator(encryptionKeySize)
         val decrypted = transportValue.toByteArray(charset)
         val encrypted = encrypt(iv, decrypted)
-        val mac = mac(decrypted)
+        val mac = mac(encrypted)
         return "${hex(iv)}/${hex(encrypted)}:${hex(mac)}"
     }
 

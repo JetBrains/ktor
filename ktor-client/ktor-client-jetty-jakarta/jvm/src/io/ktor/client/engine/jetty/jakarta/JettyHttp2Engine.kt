@@ -7,25 +7,17 @@ package io.ktor.client.engine.jetty.jakarta
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
-import io.ktor.client.utils.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import org.eclipse.jetty.http2.client.*
-import org.eclipse.jetty.util.thread.*
 
 @OptIn(InternalAPI::class)
 internal class JettyHttp2Engine(
     override val config: JettyEngineConfig
 ) : HttpClientEngineBase("ktor-jetty") {
 
-    override val dispatcher: CoroutineDispatcher by lazy {
-        Dispatchers.clientDispatcher(
-            config.threadsCount,
-            "ktor-jetty-dispatcher"
-        )
-    }
-
-    override val supportedCapabilities = setOf(HttpTimeout)
+    override val supportedCapabilities = setOf(HttpTimeoutCapability)
 
     /**
      * Cache that keeps least recently used [HTTP2Client] instances. Set "0" to avoid caching.
@@ -41,7 +33,7 @@ internal class JettyHttp2Engine(
 
     /** Only for tests */
     internal fun getOrCreateClient(data: HttpRequestData): HTTP2Client {
-        return clientCache[data.getCapabilityOrNull(HttpTimeout)]
+        return clientCache[data.getCapabilityOrNull(HttpTimeoutCapability)]
             ?: error("Http2Client can't be constructed because HttpTimeout plugin is not installed")
     }
 
@@ -53,14 +45,12 @@ internal class JettyHttp2Engine(
         }
     }
 
-    private fun createJettyClient(timeoutExtension: HttpTimeout.HttpTimeoutCapabilityConfiguration?): HTTP2Client =
+    private fun createJettyClient(timeoutExtension: HttpTimeoutConfig?): HTTP2Client =
         HTTP2Client().apply {
             addBean(config.sslContextFactory)
             check(config.proxy == null) { "Proxy unsupported in Jetty engine." }
 
-            executor = QueuedThreadPool().apply {
-                name = "ktor-jetty-client-qtp"
-            }
+            executor = Dispatchers.IO.asExecutor()
 
             setupTimeoutAttributes(timeoutExtension)
 
@@ -73,7 +63,7 @@ internal class JettyHttp2Engine(
 /**
  * Update [HTTP2Client] to use connect and socket timeouts specified by [HttpTimeout] plugin.
  */
-private fun HTTP2Client.setupTimeoutAttributes(timeoutAttributes: HttpTimeout.HttpTimeoutCapabilityConfiguration?) {
+private fun HTTP2Client.setupTimeoutAttributes(timeoutAttributes: HttpTimeoutConfig?) {
     timeoutAttributes?.connectTimeoutMillis?.let { connectTimeout = it }
     timeoutAttributes?.socketTimeoutMillis?.let { idleTimeout = it }
 }

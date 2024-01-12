@@ -24,21 +24,13 @@ public class AuthenticationContext(call: ApplicationCall) {
     /**
      * Retrieves an authenticated principal, or returns `null` if a user isn't authenticated.
      */
-    @Deprecated("Use accessor methods instead", level = DeprecationLevel.WARNING)
+    @Deprecated("Use accessor methods instead", level = DeprecationLevel.ERROR)
     public var principal: Principal?
         get() = _principal.principals.firstOrNull()?.second
         set(value) {
             check(value != null)
             _principal.add(null, value)
         }
-
-    /**
-     * Stores authentication failures for keys provided by authentication mechanisms.
-     */
-    @Suppress("unused")
-    @Deprecated("Use allErrors, allFailures or error() function instead", level = DeprecationLevel.ERROR)
-    public val errors: HashMap<Any, AuthenticationFailedCause>
-        get() = _errors
 
     /**
      * All registered errors during auth procedure (only [AuthenticationFailedCause.Error]).

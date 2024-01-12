@@ -6,6 +6,7 @@ package io.ktor.util
 
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
+import io.ktor.utils.io.pool.*
 import kotlinx.coroutines.*
 
 private const val CHUNK_BUFFER_SIZE = 4096L
@@ -20,14 +21,14 @@ public fun ByteReadChannel.split(coroutineScope: CoroutineScope): Pair<ByteReadC
     val second = ByteChannel(autoFlush = true)
 
     coroutineScope.launch {
+        val buffer = ByteArrayPool.borrow()
         try {
             while (!isClosedForRead) {
-                this@split.readRemaining(CHUNK_BUFFER_SIZE).use { chunk ->
-                    listOf(
-                        async { first.writePacket(chunk.copy()) },
-                        async { second.writePacket(chunk.copy()) }
-                    ).awaitAll()
-                }
+                val read = this@split.readAvailable(buffer)
+                listOf(
+                    async { first.writeFully(buffer, 0, read) },
+                    async { second.writeFully(buffer, 0, read) }
+                ).awaitAll()
             }
 
             closedCause?.let { throw it }
@@ -36,6 +37,7 @@ public fun ByteReadChannel.split(coroutineScope: CoroutineScope): Pair<ByteReadC
             first.cancel(cause)
             second.cancel(cause)
         } finally {
+            ByteArrayPool.recycle(buffer)
             first.close()
             second.close()
         }

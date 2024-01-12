@@ -258,7 +258,7 @@ class CORSTest {
     fun testSimpleRequestHttps() {
         withTestApplication {
             application.install(CORS) {
-                allowHost("my-host", schemes = listOf("http", "https"))
+                allowHost("my-host")
             }
 
             application.routing {
@@ -1074,16 +1074,20 @@ class CORSTest {
             client.get { headers.append(HttpHeaders.Origin, "http://domain.net") }.status
         )
         assertEquals(
-            HttpStatusCode.Forbidden,
+            HttpStatusCode.OK,
             client.get { headers.append(HttpHeaders.Origin, "https://domain.com") }.status
         )
         assertEquals(
-            HttpStatusCode.Forbidden,
+            HttpStatusCode.OK,
             client.get { headers.append(HttpHeaders.Origin, "https://www.domain.com") }.status
         )
         assertEquals(
             HttpStatusCode.Forbidden,
-            client.get { headers.append(HttpHeaders.Origin, "https://foo.bar.domain.com") }.status
+            client.get { headers.append(HttpHeaders.Origin, "https://domain.net") }.status
+        )
+        assertEquals(
+            HttpStatusCode.Forbidden,
+            client.get { headers.append(HttpHeaders.Origin, "sftp://domain.com") }.status
         )
     }
 

@@ -29,10 +29,10 @@ public inline fun Memory(array: ByteArray, offset: Int = 0, length: Int = array.
 
 @PublishedApi
 internal actual object DefaultAllocator : Allocator {
-    override fun alloc(size: Int): Memory = Memory(ByteBuffer.allocate(size))
+    actual override fun alloc(size: Int): Memory = Memory(ByteBuffer.allocate(size))
 
-    override fun alloc(size: Long): Memory = alloc(size.toIntOrFail("size"))
+    actual override fun alloc(size: Long): Memory = alloc(size.toIntOrFail("size"))
 
-    override fun free(instance: Memory) {
+    actual override fun free(instance: Memory) {
     }
 }

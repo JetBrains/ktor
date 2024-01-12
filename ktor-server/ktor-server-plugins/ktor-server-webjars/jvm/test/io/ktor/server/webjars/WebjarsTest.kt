@@ -8,162 +8,183 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.http.content.*
 import io.ktor.server.plugins.cachingheaders.*
 import io.ktor.server.plugins.conditionalheaders.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
-import io.ktor.util.*
 import io.ktor.util.date.*
 import kotlin.test.*
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.seconds
 
-@Suppress("DEPRECATION")
 class WebjarsTest {
 
     @Test
     fun resourceNotFound() {
-        withTestApplication {
-            application.install(Webjars)
-            handleRequest(HttpMethod.Get, "/webjars/foo.js").let { call ->
+        testApplication {
+            install(Webjars)
+            client.get("/webjars/foo.js").let { response ->
                 // Should be handled by some other routing
-                assertEquals(HttpStatusCode.NotFound, call.response.status())
+                assertEquals(HttpStatusCode.NotFound, response.status)
             }
         }
     }
 
     @Test
     fun pathLike() {
-        withTestApplication {
-            application.install(Webjars)
-            application.routing {
+        testApplication {
+            install(Webjars)
+            routing {
                 get("/webjars-something/jquery") {
                     call.respondText { "Something Else" }
                 }
             }
-            handleRequest(HttpMethod.Get, "/webjars-something/jquery").let { call ->
-                assertEquals(HttpStatusCode.OK, call.response.status())
-                assertEquals("Something Else", call.response.content)
+            client.get("/webjars-something/jquery").let { response ->
+                assertEquals(HttpStatusCode.OK, response.status)
+                assertEquals("Something Else", response.bodyAsText())
             }
         }
     }
 
     @Test
     fun nestedPath() {
-        withTestApplication {
-            application.install(Webjars) {
+        testApplication {
+            install(Webjars) {
                 path = "/assets/webjars"
             }
-            handleRequest(HttpMethod.Get, "/assets/webjars/jquery/jquery.js").let { call ->
-                assertEquals(HttpStatusCode.OK, call.response.status())
-                assertEquals("application/javascript", call.response.headers["Content-Type"])
+            client.get("/assets/webjars/jquery/jquery.js").let { response ->
+                assertEquals(HttpStatusCode.OK, response.status)
+                assertEquals("application/javascript", response.headers["Content-Type"])
             }
         }
     }
 
     @Test
     fun rootPath() {
-        withTestApplication {
-            application.install(Webjars) {
+        testApplication {
+            install(Webjars) {
                 path = "/"
             }
-            handleRequest(HttpMethod.Get, "/jquery/jquery.js").let { call ->
-                assertEquals(HttpStatusCode.OK, call.response.status())
-                assertEquals("application/javascript", call.response.headers["Content-Type"])
+            client.get("/jquery/jquery.js").let { response ->
+                assertEquals(HttpStatusCode.OK, response.status)
+                assertEquals("application/javascript", response.headers["Content-Type"])
             }
         }
     }
 
     @Test
     fun rootPath2() {
-        withTestApplication {
-            application.install(Webjars) {
+        testApplication {
+            install(Webjars) {
                 path = "/"
             }
-            application.routing {
+            routing {
                 get("/") { call.respondText("Hello, World") }
             }
-            handleRequest(HttpMethod.Get, "/").let { call ->
-                assertEquals(HttpStatusCode.OK, call.response.status())
-                assertEquals("Hello, World", call.response.content)
+            client.get("/").let { response ->
+                assertEquals(HttpStatusCode.OK, response.status)
+                assertEquals("Hello, World", response.bodyAsText())
             }
-            handleRequest(HttpMethod.Get, "/jquery/jquery.js").let { call ->
-                assertEquals(HttpStatusCode.OK, call.response.status())
-                assertEquals("application/javascript", call.response.headers["Content-Type"])
+            client.get("/jquery/jquery.js").let { response ->
+                assertEquals(HttpStatusCode.OK, response.status)
+                assertEquals("application/javascript", response.headers["Content-Type"])
             }
         }
     }
 
     @Test
     fun versionAgnostic() {
-        withTestApplication {
-            application.install(Webjars)
+        testApplication {
+            install(Webjars)
 
-            handleRequest(HttpMethod.Get, "/webjars/jquery/jquery.js").let { call ->
-                assertEquals(HttpStatusCode.OK, call.response.status())
-                assertEquals("application/javascript", call.response.headers["Content-Type"])
+            client.get("/webjars/jquery/jquery.js").let { response ->
+                assertEquals(HttpStatusCode.OK, response.status)
+                assertEquals("application/javascript", response.headers["Content-Type"])
             }
         }
     }
 
     @Test
     fun withGetParameters() {
-        withTestApplication {
-            application.install(Webjars)
+        testApplication {
+            install(Webjars)
 
-            handleRequest(HttpMethod.Get, "/webjars/jquery/jquery.js?param1=value1").let { call ->
-                assertEquals(HttpStatusCode.OK, call.response.status())
-                assertEquals("application/javascript", call.response.headers["Content-Type"])
+            client.get("/webjars/jquery/jquery.js?param1=value1").let { response ->
+                assertEquals(HttpStatusCode.OK, response.status)
+                assertEquals("application/javascript", response.headers["Content-Type"])
             }
         }
     }
 
     @Test
     fun withSpecificVersion() {
-        withTestApplication {
-            application.install(Webjars)
+        testApplication {
+            install(Webjars)
 
-            handleRequest(HttpMethod.Get, "/webjars/jquery/3.6.4/jquery.js").let { call ->
-                assertEquals(HttpStatusCode.OK, call.response.status())
-                assertEquals("application/javascript", call.response.headers["Content-Type"])
+            client.get("/webjars/jquery/3.6.4/jquery.js").let { response ->
+                assertEquals(HttpStatusCode.OK, response.status)
+                assertEquals("application/javascript", response.headers["Content-Type"])
             }
         }
     }
 
     @Test
+    fun isStaticContentReturnsTrue() {
+        var isStatic = false
+        var location = ""
+        testApplication {
+            install(Webjars)
+            install(
+                createApplicationPlugin("TestResponseMeta") {
+                    onCallRespond { call ->
+                        isStatic = call.isStaticContent()
+                        location = call.attributes[StaticFileLocationProperty]
+                    }
+                }
+            )
+
+            client.get("/webjars/jquery/jquery.js")
+
+            assertTrue(isStatic, "Should be static file")
+            assertEquals(location, "jquery/jquery.js")
+        }
+    }
+
+    @Test
     fun withConditionalAndCachingHeaders() {
-        withTestApplication {
-            application.install(Webjars)
-            application.install(ConditionalHeaders)
-            application.install(CachingHeaders)
-            handleRequest(HttpMethod.Get, "/webjars/jquery/3.6.4/jquery.js").let { call ->
-                assertEquals(HttpStatusCode.OK, call.response.status())
-                assertEquals("application/javascript", call.response.headers["Content-Type"])
-                assertNotNull(call.response.headers["Last-Modified"])
-                assertEquals("\"3.6.4\"", call.response.headers["Etag"])
-                assertEquals("max-age=${90.days.inWholeSeconds}", call.response.headers["Cache-Control"])
+        testApplication {
+            install(Webjars)
+            install(ConditionalHeaders)
+            install(CachingHeaders)
+            client.get("/webjars/jquery/3.6.4/jquery.js").let { response ->
+                assertEquals(HttpStatusCode.OK, response.status)
+                assertEquals("application/javascript", response.headers["Content-Type"])
+                assertNotNull(response.headers["Last-Modified"])
+                assertEquals("\"3.6.4\"", response.headers["Etag"])
+                assertEquals("max-age=${90.days.inWholeSeconds}", response.headers["Cache-Control"])
             }
         }
     }
 
     @Test
     fun withConditionalAndCachingHeadersCustom() {
-        withTestApplication {
+        testApplication {
             val date = GMTDate()
-            application.install(Webjars) {
+            install(Webjars) {
                 maxAge { 5.seconds }
                 lastModified { date }
                 etag { "test" }
             }
-            application.install(ConditionalHeaders)
-            application.install(CachingHeaders)
-            handleRequest(HttpMethod.Get, "/webjars/jquery/3.6.4/jquery.js").let { call ->
-                assertEquals(HttpStatusCode.OK, call.response.status())
-                assertEquals("application/javascript", call.response.headers["Content-Type"])
-                assertEquals(date.toHttpDate(), call.response.headers["Last-Modified"])
-                assertEquals("\"test\"", call.response.headers["Etag"])
-                assertEquals("max-age=5", call.response.headers["Cache-Control"])
+            install(ConditionalHeaders)
+            install(CachingHeaders)
+            client.get("/webjars/jquery/3.6.4/jquery.js").let { response ->
+                assertEquals(HttpStatusCode.OK, response.status)
+                assertEquals("application/javascript", response.headers["Content-Type"])
+                assertEquals(date.toHttpDate(), response.headers["Last-Modified"])
+                assertEquals("\"test\"", response.headers["Etag"])
+                assertEquals("max-age=5", response.headers["Cache-Control"])
             }
         }
     }

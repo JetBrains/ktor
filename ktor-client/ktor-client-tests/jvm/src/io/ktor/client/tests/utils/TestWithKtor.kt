@@ -7,34 +7,32 @@ package io.ktor.client.tests.utils
 import ch.qos.logback.classic.*
 import ch.qos.logback.classic.Logger
 import io.ktor.server.engine.*
-import kotlinx.coroutines.debug.junit4.*
-import org.junit.*
+import kotlinx.coroutines.debug.junit5.*
+import org.junit.jupiter.api.*
 import org.slf4j.*
 import java.net.*
 import java.util.concurrent.*
 
 @Suppress("KDocMissingDocumentation")
+@CoroutinesTimeout(5 * 60 * 1000)
 abstract class TestWithKtor {
     protected val serverPort: Int = ServerSocket(0).use { it.localPort }
     protected val testUrl: String = "http://localhost:$serverPort"
 
-    @get:Rule
-    open val timeout: CoroutinesTimeout = CoroutinesTimeout.seconds(5 * 60)
-
-    abstract val server: ApplicationEngine
+    abstract val server: EmbeddedServer<*, *>
 
     init {
         (LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME) as? Logger)?.level = Level.ERROR
     }
 
-    @Before
+    @BeforeEach
     fun startServer() {
         var attempt = 0
 
         do {
             attempt++
             try {
-                server.start()
+                server.start(wait = false)
                 break
             } catch (cause: Throwable) {
                 if (attempt >= 10) throw cause
@@ -45,7 +43,7 @@ abstract class TestWithKtor {
         ensureServerRunning()
     }
 
-    @After
+    @AfterEach
     fun stopServer() {
         server.stop(0, 0, TimeUnit.SECONDS)
     }

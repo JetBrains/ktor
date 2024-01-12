@@ -4,7 +4,7 @@
 
 package io.ktor.client.utils
 
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 
 /**

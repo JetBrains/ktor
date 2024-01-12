@@ -6,9 +6,10 @@ package io.ktor.client.plugins.observer
 
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.plugins.*
+import io.ktor.client.plugins.api.*
 import io.ktor.client.statement.*
 import io.ktor.util.*
+import io.ktor.util.pipeline.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
@@ -18,67 +19,69 @@ import kotlin.coroutines.*
  */
 public typealias ResponseHandler = suspend (HttpResponse) -> Unit
 
+@KtorDsl
+public class ResponseObserverConfig {
+    internal var responseHandler: ResponseHandler = {}
+
+    internal var filter: ((HttpClientCall) -> Boolean)? = null
+
+    /**
+     * Set response handler for logging.
+     */
+    public fun onResponse(block: ResponseHandler) {
+        responseHandler = block
+    }
+
+    /**
+     * Set filter predicate to dynamically control if interceptor is executed or not for each http call.
+     */
+    public fun filter(block: ((HttpClientCall) -> Boolean)) {
+        filter = block
+    }
+}
+
 /**
  * Observe response plugin.
  */
-public class ResponseObserver(
-    private val responseHandler: ResponseHandler,
-    private val filter: ((HttpClientCall) -> Boolean)? = null
+@OptIn(InternalAPI::class)
+public val ResponseObserver: ClientPlugin<ResponseObserverConfig> = createClientPlugin(
+    "ResponseObserver",
+    ::ResponseObserverConfig
 ) {
-    @KtorDsl
-    public class Config {
-        internal var responseHandler: ResponseHandler = {}
 
-        internal var filter: ((HttpClientCall) -> Boolean)? = null
+    val responseHandler: ResponseHandler = pluginConfig.responseHandler
+    val filter: ((HttpClientCall) -> Boolean)? = pluginConfig.filter
 
-        /**
-         * Set response handler for logging.
-         */
-        public fun onResponse(block: ResponseHandler) {
-            responseHandler = block
+    on(AfterReceiveHook) { response ->
+        if (filter?.invoke(response.call) == false) return@on
+
+        val (loggingContent, responseContent) = response.content.split(response)
+
+        val newResponse = response.call.wrapWithContent(responseContent).response
+        val sideResponse = response.call.wrapWithContent(loggingContent).response
+
+        client.launch(getResponseObserverContext()) {
+            runCatching { responseHandler(sideResponse) }
+
+            val content = sideResponse.content
+            if (!content.isClosedForRead) {
+                runCatching { content.discard() }
+            }
         }
 
-        /**
-         * Set filter predicate to dynamically control if interceptor is executed or not for each http call.
-         */
-        public fun filter(block: ((HttpClientCall) -> Boolean)) {
-            filter = block
-        }
+        proceedWith(newResponse)
+    }
+}
+
+private object AfterReceiveHook : ClientHook<suspend AfterReceiveHook.Context.(HttpResponse) -> Unit> {
+
+    class Context(private val context: PipelineContext<HttpResponse, Unit>) {
+        suspend fun proceedWith(response: HttpResponse) = context.proceedWith(response)
     }
 
-    public companion object Plugin : HttpClientPlugin<Config, ResponseObserver> {
-
-        override val key: AttributeKey<ResponseObserver> = AttributeKey("BodyInterceptor")
-
-        override fun prepare(block: Config.() -> Unit): ResponseObserver {
-            val config = Config().apply(block)
-            return ResponseObserver(config.responseHandler, config.filter)
-        }
-
-        @OptIn(InternalAPI::class)
-        override fun install(plugin: ResponseObserver, scope: HttpClient) {
-            scope.receivePipeline.intercept(HttpReceivePipeline.After) { response ->
-                if (plugin.filter?.invoke(response.call) == false) return@intercept
-
-                val (loggingContent, responseContent) = response.content.split(response)
-
-                val newResponse = response.call.wrapWithContent(responseContent).response
-                val sideResponse = response.call.wrapWithContent(loggingContent).response
-
-                scope.launch(getResponseObserverContext()) {
-                    try {
-                        plugin.responseHandler(sideResponse)
-                    } catch (_: Throwable) {
-                    }
-
-                    val content = sideResponse.content
-                    if (!content.isClosedForRead) {
-                        content.discard()
-                    }
-                }
-
-                proceedWith(newResponse)
-            }
+    override fun install(client: HttpClient, handler: suspend Context.(HttpResponse) -> Unit) {
+        client.receivePipeline.intercept(HttpReceivePipeline.After) {
+            handler(Context(this), subject)
         }
     }
 }

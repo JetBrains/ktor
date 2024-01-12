@@ -9,7 +9,7 @@ import io.ktor.server.application.*
 import io.ktor.server.application.hooks.*
 import io.ktor.server.plugins.*
 import io.ktor.server.request.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 /**
  * A plugin that enables the capability to tunnel HTTP verbs inside the `X-HTTP-Method-Override` header.

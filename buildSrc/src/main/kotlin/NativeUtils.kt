@@ -78,6 +78,7 @@ fun Project.desktopTargets(): List<String> = fastOr {
             macosX64(),
             macosArm64(),
             linuxX64(),
+            linuxArm64(),
             mingwX64()
         ).map { it.name }
     }

@@ -58,6 +58,7 @@ class TestEngineMultipartTest {
         testMultiParts(
             {
                 assertNotNull(it, "it should be multipart data")
+                @Suppress("DEPRECATION")
                 val parts = it.readAllParts()
 
                 assertEquals(1, parts.size)
@@ -96,6 +97,7 @@ class TestEngineMultipartTest {
         withTestApplication {
             application.intercept(ApplicationCallPipeline.Call) {
                 try {
+                    @Suppress("DEPRECATION")
                     call.receiveMultipart().readAllParts()
                 } catch (error: Throwable) {
                     fail("This pipeline shouldn't finish successfully")
@@ -130,6 +132,7 @@ class TestEngineMultipartTest {
         testMultiParts(
             {
                 assertNotNull(it, "it should be multipart data")
+                @Suppress("DEPRECATION")
                 val parts = it.readAllParts()
 
                 assertEquals(1, parts.size)

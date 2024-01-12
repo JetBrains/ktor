@@ -1,5 +1,0 @@
-ktor:
-    deployment:
-        port: 8081
-    application:
-        class: org.company.ApplicationClass

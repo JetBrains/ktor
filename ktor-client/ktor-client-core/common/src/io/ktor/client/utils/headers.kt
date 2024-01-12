@@ -5,7 +5,6 @@
 package io.ktor.client.utils
 
 import io.ktor.http.*
-import io.ktor.util.*
 
 /**
  * Builds an instance of [Headers] using the [block] function.

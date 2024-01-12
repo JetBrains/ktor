@@ -23,7 +23,6 @@ public final class io/ktor/client/engine/okhttp/OkHttpEngine : io/ktor/client/en
 	public synthetic fun getConfig ()Lio/ktor/client/engine/HttpClientEngineConfig;
 	public fun getConfig ()Lio/ktor/client/engine/okhttp/OkHttpConfig;
 	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
-	public fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public fun getSupportedCapabilities ()Ljava/util/Set;
 }
 

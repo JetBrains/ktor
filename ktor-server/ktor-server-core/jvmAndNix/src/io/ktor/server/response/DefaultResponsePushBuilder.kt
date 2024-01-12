@@ -8,7 +8,7 @@ import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.util.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 /**
  * An HTTP/2 push builder.

@@ -4,6 +4,7 @@
 
 package io.ktor.client.engine.winhttp.internal
 
+import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.cio.*
@@ -18,17 +19,26 @@ internal class WinHttpResponseData(
     val headers: String
 )
 
+@OptIn(InternalAPI::class)
 internal suspend fun WinHttpResponseData.convert(
+    data: HttpRequestData,
     requestTime: GMTDate,
-    responseBody: Any,
+    body: Any,
     callContext: CoroutineContext
 ): HttpResponseData {
+    val status = HttpStatusCode.fromValue(statusCode)
     val headers = parseResponse(ByteReadChannel(headers))?.use { response ->
         HeadersImpl(response.headers.toMap())
     } ?: throw IllegalStateException("Failed to parse response header")
 
+    val responseBody: Any = if (needToProcessSSE(data, status, headers)) {
+        DefaultClientSSESession(data.body as SSEClientContent, body as ByteReadChannel, callContext)
+    } else {
+        body
+    }
+
     return HttpResponseData(
-        HttpStatusCode.fromValue(statusCode),
+        status,
         requestTime,
         headers,
         HttpProtocolVersion.parse(httpProtocol),

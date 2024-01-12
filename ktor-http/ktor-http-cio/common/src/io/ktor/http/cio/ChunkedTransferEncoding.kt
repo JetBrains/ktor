@@ -33,7 +33,8 @@ public typealias DecoderJob = WriterJob
 @Suppress("TYPEALIAS_EXPANSION_DEPRECATION")
 @Deprecated(
     "Specify content length if known or pass -1L",
-    ReplaceWith("decodeChunked(input, -1L)")
+    ReplaceWith("decodeChunked(input, -1L)"),
+    level = DeprecationLevel.ERROR
 )
 public fun CoroutineScope.decodeChunked(input: ByteReadChannel): DecoderJob =
     decodeChunked(input, -1L)

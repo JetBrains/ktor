@@ -9,7 +9,6 @@ import io.ktor.client.plugins.websocket.*
 import io.ktor.client.tests.utils.*
 import kotlinx.coroutines.*
 import okhttp3.*
-import java.lang.RuntimeException
 import kotlin.test.*
 import kotlin.test.assertFailsWith
 

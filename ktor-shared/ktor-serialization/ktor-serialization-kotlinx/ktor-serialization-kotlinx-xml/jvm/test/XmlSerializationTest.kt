@@ -44,7 +44,7 @@ class XmlSerializationTest {
     }
 
     private suspend inline fun <reified T : Any> ContentConverter.testSerialize(data: T): String {
-        val content = serializeNullable(ContentType.Application.Xml, Charsets.UTF_8, typeInfo<T>(), data)
+        val content = serialize(ContentType.Application.Xml, Charsets.UTF_8, typeInfo<T>(), data)
         return (content as? TextContent)?.text ?: error("Failed to get serialized $data")
     }
 }

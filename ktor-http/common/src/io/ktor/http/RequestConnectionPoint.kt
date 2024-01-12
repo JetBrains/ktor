@@ -23,7 +23,10 @@ public interface RequestConnectionPoint {
     /**
      * Port, for example 80 or 443
      */
-    @Deprecated("Use localPort or serverPort instead")
+    @Deprecated(
+        "Use localPort or serverPort instead",
+        level = DeprecationLevel.ERROR
+    )
     public val port: Int
 
     /**
@@ -39,7 +42,10 @@ public interface RequestConnectionPoint {
     /**
      * Request host, useful for virtual hosts routing
      */
-    @Deprecated("Use localHost or serverHost instead")
+    @Deprecated(
+        "Use localHost or serverHost instead",
+        level = DeprecationLevel.ERROR
+    )
     public val host: String
 
     /**

@@ -16,7 +16,6 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
-import io.ktor.util.*
 import io.ktor.util.reflect.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
@@ -156,7 +155,7 @@ class MustacheTest {
         application {
             install(ContentNegotiation) {
                 val alwaysFailingConverter = object : ContentConverter {
-                    override suspend fun serializeNullable(
+                    override suspend fun serialize(
                         contentType: ContentType,
                         charset: Charset,
                         typeInfo: TypeInfo,

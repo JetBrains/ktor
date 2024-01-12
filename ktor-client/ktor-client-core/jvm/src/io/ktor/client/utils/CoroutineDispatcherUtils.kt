@@ -4,12 +4,8 @@
 
 package io.ktor.client.utils
 
-import io.ktor.util.*
-import kotlinx.atomicfu.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.scheduling.*
-import java.io.*
-import kotlin.coroutines.*
 
 /**
  * Creates [CoroutineDispatcher] based on thread pool of [threadCount] threads.

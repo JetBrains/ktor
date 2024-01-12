@@ -344,8 +344,8 @@ class HttpRequestRetryTest {
         }
 
         test { client ->
-            val events = mutableListOf<HttpRequestRetry.RetryEventData>()
-            client.monitor.subscribe(HttpRequestRetry.HttpRequestRetryEvent) { events.add(it) }
+            val events = mutableListOf<HttpRetryEventData>()
+            client.monitor.subscribe(HttpRequestRetryEvent) { events.add(it) }
 
             client.get {}
 

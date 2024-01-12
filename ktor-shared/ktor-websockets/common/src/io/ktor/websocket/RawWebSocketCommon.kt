@@ -4,7 +4,6 @@
 
 package io.ktor.websocket
 
-import io.ktor.util.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.bits.*

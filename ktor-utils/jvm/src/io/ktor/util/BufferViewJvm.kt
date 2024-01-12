@@ -4,6 +4,7 @@
 
 package io.ktor.util
 
+import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.core.internal.*
 import java.nio.channels.*

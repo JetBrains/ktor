@@ -4,7 +4,6 @@
 
 package io.ktor.util.date
 
-import io.ktor.util.*
 import java.util.*
 
 private val GMT_TIMEZONE = TimeZone.getTimeZone("GMT")

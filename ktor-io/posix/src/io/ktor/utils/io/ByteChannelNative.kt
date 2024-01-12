@@ -112,9 +112,11 @@ internal class ByteChannelNative(
         return result
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     override suspend fun readAvailable(dst: CPointer<ByteVar>, offset: Int, length: Int): Int =
         readAvailable(dst, offset.toLong(), length.toLong())
 
+    @OptIn(ExperimentalForeignApi::class)
     override suspend fun readAvailable(dst: CPointer<ByteVar>, offset: Long, length: Long): Int {
         require(offset >= 0L)
         require(length >= 0L)
@@ -127,7 +129,7 @@ internal class ByteChannelNative(
             awaitSuspend(1)
         }
 
-        if (!readable.canRead()) {
+        if (readable.remaining < availableForRead) {
             prepareFlushedBytes()
         }
 
@@ -136,10 +138,12 @@ internal class ByteChannelNative(
         return size
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     override suspend fun readFully(dst: CPointer<ByteVar>, offset: Int, length: Int) {
         readFully(dst, offset.toLong(), length.toLong())
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     override suspend fun readFully(dst: CPointer<ByteVar>, offset: Long, length: Long) {
         require(offset >= 0L)
         require(length >= 0L)
@@ -159,6 +163,7 @@ internal class ByteChannelNative(
         }
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     private suspend fun readFullySuspend(dst: CPointer<ByteVar>, offset: Long, length: Long) {
         var position = offset
         var rem = length
@@ -177,10 +182,12 @@ internal class ByteChannelNative(
         }
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     override suspend fun writeFully(src: CPointer<ByteVar>, offset: Int, length: Int) {
         return writeFully(src, offset.toLong(), length.toLong())
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     override suspend fun writeFully(src: CPointer<ByteVar>, offset: Long, length: Long) {
         if (availableForWrite > 0) {
             val size = tryWriteCPointer(src, offset, length).toLong()
@@ -197,6 +204,7 @@ internal class ByteChannelNative(
         return writeFullySuspend(src, offset, length)
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     private suspend fun writeFullySuspend(src: CPointer<ByteVar>, offset: Long, length: Long) {
         var remaining = length
         var position = offset
@@ -230,9 +238,11 @@ internal class ByteChannelNative(
         return size
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     override suspend fun writeAvailable(src: CPointer<ByteVar>, offset: Int, length: Int): Int =
         writeAvailable(src, offset.toLong(), length.toLong())
 
+    @OptIn(ExperimentalForeignApi::class)
     override suspend fun writeAvailable(src: CPointer<ByteVar>, offset: Long, length: Long): Int {
         if (availableForWrite > 0) {
             val size = tryWriteCPointer(src, offset, length)
@@ -262,11 +272,13 @@ internal class ByteChannelNative(
         return "ByteChannel[0x$hashCode, job: $attachedJob, cause: $closedCause]"
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     private suspend fun writeAvailableSuspend(src: CPointer<ByteVar>, offset: Long, length: Long): Int {
         awaitAtLeastNBytesAvailableForWrite(1)
         return writeAvailable(src, offset, length)
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     private fun tryWriteCPointer(src: CPointer<ByteVar>, offset: Long, length: Long): Int {
         val size = minOf(length, availableForWrite.toLong(), Int.MAX_VALUE.toLong()).toInt()
         val ptr: CPointer<ByteVar> = (src + offset)!!
@@ -274,6 +286,7 @@ internal class ByteChannelNative(
         return size
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     private fun tryReadCPointer(dst: CPointer<ByteVar>, offset: Long, length: Long): Int {
         val size = minOf(length, availableForRead.toLong(), Int.MAX_VALUE.toLong()).toInt()
         val ptr: CPointer<ByteVar> = (dst + offset)!!

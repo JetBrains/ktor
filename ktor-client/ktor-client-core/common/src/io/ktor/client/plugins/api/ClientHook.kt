@@ -5,7 +5,7 @@
 package io.ktor.client.plugins.api
 
 import io.ktor.client.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 /**
  * A hook that can be registered in [ClientPluginBuilder].

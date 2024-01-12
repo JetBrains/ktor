@@ -6,114 +6,100 @@ package io.ktor.client.plugins
 
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.plugins.api.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.events.*
 import io.ktor.http.*
-import io.ktor.util.*
 import io.ktor.util.logging.*
-import kotlin.native.concurrent.*
+import io.ktor.utils.io.*
 
 private val ALLOWED_FOR_REDIRECT: Set<HttpMethod> = setOf(HttpMethod.Get, HttpMethod.Head)
 
 private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.HttpRedirect")
 
 /**
- * An [HttpClient] plugin that handles HTTP redirects
+ * Occurs when receiving a response with a redirect message.
  */
-public class HttpRedirect private constructor(
-    private val checkHttpMethod: Boolean,
-    private val allowHttpsDowngrade: Boolean
+public val HttpResponseRedirectEvent: EventDefinition<HttpResponse> = EventDefinition()
+
+@KtorDsl
+public class HttpRedirectConfig {
+
+    /**
+     * Checks whether the HTTP method is allowed for the redirect.
+     * Only [HttpMethod.Get] and [HttpMethod.Head] are allowed for implicit redirection.
+     *
+     * Please note: changing this flag could lead to security issues, consider changing the request URL instead.
+     */
+    public var checkHttpMethod: Boolean = true
+
+    /**
+     * `true` allows a client to make a redirect with downgrading from HTTPS to plain HTTP.
+     */
+    public var allowHttpsDowngrade: Boolean = false
+}
+
+@OptIn(InternalAPI::class)
+public val HttpRedirect: ClientPlugin<HttpRedirectConfig> = createClientPlugin(
+    "HttpRedirect",
+    ::HttpRedirectConfig
 ) {
 
-    @KtorDsl
-    public class Config {
+    val checkHttpMethod: Boolean = pluginConfig.checkHttpMethod
+    val allowHttpsDowngrade: Boolean = pluginConfig.allowHttpsDowngrade
 
-        /**
-         * Checks whether the HTTP method is allowed for the redirect.
-         * Only [HttpMethod.Get] and [HttpMethod.Head] are allowed for implicit redirection.
-         *
-         * Please note: changing this flag could lead to security issues, consider changing the request URL instead.
-         */
-        public var checkHttpMethod: Boolean = true
+    suspend fun Send.Sender.handleCall(
+        context: HttpRequestBuilder,
+        origin: HttpClientCall,
+        allowHttpsDowngrade: Boolean,
+        client: HttpClient
+    ): HttpClientCall {
+        if (!origin.response.status.isRedirect()) return origin
 
-        /**
-         * `true` allows a client to make a redirect with downgrading from HTTPS to plain HTTP.
-         */
-        public var allowHttpsDowngrade: Boolean = false
+        var call = origin
+        var requestBuilder = context
+        val originProtocol = origin.request.url.protocol
+        val originAuthority = origin.request.url.authority
+
+        while (true) {
+            client.monitor.raise(HttpResponseRedirectEvent, call.response)
+
+            val location = call.response.headers[HttpHeaders.Location]
+            LOGGER.trace("Received redirect response to $location for request ${context.url}")
+
+            requestBuilder = HttpRequestBuilder().apply {
+                takeFromWithExecutionContext(requestBuilder)
+                url.parameters.clear()
+
+                location?.let { url.takeFrom(it) }
+
+                /**
+                 * Disallow redirect with a security downgrade.
+                 */
+                if (!allowHttpsDowngrade && originProtocol.isSecure() && !url.protocol.isSecure()) {
+                    LOGGER.trace("Can not redirect ${context.url} because of security downgrade")
+                    return call
+                }
+
+                if (originAuthority != url.authority) {
+                    headers.remove(HttpHeaders.Authorization)
+                    LOGGER.trace("Removing Authorization header from redirect for ${context.url}")
+                }
+            }
+
+            call = proceed(requestBuilder)
+            if (!call.response.status.isRedirect()) return call
+        }
     }
 
-    public companion object Plugin : HttpClientPlugin<Config, HttpRedirect> {
-        override val key: AttributeKey<HttpRedirect> = AttributeKey("HttpRedirect")
-
-        /**
-         * Occurs when receiving a response with a redirect message.
-         */
-        public val HttpResponseRedirect: EventDefinition<HttpResponse> = EventDefinition()
-
-        override fun prepare(block: Config.() -> Unit): HttpRedirect {
-            val config = Config().apply(block)
-            return HttpRedirect(
-                checkHttpMethod = config.checkHttpMethod,
-                allowHttpsDowngrade = config.allowHttpsDowngrade
-            )
+    on(Send) { request ->
+        val origin = proceed(request)
+        if (checkHttpMethod && origin.request.method !in ALLOWED_FOR_REDIRECT) {
+            return@on origin
         }
 
-        override fun install(plugin: HttpRedirect, scope: HttpClient) {
-            scope.plugin(HttpSend).intercept { context ->
-                val origin = execute(context)
-                if (plugin.checkHttpMethod && origin.request.method !in ALLOWED_FOR_REDIRECT) {
-                    return@intercept origin
-                }
-
-                handleCall(context, origin, plugin.allowHttpsDowngrade, scope)
-            }
-        }
-
-        @OptIn(InternalAPI::class)
-        private suspend fun Sender.handleCall(
-            context: HttpRequestBuilder,
-            origin: HttpClientCall,
-            allowHttpsDowngrade: Boolean,
-            client: HttpClient
-        ): HttpClientCall {
-            if (!origin.response.status.isRedirect()) return origin
-
-            var call = origin
-            var requestBuilder = context
-            val originProtocol = origin.request.url.protocol
-            val originAuthority = origin.request.url.authority
-
-            while (true) {
-                client.monitor.raise(HttpResponseRedirect, call.response)
-
-                val location = call.response.headers[HttpHeaders.Location]
-                LOGGER.trace("Received redirect response to $location for request ${context.url}")
-
-                requestBuilder = HttpRequestBuilder().apply {
-                    takeFromWithExecutionContext(requestBuilder)
-                    url.parameters.clear()
-
-                    location?.let { url.takeFrom(it) }
-
-                    /**
-                     * Disallow redirect with a security downgrade.
-                     */
-                    if (!allowHttpsDowngrade && originProtocol.isSecure() && !url.protocol.isSecure()) {
-                        LOGGER.trace("Can not redirect ${context.url} because of security downgrade")
-                        return call
-                    }
-
-                    if (originAuthority != url.authority) {
-                        headers.remove(HttpHeaders.Authorization)
-                        LOGGER.trace("Removing Authorization header from redirect for ${context.url}")
-                    }
-                }
-
-                call = execute(requestBuilder)
-                if (!call.response.status.isRedirect()) return call
-            }
-        }
+        handleCall(request, origin, allowHttpsDowngrade, client)
     }
 }
 
@@ -123,5 +109,6 @@ private fun HttpStatusCode.isRedirect(): Boolean = when (value) {
     HttpStatusCode.TemporaryRedirect.value,
     HttpStatusCode.PermanentRedirect.value,
     HttpStatusCode.SeeOther.value -> true
+
     else -> false
 }

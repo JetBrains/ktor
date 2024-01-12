@@ -5,6 +5,7 @@
 package io.ktor.client.engine.okhttp
 
 import io.ktor.client.plugins.sse.*
+import io.ktor.http.*
 import io.ktor.sse.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
@@ -36,9 +37,15 @@ internal class OkHttpSSESession(
     }
 
     override fun onFailure(eventSource: EventSource, t: Throwable?, response: Response?) {
-        val error = t?.let { SSEException(it) }
-            ?: SSEException("Unexpected error occurred")
-        originResponse.completeExceptionally(error)
+        val statusCode = response?.code
+
+        if (response != null && statusCode != HttpStatusCode.OK.value) {
+            originResponse.complete(response)
+        } else {
+            val error = t?.let { SSEException(it) } ?: mapException(response)
+            originResponse.completeExceptionally(error)
+        }
+
         _incoming.close()
         serverSentEventsSource.cancel()
     }
@@ -46,5 +53,20 @@ internal class OkHttpSSESession(
     override fun onClosed(eventSource: EventSource) {
         _incoming.close()
         serverSentEventsSource.cancel()
+    }
+
+    private fun mapException(response: Response?): SSEException {
+        return when {
+            response != null && response.code != HttpStatusCode.OK.value ->
+                SSEException("Expected status code ${HttpStatusCode.OK.value} but was: ${response.code}")
+
+            response != null && response.headers[HttpHeaders.ContentType]
+                ?.let { ContentType.parse(it) }?.withoutParameters() != ContentType.Text.EventStream ->
+                SSEException(
+                    "Content type must be ${ContentType.Text.EventStream} but was: ${response.headers[HttpHeaders.ContentType]}" // ktlint-disable max-line-length
+                )
+
+            else -> SSEException("Unexpected error occurred")
+        }
     }
 }

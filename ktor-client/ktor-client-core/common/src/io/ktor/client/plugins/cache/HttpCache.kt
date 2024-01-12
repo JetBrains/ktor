@@ -41,10 +41,12 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.HttpCache")
  * You can learn more from [Caching](https://ktor.io/docs/client-caching.html).
  */
 public class HttpCache private constructor(
-    @Deprecated("This will become internal")
-    public val publicStorage: HttpCacheStorage,
-    @Deprecated("This will become internal")
-    public val privateStorage: HttpCacheStorage,
+    @Deprecated("This will become internal", level = DeprecationLevel.ERROR)
+    @Suppress("DEPRECATION_ERROR")
+    internal val publicStorage: HttpCacheStorage,
+    @Deprecated("This will become internal", level = DeprecationLevel.ERROR)
+    @Suppress("DEPRECATION_ERROR")
+    internal val privateStorage: HttpCacheStorage,
     private val publicStorageNew: CacheStorage,
     private val privateStorageNew: CacheStorage,
     private val useOldStorage: Boolean,
@@ -70,7 +72,11 @@ public class HttpCache private constructor(
          *
          * [HttpCacheStorage.Unlimited] by default.
          */
-        @Deprecated("This will become internal. Use setter method instead with new storage interface")
+        @Deprecated(
+            "This will become internal. Use setter method instead with new storage interface",
+            level = DeprecationLevel.ERROR
+        )
+        @Suppress("DEPRECATION_ERROR")
         public var publicStorage: HttpCacheStorage = HttpCacheStorage.Unlimited()
             set(value) {
                 useOldStorage = true
@@ -84,7 +90,11 @@ public class HttpCache private constructor(
          *
          * Consider using [HttpCacheStorage.Disabled] if the client is used as intermediate.
          */
-        @Deprecated("This will become internal. Use setter method instead with new storage interface")
+        @Deprecated(
+            "This will become internal. Use setter method instead with new storage interface",
+            level = DeprecationLevel.ERROR
+        )
+        @Suppress("DEPRECATION_ERROR")
         public var privateStorage: HttpCacheStorage = HttpCacheStorage.Unlimited()
             set(value) {
                 useOldStorage = true
@@ -121,6 +131,7 @@ public class HttpCache private constructor(
             val config = Config().apply(block)
 
             with(config) {
+                @Suppress("DEPRECATION_ERROR")
                 return HttpCache(
                     publicStorage = publicStorage,
                     privateStorage = privateStorage,
@@ -349,6 +360,7 @@ internal fun mergedHeadersLookup(
         HttpHeaders.UserAgent -> {
             content.headers[HttpHeaders.UserAgent] ?: headerExtractor(HttpHeaders.UserAgent) ?: KTOR_DEFAULT_USER_AGENT
         }
+
         else -> {
             val value = content.headers.getAll(header) ?: allHeadersExtractor(header) ?: emptyList()
             value.joinToString(";")

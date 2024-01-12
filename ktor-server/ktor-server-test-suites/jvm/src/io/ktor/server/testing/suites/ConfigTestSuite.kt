@@ -6,10 +6,9 @@ package io.ktor.server.testing.suites
 
 import io.ktor.server.engine.*
 import kotlinx.coroutines.*
-import org.junit.*
-import org.junit.Assert.*
 import java.util.concurrent.*
 import kotlin.system.*
+import kotlin.test.*
 
 var count = 0
 
@@ -25,7 +24,7 @@ abstract class ConfigTestSuite(val engine: ApplicationEngineFactory<*, *>) {
         }
 
         assertFailsWith<IllegalStateException> {
-            server.start()
+            server.start(wait = false)
         }
 
         assertEquals(1, count)
@@ -41,7 +40,7 @@ abstract class ConfigTestSuite(val engine: ApplicationEngineFactory<*, *>) {
         }
 
         assertFailsWith<IllegalStateException> {
-            server.start()
+            server.start(wait = false)
         }
 
         assertEquals(1, counter)
@@ -57,6 +56,6 @@ abstract class ConfigTestSuite(val engine: ApplicationEngineFactory<*, *>) {
             server.stop(0, 100, TimeUnit.SECONDS)
         }
 
-        assertTrue("Stop time is $time", time < 100)
+        assertTrue(time < 100, "Stop time is $time")
     }
 }

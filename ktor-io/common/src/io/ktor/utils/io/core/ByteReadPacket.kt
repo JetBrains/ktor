@@ -38,8 +38,9 @@ public class ByteReadPacket internal constructor(
     final override fun closeSource() {
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun toString(): String {
-        return "ByteReadPacket($remaining bytes remaining)"
+        return "ByteReadPacket[${hashCode().toHexString()}]"
     }
 
     public companion object {

@@ -5,13 +5,14 @@
 package io.ktor.client.call
 
 import io.ktor.client.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.util.*
 import io.ktor.util.reflect.*
 import io.ktor.utils.io.*
-import io.ktor.utils.io.concurrent.*
 import kotlinx.atomicfu.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
@@ -56,7 +57,6 @@ public open class HttpClientCall(
         this.response = DefaultHttpResponse(this, responseData)
 
         if (responseData.body !is ByteReadChannel) {
-            @Suppress("DEPRECATION_ERROR")
             attributes.put(CustomResponse, responseData.body)
         }
     }
@@ -77,11 +77,10 @@ public open class HttpClientCall(
     public suspend fun bodyNullable(info: TypeInfo): Any? {
         try {
             if (response.instanceOf(info.type)) return response
-            if (!allowDoubleReceive && !received.compareAndSet(false, true)) {
+            if (!allowDoubleReceive && !response.isSaved && !received.compareAndSet(false, true)) {
                 throw DoubleReceiveException(this)
             }
 
-            @Suppress("DEPRECATION_ERROR")
             val responseData = attributes.getOrNull(CustomResponse) ?: getResponseContent()
 
             val subject = HttpResponseContainer(info, responseData)
@@ -124,17 +123,7 @@ public open class HttpClientCall(
     }
 
     public companion object {
-        /**
-         * [CustomResponse] key used to process the response of custom type in case of [HttpClientEngine] can't return body bytes directly.
-         * If present, attribute value will be an initial value for [HttpResponseContainer] in [HttpClient.responsePipeline].
-         *
-         * Example: [WebSocketSession]
-         */
-        @Deprecated(
-            "This is going to be removed. Please file a ticket with clarification why and what for do you need it.",
-            level = DeprecationLevel.ERROR
-        )
-        public val CustomResponse: AttributeKey<Any> = AttributeKey("CustomResponse")
+        private val CustomResponse: AttributeKey<Any> = AttributeKey("CustomResponse")
     }
 }
 
@@ -183,19 +172,24 @@ public class ReceivePipelineException(
 ) : IllegalStateException("Fail to run receive pipeline: $cause")
 
 /**
- * Exception representing the no transformation was found.
- * It includes the received type and the expected type as part of the message.
+ * Exception represents the inability to find a suitable transformation for the received body from
+ * the resulted type to the expected by the client type.
+ *
+ * You can read how to resolve NoTransformationFoundException at [FAQ](https://ktor.io/docs/faq.html#no-transformation-found-exception)
  */
-@Suppress("KDocMissingDocumentation")
 public class NoTransformationFoundException(
     response: HttpResponse,
     from: KClass<*>,
     to: KClass<*>
 ) : UnsupportedOperationException() {
-    override val message: String? = """No transformation found: $from -> $to
-        |with response from ${response.request.url}:
-        |status: ${response.status}
-        |response headers: 
-        |${response.headers.flattenEntries().joinToString { (key, value) -> "$key: $value\n" }}
-    """.trimMargin()
+    override val message: String? = """
+        Expected response body of the type '$to' but was '$from'
+        In response from `${response.request.url}`
+        Response status `${response.status}`
+        Response header `ContentType: ${response.headers[HttpHeaders.ContentType]}` 
+        Request header `Accept: ${response.request.headers[HttpHeaders.Accept]}`
+        
+        You can read how to resolve NoTransformationFoundException at FAQ: 
+        https://ktor.io/docs/faq.html#no-transformation-found-exception
+    """.trimIndent()
 }

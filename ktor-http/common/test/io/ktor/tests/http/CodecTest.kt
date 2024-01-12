@@ -63,7 +63,8 @@ class CodecTest {
     @Test
     fun testEncodeURLPathPreservesPercentEncoding() {
         val test = "/a/path/with/a%20space/"
-        assertEquals(test, test.encodeURLPath())
+        assertEquals(test, test.encodeURLPath(encodeEncoded = false))
+        assertEquals(test.replace("%", "%25"), test.encodeURLPath())
     }
 
     @Test

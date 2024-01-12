@@ -9,6 +9,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.util.*
 import io.ktor.util.logging.*
+import io.ktor.utils.io.*
 
 private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.DefaultRequest")
 
@@ -89,14 +90,14 @@ public class DefaultRequest private constructor(private val block: DefaultReques
         }
 
         private fun mergeUrls(baseUrl: Url, requestUrl: URLBuilder) {
-            if (requestUrl.protocol == URLProtocol.HTTP) {
-                requestUrl.protocol = baseUrl.protocol
+            if (requestUrl.protocolOrNull == null) {
+                requestUrl.protocolOrNull = baseUrl.protocolOrNull
             }
             if (requestUrl.host.isNotEmpty()) return
 
             val resultUrl = URLBuilder(baseUrl)
             with(requestUrl) {
-                resultUrl.protocol = requestUrl.protocol
+                resultUrl.protocolOrNull = requestUrl.protocolOrNull
                 if (port != DEFAULT_PORT) {
                     resultUrl.port = port
                 }

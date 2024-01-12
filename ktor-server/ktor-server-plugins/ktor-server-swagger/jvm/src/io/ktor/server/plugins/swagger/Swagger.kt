@@ -21,7 +21,7 @@ import java.io.*
  * the file system using [java.io.File].
  *
  */
-public fun RoutingBuilder.swaggerUI(
+public fun Route.swaggerUI(
     path: String,
     swaggerFile: String = "openapi/documentation.yaml",
     block: SwaggerConfig.() -> Unit = {}
@@ -40,7 +40,7 @@ public fun RoutingBuilder.swaggerUI(
 /**
  * Creates a `get` endpoint with [SwaggerUI] at [path] rendered from the [apiFile].
  */
-public fun RoutingBuilder.swaggerUI(path: String, apiFile: File, block: SwaggerConfig.() -> Unit = {}) {
+public fun Route.swaggerUI(path: String, apiFile: File, block: SwaggerConfig.() -> Unit = {}) {
     if (!apiFile.exists()) {
         throw FileNotFoundException("Swagger file not found: ${apiFile.absolutePath}")
     }
@@ -49,7 +49,7 @@ public fun RoutingBuilder.swaggerUI(path: String, apiFile: File, block: SwaggerC
     swaggerUI(path, apiFile.name, content, block)
 }
 
-internal fun RoutingBuilder.swaggerUI(
+internal fun Route.swaggerUI(
     path: String,
     apiUrl: String,
     api: String,
@@ -63,8 +63,9 @@ internal fun RoutingBuilder.swaggerUI(
         }
         get {
             val fullPath = call.request.path()
-            val docExpansion =
-                runCatching { call.request.queryParameters.getOrFail<String>("docExpansion") }.getOrNull()
+            val docExpansion = runCatching {
+                call.request.queryParameters.getOrFail<String>("docExpansion")
+            }.getOrNull()
             call.respondHtml {
                 head {
                     title { +"Swagger UI" }
@@ -98,8 +99,7 @@ window.onload = function() {
             SwaggerUIBundle.presets.apis,
             SwaggerUIStandalonePreset
         ],
-        layout: 'StandaloneLayout'
-        ${docExpansion?.let { "docExpansion: '$it'" } ?: ""}
+        layout: 'StandaloneLayout'${docExpansion?.let { ",\n        docExpansion: '$it'" } ?: ""}
     });
 }
                             """.trimIndent()
@@ -109,28 +109,4 @@ window.onload = function() {
             }
         }
     }
-}
-
-/**
- * Creates a `get` endpoint with [SwaggerUI] at [path] rendered from the [apiFile].
- */
-@Deprecated("Replaced with the extension on [RoutingBuilder]", level = DeprecationLevel.HIDDEN)
-public fun Routing.swaggerUI(path: String, apiFile: File, block: SwaggerConfig.() -> Unit = {}) {
-    swaggerUI(path, apiFile, block)
-}
-
-/**
- * Creates a `get` endpoint with [SwaggerUI] at [path] rendered from the OpenAPI file located at [swaggerFile].
- *
- * This method tries to lookup [swaggerFile] in the resources first, and if it's not found, it will try to read it from
- * the file system using [java.io.File].
- *
- */
-@Deprecated("Replaced with the extension on [RoutingBuilder]", level = DeprecationLevel.HIDDEN)
-public fun Routing.swaggerUI(
-    path: String,
-    swaggerFile: String = "openapi/documentation.yaml",
-    block: SwaggerConfig.() -> Unit = {}
-) {
-    swaggerUI(path, swaggerFile, block)
 }

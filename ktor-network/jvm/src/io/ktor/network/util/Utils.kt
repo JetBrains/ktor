@@ -5,7 +5,6 @@
 package io.ktor.network.util
 
 import io.ktor.util.date.*
-import io.ktor.utils.io.concurrent.*
 import kotlinx.atomicfu.*
 import kotlinx.coroutines.*
 import kotlin.contracts.*
@@ -14,7 +13,6 @@ import kotlin.contracts.*
  * Infinite timeout in milliseconds.
  */
 internal const val INFINITE_TIMEOUT_MS = Long.MAX_VALUE
-
 internal class Timeout(
     private val name: String,
     private val timeoutMs: Long,

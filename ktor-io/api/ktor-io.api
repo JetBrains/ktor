@@ -282,6 +282,15 @@ public final class io/ktor/utils/io/ExceptionUtilsJvmKt {
 	public static final fun tryCopyException (Ljava/lang/Throwable;Ljava/lang/Throwable;)Ljava/lang/Throwable;
 }
 
+public abstract interface annotation class io/ktor/utils/io/InternalAPI : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class io/ktor/utils/io/KtorDsl : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class io/ktor/utils/io/KtorExperimentalAPI : java/lang/annotation/Annotation {
+}
+
 public abstract interface class io/ktor/utils/io/LookAheadSession {
 	public abstract fun consumed (I)V
 	public abstract fun request (II)Ljava/nio/ByteBuffer;
@@ -294,6 +303,10 @@ public final class io/ktor/utils/io/LookAheadSessionKt {
 
 public abstract interface class io/ktor/utils/io/LookAheadSuspendSession : io/ktor/utils/io/LookAheadSession {
 	public abstract fun awaitAtLeast (ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface annotation class io/ktor/utils/io/PublicAPICandidate : java/lang/annotation/Annotation {
+	public abstract fun version ()Ljava/lang/String;
 }
 
 public abstract interface class io/ktor/utils/io/ReadSession {
@@ -592,11 +605,8 @@ public final class io/ktor/utils/io/charsets/EncodingKt {
 	public static final fun decode (Ljava/nio/charset/CharsetDecoder;Lio/ktor/utils/io/core/Input;I)Ljava/lang/String;
 	public static synthetic fun decode$default (Ljava/nio/charset/CharsetDecoder;Lio/ktor/utils/io/core/Input;IILjava/lang/Object;)Ljava/lang/String;
 	public static final fun encode (Ljava/nio/charset/CharsetEncoder;Ljava/lang/CharSequence;II)Lio/ktor/utils/io/core/ByteReadPacket;
-	public static final fun encode (Ljava/nio/charset/CharsetEncoder;Ljava/lang/CharSequence;IILio/ktor/utils/io/core/Output;)V
 	public static final fun encode (Ljava/nio/charset/CharsetEncoder;[CIILio/ktor/utils/io/core/Output;)V
 	public static synthetic fun encode$default (Ljava/nio/charset/CharsetEncoder;Ljava/lang/CharSequence;IIILjava/lang/Object;)Lio/ktor/utils/io/core/ByteReadPacket;
-	public static final fun encodeToByteArrayImpl (Ljava/nio/charset/CharsetEncoder;Ljava/lang/CharSequence;II)[B
-	public static synthetic fun encodeToByteArrayImpl$default (Ljava/nio/charset/CharsetEncoder;Ljava/lang/CharSequence;IIILjava/lang/Object;)[B
 	public static final fun encodeUTF8 (Ljava/nio/charset/CharsetEncoder;Lio/ktor/utils/io/core/ByteReadPacket;)Lio/ktor/utils/io/core/ByteReadPacket;
 }
 
@@ -613,12 +623,6 @@ public final class io/ktor/utils/io/charsets/UTFKt {
 	public static final fun decodeUTF (Ljava/nio/ByteBuffer;[CII)J
 	public static final fun decodeUTF8Line (Ljava/nio/ByteBuffer;[CII)J
 	public static synthetic fun decodeUTF8Line$default (Ljava/nio/ByteBuffer;[CIIILjava/lang/Object;)J
-}
-
-public final class io/ktor/utils/io/concurrent/SharedKt {
-	public static final fun shared (Ljava/lang/Object;)Lkotlin/properties/ReadWriteProperty;
-	public static final fun sharedLazy (Lkotlin/jvm/functions/Function0;)Lkotlin/properties/ReadOnlyProperty;
-	public static final fun threadLocal (Ljava/lang/Object;)Lkotlin/properties/ReadOnlyProperty;
 }
 
 public class io/ktor/utils/io/core/Buffer {
@@ -660,22 +664,11 @@ public final class io/ktor/utils/io/core/Buffer$Companion {
 }
 
 public final class io/ktor/utils/io/core/BufferCompatibilityKt {
-	public static final fun append (Lio/ktor/utils/io/core/Buffer;C)Lio/ktor/utils/io/core/Buffer;
-	public static final fun append (Lio/ktor/utils/io/core/Buffer;Ljava/lang/CharSequence;)Lio/ktor/utils/io/core/Buffer;
-	public static final fun append (Lio/ktor/utils/io/core/Buffer;Ljava/lang/CharSequence;II)Lio/ktor/utils/io/core/Buffer;
-	public static final fun append (Lio/ktor/utils/io/core/Buffer;[CII)Lio/ktor/utils/io/core/Buffer;
 	public static final fun fill (Lio/ktor/utils/io/core/Buffer;IB)V
 	public static final fun fill (Lio/ktor/utils/io/core/Buffer;JB)V
 	public static final fun fill-sEu17AQ (Lio/ktor/utils/io/core/Buffer;IB)V
-	public static final fun flush (Lio/ktor/utils/io/core/Buffer;)V
-	public static final fun makeView (Lio/ktor/utils/io/core/Buffer;)Lio/ktor/utils/io/core/Buffer;
-	public static final fun makeView (Lio/ktor/utils/io/core/internal/ChunkBuffer;)Lio/ktor/utils/io/core/internal/ChunkBuffer;
-	public static final fun pushBack (Lio/ktor/utils/io/core/Buffer;I)V
 	public static final fun readFully (Lio/ktor/utils/io/core/Buffer;[Ljava/lang/Byte;II)V
 	public static synthetic fun readFully$default (Lio/ktor/utils/io/core/Buffer;[Ljava/lang/Byte;IIILjava/lang/Object;)V
-	public static final fun readText (Lio/ktor/utils/io/core/Buffer;Ljava/nio/charset/CharsetDecoder;Ljava/lang/Appendable;ZI)I
-	public static synthetic fun readText$default (Lio/ktor/utils/io/core/Buffer;Ljava/nio/charset/CharsetDecoder;Ljava/lang/Appendable;ZIILjava/lang/Object;)I
-	public static final fun tryPeek (Lio/ktor/utils/io/core/Buffer;)I
 }
 
 public final class io/ktor/utils/io/core/BufferFactoryKt {
@@ -849,6 +842,7 @@ public final class io/ktor/utils/io/core/ByteOrder : java/lang/Enum {
 	public static final field BIG_ENDIAN Lio/ktor/utils/io/core/ByteOrder;
 	public static final field Companion Lio/ktor/utils/io/core/ByteOrder$Companion;
 	public static final field LITTLE_ENDIAN Lio/ktor/utils/io/core/ByteOrder;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getNioOrder ()Ljava/nio/ByteOrder;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/utils/io/core/ByteOrder;
 	public static fun values ()[Lio/ktor/utils/io/core/ByteOrder;
@@ -1246,8 +1240,6 @@ public final class io/ktor/utils/io/core/PacketJVMKt {
 	public static final fun getPACKET_MAX_COPY_SIZE ()I
 	public static final fun readByteBuffer (Lio/ktor/utils/io/core/ByteReadPacket;IZ)Ljava/nio/ByteBuffer;
 	public static synthetic fun readByteBuffer$default (Lio/ktor/utils/io/core/ByteReadPacket;IZILjava/lang/Object;)Ljava/nio/ByteBuffer;
-	public static final fun readText (Lio/ktor/utils/io/core/ByteReadPacket;Ljava/nio/charset/CharsetDecoder;Ljava/lang/Appendable;I)I
-	public static synthetic fun readText$default (Lio/ktor/utils/io/core/ByteReadPacket;Ljava/nio/charset/CharsetDecoder;Ljava/lang/Appendable;IILjava/lang/Object;)I
 }
 
 public final class io/ktor/utils/io/core/PacketKt {
@@ -1435,6 +1427,12 @@ public final class io/ktor/utils/io/jvm/nio/WritingKt {
 	public static final fun copyTo (Lio/ktor/utils/io/ByteReadChannel;Ljava/nio/channels/WritableByteChannel;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun copyTo$default (Lio/ktor/utils/io/ByteReadChannel;Ljava/nio/channels/Pipe;JLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun copyTo$default (Lio/ktor/utils/io/ByteReadChannel;Ljava/nio/channels/WritableByteChannel;JLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class io/ktor/utils/io/locks/SynchronizedKt {
+	public static final fun reentrantLock ()Ljava/util/concurrent/locks/ReentrantLock;
+	public static final fun synchronized (Ljava/lang/Object;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
+	public static final fun withLock (Ljava/util/concurrent/locks/ReentrantLock;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
 }
 
 public final class io/ktor/utils/io/nio/ChannelsKt {

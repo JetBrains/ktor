@@ -5,7 +5,6 @@
 package io.ktor.server.servlet
 
 import io.ktor.http.*
-import io.ktor.server.engine.*
 import java.util.*
 import javax.servlet.http.*
 

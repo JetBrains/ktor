@@ -7,7 +7,6 @@ package io.ktor.client.engine.java
 import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.util.*
 import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import kotlinx.atomicfu.*
@@ -46,8 +45,8 @@ internal class JavaHttpResponseBodyHandler(
         val status = HttpStatusCode.fromValue(response.statusCode())
         val headers = HeadersImpl(response.headers().map())
 
-        val body: Any = if (requestData.isSseRequest()) {
-            DefaultClientSSESession(requestData.body as SSEClientContent, responseChannel, callContext, status, headers)
+        val body: Any = if (needToProcessSSE(requestData, status, headers)) {
+            DefaultClientSSESession(requestData.body as SSEClientContent, responseChannel, callContext)
         } else {
             responseChannel
         }

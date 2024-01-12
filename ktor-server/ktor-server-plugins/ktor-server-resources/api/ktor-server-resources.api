@@ -7,7 +7,7 @@ public final class io/ktor/server/resources/Resources : io/ktor/server/applicati
 
 public final class io/ktor/server/resources/RoutingKt {
 	public static final fun getResourceInstanceKey ()Lio/ktor/util/AttributeKey;
-	public static final fun handle (Lio/ktor/server/routing/RoutingBuilder;Lkotlinx/serialization/KSerializer;Lkotlin/jvm/functions/Function3;)V
-	public static final fun resource (Lio/ktor/server/routing/RoutingBuilder;Lkotlinx/serialization/KSerializer;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/routing/RoutingBuilder;
+	public static final fun handle (Lio/ktor/server/routing/Route;Lkotlinx/serialization/KSerializer;Lkotlin/jvm/functions/Function3;)V
+	public static final fun resource (Lio/ktor/server/routing/Route;Lkotlinx/serialization/KSerializer;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/routing/Route;
 }
 

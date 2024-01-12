@@ -7,11 +7,13 @@ package io.ktor.client.engine.winhttp
 import io.ktor.client.engine.*
 import io.ktor.client.engine.winhttp.internal.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.sse.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
-import io.ktor.util.*
 import io.ktor.util.date.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
+import kotlin.coroutines.*
 
 internal class WinHttpClientEngine(
     override val config: WinHttpClientEngineConfig
@@ -19,7 +21,7 @@ internal class WinHttpClientEngine(
 
     override val dispatcher: CoroutineDispatcher = Dispatchers.Unconfined
 
-    override val supportedCapabilities = setOf(HttpTimeout, WebSocketCapability)
+    override val supportedCapabilities = setOf(HttpTimeoutCapability, WebSocketCapability, SSECapability)
 
     private val session = WinHttpSession(config)
 
@@ -28,6 +30,8 @@ internal class WinHttpClientEngine(
             session.close()
         }
     }
+
+    override fun toString(): String = "WinHttp"
 
     @OptIn(InternalAPI::class)
     override suspend fun execute(data: HttpRequestData): HttpResponseData {
@@ -56,6 +60,6 @@ internal class WinHttpClientEngine(
             request.readBody(callContext)
         }
 
-        return rawResponse.convert(requestTime, responseBody, callContext)
+        return rawResponse.convert(data, requestTime, responseBody, callContext)
     }
 }

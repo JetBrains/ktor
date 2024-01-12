@@ -51,7 +51,7 @@ class RespondWriteTest {
     fun testSuspendInside() {
         withTestApplication {
             val executor = Executors.newSingleThreadExecutor()
-            environment.monitor.subscribe(ApplicationStopped) { executor.shutdown() }
+            application.monitor.subscribe(ApplicationStopped) { executor.shutdown() }
             application.routing {
                 get("/") {
                     call.respondTextWriter {

@@ -5,31 +5,42 @@
 
 package io.ktor.server.testing
 
+import io.ktor.junit.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.debug.junit4.*
-import org.junit.*
-import org.junit.rules.*
+import kotlinx.coroutines.debug.junit5.*
+import org.junit.jupiter.api.*
+import java.lang.reflect.*
+import java.util.*
 import kotlin.time.*
 import kotlin.time.Duration.Companion.seconds
 
+@CoroutinesTimeout(5 * 60 * 1000)
+@ErrorCollectorTest
 actual abstract class BaseTest actual constructor() {
-    actual open val timeout: Duration = 10.seconds
+    actual open val timeout: Duration = 60.seconds // not used
 
-    @get:Rule
-    internal val errorCollector = ErrorCollector() // TODO: for some reason, it tracks only one error
+    private val errorCollector = ErrorCollector()
 
-    @get:Rule
-    internal val coroutinesTimeout
-        get() = CoroutinesTimeout.seconds(timeout.inWholeSeconds, true)
+    var testMethod: Optional<Method> = Optional.empty()
+    var testName: String = ""
 
-    @get:Rule
-    internal val testName: TestName = TestName()
+    @BeforeEach
+    fun setUp(testInfo: TestInfo) {
+        val method = testInfo.testMethod
+        testMethod = method
+        testName = method.map { it.name }.orElse(testInfo.displayName)
+    }
+
+    @AfterEach
+    fun throwErrors() {
+        errorCollector.throwErrorIfPresent()
+    }
 
     actual fun collectUnhandledException(error: Throwable) {
-        errorCollector.addError(error)
+        errorCollector += error
     }
 
     actual fun runTest(block: suspend CoroutineScope.() -> Unit) {
-        runBlocking(CoroutineName("test-${testName.methodName}"), block)
+        runBlocking(CoroutineName("test-$testName"), block)
     }
 }

@@ -13,6 +13,7 @@ import libcurl.*
 import platform.posix.*
 import kotlin.coroutines.*
 
+@OptIn(ExperimentalForeignApi::class)
 internal fun onHeadersReceived(
     buffer: CPointer<ByteVar>,
     size: size_t,
@@ -25,6 +26,7 @@ internal fun onHeadersReceived(
     return chunkSize
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal fun onBodyChunkReceived(
     buffer: CPointer<ByteVar>,
     size: size_t,
@@ -42,11 +44,13 @@ internal fun onBodyChunkReceived(
     }
 
     val chunkSize = (size * count).toInt()
+
+    // TODO: delete `runBlocking` with fix of https://youtrack.jetbrains.com/issue/KTOR-6030/Migrate-to-new-kotlinx.io-library
     val written = try {
-        body.writeAvailable(1) { dst: Buffer ->
-            val toWrite = minOf(chunkSize - wrapper.bytesWritten.value, dst.writeRemaining)
-            dst.writeFully(buffer, wrapper.bytesWritten.value, toWrite)
+        runBlocking {
+            body.writeFully(buffer, 0, chunkSize)
         }
+        chunkSize
     } catch (cause: Throwable) {
         return -1
     }
@@ -70,6 +74,7 @@ internal fun onBodyChunkReceived(
     return CURL_WRITEFUNC_PAUSE
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal fun onBodyChunkRequested(
     buffer: CPointer<ByteVar>,
     size: size_t,
@@ -83,6 +88,7 @@ internal fun onBodyChunkRequested(
     if (body.isClosedForRead) {
         return if (body.closedCause != null) -1 else 0
     }
+    @Suppress("DEPRECATION")
     val readCount = try {
         body.readAvailable(1) { source: Buffer ->
             source.readAvailable(buffer, 0, requested)

@@ -50,6 +50,8 @@ public suspend fun HttpClient.serverSentEventsSession(
             statement.body<ClientSSESession, Unit> { session ->
                 sessionDeferred.complete(session)
             }
+        } catch (cause: CancellationException) {
+            sessionDeferred.cancel(cause)
         } catch (cause: Throwable) {
             sessionDeferred.completeExceptionally(SSEException(cause))
         }
@@ -101,6 +103,8 @@ public suspend fun HttpClient.serverSentEvents(
     val session = serverSentEventsSession(reconnectionTime, showCommentEvents, showRetryEvents, request)
     try {
         block(session)
+    } catch (cause: CancellationException) {
+        throw cause
     } catch (cause: Throwable) {
         throw SSEException(cause)
     } finally {

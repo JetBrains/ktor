@@ -8,7 +8,7 @@ import io.ktor.client.plugins.cache.*
 import io.ktor.http.*
 import io.ktor.util.collections.*
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 internal class UnlimitedCacheStorage : HttpCacheStorage() {
     private val store = ConcurrentMap<Url, MutableSet<HttpCacheEntry>>()
 

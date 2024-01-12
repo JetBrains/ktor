@@ -33,22 +33,7 @@ public class KotlinxSerializationConverter(
         }
     }
 
-    @Suppress("OverridingDeprecatedMember")
-    @Deprecated(
-        "Please override and use serializeNullable instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith("serializeNullable(charset, typeInfo, contentType, value)")
-    )
     override suspend fun serialize(
-        contentType: ContentType,
-        charset: Charset,
-        typeInfo: TypeInfo,
-        value: Any
-    ): OutgoingContent {
-        return serializeNullable(contentType, charset, typeInfo, value)
-    }
-
-    override suspend fun serializeNullable(
         contentType: ContentType,
         charset: Charset,
         typeInfo: TypeInfo,

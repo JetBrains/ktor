@@ -10,7 +10,6 @@ import io.ktor.client.statement.*
 import io.ktor.client.tests.utils.*
 import io.ktor.http.*
 import io.ktor.resources.*
-import kotlinx.serialization.*
 import kotlin.test.*
 
 class ResourcesTest {

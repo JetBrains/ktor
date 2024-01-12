@@ -38,7 +38,7 @@ public fun expectHttpBody(
     contentLength: Long,
     transferEncoding: CharSequence?,
     connectionOptions: ConnectionOptions?,
-    contentType: CharSequence?
+    @Suppress("UNUSED_PARAMETER") contentType: CharSequence?
 ): Boolean {
     if (transferEncoding != null) {
         // verify header value
@@ -46,7 +46,6 @@ public fun expectHttpBody(
         return true
     }
     if (contentLength != -1L) return contentLength > 0L
-    if (contentType != null) return true
 
     if (method == HttpMethod.Get || method == HttpMethod.Head || method == HttpMethod.Options) return false
     if (connectionOptions?.close == true) return true
@@ -116,7 +115,10 @@ public suspend fun parseHttpBody(
  * @param transferEncoding header or `null`
  * @param
  */
-@Deprecated("Please use method with version parameter")
+@Deprecated(
+    "Please use method with version parameter",
+    level = DeprecationLevel.ERROR
+)
 public suspend fun parseHttpBody(
     contentLength: Long,
     transferEncoding: CharSequence?,

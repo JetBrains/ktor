@@ -56,6 +56,7 @@ public actual interface ByteWriteChannel {
      *
      * @return number of consumed bytes or -1 if the block wasn't executed.
      */
+    @Suppress("DEPRECATION")
     public fun writeAvailable(min: Int, block: (Buffer) -> Unit): Int
 
     /**
@@ -66,16 +67,19 @@ public actual interface ByteWriteChannel {
     /**
      * Writes as much as possible and only suspends if buffer is full
      */
+    @Suppress("DEPRECATION")
     public actual suspend fun writeAvailable(src: ChunkBuffer): Int
 
     /**
      * Writes as much as possible and only suspends if buffer is full
      */
+    @OptIn(ExperimentalForeignApi::class)
     public suspend fun writeAvailable(src: CPointer<ByteVar>, offset: Int, length: Int): Int
 
     /**
      * Writes as much as possible and only suspends if buffer is full
      */
+    @OptIn(ExperimentalForeignApi::class)
     public suspend fun writeAvailable(src: CPointer<ByteVar>, offset: Long, length: Long): Int
 
     /**
@@ -88,12 +92,14 @@ public actual interface ByteWriteChannel {
      * Writes all [src] bytes and suspends until all bytes written. Causes flush if buffer filled up or when [autoFlush]
      * Crashes if channel get closed while writing.
      */
+    @OptIn(ExperimentalForeignApi::class)
     public suspend fun writeFully(src: CPointer<ByteVar>, offset: Int, length: Int)
 
     /**
      * Writes all [src] bytes and suspends until all bytes written. Causes flush if buffer filled up or when [autoFlush]
      * Crashes if channel get closed while writing.
      */
+    @OptIn(ExperimentalForeignApi::class)
     public suspend fun writeFully(src: CPointer<ByteVar>, offset: Long, length: Long)
 
     @Suppress("DEPRECATION")
@@ -171,6 +177,7 @@ public actual interface ByteWriteChannel {
      */
     public actual fun flush()
 
+    @Suppress("DEPRECATION")
     public actual suspend fun writeFully(src: Buffer)
 
     public actual suspend fun writeFully(memory: Memory, startIndex: Int, endIndex: Int)

@@ -27,9 +27,12 @@ import kotlin.coroutines.*
  * Tomcat application engine that runs it in embedded mode
  */
 public class TomcatApplicationEngine(
-    environment: ApplicationEngineEnvironment,
-    configure: Configuration.() -> Unit
-) : BaseApplicationEngine(environment) {
+    environment: ApplicationEnvironment,
+    monitor: Events,
+    developmentMode: Boolean,
+    public val configuration: Configuration,
+    private val applicationProvider: () -> Application
+) : BaseApplicationEngine(environment, monitor, developmentMode) {
     /**
      * Tomcat engine specific configuration builder
      */
@@ -41,8 +44,6 @@ public class TomcatApplicationEngine(
         public var configureTomcat: Tomcat.() -> Unit = {}
     }
 
-    private val configuration = Configuration().apply(configure)
-
     private val tempDirectory by lazy { Files.createTempDirectory("ktor-server-tomcat-jakarta-") }
 
     private var cancellationDeferred: CompletableJob? = null
@@ -53,13 +54,13 @@ public class TomcatApplicationEngine(
         override val enginePipeline: EnginePipeline
             get() = this@TomcatApplicationEngine.pipeline
         override val application: Application
-            get() = this@TomcatApplicationEngine.application
+            get() = this@TomcatApplicationEngine.applicationProvider()
         override val upgrade: ServletUpgrade
             get() = DefaultServletUpgrade
         override val logger: Logger
             get() = this@TomcatApplicationEngine.environment.log
         override val coroutineContext: CoroutineContext
-            get() = super.coroutineContext + environment.parentCoroutineContext
+            get() = super.coroutineContext + application.parentCoroutineContext
     }
 
     private val server = Tomcat().apply {
@@ -69,7 +70,7 @@ public class TomcatApplicationEngine(
                 removeConnector(existing)
             }
 
-            environment.connectors.forEach { ktorConnector ->
+            configuration.connectors.forEach { ktorConnector ->
                 addConnector(
                     Connector().apply {
                         port = ktorConnector.port
@@ -155,20 +156,22 @@ public class TomcatApplicationEngine(
     private val stopped = atomic(false)
 
     override fun start(wait: Boolean): TomcatApplicationEngine {
-        addShutdownHook {
+        addShutdownHook(monitor) {
             stop(configuration.shutdownGracePeriod, configuration.shutdownTimeout)
         }
 
-        environment.start()
         server.start()
 
-        val connectors = server.service.findConnectors().zip(environment.connectors)
+        val connectors = server.service.findConnectors().zip(configuration.connectors)
             .map { it.second.withPort(it.first.localPort) }
         resolvedConnectors.complete(connectors)
-        environment.monitor.raiseCatching(ServerReady, environment, environment.log)
+        monitor.raiseCatching(ServerReady, environment, environment.log)
 
-        cancellationDeferred =
-            stopServerOnCancellation(configuration.shutdownGracePeriod, configuration.shutdownTimeout)
+        cancellationDeferred = stopServerOnCancellation(
+            applicationProvider(),
+            configuration.shutdownGracePeriod,
+            configuration.shutdownTimeout
+        )
         if (wait) {
             server.server.await()
             stop(configuration.shutdownGracePeriod, configuration.shutdownTimeout)
@@ -180,9 +183,8 @@ public class TomcatApplicationEngine(
         if (!stopped.compareAndSet(expect = false, update = true)) return
 
         cancellationDeferred?.complete()
-        environment.monitor.raise(ApplicationStopPreparing, environment)
+        monitor.raise(ApplicationStopPreparing, environment)
         server.stop()
-        environment.stop()
         server.destroy()
         tempDirectory.toFile().deleteRecursively()
     }

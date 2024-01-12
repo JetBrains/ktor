@@ -26,6 +26,11 @@ public actual class InetSocketAddress internal constructor(
 
     public actual operator fun component2(): Int = port
 
+    /**
+     * Create a copy of [InetSocketAddress].
+     *
+     * Note that this may trigger a name service reverse lookup.
+     */
     public actual fun copy(
         hostname: String,
         port: Int

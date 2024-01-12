@@ -8,23 +8,22 @@ import io.ktor.client.*
 import io.ktor.client.engine.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.debug.*
-import kotlinx.coroutines.debug.junit4.*
-import org.junit.*
-import org.junit.runner.*
-import org.junit.runners.*
+import kotlinx.coroutines.debug.junit5.*
+import org.junit.jupiter.api.extension.*
 import java.util.*
+import kotlin.test.*
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Helper interface to test client.
  */
-@RunWith(Parameterized::class)
 actual abstract class ClientLoader actual constructor(val timeoutSeconds: Int) {
 
-    @Parameterized.Parameter
-    lateinit var engine: HttpClientEngineContainer
-
-    @get:Rule
-    open val timeout: CoroutinesTimeout = CoroutinesTimeout.seconds(timeoutSeconds)
+    private val engines: List<HttpClientEngineContainer> by lazy {
+        HttpClientEngineContainer::class.java.let { engineContainerClass ->
+            ServiceLoader.load(engineContainerClass, engineContainerClass.classLoader).toList()
+        }
+    }
 
     /**
      * Perform test against all clients from dependencies.
@@ -34,33 +33,38 @@ actual abstract class ClientLoader actual constructor(val timeoutSeconds: Int) {
         onlyWithEngine: String?,
         block: suspend TestClientBuilder<HttpClientEngineConfig>.() -> Unit
     ) {
-        val locale = Locale.getDefault()
-        val engineName = engine.toString().lowercase(locale)
-        for (skipEngine in skipEngines) {
-            val skipEngineArray = skipEngine.lowercase(locale).split(":")
-
-            val (platform, skipEngineName) = when (skipEngineArray.size) {
-                2 -> skipEngineArray[0] to skipEngineArray[1]
-                1 -> "*" to skipEngineArray[0]
-                else -> throw IllegalStateException("Wrong skip engine format, expected 'engine' or 'platform:engine'")
+        for (engine in engines) {
+            if (shouldSkip(engine, skipEngines, onlyWithEngine)) {
+                continue
             }
-
-            val platformShouldBeSkipped = "*" == platform || OS_NAME == platform
-            val engineShouldBeSkipped = "*" == skipEngineName || engineName == skipEngineName
-
-            if (platformShouldBeSkipped && engineShouldBeSkipped) {
-                return
-            }
-
-            if (onlyWithEngine != null && engineName != onlyWithEngine) {
-                return
+            runBlocking {
+                withTimeout(timeoutSeconds.seconds.inWholeMilliseconds) {
+                    testWithEngine(engine.factory, this@ClientLoader, timeoutSeconds * 1000L, block)
+                }
             }
         }
+    }
 
-        val enginesToSkip = skipEngines.map { it.lowercase(locale) }
-        if (engineName in enginesToSkip) return
+    fun shouldSkip(engine: HttpClientEngineContainer, skipEngines: List<String>, onlyWithEngine: String?): Boolean =
+        skipEngines.any { shouldSkip(engine.toString(), it, onlyWithEngine) }
 
-        testWithEngine(engine.factory, this, timeoutSeconds * 1000L, block)
+    fun shouldSkip(engineName: String, skipEngine: String, onlyWithEngine: String?): Boolean {
+        val locale = Locale.getDefault()
+        val skipEngineArray = skipEngine.lowercase(locale).split(":")
+
+        val (platform, skipEngineName) = when (skipEngineArray.size) {
+            2 -> skipEngineArray[0] to skipEngineArray[1]
+            1 -> "*" to skipEngineArray[0]
+            else -> throw IllegalStateException("Wrong skip engine format, expected 'engine' or 'platform:engine'")
+        }
+
+        val platformShouldBeSkipped = "*" == platform || OS_NAME == platform
+        val engineShouldBeSkipped = "*" == skipEngineName || engineName.lowercase(locale) == skipEngineName.lowercase(
+            locale
+        )
+        val notOnlyEngine = onlyWithEngine != null && engineName.lowercase(locale) != onlyWithEngine.lowercase(locale)
+
+        return platformShouldBeSkipped || engineShouldBeSkipped || notOnlyEngine
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -92,14 +96,6 @@ actual abstract class ClientLoader actual constructor(val timeoutSeconds: Int) {
         }
 
         error(message)
-    }
-
-    companion object {
-        @JvmStatic
-        @Parameterized.Parameters(name = "{0}")
-        fun engines(): List<HttpClientEngineContainer> = HttpClientEngineContainer::class.java.let {
-            ServiceLoader.load(it, it.classLoader).toList()
-        }
     }
 }
 

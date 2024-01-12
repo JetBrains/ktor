@@ -10,7 +10,6 @@ import io.ktor.server.auth.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
-import io.ktor.util.*
 import io.ktor.utils.io.core.*
 import kotlin.random.*
 import kotlin.test.*

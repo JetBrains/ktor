@@ -1,5 +1,4 @@
 import io.ktor.client.plugins.contentnegotiation.tests.*
-import io.ktor.http.*
 import io.ktor.serialization.jackson.*
 
 /*

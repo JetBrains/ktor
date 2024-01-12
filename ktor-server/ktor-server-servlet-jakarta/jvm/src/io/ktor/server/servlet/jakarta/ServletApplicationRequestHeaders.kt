@@ -5,7 +5,6 @@
 package io.ktor.server.servlet.jakarta
 
 import io.ktor.http.*
-import io.ktor.server.engine.*
 import jakarta.servlet.http.*
 import java.util.*
 

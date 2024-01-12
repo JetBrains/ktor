@@ -19,7 +19,7 @@ import kotlin.coroutines.*
  */
 public class RoutingPipelineCall(
     public val engineCall: PipelineCall,
-    public val route: Route,
+    public val route: RouteNode,
     override val coroutineContext: CoroutineContext,
     receivePipeline: ApplicationReceivePipeline,
     responsePipeline: ApplicationSendPipeline,

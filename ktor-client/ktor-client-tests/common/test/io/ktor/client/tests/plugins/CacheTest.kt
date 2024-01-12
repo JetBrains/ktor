@@ -15,6 +15,7 @@ import io.ktor.client.utils.*
 import io.ktor.http.*
 import io.ktor.util.*
 import io.ktor.util.date.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import kotlin.test.*
 
@@ -483,13 +484,11 @@ class CacheTest : ClientLoader() {
         }
 
         test { client ->
-            println("client ${client.engine}")
             val url = Url("$TEST_SERVER/cache/etag?max-age=10")
 
             val responseNoCache = client.get(url) {
                 header(HttpHeaders.CacheControl, "only-if-cached")
             }
-            println("responseNoCache ${responseNoCache.status}")
             assertEquals(HttpStatusCode.GatewayTimeout, responseNoCache.status)
 
             val bodyOriginal = client.get(url).bodyAsText()
@@ -806,6 +805,18 @@ class CacheTest : ClientLoader() {
             val firstPrivate = client.get(privateUrl).body<String>()
             assertEquals(firstPrivate, "private")
             assertEquals(0, privateCache().size)
+        }
+    }
+
+    @Test
+    fun testMaxAgeMoreThanMaxValue() = clientTests {
+        config {
+            install(HttpCache)
+        }
+        test { client ->
+            client.get("$TEST_SERVER/cache/set-max-age").apply {
+                assertEquals(HttpStatusCode.OK, status)
+            }
         }
     }
 

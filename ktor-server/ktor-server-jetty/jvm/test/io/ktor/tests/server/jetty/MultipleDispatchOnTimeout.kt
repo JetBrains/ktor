@@ -29,9 +29,10 @@ class MultipleDispatchOnTimeout {
     fun `calls with duration longer than default timeout do not trigger a redispatch`() {
         val callCount = AtomicInteger(0)
         val port = findFreePort()
-        val environment = applicationEngineEnvironment {
-            connector { this.port = port }
+        val environment = applicationEnvironment {
             log = LoggerFactory.getLogger("io.ktor.test")
+        }
+        val props = applicationProperties(environment) {
             module {
                 intercept(ApplicationCallPipeline.Call) {
                     callCount.incrementAndGet()
@@ -47,15 +48,16 @@ class MultipleDispatchOnTimeout {
             }
         }
 
-        val jetty = embeddedServer(Jetty, environment)
+        val jetty = embeddedServer(Jetty, props) {
+            connector { this.port = port }
+        }
         try {
             jetty.start()
 
             Thread.sleep(1000)
 
-            val result = URL("http://localhost:$port/").openConnection().inputStream.bufferedReader().readLine().let {
-                it
-            } ?: "<empty>"
+            val result = URL("http://localhost:$port/").openConnection().inputStream.bufferedReader().readLine()
+                ?: "<empty>"
 
             // println("Got result: $result" )
 

@@ -10,8 +10,8 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.*
 import platform.posix.*
 import kotlin.coroutines.*
-import kotlin.native.concurrent.*
 
+@OptIn(ExperimentalForeignApi::class)
 internal class TCPServerSocketNative(
     private val descriptor: Int,
     private val selectorManager: SelectorManager,

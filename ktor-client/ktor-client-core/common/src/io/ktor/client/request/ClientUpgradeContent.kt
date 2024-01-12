@@ -6,7 +6,6 @@ package io.ktor.client.request
 
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.util.*
 import io.ktor.utils.io.*
 
 @Suppress("KDocMissingDocumentation", "DEPRECATION")

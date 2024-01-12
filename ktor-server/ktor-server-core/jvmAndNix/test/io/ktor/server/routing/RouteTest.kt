@@ -5,7 +5,6 @@
 package io.ktor.tests.routing
 
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
@@ -15,39 +14,39 @@ class RouteTest {
 
     @Test
     fun testToStringSimple() {
-        val root = Route(
+        val root = RouteNode(
             parent = null,
             selector = PathSegmentConstantRouteSelector("root"),
             environment = createTestEnvironment()
         )
-        val simpleChild = Route(
+        val simpleChild = RouteNode(
             parent = root,
             selector = PathSegmentConstantRouteSelector("simpleChild"),
             environment = createTestEnvironment()
         )
         val simpleGrandChild =
-            Route(
+            RouteNode(
                 parent = simpleChild,
                 selector = PathSegmentConstantRouteSelector("simpleGrandChild"),
                 environment = createTestEnvironment()
             )
 
-        val slashChild = Route(
+        val slashChild = RouteNode(
             parent = root,
             selector = TrailingSlashRouteSelector,
             environment = createTestEnvironment()
         )
-        val slashGrandChild = Route(
+        val slashGrandChild = RouteNode(
             parent = slashChild,
             selector = TrailingSlashRouteSelector,
             environment = createTestEnvironment()
         )
-        val simpleChildInSlash = Route(
+        val simpleChildInSlash = RouteNode(
             parent = slashGrandChild,
             selector = PathSegmentConstantRouteSelector("simpleChildInSlash"),
             environment = createTestEnvironment()
         )
-        val slashChildInSimpleChild = Route(
+        val slashChildInSimpleChild = RouteNode(
             parent = simpleChildInSlash,
             selector = TrailingSlashRouteSelector,
             environment = createTestEnvironment()
@@ -64,7 +63,7 @@ class RouteTest {
 
     @Test
     fun testCreateChildKeepsDevelopmentMode() {
-        val root = Route(
+        val root = RouteNode(
             parent = null,
             selector = PathSegmentConstantRouteSelector("root"),
             developmentMode = true,

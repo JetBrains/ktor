@@ -27,20 +27,24 @@ private fun Project.configureJsTasks() {
     kotlin {
         js(IR) {
             nodejs {
-                testTask {
-                    useMocha {
-                        timeout = "10000"
+                testTask(
+                    Action {
+                        useMocha {
+                            timeout = "10000"
+                        }
                     }
-                }
+                )
             }
 
             browser {
-                testTask {
-                    useKarma {
-                        useChromeHeadless()
-                        useConfigDirectory(File(project.rootProject.projectDir, "karma"))
+                testTask(
+                    Action {
+                        useKarma {
+                            useChromeHeadless()
+                            useConfigDirectory(File(project.rootProject.projectDir, "karma"))
+                        }
                     }
-                }
+                )
             }
 
             binaries.library()

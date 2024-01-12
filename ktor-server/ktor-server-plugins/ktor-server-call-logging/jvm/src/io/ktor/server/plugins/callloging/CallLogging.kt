@@ -55,7 +55,7 @@ public val CallLogging: ApplicationPlugin<CallLoggingConfig> = createApplication
     }
 
     setupMDCProvider()
-    setupLogging(application.environment.monitor, ::log)
+    setupLogging(application.monitor, ::log)
 
     on(CallSetup) { call ->
         call.attributes.put(CALL_START_TIME, clock())
@@ -78,12 +78,12 @@ private fun PluginBuilder<CallLoggingConfig>.logCompletedCalls(logSuccess: (Appl
 private fun PluginBuilder<CallLoggingConfig>.logCallsWithMDC(logSuccess: (ApplicationCall) -> Unit) {
     val entries = pluginConfig.mdcEntries
 
-    on(MDCHook(ApplicationCallPipeline.Monitoring)) { call, block ->
-        withMDC(entries, call, block)
+    on(MDCHook(ApplicationCallPipeline.Monitoring)) { call, proceed ->
+        withMDC(entries, call, proceed)
     }
 
-    on(MDCHook(ApplicationCallPipeline.Call)) { call, block ->
-        withMDC(entries, call, block)
+    on(MDCHook(ApplicationCallPipeline.Call)) { call, proceed ->
+        withMDC(entries, call, proceed)
     }
 
     on(ResponseSent) { call ->

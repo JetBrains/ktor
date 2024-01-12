@@ -9,6 +9,7 @@ import org.khronos.webgl.*
 /**
  * Creates buffered channel for asynchronous reading and writing of sequences of bytes.
  */
+@Suppress("DEPRECATION")
 public actual fun ByteChannel(autoFlush: Boolean): ByteChannel {
     return ByteChannelJS(ChunkBuffer.Empty, autoFlush)
 }
@@ -18,6 +19,7 @@ public actual fun ByteChannel(autoFlush: Boolean): ByteChannel {
  */
 public actual fun ByteReadChannel(content: ByteArray, offset: Int, length: Int): ByteReadChannel {
     if (content.isEmpty()) return ByteReadChannel.Empty
+    @Suppress("DEPRECATION")
     val head = ChunkBuffer.Pool.borrow()
     var tail = head
 
@@ -26,11 +28,13 @@ public actual fun ByteReadChannel(content: ByteArray, offset: Int, length: Int):
     while (true) {
         tail.reserveEndGap(8)
         val size = minOf(end - start, tail.writeRemaining)
+        @Suppress("DEPRECATION")
         (tail as Buffer).writeFully(content, start, size)
         start += size
 
         if (start == end) break
         val current = tail
+        @Suppress("DEPRECATION")
         tail = ChunkBuffer.Pool.borrow()
         current.next = tail
     }
@@ -43,6 +47,7 @@ public actual fun ByteReadChannel(content: ByteArray, offset: Int, length: Int):
  */
 public fun ByteReadChannel(content: ArrayBufferView): ByteReadChannel {
     if (content.byteLength == 0) return ByteReadChannel.Empty
+    @Suppress("DEPRECATION")
     val head = ChunkBuffer.Pool.borrow()
     var tail = head
 
@@ -56,6 +61,7 @@ public fun ByteReadChannel(content: ArrayBufferView): ByteReadChannel {
         remaining -= size
 
         if (remaining == 0) break
+        @Suppress("DEPRECATION")
         tail = ChunkBuffer.Pool.borrow()
     }
 
@@ -75,9 +81,11 @@ public actual suspend fun ByteReadChannel.copyTo(dst: ByteWriteChannel, limit: L
     return (this as ByteChannelSequentialBase).copyToSequentialImpl((dst as ByteChannelSequentialBase), limit)
 }
 
+@Suppress("DEPRECATION")
 internal class ByteChannelJS(initial: ChunkBuffer, autoFlush: Boolean) : ByteChannelSequentialBase(initial, autoFlush) {
     private var attachedJob: Job? = null
 
+    @Deprecated(IO_DEPRECATION_MESSAGE)
     @OptIn(InternalCoroutinesApi::class)
     override fun attachJob(job: Job) {
         attachedJob?.cancel()

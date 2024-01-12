@@ -7,7 +7,7 @@ package io.ktor.server.routing
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlin.jvm.*
 
 /**
@@ -25,7 +25,7 @@ import kotlin.jvm.*
  * ```
  */
 @KtorDsl
-public fun RoutingBuilder.route(path: Regex, build: RoutingBuilder.() -> Unit): RoutingBuilder =
+public fun Route.route(path: Regex, build: Route.() -> Unit): Route =
     createRouteFromRegexPath(path).apply(build)
 
 /**
@@ -43,7 +43,7 @@ public fun RoutingBuilder.route(path: Regex, build: RoutingBuilder.() -> Unit): 
  * ```
  */
 @KtorDsl
-public fun RoutingBuilder.route(path: Regex, method: HttpMethod, build: RoutingBuilder.() -> Unit): RoutingBuilder {
+public fun Route.route(path: Regex, method: HttpMethod, build: Route.() -> Unit): Route {
     val selector = HttpMethodRouteSelector(method)
     return createRouteFromRegexPath(path).createChild(selector).apply(build)
 }
@@ -61,7 +61,7 @@ public fun RoutingBuilder.route(path: Regex, method: HttpMethod, build: RoutingB
  * ```
  */
 @KtorDsl
-public fun RoutingBuilder.get(path: Regex, body: RoutingHandler): RoutingBuilder {
+public fun Route.get(path: Regex, body: RoutingHandler): Route {
     return route(path, HttpMethod.Get) { handle(body) }
 }
 
@@ -78,7 +78,7 @@ public fun RoutingBuilder.get(path: Regex, body: RoutingHandler): RoutingBuilder
  * ```
  */
 @KtorDsl
-public fun RoutingBuilder.post(path: Regex, body: RoutingHandler): RoutingBuilder {
+public fun Route.post(path: Regex, body: RoutingHandler): Route {
     return route(path, HttpMethod.Post) { handle(body) }
 }
 
@@ -96,10 +96,10 @@ public fun RoutingBuilder.post(path: Regex, body: RoutingHandler): RoutingBuilde
  */
 @KtorDsl
 @JvmName("postTypedPath")
-public inline fun <reified R : Any> RoutingBuilder.post(
+public inline fun <reified R : Any> Route.post(
     path: Regex,
     crossinline body: suspend RoutingContext.(R) -> Unit
-): RoutingBuilder = post(path) {
+): Route = post(path) {
     body(call.receive())
 }
 
@@ -116,7 +116,7 @@ public inline fun <reified R : Any> RoutingBuilder.post(
  * ```
  */
 @KtorDsl
-public fun RoutingBuilder.head(path: Regex, body: RoutingHandler): RoutingBuilder {
+public fun Route.head(path: Regex, body: RoutingHandler): Route {
     return route(path, HttpMethod.Head) { handle(body) }
 }
 
@@ -133,7 +133,7 @@ public fun RoutingBuilder.head(path: Regex, body: RoutingHandler): RoutingBuilde
  * ```
  */
 @KtorDsl
-public fun RoutingBuilder.put(path: Regex, body: RoutingHandler): RoutingBuilder {
+public fun Route.put(path: Regex, body: RoutingHandler): Route {
     return route(path, HttpMethod.Put) { handle(body) }
 }
 
@@ -151,10 +151,10 @@ public fun RoutingBuilder.put(path: Regex, body: RoutingHandler): RoutingBuilder
  */
 @KtorDsl
 @JvmName("putTypedPath")
-public inline fun <reified R : Any> RoutingBuilder.put(
+public inline fun <reified R : Any> Route.put(
     path: Regex,
     crossinline body: suspend RoutingContext.(R) -> Unit
-): RoutingBuilder = put(path) {
+): Route = put(path) {
     body(call.receive())
 }
 
@@ -171,7 +171,7 @@ public inline fun <reified R : Any> RoutingBuilder.put(
  * ```
  */
 @KtorDsl
-public fun RoutingBuilder.patch(path: Regex, body: RoutingHandler): RoutingBuilder {
+public fun Route.patch(path: Regex, body: RoutingHandler): Route {
     return route(path, HttpMethod.Patch) { handle(body) }
 }
 
@@ -189,10 +189,10 @@ public fun RoutingBuilder.patch(path: Regex, body: RoutingHandler): RoutingBuild
  */
 @KtorDsl
 @JvmName("patchTypedPath")
-public inline fun <reified R : Any> RoutingBuilder.patch(
+public inline fun <reified R : Any> Route.patch(
     path: Regex,
     crossinline body: suspend RoutingContext.(R) -> Unit
-): RoutingBuilder = patch(path) {
+): Route = patch(path) {
     body(call.receive())
 }
 
@@ -209,7 +209,7 @@ public inline fun <reified R : Any> RoutingBuilder.patch(
  * ```
  */
 @KtorDsl
-public fun RoutingBuilder.delete(path: Regex, body: RoutingHandler): RoutingBuilder {
+public fun Route.delete(path: Regex, body: RoutingHandler): Route {
     return route(path, HttpMethod.Delete) { handle(body) }
 }
 
@@ -226,11 +226,11 @@ public fun RoutingBuilder.delete(path: Regex, body: RoutingHandler): RoutingBuil
  * ```
  */
 @KtorDsl
-public fun RoutingBuilder.options(path: Regex, body: RoutingHandler): RoutingBuilder {
+public fun Route.options(path: Regex, body: RoutingHandler): Route {
     return route(path, HttpMethod.Options) { handle(body) }
 }
 
-private fun RoutingBuilder.createRouteFromRegexPath(regex: Regex): RoutingBuilder {
+private fun Route.createRouteFromRegexPath(regex: Regex): Route {
     return createChild(PathSegmentRegexRouteSelector(regex))
 }
 

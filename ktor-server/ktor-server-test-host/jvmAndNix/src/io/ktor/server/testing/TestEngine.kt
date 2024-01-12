@@ -6,6 +6,7 @@
 
 package io.ktor.server.testing
 
+import io.ktor.events.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.config.*
@@ -18,14 +19,12 @@ internal expect fun DefaultTestConfig(configPath: String? = null): ApplicationCo
  * Creates an engine environment for a test application.
  */
 public fun createTestEnvironment(
-    configure: ApplicationEngineEnvironmentBuilder.() -> Unit = {}
-): ApplicationEngineEnvironment =
-    applicationEngineEnvironment {
+    configure: ApplicationEnvironmentBuilder.() -> Unit = {}
+): ApplicationEnvironment =
+    applicationEnvironment {
         config = MapApplicationConfig("ktor.deployment.environment" to "test")
         log = KtorSimpleLogger("io.ktor.test")
-        developmentMode = true
         configure()
-        watchPaths = emptyList()
     }
 
 /**
@@ -46,16 +45,19 @@ public fun TestApplicationEngine.handleRequest(
  */
 @Deprecated("Please use new `testApplication` API: https://ktor.io/docs/migrating-2.html#testing-api")
 public fun <R> withApplication(
-    environment: ApplicationEngineEnvironment = createTestEnvironment(),
+    environment: ApplicationEnvironment = createTestEnvironment(),
     configure: TestApplicationEngine.Configuration.() -> Unit = {},
     test: TestApplicationEngine.() -> R
 ): R {
-    val engine = TestApplicationEngine(environment, configure)
-    engine.start()
+    val properties = applicationProperties(environment) {
+        watchPaths = emptyList()
+    }
+    val embeddedServer = EmbeddedServer(properties, TestEngine, configure)
+    embeddedServer.start()
     try {
-        return engine.test()
+        return embeddedServer.engine.test()
     } finally {
-        engine.stop(0L, 0L)
+        embeddedServer.stop()
     }
 }
 
@@ -97,8 +99,20 @@ public fun <R> withTestApplication(
  * An [ApplicationEngineFactory] providing a CIO-based [ApplicationEngine].
  */
 public object TestEngine : ApplicationEngineFactory<TestApplicationEngine, TestApplicationEngine.Configuration> {
-    override fun create(
-        environment: ApplicationEngineEnvironment,
+
+    override fun configuration(
         configure: TestApplicationEngine.Configuration.() -> Unit
-    ): TestApplicationEngine = TestApplicationEngine(environment, configure)
+    ): TestApplicationEngine.Configuration {
+        return TestApplicationEngine.Configuration().apply(configure)
+    }
+
+    override fun create(
+        environment: ApplicationEnvironment,
+        monitor: Events,
+        developmentMode: Boolean,
+        configuration: TestApplicationEngine.Configuration,
+        applicationProvider: () -> Application
+    ): TestApplicationEngine {
+        return TestApplicationEngine(environment, monitor, developmentMode, applicationProvider, configuration)
+    }
 }

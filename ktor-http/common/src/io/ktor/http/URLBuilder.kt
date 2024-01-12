@@ -23,9 +23,9 @@ public const val DEFAULT_PORT: Int = 0
  * @property trailingQuery keep a trailing question character even if there are no query parameters
  */
 public class URLBuilder(
-    public var protocol: URLProtocol = URLProtocol.HTTP,
+    protocol: URLProtocol? = null,
     public var host: String = "",
-    public var port: Int = DEFAULT_PORT,
+    port: Int = DEFAULT_PORT,
     user: String? = null,
     password: String? = null,
     pathSegments: List<String> = emptyList(),
@@ -33,6 +33,19 @@ public class URLBuilder(
     fragment: String = "",
     public var trailingQuery: Boolean = false
 ) {
+    public var port: Int = port
+        set(value) {
+            require(value in 0..65535) {
+                "Port must be between 0 and 65535, or $DEFAULT_PORT if not set. Provided: $value"
+            }
+            field = value
+        }
+
+    public var protocolOrNull: URLProtocol? = protocol
+    public var protocol: URLProtocol
+        get() = protocolOrNull ?: URLProtocol.HTTP
+        set(value) { protocolOrNull = value }
+
     public var encodedUser: String? = user?.encodeURLParameter()
 
     public var user: String?
@@ -91,7 +104,7 @@ public class URLBuilder(
     public fun build(): Url {
         applyOrigin()
         return Url(
-            protocol = protocol,
+            protocol = protocolOrNull,
             host = host,
             specifiedPort = port,
             pathSegments = pathSegments,
@@ -107,7 +120,7 @@ public class URLBuilder(
     private fun applyOrigin() {
         if (host.isNotEmpty() || protocol.name == "file") return
         host = originUrl.host
-        if (protocol == URLProtocol.HTTP) protocol = originUrl.protocol
+        if (protocolOrNull == null) protocolOrNull = originUrl.protocolOrNull
         if (port == DEFAULT_PORT) port = originUrl.specifiedPort
     }
 
@@ -286,22 +299,16 @@ public fun URLBuilder.set(
     block(this)
 }
 
-@Deprecated(level = DeprecationLevel.HIDDEN, message = "Plesae use method with boolean parameter")
-public fun URLBuilder.appendPathSegments(segments: List<String>): URLBuilder =
-    appendPathSegments(segments, false)
-
-@Deprecated(level = DeprecationLevel.HIDDEN, message = "Plesae use method with boolean parameter")
-public fun URLBuilder.appendPathSegments(vararg components: String): URLBuilder =
-    appendPathSegments(components.toList(), false)
-
 @Deprecated(
     message = "Please use appendPathSegments method",
-    replaceWith = ReplaceWith("this.appendPathSegments(components")
+    replaceWith = ReplaceWith("this.appendPathSegments(components"),
+    level = DeprecationLevel.ERROR
 )
 public fun URLBuilder.pathComponents(vararg components: String): URLBuilder = appendPathSegments(components.toList())
 
 @Deprecated(
     message = "Please use appendPathSegments method",
-    replaceWith = ReplaceWith("this.appendPathSegments(components")
+    replaceWith = ReplaceWith("this.appendPathSegments(components"),
+    level = DeprecationLevel.ERROR
 )
 public fun URLBuilder.pathComponents(components: List<String>): URLBuilder = appendPathSegments(components)

@@ -19,7 +19,7 @@ import io.ktor.server.routing.*
  *
  * @see ServerSSESession
  */
-public fun RoutingBuilder.sse(path: String, handler: suspend ServerSSESession.() -> Unit) {
+public fun Route.sse(path: String, handler: suspend ServerSSESession.() -> Unit) {
     plugin(SSE)
 
     route(path, HttpMethod.Get) {
@@ -37,10 +37,13 @@ public fun RoutingBuilder.sse(path: String, handler: suspend ServerSSESession.()
  *
  * @see ServerSSESession
  */
-public fun RoutingBuilder.sse(handler: suspend ServerSSESession.() -> Unit) {
+public fun Route.sse(handler: suspend ServerSSESession.() -> Unit) {
     plugin(SSE)
 
     handle {
+        call.response.header(HttpHeaders.ContentType, ContentType.Text.EventStream.toString())
+        call.response.header(HttpHeaders.CacheControl, "no-store")
+        call.response.header(HttpHeaders.Connection, "keep-alive")
         call.respond(SSEServerContent(call, handler))
     }
 }

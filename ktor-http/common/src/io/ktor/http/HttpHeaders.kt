@@ -131,7 +131,11 @@ public object HttpHeaders {
 
     private val UnsafeHeadersArray: Array<String> = arrayOf(TransferEncoding, Upgrade)
 
-    @Deprecated("Use UnsafeHeadersList instead.", replaceWith = ReplaceWith("HttpHeaders.UnsafeHeadersList"))
+    @Deprecated(
+        "Use UnsafeHeadersList instead.",
+        replaceWith = ReplaceWith("HttpHeaders.UnsafeHeadersList"),
+        level = DeprecationLevel.ERROR
+    )
     public val UnsafeHeaders: Array<String>
         get() = UnsafeHeadersArray.copyOf()
 

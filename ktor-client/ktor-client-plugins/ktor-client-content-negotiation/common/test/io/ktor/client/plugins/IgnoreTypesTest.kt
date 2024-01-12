@@ -5,6 +5,7 @@
 package io.ktor.client.plugins
 
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
@@ -14,7 +15,6 @@ import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.serialization.*
 import io.ktor.test.dispatcher.*
-import io.ktor.util.*
 import io.ktor.util.reflect.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
@@ -26,7 +26,7 @@ class IgnoreTypesTest {
             error("This should not be called")
         }
 
-        override suspend fun serializeNullable(
+        override suspend fun serialize(
             contentType: ContentType,
             charset: Charset,
             typeInfo: TypeInfo,
@@ -44,61 +44,34 @@ class IgnoreTypesTest {
 
     @Test
     fun testTriesToConvertString() = testSuspend {
-        val plugin = ContentNegotiation(
-            registrations = listOf(
-                ContentNegotiation.Config.ConverterRegistration(
-                    converter,
-                    ContentType.Any,
-                    object : ContentTypeMatcher {
-                        override fun contains(contentType: ContentType): Boolean = true
-                    }
-                )
-            ),
-            ignoredTypes = setOf()
-        )
+        val client = HttpClient(MockEngine) {
+            install(ContentNegotiation) {
+                register(ContentType.Application.Json, converter)
+                clearIgnoredTypes()
+            }
+            engine {
+                addHandler {
+                    respond(
+                        "OK",
+                        HttpStatusCode.OK,
+                        buildHeaders { append(HttpHeaders.ContentType, ContentType.Application.Json.toString()) }
+                    )
+                }
+            }
+        }
 
-        var message = assertFails {
-            plugin.convertRequest(request, "Hello")
-        }.message
+        val sendError = assertFails {
+            client.post("/") {
+                contentType(ContentType.Application.Json)
+                setBody("BODY")
+            }
+        }
+        assertEquals("This should not be called", sendError.message)
 
-        assertEquals("This should not be called", message)
-
-        message = assertFails {
-            plugin.convertResponse(
-                URLBuilder().build(),
-                typeInfo<String>(),
-                ByteReadChannel("FOO"),
-                ContentType.Application.Json
-            )
-        }.message
-
-        assertEquals("This should not be called", message)
-    }
-
-    @Test
-    fun testIgnoresString() = testSuspend {
-        val plugin = ContentNegotiation(
-            registrations = listOf(
-                ContentNegotiation.Config.ConverterRegistration(
-                    converter,
-                    ContentType.Any,
-                    object : ContentTypeMatcher {
-                        override fun contains(contentType: ContentType): Boolean = true
-                    }
-                )
-            ),
-            ignoredTypes = setOf(String::class)
-        )
-
-        assertNull(plugin.convertRequest(request, "Hello"))
-        assertNull(
-            plugin.convertResponse(
-                URLBuilder().build(),
-                typeInfo<String>(),
-                ByteReadChannel.Empty,
-                ContentType.Application.Json
-            )
-        )
+        val receiveError = assertFails {
+            client.get("/").body<String>()
+        }
+        assertEquals("This should not be called", receiveError.message)
     }
 
     @Test

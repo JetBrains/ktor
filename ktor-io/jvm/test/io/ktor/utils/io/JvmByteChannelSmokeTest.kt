@@ -2,17 +2,12 @@ package io.ktor.utils.io
 
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.core.internal.*
-import org.junit.*
-import org.junit.rules.*
+import kotlinx.coroutines.debug.junit5.*
 import java.nio.*
-import java.util.concurrent.*
 import kotlin.test.*
-import kotlin.test.Test
 
+@CoroutinesTimeout(10_000, cancelOnTimeout = true)
 open class JvmByteChannelSmokeTest : ByteChannelSmokeTest() {
-
-    @get:Rule
-    val timeout = Timeout(10, TimeUnit.SECONDS)
 
     @Suppress("DEPRECATION")
     @Test

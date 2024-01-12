@@ -158,6 +158,7 @@ class XHttpMethodOverrideTest {
 
             application.routing {
                 get("/") {
+                    @Suppress("DEPRECATION_ERROR")
                     with(call.request.origin) {
                         assertEquals("localhost", host)
                         assertEquals(80, port)
@@ -188,6 +189,7 @@ class XHttpMethodOverrideTest {
 
             application.routing {
                 get("/") {
+                    @Suppress("DEPRECATION_ERROR")
                     with(call.request.origin) {
                         assertEquals("host", host)
                         assertEquals(90, port)
@@ -218,6 +220,7 @@ class XHttpMethodOverrideTest {
 
             application.routing {
                 get("/") {
+                    @Suppress("DEPRECATION_ERROR")
                     with(call.request.origin) {
                         assertEquals("host", host)
                         assertEquals(80, port)
@@ -248,6 +251,7 @@ class XHttpMethodOverrideTest {
 
             application.routing {
                 get("/") {
+                    @Suppress("DEPRECATION_ERROR")
                     with(call.request.origin) {
                         assertEquals("host", host)
                         assertEquals(443, port)

@@ -7,7 +7,7 @@ package io.ktor.util
 import kotlinx.cinterop.*
 import platform.posix.*
 
-@OptIn(ExperimentalUnsignedTypes::class, UnsafeNumber::class)
+@OptIn(ExperimentalUnsignedTypes::class, UnsafeNumber::class, ExperimentalForeignApi::class)
 internal actual fun secureRandom(bytes: ByteArray) {
     val fd = fopen("/dev/urandom", "rb") ?: return
     val size = bytes.size

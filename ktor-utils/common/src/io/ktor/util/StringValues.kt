@@ -245,10 +245,8 @@ public open class StringValuesBuilderImpl(
 
     override fun appendAll(name: String, values: Iterable<String>) {
         ensureListForKey(name).let { list ->
-            values.forEach { value ->
-                validateValue(value)
-                list.add(value)
-            }
+            values.forEach { validateValue(it) }
+            list.addAll(values)
         }
     }
 

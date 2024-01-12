@@ -7,6 +7,7 @@ import kotlinx.cinterop.*
 import platform.osx.*
 import platform.posix.*
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual fun <T> unpack_sockaddr_un(
     sockaddr: sockaddr,
     block: (family: UShort, path: String) -> T
@@ -15,6 +16,7 @@ internal actual fun <T> unpack_sockaddr_un(
     return block(address.sun_family.convert(), address.sun_path.toKString())
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual fun pack_sockaddr_un(
     family: UShort,
     path: String,

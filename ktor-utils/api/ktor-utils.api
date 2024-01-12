@@ -1,10 +1,5 @@
-public final class io/ktor/util/AlwaysFailNonceManager : io/ktor/util/NonceManager {
-	public static final field INSTANCE Lio/ktor/util/AlwaysFailNonceManager;
-	public fun newNonce (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun verifyNonce (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public final class io/ktor/util/AttributeKey {
+	public synthetic fun <init> (Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getName ()Ljava/lang/String;
@@ -236,15 +231,6 @@ public final class io/ktor/util/InputJvmKt {
 	public static final fun asStream (Lio/ktor/utils/io/core/Input;)Ljava/io/InputStream;
 }
 
-public abstract interface annotation class io/ktor/util/InternalAPI : java/lang/annotation/Annotation {
-}
-
-public abstract interface annotation class io/ktor/util/KtorDsl : java/lang/annotation/Annotation {
-}
-
-public abstract interface annotation class io/ktor/util/KtorExperimentalAPI : java/lang/annotation/Annotation {
-}
-
 public final class io/ktor/util/NIOKt {
 	public static final fun copy (Ljava/nio/ByteBuffer;I)Ljava/nio/ByteBuffer;
 	public static final fun copy (Ljava/nio/ByteBuffer;Lio/ktor/utils/io/pool/ObjectPool;I)Ljava/nio/ByteBuffer;
@@ -278,6 +264,7 @@ public final class io/ktor/util/Platform : java/lang/Enum {
 	public static final field Jvm Lio/ktor/util/Platform;
 	public static final field Native Lio/ktor/util/Platform;
 	public static final field Node Lio/ktor/util/Platform;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/util/Platform;
 	public static fun values ()[Lio/ktor/util/Platform;
 }
@@ -296,13 +283,8 @@ public final class io/ktor/util/PlatformUtilsJvmKt {
 	public static final fun getPlatform (Lio/ktor/util/PlatformUtils;)Lio/ktor/util/Platform;
 }
 
-public abstract interface annotation class io/ktor/util/PublicAPICandidate : java/lang/annotation/Annotation {
-	public abstract fun version ()Ljava/lang/String;
-}
-
 public final class io/ktor/util/RangesKt {
 	public static final fun contains (Lkotlin/ranges/LongRange;Lkotlin/ranges/LongRange;)Z
-	public static final fun getLength (Lkotlin/ranges/LongRange;)J
 }
 
 public final class io/ktor/util/StatelessHmacNonceManager : io/ktor/util/NonceManager {
@@ -464,12 +446,6 @@ public final class io/ktor/util/ThrowableKt {
 	public static final fun getRootCause (Ljava/lang/Throwable;)Ljava/lang/Throwable;
 }
 
-public final class io/ktor/util/cio/ByteBufferPool : io/ktor/utils/io/pool/DefaultPool {
-	public fun <init> ()V
-	public synthetic fun clearInstance (Ljava/lang/Object;)Ljava/lang/Object;
-	public synthetic fun produceInstance ()Ljava/lang/Object;
-}
-
 public final class io/ktor/util/cio/ByteBufferPoolKt {
 	public static final fun getKtorDefaultPool ()Lio/ktor/utils/io/pool/ObjectPool;
 }
@@ -508,8 +484,6 @@ public final class io/ktor/util/cio/InputStreamAdaptersKt {
 public final class io/ktor/util/cio/OutputStreamAdaptersKt {
 	public static final fun bufferedWriter (Lio/ktor/utils/io/ByteWriteChannel;Ljava/nio/charset/Charset;)Ljava/io/BufferedWriter;
 	public static synthetic fun bufferedWriter$default (Lio/ktor/utils/io/ByteWriteChannel;Ljava/nio/charset/Charset;ILjava/lang/Object;)Ljava/io/BufferedWriter;
-	public static final fun write (Lio/ktor/utils/io/ByteWriteChannel;Ljava/lang/String;Ljava/nio/charset/Charset;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun write$default (Lio/ktor/utils/io/ByteWriteChannel;Ljava/lang/String;Ljava/nio/charset/Charset;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun writer (Lio/ktor/utils/io/ByteWriteChannel;Ljava/nio/charset/Charset;)Ljava/io/Writer;
 	public static synthetic fun writer$default (Lio/ktor/utils/io/ByteWriteChannel;Ljava/nio/charset/Charset;ILjava/lang/Object;)Ljava/io/Writer;
 }
@@ -522,15 +496,6 @@ public final class io/ktor/util/cio/ReadersKt {
 	public static final fun toByteArray (Lio/ktor/utils/io/ByteReadChannel;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun toByteArray$default (Lio/ktor/utils/io/ByteReadChannel;ILkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun use (Lio/ktor/utils/io/ByteWriteChannel;Lkotlin/jvm/functions/Function1;)V
-}
-
-public final class io/ktor/util/cio/Semaphore {
-	public fun <init> (I)V
-	public final fun acquire (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun enter (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getLimit ()I
-	public final fun leave ()V
-	public final fun release ()V
 }
 
 public final class io/ktor/util/collections/CollectionUtilsKt {
@@ -707,6 +672,7 @@ public final class io/ktor/util/date/Month : java/lang/Enum {
 	public static final field NOVEMBER Lio/ktor/util/date/Month;
 	public static final field OCTOBER Lio/ktor/util/date/Month;
 	public static final field SEPTEMBER Lio/ktor/util/date/Month;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/util/date/Month;
 	public static fun values ()[Lio/ktor/util/date/Month;
@@ -726,6 +692,7 @@ public final class io/ktor/util/date/WeekDay : java/lang/Enum {
 	public static final field THURSDAY Lio/ktor/util/date/WeekDay;
 	public static final field TUESDAY Lio/ktor/util/date/WeekDay;
 	public static final field WEDNESDAY Lio/ktor/util/date/WeekDay;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/util/date/WeekDay;
 	public static fun values ()[Lio/ktor/util/date/WeekDay;
@@ -775,6 +742,7 @@ public final class io/ktor/util/debug/plugins/PluginTraceElement {
 public final class io/ktor/util/debug/plugins/PluginTraceElement$PluginEvent : java/lang/Enum {
 	public static final field FINISHED Lio/ktor/util/debug/plugins/PluginTraceElement$PluginEvent;
 	public static final field STARTED Lio/ktor/util/debug/plugins/PluginTraceElement$PluginEvent;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/ktor/util/debug/plugins/PluginTraceElement$PluginEvent;
 	public static fun values ()[Lio/ktor/util/debug/plugins/PluginTraceElement$PluginEvent;
 }
@@ -953,6 +921,7 @@ public class io/ktor/util/pipeline/Pipeline {
 	public final fun merge (Lio/ktor/util/pipeline/Pipeline;)V
 	public final fun mergePhases (Lio/ktor/util/pipeline/Pipeline;)V
 	public final fun resetFrom (Lio/ktor/util/pipeline/Pipeline;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract class io/ktor/util/pipeline/PipelineContext : kotlinx/coroutines/CoroutineScope {
@@ -973,10 +942,6 @@ public final class io/ktor/util/pipeline/PipelinePhase {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun getName ()Ljava/lang/String;
 	public fun toString ()Ljava/lang/String;
-}
-
-public class io/ktor/util/reflect/TypeBase {
-	public fun <init> ()V
 }
 
 public final class io/ktor/util/reflect/TypeInfo {

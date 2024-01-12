@@ -1,5 +1,6 @@
 public final class io/ktor/server/plugins/hsts/HSTSConfig : io/ktor/server/plugins/hsts/HSTSHostConfig {
 	public fun <init> ()V
+	public final fun filter (Lkotlin/jvm/functions/Function1;)V
 	public final fun withHost (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 

@@ -9,6 +9,7 @@ import kotlin.coroutines.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class WorkerSelectorManager : SelectorManager {
+    @OptIn(DelicateCoroutinesApi::class)
     private val selectorContext = newSingleThreadContext("WorkerSelectorManager")
     private val job = Job()
     override val coroutineContext: CoroutineContext = selectorContext + job

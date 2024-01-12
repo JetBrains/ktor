@@ -17,6 +17,7 @@ kotlin.sourceSets {
             api(project(":ktor-server:ktor-server-plugins:ktor-server-content-negotiation"))
             api(project(":ktor-server:ktor-server-plugins:ktor-server-call-id"))
             api(project(":ktor-server:ktor-server-plugins:ktor-server-cors"))
+            api(project(":ktor-server:ktor-server-plugins:ktor-server-csrf"))
             api(project(":ktor-server:ktor-server-plugins:ktor-server-data-conversion"))
             api(project(":ktor-server:ktor-server-plugins:ktor-server-double-receive"))
             api(project(":ktor-server:ktor-server-plugins:ktor-server-forwarded-header"))

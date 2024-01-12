@@ -43,7 +43,10 @@ public sealed class RouteSelectorEvaluation(
     ) : RouteSelectorEvaluation(false)
 
     public companion object {
-        @Deprecated("Please use RouteSelectorEvaluation.Failure() or RouteSelectorEvaluation.Success() constructors")
+        @Deprecated(
+            "Please use RouteSelectorEvaluation.Failure() or RouteSelectorEvaluation.Success() constructors",
+            level = DeprecationLevel.ERROR
+        )
         public operator fun invoke(
             succeeded: Boolean,
             quality: Double,
@@ -177,12 +180,7 @@ public sealed class RouteSelectorEvaluation(
  *
  * @param quality indicates how good this selector is compared to siblings
  */
-public abstract class RouteSelector
-@Deprecated("quality property is not used anymore and will be removed", replaceWith = ReplaceWith("RouteSelector()"))
-constructor(@Deprecated("This property is not used anymore and will be removed") public val quality: Double) {
-
-    @Suppress("Deprecation")
-    public constructor() : this(0.0)
+public abstract class RouteSelector {
 
     /**
      * Evaluates this selector against [context] and a path segment at [segmentIndex].
@@ -303,14 +301,6 @@ public data class PathSegmentConstantRouteSelector(
     val value: String
 ) : RouteSelector() {
 
-    @Suppress("UNUSED_PARAMETER")
-    @Deprecated(
-        "hasTrailingSlash is not used anymore. This is going to be removed",
-        level = DeprecationLevel.ERROR,
-        replaceWith = ReplaceWith("PathSegmentConstantRouteSelector(value)")
-    )
-    public constructor(value: String, hasTrailingSlash: Boolean) : this(value)
-
     override fun evaluate(context: RoutingResolveContext, segmentIndex: Int): RouteSelectorEvaluation = when {
         segmentIndex < context.segments.size && context.segments[segmentIndex] == value ->
             RouteSelectorEvaluation.ConstantPath
@@ -351,15 +341,6 @@ public data class PathSegmentParameterRouteSelector(
     val suffix: String? = null
 ) : RouteSelector() {
 
-    @Suppress("UNUSED_PARAMETER")
-    @Deprecated(
-        "hasTrailingSlash is not used anymore. This is going to be removed",
-        level = DeprecationLevel.ERROR,
-        replaceWith = ReplaceWith("PathSegmentParameterRouteSelector(value, prefix, suffix)")
-    )
-    public constructor(name: String, prefix: String? = null, suffix: String? = null, hasTrailingSlash: Boolean) :
-        this(name, prefix, suffix)
-
     override fun evaluate(context: RoutingResolveContext, segmentIndex: Int): RouteSelectorEvaluation {
         return evaluatePathSegmentParameter(
             segments = context.segments,
@@ -385,15 +366,6 @@ public data class PathSegmentOptionalParameterRouteSelector(
     val prefix: String? = null,
     val suffix: String? = null
 ) : RouteSelector() {
-
-    @Suppress("UNUSED_PARAMETER")
-    @Deprecated(
-        "hasTrailingSlash is not used anymore. This is going to be removed",
-        level = DeprecationLevel.ERROR,
-        replaceWith = ReplaceWith("PathSegmentOptionalParameterRouteSelector(value, prefix, suffix)")
-    )
-    public constructor(name: String, prefix: String? = null, suffix: String? = null, hasTrailingSlash: Boolean) :
-        this(name, prefix, suffix)
 
     override fun evaluate(context: RoutingResolveContext, segmentIndex: Int): RouteSelectorEvaluation {
         return evaluatePathSegmentParameter(
@@ -433,20 +405,12 @@ public data class PathSegmentTailcardRouteSelector(
     val prefix: String = ""
 ) : RouteSelector() {
 
-    @Suppress("UNUSED_PARAMETER")
-    @Deprecated(
-        "hasTrailingSlash is not used anymore. This is going to be removed",
-        level = DeprecationLevel.ERROR,
-        replaceWith = ReplaceWith("PathSegmentTailcardRouteSelector(name, prefix)")
-    )
-    public constructor(name: String = "", prefix: String = "", hasTrailingSlash: Boolean) : this(name, prefix)
-
     init {
         require(prefix.none { it == '/' }) { "Multisegment prefix is not supported" }
     }
 
     override fun evaluate(context: RoutingResolveContext, segmentIndex: Int): RouteSelectorEvaluation {
-        val segments = context.segments.dropLastWhile { it.isEmpty() } // remove extra segment from trailing slash
+        val segments = context.segments
         if (prefix.isNotEmpty()) {
             val segmentText = segments.getOrNull(segmentIndex)
             if (segmentText == null || !segmentText.startsWith(prefix)) {

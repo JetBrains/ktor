@@ -8,6 +8,7 @@ import kotlinx.cinterop.*
 import kotlin.test.*
 
 class ByteChannelNativeTests : ByteChannelTestBase(true) {
+    @OptIn(ExperimentalForeignApi::class)
     @Test
     fun testCPointersReadWriteFully() = runTest {
         val array = ByteArray(4)
@@ -29,6 +30,7 @@ class ByteChannelNativeTests : ByteChannelTestBase(true) {
         assertTrue { array.contentEquals(result) }
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     @Test
     fun testCPointersReadWriteFullyWithShift() = runTest {
         for (shift in 0..3) {
@@ -54,6 +56,7 @@ class ByteChannelNativeTests : ByteChannelTestBase(true) {
         }
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     @Test
     fun testCPointersReadAvailable() = runTest {
         val array = ByteArray(4)

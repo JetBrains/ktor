@@ -6,7 +6,7 @@ package io.ktor.client.engine.cio
 
 import io.ktor.client.*
 import io.ktor.client.engine.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 
 @InternalAPI
 @Suppress("KDocMissingDocumentation")

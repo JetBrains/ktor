@@ -5,7 +5,18 @@
 
 package io.ktor.util.logging
 
+public enum class LogLevel {
+    TRACE,
+    DEBUG,
+    INFO,
+    WARN,
+    ERROR,
+    NONE
+}
+
 public actual interface Logger {
+    public val level: LogLevel
+
     public actual fun error(message: String)
     public actual fun error(message: String, cause: Throwable)
     public actual fun warn(message: String)

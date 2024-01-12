@@ -7,7 +7,7 @@ package io.ktor.server.jetty.jakarta
 import io.ktor.server.application.*
 import io.ktor.server.jetty.jakarta.internal.*
 import io.ktor.server.servlet.jakarta.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import jakarta.servlet.http.*
 import org.eclipse.jetty.server.*
 import kotlin.coroutines.*

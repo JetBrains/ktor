@@ -4,7 +4,7 @@ kotlin {
     sourceSets {
         jvmMain {
             dependencies {
-                api(project(":ktor-server:ktor-server-host-common"))
+                api(project(":ktor-server:ktor-server-core"))
                 api(project(":ktor-server:ktor-server-servlet"))
                 api(libs.jetty.server)
                 api(libs.jetty.servlets)

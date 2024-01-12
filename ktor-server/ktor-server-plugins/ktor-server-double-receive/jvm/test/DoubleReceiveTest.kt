@@ -2,9 +2,8 @@ import io.ktor.server.plugins.doublereceive.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
-import org.junit.*
-import org.junit.Assert.*
 import kotlin.coroutines.*
+import kotlin.test.*
 
 /*
  * Copyright 2014-2022 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
@@ -23,7 +22,7 @@ class DoubleReceiveTest {
 
         repeat(3) {
             val received = cache.read().readRemaining().readBytes()
-            assertArrayEquals(content, received)
+            assertEquals(content.toList(), received.toList())
         }
     }
 
@@ -38,7 +37,7 @@ class DoubleReceiveTest {
         repeat(3) {
             val channel = cache.read()
             val received = channel.readRemaining().readBytes()
-            assertArrayEquals(content, received)
+            assertEquals(content.toList(), received.toList())
         }
     }
 }

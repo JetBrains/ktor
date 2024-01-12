@@ -6,7 +6,7 @@ package io.ktor.server.servlet.jakarta.v4
 
 import io.ktor.http.*
 import io.ktor.server.response.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import jakarta.servlet.http.*
 
 @InternalAPI

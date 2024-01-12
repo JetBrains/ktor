@@ -11,7 +11,6 @@ package io.ktor.server.webjars
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.util.cio.*
-import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.*
 import org.webjars.*

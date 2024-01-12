@@ -10,9 +10,7 @@ import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.tests.utils.*
 import io.ktor.http.*
-import io.ktor.http.content.*
 import io.ktor.network.sockets.*
-import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.request.*
@@ -109,21 +107,6 @@ class RequestTests : TestWithKtor() {
     }
 
     class CustomException : IllegalStateException()
-
-    @Test
-    fun testBodyPropagatesExceptionType() = testWithEngine(OkHttp) {
-        test { client ->
-            assertFailsWith<CustomException> {
-                client.post("$testUrl/echo") {
-                    setBody(object : OutgoingContent.WriteChannelContent() {
-                        override suspend fun writeTo(channel: ByteWriteChannel) {
-                            throw CustomException()
-                        }
-                    })
-                }.body<String>()
-            }
-        }
-    }
 
     @Test
     fun testFormContentType() = testWithEngine(OkHttp) {

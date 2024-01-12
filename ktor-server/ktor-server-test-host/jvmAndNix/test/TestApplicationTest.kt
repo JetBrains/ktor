@@ -186,7 +186,7 @@ class TestApplicationTest {
         }
         application {
             applicationCalled = true
-            environment.monitor.subscribe(ApplicationStarted) {
+            monitor.subscribe(ApplicationStarted) {
                 applicationStarted = true
             }
         }
@@ -337,26 +337,23 @@ class TestApplicationTest {
 
     @Test
     fun testConnectors(): Unit = testApplication {
-        environment {
+        engine {
             connector {
                 port = 8080
             }
             connector {
                 port = 8081
             }
-
-            module {
-                routing {
-                    port(8080) {
-                        get {
-                            call.respond("8080")
-                        }
-                    }
-                    port(8081) {
-                        get {
-                            call.respond("8081")
-                        }
-                    }
+        }
+        routing {
+            port(8080) {
+                get {
+                    call.respond("8080")
+                }
+            }
+            port(8081) {
+                get {
+                    call.respond("8081")
                 }
             }
         }
@@ -372,6 +369,14 @@ class TestApplicationTest {
             port = 8081
         }
         assertEquals("8081", response8081.bodyAsText())
+    }
+
+    @Test
+    fun testStartupJobsCompletion() = testApplication {
+        startApplication()
+        withTimeoutOrNull(1000) {
+            engine.application.coroutineContext.job.children.forEach { scope -> scope.join() }
+        } ?: fail("Timed out waiting for child coroutines to finish")
     }
 
     @Test

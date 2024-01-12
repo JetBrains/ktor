@@ -8,19 +8,19 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.netty.cio.*
-import io.ktor.util.cio.*
 import io.ktor.utils.io.*
 import io.netty.channel.*
 import io.netty.handler.codec.http.*
+import io.netty.handler.timeout.*
 import io.netty.util.concurrent.*
-import kotlinx.atomicfu.*
 import kotlinx.coroutines.*
 import java.io.*
 import kotlin.coroutines.*
 
 internal class NettyHttp1Handler(
+    private val applicationProvider: () -> Application,
     private val enginePipeline: EnginePipeline,
-    private val environment: ApplicationEngineEnvironment,
+    private val environment: ApplicationEnvironment,
     private val callEventGroup: EventExecutorGroup,
     private val engineContext: CoroutineContext,
     private val userContext: CoroutineContext,
@@ -68,11 +68,13 @@ internal class NettyHttp1Handler(
                 handleRequest(context, message)
                 callReadIfNeeded(context)
             }
+
             message is LastHttpContent && !message.content().isReadable && skipEmpty -> {
                 skipEmpty = false
                 message.release()
                 callReadIfNeeded(context)
             }
+
             else -> {
                 context.fireChannelRead(message)
             }
@@ -86,13 +88,22 @@ internal class NettyHttp1Handler(
 
     @Suppress("OverridingDeprecatedMember")
     override fun exceptionCaught(context: ChannelHandlerContext, cause: Throwable) {
-        if (cause is IOException || cause is ChannelIOException) {
-            environment.application.log.debug("I/O operation failed", cause)
-            handlerJob.cancel()
-        } else {
-            handlerJob.completeExceptionally(cause)
+        when (cause) {
+            is IOException -> {
+                environment.log.debug("I/O operation failed", cause)
+                handlerJob.cancel()
+                context.close()
+            }
+
+            is ReadTimeoutException -> {
+                context.fireExceptionCaught(cause)
+            }
+
+            else -> {
+                handlerJob.completeExceptionally(cause)
+                context.close()
+            }
         }
-        context.close()
     }
 
     override fun channelReadComplete(context: ChannelHandlerContext?) {
@@ -123,11 +134,12 @@ internal class NettyHttp1Handler(
                 skipEmpty = true
                 null
             }
+
             else -> prepareRequestContentChannel(context, message)
         }
 
         return NettyHttp1ApplicationCall(
-            environment.application,
+            applicationProvider(),
             context,
             message,
             requestBodyChannel,

@@ -15,7 +15,13 @@ import kotlinx.coroutines.*
 import platform.Foundation.*
 import platform.posix.*
 
-@OptIn(DelicateCoroutinesApi::class, UnsafeNumber::class, InternalAPI::class)
+@OptIn(
+    DelicateCoroutinesApi::class,
+    UnsafeNumber::class,
+    InternalAPI::class,
+    ExperimentalForeignApi::class,
+    BetaInteropApi::class
+)
 internal suspend fun OutgoingContent.toDataOrStream(): Any? {
     if (this is OutgoingContent.ByteArrayContent) return bytes().toNSData()
     if (this is OutgoingContent.NoContent) return null
@@ -24,7 +30,7 @@ internal suspend fun OutgoingContent.toDataOrStream(): Any? {
     val outputStreamPtr = nativeHeap.alloc<ObjCObjectVar<NSOutputStream?>>()
     val inputStreamPtr = nativeHeap.alloc<ObjCObjectVar<NSInputStream?>>()
 
-    NSStream.getBoundStreamsWithBufferSize(4096, inputStreamPtr.ptr, outputStreamPtr.ptr)
+    NSStream.getBoundStreamsWithBufferSize(4096.convert(), inputStreamPtr.ptr, outputStreamPtr.ptr)
 
     val context = callContext()
     context[Job]!!.invokeOnCompletion {
@@ -73,7 +79,7 @@ internal suspend fun OutgoingContent.toDataOrStream(): Any? {
     return inputStream
 }
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 internal fun ByteArray.toNSData(): NSData = NSMutableData().apply {
     if (isEmpty()) return@apply
     this@toNSData.usePinned {
@@ -81,7 +87,7 @@ internal fun ByteArray.toNSData(): NSData = NSMutableData().apply {
     }
 }
 
-@OptIn(UnsafeNumber::class)
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 internal fun NSData.toByteArray(): ByteArray {
     val result = ByteArray(length.toInt())
     if (result.isEmpty()) return result
@@ -97,6 +103,7 @@ internal fun NSData.toByteArray(): ByteArray {
  * Executes the given block function on this resource and then releases it correctly whether an
  * exception is thrown or not.
  */
+@OptIn(ExperimentalForeignApi::class)
 internal inline fun <T : CPointed, R> CPointer<T>.use(block: (CPointer<T>) -> R): R {
     try {
         return block(this)

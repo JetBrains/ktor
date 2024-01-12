@@ -5,7 +5,10 @@
 package io.ktor.util
 
 import io.ktor.util.collections.*
+import io.ktor.utils.io.*
+import kotlinx.cinterop.*
 import platform.posix.*
+import kotlin.experimental.*
 import kotlin.native.concurrent.*
 
 @Suppress("DEPRECATION")
@@ -14,23 +17,28 @@ import kotlin.native.concurrent.*
 private val init = setSignalHandler()
 
 @InternalAPI
+@OptIn(ExperimentalForeignApi::class)
 public object ThreadInfo {
+    @OptIn(ObsoleteWorkersApi::class)
     private val threads = ConcurrentMap<Worker, pthread_t>(initialCapacity = 32)
 
     init {
         init
     }
 
+    @OptIn(ObsoleteWorkersApi::class)
     public fun registerCurrentThread() {
         @Suppress("UNNECESSARY_NOT_NULL_ASSERTION")
         val thread = pthread_self()!!
         threads[Worker.current] = thread
     }
 
+    @OptIn(ObsoleteWorkersApi::class)
     public fun dropWorker(worker: Worker) {
         threads.remove(worker)
     }
 
+    @OptIn(ExperimentalNativeApi::class, ObsoleteWorkersApi::class)
     public fun getAllStackTraces(): List<WorkerStacktrace> {
         if (kotlin.native.Platform.osFamily == OsFamily.WINDOWS) return emptyList()
 
@@ -62,6 +70,7 @@ public object ThreadInfo {
         }
     }
 
+    @OptIn(ObsoleteWorkersApi::class)
     public fun stopAllWorkers() {
         for (worker in threads.keys) {
             if (worker == Worker.current) continue
@@ -79,6 +88,7 @@ public class WorkerStacktrace(
     public val stacktrace: List<String>
 )
 
+@OptIn(ExperimentalForeignApi::class)
 internal expect fun collectStack(thread: pthread_t): List<String>
 
 internal expect fun setSignalHandler()

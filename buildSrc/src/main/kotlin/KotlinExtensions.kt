@@ -27,6 +27,16 @@ fun KotlinMultiplatformExtension.createCInterop(
     }
 }
 
+fun NamedDomainObjectContainer<KotlinSourceSet>.commonMain(block: KotlinSourceSet.() -> Unit) {
+    val sourceSet = getByName("commonMain")
+    block(sourceSet)
+}
+
+fun NamedDomainObjectContainer<KotlinSourceSet>.commonTest(block: KotlinSourceSet.() -> Unit) {
+    val sourceSet = getByName("commonTest")
+    block(sourceSet)
+}
+
 fun NamedDomainObjectContainer<KotlinSourceSet>.jvmAndNixMain(block: KotlinSourceSet.() -> Unit) {
     val sourceSet = findByName("jvmAndNixMain") ?: getByName("jvmMain")
     block(sourceSet)

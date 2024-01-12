@@ -5,20 +5,17 @@
 package io.ktor.utils.io
 
 import kotlinx.coroutines.*
-import kotlinx.coroutines.debug.junit4.*
+import kotlinx.coroutines.debug.junit5.*
 import kotlinx.coroutines.flow.*
-import org.junit.Rule
 import java.io.*
 import java.nio.*
 import kotlin.test.*
 
 @Suppress("PublicApiImplicitType")
+@CoroutinesTimeout(10_000, cancelOnTimeout = true)
 class ConsumeEachBufferRangeTest {
     private val content = ByteArray(16384) { it.toByte() }
     private val channel = ByteChannel(autoFlush = true)
-
-    @get:Rule
-    val timeout = CoroutinesTimeout(10000, cancelOnTimeout = true)
 
     @Test
     fun test() {

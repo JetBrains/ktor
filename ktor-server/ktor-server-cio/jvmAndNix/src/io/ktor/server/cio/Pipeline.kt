@@ -14,29 +14,6 @@ import kotlin.native.concurrent.*
  */
 public typealias HttpRequestHandler = suspend ServerRequestScope.(request: Request) -> Unit
 
-/**
- * HTTP pipeline coroutine name
- */
-@Deprecated(
-    "This is an implementation detail and will become internal in future releases.",
-    level = DeprecationLevel.ERROR
-)
-public val HttpPipelineCoroutine: CoroutineName = CoroutineName("http-pipeline")
-
-/**
- * HTTP pipeline writer coroutine name
- */
-@Deprecated(
-    "This is an implementation detail and will become internal in future releases.",
-    level = DeprecationLevel.ERROR
-)
-public val HttpPipelineWriterCoroutine: CoroutineName = CoroutineName("http-pipeline-writer")
-
-/**
- * HTTP request handler coroutine name
- */
-@Deprecated(
-    "This is an implementation detail and will become internal in future releases.",
-    level = DeprecationLevel.ERROR
-)
-public val RequestHandlerCoroutine: CoroutineName = CoroutineName("request-handler")
+internal val HttpPipelineCoroutine: CoroutineName = CoroutineName("http-pipeline")
+internal val HttpPipelineWriterCoroutine: CoroutineName = CoroutineName("http-pipeline-writer")
+internal val RequestHandlerCoroutine: CoroutineName = CoroutineName("request-handler")

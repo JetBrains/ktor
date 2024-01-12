@@ -53,7 +53,7 @@ fun main(args: Array<String>) {
 You also can use [Ktor Gradle Plugin](https://github.com/ktorio/ktor-build-plugins) to configure bom, run tasks and deployment:
 ```kotlin
 plugins {
-    id("ktor.plugin") version "2.3.3"
+    id("io.ktor.plugin") version "2.3.4"
 }
 
 dependencies {

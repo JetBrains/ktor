@@ -7,7 +7,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2022, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -28,17 +28,17 @@
    a script at release-time. This was made its own header file in 7.11.2 */
 
 /* This is the global package copyright */
-#define LIBCURL_COPYRIGHT "Daniel Stenberg, <daniel@haxx.se>."
+#define LIBCURL_COPYRIGHT "1996 - 2022 Daniel Stenberg, <daniel@haxx.se>."
 
 /* This is the version number of the libcurl package from which this header
    file origins: */
-#define LIBCURL_VERSION "8.0.1"
+#define LIBCURL_VERSION "7.84.0"
 
 /* The numeric version number is also available "in parts" by using these
    defines: */
-#define LIBCURL_VERSION_MAJOR 8
-#define LIBCURL_VERSION_MINOR 0
-#define LIBCURL_VERSION_PATCH 1
+#define LIBCURL_VERSION_MAJOR 7
+#define LIBCURL_VERSION_MINOR 84
+#define LIBCURL_VERSION_PATCH 0
 
 /* This is the numeric version of the libcurl version number, meant for easier
    parsing and comparisons by programs. The LIBCURL_VERSION_NUM define will
@@ -59,7 +59,7 @@
    CURL_VERSION_BITS() macro since curl's own configure script greps for it
    and needs it to contain the full number.
 */
-#define LIBCURL_VERSION_NUM 0x080001
+#define LIBCURL_VERSION_NUM 0x075400
 
 /*
  * This is the date and time when the full source package was created. The
@@ -70,7 +70,7 @@
  *
  * "2007-11-23"
  */
-#define LIBCURL_TIMESTAMP "2023-03-20"
+#define LIBCURL_TIMESTAMP "2022-06-27"
 
 #define CURL_VERSION_BITS(x,y,z) ((x)<<16|(y)<<8|(z))
 #define CURL_AT_LEAST_VERSION(x,y,z) \

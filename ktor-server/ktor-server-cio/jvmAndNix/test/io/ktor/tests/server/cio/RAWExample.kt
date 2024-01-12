@@ -12,7 +12,7 @@ import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
-import kotlin.jvm.*
+import kotlin.concurrent.*
 
 @Volatile
 private var cachedDateText: String = GMTDate().toHttpDate()

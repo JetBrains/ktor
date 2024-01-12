@@ -14,40 +14,53 @@ import io.mockk.*
 import io.netty.channel.*
 import io.netty.channel.nio.*
 import kotlinx.coroutines.*
-import org.junit.*
 import java.util.concurrent.*
+import kotlin.test.*
 
 class NettyConfigurationTest {
-    private val environment: ApplicationEngineEnvironment get() {
+    private fun server(
+        block: NettyApplicationEngine.Configuration.() -> Unit
+    ): EmbeddedServer<NettyApplicationEngine, NettyApplicationEngine.Configuration> {
         val config = MapApplicationConfig()
         val events = Events()
 
-        val env = mockk<ApplicationEngineEnvironment>()
-        every { env.developmentMode } returns false
-        every { env.config } returns config
-        every { env.monitor } returns events
-        every { env.stop() } just Runs
-        every { env.start() } just Runs
-        every { env.connectors } returns listOf(EngineConnectorBuilder())
-        every { env.parentCoroutineContext } returns Dispatchers.Default
-        every { env.application } returns mockk<Application>().apply {
+        val server = mockk<EmbeddedServer<NettyApplicationEngine, NettyApplicationEngine.Configuration>>()
+        val application = mockk<Application>().apply {
             every { coroutineContext } returns Job()
+            every { developmentMode } returns false
+            every { parentCoroutineContext } returns Dispatchers.Default
         }
-        every { env.log } returns KtorSimpleLogger("test-logger")
-        return env
+        val environment = mockk<ApplicationEnvironment>().apply {
+            every { log } returns KtorSimpleLogger("test-logger")
+            every { this@apply.config } returns config
+        }
+        every { server.application } returns application
+        every { server.environment } returns environment
+        every { server.monitor } returns events
+        every { server.engineConfig } returns NettyApplicationEngine.Configuration()
+            .apply { connector { port = 0 } }
+            .apply(block)
+        return server
     }
 
     @Test
     fun configuredChildAndParentGroupShutdownGracefully() {
         val parentGroup = spyk(NioEventLoopGroup())
         val childGroup = spyk(NioEventLoopGroup())
-
-        val engine = NettyApplicationEngine(environment) {
+        val server = server {
             configureBootstrap = {
                 group(parentGroup, childGroup)
             }
         }
 
+        val engine = NettyApplicationEngine(
+            server.environment,
+            server.monitor,
+            server.application.developmentMode,
+            server.engineConfig
+        ) { server.application }
+
+        engine.start(wait = false)
         engine.stop(10, 10)
         verify { parentGroup.shutdownGracefully(10, 10, TimeUnit.MILLISECONDS) }
         verify { childGroup.shutdownGracefully(10, 10, TimeUnit.MILLISECONDS) }
@@ -69,12 +82,19 @@ class NettyConfigurationTest {
 
         val group = stubGroup(channel)
 
-        val engine = NettyApplicationEngine(environment) {
+        val server = server {
             configureBootstrap = {
                 channelFactory(factory)
                 group(group)
             }
         }
+
+        val engine = NettyApplicationEngine(
+            server.environment,
+            server.monitor,
+            server.application.developmentMode,
+            server.engineConfig
+        ) { server.application }
 
         engine.start(wait = false)
         engine.stop(10, 10)

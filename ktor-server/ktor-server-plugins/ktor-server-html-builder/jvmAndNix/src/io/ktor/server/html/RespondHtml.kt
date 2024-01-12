@@ -30,7 +30,7 @@ public suspend fun ApplicationCall.respondHtml(status: HttpStatusCode = HttpStat
  * Represents an [OutgoingContent] build using `kotlinx.html`.
  * @see [respondHtml]
  */
-@Deprecated("This will be removed from public API", level = DeprecationLevel.WARNING)
+@Deprecated("This will be removed from public API", level = DeprecationLevel.ERROR)
 public class HtmlContent(
     override val status: HttpStatusCode? = null,
     private val builder: HTML.() -> Unit

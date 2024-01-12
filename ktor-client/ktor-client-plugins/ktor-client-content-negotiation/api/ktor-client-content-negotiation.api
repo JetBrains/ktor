@@ -2,11 +2,7 @@ public final class io/ktor/client/plugins/contentnegotiation/ContentConverterExc
 	public fun <init> (Ljava/lang/String;)V
 }
 
-public final class io/ktor/client/plugins/contentnegotiation/ContentNegotiation {
-	public static final field Plugin Lio/ktor/client/plugins/contentnegotiation/ContentNegotiation$Plugin;
-}
-
-public final class io/ktor/client/plugins/contentnegotiation/ContentNegotiation$Config : io/ktor/serialization/Configuration {
+public final class io/ktor/client/plugins/contentnegotiation/ContentNegotiationConfig : io/ktor/serialization/Configuration {
 	public fun <init> ()V
 	public final fun clearIgnoredTypes ()V
 	public final fun ignoreType (Lkotlin/reflect/KClass;)V
@@ -15,12 +11,8 @@ public final class io/ktor/client/plugins/contentnegotiation/ContentNegotiation$
 	public final fun removeIgnoredType (Lkotlin/reflect/KClass;)V
 }
 
-public final class io/ktor/client/plugins/contentnegotiation/ContentNegotiation$Plugin : io/ktor/client/plugins/HttpClientPlugin {
-	public fun getKey ()Lio/ktor/util/AttributeKey;
-	public fun install (Lio/ktor/client/plugins/contentnegotiation/ContentNegotiation;Lio/ktor/client/HttpClient;)V
-	public synthetic fun install (Ljava/lang/Object;Lio/ktor/client/HttpClient;)V
-	public fun prepare (Lkotlin/jvm/functions/Function1;)Lio/ktor/client/plugins/contentnegotiation/ContentNegotiation;
-	public synthetic fun prepare (Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+public final class io/ktor/client/plugins/contentnegotiation/ContentNegotiationKt {
+	public static final fun getContentNegotiation ()Lio/ktor/client/plugins/api/ClientPlugin;
 }
 
 public final class io/ktor/client/plugins/contentnegotiation/JsonContentTypeMatcher : io/ktor/http/ContentTypeMatcher {

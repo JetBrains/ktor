@@ -17,10 +17,12 @@ public object EngineMain {
      */
     @JvmStatic
     public fun main(args: Array<String>) {
-        val applicationEnvironment = commandLineEnvironment(args)
-        val engine = NettyApplicationEngine(applicationEnvironment) { loadConfiguration(applicationEnvironment.config) }
-
-        engine.start(true)
+        val config = CommandLineConfig(args)
+        val server = EmbeddedServer(config.applicationProperties, Netty) {
+            takeFrom(config.engineConfig)
+            loadConfiguration(config.applicationProperties.environment.config)
+        }
+        server.start(true)
     }
 
     internal fun NettyApplicationEngine.Configuration.loadConfiguration(config: ApplicationConfig) {

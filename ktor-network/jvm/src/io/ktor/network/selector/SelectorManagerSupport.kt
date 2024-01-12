@@ -58,13 +58,12 @@ public abstract class SelectorManagerSupport internal constructor() : SelectorMa
         pending = keys.size - selectedCount
         cancelled = 0
 
-        if (selectedCount > 0) {
-            val iter = selectedKeys.iterator()
-            while (iter.hasNext()) {
-                val k = iter.next()
-                handleSelectedKey(k)
-                iter.remove()
-            }
+        if (selectedCount <= 0) return
+        val iter = selectedKeys.iterator()
+        while (iter.hasNext()) {
+            val k = iter.next()
+            handleSelectedKey(k)
+            iter.remove()
         }
     }
 

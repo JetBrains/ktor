@@ -7,10 +7,8 @@ package io.ktor.tests.server.routing
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.routing.header
 import io.ktor.server.testing.*
 import kotlin.test.*
 
@@ -305,7 +303,7 @@ class RoutingTracingTest {
         return trace?.buildText()!!
     }
 
-    private fun RoutingBuilder.testRouting() {
+    private fun Route.testRouting() {
         get("/bar") { call.respond("/bar") }
         get("/baz") { call.respond("/baz") }
         get("/baz/x") { call.respond("/baz/x") }

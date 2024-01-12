@@ -10,7 +10,6 @@ import io.ktor.client.engine.mock.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.test.dispatcher.*
-import io.ktor.util.*
 import kotlin.test.*
 
 class DefaultTransformTest {
