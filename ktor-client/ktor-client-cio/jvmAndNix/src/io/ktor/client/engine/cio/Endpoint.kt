@@ -15,7 +15,6 @@ import io.ktor.network.tls.*
 import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
-import io.ktor.utils.io.errors.UnknownServiceException
 import kotlinx.atomicfu.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
@@ -199,12 +198,6 @@ internal class Endpoint(
         connections.incrementAndGet()
 
         try {
-            if (!Platform.isCleartextTrafficPermitted(host)) {
-                throw UnknownServiceException(
-                    "CLEARTEXT communication to $host not permitted by network security policy"
-                )
-            }
-
             repeat(connectAttempts) {
                 val address = InetSocketAddress(host, port)
 

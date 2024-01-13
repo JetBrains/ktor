@@ -92,6 +92,7 @@ include(":ktor-client:ktor-client-plugins:ktor-client-json:ktor-client-serializa
 include(":ktor-client:ktor-client-plugins:ktor-client-auth")
 include(":ktor-client:ktor-client-plugins:ktor-client-call-id")
 include(":ktor-client:ktor-client-plugins:ktor-client-logging")
+include(":ktor-client:ktor-client-plugins:ktor-client-platform")
 include(":ktor-client:ktor-client-plugins:ktor-client-encoding")
 include(":ktor-client:ktor-client-plugins:ktor-client-websockets")
 include(":ktor-client:ktor-client-plugins:ktor-client-content-negotiation")
