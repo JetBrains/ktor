@@ -12,6 +12,11 @@ internal actual object Platform {
      */
     private val isAndroid: Boolean = System.getProperty("java.vm.name") == "Dalvik"
 
+    /**
+     * Used by Android to determine whether cleartext network traffic is permitted for all network communication from this process.
+     *
+     * See [NetworkSecurityPolicy#isCleartextTrafficPermitted()](https://developer.android.com/reference/android/security/NetworkSecurityPolicy#isCleartextTrafficPermitted()).
+     */
     actual fun isCleartextTrafficPermitted(hostname: String): Boolean {
         if (!isAndroid) return true
         return try {
