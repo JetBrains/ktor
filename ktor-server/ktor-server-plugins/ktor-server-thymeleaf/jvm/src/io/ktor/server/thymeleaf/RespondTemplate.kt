@@ -17,5 +17,6 @@ public suspend fun ApplicationCall.respondTemplate(
     model: Map<String, Any> = emptyMap(),
     etag: String? = null,
     contentType: ContentType = ContentType.Text.Html.withCharset(Charsets.UTF_8),
-    locale: Locale = Locale.getDefault()
-): Unit = respond(ThymeleafContent(template, model, etag, contentType, locale))
+    locale: Locale = Locale.getDefault(),
+    status: HttpStatusCode = HttpStatusCode.OK    
+): Unit = respond(status, ThymeleafContent(template, model, etag, contentType, locale))

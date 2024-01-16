@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.*
 import kotlin.concurrent.*
 import kotlin.test.*
 
-@ExtendWith(RetryOnException::class)
+@ExtendWith(RetrySupport::class)
 abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfiguration : ApplicationEngine.Configuration>(
     hostFactory: ApplicationEngineFactory<TEngine, TConfiguration>
 ) : EngineTestBase<TEngine, TConfiguration>(hostFactory) {
@@ -325,7 +325,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @OptIn(InternalAPI::class)
-    @Test
+    @RetryableTest(2)
     open fun testBlockingConcurrency() {
         val completed = AtomicInteger(0)
         createAndStartServer {

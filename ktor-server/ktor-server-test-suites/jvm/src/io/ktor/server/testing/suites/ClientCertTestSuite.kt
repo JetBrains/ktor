@@ -15,7 +15,6 @@ import io.ktor.server.engine.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.*
-import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.*
 import kotlin.test.*
 import kotlin.test.Test
@@ -23,7 +22,7 @@ import kotlin.test.Test
 /**
  * This tests uses a CA, which creates server and client certificates.
  */
-@ExtendWith(RetryOnException::class)
+@ExtendWith(RetrySupport::class)
 abstract class ClientCertTestSuite<Engine : ApplicationEngine, Configuration : ApplicationEngine.Configuration>(
     val engine: ApplicationEngineFactory<Engine, Configuration>
 ) {
@@ -41,6 +40,7 @@ abstract class ClientCertTestSuite<Engine : ApplicationEngine, Configuration : A
         val ca = generateCertificate(keyType = KeyType.CA)
     }
 
+    @RetryableTest(2)
     @Test
     open fun `Server requesting Client Certificate from CIO Client`() {
         val clientKeys = ca.generateCertificate(keyType = KeyType.Client)

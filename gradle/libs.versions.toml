@@ -36,22 +36,22 @@ logback-version = "1.3.5"
 dropwizard-version = "4.2.22"
 micrometer-version = "1.12.2"
 
-jansi-version = "2.4.0"
+jansi-version = "2.4.1"
 typesafe-version = "1.4.3"
 
-mockk-version = "1.13.5"
+mockk-version = "1.13.9"
 
 java-jwt-version = "4.4.0"
 
 jwks-rsa-version = "0.22.1"
 mustache-version = "0.9.11"
 freemarker-version = "2.3.32"
-pebble-version = "3.2.1"
+pebble-version = "3.2.2"
 velocity-version = "2.3"
 velocity-tools-version = "3.1"
 webjars-locator-version = "0.53"
 webjars-jquery-version = "3.6.4"
-thymeleaf-version = "3.1.1.RELEASE"
+thymeleaf-version = "3.1.2.RELEASE"
 javax-servlet-version = "4.0.1"
 jakarta-servlet-version = "5.0.0"
 
@@ -63,7 +63,7 @@ yamlkt-version = "0.13.0"
 
 swagger-codegen-version = "3.0.52"
 swagger-codegen-generators-version = "1.0.38"
-swagger-parser-version = "2.1.13"
+swagger-parser-version = "2.1.19"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin-version" }

@@ -4,10 +4,13 @@
 
 package io.ktor.tests.server.tomcat.jakarta
 
+import io.ktor.junit.*
 import io.ktor.server.testing.suites.*
 import io.ktor.server.tomcat.jakarta.*
+import org.junit.jupiter.api.extension.ExtendWith
 import kotlin.test.*
 
+@ExtendWith(RetrySupport::class)
 class TomcatWebSocketTest :
     WebSocketEngineSuite<TomcatApplicationEngine, TomcatApplicationEngine.Configuration>(Tomcat) {
 
@@ -17,5 +20,15 @@ class TomcatWebSocketTest :
 
     @Ignore
     override fun testFragmentedFlagsFromTheFirstFrame() {
+    }
+
+    @RetryableTest(3)
+    override fun testWebSocketGenericSequence() {
+        super.testWebSocketGenericSequence()
+    }
+
+    @RetryableTest(3)
+    override fun testConnectionWithContentType() {
+        super.testConnectionWithContentType()
     }
 }

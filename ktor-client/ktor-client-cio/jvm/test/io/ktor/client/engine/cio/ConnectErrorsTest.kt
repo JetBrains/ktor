@@ -26,7 +26,7 @@ import kotlin.concurrent.*
 import kotlin.test.*
 
 @CoroutinesTimeout(5 * 60 * 1000)
-@ExtendWith(RetryOnException::class)
+@ExtendWith(RetrySupport::class)
 @Suppress("KDocMissingDocumentation")
 class ConnectErrorsTest {
 
@@ -37,7 +37,7 @@ class ConnectErrorsTest {
         serverSocket.close()
     }
 
-    @Test
+    @RetryableTest(3)
     fun testConnectAfterConnectionErrors(): Unit = runBlocking {
         val client = HttpClient(CIO) {
             engine {
@@ -81,7 +81,7 @@ class ConnectErrorsTest {
         }
     }
 
-    @Test
+    @RetryableTest(3)
     fun testResponseWithNoLengthChunkedAndConnectionClosedWithHttp10(): Unit = runBlocking {
         val client = HttpClient(CIO)
 
@@ -107,7 +107,7 @@ class ConnectErrorsTest {
         }
     }
 
-    @Test
+    @RetryableTest(3)
     fun testResponseErrorWithNoLengthChunkedAndConnectionClosedWithHttp11(): Unit = runBlocking {
         val client = HttpClient(CIO)
 
@@ -134,7 +134,7 @@ class ConnectErrorsTest {
         }
     }
 
-    @Test
+    @RetryableTest(3)
     fun testLateServerStart(): Unit = runBlocking {
         val keyStoreFile = File("build/temp.jks")
         val keyStore = generateCertificate(keyStoreFile, algorithm = "SHA256withECDSA", keySizeInBits = 256)

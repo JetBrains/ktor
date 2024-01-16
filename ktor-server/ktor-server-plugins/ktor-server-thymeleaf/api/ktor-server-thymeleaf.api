@@ -1,6 +1,6 @@
 public final class io/ktor/server/thymeleaf/RespondTemplateKt {
-	public static final fun respondTemplate (Lio/ktor/server/application/ApplicationCall;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Lio/ktor/http/ContentType;Ljava/util/Locale;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun respondTemplate$default (Lio/ktor/server/application/ApplicationCall;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Lio/ktor/http/ContentType;Ljava/util/Locale;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun respondTemplate (Lio/ktor/server/application/ApplicationCall;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Lio/ktor/http/ContentType;Ljava/util/Locale;Lio/ktor/http/HttpStatusCode;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun respondTemplate$default (Lio/ktor/server/application/ApplicationCall;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Lio/ktor/http/ContentType;Ljava/util/Locale;Lio/ktor/http/HttpStatusCode;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class io/ktor/server/thymeleaf/ThymeleafContent {

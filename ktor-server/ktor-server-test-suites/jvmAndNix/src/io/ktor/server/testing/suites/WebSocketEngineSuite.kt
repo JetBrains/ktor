@@ -278,7 +278,7 @@ abstract class WebSocketEngineSuite<TEngine : ApplicationEngine, TConfiguration 
     }
 
     @Test
-    fun testWebSocketGenericSequence() = runTest {
+    open fun testWebSocketGenericSequence() = runTest {
         val collected = Channel<String>(Channel.UNLIMITED)
 
         createAndStartServer {
@@ -406,7 +406,7 @@ abstract class WebSocketEngineSuite<TEngine : ApplicationEngine, TConfiguration 
     }
 
     @Test
-    fun testConnectionWithContentType() = runTest {
+    open fun testConnectionWithContentType() = runTest {
         val count = 5
         val template = (1..count).joinToString("") { (it and 0x0f).toString(16) }
         val bytes = template.toByteArray()
