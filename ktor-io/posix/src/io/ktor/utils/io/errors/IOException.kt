@@ -6,3 +6,5 @@ actual constructor(message: String, cause: Throwable?) : Exception(message, caus
 }
 
 public actual open class EOFException actual constructor(message: String) : IOException(message)
+
+public actual open class UnknownServiceException actual constructor(message: String) : IOException(message)
