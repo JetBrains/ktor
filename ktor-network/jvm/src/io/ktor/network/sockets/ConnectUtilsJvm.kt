@@ -5,6 +5,7 @@
 package io.ktor.network.sockets
 
 import io.ktor.network.selector.*
+import io.ktor.network.selector.eventgroup.EventGroupSelectorManager
 import java.net.*
 import java.nio.channels.*
 import java.nio.channels.spi.*
@@ -27,10 +28,14 @@ internal actual fun bind(
     localAddress: SocketAddress?,
     socketOptions: SocketOptions.AcceptorOptions
 ): ServerSocket = selector.buildOrClose({ openServerSocketChannelFor(localAddress) }) {
+    require(selector is EventGroupSelectorManager)
+
     if (localAddress is InetSocketAddress) assignOptions(socketOptions)
     nonBlocking()
 
-    ServerSocketImpl(this, selector).apply {
+    val registered = selector.group.registerChannel(this)
+
+    ServerSocketImpl(registered, selector).apply {
         if (java7NetworkApisAvailable) {
             channel.bind(localAddress?.toJavaAddress(), socketOptions.backlogSize)
         } else {

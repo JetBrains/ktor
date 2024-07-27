@@ -77,5 +77,9 @@ public actual enum class SelectInterest(public val flag: Int) {
         public val flags: IntArray = values().map { it.flag }.toIntArray()
 
         public val size: Int = values().size
+
+        private val byFlag = values().associateBy { it.flag }
+
+        public fun byValue(value: Int): SelectInterest = byFlag[value] ?: error("Unknown SelectInterest value: $value")
     }
 }

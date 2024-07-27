@@ -5,15 +5,19 @@
 package io.ktor.network.sockets
 
 import io.ktor.network.selector.*
+import io.ktor.network.selector.eventgroup.*
+import io.ktor.network.selector.eventgroup.Connection
 import kotlinx.coroutines.*
 import java.net.*
 import java.nio.channels.*
 
 @Suppress("BlockingMethodInNonBlockingContext")
 internal class ServerSocketImpl(
-    override val channel: ServerSocketChannel,
-    val selector: SelectorManager
-) : ServerSocket, Selectable by SelectableBase(channel) {
+    private val registeredServerChannel: RegisteredServerChannel,
+    private val selector: SelectorManager,
+) : ServerSocket, Selectable by SelectableBase(registeredServerChannel.channel) {
+    override val channel: ServerSocketChannel get() = registeredServerChannel.channel
+
     init {
         require(!channel.isBlocking) { "Channel need to be configured as non-blocking." }
     }
@@ -31,29 +35,19 @@ internal class ServerSocketImpl(
         }
 
     override suspend fun accept(): Socket {
-        channel.accept()?.let { return accepted(it) }
-        return acceptSuspend()
-    }
-
-    private suspend fun acceptSuspend(): Socket {
-        while (true) {
-            interestOp(SelectInterest.ACCEPT, true)
-            selector.select(this, SelectInterest.ACCEPT)
-            channel.accept()?.let { return accepted(it) }
-        }
-    }
-
-    private fun accepted(nioChannel: SocketChannel): Socket {
-        interestOp(SelectInterest.ACCEPT, false)
-        nioChannel.configureBlocking(false)
-        if (localAddress is InetSocketAddress) {
-            if (java7NetworkApisAvailable) {
-                nioChannel.setOption(StandardSocketOptions.TCP_NODELAY, true)
-            } else {
-                nioChannel.socket().tcpNoDelay = true
+        return registeredServerChannel.acceptConnection { nioChannel ->
+            if (localAddress is InetSocketAddress) {
+                if (java7NetworkApisAvailable) {
+                    nioChannel.setOption(StandardSocketOptions.TCP_NODELAY, true)
+                } else {
+                    nioChannel.socket().tcpNoDelay = true
+                }
             }
-        }
-        return SocketImpl(nioChannel, selector)
+        }.toSocket()
+    }
+
+    private fun Connection.toSocket(): Socket {
+        return ServerConnectionBasedSocket(this, selector)
     }
 
     override fun close() {
