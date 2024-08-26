@@ -282,6 +282,10 @@ open class io.ktor.utils.io.charsets/MalformedInputException : kotlinx.io/IOExce
     constructor <init>(kotlin/String) // io.ktor.utils.io.charsets/MalformedInputException.<init>|<init>(kotlin.String){}[0]
 }
 
+open class io.ktor.utils.io.errors/UnknownServiceException : kotlinx.io/IOException { // io.ktor.utils.io.errors/UnknownServiceException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.utils.io.errors/UnknownServiceException.<init>|<init>(kotlin.String){}[0]
+}
+
 final object io.ktor.utils.io.charsets/Charsets { // io.ktor.utils.io.charsets/Charsets|null[0]
     final val ISO_8859_1 // io.ktor.utils.io.charsets/Charsets.ISO_8859_1|{}ISO_8859_1[0]
         final fun <get-ISO_8859_1>(): io.ktor.utils.io.charsets/Charset // io.ktor.utils.io.charsets/Charsets.ISO_8859_1.<get-ISO_8859_1>|<get-ISO_8859_1>(){}[0]
