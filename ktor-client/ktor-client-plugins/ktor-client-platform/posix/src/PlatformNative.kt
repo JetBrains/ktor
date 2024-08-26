@@ -9,5 +9,5 @@ internal actual object Platform {
     /**
      * Not supported on native.
      */
-    fun isCleartextTrafficPermitted(hostname: String): Boolean = false
+    actual fun isCleartextTrafficPermitted(hostname: String): Boolean = false
 }
