@@ -61,8 +61,7 @@ class CurlProxyTest {
 
         runBlocking {
             client.use {
-                @Suppress("DEPRECATION")
-                assertFailsWith<CurlIllegalStateException> {
+                assertFailsWith<IllegalStateException> {
                     client.get("https://localhost:8089/")
                 }
             }

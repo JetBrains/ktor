@@ -1,0 +1,36 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-sse>
+abstract interface io.ktor.server.sse/ServerSSESession : kotlinx.coroutines/CoroutineScope { // io.ktor.server.sse/ServerSSESession|null[0]
+    abstract val call // io.ktor.server.sse/ServerSSESession.call|{}call[0]
+        abstract fun <get-call>(): io.ktor.server.application/ApplicationCall // io.ktor.server.sse/ServerSSESession.call.<get-call>|<get-call>(){}[0]
+
+    abstract suspend fun close() // io.ktor.server.sse/ServerSSESession.close|close(){}[0]
+    abstract suspend fun send(io.ktor.sse/ServerSentEvent) // io.ktor.server.sse/ServerSSESession.send|send(io.ktor.sse.ServerSentEvent){}[0]
+    open suspend fun send(kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/Long? = ..., kotlin/String? = ...) // io.ktor.server.sse/ServerSSESession.send|send(kotlin.String?;kotlin.String?;kotlin.String?;kotlin.Long?;kotlin.String?){}[0]
+}
+
+final class io.ktor.server.sse/SSEServerContent : io.ktor.http.content/OutgoingContent.WriteChannelContent { // io.ktor.server.sse/SSEServerContent|null[0]
+    constructor <init>(io.ktor.server.application/ApplicationCall, kotlin.coroutines/SuspendFunction1<io.ktor.server.sse/ServerSSESession, kotlin/Unit>) // io.ktor.server.sse/SSEServerContent.<init>|<init>(io.ktor.server.application.ApplicationCall;kotlin.coroutines.SuspendFunction1<io.ktor.server.sse.ServerSSESession,kotlin.Unit>){}[0]
+
+    final val call // io.ktor.server.sse/SSEServerContent.call|{}call[0]
+        final fun <get-call>(): io.ktor.server.application/ApplicationCall // io.ktor.server.sse/SSEServerContent.call.<get-call>|<get-call>(){}[0]
+    final val contentType // io.ktor.server.sse/SSEServerContent.contentType|{}contentType[0]
+        final fun <get-contentType>(): io.ktor.http/ContentType // io.ktor.server.sse/SSEServerContent.contentType.<get-contentType>|<get-contentType>(){}[0]
+    final val handle // io.ktor.server.sse/SSEServerContent.handle|{}handle[0]
+        final fun <get-handle>(): kotlin.coroutines/SuspendFunction1<io.ktor.server.sse/ServerSSESession, kotlin/Unit> // io.ktor.server.sse/SSEServerContent.handle.<get-handle>|<get-handle>(){}[0]
+
+    final fun toString(): kotlin/String // io.ktor.server.sse/SSEServerContent.toString|toString(){}[0]
+    final suspend fun writeTo(io.ktor.utils.io/ByteWriteChannel) // io.ktor.server.sse/SSEServerContent.writeTo|writeTo(io.ktor.utils.io.ByteWriteChannel){}[0]
+}
+
+final val io.ktor.server.sse/SSE // io.ktor.server.sse/SSE|{}SSE[0]
+    final fun <get-SSE>(): io.ktor.server.application/ApplicationPlugin<kotlin/Unit> // io.ktor.server.sse/SSE.<get-SSE>|<get-SSE>(){}[0]
+
+final fun (io.ktor.server.routing/Route).io.ktor.server.sse/sse(kotlin.coroutines/SuspendFunction1<io.ktor.server.sse/ServerSSESession, kotlin/Unit>) // io.ktor.server.sse/sse|sse@io.ktor.server.routing.Route(kotlin.coroutines.SuspendFunction1<io.ktor.server.sse.ServerSSESession,kotlin.Unit>){}[0]
+final fun (io.ktor.server.routing/Route).io.ktor.server.sse/sse(kotlin/String, kotlin.coroutines/SuspendFunction1<io.ktor.server.sse/ServerSSESession, kotlin/Unit>) // io.ktor.server.sse/sse|sse@io.ktor.server.routing.Route(kotlin.String;kotlin.coroutines.SuspendFunction1<io.ktor.server.sse.ServerSSESession,kotlin.Unit>){}[0]

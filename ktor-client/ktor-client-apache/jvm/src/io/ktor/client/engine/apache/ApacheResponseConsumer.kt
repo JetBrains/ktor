@@ -16,7 +16,7 @@ import kotlin.coroutines.*
 
 @OptIn(InternalCoroutinesApi::class)
 internal class ApacheResponseConsumer(
-    val parentContext: CoroutineContext,
+    private val parentContext: CoroutineContext,
     private val requestData: HttpRequestData
 ) : HttpAsyncResponseConsumer<Unit>, CoroutineScope {
     private val interestController = InterestControllerHolder()
@@ -26,7 +26,6 @@ internal class ApacheResponseConsumer(
 
     private val waiting = atomic(false)
 
-    @Suppress("DEPRECATION")
     private val channel = ByteChannel().also {
         it.attachJob(consumerJob)
     }
@@ -44,6 +43,7 @@ internal class ApacheResponseConsumer(
         }
     }
 
+    @OptIn(InternalAPI::class)
     override fun consumeContent(decoder: ContentDecoder, ioctrl: IOControl) {
         check(!waiting.value)
 
@@ -53,7 +53,7 @@ internal class ApacheResponseConsumer(
             channel.writeAvailable {
                 result = decoder.read(it)
             }
-            channel.flush()
+            channel.flushWriteBuffer()
         } while (result > 0)
 
         if (result < 0 || decoder.isCompleted) {
@@ -91,19 +91,17 @@ internal class ApacheResponseConsumer(
         consumerJob.complete()
     }
 
-    override fun getException(): Exception? = channel.closedCause as? Exception
+    override fun getException(): Exception? = channel.closedCause as Exception?
 
-    override fun getResult() {
-    }
+    override fun getResult() = Unit
 
     override fun isDone(): Boolean = channel.isClosedForWrite
 
-    override fun responseCompleted(context: HttpContext) {
-    }
+    override fun responseCompleted(context: HttpContext) = Unit
 
     override fun responseReceived(response: HttpResponse) {
         responseDeferred.complete(response)
     }
 
-    public suspend fun waitForResponse(): HttpResponse = responseDeferred.await()
+    suspend fun waitForResponse(): HttpResponse = responseDeferred.await()
 }

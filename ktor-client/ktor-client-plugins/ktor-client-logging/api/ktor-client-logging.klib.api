@@ -1,0 +1,59 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-client-logging>
+final enum class io.ktor.client.plugins.logging/LogLevel : kotlin/Enum<io.ktor.client.plugins.logging/LogLevel> { // io.ktor.client.plugins.logging/LogLevel|null[0]
+    enum entry ALL // io.ktor.client.plugins.logging/LogLevel.ALL|null[0]
+    enum entry BODY // io.ktor.client.plugins.logging/LogLevel.BODY|null[0]
+    enum entry HEADERS // io.ktor.client.plugins.logging/LogLevel.HEADERS|null[0]
+    enum entry INFO // io.ktor.client.plugins.logging/LogLevel.INFO|null[0]
+    enum entry NONE // io.ktor.client.plugins.logging/LogLevel.NONE|null[0]
+
+    final val body // io.ktor.client.plugins.logging/LogLevel.body|{}body[0]
+        final fun <get-body>(): kotlin/Boolean // io.ktor.client.plugins.logging/LogLevel.body.<get-body>|<get-body>(){}[0]
+    final val entries // io.ktor.client.plugins.logging/LogLevel.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.client.plugins.logging/LogLevel> // io.ktor.client.plugins.logging/LogLevel.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val headers // io.ktor.client.plugins.logging/LogLevel.headers|{}headers[0]
+        final fun <get-headers>(): kotlin/Boolean // io.ktor.client.plugins.logging/LogLevel.headers.<get-headers>|<get-headers>(){}[0]
+    final val info // io.ktor.client.plugins.logging/LogLevel.info|{}info[0]
+        final fun <get-info>(): kotlin/Boolean // io.ktor.client.plugins.logging/LogLevel.info.<get-info>|<get-info>(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.client.plugins.logging/LogLevel // io.ktor.client.plugins.logging/LogLevel.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.client.plugins.logging/LogLevel> // io.ktor.client.plugins.logging/LogLevel.values|values#static(){}[0]
+}
+
+abstract interface io.ktor.client.plugins.logging/Logger { // io.ktor.client.plugins.logging/Logger|null[0]
+    abstract fun log(kotlin/String) // io.ktor.client.plugins.logging/Logger.log|log(kotlin.String){}[0]
+
+    final object Companion // io.ktor.client.plugins.logging/Logger.Companion|null[0]
+}
+
+final class io.ktor.client.plugins.logging/LoggingConfig { // io.ktor.client.plugins.logging/LoggingConfig|null[0]
+    constructor <init>() // io.ktor.client.plugins.logging/LoggingConfig.<init>|<init>(){}[0]
+
+    final var level // io.ktor.client.plugins.logging/LoggingConfig.level|{}level[0]
+        final fun <get-level>(): io.ktor.client.plugins.logging/LogLevel // io.ktor.client.plugins.logging/LoggingConfig.level.<get-level>|<get-level>(){}[0]
+        final fun <set-level>(io.ktor.client.plugins.logging/LogLevel) // io.ktor.client.plugins.logging/LoggingConfig.level.<set-level>|<set-level>(io.ktor.client.plugins.logging.LogLevel){}[0]
+    final var logger // io.ktor.client.plugins.logging/LoggingConfig.logger|{}logger[0]
+        final fun <get-logger>(): io.ktor.client.plugins.logging/Logger // io.ktor.client.plugins.logging/LoggingConfig.logger.<get-logger>|<get-logger>(){}[0]
+        final fun <set-logger>(io.ktor.client.plugins.logging/Logger) // io.ktor.client.plugins.logging/LoggingConfig.logger.<set-logger>|<set-logger>(io.ktor.client.plugins.logging.Logger){}[0]
+
+    final fun filter(kotlin/Function1<io.ktor.client.request/HttpRequestBuilder, kotlin/Boolean>) // io.ktor.client.plugins.logging/LoggingConfig.filter|filter(kotlin.Function1<io.ktor.client.request.HttpRequestBuilder,kotlin.Boolean>){}[0]
+    final fun sanitizeHeader(kotlin/String = ..., kotlin/Function1<kotlin/String, kotlin/Boolean>) // io.ktor.client.plugins.logging/LoggingConfig.sanitizeHeader|sanitizeHeader(kotlin.String;kotlin.Function1<kotlin.String,kotlin.Boolean>){}[0]
+}
+
+final val io.ktor.client.plugins.logging/DEFAULT // io.ktor.client.plugins.logging/DEFAULT|@io.ktor.client.plugins.logging.Logger.Companion{}DEFAULT[0]
+    final fun (io.ktor.client.plugins.logging/Logger.Companion).<get-DEFAULT>(): io.ktor.client.plugins.logging/Logger // io.ktor.client.plugins.logging/DEFAULT.<get-DEFAULT>|<get-DEFAULT>@io.ktor.client.plugins.logging.Logger.Companion(){}[0]
+final val io.ktor.client.plugins.logging/EMPTY // io.ktor.client.plugins.logging/EMPTY|@io.ktor.client.plugins.logging.Logger.Companion{}EMPTY[0]
+    final fun (io.ktor.client.plugins.logging/Logger.Companion).<get-EMPTY>(): io.ktor.client.plugins.logging/Logger // io.ktor.client.plugins.logging/EMPTY.<get-EMPTY>|<get-EMPTY>@io.ktor.client.plugins.logging.Logger.Companion(){}[0]
+final val io.ktor.client.plugins.logging/Logging // io.ktor.client.plugins.logging/Logging|{}Logging[0]
+    final fun <get-Logging>(): io.ktor.client.plugins.api/ClientPlugin<io.ktor.client.plugins.logging/LoggingConfig> // io.ktor.client.plugins.logging/Logging.<get-Logging>|<get-Logging>(){}[0]
+final val io.ktor.client.plugins.logging/SIMPLE // io.ktor.client.plugins.logging/SIMPLE|@io.ktor.client.plugins.logging.Logger.Companion{}SIMPLE[0]
+    final fun (io.ktor.client.plugins.logging/Logger.Companion).<get-SIMPLE>(): io.ktor.client.plugins.logging/Logger // io.ktor.client.plugins.logging/SIMPLE.<get-SIMPLE>|<get-SIMPLE>@io.ktor.client.plugins.logging.Logger.Companion(){}[0]
+
+final fun (io.ktor.client/HttpClientConfig<*>).io.ktor.client.plugins.logging/Logging(kotlin/Function1<io.ktor.client.plugins.logging/LoggingConfig, kotlin/Unit> = ...) // io.ktor.client.plugins.logging/Logging|Logging@io.ktor.client.HttpClientConfig<*>(kotlin.Function1<io.ktor.client.plugins.logging.LoggingConfig,kotlin.Unit>){}[0]
+final fun io.ktor.client.plugins.logging/MDCContext(): kotlin.coroutines/CoroutineContext.Element // io.ktor.client.plugins.logging/MDCContext|MDCContext(){}[0]

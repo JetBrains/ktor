@@ -1,0 +1,72 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-html-builder>
+abstract interface <#A: in kotlin/Any?> io.ktor.server.html/Template { // io.ktor.server.html/Template|null[0]
+    abstract fun (#A).apply() // io.ktor.server.html/Template.apply|apply@1:0(){}[0]
+}
+
+final class <#A: kotlin/Any?> io.ktor.server.html/PlaceholderItem : io.ktor.server.html/Placeholder<#A> { // io.ktor.server.html/PlaceholderItem|null[0]
+    constructor <init>(kotlin/Int, kotlin.collections/List<io.ktor.server.html/PlaceholderItem<#A>>) // io.ktor.server.html/PlaceholderItem.<init>|<init>(kotlin.Int;kotlin.collections.List<io.ktor.server.html.PlaceholderItem<1:0>>){}[0]
+
+    final val collection // io.ktor.server.html/PlaceholderItem.collection|{}collection[0]
+        final fun <get-collection>(): kotlin.collections/List<io.ktor.server.html/PlaceholderItem<#A>> // io.ktor.server.html/PlaceholderItem.collection.<get-collection>|<get-collection>(){}[0]
+    final val first // io.ktor.server.html/PlaceholderItem.first|{}first[0]
+        final fun <get-first>(): kotlin/Boolean // io.ktor.server.html/PlaceholderItem.first.<get-first>|<get-first>(){}[0]
+    final val index // io.ktor.server.html/PlaceholderItem.index|{}index[0]
+        final fun <get-index>(): kotlin/Int // io.ktor.server.html/PlaceholderItem.index.<get-index>|<get-index>(){}[0]
+    final val last // io.ktor.server.html/PlaceholderItem.last|{}last[0]
+        final fun <get-last>(): kotlin/Boolean // io.ktor.server.html/PlaceholderItem.last.<get-last>|<get-last>(){}[0]
+}
+
+final class io.ktor.server.html/HtmlContent : io.ktor.http.content/OutgoingContent.WriteChannelContent { // io.ktor.server.html/HtmlContent|null[0]
+    constructor <init>(io.ktor.http/HttpStatusCode? = ..., kotlin/Function1<kotlinx.html/HTML, kotlin/Unit>) // io.ktor.server.html/HtmlContent.<init>|<init>(io.ktor.http.HttpStatusCode?;kotlin.Function1<kotlinx.html.HTML,kotlin.Unit>){}[0]
+
+    final val contentType // io.ktor.server.html/HtmlContent.contentType|{}contentType[0]
+        final fun <get-contentType>(): io.ktor.http/ContentType // io.ktor.server.html/HtmlContent.contentType.<get-contentType>|<get-contentType>(){}[0]
+    final val status // io.ktor.server.html/HtmlContent.status|{}status[0]
+        final fun <get-status>(): io.ktor.http/HttpStatusCode? // io.ktor.server.html/HtmlContent.status.<get-status>|<get-status>(){}[0]
+
+    final suspend fun writeTo(io.ktor.utils.io/ByteWriteChannel) // io.ktor.server.html/HtmlContent.writeTo|writeTo(io.ktor.utils.io.ByteWriteChannel){}[0]
+}
+
+open class <#A: kotlin/Any?, #B: kotlin/Any?> io.ktor.server.html/PlaceholderList { // io.ktor.server.html/PlaceholderList|null[0]
+    constructor <init>() // io.ktor.server.html/PlaceholderList.<init>|<init>(){}[0]
+
+    final val size // io.ktor.server.html/PlaceholderList.size|{}size[0]
+        final fun <get-size>(): kotlin/Int // io.ktor.server.html/PlaceholderList.size.<get-size>|<get-size>(){}[0]
+
+    final fun apply(#A, kotlin/Function2<#A, io.ktor.server.html/PlaceholderItem<#B>, kotlin/Unit>) // io.ktor.server.html/PlaceholderList.apply|apply(1:0;kotlin.Function2<1:0,io.ktor.server.html.PlaceholderItem<1:1>,kotlin.Unit>){}[0]
+    final fun invoke(kotlin/String = ..., kotlin/Function2<#B, io.ktor.server.html/Placeholder<#B>, kotlin/Unit> = ...) // io.ktor.server.html/PlaceholderList.invoke|invoke(kotlin.String;kotlin.Function2<1:1,io.ktor.server.html.Placeholder<1:1>,kotlin.Unit>){}[0]
+    final fun isEmpty(): kotlin/Boolean // io.ktor.server.html/PlaceholderList.isEmpty|isEmpty(){}[0]
+    final fun isNotEmpty(): kotlin/Boolean // io.ktor.server.html/PlaceholderList.isNotEmpty|isNotEmpty(){}[0]
+}
+
+open class <#A: kotlin/Any?> io.ktor.server.html/Placeholder { // io.ktor.server.html/Placeholder|null[0]
+    constructor <init>() // io.ktor.server.html/Placeholder.<init>|<init>(){}[0]
+
+    final var meta // io.ktor.server.html/Placeholder.meta|{}meta[0]
+        final fun <get-meta>(): kotlin/String // io.ktor.server.html/Placeholder.meta.<get-meta>|<get-meta>(){}[0]
+        final fun <set-meta>(kotlin/String) // io.ktor.server.html/Placeholder.meta.<set-meta>|<set-meta>(kotlin.String){}[0]
+
+    final fun apply(#A) // io.ktor.server.html/Placeholder.apply|apply(1:0){}[0]
+    final fun invoke(kotlin/String = ..., kotlin/Function2<#A, io.ktor.server.html/Placeholder<#A>, kotlin/Unit>) // io.ktor.server.html/Placeholder.invoke|invoke(kotlin.String;kotlin.Function2<1:0,io.ktor.server.html.Placeholder<1:0>,kotlin.Unit>){}[0]
+}
+
+open class <#A: kotlin/Any?> io.ktor.server.html/TemplatePlaceholder { // io.ktor.server.html/TemplatePlaceholder|null[0]
+    constructor <init>() // io.ktor.server.html/TemplatePlaceholder.<init>|<init>(){}[0]
+
+    final fun apply(#A) // io.ktor.server.html/TemplatePlaceholder.apply|apply(1:0){}[0]
+    final fun invoke(kotlin/Function1<#A, kotlin/Unit>) // io.ktor.server.html/TemplatePlaceholder.invoke|invoke(kotlin.Function1<1:0,kotlin.Unit>){}[0]
+}
+
+final fun <#A: io.ktor.server.html/Template<#B>, #B: kotlin/Any?> (#B).io.ktor.server.html/insert(#A, io.ktor.server.html/TemplatePlaceholder<#A>) // io.ktor.server.html/insert|insert@0:1(0:0;io.ktor.server.html.TemplatePlaceholder<0:0>){0§<io.ktor.server.html.Template<0:1>>;1§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?, #B: io.ktor.server.html/Template<#A>> (#A).io.ktor.server.html/insert(#B, kotlin/Function1<#B, kotlin/Unit>) // io.ktor.server.html/insert|insert@0:0(0:1;kotlin.Function1<0:1,kotlin.Unit>){0§<kotlin.Any?>;1§<io.ktor.server.html.Template<0:0>>}[0]
+final fun <#A: kotlin/Any?, #B: kotlin/Any?> (#A).io.ktor.server.html/each(io.ktor.server.html/PlaceholderList<#A, #B>, kotlin/Function2<#A, io.ktor.server.html/PlaceholderItem<#B>, kotlin/Unit>) // io.ktor.server.html/each|each@0:0(io.ktor.server.html.PlaceholderList<0:0,0:1>;kotlin.Function2<0:0,io.ktor.server.html.PlaceholderItem<0:1>,kotlin.Unit>){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?> (#A).io.ktor.server.html/insert(io.ktor.server.html/Placeholder<#A>) // io.ktor.server.html/insert|insert@0:0(io.ktor.server.html.Placeholder<0:0>){0§<kotlin.Any?>}[0]
+final suspend fun (io.ktor.server.application/ApplicationCall).io.ktor.server.html/respondHtml(io.ktor.http/HttpStatusCode = ..., kotlin/Function1<kotlinx.html/HTML, kotlin/Unit>) // io.ktor.server.html/respondHtml|respondHtml@io.ktor.server.application.ApplicationCall(io.ktor.http.HttpStatusCode;kotlin.Function1<kotlinx.html.HTML,kotlin.Unit>){}[0]
+final suspend fun <#A: io.ktor.server.html/Template<kotlinx.html/HTML>> (io.ktor.server.application/ApplicationCall).io.ktor.server.html/respondHtmlTemplate(#A, io.ktor.http/HttpStatusCode = ..., kotlin/Function1<#A, kotlin/Unit>) // io.ktor.server.html/respondHtmlTemplate|respondHtmlTemplate@io.ktor.server.application.ApplicationCall(0:0;io.ktor.http.HttpStatusCode;kotlin.Function1<0:0,kotlin.Unit>){0§<io.ktor.server.html.Template<kotlinx.html.HTML>>}[0]

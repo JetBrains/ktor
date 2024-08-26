@@ -12,7 +12,7 @@ import test.server.tests.*
 import java.io.*
 import java.util.concurrent.*
 
-val TEST_SERVER: String = "http://127.0.0.1:8080"
+const val TEST_SERVER: String = "http://127.0.0.1:8080"
 
 private const val DEFAULT_PORT: Int = 8080
 private const val DEFAULT_TLS_PORT: Int = 8089

@@ -1,0 +1,19 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-csrf>
+final class io.ktor.server.plugins.csrf/CSRFConfig { // io.ktor.server.plugins.csrf/CSRFConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.csrf/CSRFConfig.<init>|<init>(){}[0]
+
+    final fun allowOrigin(kotlin/String) // io.ktor.server.plugins.csrf/CSRFConfig.allowOrigin|allowOrigin(kotlin.String){}[0]
+    final fun checkHeader(kotlin/String, kotlin/Function2<io.ktor.server.application/ApplicationCall, kotlin/String, kotlin/Boolean> = ...) // io.ktor.server.plugins.csrf/CSRFConfig.checkHeader|checkHeader(kotlin.String;kotlin.Function2<io.ktor.server.application.ApplicationCall,kotlin.String,kotlin.Boolean>){}[0]
+    final fun onFailure(kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, kotlin/String, kotlin/Unit>) // io.ktor.server.plugins.csrf/CSRFConfig.onFailure|onFailure(kotlin.coroutines.SuspendFunction2<io.ktor.server.application.ApplicationCall,kotlin.String,kotlin.Unit>){}[0]
+    final fun originMatchesHost() // io.ktor.server.plugins.csrf/CSRFConfig.originMatchesHost|originMatchesHost(){}[0]
+}
+
+final val io.ktor.server.plugins.csrf/CSRF // io.ktor.server.plugins.csrf/CSRF|{}CSRF[0]
+    final fun <get-CSRF>(): io.ktor.server.application/RouteScopedPlugin<io.ktor.server.plugins.csrf/CSRFConfig> // io.ktor.server.plugins.csrf/CSRF.<get-CSRF>|<get-CSRF>(){}[0]

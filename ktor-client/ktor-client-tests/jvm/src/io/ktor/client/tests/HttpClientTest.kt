@@ -25,7 +25,6 @@ import java.util.concurrent.*
 import kotlin.coroutines.*
 import kotlin.test.*
 
-@Suppress("KDocMissingDocumentation")
 abstract class HttpClientTest(private val factory: HttpClientEngineFactory<*>) : TestWithKtor() {
     override val server: EmbeddedServer<*, *> = embeddedServer(CIO, serverPort) {
         routing {

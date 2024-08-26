@@ -14,9 +14,9 @@ import org.eclipse.jetty.server.*
 import java.util.concurrent.*
 import kotlin.coroutines.*
 
-@Suppress("KDocMissingDocumentation")
 @InternalAPI
 public object JettyUpgradeImpl : ServletUpgrade {
+
     override suspend fun performUpgrade(
         upgrade: OutgoingContent.ProtocolUpgrade,
         servletRequest: HttpServletRequest,
@@ -33,7 +33,7 @@ public object JettyUpgradeImpl : ServletUpgrade {
         endPoint.idleTimeout = TimeUnit.MINUTES.toMillis(60L)
 
         withContext(engineContext + CoroutineName("upgrade-scope")) {
-            try {
+            connection.use { connection ->
                 coroutineScope {
                     val inputChannel = ByteChannel(autoFlush = true)
                     val reader = EndPointReader(endPoint, coroutineContext, inputChannel)
@@ -53,12 +53,11 @@ public object JettyUpgradeImpl : ServletUpgrade {
 
                     upgradeJob.invokeOnCompletion {
                         inputChannel.cancel()
+                        @Suppress("DEPRECATION")
                         outputChannel.close()
                         cancel()
                     }
                 }
-            } finally {
-                connection.close()
             }
         }
     }

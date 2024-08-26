@@ -18,15 +18,8 @@ internal suspend fun commonFetch(
     init: RequestInit,
     config: JsClientEngineConfig,
 ): org.w3c.fetch.Response = suspendCancellableCoroutine { continuation ->
-    val controller = AbortController()
-    init.signal = controller.signal
-
-    continuation.invokeOnCancellation {
-        controller.abort()
-    }
-
-    val promise: Promise<org.w3c.fetch.Response> = when (PlatformUtils.platform) {
-        Platform.Browser -> fetch(input, init)
+    val promise: Promise<org.w3c.fetch.Response> = when {
+        PlatformUtils.IS_BROWSER -> fetch(input, init)
         else -> {
             val options = js("Object").assign(js("Object").create(null), init, config.nodeOptions)
             jsRequireNodeFetch()(input, options)
@@ -44,8 +37,8 @@ internal suspend fun commonFetch(
 }
 
 internal fun AbortController(): AbortController {
-    return when (PlatformUtils.platform) {
-        Platform.Browser -> js("new AbortController()")
+    return when {
+        PlatformUtils.IS_BROWSER -> js("new AbortController()")
         else -> {
             @Suppress("UNUSED_VARIABLE")
             val controller = js("eval('require')('abort-controller')")
@@ -56,8 +49,8 @@ internal fun AbortController(): AbortController {
 
 internal fun CoroutineScope.readBody(
     response: org.w3c.fetch.Response
-): ByteReadChannel = when (PlatformUtils.platform) {
-    Platform.Node -> readBodyNode(response)
+): ByteReadChannel = when {
+    PlatformUtils.IS_NODE -> readBodyNode(response)
     else -> readBodyBrowser(response)
 }
 

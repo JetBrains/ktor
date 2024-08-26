@@ -72,11 +72,9 @@ internal class DarwinLegacyTaskHandler(
     fun NSHTTPURLResponse.toResponseData(requestData: HttpRequestData): HttpResponseData {
         val status = HttpStatusCode.fromValue(statusCode.convert())
         val headers = readHeaders()
-        val responseBody: Any = if (needToProcessSSE(requestData, status, headers)) {
-            DefaultClientSSESession(requestData.body as SSEClientContent, body, callContext)
-        } else {
-            body
-        }
+        val responseBody: Any = requestData.attributes.getOrNull(ResponseAdapterAttributeKey)
+            ?.adapt(requestData, status, headers, body, requestData.body, callContext)
+            ?: body
 
         return HttpResponseData(
             status,

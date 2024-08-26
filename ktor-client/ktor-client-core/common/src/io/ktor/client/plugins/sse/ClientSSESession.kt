@@ -4,16 +4,24 @@
 
 package io.ktor.client.plugins.sse
 
+import io.ktor.client.call.*
 import io.ktor.sse.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 /**
- * A client Server-sent events session.
+ * A Server-sent events session.
  */
-public interface ClientSSESession : CoroutineScope {
+public interface SSESession : CoroutineScope {
     /**
      * An incoming server-sent events flow.
      */
     public val incoming: Flow<ServerSentEvent>
 }
+
+/**
+ * A client Server-sent events session.
+ *
+ * @property call associated with session.
+ */
+public class ClientSSESession(public val call: HttpClientCall, delegate: SSESession) : SSESession by delegate

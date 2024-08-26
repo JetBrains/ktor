@@ -32,7 +32,7 @@ class ClientPipelinesTest : ClientLoader() {
                         override val version: HttpProtocolVersion = response.version
                         override val requestTime: GMTDate = response.requestTime
                         override val responseTime: GMTDate = response.responseTime
-                        override val content: ByteReadChannel = response.content
+                        override val rawContent: ByteReadChannel = response.rawContent
                         override val headers get() = headers
                         override val coroutineContext: CoroutineContext = response.coroutineContext
                     }

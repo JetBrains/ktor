@@ -15,7 +15,6 @@ import kotlin.coroutines.intrinsics.*
 /**
  * Default CIO selector manager implementation
  */
-@Suppress("BlockingMethodInNonBlockingContext")
 public class ActorSelectorManager(context: CoroutineContext) : SelectorManagerSupport(), Closeable, CoroutineScope {
     @Volatile
     private var selectorRef: Selector? = null

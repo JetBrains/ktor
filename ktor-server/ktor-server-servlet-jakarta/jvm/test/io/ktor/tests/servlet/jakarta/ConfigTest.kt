@@ -36,6 +36,7 @@ class ConfigTest {
             every { contextPath } returns "/"
             every { getAttribute(ApplicationAttributeKey) } returns null
             every { getAttribute(EnvironmentAttributeKey) } returns null
+            every { serverInfo } returns ""
         }
 
         val config = mockk<ServletConfig> {
@@ -70,6 +71,7 @@ class ConfigTest {
             every { contextPath } returns "/"
             every { getAttribute(ApplicationAttributeKey) } returns null
             every { getAttribute(EnvironmentAttributeKey) } returns null
+            every { serverInfo } returns ""
         }
 
         val config = mockk<ServletConfig> {
@@ -106,7 +108,7 @@ class ConfigTest {
             every { serverPort } returns 80
             every { serverName } returns "server"
             every { remoteHost } returns "localhost"
-            every { attributeNames } returns java.util.Collections.enumeration(emptyList())
+            every { attributeNames } returns Collections.enumeration(emptyList())
         }
     }
 }

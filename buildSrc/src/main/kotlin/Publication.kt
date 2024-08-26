@@ -21,6 +21,7 @@ fun isAvailableForPublication(publication: Publication): Boolean {
         "androidRelease",
         "androidDebug",
         "js",
+        "wasmJs",
         "metadata",
         "kotlinMultiplatform"
     )
@@ -36,6 +37,7 @@ fun isAvailableForPublication(publication: Publication): Boolean {
         "watchosArm32",
         "watchosArm64",
         "watchosSimulatorArm64",
+        "watchosDeviceArm64",
 
         "tvosX64",
         "tvosArm64",
@@ -51,8 +53,6 @@ fun isAvailableForPublication(publication: Publication): Boolean {
 }
 
 fun Project.configurePublication() {
-    if (COMMON_JVM_ONLY) return
-
     apply(plugin = "maven-publish")
 
     tasks.withType<AbstractPublishToMaven>().all {

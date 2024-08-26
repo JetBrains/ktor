@@ -220,7 +220,7 @@ public class NettyApplicationEngine(
                 .map { it.sync().channel() }
             val connectors = channels!!.zip(configuration.connectors)
                 .map { it.second.withPort(it.first.localAddress().port) }
-            resolvedConnectors.complete(connectors)
+            resolvedConnectorsDeferred.complete(connectors)
         } catch (cause: BindException) {
             terminate()
             throw cause

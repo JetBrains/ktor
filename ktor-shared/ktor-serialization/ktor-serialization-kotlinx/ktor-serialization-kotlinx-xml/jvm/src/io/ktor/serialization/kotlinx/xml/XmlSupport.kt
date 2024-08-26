@@ -21,6 +21,7 @@ import nl.adaptivity.xmlutil.serialization.*
  *
  * See [XML] for more details.
  */
+@OptIn(XmlUtilInternal::class)
 public val DefaultXml: XML = XML {
     repairNamespaces = true
     xmlDeclMode = XmlDeclMode.None

@@ -62,7 +62,9 @@ public class MockEngine(override val config: MockEngineConfig) : HttpClientEngin
             handler
         }
 
-        val response = handler(MockRequestHandleScope(callContext), data)
+        val response = withContext(dispatcher + callContext) {
+            handler(MockRequestHandleScope(callContext), data)
+        }
 
         synchronized(mutex) {
             _requestsHistory.add(data)
@@ -72,7 +74,6 @@ public class MockEngine(override val config: MockEngineConfig) : HttpClientEngin
         return response
     }
 
-    @Suppress("KDocMissingDocumentation")
     override fun close() {
         super.close()
 

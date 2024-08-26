@@ -28,7 +28,6 @@ class StackWalkingFailedTest {
 
         val file = File("common/src").walkTopDown()
             .filter { it.name == fileName }
-            .asSequence()
             .singleOrNull() ?: error("File with name $fileName is not found in sources")
 
         val fileLines = file.readLines()
@@ -50,7 +49,7 @@ class StackWalkingFailedTest {
 
     @Test
     fun fillStackTraceElement() {
-        val element = StackWalkingFailedFrame.getStackTraceElement()!!
+        val element = StackWalkingFailedFrame.getStackTraceElement()
         val container = Exception("Expected exception.")
         container.stackTrace = arrayOf(element)
 

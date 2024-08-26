@@ -110,7 +110,8 @@ internal class WinHttpRequestProducer(
         }.channel
         is OutgoingContent.ReadChannelContent -> readFrom()
         is OutgoingContent.NoContent -> null
-        else -> throw UnsupportedContentTypeException(this)
+        is OutgoingContent.ContentWrapper -> delegate().toByteChannel()
+        is OutgoingContent.ProtocolUpgrade -> throw UnsupportedContentTypeException(this)
     }
 
     companion object {

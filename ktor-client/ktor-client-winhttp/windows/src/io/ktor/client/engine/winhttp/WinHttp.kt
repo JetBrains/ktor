@@ -7,7 +7,6 @@ package io.ktor.client.engine.winhttp
 import io.ktor.client.engine.*
 import io.ktor.utils.io.*
 
-@Suppress("DEPRECATION")
 @OptIn(ExperimentalStdlibApi::class)
 @EagerInitialization
 private val initHook = WinHttp
@@ -31,16 +30,12 @@ private val initHook = WinHttp
  * You can learn more about client engines from [Engines](https://ktor.io/docs/http-client-engines.html).
  */
 @OptIn(InternalAPI::class)
-public object WinHttp : HttpClientEngineFactory<WinHttpClientEngineConfig> {
+public data object WinHttp : HttpClientEngineFactory<WinHttpClientEngineConfig> {
     init {
         engines.append(this)
     }
 
     override fun create(block: WinHttpClientEngineConfig.() -> Unit): HttpClientEngine {
         return WinHttpClientEngine(WinHttpClientEngineConfig().apply(block))
-    }
-
-    override fun toString(): String {
-        return "WinHttp"
     }
 }

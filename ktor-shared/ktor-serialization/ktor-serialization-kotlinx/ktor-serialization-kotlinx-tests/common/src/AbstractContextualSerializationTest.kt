@@ -47,28 +47,35 @@ public abstract class AbstractContextualSerializationTest<T : SerialFormat> {
     ): Boolean
 
     @Test
-    public fun testSerializationWithContext(): Unit = testSuspend {
-        val context = serializersModuleOf(UserData::class, UserDataSerializer)
-        val contextualSerializer = buildContextualSerializer(context)
-        val contextual = KotlinxSerializationConverter(contextualSerializer)
-        val simple = KotlinxSerializationConverter(defaultSerializationFormat)
+    public fun testSerializationWithContext() {
+        testSuspend {
+            val context = serializersModuleOf(UserData::class, UserDataSerializer)
+            val contextualSerializer = buildContextualSerializer(context)
+            val contextual = KotlinxSerializationConverter(contextualSerializer)
+            val simple = KotlinxSerializationConverter(defaultSerializationFormat)
 
-        val data = UserData(1, "kotlin")
+            val data = UserData(1, "kotlin")
 
-        val contextualResult = contextual.testSerialize(data)
-        val simpleResult = simple.testSerialize(data)
+            val contextualResult = contextual.testSerialize(data)
+            val simpleResult = simple.testSerialize(data)
 
-        assertEquals(""""1""kotlin"""", contextualResult, contextualSerializer, UserDataSerializer)
-        assertEquals("""{"id":1,"name":"kotlin"}""", simpleResult, defaultSerializationFormat, UserData.serializer())
+            assertEquals(""""1""kotlin"""", contextualResult, contextualSerializer, UserDataSerializer)
+            assertEquals(
+                """{"id":1,"name":"kotlin"}""",
+                simpleResult,
+                defaultSerializationFormat,
+                UserData.serializer()
+            )
 
-        assertEquals(
-            data,
-            contextual.deserialize(Charsets.UTF_8, typeInfo<UserData>(), ByteReadChannel(contextualResult))
-        )
-        assertEquals(
-            data,
-            simple.deserialize(Charsets.UTF_8, typeInfo<UserData>(), ByteReadChannel(simpleResult))
-        )
+            assertEquals(
+                data,
+                contextual.deserialize(Charsets.UTF_8, typeInfo<UserData>(), ByteReadChannel(contextualResult))
+            )
+            assertEquals(
+                data,
+                simple.deserialize(Charsets.UTF_8, typeInfo<UserData>(), ByteReadChannel(simpleResult))
+            )
+        }
     }
 
     private suspend inline fun <reified T : Any> ContentConverter.testSerialize(data: T): ByteArray {

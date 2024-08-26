@@ -9,7 +9,6 @@ import io.ktor.http.*
 import io.ktor.http.auth.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
-import io.ktor.server.auth.Principal
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
@@ -18,7 +17,6 @@ import kotlinx.coroutines.*
 import java.security.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 class DigestTest {
     @Test
     fun createExampleChallengeFromRFC() {
@@ -127,7 +125,7 @@ class DigestTest {
 
     @Test
     fun testValidateFunction() = testApplication {
-        class TestPrincipal(val name: String) : Principal
+        class TestPrincipal(val name: String)
         install(Authentication) {
             digest {
                 val p = "Circle Of Life"

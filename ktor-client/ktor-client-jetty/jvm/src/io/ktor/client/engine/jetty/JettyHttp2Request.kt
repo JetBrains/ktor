@@ -17,7 +17,7 @@ private val EmptyByteBuffer = ByteBuffer.allocate(0)!!
 internal class JettyHttp2Request(private val stream: Stream) : Callback {
     private val deferred = AtomicReference<CancellableContinuation<Unit>?>()
 
-    public suspend fun write(src: ByteBuffer) = suspendCancellableCoroutine<Unit> { continuation ->
+    suspend fun write(src: ByteBuffer) = suspendCancellableCoroutine<Unit> { continuation ->
         deferred.set(continuation)
 
         val frame = DataFrame(stream.id, src, false)
@@ -32,7 +32,7 @@ internal class JettyHttp2Request(private val stream: Stream) : Callback {
         deferred.getAndSet(null)!!.resumeWithException(cause)
     }
 
-    public fun endBody() {
+    fun endBody() {
         stream.data(DataFrame(stream.id, EmptyByteBuffer, true), Callback.NOOP)
     }
 }

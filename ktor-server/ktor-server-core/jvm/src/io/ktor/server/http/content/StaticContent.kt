@@ -4,10 +4,12 @@
 
 package io.ktor.server.http.content
 
+import com.sun.nio.file.*
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.application.hooks.*
+import io.ktor.server.http.content.FileSystemPaths.Companion.paths
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.util.*
@@ -155,7 +157,7 @@ public class StaticContentConfig<Resource : Any> internal constructor() {
 }
 
 /**
- * Sets up [Routing] to serve static files.
+ * Sets up [RoutingRoot] to serve static files.
  * All files inside [dir] will be accessible recursively at "[remotePath]/path/to/file".
  * If the requested file is a directory and [index] is not `null`,
  * then response will be [index] file in the requested directory.
@@ -195,7 +197,7 @@ public fun Route.staticFiles(
 }
 
 /**
- * Sets up [Routing] to serve resources as static content.
+ * Sets up [RoutingRoot] to serve resources as static content.
  * All resources inside [basePackage] will be accessible recursively at "[remotePath]/path/to/resource".
  * If requested resource doesn't exist and [index] is not `null`,
  * then response will be [index] resource in the requested package.
@@ -235,7 +237,7 @@ public fun Route.staticResources(
 }
 
 /**
- * Sets up [Routing] to serve contents of [zip] as static content.
+ * Sets up [RoutingRoot] to serve contents of [zip] as static content.
  * All paths inside [basePath] will be accessible recursively at "[remotePath]/path/to/resource".
  * If requested path doesn't exist and [index] is not `null`,
  * then response will be [index] path in the requested package.
@@ -254,12 +256,55 @@ public fun Route.staticZip(
     remotePath = remotePath,
     basePath = basePath,
     index = index,
-    fileSystem = FileSystems.newFileSystem(zip, environment.classLoader),
+    fileSystem = ReloadingZipFileSystem(
+        zip,
+        environment.classLoader,
+        getFileSystem(zip, environment.classLoader).paths()
+    ),
     block = block
 )
 
+private fun getFileSystem(zip: Path, classLoader: ClassLoader): FileSystem = FileSystems.newFileSystem(zip, classLoader)
+
 /**
- * Sets up [Routing] to serve [fileSystem] as static content.
+ * Allow to serve changing [FileSystem]. Returns [FileSystemPaths],
+ * which will be recreated on each request if there were any file changes.
+ */
+private class ReloadingZipFileSystem(
+    private val zip: Path,
+    private val classLoader: ClassLoader,
+    private var delegate: FileSystemPaths
+) : FileSystemPaths {
+    private val watchService = FileSystems.getDefault().newWatchService()
+
+    init {
+        zip.parent.register(
+            watchService,
+            arrayOf(
+                StandardWatchEventKinds.ENTRY_CREATE,
+                StandardWatchEventKinds.ENTRY_DELETE,
+                StandardWatchEventKinds.ENTRY_MODIFY,
+                StandardWatchEventKinds.OVERFLOW
+            ),
+            SensitivityWatchEventModifier.HIGH
+        )
+    }
+
+    override fun getPath(first: String, vararg more: String): Path {
+        val key = watchService.poll() ?: return delegate.getPath(first, *more)
+
+        val events = key.pollEvents()
+        if (events.isNotEmpty()) {
+            delegate = getFileSystem(zip, classLoader).paths()
+        }
+        key.reset()
+
+        return delegate.getPath(first, *more)
+    }
+}
+
+/**
+ * Sets up [RoutingRoot] to serve [fileSystem] as static content.
  * All paths inside [basePath] will be accessible recursively at "[remotePath]/path/to/resource".
  * If requested path doesn't exist and [index] is not `null`,
  * then response will be [index] path in the requested package.
@@ -272,7 +317,7 @@ public fun Route.staticFileSystem(
     remotePath: String,
     basePath: String?,
     index: String? = "index.html",
-    fileSystem: FileSystem = FileSystems.getDefault(),
+    fileSystem: FileSystemPaths = FileSystems.getDefault().paths(),
     block: StaticContentConfig<Path>.() -> Unit = {}
 ): Route {
     val staticRoute = StaticContentConfig<Path>().apply(block)
@@ -315,7 +360,7 @@ public fun Route.staticFileSystem(
  * * This can't be disabled in a child route if it was enabled in the root route
  */
 public fun Route.preCompressed(
-    vararg types: CompressedFileType = CompressedFileType.values(),
+    vararg types: CompressedFileType = CompressedFileType.entries.toTypedArray(),
     configure: Route.() -> Unit
 ) {
     val existing = staticContentEncodedTypes ?: emptyList()
@@ -359,7 +404,7 @@ public fun Route.static(remotePath: String, configure: Route.() -> Unit): Route 
 /**
  * Specifies [localPath] as a default file to serve when folder is requested
  */
-@Suppress("DEPRECATION")
+
 @Deprecated("Please use `staticFiles` instead")
 public fun Route.default(localPath: String): Unit = default(File(localPath))
 
@@ -378,7 +423,7 @@ public fun Route.default(localPath: File) {
 /**
  * Sets up routing to serve [localPath] file as [remotePath]
  */
-@Suppress("DEPRECATION")
+
 @Deprecated("Please use `staticFiles` instead")
 public fun Route.file(remotePath: String, localPath: String = remotePath): Unit =
     file(remotePath, File(localPath))
@@ -398,7 +443,7 @@ public fun Route.file(remotePath: String, localPath: File) {
 /**
  * Sets up routing to serve all files from [folder]
  */
-@Suppress("DEPRECATION")
+
 @Deprecated("Please use `staticFiles` instead")
 public fun Route.files(folder: String): Unit = files(File(folder))
 
@@ -421,7 +466,7 @@ private val staticBasePackageName = AttributeKey<String>("BasePackage")
 /**
  * Base package for relative resources calculations for static content
  */
-@Suppress("DEPRECATION")
+
 @Deprecated("Please use `staticResources` instead")
 public var Route.staticBasePackage: String?
     get() = attributes.getOrNull(staticBasePackageName) ?: parent?.staticBasePackage
@@ -442,7 +487,7 @@ private fun String?.combinePackage(resourcePackage: String?) = when {
 /**
  * Sets up routing to serve [resource] as [remotePath] in [resourcePackage]
  */
-@Suppress("DEPRECATION")
+
 @Deprecated("Please use `staticResources` instead")
 public fun Route.resource(remotePath: String, resource: String = remotePath, resourcePackage: String? = null) {
     val compressedTypes = staticContentEncodedTypes
@@ -459,7 +504,7 @@ public fun Route.resource(remotePath: String, resource: String = remotePath, res
 /**
  * Sets up routing to serve all resources in [resourcePackage]
  */
-@Suppress("DEPRECATION")
+
 @Deprecated("Please use `staticResources` instead")
 public fun Route.resources(resourcePackage: String? = null) {
     val packageName = staticBasePackage.combinePackage(resourcePackage)
@@ -477,7 +522,7 @@ public fun Route.resources(resourcePackage: String? = null) {
 /**
  * Specifies [resource] as a default resources to serve when folder is requested
  */
-@Suppress("DEPRECATION")
+
 @Deprecated("Please use `staticResources` instead")
 public fun Route.defaultResource(resource: String, resourcePackage: String? = null) {
     val packageName = staticBasePackage.combinePackage(resourcePackage)
@@ -559,7 +604,7 @@ private suspend fun ApplicationCall.respondStaticFile(
 }
 
 private suspend fun ApplicationCall.respondStaticPath(
-    fileSystem: FileSystem,
+    fileSystem: FileSystemPaths,
     index: String?,
     basePath: String?,
     compressedTypes: List<CompressedFileType>?,
@@ -665,4 +710,24 @@ private suspend fun ApplicationCall.respondStaticResource(
         cacheControl = cacheControl,
         modifier = modifier
     )
+}
+
+/**
+ * Wrapper on [FileSystem] for more specific delegation since we use only [getPath] method from it.
+ */
+public interface FileSystemPaths {
+    public companion object {
+        /**
+         * Creates a [FileSystemPaths] instance from a [FileSystem].
+         */
+        public fun FileSystem.paths(): FileSystemPaths = object : FileSystemPaths {
+            override fun getPath(first: String, vararg more: String): Path = this@paths.getPath(first, *more)
+        }
+    }
+
+    /**
+     * Converts a path string, or a sequence of strings that when joined form a path string, to a Path.
+     * Equal to [FileSystem.getPath].
+     */
+    public fun getPath(first: String, vararg more: String): Path
 }

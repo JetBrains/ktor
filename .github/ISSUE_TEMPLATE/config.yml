@@ -2,4 +2,4 @@ blank_issues_enabled: false
 contact_links:
   - name: Create
     url: https://youtrack.jetbrains.com/newIssue?project=KTOR
-    about: Please report any new issue using youtrack
+    about: Please report any new issues to the JetBrains YouTrack

@@ -7,11 +7,11 @@ package io.ktor.client.engine.darwin
 import io.ktor.client.call.*
 import io.ktor.client.engine.*
 import io.ktor.http.content.*
-import io.ktor.util.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.errors.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.*
+import kotlinx.io.IOException
 import platform.Foundation.*
 import platform.posix.*
 
@@ -23,6 +23,7 @@ import platform.posix.*
     BetaInteropApi::class
 )
 internal suspend fun OutgoingContent.toDataOrStream(): Any? {
+    if (this is OutgoingContent.ContentWrapper) return delegate().toDataOrStream()
     if (this is OutgoingContent.ByteArrayContent) return bytes().toNSData()
     if (this is OutgoingContent.NoContent) return null
     if (this is OutgoingContent.ProtocolUpgrade) throw UnsupportedContentTypeException(this)
@@ -112,5 +113,4 @@ internal inline fun <T : CPointed, R> CPointer<T>.use(block: (CPointer<T>) -> R)
     }
 }
 
-@Suppress("KDocMissingDocumentation")
 public class DarwinHttpRequestException(public val origin: NSError) : IOException("Exception in http request: $origin")

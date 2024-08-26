@@ -19,6 +19,7 @@ import io.ktor.websocket.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.debug.junit5.*
+import kotlinx.io.*
 import java.nio.*
 import java.nio.charset.*
 import java.time.*
@@ -26,7 +27,6 @@ import java.util.*
 import java.util.concurrent.CancellationException
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 @CoroutinesTimeout(30_000)
 class WebSocketTest {
     class Data(val string: String)
@@ -333,7 +333,7 @@ class WebSocketTest {
                     val channel = call.response.websocketChannel()!!
 
                     val parser = FrameParser()
-                    val content = channel.readRemaining().readBytes()
+                    val content = channel.readRemaining().readByteArray()
                     check(content.isNotEmpty()) { "Content it empty." }
 
                     val buffer = ByteBuffer.wrap(content)

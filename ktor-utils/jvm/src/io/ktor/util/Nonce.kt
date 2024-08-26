@@ -50,7 +50,7 @@ private val nonceGeneratorJob = GlobalScope.launch(
             weakRandom.nextBytes(weakBytes)
 
             // mix secure and weak
-            for (i in 0 until secureBytes.size) {
+            for (i in secureBytes.indices) {
                 weakBytes[i * INSECURE_NONCE_COUNT_FACTOR] = secureBytes[i]
             }
 

@@ -14,6 +14,7 @@ import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.flow.*
+import kotlinx.io.*
 import kotlinx.serialization.*
 import kotlin.jvm.*
 
@@ -65,7 +66,7 @@ public class KotlinxSerializationConverter(
         try {
             return when (format) {
                 is StringFormat -> format.decodeFromString(serializer, contentPacket.readText(charset))
-                is BinaryFormat -> format.decodeFromByteArray(serializer, contentPacket.readBytes())
+                is BinaryFormat -> format.decodeFromByteArray(serializer, contentPacket.readByteArray())
                 else -> {
                     contentPacket.discard()
                     error("Unsupported format $format")

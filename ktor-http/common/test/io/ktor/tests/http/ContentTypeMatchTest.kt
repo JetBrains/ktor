@@ -7,7 +7,7 @@ package io.ktor.tests.http
 import io.ktor.http.*
 import kotlin.test.*
 
-public class ContentTypeMatchTest {
+class ContentTypeMatchTest {
     @Test
     fun testTypeAndSubtype() {
         assertTrue { ContentType.parse("text/plain").match("*") }

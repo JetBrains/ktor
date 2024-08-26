@@ -94,7 +94,8 @@ internal class JsWebSocketSession(
                 when (it.frameType) {
                     FrameType.TEXT -> {
                         val text = it.data
-                        websocket.send(String(text))
+
+                        websocket.send(text.decodeToString(0, 0 + text.size))
                     }
                     FrameType.BINARY -> {
                         val source = it.data as Int8Array
@@ -157,7 +158,7 @@ internal class JsWebSocketSession(
     @OptIn(InternalAPI::class)
     private fun Short.isReservedStatusCode(): Boolean {
         return CloseReason.Codes.byCode(this).let { resolved ->
-            @Suppress("DEPRECATION")
+
             resolved == null || resolved == CloseReason.Codes.CLOSED_ABNORMALLY
         }
     }

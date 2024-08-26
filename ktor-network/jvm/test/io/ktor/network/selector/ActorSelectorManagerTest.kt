@@ -12,7 +12,7 @@ import kotlin.test.*
 import kotlin.test.Test
 
 class ActorSelectorManagerTest {
-    val manager = ActorSelectorManager(Dispatchers.Default)
+    private val manager = ActorSelectorManager(Dispatchers.Default)
 
     @AfterEach
     fun tearDown() {

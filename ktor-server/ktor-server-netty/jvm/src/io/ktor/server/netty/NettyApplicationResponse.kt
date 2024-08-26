@@ -41,7 +41,7 @@ public abstract class NettyApplicationResponse(
             throw t
         } finally {
             val out = responseChannel as? ByteWriteChannel
-            out?.close()
+            out?.flushAndClose()
         }
     }
 

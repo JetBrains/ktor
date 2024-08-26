@@ -13,10 +13,9 @@ import io.ktor.utils.io.*
 import io.netty.buffer.*
 import io.netty.channel.*
 import io.netty.handler.codec.http.*
-import kotlinx.coroutines.CancellationException
 import kotlin.coroutines.*
 
-internal class NettyHttp1ApplicationResponse constructor(
+internal class NettyHttp1ApplicationResponse(
     call: NettyApplicationCall,
     context: ChannelHandlerContext,
     engineContext: CoroutineContext,
@@ -38,7 +37,11 @@ internal class NettyHttp1ApplicationResponse constructor(
     override val headers: ResponseHeaders = object : ResponseHeaders() {
         override fun engineAppendHeader(name: String, value: String) {
             if (responseMessageSent) {
-                if (responseReady.isCancelled) throw CancellationException("Call execution has been cancelled")
+                if (responseReady.isCancelled) {
+                    throw java.util.concurrent.CancellationException(
+                        "Call execution has been cancelled"
+                    )
+                }
                 throw UnsupportedOperationException(
                     "Headers can no longer be set because response was already completed"
                 )
@@ -73,6 +76,7 @@ internal class NettyHttp1ApplicationResponse constructor(
         return responseMessage
     }
 
+    @OptIn(InternalAPI::class)
     override suspend fun respondUpgrade(upgrade: OutgoingContent.ProtocolUpgrade) {
         val nettyContext = context
         val nettyChannel = nettyContext.channel()
@@ -91,7 +95,7 @@ internal class NettyHttp1ApplicationResponse constructor(
                 addFirst(NettyDirectDecoder())
             } else {
                 cancel()
-                val cause = CancellationException("HTTP upgrade has been cancelled")
+                val cause = java.util.concurrent.CancellationException("HTTP upgrade has been cancelled")
                 upgradedWriteChannel.cancel(cause)
                 throw cause
             }
@@ -102,7 +106,7 @@ internal class NettyHttp1ApplicationResponse constructor(
         job.invokeOnCompletion {
             upgradedWriteChannel.close()
             bodyHandler.close()
-            upgradedReadChannel.cancel()
+            upgradedReadChannel.cancel(it)
         }
 
         (call as NettyApplicationCall).responseWriteJob.join()

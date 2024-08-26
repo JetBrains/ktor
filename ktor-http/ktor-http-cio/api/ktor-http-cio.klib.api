@@ -1,0 +1,135 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-http-cio>
+abstract class io.ktor.http.cio/HttpMessage : io.ktor.utils.io.core/Closeable { // io.ktor.http.cio/HttpMessage|null[0]
+    final val headers // io.ktor.http.cio/HttpMessage.headers|{}headers[0]
+        final fun <get-headers>(): io.ktor.http.cio/HttpHeadersMap // io.ktor.http.cio/HttpMessage.headers.<get-headers>|<get-headers>(){}[0]
+
+    final fun release() // io.ktor.http.cio/HttpMessage.release|release(){}[0]
+    open fun close() // io.ktor.http.cio/HttpMessage.close|close(){}[0]
+}
+
+final class io.ktor.http.cio.internals/MutableRange { // io.ktor.http.cio.internals/MutableRange|null[0]
+    constructor <init>(kotlin/Int, kotlin/Int) // io.ktor.http.cio.internals/MutableRange.<init>|<init>(kotlin.Int;kotlin.Int){}[0]
+
+    final var end // io.ktor.http.cio.internals/MutableRange.end|{}end[0]
+        final fun <get-end>(): kotlin/Int // io.ktor.http.cio.internals/MutableRange.end.<get-end>|<get-end>(){}[0]
+        final fun <set-end>(kotlin/Int) // io.ktor.http.cio.internals/MutableRange.end.<set-end>|<set-end>(kotlin.Int){}[0]
+    final var start // io.ktor.http.cio.internals/MutableRange.start|{}start[0]
+        final fun <get-start>(): kotlin/Int // io.ktor.http.cio.internals/MutableRange.start.<get-start>|<get-start>(){}[0]
+        final fun <set-start>(kotlin/Int) // io.ktor.http.cio.internals/MutableRange.start.<set-start>|<set-start>(kotlin.Int){}[0]
+
+    final fun toString(): kotlin/String // io.ktor.http.cio.internals/MutableRange.toString|toString(){}[0]
+}
+
+final class io.ktor.http.cio/CIOHeaders : io.ktor.http/Headers { // io.ktor.http.cio/CIOHeaders|null[0]
+    constructor <init>(io.ktor.http.cio/HttpHeadersMap) // io.ktor.http.cio/CIOHeaders.<init>|<init>(io.ktor.http.cio.HttpHeadersMap){}[0]
+
+    final val caseInsensitiveName // io.ktor.http.cio/CIOHeaders.caseInsensitiveName|{}caseInsensitiveName[0]
+        final fun <get-caseInsensitiveName>(): kotlin/Boolean // io.ktor.http.cio/CIOHeaders.caseInsensitiveName.<get-caseInsensitiveName>|<get-caseInsensitiveName>(){}[0]
+
+    final fun entries(): kotlin.collections/Set<kotlin.collections/Map.Entry<kotlin/String, kotlin.collections/List<kotlin/String>>> // io.ktor.http.cio/CIOHeaders.entries|entries(){}[0]
+    final fun get(kotlin/String): kotlin/String? // io.ktor.http.cio/CIOHeaders.get|get(kotlin.String){}[0]
+    final fun getAll(kotlin/String): kotlin.collections/List<kotlin/String>? // io.ktor.http.cio/CIOHeaders.getAll|getAll(kotlin.String){}[0]
+    final fun isEmpty(): kotlin/Boolean // io.ktor.http.cio/CIOHeaders.isEmpty|isEmpty(){}[0]
+    final fun names(): kotlin.collections/Set<kotlin/String> // io.ktor.http.cio/CIOHeaders.names|names(){}[0]
+}
+
+final class io.ktor.http.cio/ConnectionOptions { // io.ktor.http.cio/ConnectionOptions|null[0]
+    constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin.collections/List<kotlin/String> = ...) // io.ktor.http.cio/ConnectionOptions.<init>|<init>(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.collections.List<kotlin.String>){}[0]
+
+    final val close // io.ktor.http.cio/ConnectionOptions.close|{}close[0]
+        final fun <get-close>(): kotlin/Boolean // io.ktor.http.cio/ConnectionOptions.close.<get-close>|<get-close>(){}[0]
+    final val extraOptions // io.ktor.http.cio/ConnectionOptions.extraOptions|{}extraOptions[0]
+        final fun <get-extraOptions>(): kotlin.collections/List<kotlin/String> // io.ktor.http.cio/ConnectionOptions.extraOptions.<get-extraOptions>|<get-extraOptions>(){}[0]
+    final val keepAlive // io.ktor.http.cio/ConnectionOptions.keepAlive|{}keepAlive[0]
+        final fun <get-keepAlive>(): kotlin/Boolean // io.ktor.http.cio/ConnectionOptions.keepAlive.<get-keepAlive>|<get-keepAlive>(){}[0]
+    final val upgrade // io.ktor.http.cio/ConnectionOptions.upgrade|{}upgrade[0]
+        final fun <get-upgrade>(): kotlin/Boolean // io.ktor.http.cio/ConnectionOptions.upgrade.<get-upgrade>|<get-upgrade>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.http.cio/ConnectionOptions.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.http.cio/ConnectionOptions.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.http.cio/ConnectionOptions.toString|toString(){}[0]
+
+    final object Companion { // io.ktor.http.cio/ConnectionOptions.Companion|null[0]
+        final val Close // io.ktor.http.cio/ConnectionOptions.Companion.Close|{}Close[0]
+            final fun <get-Close>(): io.ktor.http.cio/ConnectionOptions // io.ktor.http.cio/ConnectionOptions.Companion.Close.<get-Close>|<get-Close>(){}[0]
+        final val KeepAlive // io.ktor.http.cio/ConnectionOptions.Companion.KeepAlive|{}KeepAlive[0]
+            final fun <get-KeepAlive>(): io.ktor.http.cio/ConnectionOptions // io.ktor.http.cio/ConnectionOptions.Companion.KeepAlive.<get-KeepAlive>|<get-KeepAlive>(){}[0]
+        final val Upgrade // io.ktor.http.cio/ConnectionOptions.Companion.Upgrade|{}Upgrade[0]
+            final fun <get-Upgrade>(): io.ktor.http.cio/ConnectionOptions // io.ktor.http.cio/ConnectionOptions.Companion.Upgrade.<get-Upgrade>|<get-Upgrade>(){}[0]
+
+        final fun parse(kotlin/CharSequence?): io.ktor.http.cio/ConnectionOptions? // io.ktor.http.cio/ConnectionOptions.Companion.parse|parse(kotlin.CharSequence?){}[0]
+    }
+}
+
+final class io.ktor.http.cio/HttpHeadersMap { // io.ktor.http.cio/HttpHeadersMap|null[0]
+    final var size // io.ktor.http.cio/HttpHeadersMap.size|{}size[0]
+        final fun <get-size>(): kotlin/Int // io.ktor.http.cio/HttpHeadersMap.size.<get-size>|<get-size>(){}[0]
+
+    final fun find(kotlin/String, kotlin/Int = ...): kotlin/Int // io.ktor.http.cio/HttpHeadersMap.find|find(kotlin.String;kotlin.Int){}[0]
+    final fun get(kotlin/String): kotlin/CharSequence? // io.ktor.http.cio/HttpHeadersMap.get|get(kotlin.String){}[0]
+    final fun getAll(kotlin/String): kotlin.sequences/Sequence<kotlin/CharSequence> // io.ktor.http.cio/HttpHeadersMap.getAll|getAll(kotlin.String){}[0]
+    final fun nameAt(kotlin/Int): kotlin/CharSequence // io.ktor.http.cio/HttpHeadersMap.nameAt|nameAt(kotlin.Int){}[0]
+    final fun put(kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int) // io.ktor.http.cio/HttpHeadersMap.put|put(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+    final fun release() // io.ktor.http.cio/HttpHeadersMap.release|release(){}[0]
+    final fun toString(): kotlin/String // io.ktor.http.cio/HttpHeadersMap.toString|toString(){}[0]
+    final fun valueAt(kotlin/Int): kotlin/CharSequence // io.ktor.http.cio/HttpHeadersMap.valueAt|valueAt(kotlin.Int){}[0]
+}
+
+final class io.ktor.http.cio/ParserException : kotlin/IllegalStateException { // io.ktor.http.cio/ParserException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.http.cio/ParserException.<init>|<init>(kotlin.String){}[0]
+}
+
+final class io.ktor.http.cio/Request : io.ktor.http.cio/HttpMessage { // io.ktor.http.cio/Request|null[0]
+    final val method // io.ktor.http.cio/Request.method|{}method[0]
+        final fun <get-method>(): io.ktor.http/HttpMethod // io.ktor.http.cio/Request.method.<get-method>|<get-method>(){}[0]
+    final val uri // io.ktor.http.cio/Request.uri|{}uri[0]
+        final fun <get-uri>(): kotlin/CharSequence // io.ktor.http.cio/Request.uri.<get-uri>|<get-uri>(){}[0]
+    final val version // io.ktor.http.cio/Request.version|{}version[0]
+        final fun <get-version>(): kotlin/CharSequence // io.ktor.http.cio/Request.version.<get-version>|<get-version>(){}[0]
+}
+
+final class io.ktor.http.cio/RequestResponseBuilder { // io.ktor.http.cio/RequestResponseBuilder|null[0]
+    constructor <init>() // io.ktor.http.cio/RequestResponseBuilder.<init>|<init>(){}[0]
+
+    final fun build(): kotlinx.io/Source // io.ktor.http.cio/RequestResponseBuilder.build|build(){}[0]
+    final fun bytes(kotlin/ByteArray, kotlin/Int = ..., kotlin/Int = ...) // io.ktor.http.cio/RequestResponseBuilder.bytes|bytes(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
+    final fun emptyLine() // io.ktor.http.cio/RequestResponseBuilder.emptyLine|emptyLine(){}[0]
+    final fun headerLine(kotlin/CharSequence, kotlin/CharSequence) // io.ktor.http.cio/RequestResponseBuilder.headerLine|headerLine(kotlin.CharSequence;kotlin.CharSequence){}[0]
+    final fun line(kotlin/CharSequence) // io.ktor.http.cio/RequestResponseBuilder.line|line(kotlin.CharSequence){}[0]
+    final fun release() // io.ktor.http.cio/RequestResponseBuilder.release|release(){}[0]
+    final fun requestLine(io.ktor.http/HttpMethod, kotlin/CharSequence, kotlin/CharSequence) // io.ktor.http.cio/RequestResponseBuilder.requestLine|requestLine(io.ktor.http.HttpMethod;kotlin.CharSequence;kotlin.CharSequence){}[0]
+    final fun responseLine(kotlin/CharSequence, kotlin/Int, kotlin/CharSequence) // io.ktor.http.cio/RequestResponseBuilder.responseLine|responseLine(kotlin.CharSequence;kotlin.Int;kotlin.CharSequence){}[0]
+}
+
+final class io.ktor.http.cio/Response : io.ktor.http.cio/HttpMessage { // io.ktor.http.cio/Response|null[0]
+    final val status // io.ktor.http.cio/Response.status|{}status[0]
+        final fun <get-status>(): kotlin/Int // io.ktor.http.cio/Response.status.<get-status>|<get-status>(){}[0]
+    final val statusText // io.ktor.http.cio/Response.statusText|{}statusText[0]
+        final fun <get-statusText>(): kotlin/CharSequence // io.ktor.http.cio/Response.statusText.<get-statusText>|<get-statusText>(){}[0]
+    final val version // io.ktor.http.cio/Response.version|{}version[0]
+        final fun <get-version>(): kotlin/CharSequence // io.ktor.http.cio/Response.version.<get-version>|<get-version>(){}[0]
+}
+
+final fun (kotlin/CharSequence).io.ktor.http.cio.internals/parseDecLong(): kotlin/Long // io.ktor.http.cio.internals/parseDecLong|parseDecLong@kotlin.CharSequence(){}[0]
+final fun (kotlinx.coroutines/CoroutineScope).io.ktor.http.cio/decodeChunked(io.ktor.utils.io/ByteReadChannel): io.ktor.utils.io/WriterJob // io.ktor.http.cio/decodeChunked|decodeChunked@kotlinx.coroutines.CoroutineScope(io.ktor.utils.io.ByteReadChannel){}[0]
+final fun (kotlinx.coroutines/CoroutineScope).io.ktor.http.cio/decodeChunked(io.ktor.utils.io/ByteReadChannel, kotlin/Long): io.ktor.utils.io/WriterJob // io.ktor.http.cio/decodeChunked|decodeChunked@kotlinx.coroutines.CoroutineScope(io.ktor.utils.io.ByteReadChannel;kotlin.Long){}[0]
+final fun io.ktor.http.cio/expectHttpBody(io.ktor.http.cio/Request): kotlin/Boolean // io.ktor.http.cio/expectHttpBody|expectHttpBody(io.ktor.http.cio.Request){}[0]
+final fun io.ktor.http.cio/expectHttpBody(io.ktor.http/HttpMethod, kotlin/Long, kotlin/CharSequence?, io.ktor.http.cio/ConnectionOptions?, kotlin/CharSequence?): kotlin/Boolean // io.ktor.http.cio/expectHttpBody|expectHttpBody(io.ktor.http.HttpMethod;kotlin.Long;kotlin.CharSequence?;io.ktor.http.cio.ConnectionOptions?;kotlin.CharSequence?){}[0]
+final fun io.ktor.http.cio/expectHttpUpgrade(io.ktor.http.cio/Request): kotlin/Boolean // io.ktor.http.cio/expectHttpUpgrade|expectHttpUpgrade(io.ktor.http.cio.Request){}[0]
+final fun io.ktor.http.cio/expectHttpUpgrade(io.ktor.http/HttpMethod, kotlin/CharSequence?, io.ktor.http.cio/ConnectionOptions?): kotlin/Boolean // io.ktor.http.cio/expectHttpUpgrade|expectHttpUpgrade(io.ktor.http.HttpMethod;kotlin.CharSequence?;io.ktor.http.cio.ConnectionOptions?){}[0]
+final suspend fun io.ktor.http.cio/decodeChunked(io.ktor.utils.io/ByteReadChannel, io.ktor.utils.io/ByteWriteChannel) // io.ktor.http.cio/decodeChunked|decodeChunked(io.ktor.utils.io.ByteReadChannel;io.ktor.utils.io.ByteWriteChannel){}[0]
+final suspend fun io.ktor.http.cio/encodeChunked(io.ktor.utils.io/ByteWriteChannel, io.ktor.utils.io/ByteReadChannel) // io.ktor.http.cio/encodeChunked|encodeChunked(io.ktor.utils.io.ByteWriteChannel;io.ktor.utils.io.ByteReadChannel){}[0]
+final suspend fun io.ktor.http.cio/encodeChunked(io.ktor.utils.io/ByteWriteChannel, kotlin.coroutines/CoroutineContext): io.ktor.utils.io/ReaderJob // io.ktor.http.cio/encodeChunked|encodeChunked(io.ktor.utils.io.ByteWriteChannel;kotlin.coroutines.CoroutineContext){}[0]
+final suspend fun io.ktor.http.cio/parseHeaders(io.ktor.utils.io/ByteReadChannel): io.ktor.http.cio/HttpHeadersMap // io.ktor.http.cio/parseHeaders|parseHeaders(io.ktor.utils.io.ByteReadChannel){}[0]
+final suspend fun io.ktor.http.cio/parseHttpBody(io.ktor.http.cio/HttpHeadersMap, io.ktor.utils.io/ByteReadChannel, io.ktor.utils.io/ByteWriteChannel) // io.ktor.http.cio/parseHttpBody|parseHttpBody(io.ktor.http.cio.HttpHeadersMap;io.ktor.utils.io.ByteReadChannel;io.ktor.utils.io.ByteWriteChannel){}[0]
+final suspend fun io.ktor.http.cio/parseHttpBody(io.ktor.http/HttpProtocolVersion?, kotlin/Long, kotlin/CharSequence?, io.ktor.http.cio/ConnectionOptions?, io.ktor.utils.io/ByteReadChannel, io.ktor.utils.io/ByteWriteChannel) // io.ktor.http.cio/parseHttpBody|parseHttpBody(io.ktor.http.HttpProtocolVersion?;kotlin.Long;kotlin.CharSequence?;io.ktor.http.cio.ConnectionOptions?;io.ktor.utils.io.ByteReadChannel;io.ktor.utils.io.ByteWriteChannel){}[0]
+final suspend fun io.ktor.http.cio/parseHttpBody(kotlin/Long, kotlin/CharSequence?, io.ktor.http.cio/ConnectionOptions?, io.ktor.utils.io/ByteReadChannel, io.ktor.utils.io/ByteWriteChannel) // io.ktor.http.cio/parseHttpBody|parseHttpBody(kotlin.Long;kotlin.CharSequence?;io.ktor.http.cio.ConnectionOptions?;io.ktor.utils.io.ByteReadChannel;io.ktor.utils.io.ByteWriteChannel){}[0]
+final suspend fun io.ktor.http.cio/parseRequest(io.ktor.utils.io/ByteReadChannel): io.ktor.http.cio/Request? // io.ktor.http.cio/parseRequest|parseRequest(io.ktor.utils.io.ByteReadChannel){}[0]
+final suspend fun io.ktor.http.cio/parseResponse(io.ktor.utils.io/ByteReadChannel): io.ktor.http.cio/Response? // io.ktor.http.cio/parseResponse|parseResponse(io.ktor.utils.io.ByteReadChannel){}[0]

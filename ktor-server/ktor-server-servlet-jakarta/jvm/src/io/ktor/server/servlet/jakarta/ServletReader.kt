@@ -12,7 +12,6 @@ import kotlinx.coroutines.channels.*
 import java.io.*
 import java.util.concurrent.*
 
-@Suppress("DEPRECATION")
 internal fun CoroutineScope.servletReader(input: ServletInputStream, contentLength: Int): WriterJob {
     val reader = ServletReader(input, contentLength)
 
@@ -25,6 +24,7 @@ private class ServletReader(val input: ServletInputStream, val contentLength: In
     val channel = ByteChannel()
     private val events = Channel<Unit>(2)
 
+    @OptIn(InternalAPI::class)
     suspend fun run() {
         val buffer = ArrayPool.borrow()
         try {
@@ -51,6 +51,7 @@ private class ServletReader(val input: ServletInputStream, val contentLength: In
         }
     }
 
+    @OptIn(InternalAPI::class)
     @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun loop(buffer: ByteArray) {
         var bodySize = 0

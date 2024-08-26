@@ -22,7 +22,6 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.DefaultResponseVal
  */
 public fun HttpClientConfig<*>.addDefaultResponseValidation() {
     HttpResponseValidator {
-        @Suppress("DEPRECATION")
         expectSuccess = this@addDefaultResponseValidation.expectSuccess
 
         validateResponse { response ->
@@ -80,7 +79,6 @@ public open class ResponseException(
 /**
  * Unhandled redirect exception.
  */
-@Suppress("KDocMissingDocumentation")
 public class RedirectResponseException(response: HttpResponse, cachedResponseText: String) :
     ResponseException(response, cachedResponseText) {
 
@@ -92,7 +90,6 @@ public class RedirectResponseException(response: HttpResponse, cachedResponseTex
 /**
  * Server error exception.
  */
-@Suppress("KDocMissingDocumentation")
 public class ServerResponseException(
     response: HttpResponse,
     cachedResponseText: String
@@ -105,7 +102,6 @@ public class ServerResponseException(
 /**
  * Bad client request exception.
  */
-@Suppress("KDocMissingDocumentation")
 public class ClientRequestException(
     response: HttpResponse,
     cachedResponseText: String

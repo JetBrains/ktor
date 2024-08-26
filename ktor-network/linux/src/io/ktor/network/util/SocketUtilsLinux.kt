@@ -11,8 +11,8 @@ import platform.posix.*
 @OptIn(ExperimentalForeignApi::class)
 internal actual fun ktor_inet_ntop(
     family: Int,
-    src: CValuesRef<*>?,
-    dst: CValuesRef<ByteVar>?,
+    src: CPointer<*>?,
+    dst: CPointer<ByteVar>?,
     size: socklen_t
 ): CPointer<ByteVar>? = inet_ntop(family, src, dst, size)
 

@@ -25,14 +25,14 @@ internal actual fun platformDefaultFromValues(value: String, klass: KClass<*>): 
 
 @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
 private fun convertSimpleTypes(value: String, klass: KClass<*>): Any? = when (klass) {
-    java.lang.Integer::class -> value.toInt()
+    Integer::class -> value.toInt()
     java.lang.Float::class -> value.toFloat()
     java.lang.Double::class -> value.toDouble()
     java.lang.Long::class -> value.toLong()
     java.lang.Short::class -> value.toShort()
     java.lang.Boolean::class -> value.toBoolean()
     java.lang.String::class -> value
-    java.lang.Character::class -> value[0]
+    Character::class -> value[0]
     BigDecimal::class -> BigDecimal(value)
     BigInteger::class -> BigInteger(value)
     UUID::class -> UUID.fromString(value)
@@ -45,14 +45,14 @@ internal actual fun platformDefaultToValues(value: Any): List<String>? {
         return listOf(value.name)
     }
     return when (value) {
-        is java.lang.Integer -> listOf(value.toString())
+        is Integer -> listOf(value.toString())
         is java.lang.Float -> listOf(value.toString())
         is java.lang.Double -> listOf(value.toString())
         is java.lang.Long -> listOf(value.toString())
         is java.lang.Boolean -> listOf(value.toString())
         is java.lang.Short -> listOf(value.toString())
         is java.lang.String -> listOf(value.toString())
-        is java.lang.Character -> listOf(value.toString())
+        is Character -> listOf(value.toString())
         is BigDecimal -> listOf(value.toString())
         is BigInteger -> listOf(value.toString())
         is UUID -> listOf(value.toString())

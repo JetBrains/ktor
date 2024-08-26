@@ -11,9 +11,9 @@ import io.ktor.test.dispatcher.*
 import io.ktor.util.reflect.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
-import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlinx.io.*
 import kotlinx.serialization.*
 import kotlin.test.*
 
@@ -40,94 +40,102 @@ public abstract class AbstractSerializationTest<T : SerialFormat> {
     ): Boolean
 
     @Test
-    public fun testMapsElements(): Unit = testSuspend {
-        val testSerializer = KotlinxSerializationConverter(defaultSerializationFormat)
-        testSerializer.testSerialize(
-            mapOf(
-                "a" to "1",
-                "b" to "2"
-            )
-        ).let { result ->
-            assertEquals("""{"a":"1","b":"2"}""", result, defaultSerializationFormat)
-        }
-
-        testSerializer.testSerialize(
-            mapOf(
-                "a" to "1",
-                "b" to null
-            )
-        ).let { result ->
-            assertEquals("""{"a":"1","b":null}""", result, defaultSerializationFormat)
-        }
-
-        testSerializer.testSerialize(
-            mapOf(
-                "a" to "1",
-                null to "2"
-            )
-        ).let { result ->
-            assertEquals("""{"a":"1",null:"2"}""", result, defaultSerializationFormat)
-        }
-
-        // this is not yet supported
-        assertFails {
-            testSerializer.testSerialize<Map<String, Any>>(
+    public fun testMapsElements() {
+        testSuspend {
+            val testSerializer = KotlinxSerializationConverter(defaultSerializationFormat)
+            testSerializer.testSerialize(
                 mapOf(
                     "a" to "1",
-                    "b" to 2
+                    "b" to "2"
                 )
+            ).let { result ->
+                assertEquals("""{"a":"1","b":"2"}""", result, defaultSerializationFormat)
+            }
+
+            testSerializer.testSerialize(
+                mapOf(
+                    "a" to "1",
+                    "b" to null
+                )
+            ).let { result ->
+                assertEquals("""{"a":"1","b":null}""", result, defaultSerializationFormat)
+            }
+
+            testSerializer.testSerialize(
+                mapOf(
+                    "a" to "1",
+                    null to "2"
+                )
+            ).let { result ->
+                assertEquals("""{"a":"1",null:"2"}""", result, defaultSerializationFormat)
+            }
+
+            // this is not yet supported
+            assertFails {
+                testSerializer.testSerialize<Map<String, Any>>(
+                    mapOf(
+                        "a" to "1",
+                        "b" to 2
+                    )
+                )
+            }
+        }
+    }
+
+    @Test
+    public fun testRegisterCustom() {
+        testSuspend {
+            val serializer = KotlinxSerializationConverter(defaultSerializationFormat)
+
+            val user = User(1, "vasya")
+            val actual = serializer.testSerialize(user)
+            assertEquals("""{"id":1,"login":"vasya"}""", actual, defaultSerializationFormat)
+        }
+    }
+
+    @Test
+    public fun testRegisterCustomList() {
+        testSuspend {
+            val serializer = KotlinxSerializationConverter(defaultSerializationFormat)
+
+            val user = User(2, "petya")
+            val photo = Photo(3, "petya.jpg")
+
+            assertEquals(
+                """[{"id":2,"login":"petya"}]""",
+                serializer.testSerialize(listOf(user)),
+                defaultSerializationFormat
+            )
+            assertEquals(
+                """[{"id":3,"path":"petya.jpg"}]""",
+                serializer.testSerialize(listOf(photo)),
+                defaultSerializationFormat
             )
         }
     }
 
     @Test
-    public fun testRegisterCustom(): Unit = testSuspend {
-        val serializer = KotlinxSerializationConverter(defaultSerializationFormat)
+    public open fun testRegisterCustomFlow() {
+        testSuspend {
+            val serializer = KotlinxSerializationConverter(defaultSerializationFormat)
 
-        val user = User(1, "vasya")
-        val actual = serializer.testSerialize(user)
-        assertEquals("""{"id":1,"login":"vasya"}""", actual, defaultSerializationFormat)
+            val user = User(2, "petya")
+            val photo = Photo(3, "petya.jpg")
+
+            assertEquals(
+                """[{"id":2,"login":"petya"}]""",
+                serializer.testSerialize(flowOf(user)),
+                defaultSerializationFormat
+            )
+            assertEquals(
+                """[{"id":3,"path":"petya.jpg"}]""",
+                serializer.testSerialize(flowOf(photo)),
+                defaultSerializationFormat
+            )
+        }
     }
 
-    @Test
-    public fun testRegisterCustomList(): Unit = testSuspend {
-        val serializer = KotlinxSerializationConverter(defaultSerializationFormat)
-
-        val user = User(2, "petya")
-        val photo = Photo(3, "petya.jpg")
-
-        assertEquals(
-            """[{"id":2,"login":"petya"}]""",
-            serializer.testSerialize(listOf(user)),
-            defaultSerializationFormat
-        )
-        assertEquals(
-            """[{"id":3,"path":"petya.jpg"}]""",
-            serializer.testSerialize(listOf(photo)),
-            defaultSerializationFormat
-        )
-    }
-
-    @Test
-    public open fun testRegisterCustomFlow(): Unit = testSuspend {
-        val serializer = KotlinxSerializationConverter(defaultSerializationFormat)
-
-        val user = User(2, "petya")
-        val photo = Photo(3, "petya.jpg")
-
-        assertEquals(
-            """[{"id":2,"login":"petya"}]""",
-            serializer.testSerialize(flowOf(user)),
-            defaultSerializationFormat
-        )
-        assertEquals(
-            """[{"id":3,"path":"petya.jpg"}]""",
-            serializer.testSerialize(flowOf(photo)),
-            defaultSerializationFormat
-        )
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
+    @OptIn(DelicateCoroutinesApi::class, InternalAPI::class)
     protected suspend inline fun <reified T : Any> ContentConverter.testSerialize(data: T): ByteArray {
         return when (
             val content =
@@ -140,7 +148,7 @@ public abstract class AbstractSerializationTest<T : SerialFormat> {
                     content.writeTo(channel)
                     channel.close()
                 }
-                channel.readRemaining().readBytes()
+                channel.readRemaining().readByteArray()
             }
 
             else -> error("Failed to get serialized $data")

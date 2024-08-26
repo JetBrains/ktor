@@ -15,6 +15,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.debug.junit5.*
 import org.junit.jupiter.api.extension.*
 import kotlin.test.*
 import kotlin.test.Test
@@ -41,6 +42,7 @@ abstract class ClientCertTestSuite<Engine : ApplicationEngine, Configuration : A
     }
 
     @RetryableTest(2)
+    @CoroutinesTimeout(60 * 1000, cancelOnTimeout = true)
     @Test
     open fun `Server requesting Client Certificate from CIO Client`() {
         val clientKeys = ca.generateCertificate(keyType = KeyType.Client)

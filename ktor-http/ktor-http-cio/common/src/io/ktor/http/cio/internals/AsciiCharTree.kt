@@ -5,11 +5,11 @@
 package io.ktor.http.cio.internals
 
 internal class AsciiCharTree<T : Any>(val root: Node<T>) {
-    public class Node<T>(val ch: Char, val exact: List<T>, val children: List<Node<T>>) {
+    class Node<T>(val ch: Char, val exact: List<T>, val children: List<Node<T>>) {
         val array = Array(0x100) { chi -> children.singleOrNull { it.ch.code == chi } }
     }
 
-    public fun search(
+    fun search(
         sequence: CharSequence,
         fromIdx: Int = 0,
         end: Int = sequence.length,
@@ -35,12 +35,12 @@ internal class AsciiCharTree<T : Any>(val root: Node<T>) {
         return node.exact
     }
 
-    public companion object {
-        public fun <T : CharSequence> build(from: List<T>): AsciiCharTree<T> {
+    companion object {
+        fun <T : CharSequence> build(from: List<T>): AsciiCharTree<T> {
             return build(from, { it.length }, { s, idx -> s[idx] })
         }
 
-        public fun <T : Any> build(from: List<T>, length: (T) -> Int, charAt: (T, Int) -> Char): AsciiCharTree<T> {
+        fun <T : Any> build(from: List<T>, length: (T) -> Int, charAt: (T, Int) -> Char): AsciiCharTree<T> {
             val maxLen = from.maxByOrNull(length)?.let(length)
                 ?: throw NoSuchElementException("Unable to build char tree from an empty list")
 

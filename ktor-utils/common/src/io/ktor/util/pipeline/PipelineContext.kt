@@ -48,7 +48,7 @@ public abstract class PipelineContext<TSubject : Any, TContext : Any>(
  */
 internal fun <TSubject : Any, TContext : Any> pipelineContextFor(
     context: TContext,
-    interceptors: List<PipelineInterceptorFunction<TSubject, TContext>>,
+    interceptors: List<PipelineInterceptor<TSubject, TContext>>,
     subject: TSubject,
     coroutineContext: CoroutineContext,
     debugMode: Boolean = false

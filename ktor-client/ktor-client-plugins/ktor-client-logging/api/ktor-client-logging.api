@@ -1,3 +1,7 @@
+public final class io/ktor/client/plugins/logging/KtorMDCContext_jvmKt {
+	public static final fun MDCContext ()Lkotlin/coroutines/CoroutineContext$Element;
+}
+
 public final class io/ktor/client/plugins/logging/LogLevel : java/lang/Enum {
 	public static final field ALL Lio/ktor/client/plugins/logging/LogLevel;
 	public static final field BODY Lio/ktor/client/plugins/logging/LogLevel;

@@ -10,6 +10,7 @@ import io.ktor.util.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
 import io.ktor.utils.io.core.*
+import kotlinx.io.*
 
 fun makeArray(size: Int): ByteArray = ByteArray(size) { it.toByte() }
 
@@ -23,7 +24,7 @@ suspend fun List<PartData>.makeString(): String = buildString {
             is PartData.FileItem -> filenameContentTypeAndContentString(it.provider, it.headers)
             is PartData.FormItem -> it.value
             is PartData.BinaryItem -> filenameContentTypeAndContentString(
-                { ByteReadChannel(it.provider().readBytes()) },
+                { ByteReadChannel(it.provider().readByteArray()) },
                 it.headers
             )
 
@@ -34,7 +35,6 @@ suspend fun List<PartData>.makeString(): String = buildString {
     }
 }
 
-@Suppress("DEPRECATION")
 private suspend fun filenameContentTypeAndContentString(provider: () -> ByteReadChannel, headers: Headers): String {
     val dispositionHeader: String = headers.getAll(HttpHeaders.ContentDisposition)!!.joinToString(";")
     val disposition: ContentDisposition = ContentDisposition.parse(dispositionHeader)

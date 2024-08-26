@@ -7,6 +7,7 @@ package io.ktor.websocket
 import io.ktor.utils.io.charsets.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
+import kotlinx.io.*
 
 /**
  * A frame received or ready to be sent. It is not reusable and not thread-safe.
@@ -15,6 +16,7 @@ import kotlinx.coroutines.*
  * @property data - a frame content or fragment content
  * @property disposableHandle could be invoked when the frame is processed
  */
+
 public expect sealed class Frame private constructor(
     fin: Boolean,
     frameType: FrameType,
@@ -61,7 +63,7 @@ public expect sealed class Frame private constructor(
         rsv3: Boolean = false
     ) : Frame {
         public constructor(fin: Boolean, data: ByteArray)
-        public constructor(fin: Boolean, packet: ByteReadPacket)
+        public constructor(fin: Boolean, packet: Source)
     }
 
     /**
@@ -81,7 +83,7 @@ public expect sealed class Frame private constructor(
     ) : Frame {
         public constructor(fin: Boolean, data: ByteArray)
         public constructor(text: String)
-        public constructor(fin: Boolean, packet: ByteReadPacket)
+        public constructor(fin: Boolean, packet: Source)
     }
 
     /**
@@ -90,7 +92,7 @@ public expect sealed class Frame private constructor(
      */
     public class Close(data: ByteArray) : Frame {
         public constructor(reason: CloseReason)
-        public constructor(packet: ByteReadPacket)
+        public constructor(packet: Source)
         public constructor()
     }
 
@@ -99,7 +101,7 @@ public expect sealed class Frame private constructor(
      * Usually there is no need to send/handle it unless you have a RAW WebSocket session.
      */
     public class Ping(data: ByteArray) : Frame {
-        public constructor(packet: ByteReadPacket)
+        public constructor(packet: Source)
     }
 
     /**
@@ -110,7 +112,7 @@ public expect sealed class Frame private constructor(
         data: ByteArray,
         disposableHandle: DisposableHandle = NonDisposableHandle
     ) : Frame {
-        public constructor(packet: ByteReadPacket)
+        public constructor(packet: Source)
     }
 
     /**
@@ -152,7 +154,6 @@ public fun Frame.readBytes(): ByteArray {
 /**
  * Reads the close reason from the close frame or null if no close reason is provided.
  */
-@Suppress("CONFLICTING_OVERLOADS")
 public fun Frame.Close.readReason(): CloseReason? {
     if (data.size < 2) {
         return null
@@ -166,7 +167,6 @@ public fun Frame.Close.readReason(): CloseReason? {
     return CloseReason(code, message)
 }
 
-internal object NonDisposableHandle : DisposableHandle {
-    override fun dispose() {}
-    override fun toString(): String = "NonDisposableHandle"
+internal data object NonDisposableHandle : DisposableHandle {
+    override fun dispose() = Unit
 }

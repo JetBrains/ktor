@@ -22,14 +22,15 @@ import kotlin.native.concurrent.*
  * See [Json] for more details.
  */
 
-public val DefaultJson: Json = Json {
-    encodeDefaults = true
-    isLenient = true
-    allowSpecialFloatingPointValues = true
-    allowStructuredMapKeys = true
-    prettyPrint = false
-    useArrayPolymorphism = false
-}
+public val DefaultJson: Json =
+    Json {
+        encodeDefaults = true
+        isLenient = true
+        allowSpecialFloatingPointValues = true
+        allowStructuredMapKeys = true
+        prettyPrint = false
+        useArrayPolymorphism = false
+    }
 
 /**
  * Registers the `application/json` (or another specified [contentType]) content type

@@ -11,6 +11,7 @@ import io.ktor.client.request.*
 import io.ktor.client.tests.utils.*
 import io.ktor.test.dispatcher.*
 import io.ktor.utils.io.errors.*
+import kotlinx.io.IOException
 import kotlin.test.*
 
 class JettyHttp2EngineTest {

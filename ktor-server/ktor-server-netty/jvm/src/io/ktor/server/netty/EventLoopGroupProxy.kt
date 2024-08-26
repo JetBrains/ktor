@@ -27,36 +27,20 @@ public class EventLoopGroupProxy(
 
         public fun create(parallelism: Int): EventLoopGroupProxy {
             val defaultFactory = DefaultThreadFactory(EventLoopGroupProxy::class.java, true)
-
-            val factory = ThreadFactory { runnable ->
-                defaultFactory.newThread {
-                    markParkingProhibited()
-                    runnable.run()
-                }
-            }
-
             val channelClass = getChannelClass()
 
             return when {
-                KQueue.isAvailable() -> EventLoopGroupProxy(channelClass, KQueueEventLoopGroup(parallelism, factory))
-                Epoll.isAvailable() -> EventLoopGroupProxy(channelClass, EpollEventLoopGroup(parallelism, factory))
-                else -> EventLoopGroupProxy(channelClass, NioEventLoopGroup(parallelism, factory))
-            }
-        }
+                KQueue.isAvailable() -> EventLoopGroupProxy(
+                    channelClass,
+                    KQueueEventLoopGroup(parallelism, defaultFactory)
+                )
 
-        private val prohibitParkingFunction: Method? by lazy {
-            try {
-                Class.forName("io.ktor.utils.io.jvm.javaio.PollersKt")
-                    .getMethod("prohibitParking")
-            } catch (cause: Throwable) {
-                null
-            }
-        }
+                Epoll.isAvailable() -> EventLoopGroupProxy(
+                    channelClass,
+                    EpollEventLoopGroup(parallelism, defaultFactory)
+                )
 
-        private fun markParkingProhibited() {
-            try {
-                prohibitParkingFunction?.invoke(null)
-            } catch (_: Throwable) {
+                else -> EventLoopGroupProxy(channelClass, NioEventLoopGroup(parallelism, defaultFactory))
             }
         }
     }

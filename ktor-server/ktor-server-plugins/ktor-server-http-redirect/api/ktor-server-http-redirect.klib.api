@@ -1,0 +1,28 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-http-redirect>
+final class io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig { // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.<init>|<init>(){}[0]
+
+    final val excludePredicates // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.excludePredicates|{}excludePredicates[0]
+        final fun <get-excludePredicates>(): kotlin.collections/MutableList<kotlin/Function1<io.ktor.server.application/ApplicationCall, kotlin/Boolean>> // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.excludePredicates.<get-excludePredicates>|<get-excludePredicates>(){}[0]
+
+    final var permanentRedirect // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.permanentRedirect|{}permanentRedirect[0]
+        final fun <get-permanentRedirect>(): kotlin/Boolean // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.permanentRedirect.<get-permanentRedirect>|<get-permanentRedirect>(){}[0]
+        final fun <set-permanentRedirect>(kotlin/Boolean) // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.permanentRedirect.<set-permanentRedirect>|<set-permanentRedirect>(kotlin.Boolean){}[0]
+    final var sslPort // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.sslPort|{}sslPort[0]
+        final fun <get-sslPort>(): kotlin/Int // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.sslPort.<get-sslPort>|<get-sslPort>(){}[0]
+        final fun <set-sslPort>(kotlin/Int) // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.sslPort.<set-sslPort>|<set-sslPort>(kotlin.Int){}[0]
+
+    final fun exclude(kotlin/Function1<io.ktor.server.application/ApplicationCall, kotlin/Boolean>) // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.exclude|exclude(kotlin.Function1<io.ktor.server.application.ApplicationCall,kotlin.Boolean>){}[0]
+    final fun excludePrefix(kotlin/String) // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.excludePrefix|excludePrefix(kotlin.String){}[0]
+    final fun excludeSuffix(kotlin/String) // io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig.excludeSuffix|excludeSuffix(kotlin.String){}[0]
+}
+
+final val io.ktor.server.plugins.httpsredirect/HttpsRedirect // io.ktor.server.plugins.httpsredirect/HttpsRedirect|{}HttpsRedirect[0]
+    final fun <get-HttpsRedirect>(): io.ktor.server.application/ApplicationPlugin<io.ktor.server.plugins.httpsredirect/HttpsRedirectConfig> // io.ktor.server.plugins.httpsredirect/HttpsRedirect.<get-HttpsRedirect>|<get-HttpsRedirect>(){}[0]

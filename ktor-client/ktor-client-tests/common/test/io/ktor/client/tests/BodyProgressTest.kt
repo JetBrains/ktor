@@ -7,7 +7,6 @@
 package io.ktor.client.tests
 
 import io.ktor.client.call.*
-import io.ktor.client.content.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.cache.*
@@ -82,6 +81,7 @@ class BodyProgressTest : ClientLoader(timeoutSeconds = 60) {
         }
     }
 
+    @OptIn(InternalAPI::class)
     @Test
     fun testSendChannel() = clientTests {
         test { client ->
@@ -166,6 +166,7 @@ class BodyProgressTest : ClientLoader(timeoutSeconds = 60) {
         }
     }
 
+    @OptIn(InternalAPI::class)
     @Test
     fun testReceiveChannelWithExecute() = clientTests {
         test { client ->
@@ -190,6 +191,7 @@ class BodyProgressTest : ClientLoader(timeoutSeconds = 60) {
         }
     }
 
+    @OptIn(InternalAPI::class)
     @Test
     fun testReceiveChannelWithReceive() = clientTests {
         test { client ->

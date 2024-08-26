@@ -9,6 +9,7 @@ kotlin.sourceSets {
             api(kotlin("test-annotations-common"))
             api(project(":ktor-shared:ktor-serialization:ktor-serialization-kotlinx"))
             api(project(":ktor-client:ktor-client-tests"))
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
     jvmMain {

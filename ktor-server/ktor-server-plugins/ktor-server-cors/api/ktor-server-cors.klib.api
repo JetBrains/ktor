@@ -1,0 +1,69 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-cors>
+final class io.ktor.server.plugins.cors/CORSConfig { // io.ktor.server.plugins.cors/CORSConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.cors/CORSConfig.<init>|<init>(){}[0]
+
+    final val exposedHeaders // io.ktor.server.plugins.cors/CORSConfig.exposedHeaders|{}exposedHeaders[0]
+        final fun <get-exposedHeaders>(): kotlin.collections/MutableSet<kotlin/String> // io.ktor.server.plugins.cors/CORSConfig.exposedHeaders.<get-exposedHeaders>|<get-exposedHeaders>(){}[0]
+    final val headerPredicates // io.ktor.server.plugins.cors/CORSConfig.headerPredicates|{}headerPredicates[0]
+        final fun <get-headerPredicates>(): kotlin.collections/MutableList<kotlin/Function1<kotlin/String, kotlin/Boolean>> // io.ktor.server.plugins.cors/CORSConfig.headerPredicates.<get-headerPredicates>|<get-headerPredicates>(){}[0]
+    final val headers // io.ktor.server.plugins.cors/CORSConfig.headers|{}headers[0]
+        final fun <get-headers>(): kotlin.collections/MutableSet<kotlin/String> // io.ktor.server.plugins.cors/CORSConfig.headers.<get-headers>|<get-headers>(){}[0]
+    final val hosts // io.ktor.server.plugins.cors/CORSConfig.hosts|{}hosts[0]
+        final fun <get-hosts>(): kotlin.collections/MutableSet<kotlin/String> // io.ktor.server.plugins.cors/CORSConfig.hosts.<get-hosts>|<get-hosts>(){}[0]
+    final val methods // io.ktor.server.plugins.cors/CORSConfig.methods|{}methods[0]
+        final fun <get-methods>(): kotlin.collections/MutableSet<io.ktor.http/HttpMethod> // io.ktor.server.plugins.cors/CORSConfig.methods.<get-methods>|<get-methods>(){}[0]
+
+    final var allowCredentials // io.ktor.server.plugins.cors/CORSConfig.allowCredentials|{}allowCredentials[0]
+        final fun <get-allowCredentials>(): kotlin/Boolean // io.ktor.server.plugins.cors/CORSConfig.allowCredentials.<get-allowCredentials>|<get-allowCredentials>(){}[0]
+        final fun <set-allowCredentials>(kotlin/Boolean) // io.ktor.server.plugins.cors/CORSConfig.allowCredentials.<set-allowCredentials>|<set-allowCredentials>(kotlin.Boolean){}[0]
+    final var allowNonSimpleContentTypes // io.ktor.server.plugins.cors/CORSConfig.allowNonSimpleContentTypes|{}allowNonSimpleContentTypes[0]
+        final fun <get-allowNonSimpleContentTypes>(): kotlin/Boolean // io.ktor.server.plugins.cors/CORSConfig.allowNonSimpleContentTypes.<get-allowNonSimpleContentTypes>|<get-allowNonSimpleContentTypes>(){}[0]
+        final fun <set-allowNonSimpleContentTypes>(kotlin/Boolean) // io.ktor.server.plugins.cors/CORSConfig.allowNonSimpleContentTypes.<set-allowNonSimpleContentTypes>|<set-allowNonSimpleContentTypes>(kotlin.Boolean){}[0]
+    final var allowSameOrigin // io.ktor.server.plugins.cors/CORSConfig.allowSameOrigin|{}allowSameOrigin[0]
+        final fun <get-allowSameOrigin>(): kotlin/Boolean // io.ktor.server.plugins.cors/CORSConfig.allowSameOrigin.<get-allowSameOrigin>|<get-allowSameOrigin>(){}[0]
+        final fun <set-allowSameOrigin>(kotlin/Boolean) // io.ktor.server.plugins.cors/CORSConfig.allowSameOrigin.<set-allowSameOrigin>|<set-allowSameOrigin>(kotlin.Boolean){}[0]
+    final var maxAgeInSeconds // io.ktor.server.plugins.cors/CORSConfig.maxAgeInSeconds|{}maxAgeInSeconds[0]
+        final fun <get-maxAgeInSeconds>(): kotlin/Long // io.ktor.server.plugins.cors/CORSConfig.maxAgeInSeconds.<get-maxAgeInSeconds>|<get-maxAgeInSeconds>(){}[0]
+        final fun <set-maxAgeInSeconds>(kotlin/Long) // io.ktor.server.plugins.cors/CORSConfig.maxAgeInSeconds.<set-maxAgeInSeconds>|<set-maxAgeInSeconds>(kotlin.Long){}[0]
+
+    final fun allowHeader(kotlin/String) // io.ktor.server.plugins.cors/CORSConfig.allowHeader|allowHeader(kotlin.String){}[0]
+    final fun allowHeaders(kotlin/Function1<kotlin/String, kotlin/Boolean>) // io.ktor.server.plugins.cors/CORSConfig.allowHeaders|allowHeaders(kotlin.Function1<kotlin.String,kotlin.Boolean>){}[0]
+    final fun allowHeadersPrefixed(kotlin/String) // io.ktor.server.plugins.cors/CORSConfig.allowHeadersPrefixed|allowHeadersPrefixed(kotlin.String){}[0]
+    final fun allowHost(kotlin/String, kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<kotlin/String> = ...) // io.ktor.server.plugins.cors/CORSConfig.allowHost|allowHost(kotlin.String;kotlin.collections.List<kotlin.String>;kotlin.collections.List<kotlin.String>){}[0]
+    final fun allowMethod(io.ktor.http/HttpMethod) // io.ktor.server.plugins.cors/CORSConfig.allowMethod|allowMethod(io.ktor.http.HttpMethod){}[0]
+    final fun allowOrigins(kotlin/Function1<kotlin/String, kotlin/Boolean>) // io.ktor.server.plugins.cors/CORSConfig.allowOrigins|allowOrigins(kotlin.Function1<kotlin.String,kotlin.Boolean>){}[0]
+    final fun allowXHttpMethodOverride() // io.ktor.server.plugins.cors/CORSConfig.allowXHttpMethodOverride|allowXHttpMethodOverride(){}[0]
+    final fun anyHost() // io.ktor.server.plugins.cors/CORSConfig.anyHost|anyHost(){}[0]
+    final fun anyMethod() // io.ktor.server.plugins.cors/CORSConfig.anyMethod|anyMethod(){}[0]
+    final fun exposeHeader(kotlin/String) // io.ktor.server.plugins.cors/CORSConfig.exposeHeader|exposeHeader(kotlin.String){}[0]
+
+    final object Companion { // io.ktor.server.plugins.cors/CORSConfig.Companion|null[0]
+        final const val CORS_DEFAULT_MAX_AGE // io.ktor.server.plugins.cors/CORSConfig.Companion.CORS_DEFAULT_MAX_AGE|{}CORS_DEFAULT_MAX_AGE[0]
+            final fun <get-CORS_DEFAULT_MAX_AGE>(): kotlin/Long // io.ktor.server.plugins.cors/CORSConfig.Companion.CORS_DEFAULT_MAX_AGE.<get-CORS_DEFAULT_MAX_AGE>|<get-CORS_DEFAULT_MAX_AGE>(){}[0]
+
+        final val CorsDefaultMethods // io.ktor.server.plugins.cors/CORSConfig.Companion.CorsDefaultMethods|{}CorsDefaultMethods[0]
+            final fun <get-CorsDefaultMethods>(): kotlin.collections/Set<io.ktor.http/HttpMethod> // io.ktor.server.plugins.cors/CORSConfig.Companion.CorsDefaultMethods.<get-CorsDefaultMethods>|<get-CorsDefaultMethods>(){}[0]
+        final val CorsSimpleContentTypes // io.ktor.server.plugins.cors/CORSConfig.Companion.CorsSimpleContentTypes|{}CorsSimpleContentTypes[0]
+            final fun <get-CorsSimpleContentTypes>(): kotlin.collections/Set<io.ktor.http/ContentType> // io.ktor.server.plugins.cors/CORSConfig.Companion.CorsSimpleContentTypes.<get-CorsSimpleContentTypes>|<get-CorsSimpleContentTypes>(){}[0]
+        final val CorsSimpleRequestHeaders // io.ktor.server.plugins.cors/CORSConfig.Companion.CorsSimpleRequestHeaders|{}CorsSimpleRequestHeaders[0]
+            final fun <get-CorsSimpleRequestHeaders>(): kotlin.collections/Set<kotlin/String> // io.ktor.server.plugins.cors/CORSConfig.Companion.CorsSimpleRequestHeaders.<get-CorsSimpleRequestHeaders>|<get-CorsSimpleRequestHeaders>(){}[0]
+        final val CorsSimpleResponseHeaders // io.ktor.server.plugins.cors/CORSConfig.Companion.CorsSimpleResponseHeaders|{}CorsSimpleResponseHeaders[0]
+            final fun <get-CorsSimpleResponseHeaders>(): kotlin.collections/Set<kotlin/String> // io.ktor.server.plugins.cors/CORSConfig.Companion.CorsSimpleResponseHeaders.<get-CorsSimpleResponseHeaders>|<get-CorsSimpleResponseHeaders>(){}[0]
+    }
+}
+
+final val io.ktor.server.plugins.cors.routing/CORS // io.ktor.server.plugins.cors.routing/CORS|{}CORS[0]
+    final fun <get-CORS>(): io.ktor.server.application/RouteScopedPlugin<io.ktor.server.plugins.cors/CORSConfig> // io.ktor.server.plugins.cors.routing/CORS.<get-CORS>|<get-CORS>(){}[0]
+final val io.ktor.server.plugins.cors/CORS // io.ktor.server.plugins.cors/CORS|{}CORS[0]
+    final fun <get-CORS>(): io.ktor.server.application/ApplicationPlugin<io.ktor.server.plugins.cors/CORSConfig> // io.ktor.server.plugins.cors/CORS.<get-CORS>|<get-CORS>(){}[0]
+
+final var io.ktor.server.plugins.cors/maxAgeDuration // io.ktor.server.plugins.cors/maxAgeDuration|@io.ktor.server.plugins.cors.CORSConfig{}maxAgeDuration[0]
+    final fun (io.ktor.server.plugins.cors/CORSConfig).<get-maxAgeDuration>(): kotlin.time/Duration // io.ktor.server.plugins.cors/maxAgeDuration.<get-maxAgeDuration>|<get-maxAgeDuration>@io.ktor.server.plugins.cors.CORSConfig(){}[0]
+    final fun (io.ktor.server.plugins.cors/CORSConfig).<set-maxAgeDuration>(kotlin.time/Duration) // io.ktor.server.plugins.cors/maxAgeDuration.<set-maxAgeDuration>|<set-maxAgeDuration>@io.ktor.server.plugins.cors.CORSConfig(kotlin.time.Duration){}[0]

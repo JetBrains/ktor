@@ -74,8 +74,8 @@ public abstract class io/ktor/websocket/Frame {
 }
 
 public final class io/ktor/websocket/Frame$Binary : io/ktor/websocket/Frame {
-	public fun <init> (ZLio/ktor/utils/io/core/ByteReadPacket;)V
 	public fun <init> (ZLjava/nio/ByteBuffer;)V
+	public fun <init> (ZLkotlinx/io/Source;)V
 	public fun <init> (Z[B)V
 	public fun <init> (Z[BZZZ)V
 	public synthetic fun <init> (Z[BZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -83,9 +83,9 @@ public final class io/ktor/websocket/Frame$Binary : io/ktor/websocket/Frame {
 
 public final class io/ktor/websocket/Frame$Close : io/ktor/websocket/Frame {
 	public fun <init> ()V
-	public fun <init> (Lio/ktor/utils/io/core/ByteReadPacket;)V
 	public fun <init> (Lio/ktor/websocket/CloseReason;)V
 	public fun <init> (Ljava/nio/ByteBuffer;)V
+	public fun <init> (Lkotlinx/io/Source;)V
 	public fun <init> ([B)V
 }
 
@@ -94,24 +94,24 @@ public final class io/ktor/websocket/Frame$Companion {
 }
 
 public final class io/ktor/websocket/Frame$Ping : io/ktor/websocket/Frame {
-	public fun <init> (Lio/ktor/utils/io/core/ByteReadPacket;)V
 	public fun <init> (Ljava/nio/ByteBuffer;)V
+	public fun <init> (Lkotlinx/io/Source;)V
 	public fun <init> ([B)V
 }
 
 public final class io/ktor/websocket/Frame$Pong : io/ktor/websocket/Frame {
-	public fun <init> (Lio/ktor/utils/io/core/ByteReadPacket;)V
 	public fun <init> (Ljava/nio/ByteBuffer;)V
 	public fun <init> (Ljava/nio/ByteBuffer;Lkotlinx/coroutines/DisposableHandle;)V
 	public synthetic fun <init> (Ljava/nio/ByteBuffer;Lkotlinx/coroutines/DisposableHandle;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lkotlinx/io/Source;)V
 	public fun <init> ([BLkotlinx/coroutines/DisposableHandle;)V
 	public synthetic fun <init> ([BLkotlinx/coroutines/DisposableHandle;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 }
 
 public final class io/ktor/websocket/Frame$Text : io/ktor/websocket/Frame {
 	public fun <init> (Ljava/lang/String;)V
-	public fun <init> (ZLio/ktor/utils/io/core/ByteReadPacket;)V
 	public fun <init> (ZLjava/nio/ByteBuffer;)V
+	public fun <init> (ZLkotlinx/io/Source;)V
 	public fun <init> (Z[B)V
 	public fun <init> (Z[BZZZ)V
 	public synthetic fun <init> (Z[BZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V

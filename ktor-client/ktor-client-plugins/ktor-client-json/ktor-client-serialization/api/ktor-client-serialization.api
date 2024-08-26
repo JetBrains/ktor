@@ -3,7 +3,7 @@ public final class io/ktor/client/plugins/kotlinx/serializer/KotlinxSerializer :
 	public fun <init> ()V
 	public fun <init> (Lkotlinx/serialization/json/Json;)V
 	public synthetic fun <init> (Lkotlinx/serialization/json/Json;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun read (Lio/ktor/util/reflect/TypeInfo;Lio/ktor/utils/io/core/Input;)Ljava/lang/Object;
+	public fun read (Lio/ktor/util/reflect/TypeInfo;Lkotlinx/io/Source;)Ljava/lang/Object;
 	public fun write (Ljava/lang/Object;)Lio/ktor/http/content/OutgoingContent;
 	public fun write (Ljava/lang/Object;Lio/ktor/http/ContentType;)Lio/ktor/http/content/OutgoingContent;
 }

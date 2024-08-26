@@ -9,14 +9,13 @@ import io.ktor.http.cio.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
-import io.ktor.util.*
 import io.ktor.util.pipeline.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
-import io.ktor.utils.io.core.*
 import io.ktor.utils.io.jvm.javaio.*
 import io.ktor.utils.io.streams.*
 import kotlinx.coroutines.*
+import kotlinx.io.*
 import java.io.*
 
 internal actual suspend fun PipelineContext<Any, PipelineCall>.defaultPlatformTransformations(
@@ -41,11 +40,12 @@ internal actual fun PipelineContext<*, PipelineCall>.multiPartData(rc: ByteReadC
         coroutineContext + Dispatchers.Unconfined,
         rc,
         contentType,
-        contentLength
+        contentLength,
+        call.formFieldLimit
     )
 }
 
-internal actual fun ByteReadPacket.readTextWithCustomCharset(charset: Charset): String =
+internal actual fun Source.readTextWithCustomCharset(charset: Charset): String =
     inputStream().reader(charset).readText()
 
 private fun receiveGuardedInputStream(channel: ByteReadChannel): InputStream {

@@ -1,0 +1,22 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-client-call-id>
+final class io.ktor.client.plugins.callid/CallIdConfig { // io.ktor.client.plugins.callid/CallIdConfig|null[0]
+    constructor <init>() // io.ktor.client.plugins.callid/CallIdConfig.<init>|<init>(){}[0]
+
+    final var useCoroutineContext // io.ktor.client.plugins.callid/CallIdConfig.useCoroutineContext|{}useCoroutineContext[0]
+        final fun <get-useCoroutineContext>(): kotlin/Boolean // io.ktor.client.plugins.callid/CallIdConfig.useCoroutineContext.<get-useCoroutineContext>|<get-useCoroutineContext>(){}[0]
+        final fun <set-useCoroutineContext>(kotlin/Boolean) // io.ktor.client.plugins.callid/CallIdConfig.useCoroutineContext.<set-useCoroutineContext>|<set-useCoroutineContext>(kotlin.Boolean){}[0]
+
+    final fun addToHeader(kotlin/String = ...) // io.ktor.client.plugins.callid/CallIdConfig.addToHeader|addToHeader(kotlin.String){}[0]
+    final fun generate(kotlin.coroutines/SuspendFunction1<io.ktor.client.request/HttpRequestBuilder, kotlin/String?>) // io.ktor.client.plugins.callid/CallIdConfig.generate|generate(kotlin.coroutines.SuspendFunction1<io.ktor.client.request.HttpRequestBuilder,kotlin.String?>){}[0]
+    final fun intercept(kotlin/Function2<io.ktor.client.request/HttpRequestBuilder, kotlin/String, kotlin/Unit>) // io.ktor.client.plugins.callid/CallIdConfig.intercept|intercept(kotlin.Function2<io.ktor.client.request.HttpRequestBuilder,kotlin.String,kotlin.Unit>){}[0]
+}
+
+final val io.ktor.client.plugins.callid/CallId // io.ktor.client.plugins.callid/CallId|{}CallId[0]
+    final fun <get-CallId>(): io.ktor.client.plugins.api/ClientPlugin<io.ktor.client.plugins.callid/CallIdConfig> // io.ktor.client.plugins.callid/CallId.<get-CallId>|<get-CallId>(){}[0]

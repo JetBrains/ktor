@@ -43,11 +43,11 @@ public class CaseInsensitiveSet() : MutableSet<String> {
     }
 
     override fun removeAll(elements: Collection<String>): Boolean {
-        return backingMap.keys.removeAll(elements)
+        return backingMap.keys.removeAll(elements.toSet())
     }
 
     override fun retainAll(elements: Collection<String>): Boolean {
-        return backingMap.keys.retainAll(elements)
+        return backingMap.keys.retainAll(elements.toSet())
     }
 
     override fun contains(element: String): Boolean {

@@ -16,7 +16,6 @@ import io.ktor.util.*
 import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.CancellationException
 import org.w3c.dom.*
 import org.w3c.dom.events.*
 import kotlin.coroutines.*
@@ -31,7 +30,7 @@ internal class JsClientEngine(
         check(config.proxy == null) { "Proxy unsupported in Js engine." }
     }
 
-    @OptIn(InternalAPI::class)
+    @OptIn(InternalAPI::class, InternalCoroutinesApi::class)
     override suspend fun execute(data: HttpRequestData): HttpResponseData {
         val callContext = callContext()
         val clientConfig = data.attributes[CLIENT_CONFIG]
@@ -42,6 +41,13 @@ internal class JsClientEngine(
 
         val requestTime = GMTDate()
         val rawRequest = data.toRaw(clientConfig, callContext)
+
+        val controller = AbortController()
+        rawRequest.signal = controller.signal
+        callContext.job.invokeOnCompletion(onCancelling = true) {
+            controller.abort()
+        }
+
         val rawResponse = commonFetch(data.url.toString(), rawRequest, config)
 
         val status = HttpStatusCode(rawResponse.status.toInt(), rawResponse.statusText)
@@ -49,11 +55,9 @@ internal class JsClientEngine(
         val version = HttpProtocolVersion.HTTP_1_1
 
         val body = CoroutineScope(callContext).readBody(rawResponse)
-        val responseBody: Any = if (needToProcessSSE(data, status, headers)) {
-            DefaultClientSSESession(data.body as SSEClientContent, body, callContext)
-        } else {
-            body
-        }
+        val responseBody: Any = data.attributes.getOrNull(ResponseAdapterAttributeKey)
+            ?.adapt(data, status, headers, body, data.body, callContext)
+            ?: body
 
         return HttpResponseData(
             status,
@@ -76,8 +80,8 @@ internal class JsClientEngine(
             headerName.equals("sec-websocket-protocol", true)
         }
         val protocols = protocolHeaderNames.mapNotNull { headers.getAll(it) }.flatten().toTypedArray()
-        return when (PlatformUtils.platform) {
-            Platform.Browser -> js("new WebSocket(urlString_capturingHack, protocols)")
+        return when {
+            PlatformUtils.IS_BROWSER -> js("new WebSocket(urlString_capturingHack, protocols)")
             else -> {
                 val ws_capturingHack = js("eval('require')('ws')")
                 val headers_capturingHack: dynamic = object {}
@@ -98,14 +102,14 @@ internal class JsClientEngine(
         val urlString = request.url.toString()
         val socket: WebSocket = createWebSocket(urlString, request.headers)
 
+        val session = JsWebSocketSession(callContext, socket)
+
         try {
             socket.awaitConnection()
         } catch (cause: Throwable) {
             callContext.cancel(CancellationException("Failed to connect to $urlString", cause))
             throw cause
         }
-
-        val session = JsWebSocketSession(callContext, socket)
 
         return HttpResponseData(
             HttpStatusCode.SwitchingProtocols,

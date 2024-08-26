@@ -10,6 +10,7 @@ import io.ktor.utils.io.bits.*
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.pool.*
 import kotlinx.coroutines.*
+import kotlinx.io.*
 import kotlin.coroutines.*
 
 private const val MAX_CHUNK_SIZE_LENGTH = 128
@@ -24,7 +25,6 @@ private val ChunkSizeBufferPool: ObjectPool<StringBuilder> =
 /**
  * Decoder job type
  */
-@Suppress("DEPRECATION")
 public typealias DecoderJob = WriterJob
 
 /**
@@ -91,14 +91,13 @@ public suspend fun decodeChunked(input: ByteReadChannel, out: ByteWriteChannel) 
         throw t
     } finally {
         ChunkSizeBufferPool.recycle(chunkSizeBuffer)
-        out.close()
+        out.flushAndClose()
     }
 }
 
 /**
  * Encoder job type
  */
-@Suppress("DEPRECATION")
 public typealias EncoderJob = ReaderJob
 
 /**
@@ -135,7 +134,6 @@ public suspend fun encodeChunked(output: ByteWriteChannel, input: ByteReadChanne
     }
 }
 
-@Suppress("DEPRECATION")
 private fun ByteReadChannel.rethrowCloseCause() {
     val cause = when (this) {
         is ByteChannel -> closedCause
@@ -148,8 +146,7 @@ private const val CrLfShort: Short = 0x0d0a
 private val CrLf = "\r\n".toByteArray()
 private val LastChunkBytes = "0\r\n\r\n".toByteArray()
 
-@Suppress("DEPRECATION")
-private suspend fun ByteWriteChannel.writeChunk(memory: Memory, startIndex: Int, endIndex: Int): Int {
+private suspend fun ByteWriteChannel.writeChunk(memory: ByteArray, startIndex: Int, endIndex: Int): Int {
     val size = endIndex - startIndex
     writeIntHex(size)
     writeShort(CrLfShort)

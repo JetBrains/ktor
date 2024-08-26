@@ -58,7 +58,7 @@ If targeting macOS and/or iOS, install `Xcode` and `Xcode command line tools` on
 **Windows**
 
 For development on Windows, it is recommended to use [Cygwin](http://cygwin.com/) which will provide the necessary
-libaries such as `libncurses`.
+libraries such as `libncurses`.
 
 #### Referencing artifacts locally
 
@@ -76,16 +76,6 @@ by adding the following line to your `settings.gradle(.kts)` file:
 To import into IntelliJ IDEA, just open up the `Ktor` project folder. IntelliJ IDEA should automatically detect
 that it is a Gradle project and import it. It's important that you make sure that all building and test operations
 are delegated to Gradle under [Gradle Settings](https://www.jetbrains.com/help/idea/gradle-settings.html).
-
-
-##### Working with Js and Native in IntelliJ IDEA
-
-The import, syntax highlight, and build for Js and Native source sets are disabled by default in IntelliJ IDEA.
-If you want to work on multiplatform code in IDE, you should disable the `jvmAndCommonOnly` flag in the `gradle.properties` file:
-```
-ktor.ide.jvmAndCommonOnly=false
-```
-Please note that disabling this flag increases the time it takes to import and index the project.
 
 ### Pull Requests
 

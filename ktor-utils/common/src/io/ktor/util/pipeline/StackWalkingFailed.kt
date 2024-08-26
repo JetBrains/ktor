@@ -5,7 +5,7 @@
 package io.ktor.util.pipeline
 
 internal object StackWalkingFailed {
-    public fun failedToCaptureStackFrame() {
+    fun failedToCaptureStackFrame() {
         error(
             "Failed to capture stack frame. This is usually happens when a coroutine is running so" +
                 " the frame stack is changing quickly " +

@@ -19,7 +19,6 @@ import io.ktor.server.testing.*
 import kotlinx.serialization.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 abstract class JsonContentNegotiationTest(val converter: ContentConverter) {
     protected open val extraFieldResult = HttpStatusCode.OK
 
@@ -88,7 +87,7 @@ abstract class JsonContentNegotiationTest(val converter: ContentConverter) {
     }
 
     @Test
-    open fun testSendJsonStringServer(): Unit = testApplication {
+    open fun testSendJsonStringServer() = testApplication {
         routing {
             get("/") {
                 call.respond("abc")
@@ -105,7 +104,7 @@ abstract class JsonContentNegotiationTest(val converter: ContentConverter) {
     }
 
     @Test
-    open fun testReceiveJsonStringServer(): Unit = testApplication {
+    open fun testReceiveJsonStringServer() = testApplication {
         install(ContentNegotiation) {
             clearIgnoredTypes()
             register(ContentType.Application.Json, converter)
@@ -126,7 +125,7 @@ abstract class JsonContentNegotiationTest(val converter: ContentConverter) {
     }
 
     @Test
-    open fun testReceiveJsonStringClient(): Unit = testApplication {
+    open fun testReceiveJsonStringClient() = testApplication {
         routing {
             get("/") {
                 call.respond(TextContent("\"abc\"", ContentType.Application.Json))
@@ -144,7 +143,7 @@ abstract class JsonContentNegotiationTest(val converter: ContentConverter) {
     }
 
     @Test
-    open fun testSendJsonStringClient(): Unit = testApplication {
+    open fun testSendJsonStringClient() = testApplication {
         routing {
             post("/") {
                 val request = call.receive<String>()
@@ -167,7 +166,7 @@ abstract class JsonContentNegotiationTest(val converter: ContentConverter) {
     }
 
     @Test
-    open fun testJsonNullServer(): Unit = testApplication {
+    open fun testJsonNullServer() = testApplication {
         install(ContentNegotiation) {
             register(ContentType.Application.Json, converter)
         }
@@ -188,7 +187,7 @@ abstract class JsonContentNegotiationTest(val converter: ContentConverter) {
     }
 
     @Test
-    open fun testJsonNullClient(): Unit = testApplication {
+    open fun testJsonNullClient() = testApplication {
         routing {
             post("/") {
                 val request = call.receive<String>()
@@ -277,6 +276,25 @@ abstract class JsonContentNegotiationTest(val converter: ContentConverter) {
         }.get("/").let { response ->
             assertEquals(HttpStatusCode.OK, response.status)
             assertEquals("""{"value":"abc"}""", response.bodyAsText())
+        }
+    }
+
+    @Test
+    fun testNoDuplicatedHeaders() = testApplication {
+        install(ContentNegotiation) {
+            register(ContentType.Application.Json, converter)
+        }
+
+        createClient {
+            install(io.ktor.client.plugins.contentnegotiation.ContentNegotiation) {
+                register(ContentType.Application.Json, converter)
+            }
+        }.get {
+            header(HttpHeaders.Accept, "application/json")
+        }.let { response ->
+            response.request.headers.forEach { _, values ->
+                assertEquals(1, values.size)
+            }
         }
     }
 

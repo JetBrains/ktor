@@ -1,4 +1,4 @@
-public final class io/ktor/server/plugins/callloging/CallLoggingConfig {
+public final class io/ktor/server/plugins/calllogging/CallLoggingConfig {
 	public fun <init> ()V
 	public final fun clock (Lkotlin/jvm/functions/Function0;)V
 	public final fun disableDefaultColors ()V
@@ -12,7 +12,7 @@ public final class io/ktor/server/plugins/callloging/CallLoggingConfig {
 	public final fun setLogger (Lorg/slf4j/Logger;)V
 }
 
-public final class io/ktor/server/plugins/callloging/CallLoggingKt {
+public final class io/ktor/server/plugins/calllogging/CallLoggingKt {
 	public static final fun getCallLogging ()Lio/ktor/server/application/ApplicationPlugin;
 	public static final fun processingTimeMillis (Lio/ktor/server/application/ApplicationCall;Lkotlin/jvm/functions/Function0;)J
 	public static synthetic fun processingTimeMillis$default (Lio/ktor/server/application/ApplicationCall;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)J

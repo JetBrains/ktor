@@ -46,7 +46,7 @@ class NettySpecificTest {
 
         socket.close()
 
-        try {
+        socket2.use {
             val environment = applicationEnvironment()
 
             val server = embeddedServer(Netty, environment, {
@@ -66,8 +66,6 @@ class NettySpecificTest {
             }
 
             assertTrue(server.engine.bootstraps.all { (it.config().group() as ExecutorService).isTerminated })
-        } finally {
-            socket2.close()
         }
     }
 }

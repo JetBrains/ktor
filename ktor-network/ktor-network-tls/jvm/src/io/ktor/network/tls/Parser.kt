@@ -7,7 +7,7 @@ package io.ktor.network.tls
 import io.ktor.network.tls.extensions.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
-import java.io.*
+import kotlinx.io.*
 import java.math.*
 import java.security.cert.*
 import java.security.spec.*
@@ -26,16 +26,16 @@ internal suspend fun ByteReadChannel.readTLSRecord(): TLSRecord {
     return TLSRecord(type, version, packet)
 }
 
-internal fun ByteReadPacket.readTLSHandshake(): TLSHandshake = TLSHandshake().apply {
+internal fun Source.readTLSHandshake(): TLSHandshake = TLSHandshake().apply {
     val typeAndVersion = readInt()
     type = TLSHandshakeType.byCode(typeAndVersion ushr 24)
     val length = typeAndVersion and 0xffffff
     packet = buildPacket {
-        writeFully(readBytes(length))
+        writeFully(readByteArray(length))
     }
 }
 
-internal fun ByteReadPacket.readTLSServerHello(): TLSServerHello {
+internal fun Source.readTLSServerHello(): TLSServerHello {
     val version = readTLSVersion()
 
     val random = ByteArray(32)
@@ -75,14 +75,14 @@ internal fun ByteReadPacket.readTLSServerHello(): TLSServerHello {
         extensions += TLSExtension(
             TLSExtensionType.byCode(type),
             length,
-            buildPacket { writeFully(readBytes(length)) }
+            buildPacket { writeFully(readByteArray(length)) }
         )
     }
 
     return TLSServerHello(version, random, sessionId, suite, compressionMethod, extensions)
 }
 
-internal fun ByteReadPacket.readCurveParams(): NamedCurve {
+internal fun Source.readCurveParams(): NamedCurve {
     val type = readByte().toInt() and 0xff
     when (ServerKeyExchangeType.byCode(type)) {
         ServerKeyExchangeType.NamedCurve -> {
@@ -90,12 +90,13 @@ internal fun ByteReadPacket.readCurveParams(): NamedCurve {
 
             return NamedCurve.fromCode(curveId) ?: throw TLSException("Unknown EC id")
         }
+
         ServerKeyExchangeType.ExplicitPrime -> error("ExplicitPrime server key exchange type is not yet supported")
         ServerKeyExchangeType.ExplicitChar -> error("ExplicitChar server key exchange type is not yet supported")
     }
 }
 
-internal fun ByteReadPacket.readTLSCertificate(): List<Certificate> {
+internal fun Source.readTLSCertificate(): List<Certificate> {
     val certificatesChainLength = readTripleByteLength()
     var certificateBase = 0
     val result = ArrayList<Certificate>()
@@ -119,7 +120,7 @@ internal fun ByteReadPacket.readTLSCertificate(): List<Certificate> {
     return result
 }
 
-internal fun ByteReadPacket.readECPoint(fieldSize: Int): ECPoint {
+internal fun Source.readECPoint(fieldSize: Int): ECPoint {
     val pointSize = readByte().toInt() and 0xff
 
     val tag = readByte()
@@ -129,18 +130,18 @@ internal fun ByteReadPacket.readECPoint(fieldSize: Int): ECPoint {
     if ((fieldSize + 7) ushr 3 != componentLength) throw TLSException("Invalid point component length")
 
     return ECPoint(
-        BigInteger(1, readBytes(componentLength)),
-        BigInteger(1, readBytes(componentLength))
+        BigInteger(1, readByteArray(componentLength)),
+        BigInteger(1, readByteArray(componentLength))
     )
 }
 
 private suspend fun ByteReadChannel.readTLSVersion() =
     TLSVersion.byCode(readShortCompatible() and 0xffff)
 
-private fun ByteReadPacket.readTLSVersion() =
+private fun Source.readTLSVersion() =
     TLSVersion.byCode(readShort().toInt() and 0xffff)
 
-internal fun ByteReadPacket.readTripleByteLength(): Int = (readByte().toInt() and 0xff shl 16) or
+internal fun Source.readTripleByteLength(): Int = (readByte().toInt() and 0xff shl 16) or
     (readShort().toInt() and 0xffff)
 
 internal suspend fun ByteReadChannel.readShortCompatible(): Int {

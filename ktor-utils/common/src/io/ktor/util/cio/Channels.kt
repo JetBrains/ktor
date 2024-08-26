@@ -5,6 +5,7 @@
 package io.ktor.util.cio
 
 import io.ktor.utils.io.errors.*
+import kotlinx.io.IOException
 
 /**
  * An exception thrown when an IO error occurred during reading or writing to/from the underlying channel.

@@ -15,7 +15,6 @@ import kotlin.time.*
  * Day of week
  * [value] is 3 letter shortcut
  */
-@Suppress("KDocMissingDocumentation")
 public enum class WeekDay(public val value: String) {
     MONDAY("Mon"),
     TUESDAY("Tue"),
@@ -29,12 +28,12 @@ public enum class WeekDay(public val value: String) {
         /**
          * Lookup an instance by [ordinal]
          */
-        public fun from(ordinal: Int): WeekDay = values()[ordinal]
+        public fun from(ordinal: Int): WeekDay = entries[ordinal]
 
         /**
          * Lookup an instance by short week day name [WeekDay.value]
          */
-        public fun from(value: String): WeekDay = values().find { it.value == value }
+        public fun from(value: String): WeekDay = entries.find { it.value == value }
             ?: error("Invalid day of week: $value")
     }
 }
@@ -43,7 +42,6 @@ public enum class WeekDay(public val value: String) {
  * Month
  * [value] is 3 letter shortcut
  */
-@Suppress("KDocMissingDocumentation")
 public enum class Month(public val value: String) {
     JANUARY("Jan"),
     FEBRUARY("Feb"),
@@ -62,12 +60,12 @@ public enum class Month(public val value: String) {
         /**
          * Lookup an instance by [ordinal]
          */
-        public fun from(ordinal: Int): Month = values()[ordinal]
+        public fun from(ordinal: Int): Month = entries[ordinal]
 
         /**
          * Lookup an instance by short month name [Month.value]
          */
-        public fun from(value: String): Month = values().find { it.value == value }
+        public fun from(value: String): Month = entries.find { it.value == value }
             ?: error("Invalid month: $value")
     }
 }
@@ -115,13 +113,11 @@ public data class GMTDate internal constructor(
  * Create new gmt date from the [timestamp].
  * @param timestamp is a number of epoch milliseconds (it is `now` by default).
  */
-@Suppress("FunctionName")
 public expect fun GMTDate(timestamp: Long? = null): GMTDate
 
 /**
  * Create an instance of [GMTDate] from the specified date/time components
  */
-@Suppress("FunctionName")
 public expect fun GMTDate(seconds: Int, minutes: Int, hours: Int, dayOfMonth: Int, month: Month, year: Int): GMTDate
 
 /**

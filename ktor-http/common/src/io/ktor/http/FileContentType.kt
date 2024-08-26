@@ -65,9 +65,32 @@ private val extensionsByContentType: Map<ContentType, List<String>> by lazy {
 internal fun List<ContentType>.selectDefault(): ContentType {
     val contentType = firstOrNull() ?: ContentType.Application.OctetStream
     return when {
-        contentType.contentType == "text" && contentType.charset() == null -> contentType.withCharset(Charsets.UTF_8)
+        contentType.match(ContentType.Text.Any) -> contentType.withCharsetUTF8IfNeeded()
+        contentType.match(ContentType.Image.SVG) -> contentType.withCharsetUTF8IfNeeded()
+        contentType.matchApplicationTypeWithCharset() -> contentType.withCharsetUTF8IfNeeded()
         else -> contentType
     }
+}
+
+private fun ContentType.matchApplicationTypeWithCharset(): Boolean {
+    if (!match(ContentType.Application.Any)) return false
+
+    return when {
+        match(ContentType.Application.Atom) ||
+            match(ContentType.Application.JavaScript) ||
+            match(ContentType.Application.Rss) ||
+            match(ContentType.Application.Xml) ||
+            match(ContentType.Application.Xml_Dtd)
+        -> true
+
+        else -> false
+    }
+}
+
+private fun ContentType.withCharsetUTF8IfNeeded(): ContentType {
+    if (charset() != null) return this
+
+    return withCharset(Charsets.UTF_8)
 }
 
 internal fun <A, B> Sequence<Pair<A, B>>.groupByPairs() = groupBy { it.first }

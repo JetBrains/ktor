@@ -47,4 +47,14 @@ class AcceptAllCookiesStorageTest {
         time += 1001
         assertEquals(emptyList(), storage.get(Url("http://localhost/")))
     }
+
+    @Test
+    fun testLongMaxAge() = testSuspend {
+        val storage = AcceptAllCookiesStorage()
+        val twoYears = 2 * 365 * 24 * 3600
+        val cookie = Cookie("name", "value", maxAge = twoYears)
+        storage.addCookie(Url("/"), cookie)
+
+        assertEquals(cookie.value, storage.get(Url("/")).single().value)
+    }
 }

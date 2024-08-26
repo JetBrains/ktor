@@ -5,16 +5,16 @@
 package io.ktor.http.parsing
 
 internal interface Parser {
-    public fun parse(input: String): ParseResult?
+    fun parse(input: String): ParseResult?
 
-    public fun match(input: String): Boolean
+    fun match(input: String): Boolean
 }
 
 internal class ParseResult(
     private val mapping: Map<String, List<String>>
 ) {
     operator fun get(key: String): String? = mapping[key]?.firstOrNull()
-    public fun getAll(key: String): List<String> = mapping[key] ?: emptyList()
+    fun getAll(key: String): List<String> = mapping[key] ?: emptyList()
 
-    public fun contains(key: String): Boolean = mapping.contains(key)
+    fun contains(key: String): Boolean = mapping.contains(key)
 }

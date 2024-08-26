@@ -351,7 +351,7 @@ public open class LockFreeLinkedListNode {
         if (isRemoved) return null // fast path if was already removed
         return object : AbstractAtomicDesc() {
             private val _originalNext = atomic<Node?>(null)
-            override val affectedNode: Node? get() = this@LockFreeLinkedListNode
+            override val affectedNode: Node get() = this@LockFreeLinkedListNode
             override val originalNext get() = _originalNext.value
             override fun failure(affected: Node, next: Any): Any? =
                 if (next is Removed) ALREADY_REMOVED else null
@@ -404,7 +404,7 @@ public open class LockFreeLinkedListNode {
 
     // ------ multi-word atomic operations helpers ------
 
-    public open class AddLastDesc<T : Node> constructor(
+    public open class AddLastDesc<T : Node>(
         @JvmField public val queue: Node,
         @JvmField public val node: T
     ) : AbstractAtomicDesc() {

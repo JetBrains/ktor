@@ -30,7 +30,6 @@ internal actual suspend fun openTLSSession(
     return TLSSocket(handshake.input, handshake.output, socket, context)
 }
 
-@Suppress("DEPRECATION")
 private class TLSSocket(
     private val input: ReceiveChannel<TLSRecord>,
     private val output: SendChannel<TLSRecord>,
@@ -63,7 +62,7 @@ private class TLSSocket(
             }
         } catch (_: Throwable) {
         } finally {
-            pipe.close()
+            pipe.flushAndClose()
         }
     }
 

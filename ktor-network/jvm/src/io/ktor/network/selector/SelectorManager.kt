@@ -64,7 +64,7 @@ public inline fun <C : Closeable, R> SelectorManager.buildOrClose(
  * Select interest kind
  * @property [flag] to be set in NIO selector
  */
-@Suppress("KDocMissingDocumentation")
+
 public actual enum class SelectInterest(public val flag: Int) {
     READ(SelectionKey.OP_READ),
     WRITE(SelectionKey.OP_WRITE),
@@ -72,10 +72,10 @@ public actual enum class SelectInterest(public val flag: Int) {
     CONNECT(SelectionKey.OP_CONNECT);
 
     public actual companion object {
-        public actual val AllInterests: Array<SelectInterest> = values()
+        public actual val AllInterests: Array<SelectInterest> = entries.toTypedArray()
 
-        public val flags: IntArray = values().map { it.flag }.toIntArray()
+        public val flags: IntArray = entries.map { it.flag }.toIntArray()
 
-        public val size: Int = values().size
+        public val size: Int = entries.size
     }
 }

@@ -14,11 +14,11 @@ import kotlinx.atomicfu.*
 import kotlin.test.*
 
 class EventsTest : ClientLoader() {
-    val created = atomic(0)
-    val ready = atomic(0)
-    val received = atomic(0)
-    val counter = atomic(0)
-    val cause: AtomicRef<Throwable?> = atomic(null)
+    private val created = atomic(0)
+    private val ready = atomic(0)
+    private val received = atomic(0)
+    private val counter = atomic(0)
+    private val cause: AtomicRef<Throwable?> = atomic(null)
 
     @Test
     fun testBasicEvents() = clientTests {

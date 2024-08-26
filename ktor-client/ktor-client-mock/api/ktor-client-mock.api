@@ -18,10 +18,8 @@ public final class io/ktor/client/engine/mock/MockEngine$Companion : io/ktor/cli
 public final class io/ktor/client/engine/mock/MockEngineConfig : io/ktor/client/engine/HttpClientEngineConfig {
 	public fun <init> ()V
 	public final fun addHandler (Lkotlin/jvm/functions/Function3;)V
-	public final fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public final fun getRequestHandlers ()Ljava/util/List;
 	public final fun getReuseHandlers ()Z
-	public final fun setDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
 	public final fun setReuseHandlers (Z)V
 }
 

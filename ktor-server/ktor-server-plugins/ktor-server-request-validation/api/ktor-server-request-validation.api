@@ -33,6 +33,9 @@ public final class io/ktor/server/plugins/requestvalidation/ValidationResult$Inv
 
 public final class io/ktor/server/plugins/requestvalidation/ValidationResult$Valid : io/ktor/server/plugins/requestvalidation/ValidationResult {
 	public static final field INSTANCE Lio/ktor/server/plugins/requestvalidation/ValidationResult$Valid;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class io/ktor/server/plugins/requestvalidation/Validator {

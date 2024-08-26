@@ -17,6 +17,6 @@ internal expect fun createStackTraceElement(
 ): StackTraceElement
 
 internal expect interface CoroutineStackFrame {
-    public val callerFrame: CoroutineStackFrame?
-    public fun getStackTraceElement(): StackTraceElement?
+    val callerFrame: CoroutineStackFrame?
+    fun getStackTraceElement(): StackTraceElement?
 }

@@ -16,6 +16,8 @@ import javax.net.ssl.*
 public actual class TLSConfigBuilder {
     /**
      * List of client certificate chains with private keys.
+     *
+     * The Chain will be used only if the first certificate in the chain is issued by server's certificate.
      */
     public val certificates: MutableList<CertificateAndKey> = mutableListOf()
 
@@ -76,6 +78,8 @@ public actual fun TLSConfigBuilder.takeFrom(other: TLSConfigBuilder) {
 
 /**
  * Add client certificate chain to use.
+ *
+ * It will be used only if the first certificate in the chain is issued by server's certificate.
  */
 public fun TLSConfigBuilder.addCertificateChain(chain: Array<X509Certificate>, key: PrivateKey) {
     certificates += CertificateAndKey(chain, key)
@@ -123,7 +127,7 @@ public class NoPrivateKeyException(
 ) : IllegalStateException("Failed to find private key for alias $alias. Please check your key store: $store"),
     CopyableThrowable<NoPrivateKeyException> {
 
-    override fun createCopy(): NoPrivateKeyException? = NoPrivateKeyException(alias, store).also {
+    override fun createCopy(): NoPrivateKeyException = NoPrivateKeyException(alias, store).also {
         it.initCause(this)
     }
 }

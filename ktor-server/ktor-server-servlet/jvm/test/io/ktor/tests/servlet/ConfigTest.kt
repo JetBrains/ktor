@@ -36,6 +36,7 @@ class ConfigTest {
             every { contextPath } returns "/"
             every { getAttribute(ApplicationAttributeKey) } returns null
             every { getAttribute(EnvironmentAttributeKey) } returns null
+            every { serverInfo } returns ""
         }
 
         val config = mockk<ServletConfig> {
@@ -70,6 +71,7 @@ class ConfigTest {
             every { contextPath } returns "/"
             every { getAttribute(ApplicationAttributeKey) } returns null
             every { getAttribute(EnvironmentAttributeKey) } returns null
+            every { serverInfo } returns ""
         }
 
         val config = mockk<ServletConfig> {

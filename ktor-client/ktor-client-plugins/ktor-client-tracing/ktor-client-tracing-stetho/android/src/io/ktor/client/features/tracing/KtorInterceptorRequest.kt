@@ -31,15 +31,15 @@ internal class KtorInterceptorRequest(
         return null
     }
 
-    override fun body(): ByteArray? {
-        val body = requestData.body
-        return when (body) {
-            is OutgoingContent.NoContent -> null
-            is OutgoingContent.ProtocolUpgrade -> null
-            is OutgoingContent.ReadChannelContent -> runBlocking { body.readFrom().toByteArray() }
-            is OutgoingContent.WriteChannelContent -> error("Stetho tracer does not support WriteChannelContent")
-            is OutgoingContent.ByteArrayContent -> body.bytes()
-        }
+    override fun body(): ByteArray? = getBody(requestData.body)
+
+    private fun getBody(body: OutgoingContent): ByteArray? = when (body) {
+        is OutgoingContent.NoContent -> null
+        is OutgoingContent.ProtocolUpgrade -> null
+        is OutgoingContent.ReadChannelContent -> runBlocking { body.readFrom().toByteArray() }
+        is OutgoingContent.WriteChannelContent -> error("Stetho tracer does not support WriteChannelContent")
+        is OutgoingContent.ByteArrayContent -> body.bytes()
+        is OutgoingContent.ContentWrapper -> getBody(body.delegate())
     }
 
     override fun url(): String {

@@ -9,7 +9,6 @@ import java.nio.*
 import java.util.concurrent.*
 import kotlin.random.*
 
-@Suppress("KDocMissingDocumentation")
 public class Serializer {
     private val messages = ArrayBlockingQueue<Frame>(1024)
 
@@ -115,13 +114,13 @@ public class Serializer {
     private fun ByteBuffer.maskedIfNeeded() = maskBuffer?.let { mask -> copy().apply { xor(mask) } } ?: this
 
     private fun setMaskBuffer(mask: Boolean) {
-        if (mask) {
-            maskBuffer = ByteBuffer.allocate(4).apply {
+        maskBuffer = if (mask) {
+            ByteBuffer.allocate(4).apply {
                 putInt(Random.nextInt())
                 clear()
             }
         } else {
-            maskBuffer = null
+            null
         }
     }
 }

@@ -1,0 +1,95 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-forwarded-header>
+final class io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue { // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue|null[0]
+    constructor <init>(kotlin/String?, kotlin/String?, kotlin/String?, kotlin/String?, kotlin.collections/Map<kotlin/String, kotlin/String>) // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.<init>|<init>(kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+
+    final val by // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.by|{}by[0]
+        final fun <get-by>(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.by.<get-by>|<get-by>(){}[0]
+    final val forParam // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.forParam|{}forParam[0]
+        final fun <get-forParam>(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.forParam.<get-forParam>|<get-forParam>(){}[0]
+    final val host // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.host|{}host[0]
+        final fun <get-host>(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.host.<get-host>|<get-host>(){}[0]
+    final val others // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.others|{}others[0]
+        final fun <get-others>(): kotlin.collections/Map<kotlin/String, kotlin/String> // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.others.<get-others>|<get-others>(){}[0]
+    final val proto // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.proto|{}proto[0]
+        final fun <get-proto>(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.proto.<get-proto>|<get-proto>(){}[0]
+
+    final fun component1(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.component1|component1(){}[0]
+    final fun component2(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.component2|component2(){}[0]
+    final fun component3(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.component3|component3(){}[0]
+    final fun component4(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.component4|component4(){}[0]
+    final fun component5(): kotlin.collections/Map<kotlin/String, kotlin/String> // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.component5|component5(){}[0]
+    final fun copy(kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ...): io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.copy|copy(kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue.toString|toString(){}[0]
+}
+
+final class io.ktor.server.plugins.forwardedheaders/ForwardedHeadersConfig { // io.ktor.server.plugins.forwardedheaders/ForwardedHeadersConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.forwardedheaders/ForwardedHeadersConfig.<init>|<init>(){}[0]
+
+    final fun extractValue(kotlin/Function2<io.ktor.server.plugins/MutableOriginConnectionPoint, kotlin.collections/List<io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue>, kotlin/Unit>) // io.ktor.server.plugins.forwardedheaders/ForwardedHeadersConfig.extractValue|extractValue(kotlin.Function2<io.ktor.server.plugins.MutableOriginConnectionPoint,kotlin.collections.List<io.ktor.server.plugins.forwardedheaders.ForwardedHeaderValue>,kotlin.Unit>){}[0]
+    final fun skipKnownProxies(kotlin.collections/List<kotlin/String>) // io.ktor.server.plugins.forwardedheaders/ForwardedHeadersConfig.skipKnownProxies|skipKnownProxies(kotlin.collections.List<kotlin.String>){}[0]
+    final fun skipLastProxies(kotlin/Int) // io.ktor.server.plugins.forwardedheaders/ForwardedHeadersConfig.skipLastProxies|skipLastProxies(kotlin.Int){}[0]
+    final fun useFirstValue() // io.ktor.server.plugins.forwardedheaders/ForwardedHeadersConfig.useFirstValue|useFirstValue(){}[0]
+    final fun useLastValue() // io.ktor.server.plugins.forwardedheaders/ForwardedHeadersConfig.useLastValue|useLastValue(){}[0]
+}
+
+final class io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues { // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues|null[0]
+    constructor <init>(kotlin/String?, kotlin/String?, kotlin/String?, kotlin/String?, kotlin/String?) // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.<init>|<init>(kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?){}[0]
+
+    final val forHeader // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.forHeader|{}forHeader[0]
+        final fun <get-forHeader>(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.forHeader.<get-forHeader>|<get-forHeader>(){}[0]
+    final val hostHeader // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.hostHeader|{}hostHeader[0]
+        final fun <get-hostHeader>(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.hostHeader.<get-hostHeader>|<get-hostHeader>(){}[0]
+    final val httpsFlagHeader // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.httpsFlagHeader|{}httpsFlagHeader[0]
+        final fun <get-httpsFlagHeader>(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.httpsFlagHeader.<get-httpsFlagHeader>|<get-httpsFlagHeader>(){}[0]
+    final val portHeader // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.portHeader|{}portHeader[0]
+        final fun <get-portHeader>(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.portHeader.<get-portHeader>|<get-portHeader>(){}[0]
+    final val protoHeader // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.protoHeader|{}protoHeader[0]
+        final fun <get-protoHeader>(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.protoHeader.<get-protoHeader>|<get-protoHeader>(){}[0]
+
+    final fun component1(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.component1|component1(){}[0]
+    final fun component2(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.component2|component2(){}[0]
+    final fun component3(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.component3|component3(){}[0]
+    final fun component4(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.component4|component4(){}[0]
+    final fun component5(): kotlin/String? // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.component5|component5(){}[0]
+    final fun copy(kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ...): io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.copy|copy(kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues.toString|toString(){}[0]
+}
+
+final class io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig { // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.<init>|<init>(){}[0]
+
+    final val forHeaders // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.forHeaders|{}forHeaders[0]
+        final fun <get-forHeaders>(): kotlin.collections/MutableList<kotlin/String> // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.forHeaders.<get-forHeaders>|<get-forHeaders>(){}[0]
+    final val hostHeaders // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.hostHeaders|{}hostHeaders[0]
+        final fun <get-hostHeaders>(): kotlin.collections/ArrayList<kotlin/String> // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.hostHeaders.<get-hostHeaders>|<get-hostHeaders>(){}[0]
+    final val httpsFlagHeaders // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.httpsFlagHeaders|{}httpsFlagHeaders[0]
+        final fun <get-httpsFlagHeaders>(): kotlin.collections/MutableList<kotlin/String> // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.httpsFlagHeaders.<get-httpsFlagHeaders>|<get-httpsFlagHeaders>(){}[0]
+    final val portHeaders // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.portHeaders|{}portHeaders[0]
+        final fun <get-portHeaders>(): kotlin.collections/MutableList<kotlin/String> // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.portHeaders.<get-portHeaders>|<get-portHeaders>(){}[0]
+    final val protoHeaders // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.protoHeaders|{}protoHeaders[0]
+        final fun <get-protoHeaders>(): kotlin.collections/MutableList<kotlin/String> // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.protoHeaders.<get-protoHeaders>|<get-protoHeaders>(){}[0]
+
+    final fun extractEdgeProxy(kotlin/Function2<io.ktor.server.plugins/MutableOriginConnectionPoint, io.ktor.server.plugins.forwardedheaders/XForwardedHeaderValues, kotlin/Unit>) // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.extractEdgeProxy|extractEdgeProxy(kotlin.Function2<io.ktor.server.plugins.MutableOriginConnectionPoint,io.ktor.server.plugins.forwardedheaders.XForwardedHeaderValues,kotlin.Unit>){}[0]
+    final fun skipKnownProxies(kotlin.collections/List<kotlin/String>) // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.skipKnownProxies|skipKnownProxies(kotlin.collections.List<kotlin.String>){}[0]
+    final fun skipLastProxies(kotlin/Int) // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.skipLastProxies|skipLastProxies(kotlin.Int){}[0]
+    final fun useFirstProxy() // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.useFirstProxy|useFirstProxy(){}[0]
+    final fun useLastProxy() // io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig.useLastProxy|useLastProxy(){}[0]
+}
+
+final val io.ktor.server.plugins.forwardedheaders/FORWARDED_PARSED_KEY // io.ktor.server.plugins.forwardedheaders/FORWARDED_PARSED_KEY|{}FORWARDED_PARSED_KEY[0]
+    final fun <get-FORWARDED_PARSED_KEY>(): io.ktor.util/AttributeKey<kotlin.collections/List<io.ktor.server.plugins.forwardedheaders/ForwardedHeaderValue>> // io.ktor.server.plugins.forwardedheaders/FORWARDED_PARSED_KEY.<get-FORWARDED_PARSED_KEY>|<get-FORWARDED_PARSED_KEY>(){}[0]
+final val io.ktor.server.plugins.forwardedheaders/ForwardedHeaders // io.ktor.server.plugins.forwardedheaders/ForwardedHeaders|{}ForwardedHeaders[0]
+    final fun <get-ForwardedHeaders>(): io.ktor.server.application/ApplicationPlugin<io.ktor.server.plugins.forwardedheaders/ForwardedHeadersConfig> // io.ktor.server.plugins.forwardedheaders/ForwardedHeaders.<get-ForwardedHeaders>|<get-ForwardedHeaders>(){}[0]
+final val io.ktor.server.plugins.forwardedheaders/XForwardedHeaders // io.ktor.server.plugins.forwardedheaders/XForwardedHeaders|{}XForwardedHeaders[0]
+    final fun <get-XForwardedHeaders>(): io.ktor.server.application/ApplicationPlugin<io.ktor.server.plugins.forwardedheaders/XForwardedHeadersConfig> // io.ktor.server.plugins.forwardedheaders/XForwardedHeaders.<get-XForwardedHeaders>|<get-XForwardedHeaders>(){}[0]

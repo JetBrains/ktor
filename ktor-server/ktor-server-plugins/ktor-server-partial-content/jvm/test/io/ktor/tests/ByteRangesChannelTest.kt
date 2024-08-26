@@ -109,7 +109,7 @@ class ByteRangesChannelTest : CoroutineScope {
 
     private fun asyncOf(text: String): (LongRange) -> ByteReadChannel = { range ->
         ByteReadChannel(
-            text.substring(range.start.toInt(), range.endInclusive.toInt() + 1).toByteArray(Charsets.ISO_8859_1)
+            text.substring(range.first.toInt(), range.last.toInt() + 1).toByteArray(Charsets.ISO_8859_1)
         )
     }
 }

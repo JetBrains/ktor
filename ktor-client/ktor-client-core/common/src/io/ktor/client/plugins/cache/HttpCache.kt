@@ -213,7 +213,6 @@ public class HttpCache private constructor(
 
                 if (response.status == HttpStatusCode.NotModified) {
                     LOGGER.trace("Not modified response for ${response.call.request.url}, replying from cache")
-                    response.complete()
                     val responseFromCache = plugin.findAndRefresh(response.call.request, response)
                         ?: throw InvalidCacheStateException(response.call.request.url)
 
@@ -368,7 +367,6 @@ internal fun mergedHeadersLookup(
     }
 }
 
-@Suppress("KDocMissingDocumentation")
 public class InvalidCacheStateException(requestUrl: Url) : IllegalStateException(
     "The entry for url: $requestUrl was removed from cache"
 )

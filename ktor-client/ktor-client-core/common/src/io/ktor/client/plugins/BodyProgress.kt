@@ -68,7 +68,7 @@ internal object AfterRenderHook : ClientHook<suspend (HttpRequestBuilder, Outgoi
 
 @OptIn(InternalAPI::class)
 internal fun HttpResponse.withObservableDownload(listener: ProgressListener): HttpResponse {
-    val observableByteChannel = content.observable(coroutineContext, contentLength(), listener)
+    val observableByteChannel = rawContent.observable(coroutineContext, contentLength(), listener)
     return call.wrapWithContent(observableByteChannel).response
 }
 

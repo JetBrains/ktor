@@ -1,0 +1,20 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-caching-headers>
+final class io.ktor.server.plugins.cachingheaders/CachingHeadersConfig { // io.ktor.server.plugins.cachingheaders/CachingHeadersConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.cachingheaders/CachingHeadersConfig.<init>|<init>(){}[0]
+
+    final fun options(kotlin/Function2<io.ktor.server.application/ApplicationCall, io.ktor.http.content/OutgoingContent, io.ktor.http.content/CachingOptions?>) // io.ktor.server.plugins.cachingheaders/CachingHeadersConfig.options|options(kotlin.Function2<io.ktor.server.application.ApplicationCall,io.ktor.http.content.OutgoingContent,io.ktor.http.content.CachingOptions?>){}[0]
+}
+
+final val io.ktor.server.plugins.cachingheaders/CachingHeaders // io.ktor.server.plugins.cachingheaders/CachingHeaders|{}CachingHeaders[0]
+    final fun <get-CachingHeaders>(): io.ktor.server.application/RouteScopedPlugin<io.ktor.server.plugins.cachingheaders/CachingHeadersConfig> // io.ktor.server.plugins.cachingheaders/CachingHeaders.<get-CachingHeaders>|<get-CachingHeaders>(){}[0]
+
+final var io.ktor.server.plugins.cachingheaders/caching // io.ktor.server.plugins.cachingheaders/caching|@io.ktor.server.application.ApplicationCall{}caching[0]
+    final fun (io.ktor.server.application/ApplicationCall).<get-caching>(): io.ktor.http.content/CachingOptions? // io.ktor.server.plugins.cachingheaders/caching.<get-caching>|<get-caching>@io.ktor.server.application.ApplicationCall(){}[0]
+    final fun (io.ktor.server.application/ApplicationCall).<set-caching>(io.ktor.http.content/CachingOptions?) // io.ktor.server.plugins.cachingheaders/caching.<set-caching>|<set-caching>@io.ktor.server.application.ApplicationCall(io.ktor.http.content.CachingOptions?){}[0]

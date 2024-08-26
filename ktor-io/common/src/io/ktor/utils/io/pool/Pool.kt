@@ -1,9 +1,8 @@
 package io.ktor.utils.io.pool
 
-import io.ktor.utils.io.core.*
 import kotlinx.atomicfu.*
 
-public interface ObjectPool<T : Any> : Closeable {
+public interface ObjectPool<T : Any> : AutoCloseable {
     /**
      * Pool capacity
      */
@@ -40,11 +39,9 @@ public abstract class NoPoolImpl<T : Any> : ObjectPool<T> {
     override val capacity: Int
         get() = 0
 
-    override fun recycle(instance: T) {
-    }
+    override fun recycle(instance: T): Unit = Unit
 
-    override fun dispose() {
-    }
+    override fun dispose(): Unit = Unit
 }
 
 /**
@@ -70,7 +67,7 @@ public abstract class SingleInstancePool<T : Any> : ObjectPool<T> {
 
     final override fun borrow(): T {
         borrowed.update {
-            if (it != 0) throw IllegalStateException("Instance is already consumed")
+            if (it != 0) error("Instance is already consumed")
             1
         }
 
@@ -83,16 +80,16 @@ public abstract class SingleInstancePool<T : Any> : ObjectPool<T> {
     final override fun recycle(instance: T) {
         if (this.instance.value !== instance) {
             if (this.instance.value == null && borrowed.value != 0) {
-                throw IllegalStateException("Already recycled or an irrelevant instance tried to be recycled")
+                error("Already recycled or an irrelevant instance tried to be recycled")
             }
 
-            throw IllegalStateException("Unable to recycle irrelevant instance")
+            error("Unable to recycle irrelevant instance")
         }
 
         this.instance.value = null
 
         if (!disposed.compareAndSet(false, true)) {
-            throw IllegalStateException("An instance is already disposed")
+            error("An instance is already disposed")
         }
 
         disposeInstance(instance)

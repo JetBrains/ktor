@@ -10,5 +10,5 @@ import io.ktor.util.*
 internal class RoutingMetrics(val name: String, val context: Timer.Context)
 internal val routingMetricsKey = AttributeKey<RoutingMetrics>("dropwizardRoutingMetrics")
 
-internal data class CallMeasure constructor(val timer: Timer.Context)
+internal data class CallMeasure(val timer: Timer.Context)
 internal val measureKey = AttributeKey<CallMeasure>("dropwizardMetrics")

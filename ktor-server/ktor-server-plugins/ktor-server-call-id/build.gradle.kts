@@ -6,14 +6,14 @@ description = ""
 
 kotlin {
     sourceSets {
+        commonMain {
+            dependencies {
+                api(project(":ktor-shared:ktor-call-id"))
+            }
+        }
         jvmMain {
             dependencies {
                 api(project(":ktor-server:ktor-server-plugins:ktor-server-call-logging"))
-            }
-        }
-        jvmAndNixMain {
-            dependencies {
-                api(project(":ktor-shared:ktor-call-id"))
             }
         }
     }

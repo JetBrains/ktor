@@ -11,6 +11,7 @@ import kotlinx.coroutines.channels.*
 import org.khronos.webgl.*
 import org.w3c.fetch.*
 
+@OptIn(InternalCoroutinesApi::class)
 internal fun CoroutineScope.readBodyNode(response: Response): ByteReadChannel = writer {
     val body: dynamic = response.body ?: error("Fail to get body")
 
@@ -22,9 +23,15 @@ internal fun CoroutineScope.readBodyNode(response: Response): ByteReadChannel = 
     }
 
     body.on("error") { error ->
-        val cause = JsError(error)
-        responseData.close(cause)
-        channel.close(cause)
+        val cancelCause = runCatching {
+            coroutineContext.job.getCancellationException()
+        }.getOrNull()
+        if (cancelCause != null) {
+            responseData.cancel(cancelCause)
+        } else {
+            val cause = JsError(error)
+            responseData.close(cause)
+        }
     }
 
     body.on("end") {
@@ -38,9 +45,11 @@ internal fun CoroutineScope.readBodyNode(response: Response): ByteReadChannel = 
             body.resume()
         }
     } catch (cause: Throwable) {
-        body.destroy(cause)
-        throw cause
-    }
+        val origin = runCatching {
+            coroutineContext.job.getCancellationException()
+        }.getOrNull() ?: cause
 
-    Unit
+        body.destroy(origin)
+        throw origin
+    }
 }.channel

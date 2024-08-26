@@ -43,44 +43,48 @@ class ContentNegotiationTests {
     }
 
     @Test
-    fun addAcceptHeaders(): Unit = testWithEngine(MockEngine) {
-        val registeredTypesToSend = listOf(
-            ContentType("testing", "a"),
-            ContentType("testing", "b"),
-            ContentType("testing", "c")
-        )
+    fun addAcceptHeaders() {
+        testWithEngine(MockEngine) {
+            val registeredTypesToSend = listOf(
+                ContentType("testing", "a"),
+                ContentType("testing", "b"),
+                ContentType("testing", "c")
+            )
 
-        setupWithContentNegotiation {
-            for (typeToSend in registeredTypesToSend) {
-                register(typeToSend, TestContentConverter())
-            }
-        }
-
-        test { client ->
-            client.get("https://test.com/").apply {
-                val sentTypes = assertNotNull(call.request.headers.getAll(HttpHeaders.Accept))
-                    .map { ContentType.parse(it) }
-
-                // Order NOT tested
+            setupWithContentNegotiation {
                 for (typeToSend in registeredTypesToSend) {
-                    assertContains(sentTypes, typeToSend)
+                    register(typeToSend, TestContentConverter())
+                }
+            }
+
+            test { client ->
+                client.get("https://test.com/").apply {
+                    val sentTypes = assertNotNull(call.request.headers.getAll(HttpHeaders.Accept))
+                        .map { ContentType.parse(it) }
+
+                    // Order NOT tested
+                    for (typeToSend in registeredTypesToSend) {
+                        assertContains(sentTypes, typeToSend)
+                    }
                 }
             }
         }
     }
 
     @Test
-    fun testKeepsContentType(): Unit = testWithEngine(MockEngine) {
-        setupWithContentNegotiation {
-            register(ContentType("testing", "a"), TestContentConverter())
-        }
-
-        test { client ->
-            val response = client.get("https://test.com/") {
-                contentType(ContentType("testing", "b"))
-                setBody(ByteArray(100))
+    fun testKeepsContentType() {
+        testWithEngine(MockEngine) {
+            setupWithContentNegotiation {
+                register(ContentType("testing", "a"), TestContentConverter())
             }
-            assertEquals(ContentType("testing", "b"), response.call.request.content.contentType)
+
+            test { client ->
+                val response = client.get("https://test.com/") {
+                    contentType(ContentType("testing", "b"))
+                    setBody(ByteArray(100))
+                }
+                assertEquals(ContentType("testing", "b"), response.call.request.content.contentType)
+            }
         }
     }
 
@@ -132,90 +136,96 @@ class ContentNegotiationTests {
     }
 
     @Test
-    fun replaceContentTypeInRequestPipeline(): Unit = testWithEngine(MockEngine) {
-        val bodyContentType = ContentType("testing", "a")
-        val sentContentType = ContentType("testing", "b")
-        val serializedOutgoingContent = TextContent("CONTENT", sentContentType)
+    fun replaceContentTypeInRequestPipeline() {
+        testWithEngine(MockEngine) {
+            val bodyContentType = ContentType("testing", "a")
+            val sentContentType = ContentType("testing", "b")
+            val serializedOutgoingContent = TextContent("CONTENT", sentContentType)
 
-        setupWithContentNegotiation {
-            register(bodyContentType, TestContentConverter()) {
-                serializeFn = { _, _, _, _ -> serializedOutgoingContent }
-            }
-        }
-
-        test { client ->
-            client.post("https://test.com") {
-                setBody(Thing)
-                contentType(bodyContentType)
-            }.apply {
-                // Should be removed when proceeding with serialization
-                assertNull(call.request.contentType())
-
-                // The serialized OutgoingContent should contain the new type
-                assertEquals(sentContentType, call.request.content.contentType)
-            }
-        }
-    }
-
-    @Test
-    fun selectMatchingConverterInRequestPipeline(): Unit = testWithEngine(MockEngine) {
-        val types = listOf(
-            ContentType("testing", "a"),
-            ContentType("testing", "b")
-        )
-
-        val outgoingContentPerType = types.map { contentType ->
-            contentType to TextContent("Serialise for: $contentType", contentType)
-        }
-
-        setupWithContentNegotiation {
-            outgoingContentPerType.forEach { (contentType, outgoingContent) ->
-                register(contentType, TestContentConverter()) {
-                    serializeFn = { _, _, _, _ -> outgoingContent }
+            setupWithContentNegotiation {
+                register(bodyContentType, TestContentConverter()) {
+                    serializeFn = { _, _, _, _ -> serializedOutgoingContent }
                 }
             }
-        }
 
-        test { client ->
-            outgoingContentPerType.forEach { (contentType, expectedOutgoingContent) ->
-                client.post("https://test.com/") {
+            test { client ->
+                client.post("https://test.com") {
                     setBody(Thing)
-                    contentType(contentType)
+                    contentType(bodyContentType)
                 }.apply {
-                    assertEquals(expectedOutgoingContent, call.request.content)
-                    assertEquals(contentType, call.request.content.contentType)
+                    // Should be removed when proceeding with serialization
+                    assertNull(call.request.contentType())
+
+                    // The serialized OutgoingContent should contain the new type
+                    assertEquals(sentContentType, call.request.content.contentType)
                 }
             }
         }
     }
 
     @Test
-    fun selectMatchingConverterInResponsePipeline(): Unit = testWithEngine(MockEngine) {
-        val types = listOf(
-            ContentType("testing", "a"),
-            ContentType("testing", "b")
-        )
+    fun selectMatchingConverterInRequestPipeline() {
+        testWithEngine(MockEngine) {
+            val types = listOf(
+                ContentType("testing", "a"),
+                ContentType("testing", "b")
+            )
 
-        val responsesPerType = types.map { contentType ->
-            // StringWrapper to avoid string body decoder
-            contentType to StringWrapper("Deserialized matching: $contentType")
-        }
+            val outgoingContentPerType = types.map { contentType ->
+                contentType to TextContent("Serialise for: $contentType", contentType)
+            }
 
-        setupWithContentNegotiation {
-            responsesPerType.forEach { (contentType, response) ->
-                register(contentType, TestContentConverter()) {
-                    deserializeFn = { _, _, _ -> response }
+            setupWithContentNegotiation {
+                outgoingContentPerType.forEach { (contentType, outgoingContent) ->
+                    register(contentType, TestContentConverter()) {
+                        serializeFn = { _, _, _, _ -> outgoingContent }
+                    }
+                }
+            }
+
+            test { client ->
+                outgoingContentPerType.forEach { (contentType, expectedOutgoingContent) ->
+                    client.post("https://test.com/") {
+                        setBody(Thing)
+                        contentType(contentType)
+                    }.apply {
+                        assertEquals(expectedOutgoingContent, call.request.content)
+                        assertEquals(contentType, call.request.content.contentType)
+                    }
                 }
             }
         }
+    }
 
-        test { client ->
-            responsesPerType.forEach { (contentType, expectedResponse) ->
-                client.get("https://test.com") {
-                    header(XReturnAs, contentType) // Ask server to send back the correct type
-                }.apply {
-                    assertEquals(contentType(), contentType)
-                    assertEquals(expectedResponse, body())
+    @Test
+    fun selectMatchingConverterInResponsePipeline() {
+        testWithEngine(MockEngine) {
+            val types = listOf(
+                ContentType("testing", "a"),
+                ContentType("testing", "b")
+            )
+
+            val responsesPerType = types.map { contentType ->
+                // StringWrapper to avoid string body decoder
+                contentType to StringWrapper("Deserialized matching: $contentType")
+            }
+
+            setupWithContentNegotiation {
+                responsesPerType.forEach { (contentType, response) ->
+                    register(contentType, TestContentConverter()) {
+                        deserializeFn = { _, _, _ -> response }
+                    }
+                }
+            }
+
+            test { client ->
+                responsesPerType.forEach { (contentType, expectedResponse) ->
+                    client.get("https://test.com") {
+                        header(XReturnAs, contentType) // Ask server to send back the correct type
+                    }.apply {
+                        assertEquals(contentType(), contentType)
+                        assertEquals(expectedResponse, body())
+                    }
                 }
             }
         }
@@ -283,60 +293,64 @@ class ContentNegotiationTests {
     }
 
     @Test
-    fun selectFirstNonNullConverterOutputInRequestPipeline(): Unit = testWithEngine(MockEngine) {
-        val contentTypeToSend = ContentType("testing", "client-send")
-        val sentOutgoingContent = TextContent("NON-NULL-RESULT", contentTypeToSend)
+    fun selectFirstNonNullConverterOutputInRequestPipeline() {
+        testWithEngine(MockEngine) {
+            val contentTypeToSend = ContentType("testing", "client-send")
+            val sentOutgoingContent = TextContent("NON-NULL-RESULT", contentTypeToSend)
 
-        setupWithContentNegotiation {
-            // All converters match the same content type
+            setupWithContentNegotiation {
+                // All converters match the same content type
 
-            register(contentTypeToSend, TestContentConverter())
-            register(contentTypeToSend, TestContentConverter())
+                register(contentTypeToSend, TestContentConverter())
+                register(contentTypeToSend, TestContentConverter())
 
-            // This one should yield the final result as it doesn't return null
-            register(contentTypeToSend, TestContentConverter()) {
-                serializeFn = { _, _, _, _ -> sentOutgoingContent }
+                // This one should yield the final result as it doesn't return null
+                register(contentTypeToSend, TestContentConverter()) {
+                    serializeFn = { _, _, _, _ -> sentOutgoingContent }
+                }
+
+                register(contentTypeToSend, TestContentConverter())
             }
 
-            register(contentTypeToSend, TestContentConverter())
-        }
-
-        test { client ->
-            client.get("https://test.com/") {
-                setBody(Thing)
-                contentType(contentTypeToSend)
-            }.apply {
-                assertEquals(contentTypeToSend, call.request.content.contentType)
-                assertEquals(sentOutgoingContent, call.request.content)
+            test { client ->
+                client.get("https://test.com/") {
+                    setBody(Thing)
+                    contentType(contentTypeToSend)
+                }.apply {
+                    assertEquals(contentTypeToSend, call.request.content.contentType)
+                    assertEquals(sentOutgoingContent, call.request.content)
+                }
             }
         }
     }
 
     @Test
-    fun selectFirstNonNullConverterOutputInResponsePipeline(): Unit = testWithEngine(MockEngine) {
-        val contentTypeToReceive = ContentType("testing", "client-send")
-        val receivedValue = StringWrapper("NON-NULL-DESERIALIZATION")
+    fun selectFirstNonNullConverterOutputInResponsePipeline() {
+        testWithEngine(MockEngine) {
+            val contentTypeToReceive = ContentType("testing", "client-send")
+            val receivedValue = StringWrapper("NON-NULL-DESERIALIZATION")
 
-        setupWithContentNegotiation {
-            // All converters match the same content type
+            setupWithContentNegotiation {
+                // All converters match the same content type
 
-            register(contentTypeToReceive, TestContentConverter())
-            register(contentTypeToReceive, TestContentConverter())
+                register(contentTypeToReceive, TestContentConverter())
+                register(contentTypeToReceive, TestContentConverter())
 
-            // This one should yield the final result as it doesn't return null
-            register(contentTypeToReceive, TestContentConverter()) {
-                deserializeFn = { _, _, _ -> receivedValue }
+                // This one should yield the final result as it doesn't return null
+                register(contentTypeToReceive, TestContentConverter()) {
+                    deserializeFn = { _, _, _ -> receivedValue }
+                }
+
+                register(contentTypeToReceive, TestContentConverter())
             }
 
-            register(contentTypeToReceive, TestContentConverter())
-        }
-
-        test { client ->
-            client.get("https://test.com/") {
-                header(XReturnAs, contentTypeToReceive)
-            }.apply {
-                assertEquals(contentTypeToReceive, contentType())
-                assertEquals(receivedValue, body())
+            test { client ->
+                client.get("https://test.com/") {
+                    header(XReturnAs, contentTypeToReceive)
+                }.apply {
+                    assertEquals(contentTypeToReceive, contentType())
+                    assertEquals(receivedValue, body())
+                }
             }
         }
     }

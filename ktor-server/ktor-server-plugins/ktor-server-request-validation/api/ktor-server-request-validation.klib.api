@@ -1,0 +1,59 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-request-validation>
+abstract interface io.ktor.server.plugins.requestvalidation/Validator { // io.ktor.server.plugins.requestvalidation/Validator|null[0]
+    abstract fun filter(kotlin/Any): kotlin/Boolean // io.ktor.server.plugins.requestvalidation/Validator.filter|filter(kotlin.Any){}[0]
+    abstract suspend fun validate(kotlin/Any): io.ktor.server.plugins.requestvalidation/ValidationResult // io.ktor.server.plugins.requestvalidation/Validator.validate|validate(kotlin.Any){}[0]
+}
+
+final class io.ktor.server.plugins.requestvalidation/RequestValidationConfig { // io.ktor.server.plugins.requestvalidation/RequestValidationConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.requestvalidation/RequestValidationConfig.<init>|<init>(){}[0]
+
+    final fun <#A1: kotlin/Any> validate(kotlin.reflect/KClass<#A1>, kotlin.coroutines/SuspendFunction1<#A1, io.ktor.server.plugins.requestvalidation/ValidationResult>) // io.ktor.server.plugins.requestvalidation/RequestValidationConfig.validate|validate(kotlin.reflect.KClass<0:0>;kotlin.coroutines.SuspendFunction1<0:0,io.ktor.server.plugins.requestvalidation.ValidationResult>){0§<kotlin.Any>}[0]
+    final fun validate(io.ktor.server.plugins.requestvalidation/Validator) // io.ktor.server.plugins.requestvalidation/RequestValidationConfig.validate|validate(io.ktor.server.plugins.requestvalidation.Validator){}[0]
+    final fun validate(kotlin/Function1<io.ktor.server.plugins.requestvalidation/RequestValidationConfig.ValidatorBuilder, kotlin/Unit>) // io.ktor.server.plugins.requestvalidation/RequestValidationConfig.validate|validate(kotlin.Function1<io.ktor.server.plugins.requestvalidation.RequestValidationConfig.ValidatorBuilder,kotlin.Unit>){}[0]
+    final fun validateContentLength() // io.ktor.server.plugins.requestvalidation/RequestValidationConfig.validateContentLength|validateContentLength(){}[0]
+    final inline fun <#A1: reified kotlin/Any> validate(noinline kotlin.coroutines/SuspendFunction1<#A1, io.ktor.server.plugins.requestvalidation/ValidationResult>) // io.ktor.server.plugins.requestvalidation/RequestValidationConfig.validate|validate(kotlin.coroutines.SuspendFunction1<0:0,io.ktor.server.plugins.requestvalidation.ValidationResult>){0§<kotlin.Any>}[0]
+
+    final class ValidatorBuilder { // io.ktor.server.plugins.requestvalidation/RequestValidationConfig.ValidatorBuilder|null[0]
+        constructor <init>() // io.ktor.server.plugins.requestvalidation/RequestValidationConfig.ValidatorBuilder.<init>|<init>(){}[0]
+
+        final fun filter(kotlin/Function1<kotlin/Any, kotlin/Boolean>) // io.ktor.server.plugins.requestvalidation/RequestValidationConfig.ValidatorBuilder.filter|filter(kotlin.Function1<kotlin.Any,kotlin.Boolean>){}[0]
+        final fun validation(kotlin.coroutines/SuspendFunction1<kotlin/Any, io.ktor.server.plugins.requestvalidation/ValidationResult>) // io.ktor.server.plugins.requestvalidation/RequestValidationConfig.ValidatorBuilder.validation|validation(kotlin.coroutines.SuspendFunction1<kotlin.Any,io.ktor.server.plugins.requestvalidation.ValidationResult>){}[0]
+    }
+}
+
+final class io.ktor.server.plugins.requestvalidation/RequestValidationException : kotlin/IllegalArgumentException { // io.ktor.server.plugins.requestvalidation/RequestValidationException|null[0]
+    constructor <init>(kotlin/Any, kotlin.collections/List<kotlin/String>) // io.ktor.server.plugins.requestvalidation/RequestValidationException.<init>|<init>(kotlin.Any;kotlin.collections.List<kotlin.String>){}[0]
+
+    final val reasons // io.ktor.server.plugins.requestvalidation/RequestValidationException.reasons|{}reasons[0]
+        final fun <get-reasons>(): kotlin.collections/List<kotlin/String> // io.ktor.server.plugins.requestvalidation/RequestValidationException.reasons.<get-reasons>|<get-reasons>(){}[0]
+    final val value // io.ktor.server.plugins.requestvalidation/RequestValidationException.value|{}value[0]
+        final fun <get-value>(): kotlin/Any // io.ktor.server.plugins.requestvalidation/RequestValidationException.value.<get-value>|<get-value>(){}[0]
+}
+
+sealed class io.ktor.server.plugins.requestvalidation/ValidationResult { // io.ktor.server.plugins.requestvalidation/ValidationResult|null[0]
+    constructor <init>() // io.ktor.server.plugins.requestvalidation/ValidationResult.<init>|<init>(){}[0]
+
+    final class Invalid : io.ktor.server.plugins.requestvalidation/ValidationResult { // io.ktor.server.plugins.requestvalidation/ValidationResult.Invalid|null[0]
+        constructor <init>(kotlin.collections/List<kotlin/String>) // io.ktor.server.plugins.requestvalidation/ValidationResult.Invalid.<init>|<init>(kotlin.collections.List<kotlin.String>){}[0]
+        constructor <init>(kotlin/String) // io.ktor.server.plugins.requestvalidation/ValidationResult.Invalid.<init>|<init>(kotlin.String){}[0]
+
+        final val reasons // io.ktor.server.plugins.requestvalidation/ValidationResult.Invalid.reasons|{}reasons[0]
+            final fun <get-reasons>(): kotlin.collections/List<kotlin/String> // io.ktor.server.plugins.requestvalidation/ValidationResult.Invalid.reasons.<get-reasons>|<get-reasons>(){}[0]
+    }
+
+    final object Valid : io.ktor.server.plugins.requestvalidation/ValidationResult { // io.ktor.server.plugins.requestvalidation/ValidationResult.Valid|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.plugins.requestvalidation/ValidationResult.Valid.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.server.plugins.requestvalidation/ValidationResult.Valid.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.ktor.server.plugins.requestvalidation/ValidationResult.Valid.toString|toString(){}[0]
+    }
+}
+
+final val io.ktor.server.plugins.requestvalidation/RequestValidation // io.ktor.server.plugins.requestvalidation/RequestValidation|{}RequestValidation[0]
+    final fun <get-RequestValidation>(): io.ktor.server.application/RouteScopedPlugin<io.ktor.server.plugins.requestvalidation/RequestValidationConfig> // io.ktor.server.plugins.requestvalidation/RequestValidation.<get-RequestValidation>|<get-RequestValidation>(){}[0]

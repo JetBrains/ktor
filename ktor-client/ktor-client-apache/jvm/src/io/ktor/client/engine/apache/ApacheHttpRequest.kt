@@ -43,7 +43,7 @@ internal suspend fun CloseableHttpAsyncClient.sendRequest(
         }
 
         val rawHeaders = rawResponse.allHeaders.filter {
-            it.name != null || !it.name.isBlank()
+            it.name != null || it.name.isNotBlank()
         }.groupBy(
             { it.name },
             { it.value ?: "" }
@@ -51,15 +51,10 @@ internal suspend fun CloseableHttpAsyncClient.sendRequest(
 
         val headers = HeadersImpl(rawHeaders)
 
-        val body: Any = if (needToProcessSSE(requestData, status, headers)) {
-            DefaultClientSSESession(
-                requestData.body as SSEClientContent,
-                consumer.responseChannel,
-                callContext
-            )
-        } else {
-            consumer.responseChannel
-        }
+        val body: Any = requestData.attributes.getOrNull(ResponseAdapterAttributeKey)
+            ?.adapt(requestData, status, headers, consumer.responseChannel, requestData.body, callContext)
+            ?: consumer.responseChannel
+
         return HttpResponseData(status, requestTime, headers, version, body, callContext)
     } catch (cause: Exception) {
         future.cancel(true)
@@ -71,6 +66,6 @@ internal suspend fun CloseableHttpAsyncClient.sendRequest(
 
 internal fun mapCause(exception: Exception, requestData: HttpRequestData): Exception = when {
     exception is ConnectException && exception.isTimeoutException() -> ConnectTimeoutException(requestData, exception)
-    exception is java.net.SocketTimeoutException -> SocketTimeoutException(requestData, exception)
+    exception is SocketTimeoutException -> SocketTimeoutException(requestData, exception)
     else -> exception
 }

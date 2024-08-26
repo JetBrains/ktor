@@ -9,6 +9,7 @@ import io.ktor.utils.io.core.*
 import kotlinx.atomicfu.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.*
+import kotlinx.io.Buffer
 import libcurl.*
 import platform.posix.*
 import kotlin.coroutines.*
@@ -55,7 +56,7 @@ internal fun onBodyChunkReceived(
         return -1
     }
     if (written > 0) {
-        wrapper.bytesWritten += written
+        wrapper.bytesWritten.addAndGet(written)
     }
     if (wrapper.bytesWritten.value == chunkSize) {
         wrapper.bytesWritten.value = 0
@@ -88,7 +89,6 @@ internal fun onBodyChunkRequested(
     if (body.isClosedForRead) {
         return if (body.closedCause != null) -1 else 0
     }
-    @Suppress("DEPRECATION")
     val readCount = try {
         body.readAvailable(1) { source: Buffer ->
             source.readAvailable(buffer, 0, requested)

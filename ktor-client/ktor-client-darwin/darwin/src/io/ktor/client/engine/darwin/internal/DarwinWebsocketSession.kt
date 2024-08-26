@@ -13,6 +13,7 @@ import io.ktor.websocket.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
+import kotlinx.io.*
 import platform.Foundation.*
 import platform.darwin.*
 import kotlin.coroutines.*
@@ -89,7 +90,14 @@ internal class DarwinWebsocketSession(
             when (frame.frameType) {
                 FrameType.TEXT -> {
                     suspendCancellableCoroutine<Unit> { continuation ->
-                        task.sendMessage(NSURLSessionWebSocketMessage(String(frame.data))) { error ->
+                        task.sendMessage(
+                            NSURLSessionWebSocketMessage(
+                                frame.data.decodeToString(
+                                    0,
+                                    0 + frame.data.size
+                                )
+                            )
+                        ) { error ->
                             if (error == null) {
                                 continuation.resume(Unit)
                             } else continuation.resumeWithException(DarwinHttpRequestException(error))
@@ -110,7 +118,7 @@ internal class DarwinWebsocketSession(
                 FrameType.CLOSE -> {
                     val data = buildPacket { writeFully(frame.data) }
                     val code = data.readShort().convert<NSInteger>()
-                    val reason = data.readBytes()
+                    val reason = data.readByteArray()
                     task.cancelWithCloseCode(code, reason.toNSData())
                     return@sendMessages
                 }
@@ -174,7 +182,8 @@ internal class DarwinWebsocketSession(
         reason: NSData?,
         webSocketTask: NSURLSessionWebSocketTask
     ) {
-        val closeReason = CloseReason(code.toShort(), reason?.toByteArray()?.let { String(it) } ?: "")
+        val closeReason =
+            CloseReason(code.toShort(), reason?.toByteArray()?.let { it.decodeToString(0, 0 + it.size) } ?: "")
         if (!_incoming.isClosedForSend) {
             _incoming.trySend(Frame.Close(closeReason))
         }

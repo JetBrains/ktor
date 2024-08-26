@@ -5,7 +5,6 @@
 package io.ktor.server.config
 
 import com.typesafe.config.*
-import io.ktor.server.config.ConfigLoader.Companion.load
 import java.io.*
 
 /**

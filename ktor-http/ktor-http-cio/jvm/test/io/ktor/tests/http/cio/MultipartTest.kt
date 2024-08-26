@@ -182,7 +182,7 @@ class MultipartTest {
                 "resolve": {
                     "modules": [
                         "node_modules" // this works well
-                        //"/absolute/path/to/dir/node_modules"   // this doens't
+                        //"/absolute/path/to/dir/node_modules"   // this doesn't
                     ]
                 }
             ```

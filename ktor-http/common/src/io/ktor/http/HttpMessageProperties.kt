@@ -123,7 +123,7 @@ internal fun String.splitSetCookieHeader(): List<String> {
         }
 
         var nextComma = indexOf(',', comma + 1)
-        while (nextComma >= 0 && nextComma < equals) {
+        while (nextComma in 0..<equals) {
             comma = nextComma
             nextComma = indexOf(',', nextComma + 1)
         }

@@ -40,5 +40,4 @@ public expect val NetworkAddress.address: String
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")
 public expect val NetworkAddress.port: Int
 
-@Suppress("KDocMissingDocumentation")
 public expect class UnresolvedAddressException() : IllegalArgumentException

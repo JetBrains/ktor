@@ -73,7 +73,24 @@ internal actual fun ApplicationEnvironmentBuilder.configurePlatformProperties(ar
         ?: ApplicationEnvironment::class.java.classLoader
 }
 
-internal actual fun getConfigFromEnvironment(): ApplicationConfig = System.getProperties()
-    .toMap()
-    .filterKeys { (it as String).startsWith("ktor.") }
-    .let { env -> MapApplicationConfig(env.map { it.key as String to it.value as String }) }
+internal actual fun getKtorEnvironmentProperties(): List<Pair<String, String>> = buildList {
+    System.getProperties().forEach {
+        val key = it.key as? String ?: return@forEach
+        if (key.startsWith("ktor.")) {
+            val value = it.value as? String ?: return@forEach
+            add(key to value)
+        }
+    }
+}
+
+internal actual fun getEnvironmentProperty(key: String): String? {
+    return System.getProperty(key)
+}
+
+internal actual fun setEnvironmentProperty(key: String, value: String) {
+    System.setProperty(key, value)
+}
+
+internal actual fun clearEnvironmentProperty(key: String) {
+    System.clearProperty(key)
+}

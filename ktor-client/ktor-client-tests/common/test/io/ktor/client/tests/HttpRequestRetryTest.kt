@@ -11,10 +11,10 @@ import io.ktor.client.tests.utils.*
 import io.ktor.http.*
 import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.*
+import kotlinx.io.IOException
 import kotlin.math.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 class HttpRequestRetryTest {
 
     @Test
@@ -34,13 +34,13 @@ class HttpRequestRetryTest {
 
         test { client ->
             client.get { }
-            assertTrue(
-                delays
-                    .foldIndexed(true) { index, acc, delay ->
-                        val expectedDelay = (2.0.pow(index + 1) * 1000).toLong()
-                        acc && delay in expectedDelay..expectedDelay + 1000
-                    }
-            )
+
+            val expectedDelays = listOf(1000L, 2000L, 4000L)
+            assertEquals(expectedDelays.size, delays.size)
+
+            expectedDelays.zip(delays).forEach { (expected, actual) ->
+                assertTrue { actual in expected..expected + 1000 }
+            }
         }
     }
 
@@ -99,7 +99,7 @@ class HttpRequestRetryTest {
     }
 
     @Test
-    fun testExponentialDelay() = testWithEngine(MockEngine) {
+    fun testExponentialDelayDefaults() = testWithEngine(MockEngine) {
         val delays = mutableListOf<Long>()
         config {
             engine {
@@ -117,7 +117,53 @@ class HttpRequestRetryTest {
 
         test { client ->
             client.get { }
-            assertEquals(listOf(2000L, 4000L, 8000L), delays)
+            assertEquals(listOf(1000L, 2000L, 4000L), delays)
+        }
+    }
+
+    @Test
+    fun testExponentialDelayExplicitBaseDelay() = testWithEngine(MockEngine) {
+        val delays = mutableListOf<Long>()
+        config {
+            engine {
+                addHandler { respondError(HttpStatusCode.InternalServerError) }
+                addHandler { respondError(HttpStatusCode.InternalServerError) }
+                addHandler { respondError(HttpStatusCode.InternalServerError) }
+                addHandler { respondOk() }
+            }
+            install(HttpRequestRetry) {
+                retryOnServerErrors(3)
+                exponentialDelay(randomizationMs = 0, baseDelayMs = 200)
+                delay { delays.add(it) }
+            }
+        }
+
+        test { client ->
+            client.get { }
+            assertEquals(listOf(200L, 400L, 800L), delays)
+        }
+    }
+
+    @Test
+    fun testExponentialDelayExplicitBase() = testWithEngine(MockEngine) {
+        val delays = mutableListOf<Long>()
+        config {
+            engine {
+                addHandler { respondError(HttpStatusCode.InternalServerError) }
+                addHandler { respondError(HttpStatusCode.InternalServerError) }
+                addHandler { respondError(HttpStatusCode.InternalServerError) }
+                addHandler { respondOk() }
+            }
+            install(HttpRequestRetry) {
+                retryOnServerErrors(3)
+                exponentialDelay(randomizationMs = 0, base = 1.1)
+                delay { delays.add(it) }
+            }
+        }
+
+        test { client ->
+            client.get { }
+            assertEquals(listOf(1000L, 1100L, 1210L), delays)
         }
     }
 

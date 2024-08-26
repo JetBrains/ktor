@@ -1,0 +1,19 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-conditional-headers>
+final class io.ktor.server.plugins.conditionalheaders/ConditionalHeadersConfig { // io.ktor.server.plugins.conditionalheaders/ConditionalHeadersConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.conditionalheaders/ConditionalHeadersConfig.<init>|<init>(){}[0]
+
+    final fun version(kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, io.ktor.http.content/OutgoingContent, kotlin.collections/List<io.ktor.http.content/Version>>) // io.ktor.server.plugins.conditionalheaders/ConditionalHeadersConfig.version|version(kotlin.coroutines.SuspendFunction2<io.ktor.server.application.ApplicationCall,io.ktor.http.content.OutgoingContent,kotlin.collections.List<io.ktor.http.content.Version>>){}[0]
+}
+
+final val io.ktor.server.plugins.conditionalheaders/ConditionalHeaders // io.ktor.server.plugins.conditionalheaders/ConditionalHeaders|{}ConditionalHeaders[0]
+    final fun <get-ConditionalHeaders>(): io.ktor.server.application/RouteScopedPlugin<io.ktor.server.plugins.conditionalheaders/ConditionalHeadersConfig> // io.ktor.server.plugins.conditionalheaders/ConditionalHeaders.<get-ConditionalHeaders>|<get-ConditionalHeaders>(){}[0]
+
+final fun (io.ktor.http/Headers).io.ktor.server.plugins.conditionalheaders/parseVersions(): kotlin.collections/List<io.ktor.http.content/Version> // io.ktor.server.plugins.conditionalheaders/parseVersions|parseVersions@io.ktor.http.Headers(){}[0]
+final suspend fun (io.ktor.server.application/ApplicationCall).io.ktor.server.plugins.conditionalheaders/versionsFor(io.ktor.http.content/OutgoingContent): kotlin.collections/List<io.ktor.http.content/Version> // io.ktor.server.plugins.conditionalheaders/versionsFor|versionsFor@io.ktor.server.application.ApplicationCall(io.ktor.http.content.OutgoingContent){}[0]

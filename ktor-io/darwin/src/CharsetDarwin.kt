@@ -4,12 +4,10 @@
 
 package io.ktor.utils.io.charsets
 
-import io.ktor.utils.io.core.*
-import io.ktor.utils.io.errors.*
 import kotlinx.cinterop.*
+import kotlinx.io.*
 import platform.Foundation.*
 import platform.posix.*
-import kotlin.math.*
 
 public actual object Charsets {
     public actual val UTF_8: Charset = CharsetDarwin("UTF-8")
@@ -50,91 +48,36 @@ private class CharsetDarwin(name: String) : Charset(name) {
     }
 }
 
-@Suppress("DEPRECATION")
 @OptIn(UnsafeNumber::class)
-internal actual fun CharsetEncoder.encodeImpl(input: CharSequence, fromIndex: Int, toIndex: Int, dst: Buffer): Int {
+internal actual fun CharsetEncoder.encodeImpl(input: CharSequence, fromIndex: Int, toIndex: Int, dst: Sink): Int {
     val charset = _charset as? CharsetDarwin ?: error("Charset $this is not supported by darwin.")
 
-    val max = dst.writeRemaining
-    val endIndex = min(toIndex, fromIndex + max)
-
     @Suppress("CAST_NEVER_SUCCEEDS")
-    val content = input.substring(fromIndex, endIndex) as? NSString ?: error("Failed to convert input to NSString.")
+    val content = input.substring(fromIndex, toIndex) as? NSString ?: error("Failed to convert input to NSString.")
 
     val data = content.dataUsingEncoding(charset.encoding)
         ?.toByteArray()
         ?: throw MalformedInputException("Failed to convert String to Bytes using $charset")
 
-    dst.writeFully(data)
+    dst.write(data)
     return data.size
 }
 
-@Suppress("CAST_NEVER_SUCCEEDS", "DEPRECATION")
+@Suppress("CAST_NEVER_SUCCEEDS")
 @OptIn(UnsafeNumber::class, BetaInteropApi::class)
-public actual fun CharsetDecoder.decode(input: Input, dst: Appendable, max: Int): Int {
+public actual fun CharsetDecoder.decode(input: Source, dst: Appendable, max: Int): Int {
     if (max != Int.MAX_VALUE) {
         throw IOException("Max argument is deprecated")
     }
 
     val charset = _charset as? CharsetDarwin ?: error("Charset $this is not supported by darwin.")
-    val source: ByteArray = input.readBytes()
+    val source: ByteArray = input.readByteArray()
 
     val data = source.toNSData()
     val content = NSString.create(data, charset.encoding) as? String
         ?: throw MalformedInputException("Failed to convert Bytes to String using $charset")
 
     dst.append(content)
-    return content.length
-}
-
-@OptIn(BetaInteropApi::class, UnsafeNumber::class)
-@Suppress("DEPRECATION")
-public actual fun CharsetEncoder.encodeUTF8(input: ByteReadPacket, dst: Output) {
-    val charset = _charset as? CharsetDarwin ?: error("Charset $this is not supported by darwin.")
-    val source: ByteArray = input.readBytes()
-
-    val data = source.toNSData()
-
-    @Suppress("CAST_NEVER_SUCCEEDS")
-    val content = NSString.create(data, charset.encoding) as? String
-        ?: throw MalformedInputException("Failed to convert Bytes to String using $charset")
-
-    dst.writeFully(content.toByteArray())
-}
-
-@Suppress("DEPRECATION")
-@OptIn(UnsafeNumber::class, BetaInteropApi::class)
-public actual fun CharsetDecoder.decodeExactBytes(input: Input, inputLength: Int): String {
-    val charset = _charset as? CharsetDarwin ?: error("Charset $this is not supported by darwin.")
-    val source = input.readBytes(inputLength)
-
-    val data = source.toNSData()
-
-    @Suppress("CAST_NEVER_SUCCEEDS")
-    val content = NSString.create(data, charset.encoding) as? String
-        ?: throw MalformedInputException("Failed to convert Bytes to String using $charset")
-
-    return content
-}
-
-@Suppress("DEPRECATION")
-@OptIn(UnsafeNumber::class, BetaInteropApi::class)
-internal actual fun CharsetDecoder.decodeBuffer(
-    input: Buffer,
-    out: Appendable,
-    lastBuffer: Boolean,
-    max: Int
-): Int {
-    val charset = _charset as? CharsetDarwin ?: error("Charset $this is not supported by darwin.")
-
-    val count = input.readBytes(min(input.readRemaining, max))
-    val data = count.toNSData()
-
-    @Suppress("CAST_NEVER_SUCCEEDS")
-    val content = NSString.create(data, charset.encoding) as? String
-        ?: throw MalformedInputException("Failed to convert Bytes to String using $charset")
-
-    out.append(content)
     return content.length
 }
 

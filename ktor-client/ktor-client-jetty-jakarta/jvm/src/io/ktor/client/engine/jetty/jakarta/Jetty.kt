@@ -32,7 +32,6 @@ public object Jetty : HttpClientEngineFactory<JettyEngineConfig> {
 }
 
 @InternalAPI
-@Suppress("KDocMissingDocumentation")
 public class JettyEngineContainer : HttpClientEngineContainer {
     override val factory: HttpClientEngineFactory<*> = Jetty
 

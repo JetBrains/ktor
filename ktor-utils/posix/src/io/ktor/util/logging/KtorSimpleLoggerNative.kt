@@ -7,7 +7,7 @@ package io.ktor.util.logging
 import kotlinx.cinterop.*
 import platform.posix.*
 
-private val KTOR_LOG_LEVEL_KEY = "KTOR_LOG_LEVEL"
+private const val KTOR_LOG_LEVEL_KEY = "KTOR_LOG_LEVEL"
 
 @OptIn(ExperimentalForeignApi::class)
 @Suppress("FunctionName")

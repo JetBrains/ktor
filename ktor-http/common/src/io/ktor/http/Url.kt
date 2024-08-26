@@ -109,9 +109,7 @@ public class Url internal constructor(
 
         other as Url
 
-        if (urlString != other.urlString) return false
-
-        return true
+        return urlString == other.urlString
     }
 
     override fun hashCode(): Int {

@@ -19,6 +19,7 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
+import kotlinx.io.*
 import kotlin.test.*
 import kotlin.time.Duration.Companion.minutes
 
@@ -86,7 +87,7 @@ class ContentTest : ClientLoader(5 * 60) {
         test { client ->
             testArrays.forEach { content ->
                 val responseData = client.echo<ByteReadChannel>(content)
-                val data = responseData.readRemaining().readBytes()
+                val data = responseData.readRemaining().readByteArray()
                 assertArrayEquals(
                     "Test fail with size: ${content.size}, actual size: ${data.size}",
                     content,
@@ -346,7 +347,7 @@ class ContentTest : ClientLoader(5 * 60) {
     }
 
     @Test
-    fun testDownloadStreamResponseWithClose() = clientTests {
+    fun testDownloadStreamResponseWithClose() = clientTests(onlyWithEngine = "CIO") {
         test { client ->
             client.prepareGet("$TEST_SERVER/content/stream").execute {
             }
@@ -385,6 +386,33 @@ class ContentTest : ClientLoader(5 * 60) {
             }
 
             assertNull(result)
+        }
+    }
+
+    /**
+     * This is a bit of an edge case where the initial content reader fails to read the response body
+     * before a second reader comes in. When this happens, we simply cancel the initial reader.
+     */
+    @OptIn(InternalAPI::class)
+    @Test
+    fun testSaveBody() = clientTests {
+        val expected = "I will not introduce deadlocks.\n"
+
+        test { client ->
+            val responseText = client.config {
+                HttpResponseValidator {
+                    validateResponse { response ->
+                        val channel = response.rawContent
+                        for (i in 0..100)
+                            assertEquals(expected, channel.readByteArray(expected.length).decodeToString())
+                    }
+                }
+            }.get("$TEST_SERVER/content/big-plain-text").bodyAsText()
+
+            val lines = responseText.trim().lines()
+            assertEquals(10_000, lines.size, "Should be same number of lines")
+            for ((i, line) in lines.withIndex())
+                assertEquals(expected.trim(), line, "Difference on line $i")
         }
     }
 

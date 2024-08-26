@@ -22,15 +22,13 @@ import io.ktor.server.sse.*
 import io.ktor.server.testing.*
 import io.ktor.util.*
 import io.ktor.utils.io.*
-import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
+import kotlinx.io.*
 import java.time.*
 import java.util.zip.*
 import kotlin.coroutines.*
 import kotlin.test.*
-import kotlin.text.toByteArray
 
-@Suppress("DEPRECATION")
 class CompressionTest {
     private val textToCompress = "text to be compressed\n".repeat(100)
     private val textToCompressAsBytes = textToCompress.encodeToByteArray()
@@ -573,7 +571,7 @@ class CompressionTest {
 
                         override fun bytes(): ByteArray = "Hello!".toByteArray()
 
-                        override val contentLength: Long?
+                        override val contentLength: Long
                             get() = 6
                     }
                 )
@@ -598,7 +596,7 @@ class CompressionTest {
                             userContext: CoroutineContext
                         ): Job {
                             return launch {
-                                output.close()
+                                output.flushAndClose()
                             }
                         }
                     }
@@ -667,7 +665,7 @@ class CompressionTest {
     }
 
     @Test
-    fun testResponseShouldBeSentAfterCompression(): Unit = testApplication {
+    fun testResponseShouldBeSentAfterCompression() = testApplication {
         install(Compression)
         routing {
             get("/isSent") {
@@ -746,7 +744,7 @@ class CompressionTest {
     }
 
     @Test
-    fun testSkipCompressionForSSEResponse(): Unit = testApplication {
+    fun testSkipCompressionForSSEResponse() = testApplication {
         install(Compression) {
             deflate {
                 minimumSize(1024)
@@ -769,7 +767,7 @@ class CompressionTest {
 
     @Test
     fun testDisableDecoding() = testApplication {
-        val compressed = GZip.encode(ByteReadChannel(textToCompressAsBytes)).readRemaining().readBytes()
+        val compressed = GZip.encode(ByteReadChannel(textToCompressAsBytes)).readRemaining().readByteArray()
 
         install(Compression) {
             mode = CompressionConfig.Mode.CompressResponse
@@ -793,7 +791,7 @@ class CompressionTest {
 
     @Test
     fun testDisableEncoding() = testApplication {
-        val compressed = GZip.encode(ByteReadChannel(textToCompressAsBytes)).readRemaining().readBytes()
+        val compressed = GZip.encode(ByteReadChannel(textToCompressAsBytes)).readRemaining().readByteArray()
 
         install(Compression) {
             mode = CompressionConfig.Mode.DecompressRequest

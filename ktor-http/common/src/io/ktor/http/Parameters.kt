@@ -25,15 +25,12 @@ public interface Parameters : StringValues {
     }
 }
 
-@Suppress("KDocMissingDocumentation")
 public interface ParametersBuilder : StringValuesBuilder {
     override fun build(): Parameters
 }
 
-@Suppress("KDocMissingDocumentation")
 public fun ParametersBuilder(size: Int = 8): ParametersBuilder = ParametersBuilderImpl(size)
 
-@Suppress("KDocMissingDocumentation")
 public class ParametersBuilderImpl(
     size: Int = 8
 ) : StringValuesBuilderImpl(true, size), ParametersBuilder {
@@ -73,14 +70,12 @@ public fun parametersOf(vararg pairs: Pair<String, List<String>>): Parameters = 
  */
 public fun parameters(builder: ParametersBuilder.() -> Unit): Parameters = Parameters.build(builder)
 
-@Suppress("KDocMissingDocumentation")
 public class ParametersImpl(
     values: Map<String, List<String>> = emptyMap()
 ) : Parameters, StringValuesImpl(true, values) {
     override fun toString(): String = "Parameters ${entries()}"
 }
 
-@Suppress("KDocMissingDocumentation")
 public class ParametersSingleImpl(name: String, values: List<String>) : Parameters,
     StringValuesSingleImpl(true, name, values) {
     override fun toString(): String = "Parameters ${entries()}"

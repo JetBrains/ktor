@@ -35,7 +35,7 @@ internal fun Application.headersTestServer() {
             get("host") {
                 val header = call.request.headers.getAll(HttpHeaders.Host)
 
-                if (header == null || header.isEmpty()) {
+                if (header.isNullOrEmpty()) {
                     call.respond(HttpStatusCode.BadRequest, "Header is or empty: ${header?.size}")
                     return@get
                 }

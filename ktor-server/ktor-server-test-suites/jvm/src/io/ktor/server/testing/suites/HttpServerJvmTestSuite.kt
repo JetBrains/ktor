@@ -12,19 +12,17 @@ import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.testing.*
+import io.ktor.server.test.base.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.streams.*
 import kotlinx.coroutines.*
-import org.junit.jupiter.api.*
 import java.net.*
 import java.nio.*
 import java.time.*
 import java.util.concurrent.atomic.*
 import kotlin.coroutines.*
 import kotlin.test.*
-import kotlin.test.Test
 import kotlin.text.toByteArray
 import kotlin.time.Duration.Companion.seconds
 
@@ -33,7 +31,7 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
 ) : EngineTestBase<TEngine, TConfiguration>(hostFactory) {
 
     @Test
-    open fun testPipelining() {
+    open fun testPipelining() = runTest {
         createAndStartServer {
             get("/") {
                 val id = call.parameters["d"]!!.toInt()
@@ -61,19 +59,18 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
                 flush()
             }
 
-            runBlocking {
-                val bb = ByteBuffer.allocate(1911)
-                s.getInputStream().readPacketAtLeast(1).readFully(bb)
-                assertEquals(
-                    pipelinedResponses,
-                    clearSocketResponses(String(bb.array()).lineSequence())
-                )
-            }
+            val bb = ByteBuffer.allocate(1911)
+            s.getInputStream().readPacketAtLeast(1).readFully(bb)
+            val bytes = bb.array()
+            assertEquals(
+                pipelinedResponses,
+                clearSocketResponses(bytes.decodeToString(0, 0 + bytes.size).lineSequence())
+            )
         }
     }
 
     @Test
-    open fun testPipeliningWithFlushingHeaders() {
+    open fun testPipeliningWithFlushingHeaders() = runTest {
         val lastHandler = CompletableDeferred<Unit>()
         val processedRequests = AtomicLong()
 
@@ -135,28 +132,26 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
                 flush()
             }
 
-            runBlocking {
-                lastHandler.await()
+            lastHandler.await()
 
-                builder.clear()
-                builder.append("Response for 16")
-                builder.append("\r\n")
-                impudent = builder.toString().toByteArray()
+            builder.clear()
+            builder.append("Response for 16")
+            builder.append("\r\n")
+            impudent = builder.toString().toByteArray()
 
-                s.getOutputStream().apply {
-                    write(impudent)
-                    flush()
-                }
-                val responses = clearSocketResponses(
-                    s.getInputStream().bufferedReader(Charsets.ISO_8859_1).lineSequence()
-                )
-                assertEquals(pipelinedResponses, responses)
+            s.getOutputStream().apply {
+                write(impudent)
+                flush()
             }
+            val responses = clearSocketResponses(
+                s.getInputStream().bufferedReader(Charsets.ISO_8859_1).lineSequence()
+            )
+            assertEquals(pipelinedResponses, responses)
         }
     }
 
     @Test
-    fun testRequestTwiceInOneBufferWithKeepAlive() {
+    fun testRequestTwiceInOneBufferWithKeepAlive() = runTest {
         createAndStartServer {
             get("/") {
                 val d = call.request.queryParameters["d"]!!.toLong()
@@ -211,7 +206,7 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
     }
 
     @Test
-    fun testClosedConnection() {
+    fun testClosedConnection() = runTest {
         val completed = Job()
 
         createAndStartServer {
@@ -219,6 +214,7 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
                 try {
                     call.respond(
                         object : OutgoingContent.WriteChannelContent() {
+
                             override suspend fun writeTo(channel: ByteWriteChannel) {
                                 val bb = ByteBuffer.allocate(512)
                                 for (i in 1L..1000L) {
@@ -232,7 +228,7 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
                                     channel.flush()
                                 }
 
-                                channel.close()
+                                channel.flushAndClose()
                             }
                         }
                     )
@@ -257,15 +253,13 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
             inputStream.read(ByteArray(100))
         } // send FIN
 
-        runBlocking {
-            withTimeout(5000L) {
-                completed.join()
-            }
+        withTimeout(5000L) {
+            completed.join()
         }
     }
 
     @Test
-    fun testConnectionReset() {
+    fun testConnectionReset() = runTest {
         val completed = Job()
 
         createAndStartServer {
@@ -273,6 +267,7 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
                 try {
                     call.respond(
                         object : OutgoingContent.WriteChannelContent() {
+
                             override suspend fun writeTo(channel: ByteWriteChannel) {
                                 val bb = ByteBuffer.allocate(512)
                                 for (i in 1L..1000L) {
@@ -286,7 +281,7 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
                                     channel.flush()
                                 }
 
-                                channel.close()
+                                channel.flushAndClose()
                             }
                         }
                     )
@@ -314,15 +309,14 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
             inputStream.read(ByteArray(100))
         } // send FIN + RST
 
-        runBlocking {
-            withTimeout(5000L) {
-                completed.join()
-            }
+        withTimeout(5000L) {
+            completed.join()
         }
     }
 
+    @OptIn(InternalAPI::class)
     @Test
-    open fun testUpgrade() {
+    open fun testUpgrade() = runTest {
         val completed = CompletableDeferred<Unit>()
 
         createAndStartServer {
@@ -347,7 +341,7 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
                                     input.readFully(bb)
                                     bb.flip()
                                     output.writeFully(bb)
-                                    output.close()
+                                    output.flushAndClose()
                                     input.readRemaining().use {
                                         assertEquals(0, it.remaining)
                                     }
@@ -378,61 +372,59 @@ abstract class HttpServerJvmTestSuite<TEngine : ApplicationEngine, TConfiguratio
 
             val ch = ByteChannel(true)
 
-            runBlocking {
-                launch(coroutineContext) {
-                    val s = inputStream
-                    val bytes = ByteArray(512)
-                    try {
-                        while (true) {
-                            if (s.available() > 0) {
-                                val rc = s.read(bytes)
-                                ch.writeFully(bytes, 0, rc)
-                            } else {
-                                yield()
-                                val rc = s.read(bytes)
-                                if (rc == -1) break
-                                ch.writeFully(bytes, 0, rc)
-                            }
-
+            launch {
+                val s = inputStream
+                val bytes = ByteArray(512)
+                try {
+                    while (true) {
+                        if (s.available() > 0) {
+                            val rc = s.read(bytes)
+                            ch.writeFully(bytes, 0, rc)
+                        } else {
                             yield()
+                            val rc = s.read(bytes)
+                            if (rc == -1) break
+                            ch.writeFully(bytes, 0, rc)
                         }
-                    } catch (t: Throwable) {
-                        ch.close(t)
-                    } finally {
-                        ch.close()
+
+                        yield()
                     }
+                } catch (t: Throwable) {
+                    ch.close(t)
+                } finally {
+                    ch.close()
                 }
-
-                val response = parseResponse(ch)!!
-
-                assertEquals(HttpStatusCode.SwitchingProtocols.value, response.status)
-                assertEquals("Upgrade", response.headers[HttpHeaders.Connection]?.toString())
-                assertEquals("up", response.headers[HttpHeaders.Upgrade]?.toString())
-
-                (0 until response.headers.size)
-                    .map { response.headers.nameAt(it).toString() }
-                    .groupBy { it }.forEach { (name, values) ->
-                        assertEquals(1, values.size, "Duplicate header $name")
-                    }
-
-                outputStream.apply {
-                    writePacket {
-                        writeLong(0x1122334455667788L)
-                    }
-                    flush()
-                }
-
-                assertEquals(0x1122334455667788L, ch.readLong())
-
-                close()
-
-                completed.await()
             }
+
+            val response = parseResponse(ch)!!
+
+            assertEquals(HttpStatusCode.SwitchingProtocols.value, response.status)
+            assertEquals("Upgrade", response.headers[HttpHeaders.Connection]?.toString())
+            assertEquals("up", response.headers[HttpHeaders.Upgrade]?.toString())
+
+            (0 until response.headers.size)
+                .map { response.headers.nameAt(it).toString() }
+                .groupBy { it }.forEach { (name, values) ->
+                    assertEquals(1, values.size, "Duplicate header $name")
+                }
+
+            outputStream.apply {
+                writePacket {
+                    writeLong(0x1122334455667788L)
+                }
+                flush()
+            }
+
+            assertEquals(0x1122334455667788L, ch.readLong())
+
+            close()
+
+            completed.await()
         }
     }
 
     @Test
-    fun testHeaderAppearsSingleTime() {
+    fun testHeaderAppearsSingleTime() = runTest {
         val lastModified = ZonedDateTime.now()
 
         createAndStartServer {

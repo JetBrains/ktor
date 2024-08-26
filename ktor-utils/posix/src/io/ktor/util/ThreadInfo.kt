@@ -11,7 +11,6 @@ import platform.posix.*
 import kotlin.experimental.*
 import kotlin.native.concurrent.*
 
-@Suppress("DEPRECATION")
 @OptIn(ExperimentalStdlibApi::class)
 @EagerInitialization
 private val init = setSignalHandler()

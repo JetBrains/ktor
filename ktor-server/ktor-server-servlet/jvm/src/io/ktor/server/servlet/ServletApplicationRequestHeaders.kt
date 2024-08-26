@@ -8,7 +8,6 @@ import io.ktor.http.*
 import java.util.*
 import javax.servlet.http.*
 
-@Suppress("KDocMissingDocumentation")
 public class ServletApplicationRequestHeaders(
     private val servletRequest: HttpServletRequest
 ) : Headers {

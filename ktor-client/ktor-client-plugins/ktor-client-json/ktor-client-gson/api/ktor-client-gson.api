@@ -2,7 +2,7 @@ public final class io/ktor/client/plugins/gson/GsonSerializer : io/ktor/client/p
 	public fun <init> ()V
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun read (Lio/ktor/util/reflect/TypeInfo;Lio/ktor/utils/io/core/Input;)Ljava/lang/Object;
+	public fun read (Lio/ktor/util/reflect/TypeInfo;Lkotlinx/io/Source;)Ljava/lang/Object;
 	public fun write (Ljava/lang/Object;)Lio/ktor/http/content/OutgoingContent;
 	public fun write (Ljava/lang/Object;Lio/ktor/http/ContentType;)Lio/ktor/http/content/OutgoingContent;
 }

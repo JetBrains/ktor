@@ -15,7 +15,7 @@ private fun init() {
     addExtensionProvider(KotlinxSerializationJsonExtensionProvider())
 }
 
-@Suppress("DEPRECATION", "unused")
+@Suppress("unused", "DEPRECATION")
 @OptIn(ExperimentalStdlibApi::class)
 @EagerInitialization
 private val initHook = init()

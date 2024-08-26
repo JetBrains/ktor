@@ -32,7 +32,6 @@ public object Apache5 : HttpClientEngineFactory<Apache5EngineConfig> {
     }
 }
 
-@Suppress("KDocMissingDocumentation")
 public class Apache5EngineContainer : HttpClientEngineContainer {
     override val factory: HttpClientEngineFactory<*> = Apache5
 

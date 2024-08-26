@@ -1,5 +1,4 @@
 public final class io/ktor/server/config/yaml/YamlConfig : io/ktor/server/config/ApplicationConfig {
-	public fun <init> (Lnet/mamoe/yamlkt/YamlMap;)V
 	public final fun checkEnvironmentVariables ()V
 	public fun config (Ljava/lang/String;)Lio/ktor/server/config/ApplicationConfig;
 	public fun configList (Ljava/lang/String;)Ljava/util/List;

@@ -1,0 +1,55 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-client-mock>
+final class io.ktor.client.engine.mock/MockEngine : io.ktor.client.engine/HttpClientEngineBase { // io.ktor.client.engine.mock/MockEngine|null[0]
+    constructor <init>(io.ktor.client.engine.mock/MockEngineConfig) // io.ktor.client.engine.mock/MockEngine.<init>|<init>(io.ktor.client.engine.mock.MockEngineConfig){}[0]
+
+    final val config // io.ktor.client.engine.mock/MockEngine.config|{}config[0]
+        final fun <get-config>(): io.ktor.client.engine.mock/MockEngineConfig // io.ktor.client.engine.mock/MockEngine.config.<get-config>|<get-config>(){}[0]
+    final val requestHistory // io.ktor.client.engine.mock/MockEngine.requestHistory|{}requestHistory[0]
+        final fun <get-requestHistory>(): kotlin.collections/List<io.ktor.client.request/HttpRequestData> // io.ktor.client.engine.mock/MockEngine.requestHistory.<get-requestHistory>|<get-requestHistory>(){}[0]
+    final val responseHistory // io.ktor.client.engine.mock/MockEngine.responseHistory|{}responseHistory[0]
+        final fun <get-responseHistory>(): kotlin.collections/List<io.ktor.client.request/HttpResponseData> // io.ktor.client.engine.mock/MockEngine.responseHistory.<get-responseHistory>|<get-responseHistory>(){}[0]
+    final val supportedCapabilities // io.ktor.client.engine.mock/MockEngine.supportedCapabilities|{}supportedCapabilities[0]
+        final fun <get-supportedCapabilities>(): kotlin.collections/Set<io.ktor.client.engine/HttpClientEngineCapability<out kotlin/Any>> // io.ktor.client.engine.mock/MockEngine.supportedCapabilities.<get-supportedCapabilities>|<get-supportedCapabilities>(){}[0]
+
+    final fun close() // io.ktor.client.engine.mock/MockEngine.close|close(){}[0]
+    final suspend fun execute(io.ktor.client.request/HttpRequestData): io.ktor.client.request/HttpResponseData // io.ktor.client.engine.mock/MockEngine.execute|execute(io.ktor.client.request.HttpRequestData){}[0]
+
+    final object Companion : io.ktor.client.engine/HttpClientEngineFactory<io.ktor.client.engine.mock/MockEngineConfig> { // io.ktor.client.engine.mock/MockEngine.Companion|null[0]
+        final fun create(kotlin/Function1<io.ktor.client.engine.mock/MockEngineConfig, kotlin/Unit>): io.ktor.client.engine/HttpClientEngine // io.ktor.client.engine.mock/MockEngine.Companion.create|create(kotlin.Function1<io.ktor.client.engine.mock.MockEngineConfig,kotlin.Unit>){}[0]
+        final fun invoke(kotlin.coroutines/SuspendFunction2<io.ktor.client.engine.mock/MockRequestHandleScope, io.ktor.client.request/HttpRequestData, io.ktor.client.request/HttpResponseData>): io.ktor.client.engine.mock/MockEngine // io.ktor.client.engine.mock/MockEngine.Companion.invoke|invoke(kotlin.coroutines.SuspendFunction2<io.ktor.client.engine.mock.MockRequestHandleScope,io.ktor.client.request.HttpRequestData,io.ktor.client.request.HttpResponseData>){}[0]
+    }
+}
+
+final class io.ktor.client.engine.mock/MockEngineConfig : io.ktor.client.engine/HttpClientEngineConfig { // io.ktor.client.engine.mock/MockEngineConfig|null[0]
+    constructor <init>() // io.ktor.client.engine.mock/MockEngineConfig.<init>|<init>(){}[0]
+
+    final val requestHandlers // io.ktor.client.engine.mock/MockEngineConfig.requestHandlers|{}requestHandlers[0]
+        final fun <get-requestHandlers>(): kotlin.collections/MutableList<kotlin.coroutines/SuspendFunction2<io.ktor.client.engine.mock/MockRequestHandleScope, io.ktor.client.request/HttpRequestData, io.ktor.client.request/HttpResponseData>> // io.ktor.client.engine.mock/MockEngineConfig.requestHandlers.<get-requestHandlers>|<get-requestHandlers>(){}[0]
+
+    final var reuseHandlers // io.ktor.client.engine.mock/MockEngineConfig.reuseHandlers|{}reuseHandlers[0]
+        final fun <get-reuseHandlers>(): kotlin/Boolean // io.ktor.client.engine.mock/MockEngineConfig.reuseHandlers.<get-reuseHandlers>|<get-reuseHandlers>(){}[0]
+        final fun <set-reuseHandlers>(kotlin/Boolean) // io.ktor.client.engine.mock/MockEngineConfig.reuseHandlers.<set-reuseHandlers>|<set-reuseHandlers>(kotlin.Boolean){}[0]
+
+    final fun addHandler(kotlin.coroutines/SuspendFunction2<io.ktor.client.engine.mock/MockRequestHandleScope, io.ktor.client.request/HttpRequestData, io.ktor.client.request/HttpResponseData>) // io.ktor.client.engine.mock/MockEngineConfig.addHandler|addHandler(kotlin.coroutines.SuspendFunction2<io.ktor.client.engine.mock.MockRequestHandleScope,io.ktor.client.request.HttpRequestData,io.ktor.client.request.HttpResponseData>){}[0]
+}
+
+final class io.ktor.client.engine.mock/MockRequestHandleScope { // io.ktor.client.engine.mock/MockRequestHandleScope|null[0]
+    constructor <init>(kotlin.coroutines/CoroutineContext) // io.ktor.client.engine.mock/MockRequestHandleScope.<init>|<init>(kotlin.coroutines.CoroutineContext){}[0]
+}
+
+final fun (io.ktor.client.engine.mock/MockRequestHandleScope).io.ktor.client.engine.mock/respond(io.ktor.utils.io/ByteReadChannel, io.ktor.http/HttpStatusCode = ..., io.ktor.http/Headers = ...): io.ktor.client.request/HttpResponseData // io.ktor.client.engine.mock/respond|respond@io.ktor.client.engine.mock.MockRequestHandleScope(io.ktor.utils.io.ByteReadChannel;io.ktor.http.HttpStatusCode;io.ktor.http.Headers){}[0]
+final fun (io.ktor.client.engine.mock/MockRequestHandleScope).io.ktor.client.engine.mock/respond(kotlin/ByteArray, io.ktor.http/HttpStatusCode = ..., io.ktor.http/Headers = ...): io.ktor.client.request/HttpResponseData // io.ktor.client.engine.mock/respond|respond@io.ktor.client.engine.mock.MockRequestHandleScope(kotlin.ByteArray;io.ktor.http.HttpStatusCode;io.ktor.http.Headers){}[0]
+final fun (io.ktor.client.engine.mock/MockRequestHandleScope).io.ktor.client.engine.mock/respond(kotlin/String, io.ktor.http/HttpStatusCode = ..., io.ktor.http/Headers = ...): io.ktor.client.request/HttpResponseData // io.ktor.client.engine.mock/respond|respond@io.ktor.client.engine.mock.MockRequestHandleScope(kotlin.String;io.ktor.http.HttpStatusCode;io.ktor.http.Headers){}[0]
+final fun (io.ktor.client.engine.mock/MockRequestHandleScope).io.ktor.client.engine.mock/respondBadRequest(): io.ktor.client.request/HttpResponseData // io.ktor.client.engine.mock/respondBadRequest|respondBadRequest@io.ktor.client.engine.mock.MockRequestHandleScope(){}[0]
+final fun (io.ktor.client.engine.mock/MockRequestHandleScope).io.ktor.client.engine.mock/respondError(io.ktor.http/HttpStatusCode, kotlin/String = ..., io.ktor.http/Headers = ...): io.ktor.client.request/HttpResponseData // io.ktor.client.engine.mock/respondError|respondError@io.ktor.client.engine.mock.MockRequestHandleScope(io.ktor.http.HttpStatusCode;kotlin.String;io.ktor.http.Headers){}[0]
+final fun (io.ktor.client.engine.mock/MockRequestHandleScope).io.ktor.client.engine.mock/respondOk(kotlin/String = ...): io.ktor.client.request/HttpResponseData // io.ktor.client.engine.mock/respondOk|respondOk@io.ktor.client.engine.mock.MockRequestHandleScope(kotlin.String){}[0]
+final fun (io.ktor.client.engine.mock/MockRequestHandleScope).io.ktor.client.engine.mock/respondRedirect(kotlin/String = ...): io.ktor.client.request/HttpResponseData // io.ktor.client.engine.mock/respondRedirect|respondRedirect@io.ktor.client.engine.mock.MockRequestHandleScope(kotlin.String){}[0]
+final suspend fun (io.ktor.http.content/OutgoingContent).io.ktor.client.engine.mock/toByteArray(): kotlin/ByteArray // io.ktor.client.engine.mock/toByteArray|toByteArray@io.ktor.http.content.OutgoingContent(){}[0]
+final suspend fun (io.ktor.http.content/OutgoingContent).io.ktor.client.engine.mock/toByteReadPacket(): kotlinx.io/Source // io.ktor.client.engine.mock/toByteReadPacket|toByteReadPacket@io.ktor.http.content.OutgoingContent(){}[0]

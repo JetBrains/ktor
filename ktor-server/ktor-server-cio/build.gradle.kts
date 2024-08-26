@@ -1,7 +1,7 @@
 description = ""
 
 kotlin.sourceSets {
-    jvmAndNixMain {
+    jvmAndPosixMain {
         dependencies {
             api(project(":ktor-server:ktor-server-core"))
             api(project(":ktor-http:ktor-http-cio"))
@@ -9,7 +9,7 @@ kotlin.sourceSets {
             api(project(":ktor-network"))
         }
     }
-    jvmAndNixTest {
+    jvmAndPosixTest {
         dependencies {
             api(project(":ktor-server:ktor-server-core"))
             api(project(":ktor-client:ktor-client-cio"))
@@ -18,7 +18,7 @@ kotlin.sourceSets {
     }
     jvmTest {
         dependencies {
-            api(project(":ktor-server:ktor-server-test-host"))
+            api(project(":ktor-server:ktor-server-test-base"))
             api(project(":ktor-server:ktor-server-core", configuration = "testOutput"))
             api(libs.logback.classic)
         }

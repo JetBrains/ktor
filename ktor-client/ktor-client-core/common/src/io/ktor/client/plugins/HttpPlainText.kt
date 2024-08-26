@@ -106,7 +106,6 @@ public val HttpPlainText: ClientPlugin<HttpPlainTextConfig> =
             return TextContent(content, contentType.withCharset(charset))
         }
 
-        @Suppress("DEPRECATION")
         fun read(call: HttpClientCall, body: Input): String {
             val actualCharset = call.response.charset() ?: responseCharsetFallback
             LOGGER.trace("Reading response body for ${call.request.url} as String with charset $actualCharset")

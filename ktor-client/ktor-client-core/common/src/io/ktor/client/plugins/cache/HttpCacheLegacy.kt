@@ -65,7 +65,6 @@ internal suspend fun PipelineContext<HttpResponse, Unit>.interceptReceiveLegacy(
     }
 
     if (response.status == HttpStatusCode.NotModified) {
-        response.complete()
         val responseFromCache = plugin.findAndRefresh(response.call.request, response)
             ?: throw InvalidCacheStateException(response.call.request.url)
 
@@ -88,7 +87,7 @@ private suspend fun PipelineContext<Any, HttpRequestBuilder>.proceedWithWarning(
             append(HttpHeaders.Warning, "110")
         },
         version = cachedCall.response.version,
-        body = cachedCall.response.content,
+        body = cachedCall.response.rawContent,
         callContext = cachedCall.response.coroutineContext
     )
     val call = HttpClientCall(scope, request, response)

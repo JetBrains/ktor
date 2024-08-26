@@ -5,7 +5,7 @@ plugins {
 }
 
 kotlin.sourceSets {
-    commonMain {
+    commonTest {
         dependencies {
             api(project(":ktor-server"))
             api(project(":ktor-server:ktor-server-plugins:ktor-server-rate-limit"))

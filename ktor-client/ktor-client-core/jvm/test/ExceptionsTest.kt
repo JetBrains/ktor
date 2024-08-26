@@ -51,7 +51,7 @@ private fun createResponseException(): ResponseException = ResponseException(
             get() = TODO("Not yet implemented")
         override val responseTime: GMTDate
             get() = TODO("Not yet implemented")
-        override val content: ByteReadChannel
+        override val rawContent: ByteReadChannel
             get() = TODO("Not yet implemented")
         override val headers: Headers
             get() = TODO("Not yet implemented")

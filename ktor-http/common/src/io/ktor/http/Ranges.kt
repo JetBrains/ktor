@@ -92,13 +92,13 @@ internal fun List<ContentRange>.toLongRanges(contentLength: Long) = map {
 
 // O (N^2 + N ln (N) + N)
 internal fun List<LongRange>.mergeRangesKeepOrder(): List<LongRange> {
-    val sortedMerged = sortedBy { it.start }.fold(ArrayList<LongRange>(size)) { acc, range ->
+    val sortedMerged = sortedBy { it.first }.fold(ArrayList<LongRange>(size)) { acc, range ->
         when {
             acc.isEmpty() -> acc.add(range)
-            acc.last().endInclusive < range.start - 1 -> acc.add(range)
+            acc.last().last < range.first - 1 -> acc.add(range)
             else -> {
                 val last = acc.last()
-                acc[acc.lastIndex] = last.start..max(last.endInclusive, range.endInclusive)
+                acc[acc.lastIndex] = last.first..max(last.last, range.last)
             }
         }
         acc

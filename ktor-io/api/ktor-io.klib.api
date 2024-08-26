@@ -1,0 +1,632 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Alias: native => [iosArm64, iosSimulatorArm64, iosX64, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Alias: apple => [iosArm64, iosSimulatorArm64, iosX64, macosArm64, macosX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Alias: linux => [linuxArm64, linuxX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-io>
+open annotation class io.ktor.utils.io/InternalAPI : kotlin/Annotation { // io.ktor.utils.io/InternalAPI|null[0]
+    constructor <init>() // io.ktor.utils.io/InternalAPI.<init>|<init>(){}[0]
+}
+
+open annotation class io.ktor.utils.io/KtorDsl : kotlin/Annotation { // io.ktor.utils.io/KtorDsl|null[0]
+    constructor <init>() // io.ktor.utils.io/KtorDsl.<init>|<init>(){}[0]
+}
+
+open annotation class io.ktor.utils.io/KtorExperimentalAPI : kotlin/Annotation { // io.ktor.utils.io/KtorExperimentalAPI|null[0]
+    constructor <init>() // io.ktor.utils.io/KtorExperimentalAPI.<init>|<init>(){}[0]
+}
+
+open annotation class io.ktor.utils.io/PublicAPICandidate : kotlin/Annotation { // io.ktor.utils.io/PublicAPICandidate|null[0]
+    constructor <init>(kotlin/String) // io.ktor.utils.io/PublicAPICandidate.<init>|<init>(kotlin.String){}[0]
+
+    final val version // io.ktor.utils.io/PublicAPICandidate.version|{}version[0]
+        final fun <get-version>(): kotlin/String // io.ktor.utils.io/PublicAPICandidate.version.<get-version>|<get-version>(){}[0]
+}
+
+final enum class io.ktor.utils.io.core/ByteOrder : kotlin/Enum<io.ktor.utils.io.core/ByteOrder> { // io.ktor.utils.io.core/ByteOrder|null[0]
+    enum entry BIG_ENDIAN // io.ktor.utils.io.core/ByteOrder.BIG_ENDIAN|null[0]
+    enum entry LITTLE_ENDIAN // io.ktor.utils.io.core/ByteOrder.LITTLE_ENDIAN|null[0]
+
+    final val entries // io.ktor.utils.io.core/ByteOrder.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.utils.io.core/ByteOrder> // io.ktor.utils.io.core/ByteOrder.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.utils.io.core/ByteOrder // io.ktor.utils.io.core/ByteOrder.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.utils.io.core/ByteOrder> // io.ktor.utils.io.core/ByteOrder.values|values#static(){}[0]
+
+    final object Companion { // io.ktor.utils.io.core/ByteOrder.Companion|null[0]
+        final fun nativeOrder(): io.ktor.utils.io.core/ByteOrder // io.ktor.utils.io.core/ByteOrder.Companion.nativeOrder|nativeOrder(){}[0]
+    }
+}
+
+abstract interface <#A: kotlin/Any> io.ktor.utils.io.pool/ObjectPool : kotlin/AutoCloseable { // io.ktor.utils.io.pool/ObjectPool|null[0]
+    abstract val capacity // io.ktor.utils.io.pool/ObjectPool.capacity|{}capacity[0]
+        abstract fun <get-capacity>(): kotlin/Int // io.ktor.utils.io.pool/ObjectPool.capacity.<get-capacity>|<get-capacity>(){}[0]
+
+    abstract fun borrow(): #A // io.ktor.utils.io.pool/ObjectPool.borrow|borrow(){}[0]
+    abstract fun dispose() // io.ktor.utils.io.pool/ObjectPool.dispose|dispose(){}[0]
+    abstract fun recycle(#A) // io.ktor.utils.io.pool/ObjectPool.recycle|recycle(1:0){}[0]
+    open fun close() // io.ktor.utils.io.pool/ObjectPool.close|close(){}[0]
+}
+
+abstract interface io.ktor.utils.io.core/Closeable { // io.ktor.utils.io.core/Closeable|null[0]
+    abstract fun close() // io.ktor.utils.io.core/Closeable.close|close(){}[0]
+}
+
+abstract interface io.ktor.utils.io/BufferedByteWriteChannel : io.ktor.utils.io/ByteWriteChannel { // io.ktor.utils.io/BufferedByteWriteChannel|null[0]
+    abstract fun close() // io.ktor.utils.io/BufferedByteWriteChannel.close|close(){}[0]
+    abstract fun flushWriteBuffer() // io.ktor.utils.io/BufferedByteWriteChannel.flushWriteBuffer|flushWriteBuffer(){}[0]
+}
+
+abstract interface io.ktor.utils.io/ByteReadChannel { // io.ktor.utils.io/ByteReadChannel|null[0]
+    abstract val closedCause // io.ktor.utils.io/ByteReadChannel.closedCause|{}closedCause[0]
+        abstract fun <get-closedCause>(): kotlin/Throwable? // io.ktor.utils.io/ByteReadChannel.closedCause.<get-closedCause>|<get-closedCause>(){}[0]
+    abstract val isClosedForRead // io.ktor.utils.io/ByteReadChannel.isClosedForRead|{}isClosedForRead[0]
+        abstract fun <get-isClosedForRead>(): kotlin/Boolean // io.ktor.utils.io/ByteReadChannel.isClosedForRead.<get-isClosedForRead>|<get-isClosedForRead>(){}[0]
+    abstract val readBuffer // io.ktor.utils.io/ByteReadChannel.readBuffer|{}readBuffer[0]
+        abstract fun <get-readBuffer>(): kotlinx.io/Source // io.ktor.utils.io/ByteReadChannel.readBuffer.<get-readBuffer>|<get-readBuffer>(){}[0]
+
+    abstract fun cancel(kotlin/Throwable?) // io.ktor.utils.io/ByteReadChannel.cancel|cancel(kotlin.Throwable?){}[0]
+    abstract suspend fun awaitContent(kotlin/Int = ...): kotlin/Boolean // io.ktor.utils.io/ByteReadChannel.awaitContent|awaitContent(kotlin.Int){}[0]
+
+    final object Companion { // io.ktor.utils.io/ByteReadChannel.Companion|null[0]
+        final val Empty // io.ktor.utils.io/ByteReadChannel.Companion.Empty|{}Empty[0]
+            final fun <get-Empty>(): io.ktor.utils.io/ByteReadChannel // io.ktor.utils.io/ByteReadChannel.Companion.Empty.<get-Empty>|<get-Empty>(){}[0]
+    }
+}
+
+abstract interface io.ktor.utils.io/ByteWriteChannel { // io.ktor.utils.io/ByteWriteChannel|null[0]
+    abstract val closedCause // io.ktor.utils.io/ByteWriteChannel.closedCause|{}closedCause[0]
+        abstract fun <get-closedCause>(): kotlin/Throwable? // io.ktor.utils.io/ByteWriteChannel.closedCause.<get-closedCause>|<get-closedCause>(){}[0]
+    abstract val isClosedForWrite // io.ktor.utils.io/ByteWriteChannel.isClosedForWrite|{}isClosedForWrite[0]
+        abstract fun <get-isClosedForWrite>(): kotlin/Boolean // io.ktor.utils.io/ByteWriteChannel.isClosedForWrite.<get-isClosedForWrite>|<get-isClosedForWrite>(){}[0]
+    abstract val writeBuffer // io.ktor.utils.io/ByteWriteChannel.writeBuffer|{}writeBuffer[0]
+        abstract fun <get-writeBuffer>(): kotlinx.io/Sink // io.ktor.utils.io/ByteWriteChannel.writeBuffer.<get-writeBuffer>|<get-writeBuffer>(){}[0]
+
+    abstract fun cancel(kotlin/Throwable?) // io.ktor.utils.io/ByteWriteChannel.cancel|cancel(kotlin.Throwable?){}[0]
+    abstract suspend fun flush() // io.ktor.utils.io/ByteWriteChannel.flush|flush(){}[0]
+    abstract suspend fun flushAndClose() // io.ktor.utils.io/ByteWriteChannel.flushAndClose|flushAndClose(){}[0]
+}
+
+abstract interface io.ktor.utils.io/ChannelJob { // io.ktor.utils.io/ChannelJob|null[0]
+    abstract val job // io.ktor.utils.io/ChannelJob.job|{}job[0]
+        abstract fun <get-job>(): kotlinx.coroutines/Job // io.ktor.utils.io/ChannelJob.job.<get-job>|<get-job>(){}[0]
+}
+
+abstract class <#A: kotlin/Any> io.ktor.utils.io.pool/DefaultPool : io.ktor.utils.io.pool/ObjectPool<#A> { // io.ktor.utils.io.pool/DefaultPool|null[0]
+    constructor <init>(kotlin/Int) // io.ktor.utils.io.pool/DefaultPool.<init>|<init>(kotlin.Int){}[0]
+
+    final val capacity // io.ktor.utils.io.pool/DefaultPool.capacity|{}capacity[0]
+        final fun <get-capacity>(): kotlin/Int // io.ktor.utils.io.pool/DefaultPool.capacity.<get-capacity>|<get-capacity>(){}[0]
+
+    abstract fun produceInstance(): #A // io.ktor.utils.io.pool/DefaultPool.produceInstance|produceInstance(){}[0]
+    final fun borrow(): #A // io.ktor.utils.io.pool/DefaultPool.borrow|borrow(){}[0]
+    final fun dispose() // io.ktor.utils.io.pool/DefaultPool.dispose|dispose(){}[0]
+    final fun recycle(#A) // io.ktor.utils.io.pool/DefaultPool.recycle|recycle(1:0){}[0]
+    open fun clearInstance(#A): #A // io.ktor.utils.io.pool/DefaultPool.clearInstance|clearInstance(1:0){}[0]
+    open fun disposeInstance(#A) // io.ktor.utils.io.pool/DefaultPool.disposeInstance|disposeInstance(1:0){}[0]
+    open fun validateInstance(#A) // io.ktor.utils.io.pool/DefaultPool.validateInstance|validateInstance(1:0){}[0]
+
+    // Targets: [native]
+    final val allocated // io.ktor.utils.io.pool/DefaultPool.allocated|{}allocated[0]
+        final fun <get-allocated>(): kotlin/Int // io.ktor.utils.io.pool/DefaultPool.allocated.<get-allocated>|<get-allocated>(){}[0]
+
+    // Targets: [native]
+    final val inCache // io.ktor.utils.io.pool/DefaultPool.inCache|{}inCache[0]
+        final fun <get-inCache>(): kotlin/Int // io.ktor.utils.io.pool/DefaultPool.inCache.<get-inCache>|<get-inCache>(){}[0]
+
+    // Targets: [native]
+    final val inUsed // io.ktor.utils.io.pool/DefaultPool.inUsed|{}inUsed[0]
+        final fun <get-inUsed>(): kotlin/Int // io.ktor.utils.io.pool/DefaultPool.inUsed.<get-inUsed>|<get-inUsed>(){}[0]
+
+    // Targets: [native]
+    final val recycled // io.ktor.utils.io.pool/DefaultPool.recycled|{}recycled[0]
+        final fun <get-recycled>(): kotlin/Int // io.ktor.utils.io.pool/DefaultPool.recycled.<get-recycled>|<get-recycled>(){}[0]
+
+    // Targets: [native]
+    final val released // io.ktor.utils.io.pool/DefaultPool.released|{}released[0]
+        final fun <get-released>(): kotlin/Int // io.ktor.utils.io.pool/DefaultPool.released.<get-released>|<get-released>(){}[0]
+}
+
+abstract class <#A: kotlin/Any> io.ktor.utils.io.pool/NoPoolImpl : io.ktor.utils.io.pool/ObjectPool<#A> { // io.ktor.utils.io.pool/NoPoolImpl|null[0]
+    constructor <init>() // io.ktor.utils.io.pool/NoPoolImpl.<init>|<init>(){}[0]
+
+    open val capacity // io.ktor.utils.io.pool/NoPoolImpl.capacity|{}capacity[0]
+        open fun <get-capacity>(): kotlin/Int // io.ktor.utils.io.pool/NoPoolImpl.capacity.<get-capacity>|<get-capacity>(){}[0]
+
+    open fun dispose() // io.ktor.utils.io.pool/NoPoolImpl.dispose|dispose(){}[0]
+    open fun recycle(#A) // io.ktor.utils.io.pool/NoPoolImpl.recycle|recycle(1:0){}[0]
+}
+
+abstract class <#A: kotlin/Any> io.ktor.utils.io.pool/SingleInstancePool : io.ktor.utils.io.pool/ObjectPool<#A> { // io.ktor.utils.io.pool/SingleInstancePool|null[0]
+    constructor <init>() // io.ktor.utils.io.pool/SingleInstancePool.<init>|<init>(){}[0]
+
+    final val capacity // io.ktor.utils.io.pool/SingleInstancePool.capacity|{}capacity[0]
+        final fun <get-capacity>(): kotlin/Int // io.ktor.utils.io.pool/SingleInstancePool.capacity.<get-capacity>|<get-capacity>(){}[0]
+
+    abstract fun disposeInstance(#A) // io.ktor.utils.io.pool/SingleInstancePool.disposeInstance|disposeInstance(1:0){}[0]
+    abstract fun produceInstance(): #A // io.ktor.utils.io.pool/SingleInstancePool.produceInstance|produceInstance(){}[0]
+    final fun borrow(): #A // io.ktor.utils.io.pool/SingleInstancePool.borrow|borrow(){}[0]
+    final fun dispose() // io.ktor.utils.io.pool/SingleInstancePool.dispose|dispose(){}[0]
+    final fun recycle(#A) // io.ktor.utils.io.pool/SingleInstancePool.recycle|recycle(1:0){}[0]
+}
+
+abstract class io.ktor.utils.io.charsets/Charset { // io.ktor.utils.io.charsets/Charset|null[0]
+    constructor <init>(kotlin/String) // io.ktor.utils.io.charsets/Charset.<init>|<init>(kotlin.String){}[0]
+
+    abstract fun newDecoder(): io.ktor.utils.io.charsets/CharsetDecoder // io.ktor.utils.io.charsets/Charset.newDecoder|newDecoder(){}[0]
+    abstract fun newEncoder(): io.ktor.utils.io.charsets/CharsetEncoder // io.ktor.utils.io.charsets/Charset.newEncoder|newEncoder(){}[0]
+    open fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.utils.io.charsets/Charset.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // io.ktor.utils.io.charsets/Charset.hashCode|hashCode(){}[0]
+    open fun toString(): kotlin/String // io.ktor.utils.io.charsets/Charset.toString|toString(){}[0]
+
+    final object Companion { // io.ktor.utils.io.charsets/Charset.Companion|null[0]
+        final fun forName(kotlin/String): io.ktor.utils.io.charsets/Charset // io.ktor.utils.io.charsets/Charset.Companion.forName|forName(kotlin.String){}[0]
+        final fun isSupported(kotlin/String): kotlin/Boolean // io.ktor.utils.io.charsets/Charset.Companion.isSupported|isSupported(kotlin.String){}[0]
+    }
+}
+
+abstract class io.ktor.utils.io.charsets/CharsetDecoder { // io.ktor.utils.io.charsets/CharsetDecoder|null[0]
+    constructor <init>(io.ktor.utils.io.charsets/Charset) // io.ktor.utils.io.charsets/CharsetDecoder.<init>|<init>(io.ktor.utils.io.charsets.Charset){}[0]
+}
+
+abstract class io.ktor.utils.io.charsets/CharsetEncoder { // io.ktor.utils.io.charsets/CharsetEncoder|null[0]
+    constructor <init>(io.ktor.utils.io.charsets/Charset) // io.ktor.utils.io.charsets/CharsetEncoder.<init>|<init>(io.ktor.utils.io.charsets.Charset){}[0]
+}
+
+final class io.ktor.utils.io.charsets/TooLongLineException : io.ktor.utils.io.charsets/MalformedInputException { // io.ktor.utils.io.charsets/TooLongLineException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.utils.io.charsets/TooLongLineException.<init>|<init>(kotlin.String){}[0]
+}
+
+final class io.ktor.utils.io.core/BufferLimitExceededException : kotlin/Exception { // io.ktor.utils.io.core/BufferLimitExceededException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.utils.io.core/BufferLimitExceededException.<init>|<init>(kotlin.String){}[0]
+}
+
+final class io.ktor.utils.io/ByteChannel : io.ktor.utils.io/BufferedByteWriteChannel, io.ktor.utils.io/ByteReadChannel { // io.ktor.utils.io/ByteChannel|null[0]
+    constructor <init>(kotlin/Boolean = ...) // io.ktor.utils.io/ByteChannel.<init>|<init>(kotlin.Boolean){}[0]
+
+    final val autoFlush // io.ktor.utils.io/ByteChannel.autoFlush|{}autoFlush[0]
+        final fun <get-autoFlush>(): kotlin/Boolean // io.ktor.utils.io/ByteChannel.autoFlush.<get-autoFlush>|<get-autoFlush>(){}[0]
+    final val closedCause // io.ktor.utils.io/ByteChannel.closedCause|{}closedCause[0]
+        final fun <get-closedCause>(): kotlin/Throwable? // io.ktor.utils.io/ByteChannel.closedCause.<get-closedCause>|<get-closedCause>(){}[0]
+    final val isClosedForRead // io.ktor.utils.io/ByteChannel.isClosedForRead|{}isClosedForRead[0]
+        final fun <get-isClosedForRead>(): kotlin/Boolean // io.ktor.utils.io/ByteChannel.isClosedForRead.<get-isClosedForRead>|<get-isClosedForRead>(){}[0]
+    final val isClosedForWrite // io.ktor.utils.io/ByteChannel.isClosedForWrite|{}isClosedForWrite[0]
+        final fun <get-isClosedForWrite>(): kotlin/Boolean // io.ktor.utils.io/ByteChannel.isClosedForWrite.<get-isClosedForWrite>|<get-isClosedForWrite>(){}[0]
+    final val readBuffer // io.ktor.utils.io/ByteChannel.readBuffer|{}readBuffer[0]
+        final fun <get-readBuffer>(): kotlinx.io/Source // io.ktor.utils.io/ByteChannel.readBuffer.<get-readBuffer>|<get-readBuffer>(){}[0]
+    final val writeBuffer // io.ktor.utils.io/ByteChannel.writeBuffer|{}writeBuffer[0]
+        final fun <get-writeBuffer>(): kotlinx.io/Sink // io.ktor.utils.io/ByteChannel.writeBuffer.<get-writeBuffer>|<get-writeBuffer>(){}[0]
+
+    final fun cancel(kotlin/Throwable?) // io.ktor.utils.io/ByteChannel.cancel|cancel(kotlin.Throwable?){}[0]
+    final fun close() // io.ktor.utils.io/ByteChannel.close|close(){}[0]
+    final fun flushWriteBuffer() // io.ktor.utils.io/ByteChannel.flushWriteBuffer|flushWriteBuffer(){}[0]
+    final fun toString(): kotlin/String // io.ktor.utils.io/ByteChannel.toString|toString(){}[0]
+    final suspend fun awaitContent(kotlin/Int): kotlin/Boolean // io.ktor.utils.io/ByteChannel.awaitContent|awaitContent(kotlin.Int){}[0]
+    final suspend fun flush() // io.ktor.utils.io/ByteChannel.flush|flush(){}[0]
+    final suspend fun flushAndClose() // io.ktor.utils.io/ByteChannel.flushAndClose|flushAndClose(){}[0]
+}
+
+final class io.ktor.utils.io/CountedByteReadChannel : io.ktor.utils.io/ByteReadChannel { // io.ktor.utils.io/CountedByteReadChannel|null[0]
+    constructor <init>(io.ktor.utils.io/ByteReadChannel) // io.ktor.utils.io/CountedByteReadChannel.<init>|<init>(io.ktor.utils.io.ByteReadChannel){}[0]
+
+    final val closedCause // io.ktor.utils.io/CountedByteReadChannel.closedCause|{}closedCause[0]
+        final fun <get-closedCause>(): kotlin/Throwable? // io.ktor.utils.io/CountedByteReadChannel.closedCause.<get-closedCause>|<get-closedCause>(){}[0]
+    final val delegate // io.ktor.utils.io/CountedByteReadChannel.delegate|{}delegate[0]
+        final fun <get-delegate>(): io.ktor.utils.io/ByteReadChannel // io.ktor.utils.io/CountedByteReadChannel.delegate.<get-delegate>|<get-delegate>(){}[0]
+    final val isClosedForRead // io.ktor.utils.io/CountedByteReadChannel.isClosedForRead|{}isClosedForRead[0]
+        final fun <get-isClosedForRead>(): kotlin/Boolean // io.ktor.utils.io/CountedByteReadChannel.isClosedForRead.<get-isClosedForRead>|<get-isClosedForRead>(){}[0]
+    final val readBuffer // io.ktor.utils.io/CountedByteReadChannel.readBuffer|{}readBuffer[0]
+        final fun <get-readBuffer>(): kotlinx.io/Source // io.ktor.utils.io/CountedByteReadChannel.readBuffer.<get-readBuffer>|<get-readBuffer>(){}[0]
+    final val totalBytesRead // io.ktor.utils.io/CountedByteReadChannel.totalBytesRead|{}totalBytesRead[0]
+        final fun <get-totalBytesRead>(): kotlin/Long // io.ktor.utils.io/CountedByteReadChannel.totalBytesRead.<get-totalBytesRead>|<get-totalBytesRead>(){}[0]
+
+    final fun cancel(kotlin/Throwable?) // io.ktor.utils.io/CountedByteReadChannel.cancel|cancel(kotlin.Throwable?){}[0]
+    final suspend fun awaitContent(kotlin/Int): kotlin/Boolean // io.ktor.utils.io/CountedByteReadChannel.awaitContent|awaitContent(kotlin.Int){}[0]
+}
+
+final class io.ktor.utils.io/CountedByteWriteChannel : io.ktor.utils.io/ByteWriteChannel { // io.ktor.utils.io/CountedByteWriteChannel|null[0]
+    constructor <init>(io.ktor.utils.io/ByteWriteChannel) // io.ktor.utils.io/CountedByteWriteChannel.<init>|<init>(io.ktor.utils.io.ByteWriteChannel){}[0]
+
+    final val closedCause // io.ktor.utils.io/CountedByteWriteChannel.closedCause|{}closedCause[0]
+        final fun <get-closedCause>(): kotlin/Throwable? // io.ktor.utils.io/CountedByteWriteChannel.closedCause.<get-closedCause>|<get-closedCause>(){}[0]
+    final val isClosedForWrite // io.ktor.utils.io/CountedByteWriteChannel.isClosedForWrite|{}isClosedForWrite[0]
+        final fun <get-isClosedForWrite>(): kotlin/Boolean // io.ktor.utils.io/CountedByteWriteChannel.isClosedForWrite.<get-isClosedForWrite>|<get-isClosedForWrite>(){}[0]
+    final val totalBytesWritten // io.ktor.utils.io/CountedByteWriteChannel.totalBytesWritten|{}totalBytesWritten[0]
+        final fun <get-totalBytesWritten>(): kotlin/Long // io.ktor.utils.io/CountedByteWriteChannel.totalBytesWritten.<get-totalBytesWritten>|<get-totalBytesWritten>(){}[0]
+    final val writeBuffer // io.ktor.utils.io/CountedByteWriteChannel.writeBuffer|{}writeBuffer[0]
+        final fun <get-writeBuffer>(): kotlinx.io/Sink // io.ktor.utils.io/CountedByteWriteChannel.writeBuffer.<get-writeBuffer>|<get-writeBuffer>(){}[0]
+
+    final fun cancel(kotlin/Throwable?) // io.ktor.utils.io/CountedByteWriteChannel.cancel|cancel(kotlin.Throwable?){}[0]
+    final suspend fun flush() // io.ktor.utils.io/CountedByteWriteChannel.flush|flush(){}[0]
+    final suspend fun flushAndClose() // io.ktor.utils.io/CountedByteWriteChannel.flushAndClose|flushAndClose(){}[0]
+}
+
+final class io.ktor.utils.io/ReaderJob : io.ktor.utils.io/ChannelJob { // io.ktor.utils.io/ReaderJob|null[0]
+    final val channel // io.ktor.utils.io/ReaderJob.channel|{}channel[0]
+        final fun <get-channel>(): io.ktor.utils.io/ByteWriteChannel // io.ktor.utils.io/ReaderJob.channel.<get-channel>|<get-channel>(){}[0]
+    final val job // io.ktor.utils.io/ReaderJob.job|{}job[0]
+        final fun <get-job>(): kotlinx.coroutines/Job // io.ktor.utils.io/ReaderJob.job.<get-job>|<get-job>(){}[0]
+}
+
+final class io.ktor.utils.io/ReaderScope : kotlinx.coroutines/CoroutineScope { // io.ktor.utils.io/ReaderScope|null[0]
+    constructor <init>(io.ktor.utils.io/ByteReadChannel, kotlin.coroutines/CoroutineContext) // io.ktor.utils.io/ReaderScope.<init>|<init>(io.ktor.utils.io.ByteReadChannel;kotlin.coroutines.CoroutineContext){}[0]
+
+    final val channel // io.ktor.utils.io/ReaderScope.channel|{}channel[0]
+        final fun <get-channel>(): io.ktor.utils.io/ByteReadChannel // io.ktor.utils.io/ReaderScope.channel.<get-channel>|<get-channel>(){}[0]
+    final val coroutineContext // io.ktor.utils.io/ReaderScope.coroutineContext|{}coroutineContext[0]
+        final fun <get-coroutineContext>(): kotlin.coroutines/CoroutineContext // io.ktor.utils.io/ReaderScope.coroutineContext.<get-coroutineContext>|<get-coroutineContext>(){}[0]
+}
+
+final class io.ktor.utils.io/WriterJob : io.ktor.utils.io/ChannelJob { // io.ktor.utils.io/WriterJob|null[0]
+    final val channel // io.ktor.utils.io/WriterJob.channel|{}channel[0]
+        final fun <get-channel>(): io.ktor.utils.io/ByteReadChannel // io.ktor.utils.io/WriterJob.channel.<get-channel>|<get-channel>(){}[0]
+    final val job // io.ktor.utils.io/WriterJob.job|{}job[0]
+        final fun <get-job>(): kotlinx.coroutines/Job // io.ktor.utils.io/WriterJob.job.<get-job>|<get-job>(){}[0]
+}
+
+final class io.ktor.utils.io/WriterScope : kotlinx.coroutines/CoroutineScope { // io.ktor.utils.io/WriterScope|null[0]
+    constructor <init>(io.ktor.utils.io/ByteWriteChannel, kotlin.coroutines/CoroutineContext) // io.ktor.utils.io/WriterScope.<init>|<init>(io.ktor.utils.io.ByteWriteChannel;kotlin.coroutines.CoroutineContext){}[0]
+
+    final val channel // io.ktor.utils.io/WriterScope.channel|{}channel[0]
+        final fun <get-channel>(): io.ktor.utils.io/ByteWriteChannel // io.ktor.utils.io/WriterScope.channel.<get-channel>|<get-channel>(){}[0]
+    final val coroutineContext // io.ktor.utils.io/WriterScope.coroutineContext|{}coroutineContext[0]
+        final fun <get-coroutineContext>(): kotlin.coroutines/CoroutineContext // io.ktor.utils.io/WriterScope.coroutineContext.<get-coroutineContext>|<get-coroutineContext>(){}[0]
+}
+
+open class io.ktor.utils.io.charsets/MalformedInputException : kotlinx.io/IOException { // io.ktor.utils.io.charsets/MalformedInputException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.utils.io.charsets/MalformedInputException.<init>|<init>(kotlin.String){}[0]
+}
+
+final object io.ktor.utils.io.charsets/Charsets { // io.ktor.utils.io.charsets/Charsets|null[0]
+    final val ISO_8859_1 // io.ktor.utils.io.charsets/Charsets.ISO_8859_1|{}ISO_8859_1[0]
+        final fun <get-ISO_8859_1>(): io.ktor.utils.io.charsets/Charset // io.ktor.utils.io.charsets/Charsets.ISO_8859_1.<get-ISO_8859_1>|<get-ISO_8859_1>(){}[0]
+    final val UTF_8 // io.ktor.utils.io.charsets/Charsets.UTF_8|{}UTF_8[0]
+        final fun <get-UTF_8>(): io.ktor.utils.io.charsets/Charset // io.ktor.utils.io.charsets/Charsets.UTF_8.<get-UTF_8>|<get-UTF_8>(){}[0]
+}
+
+final val io.ktor.utils.io.bits/highByte // io.ktor.utils.io.bits/highByte|@kotlin.Short{}highByte[0]
+    final inline fun (kotlin/Short).<get-highByte>(): kotlin/Byte // io.ktor.utils.io.bits/highByte.<get-highByte>|<get-highByte>@kotlin.Short(){}[0]
+final val io.ktor.utils.io.bits/highInt // io.ktor.utils.io.bits/highInt|@kotlin.Long{}highInt[0]
+    final inline fun (kotlin/Long).<get-highInt>(): kotlin/Int // io.ktor.utils.io.bits/highInt.<get-highInt>|<get-highInt>@kotlin.Long(){}[0]
+final val io.ktor.utils.io.bits/highShort // io.ktor.utils.io.bits/highShort|@kotlin.Int{}highShort[0]
+    final inline fun (kotlin/Int).<get-highShort>(): kotlin/Short // io.ktor.utils.io.bits/highShort.<get-highShort>|<get-highShort>@kotlin.Int(){}[0]
+final val io.ktor.utils.io.bits/lowByte // io.ktor.utils.io.bits/lowByte|@kotlin.Short{}lowByte[0]
+    final inline fun (kotlin/Short).<get-lowByte>(): kotlin/Byte // io.ktor.utils.io.bits/lowByte.<get-lowByte>|<get-lowByte>@kotlin.Short(){}[0]
+final val io.ktor.utils.io.bits/lowInt // io.ktor.utils.io.bits/lowInt|@kotlin.Long{}lowInt[0]
+    final inline fun (kotlin/Long).<get-lowInt>(): kotlin/Int // io.ktor.utils.io.bits/lowInt.<get-lowInt>|<get-lowInt>@kotlin.Long(){}[0]
+final val io.ktor.utils.io.bits/lowShort // io.ktor.utils.io.bits/lowShort|@kotlin.Int{}lowShort[0]
+    final inline fun (kotlin/Int).<get-lowShort>(): kotlin/Short // io.ktor.utils.io.bits/lowShort.<get-lowShort>|<get-lowShort>@kotlin.Int(){}[0]
+final val io.ktor.utils.io.charsets/charset // io.ktor.utils.io.charsets/charset|@io.ktor.utils.io.charsets.CharsetDecoder{}charset[0]
+    final fun (io.ktor.utils.io.charsets/CharsetDecoder).<get-charset>(): io.ktor.utils.io.charsets/Charset // io.ktor.utils.io.charsets/charset.<get-charset>|<get-charset>@io.ktor.utils.io.charsets.CharsetDecoder(){}[0]
+final val io.ktor.utils.io.charsets/charset // io.ktor.utils.io.charsets/charset|@io.ktor.utils.io.charsets.CharsetEncoder{}charset[0]
+    final fun (io.ktor.utils.io.charsets/CharsetEncoder).<get-charset>(): io.ktor.utils.io.charsets/Charset // io.ktor.utils.io.charsets/charset.<get-charset>|<get-charset>@io.ktor.utils.io.charsets.CharsetEncoder(){}[0]
+final val io.ktor.utils.io.charsets/name // io.ktor.utils.io.charsets/name|@io.ktor.utils.io.charsets.Charset{}name[0]
+    final fun (io.ktor.utils.io.charsets/Charset).<get-name>(): kotlin/String // io.ktor.utils.io.charsets/name.<get-name>|<get-name>@io.ktor.utils.io.charsets.Charset(){}[0]
+final val io.ktor.utils.io.core.internal/writeRemaining // io.ktor.utils.io.core.internal/writeRemaining|@kotlinx.io.Buffer{}writeRemaining[0]
+    final fun (kotlinx.io/Buffer).<get-writeRemaining>(): kotlin/Int // io.ktor.utils.io.core.internal/writeRemaining.<get-writeRemaining>|<get-writeRemaining>@kotlinx.io.Buffer(){}[0]
+final val io.ktor.utils.io.core/ByteReadPacketEmpty // io.ktor.utils.io.core/ByteReadPacketEmpty|{}ByteReadPacketEmpty[0]
+    final fun <get-ByteReadPacketEmpty>(): kotlinx.io/Source // io.ktor.utils.io.core/ByteReadPacketEmpty.<get-ByteReadPacketEmpty>|<get-ByteReadPacketEmpty>(){}[0]
+final val io.ktor.utils.io.core/endOfInput // io.ktor.utils.io.core/endOfInput|@kotlinx.io.Source{}endOfInput[0]
+    final fun (kotlinx.io/Source).<get-endOfInput>(): kotlin/Boolean // io.ktor.utils.io.core/endOfInput.<get-endOfInput>|<get-endOfInput>@kotlinx.io.Source(){}[0]
+final val io.ktor.utils.io.core/isEmpty // io.ktor.utils.io.core/isEmpty|@kotlinx.io.Source{}isEmpty[0]
+    final fun (kotlinx.io/Source).<get-isEmpty>(): kotlin/Boolean // io.ktor.utils.io.core/isEmpty.<get-isEmpty>|<get-isEmpty>@kotlinx.io.Source(){}[0]
+final val io.ktor.utils.io.core/isNotEmpty // io.ktor.utils.io.core/isNotEmpty|@kotlinx.io.Source{}isNotEmpty[0]
+    final fun (kotlinx.io/Source).<get-isNotEmpty>(): kotlin/Boolean // io.ktor.utils.io.core/isNotEmpty.<get-isNotEmpty>|<get-isNotEmpty>@kotlinx.io.Source(){}[0]
+final val io.ktor.utils.io.core/remaining // io.ktor.utils.io.core/remaining|@kotlinx.io.Source{}remaining[0]
+    final fun (kotlinx.io/Source).<get-remaining>(): kotlin/Long // io.ktor.utils.io.core/remaining.<get-remaining>|<get-remaining>@kotlinx.io.Source(){}[0]
+final val io.ktor.utils.io.core/size // io.ktor.utils.io.core/size|@kotlinx.io.Sink{}size[0]
+    final fun (kotlinx.io/Sink).<get-size>(): kotlin/Int // io.ktor.utils.io.core/size.<get-size>|<get-size>@kotlinx.io.Sink(){}[0]
+final val io.ktor.utils.io.pool/ByteArrayPool // io.ktor.utils.io.pool/ByteArrayPool|{}ByteArrayPool[0]
+    final fun <get-ByteArrayPool>(): io.ktor.utils.io.pool/ObjectPool<kotlin/ByteArray> // io.ktor.utils.io.pool/ByteArrayPool.<get-ByteArrayPool>|<get-ByteArrayPool>(){}[0]
+final val io.ktor.utils.io/CHANNEL_MAX_SIZE // io.ktor.utils.io/CHANNEL_MAX_SIZE|{}CHANNEL_MAX_SIZE[0]
+    final fun <get-CHANNEL_MAX_SIZE>(): kotlin/Int // io.ktor.utils.io/CHANNEL_MAX_SIZE.<get-CHANNEL_MAX_SIZE>|<get-CHANNEL_MAX_SIZE>(){}[0]
+final val io.ktor.utils.io/availableForRead // io.ktor.utils.io/availableForRead|@io.ktor.utils.io.ByteReadChannel{}availableForRead[0]
+    final fun (io.ktor.utils.io/ByteReadChannel).<get-availableForRead>(): kotlin/Int // io.ktor.utils.io/availableForRead.<get-availableForRead>|<get-availableForRead>@io.ktor.utils.io.ByteReadChannel(){}[0]
+final val io.ktor.utils.io/availableForWrite // io.ktor.utils.io/availableForWrite|@io.ktor.utils.io.ByteWriteChannel{}availableForWrite[0]
+    final fun (io.ktor.utils.io/ByteWriteChannel).<get-availableForWrite>(): kotlin/Int // io.ktor.utils.io/availableForWrite.<get-availableForWrite>|<get-availableForWrite>@io.ktor.utils.io.ByteWriteChannel(){}[0]
+final val io.ktor.utils.io/isCancelled // io.ktor.utils.io/isCancelled|@io.ktor.utils.io.ChannelJob{}isCancelled[0]
+    final fun (io.ktor.utils.io/ChannelJob).<get-isCancelled>(): kotlin/Boolean // io.ktor.utils.io/isCancelled.<get-isCancelled>|<get-isCancelled>@io.ktor.utils.io.ChannelJob(){}[0]
+final val io.ktor.utils.io/isCompleted // io.ktor.utils.io/isCompleted|@io.ktor.utils.io.ChannelJob{}isCompleted[0]
+    final fun (io.ktor.utils.io/ChannelJob).<get-isCompleted>(): kotlin/Boolean // io.ktor.utils.io/isCompleted.<get-isCompleted>|<get-isCompleted>@io.ktor.utils.io.ChannelJob(){}[0]
+final val io.ktor.utils.io/totalBytesRead // io.ktor.utils.io/totalBytesRead|@io.ktor.utils.io.ByteReadChannel{}totalBytesRead[0]
+    final fun (io.ktor.utils.io/ByteReadChannel).<get-totalBytesRead>(): kotlin/Long // io.ktor.utils.io/totalBytesRead.<get-totalBytesRead>|<get-totalBytesRead>@io.ktor.utils.io.ByteReadChannel(){}[0]
+
+final fun (io.ktor.utils.io.charsets/CharsetDecoder).io.ktor.utils.io.charsets/decode(kotlinx.io/Source, kotlin.text/Appendable, kotlin/Int): kotlin/Int // io.ktor.utils.io.charsets/decode|decode@io.ktor.utils.io.charsets.CharsetDecoder(kotlinx.io.Source;kotlin.text.Appendable;kotlin.Int){}[0]
+final fun (io.ktor.utils.io.charsets/CharsetDecoder).io.ktor.utils.io.charsets/decode(kotlinx.io/Source, kotlin/Int = ...): kotlin/String // io.ktor.utils.io.charsets/decode|decode@io.ktor.utils.io.charsets.CharsetDecoder(kotlinx.io.Source;kotlin.Int){}[0]
+final fun (io.ktor.utils.io.charsets/CharsetEncoder).io.ktor.utils.io.charsets/encode(kotlin/CharArray, kotlin/Int, kotlin/Int, kotlinx.io/Sink) // io.ktor.utils.io.charsets/encode|encode@io.ktor.utils.io.charsets.CharsetEncoder(kotlin.CharArray;kotlin.Int;kotlin.Int;kotlinx.io.Sink){}[0]
+final fun (io.ktor.utils.io.charsets/CharsetEncoder).io.ktor.utils.io.charsets/encode(kotlin/CharSequence, kotlin/Int = ..., kotlin/Int = ...): kotlinx.io/Source // io.ktor.utils.io.charsets/encode|encode@io.ktor.utils.io.charsets.CharsetEncoder(kotlin.CharSequence;kotlin.Int;kotlin.Int){}[0]
+final fun (io.ktor.utils.io.charsets/CharsetEncoder).io.ktor.utils.io.charsets/encodeToByteArray(kotlin/CharSequence, kotlin/Int = ..., kotlin/Int = ...): kotlin/ByteArray // io.ktor.utils.io.charsets/encodeToByteArray|encodeToByteArray@io.ktor.utils.io.charsets.CharsetEncoder(kotlin.CharSequence;kotlin.Int;kotlin.Int){}[0]
+final fun (io.ktor.utils.io.charsets/Charsets).io.ktor.utils.io.charsets/forName(kotlin/String): io.ktor.utils.io.charsets/Charset // io.ktor.utils.io.charsets/forName|forName@io.ktor.utils.io.charsets.Charsets(kotlin.String){}[0]
+final fun (io.ktor.utils.io.charsets/Charsets).io.ktor.utils.io.charsets/isSupported(kotlin/String): kotlin/Boolean // io.ktor.utils.io.charsets/isSupported|isSupported@io.ktor.utils.io.charsets.Charsets(kotlin.String){}[0]
+final fun (io.ktor.utils.io/ByteChannel).io.ktor.utils.io/attachJob(io.ktor.utils.io/ChannelJob) // io.ktor.utils.io/attachJob|attachJob@io.ktor.utils.io.ByteChannel(io.ktor.utils.io.ChannelJob){}[0]
+final fun (io.ktor.utils.io/ByteChannel).io.ktor.utils.io/attachJob(kotlinx.coroutines/Job) // io.ktor.utils.io/attachJob|attachJob@io.ktor.utils.io.ByteChannel(kotlinx.coroutines.Job){}[0]
+final fun (io.ktor.utils.io/ByteChannel).io.ktor.utils.io/cancel() // io.ktor.utils.io/cancel|cancel@io.ktor.utils.io.ByteChannel(){}[0]
+final fun (io.ktor.utils.io/ByteChannel).io.ktor.utils.io/rethrowCloseCauseIfNeeded() // io.ktor.utils.io/rethrowCloseCauseIfNeeded|rethrowCloseCauseIfNeeded@io.ktor.utils.io.ByteChannel(){}[0]
+final fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/cancel() // io.ktor.utils.io/cancel|cancel@io.ktor.utils.io.ByteReadChannel(){}[0]
+final fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/counted(): io.ktor.utils.io/CountedByteReadChannel // io.ktor.utils.io/counted|counted@io.ktor.utils.io.ByteReadChannel(){}[0]
+final fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readAvailable(kotlin/Int, kotlin/Function1<kotlinx.io/Buffer, kotlin/Int>): kotlin/Int // io.ktor.utils.io/readAvailable|readAvailable@io.ktor.utils.io.ByteReadChannel(kotlin.Int;kotlin.Function1<kotlinx.io.Buffer,kotlin.Int>){}[0]
+final fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/rethrowCloseCauseIfNeeded() // io.ktor.utils.io/rethrowCloseCauseIfNeeded|rethrowCloseCauseIfNeeded@io.ktor.utils.io.ByteReadChannel(){}[0]
+final fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/cancel() // io.ktor.utils.io/cancel|cancel@io.ktor.utils.io.ByteWriteChannel(){}[0]
+final fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/close() // io.ktor.utils.io/close|close@io.ktor.utils.io.ByteWriteChannel(){}[0]
+final fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/close(kotlin/Throwable?) // io.ktor.utils.io/close|close@io.ktor.utils.io.ByteWriteChannel(kotlin.Throwable?){}[0]
+final fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/counted(): io.ktor.utils.io/CountedByteWriteChannel // io.ktor.utils.io/counted|counted@io.ktor.utils.io.ByteWriteChannel(){}[0]
+final fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/rethrowCloseCauseIfNeeded() // io.ktor.utils.io/rethrowCloseCauseIfNeeded|rethrowCloseCauseIfNeeded@io.ktor.utils.io.ByteWriteChannel(){}[0]
+final fun (io.ktor.utils.io/ChannelJob).io.ktor.utils.io/cancel() // io.ktor.utils.io/cancel|cancel@io.ktor.utils.io.ChannelJob(){}[0]
+final fun (io.ktor.utils.io/ChannelJob).io.ktor.utils.io/getCancellationException(): kotlin.coroutines.cancellation/CancellationException // io.ktor.utils.io/getCancellationException|getCancellationException@io.ktor.utils.io.ChannelJob(){}[0]
+final fun (io.ktor.utils.io/ChannelJob).io.ktor.utils.io/invokeOnCompletion(kotlin/Function0<kotlin/Unit>) // io.ktor.utils.io/invokeOnCompletion|invokeOnCompletion@io.ktor.utils.io.ChannelJob(kotlin.Function0<kotlin.Unit>){}[0]
+final fun (kotlin/ByteArray).io.ktor.utils.io.core/storeIntAt(kotlin/Int, kotlin/Int) // io.ktor.utils.io.core/storeIntAt|storeIntAt@kotlin.ByteArray(kotlin.Int;kotlin.Int){}[0]
+final fun (kotlin/Double).io.ktor.utils.io.bits/reverseByteOrder(): kotlin/Double // io.ktor.utils.io.bits/reverseByteOrder|reverseByteOrder@kotlin.Double(){}[0]
+final fun (kotlin/Float).io.ktor.utils.io.bits/reverseByteOrder(): kotlin/Float // io.ktor.utils.io.bits/reverseByteOrder|reverseByteOrder@kotlin.Float(){}[0]
+final fun (kotlin/Int).io.ktor.utils.io.bits/reverseByteOrder(): kotlin/Int // io.ktor.utils.io.bits/reverseByteOrder|reverseByteOrder@kotlin.Int(){}[0]
+final fun (kotlin/Long).io.ktor.utils.io.bits/reverseByteOrder(): kotlin/Long // io.ktor.utils.io.bits/reverseByteOrder|reverseByteOrder@kotlin.Long(){}[0]
+final fun (kotlin/Short).io.ktor.utils.io.bits/reverseByteOrder(): kotlin/Short // io.ktor.utils.io.bits/reverseByteOrder|reverseByteOrder@kotlin.Short(){}[0]
+final fun (kotlin/String).io.ktor.utils.io.core/toByteArray(io.ktor.utils.io.charsets/Charset = ...): kotlin/ByteArray // io.ktor.utils.io.core/toByteArray|toByteArray@kotlin.String(io.ktor.utils.io.charsets.Charset){}[0]
+final fun (kotlin/UInt).io.ktor.utils.io.bits/reverseByteOrder(): kotlin/UInt // io.ktor.utils.io.bits/reverseByteOrder|reverseByteOrder@kotlin.UInt(){}[0]
+final fun (kotlin/ULong).io.ktor.utils.io.bits/reverseByteOrder(): kotlin/ULong // io.ktor.utils.io.bits/reverseByteOrder|reverseByteOrder@kotlin.ULong(){}[0]
+final fun (kotlin/UShort).io.ktor.utils.io.bits/reverseByteOrder(): kotlin/UShort // io.ktor.utils.io.bits/reverseByteOrder|reverseByteOrder@kotlin.UShort(){}[0]
+final fun (kotlinx.coroutines/CoroutineScope).io.ktor.utils.io/reader(kotlin.coroutines/CoroutineContext = ..., kotlin/Boolean = ..., kotlin.coroutines/SuspendFunction1<io.ktor.utils.io/ReaderScope, kotlin/Unit>): io.ktor.utils.io/ReaderJob // io.ktor.utils.io/reader|reader@kotlinx.coroutines.CoroutineScope(kotlin.coroutines.CoroutineContext;kotlin.Boolean;kotlin.coroutines.SuspendFunction1<io.ktor.utils.io.ReaderScope,kotlin.Unit>){}[0]
+final fun (kotlinx.coroutines/CoroutineScope).io.ktor.utils.io/reader(kotlin.coroutines/CoroutineContext, io.ktor.utils.io/ByteChannel, kotlin.coroutines/SuspendFunction1<io.ktor.utils.io/ReaderScope, kotlin/Unit>): io.ktor.utils.io/ReaderJob // io.ktor.utils.io/reader|reader@kotlinx.coroutines.CoroutineScope(kotlin.coroutines.CoroutineContext;io.ktor.utils.io.ByteChannel;kotlin.coroutines.SuspendFunction1<io.ktor.utils.io.ReaderScope,kotlin.Unit>){}[0]
+final fun (kotlinx.coroutines/CoroutineScope).io.ktor.utils.io/writer(kotlin.coroutines/CoroutineContext = ..., io.ktor.utils.io/ByteChannel, kotlin.coroutines/SuspendFunction1<io.ktor.utils.io/WriterScope, kotlin/Unit>): io.ktor.utils.io/WriterJob // io.ktor.utils.io/writer|writer@kotlinx.coroutines.CoroutineScope(kotlin.coroutines.CoroutineContext;io.ktor.utils.io.ByteChannel;kotlin.coroutines.SuspendFunction1<io.ktor.utils.io.WriterScope,kotlin.Unit>){}[0]
+final fun (kotlinx.coroutines/CoroutineScope).io.ktor.utils.io/writer(kotlin.coroutines/CoroutineContext = ..., kotlin/Boolean = ..., kotlin.coroutines/SuspendFunction1<io.ktor.utils.io/WriterScope, kotlin/Unit>): io.ktor.utils.io/WriterJob // io.ktor.utils.io/writer|writer@kotlinx.coroutines.CoroutineScope(kotlin.coroutines.CoroutineContext;kotlin.Boolean;kotlin.coroutines.SuspendFunction1<io.ktor.utils.io.WriterScope,kotlin.Unit>){}[0]
+final fun (kotlinx.io/Buffer).io.ktor.utils.io.core/canRead(): kotlin/Boolean // io.ktor.utils.io.core/canRead|canRead@kotlinx.io.Buffer(){}[0]
+final fun (kotlinx.io/Buffer).io.ktor.utils.io.core/readBytes(kotlin/Int = ...): kotlin/ByteArray // io.ktor.utils.io.core/readBytes|readBytes@kotlinx.io.Buffer(kotlin.Int){}[0]
+final fun (kotlinx.io/Sink).io.ktor.utils.io.core/append(kotlin/CharSequence, kotlin/Int = ..., kotlin/Int = ...) // io.ktor.utils.io.core/append|append@kotlinx.io.Sink(kotlin.CharSequence;kotlin.Int;kotlin.Int){}[0]
+final fun (kotlinx.io/Sink).io.ktor.utils.io.core/build(): kotlinx.io/Source // io.ktor.utils.io.core/build|build@kotlinx.io.Sink(){}[0]
+final fun (kotlinx.io/Sink).io.ktor.utils.io.core/writeFully(kotlin/ByteArray, kotlin/Int = ..., kotlin/Int = ...) // io.ktor.utils.io.core/writeFully|writeFully@kotlinx.io.Sink(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
+final fun (kotlinx.io/Sink).io.ktor.utils.io.core/writePacket(kotlinx.io/Source) // io.ktor.utils.io.core/writePacket|writePacket@kotlinx.io.Sink(kotlinx.io.Source){}[0]
+final fun (kotlinx.io/Sink).io.ktor.utils.io.core/writeText(kotlin/CharArray, kotlin/Int = ..., kotlin/Int = ..., io.ktor.utils.io.charsets/Charset = ...) // io.ktor.utils.io.core/writeText|writeText@kotlinx.io.Sink(kotlin.CharArray;kotlin.Int;kotlin.Int;io.ktor.utils.io.charsets.Charset){}[0]
+final fun (kotlinx.io/Sink).io.ktor.utils.io.core/writeText(kotlin/CharSequence, kotlin/Int = ..., kotlin/Int = ..., io.ktor.utils.io.charsets/Charset = ...) // io.ktor.utils.io.core/writeText|writeText@kotlinx.io.Sink(kotlin.CharSequence;kotlin.Int;kotlin.Int;io.ktor.utils.io.charsets.Charset){}[0]
+final fun (kotlinx.io/Sink).io.ktor.utils.io/release() // io.ktor.utils.io/release|release@kotlinx.io.Sink(){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/copy(): kotlinx.io/Source // io.ktor.utils.io.core/copy|copy@kotlinx.io.Source(){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/copyTo(kotlinx.io/Sink): kotlin/Long // io.ktor.utils.io.core/copyTo|copyTo@kotlinx.io.Source(kotlinx.io.Sink){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/discard(kotlin/Long = ...): kotlin/Long // io.ktor.utils.io.core/discard|discard@kotlinx.io.Source(kotlin.Long){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/readAvailable(kotlin/ByteArray, kotlin/Int = ..., kotlin/Int = ...): kotlin/Int // io.ktor.utils.io.core/readAvailable|readAvailable@kotlinx.io.Source(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/readAvailable(kotlinx.io/Buffer): kotlin/Int // io.ktor.utils.io.core/readAvailable|readAvailable@kotlinx.io.Source(kotlinx.io.Buffer){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/readBytes(): kotlin/ByteArray // io.ktor.utils.io.core/readBytes|readBytes@kotlinx.io.Source(){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/readBytes(kotlin/Int): kotlin/ByteArray // io.ktor.utils.io.core/readBytes|readBytes@kotlinx.io.Source(kotlin.Int){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/readFully(kotlin/ByteArray, kotlin/Int = ..., kotlin/Int = ...) // io.ktor.utils.io.core/readFully|readFully@kotlinx.io.Source(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/readShortLittleEndian(): kotlin/Short // io.ktor.utils.io.core/readShortLittleEndian|readShortLittleEndian@kotlinx.io.Source(){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/readText(io.ktor.utils.io.charsets/Charset = ..., kotlin/Int = ...): kotlin/String // io.ktor.utils.io.core/readText|readText@kotlinx.io.Source(io.ktor.utils.io.charsets.Charset;kotlin.Int){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/readTextExact(io.ktor.utils.io.charsets/Charset = ..., kotlin/Int): kotlin/String // io.ktor.utils.io.core/readTextExact|readTextExact@kotlinx.io.Source(io.ktor.utils.io.charsets.Charset;kotlin.Int){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/readTextExactCharacters(kotlin/Int, io.ktor.utils.io.charsets/Charset = ...): kotlin/String // io.ktor.utils.io.core/readTextExactCharacters|readTextExactCharacters@kotlinx.io.Source(kotlin.Int;io.ktor.utils.io.charsets.Charset){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/release() // io.ktor.utils.io.core/release|release@kotlinx.io.Source(){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io.core/takeWhile(kotlin/Function1<kotlinx.io/Buffer, kotlin/Boolean>) // io.ktor.utils.io.core/takeWhile|takeWhile@kotlinx.io.Source(kotlin.Function1<kotlinx.io.Buffer,kotlin.Boolean>){}[0]
+final fun (kotlinx.io/Source).io.ktor.utils.io/readText(): kotlin/String // io.ktor.utils.io/readText|readText@kotlinx.io.Source(){}[0]
+final fun <#A: kotlin/Any?> (kotlinx.io/Sink).io.ktor.utils.io.core/preview(kotlin/Function1<kotlinx.io/Source, #A>): #A // io.ktor.utils.io.core/preview|preview@kotlinx.io.Sink(kotlin.Function1<kotlinx.io.Source,0:0>){0§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?> (kotlinx.io/Source).io.ktor.utils.io.core/preview(kotlin/Function1<kotlinx.io/Source, #A>): #A // io.ktor.utils.io.core/preview|preview@kotlinx.io.Source(kotlin.Function1<kotlinx.io.Source,0:0>){0§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?> io.ktor.utils.io.core/withMemory(kotlin/Int, kotlin/Function1<kotlin/ByteArray, #A>): #A // io.ktor.utils.io.core/withMemory|withMemory(kotlin.Int;kotlin.Function1<kotlin.ByteArray,0:0>){0§<kotlin.Any?>}[0]
+final fun io.ktor.utils.io.core.internal/failLongToIntConversion(kotlin/Long, kotlin/String): kotlin/Nothing // io.ktor.utils.io.core.internal/failLongToIntConversion|failLongToIntConversion(kotlin.Long;kotlin.String){}[0]
+final fun io.ktor.utils.io.core/BytePacketBuilder(): kotlinx.io/Sink // io.ktor.utils.io.core/BytePacketBuilder|BytePacketBuilder(){}[0]
+final fun io.ktor.utils.io.core/ByteReadPacket(kotlin/ByteArray, kotlin/Int = ..., kotlin/Int = ...): kotlinx.io/Source // io.ktor.utils.io.core/ByteReadPacket|ByteReadPacket(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
+final fun io.ktor.utils.io.core/Sink(): kotlinx.io/Buffer // io.ktor.utils.io.core/Sink|Sink(){}[0]
+final fun io.ktor.utils.io.core/Sink(io.ktor.utils.io.pool/ObjectPool<*>): kotlinx.io/Buffer // io.ktor.utils.io.core/Sink|Sink(io.ktor.utils.io.pool.ObjectPool<*>){}[0]
+final fun io.ktor.utils.io.core/String(kotlin/ByteArray, kotlin/Int = ..., kotlin/Int = ..., io.ktor.utils.io.charsets/Charset = ...): kotlin/String // io.ktor.utils.io.core/String|String(kotlin.ByteArray;kotlin.Int;kotlin.Int;io.ktor.utils.io.charsets.Charset){}[0]
+final fun io.ktor.utils.io/ByteReadChannel(kotlin/ByteArray, kotlin/Int = ..., kotlin/Int = ...): io.ktor.utils.io/ByteReadChannel // io.ktor.utils.io/ByteReadChannel|ByteReadChannel(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
+final fun io.ktor.utils.io/ByteReadChannel(kotlin/String, io.ktor.utils.io.charsets/Charset = ...): io.ktor.utils.io/ByteReadChannel // io.ktor.utils.io/ByteReadChannel|ByteReadChannel(kotlin.String;io.ktor.utils.io.charsets.Charset){}[0]
+final fun io.ktor.utils.io/ByteReadChannel(kotlinx.io/Source): io.ktor.utils.io/ByteReadChannel // io.ktor.utils.io/ByteReadChannel|ByteReadChannel(kotlinx.io.Source){}[0]
+final inline fun (kotlin/Long).io.ktor.utils.io.core.internal/toIntOrFail(kotlin/String): kotlin/Int // io.ktor.utils.io.core.internal/toIntOrFail|toIntOrFail@kotlin.Long(kotlin.String){}[0]
+final inline fun <#A: io.ktor.utils.io.core/Closeable?, #B: kotlin/Any?> (#A).io.ktor.utils.io.core/use(kotlin/Function1<#A, #B>): #B // io.ktor.utils.io.core/use|use@0:0(kotlin.Function1<0:0,0:1>){0§<io.ktor.utils.io.core.Closeable?>;1§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any, #B: kotlin/Any?> (io.ktor.utils.io.pool/ObjectPool<#A>).io.ktor.utils.io.pool/useBorrowed(kotlin/Function1<#A, #B>): #B // io.ktor.utils.io.pool/useBorrowed|useBorrowed@io.ktor.utils.io.pool.ObjectPool<0:0>(kotlin.Function1<0:0,0:1>){0§<kotlin.Any>;1§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any, #B: kotlin/Any?> (io.ktor.utils.io.pool/ObjectPool<#A>).io.ktor.utils.io.pool/useInstance(kotlin/Function1<#A, #B>): #B // io.ktor.utils.io.pool/useInstance|useInstance@io.ktor.utils.io.pool.ObjectPool<0:0>(kotlin.Function1<0:0,0:1>){0§<kotlin.Any>;1§<kotlin.Any?>}[0]
+final inline fun io.ktor.utils.io.core/buildPacket(kotlin/Function1<kotlinx.io/Sink, kotlin/Unit>): kotlinx.io/Source // io.ktor.utils.io.core/buildPacket|buildPacket(kotlin.Function1<kotlinx.io.Sink,kotlin.Unit>){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/copyAndClose(io.ktor.utils.io/ByteWriteChannel): kotlin/Long // io.ktor.utils.io/copyAndClose|copyAndClose@io.ktor.utils.io.ByteReadChannel(io.ktor.utils.io.ByteWriteChannel){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/copyTo(io.ktor.utils.io/ByteWriteChannel): kotlin/Long // io.ktor.utils.io/copyTo|copyTo@io.ktor.utils.io.ByteReadChannel(io.ktor.utils.io.ByteWriteChannel){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/copyTo(io.ktor.utils.io/ByteWriteChannel, kotlin/Long): kotlin/Long // io.ktor.utils.io/copyTo|copyTo@io.ktor.utils.io.ByteReadChannel(io.ktor.utils.io.ByteWriteChannel;kotlin.Long){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/discard(kotlin/Long = ...): kotlin/Long // io.ktor.utils.io/discard|discard@io.ktor.utils.io.ByteReadChannel(kotlin.Long){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/discardExact(kotlin/Long) // io.ktor.utils.io/discardExact|discardExact@io.ktor.utils.io.ByteReadChannel(kotlin.Long){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/exhausted(): kotlin/Boolean // io.ktor.utils.io/exhausted|exhausted@io.ktor.utils.io.ByteReadChannel(){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readAvailable(kotlin/ByteArray, kotlin/Int = ..., kotlin/Int = ...): kotlin/Int // io.ktor.utils.io/readAvailable|readAvailable@io.ktor.utils.io.ByteReadChannel(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readBuffer(): kotlinx.io/Buffer // io.ktor.utils.io/readBuffer|readBuffer@io.ktor.utils.io.ByteReadChannel(){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readBuffer(kotlin/Int): kotlinx.io/Buffer // io.ktor.utils.io/readBuffer|readBuffer@io.ktor.utils.io.ByteReadChannel(kotlin.Int){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readByte(): kotlin/Byte // io.ktor.utils.io/readByte|readByte@io.ktor.utils.io.ByteReadChannel(){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readByteArray(kotlin/Int): kotlin/ByteArray // io.ktor.utils.io/readByteArray|readByteArray@io.ktor.utils.io.ByteReadChannel(kotlin.Int){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readFully(kotlin/ByteArray) // io.ktor.utils.io/readFully|readFully@io.ktor.utils.io.ByteReadChannel(kotlin.ByteArray){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readInt(): kotlin/Int // io.ktor.utils.io/readInt|readInt@io.ktor.utils.io.ByteReadChannel(){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readLong(): kotlin/Long // io.ktor.utils.io/readLong|readLong@io.ktor.utils.io.ByteReadChannel(){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readPacket(kotlin/Int): kotlinx.io/Source // io.ktor.utils.io/readPacket|readPacket@io.ktor.utils.io.ByteReadChannel(kotlin.Int){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readRemaining(): kotlinx.io/Source // io.ktor.utils.io/readRemaining|readRemaining@io.ktor.utils.io.ByteReadChannel(){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readRemaining(kotlin/Long): kotlinx.io/Source // io.ktor.utils.io/readRemaining|readRemaining@io.ktor.utils.io.ByteReadChannel(kotlin.Long){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readShort(): kotlin/Short // io.ktor.utils.io/readShort|readShort@io.ktor.utils.io.ByteReadChannel(){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readUTF8Line(): kotlin/String? // io.ktor.utils.io/readUTF8Line|readUTF8Line@io.ktor.utils.io.ByteReadChannel(){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readUTF8LineTo(kotlin.text/Appendable, kotlin/Int = ...): kotlin/Boolean // io.ktor.utils.io/readUTF8LineTo|readUTF8LineTo@io.ktor.utils.io.ByteReadChannel(kotlin.text.Appendable;kotlin.Int){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/toByteArray(): kotlin/ByteArray // io.ktor.utils.io/toByteArray|toByteArray@io.ktor.utils.io.ByteReadChannel(){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/awaitFreeSpace() // io.ktor.utils.io/awaitFreeSpace|awaitFreeSpace@io.ktor.utils.io.ByteWriteChannel(){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/flushIfNeeded() // io.ktor.utils.io/flushIfNeeded|flushIfNeeded@io.ktor.utils.io.ByteWriteChannel(){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/write(kotlin/Int = ..., kotlin/Function3<kotlin/ByteArray, kotlin/Int, kotlin/Int, kotlin/Int>): kotlin/Int // io.ktor.utils.io/write|write@io.ktor.utils.io.ByteWriteChannel(kotlin.Int;kotlin.Function3<kotlin.ByteArray,kotlin.Int,kotlin.Int,kotlin.Int>){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeBuffer(kotlinx.io/Source) // io.ktor.utils.io/writeBuffer|writeBuffer@io.ktor.utils.io.ByteWriteChannel(kotlinx.io.Source){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeByte(kotlin/Byte) // io.ktor.utils.io/writeByte|writeByte@io.ktor.utils.io.ByteWriteChannel(kotlin.Byte){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeByteArray(kotlin/ByteArray) // io.ktor.utils.io/writeByteArray|writeByteArray@io.ktor.utils.io.ByteWriteChannel(kotlin.ByteArray){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeFully(kotlin/ByteArray, kotlin/Int = ..., kotlin/Int = ...) // io.ktor.utils.io/writeFully|writeFully@io.ktor.utils.io.ByteWriteChannel(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeInt(kotlin/Int) // io.ktor.utils.io/writeInt|writeInt@io.ktor.utils.io.ByteWriteChannel(kotlin.Int){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeLong(kotlin/Long) // io.ktor.utils.io/writeLong|writeLong@io.ktor.utils.io.ByteWriteChannel(kotlin.Long){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writePacket(kotlinx.io/Buffer) // io.ktor.utils.io/writePacket|writePacket@io.ktor.utils.io.ByteWriteChannel(kotlinx.io.Buffer){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writePacket(kotlinx.io/Source) // io.ktor.utils.io/writePacket|writePacket@io.ktor.utils.io.ByteWriteChannel(kotlinx.io.Source){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeShort(kotlin/Short) // io.ktor.utils.io/writeShort|writeShort@io.ktor.utils.io.ByteWriteChannel(kotlin.Short){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeSource(kotlinx.io/Source) // io.ktor.utils.io/writeSource|writeSource@io.ktor.utils.io.ByteWriteChannel(kotlinx.io.Source){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeString(kotlin/String) // io.ktor.utils.io/writeString|writeString@io.ktor.utils.io.ByteWriteChannel(kotlin.String){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeStringUtf8(kotlin/String) // io.ktor.utils.io/writeStringUtf8|writeStringUtf8@io.ktor.utils.io.ByteWriteChannel(kotlin.String){}[0]
+final suspend fun (io.ktor.utils.io/ChannelJob).io.ktor.utils.io/join() // io.ktor.utils.io/join|join@io.ktor.utils.io.ChannelJob(){}[0]
+final suspend inline fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/read(crossinline kotlin.coroutines/SuspendFunction3<kotlin/ByteArray, kotlin/Int, kotlin/Int, kotlin/Int>): kotlin/Int // io.ktor.utils.io/read|read@io.ktor.utils.io.ByteReadChannel(kotlin.coroutines.SuspendFunction3<kotlin.ByteArray,kotlin.Int,kotlin.Int,kotlin.Int>){}[0]
+
+// Targets: [native]
+open class io.ktor.utils.io.locks/SynchronizedObject { // io.ktor.utils.io.locks/SynchronizedObject|null[0]
+    constructor <init>() // io.ktor.utils.io.locks/SynchronizedObject.<init>|<init>(){}[0]
+
+    final val lock // io.ktor.utils.io.locks/SynchronizedObject.lock|{}lock[0]
+        final fun <get-lock>(): kotlin.concurrent/AtomicReference<io.ktor.utils.io.locks/SynchronizedObject.LockState> // io.ktor.utils.io.locks/SynchronizedObject.lock.<get-lock>|<get-lock>(){}[0]
+
+    final fun lock() // io.ktor.utils.io.locks/SynchronizedObject.lock|lock(){}[0]
+    final fun tryLock(): kotlin/Boolean // io.ktor.utils.io.locks/SynchronizedObject.tryLock|tryLock(){}[0]
+    final fun unlock() // io.ktor.utils.io.locks/SynchronizedObject.unlock|unlock(){}[0]
+
+    final enum class Status : kotlin/Enum<io.ktor.utils.io.locks/SynchronizedObject.Status> { // io.ktor.utils.io.locks/SynchronizedObject.Status|null[0]
+        enum entry FAT // io.ktor.utils.io.locks/SynchronizedObject.Status.FAT|null[0]
+        enum entry THIN // io.ktor.utils.io.locks/SynchronizedObject.Status.THIN|null[0]
+        enum entry UNLOCKED // io.ktor.utils.io.locks/SynchronizedObject.Status.UNLOCKED|null[0]
+
+        final val entries // io.ktor.utils.io.locks/SynchronizedObject.Status.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.utils.io.locks/SynchronizedObject.Status> // io.ktor.utils.io.locks/SynchronizedObject.Status.entries.<get-entries>|<get-entries>#static(){}[0]
+
+        final fun valueOf(kotlin/String): io.ktor.utils.io.locks/SynchronizedObject.Status // io.ktor.utils.io.locks/SynchronizedObject.Status.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<io.ktor.utils.io.locks/SynchronizedObject.Status> // io.ktor.utils.io.locks/SynchronizedObject.Status.values|values#static(){}[0]
+    }
+
+    final class LockState { // io.ktor.utils.io.locks/SynchronizedObject.LockState|null[0]
+        final val mutex // io.ktor.utils.io.locks/SynchronizedObject.LockState.mutex|{}mutex[0]
+            final fun <get-mutex>(): kotlinx.cinterop/CPointer<io.ktor.io.interop.mutex/mutex_node>? // io.ktor.utils.io.locks/SynchronizedObject.LockState.mutex.<get-mutex>|<get-mutex>(){}[0]
+        final val nestedLocks // io.ktor.utils.io.locks/SynchronizedObject.LockState.nestedLocks|{}nestedLocks[0]
+            final fun <get-nestedLocks>(): kotlin/Int // io.ktor.utils.io.locks/SynchronizedObject.LockState.nestedLocks.<get-nestedLocks>|<get-nestedLocks>(){}[0]
+        final val ownerThreadId // io.ktor.utils.io.locks/SynchronizedObject.LockState.ownerThreadId|{}ownerThreadId[0]
+            // Targets: [apple]
+            final fun <get-ownerThreadId>(): kotlinx.cinterop/CPointer<platform.posix/_opaque_pthread_t>? // io.ktor.utils.io.locks/SynchronizedObject.LockState.ownerThreadId.<get-ownerThreadId>|<get-ownerThreadId>(){}[0]
+
+            // Targets: [linux, mingwX64]
+            final fun <get-ownerThreadId>(): kotlin/ULong? // io.ktor.utils.io.locks/SynchronizedObject.LockState.ownerThreadId.<get-ownerThreadId>|<get-ownerThreadId>(){}[0]
+        final val status // io.ktor.utils.io.locks/SynchronizedObject.LockState.status|{}status[0]
+            final fun <get-status>(): io.ktor.utils.io.locks/SynchronizedObject.Status // io.ktor.utils.io.locks/SynchronizedObject.LockState.status.<get-status>|<get-status>(){}[0]
+        final val waiters // io.ktor.utils.io.locks/SynchronizedObject.LockState.waiters|{}waiters[0]
+            final fun <get-waiters>(): kotlin/Int // io.ktor.utils.io.locks/SynchronizedObject.LockState.waiters.<get-waiters>|<get-waiters>(){}[0]
+
+        // Targets: [apple]
+        constructor <init>(io.ktor.utils.io.locks/SynchronizedObject.Status, kotlin/Int, kotlin/Int, kotlinx.cinterop/CPointer<platform.posix/_opaque_pthread_t>? = ..., kotlinx.cinterop/CPointer<io.ktor.io.interop.mutex/mutex_node>? = ...) // io.ktor.utils.io.locks/SynchronizedObject.LockState.<init>|<init>(io.ktor.utils.io.locks.SynchronizedObject.Status;kotlin.Int;kotlin.Int;kotlinx.cinterop.CPointer<platform.posix._opaque_pthread_t>?;kotlinx.cinterop.CPointer<io.ktor.io.interop.mutex.mutex_node>?){}[0]
+
+        // Targets: [linux, mingwX64]
+        constructor <init>(io.ktor.utils.io.locks/SynchronizedObject.Status, kotlin/Int, kotlin/Int, kotlin/ULong? = ..., kotlinx.cinterop/CPointer<io.ktor.io.interop.mutex/mutex_node>? = ...) // io.ktor.utils.io.locks/SynchronizedObject.LockState.<init>|<init>(io.ktor.utils.io.locks.SynchronizedObject.Status;kotlin.Int;kotlin.Int;kotlin.ULong?;kotlinx.cinterop.CPointer<io.ktor.io.interop.mutex.mutex_node>?){}[0]
+    }
+}
+
+// Targets: [native]
+sealed class io.ktor.utils.io.errors/PosixException : kotlin/Exception { // io.ktor.utils.io.errors/PosixException|null[0]
+    constructor <init>(kotlin/Int, kotlin/String) // io.ktor.utils.io.errors/PosixException.<init>|<init>(kotlin.Int;kotlin.String){}[0]
+
+    final val errno // io.ktor.utils.io.errors/PosixException.errno|{}errno[0]
+        final fun <get-errno>(): kotlin/Int // io.ktor.utils.io.errors/PosixException.errno.<get-errno>|<get-errno>(){}[0]
+
+    final class AddressAlreadyInUseException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.AddressAlreadyInUseException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.AddressAlreadyInUseException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class BadFileDescriptorException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.BadFileDescriptorException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.BadFileDescriptorException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class BadMessageException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.BadMessageException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.BadMessageException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class ConnectionAbortedException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.ConnectionAbortedException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.ConnectionAbortedException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class ConnectionRefusedException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.ConnectionRefusedException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.ConnectionRefusedException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class ConnectionResetException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.ConnectionResetException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.ConnectionResetException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class InterruptedException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.InterruptedException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.InterruptedException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class InvalidArgumentException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.InvalidArgumentException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.InvalidArgumentException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class NoMemoryException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.NoMemoryException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.NoMemoryException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class NoSuchFileException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.NoSuchFileException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.NoSuchFileException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class NotConnectedException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.NotConnectedException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.NotConnectedException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class NotSocketException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.NotSocketException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.NotSocketException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class OverflowException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.OverflowException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.OverflowException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class PosixErrnoException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.PosixErrnoException|null[0]
+        constructor <init>(kotlin/Int, kotlin/String) // io.ktor.utils.io.errors/PosixException.PosixErrnoException.<init>|<init>(kotlin.Int;kotlin.String){}[0]
+    }
+
+    final class TimeoutIOException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.TimeoutIOException|null[0]
+        constructor <init>(kotlin/String) // io.ktor.utils.io.errors/PosixException.TimeoutIOException.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class TryAgainException : io.ktor.utils.io.errors/PosixException { // io.ktor.utils.io.errors/PosixException.TryAgainException|null[0]
+        constructor <init>(kotlin/Int = ..., kotlin/String) // io.ktor.utils.io.errors/PosixException.TryAgainException.<init>|<init>(kotlin.Int;kotlin.String){}[0]
+    }
+
+    final object Companion { // io.ktor.utils.io.errors/PosixException.Companion|null[0]
+        final fun forErrno(kotlin/Int = ..., kotlin/String? = ...): io.ktor.utils.io.errors/PosixException // io.ktor.utils.io.errors/PosixException.Companion.forErrno|forErrno(kotlin.Int;kotlin.String?){}[0]
+    }
+}
+
+// Targets: [native]
+final fun (kotlinx.io/Sink).io.ktor.utils.io.core/write(kotlin/Function3<kotlinx.cinterop/CPointer<kotlinx.cinterop/ByteVarOf<kotlin/Byte>>, kotlin/Long, kotlin/Long, kotlin/Long>): kotlin/Long // io.ktor.utils.io.core/write|write@kotlinx.io.Sink(kotlin.Function3<kotlinx.cinterop.CPointer<kotlinx.cinterop.ByteVarOf<kotlin.Byte>>,kotlin.Long,kotlin.Long,kotlin.Long>){}[0]
+
+// Targets: [native]
+final fun (kotlinx.io/Sink).io.ktor.utils.io.core/writeFully(kotlinx.cinterop/CPointer<kotlinx.cinterop/ByteVarOf<kotlin/Byte>>, kotlin/Long, kotlin/Long) // io.ktor.utils.io.core/writeFully|writeFully@kotlinx.io.Sink(kotlinx.cinterop.CPointer<kotlinx.cinterop.ByteVarOf<kotlin.Byte>>;kotlin.Long;kotlin.Long){}[0]
+
+// Targets: [native]
+final fun (kotlinx.io/Source).io.ktor.utils.io/readAvailable(kotlinx.cinterop/CPointer<kotlinx.cinterop/ByteVarOf<kotlin/Byte>>, kotlin/Int, kotlin/Int): kotlin/Int // io.ktor.utils.io/readAvailable|readAvailable@kotlinx.io.Source(kotlinx.cinterop.CPointer<kotlinx.cinterop.ByteVarOf<kotlin.Byte>>;kotlin.Int;kotlin.Int){}[0]
+
+// Targets: [native]
+final fun io.ktor.utils.io.locks/reentrantLock(): io.ktor.utils.io.locks/SynchronizedObject // io.ktor.utils.io.locks/reentrantLock|reentrantLock(){}[0]
+
+// Targets: [native]
+final inline fun <#A: kotlin/Any?> (io.ktor.utils.io.locks/SynchronizedObject).io.ktor.utils.io.locks/withLock(kotlin/Function0<#A>): #A // io.ktor.utils.io.locks/withLock|withLock@io.ktor.utils.io.locks.SynchronizedObject(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
+
+// Targets: [native]
+final inline fun <#A: kotlin/Any?> io.ktor.utils.io.locks/synchronized(io.ktor.utils.io.locks/SynchronizedObject, kotlin/Function0<#A>): #A // io.ktor.utils.io.locks/synchronized|synchronized(io.ktor.utils.io.locks.SynchronizedObject;kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
+
+// Targets: [native]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.utils.io/readAvailable(kotlinx.cinterop/CPointer<kotlinx.cinterop/ByteVarOf<kotlin/Byte>>, kotlin/Int, kotlin/Int): kotlin/Int // io.ktor.utils.io/readAvailable|readAvailable@io.ktor.utils.io.ByteReadChannel(kotlinx.cinterop.CPointer<kotlinx.cinterop.ByteVarOf<kotlin.Byte>>;kotlin.Int;kotlin.Int){}[0]
+
+// Targets: [native]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeFully(kotlinx.cinterop/CPointer<kotlinx.cinterop/ByteVarOf<kotlin/Byte>>, kotlin/Int, kotlin/Int) // io.ktor.utils.io/writeFully|writeFully@io.ktor.utils.io.ByteWriteChannel(kotlinx.cinterop.CPointer<kotlinx.cinterop.ByteVarOf<kotlin.Byte>>;kotlin.Int;kotlin.Int){}[0]
+
+// Targets: [native]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.utils.io/writeFully(kotlinx.cinterop/CPointer<kotlinx.cinterop/ByteVarOf<kotlin/Byte>>, kotlin/Long, kotlin/Long) // io.ktor.utils.io/writeFully|writeFully@io.ktor.utils.io.ByteWriteChannel(kotlinx.cinterop.CPointer<kotlinx.cinterop.ByteVarOf<kotlin.Byte>>;kotlin.Long;kotlin.Long){}[0]
+
+// Targets: [js, wasmJs]
+final class io.ktor.utils.io.locks/ReentrantLock { // io.ktor.utils.io.locks/ReentrantLock|null[0]
+    constructor <init>() // io.ktor.utils.io.locks/ReentrantLock.<init>|<init>(){}[0]
+
+    final inline fun lock() // io.ktor.utils.io.locks/ReentrantLock.lock|lock(){}[0]
+    final inline fun tryLock(): kotlin/Boolean // io.ktor.utils.io.locks/ReentrantLock.tryLock|tryLock(){}[0]
+    final inline fun unlock() // io.ktor.utils.io.locks/ReentrantLock.unlock|unlock(){}[0]
+}
+
+// Targets: [js, wasmJs]
+final val io.ktor.utils.io.locks/Lock // io.ktor.utils.io.locks/Lock|{}Lock[0]
+    final fun <get-Lock>(): io.ktor.utils.io.locks/ReentrantLock // io.ktor.utils.io.locks/Lock.<get-Lock>|<get-Lock>(){}[0]
+
+// Targets: [js, wasmJs]
+final inline fun <#A: kotlin/Any?> (io.ktor.utils.io.locks/ReentrantLock).io.ktor.utils.io.locks/withLock(kotlin/Function0<#A>): #A // io.ktor.utils.io.locks/withLock|withLock@io.ktor.utils.io.locks.ReentrantLock(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
+
+// Targets: [js, wasmJs]
+final inline fun <#A: kotlin/Any?> io.ktor.utils.io.locks/synchronized(kotlin/Any, kotlin/Function0<#A>): #A // io.ktor.utils.io.locks/synchronized|synchronized(kotlin.Any;kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
+
+// Targets: [js, wasmJs]
+final inline fun io.ktor.utils.io.locks/reentrantLock(): io.ktor.utils.io.locks/ReentrantLock // io.ktor.utils.io.locks/reentrantLock|reentrantLock(){}[0]
+
+// Targets: [wasmJs]
+final fun (kotlin/ByteArray).io.ktor.utils.io.charsets/toJsArray(): org.khronos.webgl/Int8Array // io.ktor.utils.io.charsets/toJsArray|toJsArray@kotlin.ByteArray(){}[0]
+
+// Targets: [wasmJs]
+final fun (org.khronos.webgl/Int8Array).io.ktor.utils.io.charsets/toByteArray(): kotlin/ByteArray // io.ktor.utils.io.charsets/toByteArray|toByteArray@org.khronos.webgl.Int8Array(){}[0]

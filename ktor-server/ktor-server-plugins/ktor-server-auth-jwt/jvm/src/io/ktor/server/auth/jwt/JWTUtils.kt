@@ -89,8 +89,8 @@ internal suspend fun verifyAndValidate(
     jwtVerifier: JWTVerifier?,
     token: HttpAuthHeader,
     schemes: JWTAuthSchemes,
-    validate: suspend ApplicationCall.(JWTCredential) -> Principal?
-): Principal? {
+    validate: suspend ApplicationCall.(JWTCredential) -> Any?
+): Any? {
     val jwt = try {
         token.getBlob(schemes)?.let { jwtVerifier?.verify(it) }
     } catch (cause: JWTVerificationException) {

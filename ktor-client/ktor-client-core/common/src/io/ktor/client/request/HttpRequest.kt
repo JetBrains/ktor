@@ -206,7 +206,7 @@ public class HttpRequestData @InternalAPI constructor(
 /**
  * Data prepared for [HttpResponse].
  */
-public class HttpResponseData constructor(
+public class HttpResponseData(
     public val statusCode: HttpStatusCode,
     public val requestTime: GMTDate,
     public val headers: Headers,
@@ -299,22 +299,53 @@ public fun HttpRequestBuilder.url(urlString: String) { // ktlint-disable filenam
 }
 
 @InternalAPI
-@Suppress("KDocMissingDocumentation")
 public fun HttpRequestData.isUpgradeRequest(): Boolean {
     return body is ClientUpgradeContent
 }
 
 @InternalAPI
-@Suppress("KDocMissingDocumentation")
 public fun HttpRequestData.isSseRequest(): Boolean {
     return body is SSEClientContent
 }
 
 @InternalAPI
-@Suppress("KDocMissingDocumentation")
-public fun needToProcessSSE(data: HttpRequestData, status: HttpStatusCode, headers: Headers): Boolean {
-    val contentType = headers[HttpHeaders.ContentType]?.let { ContentType.parse(it) }
-    return data.isSseRequest() &&
-        status == HttpStatusCode.OK &&
-        contentType?.withoutParameters() == ContentType.Text.EventStream
+public val ResponseAdapterAttributeKey: AttributeKey<ResponseAdapter> = AttributeKey("ResponseAdapterAttributeKey")
+
+@InternalAPI
+public fun interface ResponseAdapter {
+    public fun adapt(
+        data: HttpRequestData,
+        status: HttpStatusCode,
+        headers: Headers,
+        responseBody: ByteReadChannel,
+        outgoingContent: OutgoingContent,
+        callContext: CoroutineContext
+    ): Any?
+}
+
+@InternalAPI
+public class SSEClientResponseAdapter : ResponseAdapter {
+    @OptIn(InternalAPI::class)
+    override fun adapt(
+        data: HttpRequestData,
+        status: HttpStatusCode,
+        headers: Headers,
+        responseBody: ByteReadChannel,
+        outgoingContent: OutgoingContent,
+        callContext: CoroutineContext
+    ): Any? {
+        val contentType = headers[HttpHeaders.ContentType]?.let { ContentType.parse(it) }
+        return if (data.isSseRequest() &&
+            status == HttpStatusCode.OK &&
+            contentType?.withoutParameters() == ContentType.Text.EventStream
+        ) {
+            DefaultClientSSESession(
+                outgoingContent as SSEClientContent,
+                responseBody,
+                callContext
+            )
+        } else {
+            null
+        }
+    }
 }

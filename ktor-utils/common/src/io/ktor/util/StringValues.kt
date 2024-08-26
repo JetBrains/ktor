@@ -73,7 +73,6 @@ public interface StringValues {
     public fun isEmpty(): Boolean
 }
 
-@Suppress("KDocMissingDocumentation")
 public interface StringValuesBuilder {
     public val caseInsensitiveName: Boolean
     public fun getAll(name: String): List<String>?
@@ -100,7 +99,6 @@ public interface StringValuesBuilder {
     public fun build(): StringValues
 }
 
-@Suppress("KDocMissingDocumentation")
 public open class StringValuesSingleImpl(
     override val caseInsensitiveName: Boolean,
     public val name: String,
@@ -150,7 +148,6 @@ public open class StringValuesSingleImpl(
         name.equals(this.name, caseInsensitiveName) && values.contains(value)
 }
 
-@Suppress("KDocMissingDocumentation")
 public open class StringValuesImpl(
     final override val caseInsensitiveName: Boolean = false,
     values: Map<String, List<String>> = emptyMap()
@@ -282,7 +279,6 @@ public open class StringValuesBuilderImpl(
     protected open fun validateValue(value: String) {
     }
 
-    @Suppress("DEPRECATION")
     private fun ensureListForKey(name: String): MutableList<String> {
         return values[name] ?: mutableListOf<String>().also { validateName(name); values[name] = it }
     }
@@ -325,7 +321,7 @@ public fun valuesOf(map: Map<String, Iterable<String>>, caseInsensitiveKey: Bool
     }
     val values: MutableMap<String, List<String>> =
         if (caseInsensitiveKey) caseInsensitiveMap() else LinkedHashMap(size)
-    map.entries.forEach { values.put(it.key, it.value.toList()) }
+    map.entries.forEach { values[it.key] = it.value.toList() }
     return StringValuesImpl(caseInsensitiveKey, values)
 }
 
@@ -361,7 +357,7 @@ public fun StringValues.filter(keepEmpty: Boolean = false, predicate: (String, S
     entries.forEach { entry ->
         val list = entry.value.filterTo(ArrayList(entry.value.size)) { predicate(entry.key, it) }
         if (keepEmpty || list.isNotEmpty()) {
-            values.put(entry.key, list)
+            values[entry.key] = list
         }
     }
 

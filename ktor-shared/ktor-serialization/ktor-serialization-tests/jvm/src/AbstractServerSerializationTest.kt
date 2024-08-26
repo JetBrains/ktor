@@ -16,7 +16,6 @@ import kotlinx.serialization.*
 import java.nio.charset.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 public abstract class AbstractServerSerializationTest {
     private val uc = "\u0422"
 

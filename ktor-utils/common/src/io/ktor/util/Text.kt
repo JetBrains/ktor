@@ -12,15 +12,14 @@ public fun String.escapeHTML(): String {
     if (text.isEmpty()) return text
 
     return buildString(length) {
-        for (idx in 0 until text.length) {
-            val ch = text[idx]
-            when (ch) {
+        for (element in text) {
+            when (element) {
                 '\'' -> append("&#x27;")
                 '\"' -> append("&quot;")
                 '&' -> append("&amp;")
                 '<' -> append("&lt;")
                 '>' -> append("&gt;")
-                else -> append(ch)
+                else -> append(element)
             }
         }
     }
@@ -35,10 +34,9 @@ public inline fun String.chomp(
     separator: String,
     onMissingDelimiter: () -> Pair<String, String>
 ): Pair<String, String> {
-    val idx = indexOf(separator)
-    return when (idx) {
+    return when (val idx = indexOf(separator)) {
         -1 -> onMissingDelimiter()
-        else -> substring(0, idx) to substring(idx + 1)
+        else -> substring(0, idx) to substring(idx + separator.length)
     }
 }
 

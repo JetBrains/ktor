@@ -10,7 +10,6 @@ import io.ktor.util.reflect.*
 import java.math.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 class DataConversionTest {
 
     @Test

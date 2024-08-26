@@ -20,7 +20,9 @@ class RetrySupport : TestTemplateInvocationContextProvider {
         return context.testMethod.isPresent && context.testMethod.get().isAnnotationPresent(RetryableTest::class.java)
     }
 
-    override fun provideTestTemplateInvocationContexts(context: ExtensionContext): Stream<TestTemplateInvocationContext> {
+    override fun provideTestTemplateInvocationContexts(
+        context: ExtensionContext
+    ): Stream<TestTemplateInvocationContext> {
         val testMethod = context.testMethod.get()
         val annotation = testMethod.getAnnotation(RetryableTest::class.java)
 

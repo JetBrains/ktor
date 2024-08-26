@@ -30,6 +30,6 @@ public interface JsonSerializer {
     /**
      * Read content from response using information specified in [type].
      */
-    @Suppress("DEPRECATION")
+
     public fun read(type: TypeInfo, body: Input): Any
 }

@@ -38,16 +38,6 @@ public class MockEngineConfig : HttpClientEngineConfig() {
     public var reuseHandlers: Boolean = true
 
     /**
-     * Dispatcher to use with [MockEngine].
-     */
-    @Deprecated(
-        "The [dispatcher] is no longer configurable, Dispatchers.IO is used by default",
-        level = DeprecationLevel.ERROR
-    )
-    public var dispatcher: CoroutineDispatcher get() = error("The [dispatcher] is no longer configurable")
-        set(_) = error("The [dispatcher] is no longer configurable")
-
-    /**
      * Add request handler to [MockEngine]
      */
     public fun addHandler(handler: MockRequestHandler) {

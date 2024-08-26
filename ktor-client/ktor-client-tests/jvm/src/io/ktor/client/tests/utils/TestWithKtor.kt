@@ -13,7 +13,6 @@ import org.slf4j.*
 import java.net.*
 import java.util.concurrent.*
 
-@Suppress("KDocMissingDocumentation")
 @CoroutinesTimeout(5 * 60 * 1000)
 abstract class TestWithKtor {
     protected val serverPort: Int = ServerSocket(0).use { it.localPort }

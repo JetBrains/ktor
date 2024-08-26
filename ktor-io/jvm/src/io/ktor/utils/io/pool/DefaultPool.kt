@@ -1,8 +1,11 @@
+/*
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ */
+
 package io.ktor.utils.io.pool
 
-import io.ktor.utils.io.utils.*
+import kotlinx.atomicfu.*
 import java.util.concurrent.atomic.*
-import kotlin.jvm.*
 
 private const val MULTIPLIER = 4
 
@@ -34,8 +37,7 @@ actual constructor(actual final override val capacity: Int) : ObjectPool<T> {
     // optional destruction of unpoolable items
     protected actual open fun disposeInstance(instance: T) {}
 
-    @Volatile
-    private var top: Long = 0L
+    private val top = atomic(0L)
 
     // closest power of 2 that is equal or larger than capacity * MULTIPLIER
     private val maxIndex = Integer.highestOneBit(capacity * MULTIPLIER - 1) * 2
@@ -82,12 +84,12 @@ actual constructor(actual final override val capacity: Int) : ObjectPool<T> {
     private fun pushTop(index: Int) {
         require(index > 0) { "index should be positive" }
         while (true) { // lock-free loop on top
-            val top = this.top // volatile read
+            val top = top.value // volatile read
             val topVersion = (top shr 32 and 0xffffffffL) + 1L
             val topIndex = (top and 0xffffffffL).toInt()
             val newTop = topVersion shl 32 or index.toLong()
             next[index] = topIndex
-            if (Top.compareAndSet(this, top, newTop)) return
+            if (this.top.compareAndSet(top, newTop)) return
         }
     }
 
@@ -95,19 +97,14 @@ actual constructor(actual final override val capacity: Int) : ObjectPool<T> {
         // lock-free loop on top
         while (true) {
             // volatile read
-            val top = this.top
+            val top = top.value
             if (top == 0L) return 0
             val newVersion = (top shr 32 and 0xffffffffL) + 1L
             val topIndex = (top and 0xffffffffL).toInt()
             if (topIndex == 0) return 0
             val next = next[topIndex]
             val newTop = newVersion shl 32 or next.toLong()
-            if (Top.compareAndSet(this, top, newTop)) return topIndex
+            if (this.top.compareAndSet(top, newTop)) return topIndex
         }
-    }
-
-    public companion object {
-        // todo: replace with atomicfu, remove companion object
-        private val Top = longUpdater(DefaultPool<*>::top)
     }
 }

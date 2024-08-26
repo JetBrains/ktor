@@ -1,14 +1,16 @@
+/*
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ */
+
 package io.ktor.utils.io
 
+import io.ktor.utils.io.core.*
+import kotlinx.io.*
 import java.nio.*
 
-@Deprecated("Use read { } instead.")
-public interface LookAheadSession {
-    /**
-     * Marks [n] bytes as consumed so the corresponding range becomes available for writing
-     */
-    public fun consumed(n: Int)
+public typealias LookAheadSession = LookAheadSuspendSession
 
+public class LookAheadSuspendSession(private val channel: ByteReadChannel) {
     /**
      * Request byte buffer range skipping [skip] bytes and [atLeast] bytes length
      * @return byte buffer for the requested range or null if it is impossible to provide such a buffer
@@ -19,46 +21,35 @@ public interface LookAheadSession {
      * - end of stream encountered and all bytes were consumed
      * - channel has been closed with an exception so buffer has been recycled
      */
-    public fun request(skip: Int, atLeast: Int): ByteBuffer?
-}
-
-@Suppress("DEPRECATION")
-@Deprecated("Use read { } instead.")
-public interface LookAheadSuspendSession : LookAheadSession {
-    /**
-     * Suspend until [n] bytes become available or end of stream encountered (possibly due to exceptional close)
-     * @see SuspendableReadSession.await
-     */
-    public suspend fun awaitAtLeast(n: Int): Boolean
-}
-
-@Suppress("DEPRECATION")
-public inline fun LookAheadSession.consumeEachRemaining(visitor: (ByteBuffer) -> Boolean) {
-    do {
-        val cont = request(0, 1)?.let {
-            val s = it.remaining()
-            val rc = visitor(it)
-            consumed(s)
-            rc
-        } ?: false
-
-        if (!cont) break
-    } while (true)
-}
-
-@Suppress("REDUNDANT_INLINE_SUSPEND_FUNCTION_TYPE", "DEPRECATION")
-public suspend inline fun LookAheadSuspendSession.consumeEachRemaining(visitor: suspend (ByteBuffer) -> Boolean) {
-    do {
-        val buffer = request(0, 1)
-        if (buffer == null) {
-            if (!awaitAtLeast(1)) break
-            continue
+    @OptIn(InternalAPI::class)
+    public fun request(skip: Int, atLeast: Int): ByteBuffer? {
+        if (channel.readBuffer.remaining < skip + atLeast) return null
+        val buffer = channel.readBuffer.preview {
+            ByteBuffer.wrap(it.readByteArray())
         }
+        if (skip > 0) {
+            buffer.position(buffer.position() + skip)
+        }
+        return buffer
+    }
 
-        val s = buffer.remaining()
-        val rc = visitor(buffer)
-        consumed(s)
+    @OptIn(InternalAPI::class)
+    public suspend fun awaitAtLeast(min: Int): Boolean {
+        if (channel.readBuffer.remaining >= min) return true
+        channel.awaitContent(min)
+        return channel.readBuffer.remaining >= min
+    }
 
-        if (!rc) break
-    } while (true)
+    @OptIn(InternalAPI::class)
+    public fun consumed(count: Int) {
+        channel.readBuffer.discard(count.toLong())
+    }
+}
+
+public suspend fun ByteReadChannel.lookAhead(block: suspend LookAheadSuspendSession.() -> Unit) {
+    block(LookAheadSuspendSession(this))
+}
+
+public suspend fun ByteReadChannel.lookAheadSuspend(block: suspend LookAheadSuspendSession.() -> Unit) {
+    block(LookAheadSuspendSession(this))
 }

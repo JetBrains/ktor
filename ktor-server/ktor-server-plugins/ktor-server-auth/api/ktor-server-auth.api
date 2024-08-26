@@ -34,12 +34,12 @@ public final class io/ktor/server/auth/AuthenticationContext {
 	public final fun getAllFailures ()Ljava/util/List;
 	public final fun getCall ()Lio/ktor/server/application/ApplicationCall;
 	public final fun getChallenge ()Lio/ktor/server/auth/AuthenticationProcedureChallenge;
-	public final fun getPrincipal ()Lio/ktor/server/auth/Principal;
-	public final fun principal (Lio/ktor/server/auth/Principal;)V
-	public final fun principal (Ljava/lang/String;Lio/ktor/server/auth/Principal;)V
-	public final fun principal (Ljava/lang/String;Lkotlin/reflect/KClass;)Lio/ktor/server/auth/Principal;
-	public static synthetic fun principal$default (Lio/ktor/server/auth/AuthenticationContext;Ljava/lang/String;Lio/ktor/server/auth/Principal;ILjava/lang/Object;)V
-	public final fun setPrincipal (Lio/ktor/server/auth/Principal;)V
+	public final fun getPrincipal ()Ljava/lang/Object;
+	public final fun principal (Ljava/lang/Object;)V
+	public final fun principal (Ljava/lang/String;Ljava/lang/Object;)V
+	public final fun principal (Ljava/lang/String;Lkotlin/reflect/KClass;)Ljava/lang/Object;
+	public static synthetic fun principal$default (Lio/ktor/server/auth/AuthenticationContext;Ljava/lang/String;Ljava/lang/Object;ILjava/lang/Object;)V
+	public final fun setPrincipal (Ljava/lang/Object;)V
 }
 
 public final class io/ktor/server/auth/AuthenticationContext$Companion {
@@ -55,10 +55,16 @@ public class io/ktor/server/auth/AuthenticationFailedCause$Error : io/ktor/serve
 
 public final class io/ktor/server/auth/AuthenticationFailedCause$InvalidCredentials : io/ktor/server/auth/AuthenticationFailedCause {
 	public static final field INSTANCE Lio/ktor/server/auth/AuthenticationFailedCause$InvalidCredentials;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class io/ktor/server/auth/AuthenticationFailedCause$NoCredentials : io/ktor/server/auth/AuthenticationFailedCause {
 	public static final field INSTANCE Lio/ktor/server/auth/AuthenticationFailedCause$NoCredentials;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class io/ktor/server/auth/AuthenticationInterceptorsKt {
@@ -148,7 +154,7 @@ public final class io/ktor/server/auth/BearerAuthenticationProvider$Config : io/
 	public final fun setRealm (Ljava/lang/String;)V
 }
 
-public final class io/ktor/server/auth/BearerTokenCredential : io/ktor/server/auth/Credential {
+public final class io/ktor/server/auth/BearerTokenCredential {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lio/ktor/server/auth/BearerTokenCredential;
@@ -186,7 +192,7 @@ public final class io/ktor/server/auth/DigestAuthenticationProvider$Config : io/
 	public final fun validate (Lkotlin/jvm/functions/Function3;)V
 }
 
-public final class io/ktor/server/auth/DigestCredential : io/ktor/server/auth/Credential {
+public final class io/ktor/server/auth/DigestCredential {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Ljava/lang/String;
@@ -331,7 +337,7 @@ public final class io/ktor/server/auth/OAuth2ResponseParameters {
 	public static final field TokenType Ljava/lang/String;
 }
 
-public abstract class io/ktor/server/auth/OAuthAccessTokenResponse : io/ktor/server/auth/Principal {
+public abstract class io/ktor/server/auth/OAuthAccessTokenResponse {
 }
 
 public final class io/ktor/server/auth/OAuthAccessTokenResponse$OAuth1a : io/ktor/server/auth/OAuthAccessTokenResponse {
@@ -539,7 +545,7 @@ public final class io/ktor/server/auth/UserHashedTableAuth {
 	public final fun getTable ()Ljava/util/Map;
 }
 
-public final class io/ktor/server/auth/UserIdPrincipal : io/ktor/server/auth/Principal {
+public final class io/ktor/server/auth/UserIdPrincipal {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lio/ktor/server/auth/UserIdPrincipal;
@@ -550,7 +556,7 @@ public final class io/ktor/server/auth/UserIdPrincipal : io/ktor/server/auth/Pri
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/ktor/server/auth/UserPasswordCredential : io/ktor/server/auth/Credential {
+public final class io/ktor/server/auth/UserPasswordCredential {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;

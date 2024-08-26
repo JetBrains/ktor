@@ -11,7 +11,6 @@ import io.ktor.http.*
 import io.ktor.http.auth.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
-import io.ktor.server.auth.Principal
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
@@ -21,7 +20,6 @@ import java.security.interfaces.*
 import java.util.concurrent.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 class JWTAuthTest {
 
     @Test
@@ -76,7 +74,7 @@ class JWTAuthTest {
     @Test
     fun testJwtWithMultipleConfigurations() {
         val validated = mutableSetOf<String>()
-        var currentPrincipal: (JWTCredential) -> Principal? = { null }
+        var currentPrincipal: (JWTCredential) -> Any? = { null }
 
         withApplication {
             application.install(Authentication) {

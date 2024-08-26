@@ -15,7 +15,7 @@ import kotlin.coroutines.*
 internal object StackWalkingFailedFrame : CoroutineStackFrame, Continuation<Nothing> {
     override val callerFrame: CoroutineStackFrame? get() = null
 
-    override fun getStackTraceElement(): StackTraceElement? {
+    override fun getStackTraceElement(): StackTraceElement {
         return createStackTraceElement(
             StackWalkingFailed::class,
             StackWalkingFailed::failedToCaptureStackFrame.name,

@@ -8,11 +8,11 @@ import io.ktor.util.cio.*
 import io.ktor.util.logging.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
-import io.ktor.utils.io.errors.*
 import kotlinx.atomicfu.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.*
+import kotlinx.io.*
 import kotlin.coroutines.*
 
 internal val LOGGER = KtorSimpleLogger("io.ktor.websocket.WebSocket")
@@ -68,6 +68,7 @@ private val NORMAL_CLOSE = CloseReason(CloseReason.Codes.NORMAL, "OK")
 /**
  * A default WebSocket session implementation that handles ping-pongs, close sequence and frame fragmentation.
  */
+
 internal class DefaultWebSocketSessionImpl(
     private val raw: WebSocketSession,
     pingInterval: Long,
@@ -138,7 +139,7 @@ internal class DefaultWebSocketSessionImpl(
     /**
      * Close session with GOING_AWAY reason
      */
-    public suspend fun goingAway(message: String = "Server is going down") {
+    suspend fun goingAway(message: String = "Server is going down") {
         sendCloseSequence(CloseReason(CloseReason.Codes.GOING_AWAY, message))
     }
 
@@ -161,7 +162,7 @@ internal class DefaultWebSocketSessionImpl(
         IncomingProcessorCoroutineName + Dispatchers.Unconfined
     ) {
         var firstFrame: Frame? = null
-        var frameBody: BytePacketBuilder? = null
+        var frameBody: Sink? = null
         var closeFramePresented = false
         try {
             @OptIn(DelicateCoroutinesApi::class)
@@ -202,7 +203,7 @@ internal class DefaultWebSocketSessionImpl(
                         val defragmented = Frame.byType(
                             fin = true,
                             firstFrame!!.frameType,
-                            frameBody!!.build().readBytes(),
+                            frameBody!!.build().readByteArray(),
                             firstFrame!!.rsv1,
                             firstFrame!!.rsv2,
                             firstFrame!!.rsv3
@@ -219,11 +220,10 @@ internal class DefaultWebSocketSessionImpl(
             filtered.close(cause)
         } finally {
             ponger.close()
-            frameBody?.release()
+            frameBody?.close()
             filtered.close()
 
             if (!closeFramePresented) {
-                @Suppress("DEPRECATION")
                 close(CloseReason(CloseReason.Codes.CLOSED_ABNORMALLY, "Connection was closed without close frame"))
             }
         }
@@ -277,7 +277,6 @@ internal class DefaultWebSocketSessionImpl(
         val reasonToSend = reason ?: CloseReason(CloseReason.Codes.NORMAL, "")
         try {
             runOrCancelPinger()
-            @Suppress("DEPRECATION")
             if (reasonToSend.code != CloseReason.Codes.CLOSED_ABNORMALLY.code) {
                 raw.outgoing.send(Frame.Close(reasonToSend))
             }
@@ -319,12 +318,12 @@ internal class DefaultWebSocketSessionImpl(
     }
 
     private suspend fun checkMaxFrameSize(
-        packet: BytePacketBuilder?,
+        packet: Sink?,
         frame: Frame
     ) {
         val size = frame.data.size + (packet?.size ?: 0)
         if (size > maxFrameSize) {
-            packet?.release()
+            packet?.close()
             close(CloseReason(CloseReason.Codes.TOO_BIG, "Frame is too big: $size. Max size is $maxFrameSize"))
             throw FrameTooBigException(size.toLong())
         }

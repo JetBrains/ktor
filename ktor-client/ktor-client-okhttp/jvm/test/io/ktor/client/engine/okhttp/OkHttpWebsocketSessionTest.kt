@@ -10,7 +10,6 @@ import io.ktor.client.tests.utils.*
 import kotlinx.coroutines.*
 import okhttp3.*
 import kotlin.test.*
-import kotlin.test.assertFailsWith
 
 class OkHttpWebsocketSessionTest {
 
@@ -38,11 +37,7 @@ class OkHttpWebsocketSessionTest {
             install(WebSockets)
 
             engine {
-                webSocketFactory = object : WebSocket.Factory {
-                    override fun newWebSocket(request: Request, listener: WebSocketListener): WebSocket {
-                        throw FactoryUsedException()
-                    }
-                }
+                webSocketFactory = WebSocket.Factory { _, _ -> throw FactoryUsedException() }
             }
         }
 

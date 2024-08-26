@@ -55,9 +55,13 @@ public class HttpClientConfig<T : HttpClientEngineConfig> {
     public var expectSuccess: Boolean = false
 
     /**
-     * Indicates whether the client should use [development mode](https://ktor.io/docs/development-mode.html).
-     * In development mode, the client's pipelines have advanced stack traces.
+     * Development mode is no longer required all functionality is enabled by default. The property is safe to remove.
      */
+    @Deprecated(
+        "Development mode is no longer required. The property will be removed in the future.",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith("")
+    )
     public var developmentMode: Boolean = PlatformUtils.IS_DEVELOPMENT_MODE
 
     /**

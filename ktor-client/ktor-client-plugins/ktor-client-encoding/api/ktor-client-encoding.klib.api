@@ -1,0 +1,45 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-client-encoding>
+final class io.ktor.client.plugins.compression/ContentEncodingConfig { // io.ktor.client.plugins.compression/ContentEncodingConfig|null[0]
+    constructor <init>() // io.ktor.client.plugins.compression/ContentEncodingConfig.<init>|<init>(){}[0]
+
+    final var mode // io.ktor.client.plugins.compression/ContentEncodingConfig.mode|{}mode[0]
+        final fun <get-mode>(): io.ktor.client.plugins.compression/ContentEncodingConfig.Mode // io.ktor.client.plugins.compression/ContentEncodingConfig.mode.<get-mode>|<get-mode>(){}[0]
+        final fun <set-mode>(io.ktor.client.plugins.compression/ContentEncodingConfig.Mode) // io.ktor.client.plugins.compression/ContentEncodingConfig.mode.<set-mode>|<set-mode>(io.ktor.client.plugins.compression.ContentEncodingConfig.Mode){}[0]
+
+    final fun customEncoder(io.ktor.util/ContentEncoder, kotlin/Float? = ...) // io.ktor.client.plugins.compression/ContentEncodingConfig.customEncoder|customEncoder(io.ktor.util.ContentEncoder;kotlin.Float?){}[0]
+    final fun deflate(kotlin/Float? = ...) // io.ktor.client.plugins.compression/ContentEncodingConfig.deflate|deflate(kotlin.Float?){}[0]
+    final fun gzip(kotlin/Float? = ...) // io.ktor.client.plugins.compression/ContentEncodingConfig.gzip|gzip(kotlin.Float?){}[0]
+    final fun identity(kotlin/Float? = ...) // io.ktor.client.plugins.compression/ContentEncodingConfig.identity|identity(kotlin.Float?){}[0]
+
+    final enum class Mode : kotlin/Enum<io.ktor.client.plugins.compression/ContentEncodingConfig.Mode> { // io.ktor.client.plugins.compression/ContentEncodingConfig.Mode|null[0]
+        enum entry All // io.ktor.client.plugins.compression/ContentEncodingConfig.Mode.All|null[0]
+        enum entry CompressRequest // io.ktor.client.plugins.compression/ContentEncodingConfig.Mode.CompressRequest|null[0]
+        enum entry DecompressResponse // io.ktor.client.plugins.compression/ContentEncodingConfig.Mode.DecompressResponse|null[0]
+
+        final val entries // io.ktor.client.plugins.compression/ContentEncodingConfig.Mode.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.client.plugins.compression/ContentEncodingConfig.Mode> // io.ktor.client.plugins.compression/ContentEncodingConfig.Mode.entries.<get-entries>|<get-entries>#static(){}[0]
+
+        final fun valueOf(kotlin/String): io.ktor.client.plugins.compression/ContentEncodingConfig.Mode // io.ktor.client.plugins.compression/ContentEncodingConfig.Mode.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<io.ktor.client.plugins.compression/ContentEncodingConfig.Mode> // io.ktor.client.plugins.compression/ContentEncodingConfig.Mode.values|values#static(){}[0]
+    }
+}
+
+final class io.ktor.client.plugins.compression/UnsupportedContentEncodingException : kotlin/IllegalStateException { // io.ktor.client.plugins.compression/UnsupportedContentEncodingException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.client.plugins.compression/UnsupportedContentEncodingException.<init>|<init>(kotlin.String){}[0]
+}
+
+final val io.ktor.client.plugins.compression/ContentEncoding // io.ktor.client.plugins.compression/ContentEncoding|{}ContentEncoding[0]
+    final fun <get-ContentEncoding>(): io.ktor.client.plugins.api/ClientPlugin<io.ktor.client.plugins.compression/ContentEncodingConfig> // io.ktor.client.plugins.compression/ContentEncoding.<get-ContentEncoding>|<get-ContentEncoding>(){}[0]
+final val io.ktor.client.plugins.compression/appliedDecoders // io.ktor.client.plugins.compression/appliedDecoders|@io.ktor.client.statement.HttpResponse{}appliedDecoders[0]
+    final fun (io.ktor.client.statement/HttpResponse).<get-appliedDecoders>(): kotlin.collections/List<kotlin/String> // io.ktor.client.plugins.compression/appliedDecoders.<get-appliedDecoders>|<get-appliedDecoders>@io.ktor.client.statement.HttpResponse(){}[0]
+
+final fun (io.ktor.client.request/HttpRequestBuilder).io.ktor.client.plugins.compression/compress(kotlin.collections/List<kotlin/String>) // io.ktor.client.plugins.compression/compress|compress@io.ktor.client.request.HttpRequestBuilder(kotlin.collections.List<kotlin.String>){}[0]
+final fun (io.ktor.client.request/HttpRequestBuilder).io.ktor.client.plugins.compression/compress(kotlin/Array<out kotlin/String>...) // io.ktor.client.plugins.compression/compress|compress@io.ktor.client.request.HttpRequestBuilder(kotlin.Array<out|kotlin.String>...){}[0]
+final fun (io.ktor.client/HttpClientConfig<*>).io.ktor.client.plugins.compression/ContentEncoding(io.ktor.client.plugins.compression/ContentEncodingConfig.Mode = ..., kotlin/Function1<io.ktor.client.plugins.compression/ContentEncodingConfig, kotlin/Unit> = ...) // io.ktor.client.plugins.compression/ContentEncoding|ContentEncoding@io.ktor.client.HttpClientConfig<*>(io.ktor.client.plugins.compression.ContentEncodingConfig.Mode;kotlin.Function1<io.ktor.client.plugins.compression.ContentEncodingConfig,kotlin.Unit>){}[0]

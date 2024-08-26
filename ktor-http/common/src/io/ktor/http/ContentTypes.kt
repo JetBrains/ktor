@@ -165,6 +165,7 @@ public class ContentType private constructor(
         public val JavaScript: ContentType = ContentType("application", "javascript")
         public val OctetStream: ContentType = ContentType("application", "octet-stream")
         public val Rss: ContentType = ContentType("application", "rss+xml")
+        public val Soap: ContentType = ContentType("application", "soap+xml")
         public val Xml: ContentType = ContentType("application", "xml")
         public val Xml_Dtd: ContentType = ContentType("application", "xml-dtd")
         public val Zip: ContentType = ContentType("application", "zip")

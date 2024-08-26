@@ -1,8 +1,49 @@
 package io.ktor.network.tls
 
+import io.mockk.*
+import java.security.cert.*
 import kotlin.test.*
 
-class MatchHostnameTest {
+class HostnameUtilsTest {
+
+    @Test
+    fun `verifyIpInCertificate has null certificates`() {
+        val certificate = mockk<X509Certificate> {
+            every { subjectAlternativeNames } returns null
+        }
+
+        verifyIpInCertificate("0.0.0.0", certificate)
+    }
+
+    @Test
+    fun `verifyHostnameInCertificate has null certificates`() {
+        val certificate = mockk<X509Certificate> {
+            every { subjectAlternativeNames } returns null
+        }
+
+        verifyHostnameInCertificate("www.example.com", certificate)
+        verifyHostnameInCertificate("0.0.0.0", certificate)
+    }
+
+    @Test
+    fun `verifyIpInCertificate has empty certificates`() {
+        val certificate = mockk<X509Certificate> {
+            every { subjectAlternativeNames } returns emptyList()
+        }
+
+        verifyIpInCertificate("0.0.0.0", certificate)
+    }
+
+    @Test
+    fun `verifyHostnameInCertificate has empty certificates`() {
+        val certificate = mockk<X509Certificate> {
+            every { subjectAlternativeNames } returns emptyList()
+        }
+
+        verifyHostnameInCertificate("www.example.com", certificate)
+        verifyHostnameInCertificate("0.0.0.0", certificate)
+    }
+
     @Test
     fun testMatchExact() {
         assertTrue(matchHostnameWithCertificate("www.example.com", "www.example.com"))

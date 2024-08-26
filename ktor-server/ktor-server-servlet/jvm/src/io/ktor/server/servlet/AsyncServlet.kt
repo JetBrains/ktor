@@ -16,7 +16,6 @@ import java.lang.reflect.*
 import javax.servlet.http.*
 import kotlin.coroutines.*
 
-@Suppress("KDocMissingDocumentation")
 public open class AsyncServletApplicationCall(
     application: Application,
     servletRequest: HttpServletRequest,
@@ -53,7 +52,6 @@ public open class AsyncServletApplicationCall(
     }
 }
 
-@Suppress("KDocMissingDocumentation")
 public class AsyncServletApplicationRequest(
     call: PipelineCall,
     servletRequest: HttpServletRequest,
@@ -76,7 +74,6 @@ public class AsyncServletApplicationRequest(
     }
 }
 
-@Suppress("DEPRECATION")
 public open class AsyncServletApplicationResponse(
     call: AsyncServletApplicationCall,
     protected val servletRequest: HttpServletRequest,

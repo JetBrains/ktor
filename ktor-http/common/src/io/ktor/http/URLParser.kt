@@ -179,10 +179,10 @@ private fun URLBuilder.fillHost(urlString: String, startIndex: Int, endIndex: In
 
     host = urlString.substring(startIndex, colonIndex)
 
-    if (colonIndex + 1 < endIndex) {
-        port = urlString.substring(colonIndex + 1, endIndex).toInt()
+    port = if (colonIndex + 1 < endIndex) {
+        urlString.substring(colonIndex + 1, endIndex).toInt()
     } else {
-        port = DEFAULT_PORT
+        DEFAULT_PORT
     }
 }
 

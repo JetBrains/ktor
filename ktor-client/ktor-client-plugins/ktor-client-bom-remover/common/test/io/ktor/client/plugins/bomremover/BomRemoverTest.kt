@@ -21,13 +21,9 @@ class BomRemoverTest : ClientLoader() {
             client.get("$TEST_SERVER/bom/with-bom-utf8").apply {
                 assertEquals("Hello world", bodyAsText())
             }
-        }
-        test { client ->
             client.get("$TEST_SERVER/bom/with-bom-utf16").apply {
                 assertEquals("Hello world", bodyAsText())
             }
-        }
-        test { client ->
             client.get("$TEST_SERVER/bom/with-bom-utf32").apply {
                 assertEquals("Hello world", bodyAsText())
             }

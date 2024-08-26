@@ -19,7 +19,6 @@ import java.util.concurrent.*
 import kotlin.coroutines.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 class ServerGsonBlockingTest {
     private val dispatcher = UnsafeDispatcher()
 
@@ -29,7 +28,7 @@ class ServerGsonBlockingTest {
     }
 
     @Test
-    fun testReceive(): Unit = testApplication {
+    fun testReceive() = testApplication {
         testApplicationProperties {
             parentCoroutineContext = dispatcher
         }

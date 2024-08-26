@@ -85,7 +85,6 @@ public class GsonConverter(private val gson: Gson = Gson()) : ContentConverter {
     }
 }
 
-@Suppress("DEPRECATION")
 internal fun Gson.isExcluded(type: KClass<*>) =
     excluder().excludeClass(type.java, false)
 

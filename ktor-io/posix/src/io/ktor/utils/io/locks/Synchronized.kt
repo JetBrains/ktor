@@ -1,11 +1,11 @@
 /*
- * Copyright 2014-2023 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
 package io.ktor.utils.io.locks
 
+import io.ktor.io.interop.mutex.*
 import io.ktor.utils.io.*
-import io.ktor.utils.io.interop.mutex.*
 import kotlinx.cinterop.*
 import platform.posix.*
 import kotlin.concurrent.AtomicNativePtr
@@ -113,7 +113,7 @@ public actual open class SynchronizedObject {
      * @return true if the lock was acquired, false otherwise.
      */
     public fun tryLock(): Boolean {
-        val currentThreadId = pthread_self()!!
+        val currentThreadId = pthread_self()
         while (true) {
             val state = lock.value
             if (state.status == Status.UNLOCKED) {
@@ -145,7 +145,7 @@ public actual open class SynchronizedObject {
      * other threads to acquire it.
      */
     public fun unlock() {
-        val currentThreadId = pthread_self()!!
+        val currentThreadId = pthread_self()
         while (true) {
             val state = lock.value
             require(currentThreadId == state.ownerThreadId) {

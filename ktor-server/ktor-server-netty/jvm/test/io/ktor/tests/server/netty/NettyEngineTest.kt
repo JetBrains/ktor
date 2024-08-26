@@ -13,11 +13,10 @@ import io.ktor.server.application.*
 import io.ktor.server.netty.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.testing.*
+import io.ktor.server.test.base.*
 import io.ktor.server.testing.suites.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlin.test.*
 
@@ -84,7 +83,7 @@ class NettyDisabledHttp2Test :
     }
 
     @Test
-    fun testRequestWithDisabledHttp2() {
+    fun testRequestWithDisabledHttp2() = runTest {
         createAndStartServer {
             application.routing {
                 get("/") {
@@ -112,7 +111,7 @@ class NettySustainabilityTest : SustainabilityTestSuite<NettyApplicationEngine, 
     }
 
     @Test
-    fun testRawWebSocketFreeze() {
+    fun testRawWebSocketFreeze() = runTest {
         createAndStartServer {
             application.install(WebSockets)
             webSocket("/ws") {
@@ -128,10 +127,8 @@ class NettySustainabilityTest : SustainabilityTestSuite<NettyApplicationEngine, 
 
         var count = 0
 
-        runBlocking {
-            client.wsRaw(path = "/ws", port = port) {
-                incoming.consumeAsFlow().collect { count++ }
-            }
+        client.wsRaw(path = "/ws", port = port) {
+            incoming.consumeAsFlow().collect { count++ }
         }
 
         assertEquals(11, count)

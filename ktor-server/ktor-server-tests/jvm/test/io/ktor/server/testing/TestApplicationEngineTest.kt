@@ -8,7 +8,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.callloging.*
+import io.ktor.server.plugins.calllogging.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -17,6 +17,7 @@ import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
+import kotlinx.io.*
 import kotlinx.serialization.Serializable
 import java.util.concurrent.atomic.*
 import kotlin.coroutines.*
@@ -24,7 +25,6 @@ import kotlin.system.*
 import kotlin.test.*
 import kotlin.text.Charsets
 
-@Suppress("DEPRECATION")
 class TestApplicationEngineTest {
     @Test
     fun testCustomDispatcher() {
@@ -97,7 +97,7 @@ class TestApplicationEngineTest {
     @Test
     fun testResponseAwait() {
         withTestApplication {
-            application.install(Routing) {
+            application.install(RoutingRoot) {
                 get("/good") {
                     call.respond(HttpStatusCode.OK, "The Response")
                 }
@@ -129,7 +129,7 @@ class TestApplicationEngineTest {
     @Test
     fun testResponseAwaitWithCustomPort() {
         withTestApplication {
-            application.install(Routing) {
+            application.install(RoutingRoot) {
                 port(7070) {
                     get("/good") {
                         call.respond(HttpStatusCode.OK, "The Response")
@@ -233,7 +233,7 @@ class TestApplicationEngineTest {
         withTestApplication {
             application.routing {
                 get("/exist") {
-                    call.respondText("Route exist")
+                    call.respondText("Routing exist")
                 }
             }
 
@@ -303,12 +303,12 @@ internal fun buildMultipart(
             append(
                 when (it) {
                     is PartData.FileItem -> {
-                        channel.writeFully(it.provider().readRemaining().readBytes())
+                        channel.writeFully(it.provider().readRemaining().readByteArray())
                         ""
                     }
 
                     is PartData.BinaryItem -> {
-                        channel.writeFully(it.provider().readBytes())
+                        channel.writeFully(it.provider().readByteArray())
                         ""
                     }
 

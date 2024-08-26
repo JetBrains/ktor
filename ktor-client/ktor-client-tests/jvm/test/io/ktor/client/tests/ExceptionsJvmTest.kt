@@ -8,8 +8,9 @@ import io.ktor.client.*
 import io.ktor.client.engine.apache.*
 import io.ktor.client.request.*
 import io.ktor.client.tests.utils.*
+import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.*
-import org.apache.http.*
+import kotlinx.io.IOException
 import java.net.*
 import kotlin.test.*
 
@@ -21,7 +22,7 @@ class ExceptionsJvmTest {
         val client = HttpClient(Apache)
 
         client.use {
-            assertFailsWith<ConnectionClosedException> {
+            assertFailsWith<IOException> {
                 it.get("$TCP_SERVER/errors/few-bytes")
             }
         }
@@ -55,7 +56,7 @@ class ExceptionsJvmTest {
 
         HttpClient(Apache).use { client ->
             repeat(100) {
-                assertFailsWith<ConnectionClosedException> {
+                assertFailsWith<IOException> {
                     client.get("http://127.0.0.1:$port")
                 }
             }

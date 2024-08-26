@@ -5,6 +5,7 @@ package io.ktor.http
 
 import io.ktor.utils.io.charsets.*
 import io.ktor.utils.io.core.*
+import kotlinx.io.*
 
 private val URL_ALPHABET = ((('a'..'z') + ('A'..'Z') + ('0'..'9')).map { it.code.toByte() }).toSet()
 private val URL_ALPHABET_CHARS = ((('a'..'z') + ('A'..'Z') + ('0'..'9'))).toSet()
@@ -253,7 +254,7 @@ private fun CharSequence.decodeImpl(
 
                 // Decode chars from bytes and put into StringBuilder
                 // Note: Tried using ByteBuffer and using enc.decode() – it's slower
-                sb.append(String(bytes, offset = 0, length = count, charset = charset))
+                sb.append(bytes.decodeToString(0, 0 + count))
             }
             else -> {
                 sb.append(c)
@@ -291,7 +292,7 @@ private fun hexDigitToChar(digit: Int): Char = when (digit) {
     else -> 'A' + digit - 10
 }
 
-private fun ByteReadPacket.forEach(block: (Byte) -> Unit) {
+private fun Source.forEach(block: (Byte) -> Unit) {
     takeWhile { buffer ->
         while (buffer.canRead()) {
             block(buffer.readByte())

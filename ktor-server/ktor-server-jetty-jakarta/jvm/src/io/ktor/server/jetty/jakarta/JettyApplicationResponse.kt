@@ -13,7 +13,6 @@ import jakarta.servlet.http.*
 import org.eclipse.jetty.server.*
 import kotlin.coroutines.*
 
-@Suppress("KDocMissingDocumentation")
 @InternalAPI
 public class JettyApplicationResponse(
     call: AsyncServletApplicationCall,

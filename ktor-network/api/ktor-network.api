@@ -89,7 +89,7 @@ public abstract interface class io/ktor/network/sockets/ABoundSocket {
 	public abstract fun getLocalAddress ()Lio/ktor/network/sockets/SocketAddress;
 }
 
-public abstract interface class io/ktor/network/sockets/AConnectedSocket : io/ktor/network/sockets/AWritable {
+public abstract interface class io/ktor/network/sockets/AConnectedSocket {
 	public abstract fun getRemoteAddress ()Lio/ktor/network/sockets/SocketAddress;
 }
 
@@ -118,7 +118,7 @@ public final class io/ktor/network/sockets/Acceptable$DefaultImpls {
 	public static fun dispose (Lio/ktor/network/sockets/Acceptable;)V
 }
 
-public abstract interface class io/ktor/network/sockets/BoundDatagramSocket : io/ktor/network/sockets/ABoundSocket, io/ktor/network/sockets/AReadable, io/ktor/network/sockets/ASocket, io/ktor/network/sockets/DatagramReadWriteChannel {
+public abstract interface class io/ktor/network/sockets/BoundDatagramSocket : io/ktor/network/sockets/ABoundSocket, io/ktor/network/sockets/ASocket, io/ktor/network/sockets/DatagramReadWriteChannel {
 }
 
 public final class io/ktor/network/sockets/BoundDatagramSocket$DefaultImpls {
@@ -142,7 +142,7 @@ public final class io/ktor/network/sockets/Configurable$DefaultImpls {
 	public static fun configure (Lio/ktor/network/sockets/Configurable;Lkotlin/jvm/functions/Function1;)Lio/ktor/network/sockets/Configurable;
 }
 
-public abstract interface class io/ktor/network/sockets/ConnectedDatagramSocket : io/ktor/network/sockets/ABoundSocket, io/ktor/network/sockets/AConnectedSocket, io/ktor/network/sockets/ASocket, io/ktor/network/sockets/DatagramReadWriteChannel, io/ktor/network/sockets/ReadWriteSocket {
+public abstract interface class io/ktor/network/sockets/ConnectedDatagramSocket : io/ktor/network/sockets/ABoundSocket, io/ktor/network/sockets/AConnectedSocket, io/ktor/network/sockets/ASocket, io/ktor/network/sockets/DatagramReadWriteChannel {
 }
 
 public final class io/ktor/network/sockets/ConnectedDatagramSocket$DefaultImpls {
@@ -159,9 +159,9 @@ public final class io/ktor/network/sockets/Connection {
 }
 
 public final class io/ktor/network/sockets/Datagram {
-	public fun <init> (Lio/ktor/utils/io/core/ByteReadPacket;Lio/ktor/network/sockets/SocketAddress;)V
+	public fun <init> (Lkotlinx/io/Source;Lio/ktor/network/sockets/SocketAddress;)V
 	public final fun getAddress ()Lio/ktor/network/sockets/SocketAddress;
-	public final fun getPacket ()Lio/ktor/utils/io/core/ByteReadPacket;
+	public final fun getPacket ()Lkotlinx/io/Source;
 }
 
 public abstract interface class io/ktor/network/sockets/DatagramReadChannel {
@@ -299,11 +299,6 @@ public final class io/ktor/network/sockets/SocketsKt {
 	public static final fun openReadChannel (Lio/ktor/network/sockets/AReadable;)Lio/ktor/utils/io/ByteReadChannel;
 	public static final fun openWriteChannel (Lio/ktor/network/sockets/AWritable;Z)Lio/ktor/utils/io/ByteWriteChannel;
 	public static synthetic fun openWriteChannel$default (Lio/ktor/network/sockets/AWritable;ZILjava/lang/Object;)Lio/ktor/utils/io/ByteWriteChannel;
-}
-
-public final class io/ktor/network/sockets/TCPSocketBuilderJvmKt {
-	public static final fun connect (Lio/ktor/network/sockets/TcpSocketBuilder;Lio/ktor/network/sockets/SocketAddress;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun connect$default (Lio/ktor/network/sockets/TcpSocketBuilder;Lio/ktor/network/sockets/SocketAddress;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class io/ktor/network/sockets/TcpSocketBuilder : io/ktor/network/sockets/Configurable {

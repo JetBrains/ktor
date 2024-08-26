@@ -142,6 +142,8 @@ public val ContentNegotiation: ClientPlugin<ContentNegotiationConfig> = createCl
     suspend fun convertRequest(request: HttpRequestBuilder, body: Any): OutgoingContent? {
         registrations.forEach {
             LOGGER.trace("Adding Accept=${it.contentTypeToSend.contentType} header for ${request.url}")
+
+            if (request.headers.contains(HttpHeaders.Accept, it.contentTypeToSend.toString())) return@forEach
             request.accept(it.contentTypeToSend)
         }
 

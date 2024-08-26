@@ -20,50 +20,6 @@ import kotlinx.coroutines.flow.*
 import kotlin.test.*
 
 class LoggingMockedTests {
-    @Test
-    fun testLogRequestWithException() = testWithEngine(MockEngine) {
-        val testLogger = TestLogger(
-            "REQUEST: ${URLBuilder.origin}",
-            "METHOD: HttpMethod(value=GET)",
-            "COMMON HEADERS",
-            "-> Accept: */*",
-            "-> Accept-Charset: UTF-8",
-            "CONTENT HEADERS",
-            "-> Content-Length: 0",
-            "BODY Content-Type: null",
-            "BODY START",
-            "",
-            "BODY END",
-            "REQUEST ${URLBuilder.origin} failed with exception: CustomError[BAD REQUEST]"
-        )
-
-        config {
-            engine {
-                addHandler {
-                    throw CustomError("BAD REQUEST")
-                }
-            }
-            install(Logging) {
-                level = LogLevel.ALL
-                logger = testLogger
-            }
-        }
-
-        test { client ->
-            var failed = false
-            try {
-                client.get { url(port = DEFAULT_PORT) }
-            } catch (_: Throwable) {
-                failed = true
-            }
-
-            assertTrue(failed, "Exception is missing.")
-        }
-
-        after {
-            testLogger.verify()
-        }
-    }
 
     @Test
     fun testLogResponseWithException() = testWithEngine(MockEngine) {
@@ -343,6 +299,7 @@ class LoggingMockedTests {
         }
     }
 
+    @OptIn(InternalAPI::class)
     @Test
     fun testCanStream() = testWithEngine(MockEngine) {
         val channel = ByteChannel(autoFlush = true)

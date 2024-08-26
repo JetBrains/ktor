@@ -4,6 +4,7 @@
 
 package io.ktor.util
 
+import kotlin.jvm.*
 import kotlin.reflect.*
 
 /**
@@ -11,24 +12,20 @@ import kotlin.reflect.*
  * @param T is a type of the value stored in the attribute
  * @param name is a name of the attribute for diagnostic purposes. Can't be blank
  */
-@Suppress("CONFLICTING_OVERLOADS")
+@JvmSynthetic
 public inline fun <reified T : Any> AttributeKey(name: String): AttributeKey<T> =
-    AttributeKey(name, T::class.toString())
+    AttributeKey(name, typeOf<T>())
 
 /**
  * Specifies a key for an attribute in [Attributes]
  * @param T is a type of the value stored in the attribute
- * @param name is a name of the attribute for diagnostic purposes. Can't be blank
+ * @property name is a name of the attribute for diagnostic purposes. Can't be blank
+ * @property type the recorded kotlin type of T
  */
-public class AttributeKey<T : Any> @PublishedApi internal constructor(
+public data class AttributeKey<T : Any> @JvmOverloads constructor(
     public val name: String,
-    private val type: String
+    private val type: KType = typeOf<Any>(),
 ) {
-
-    @Suppress("CONFLICTING_OVERLOADS")
-    @Deprecated("This constructor will be removed", level = DeprecationLevel.HIDDEN)
-    public constructor(name: String) : this(name, "unknown")
-
     init {
         if (name.isEmpty()) {
             throw IllegalStateException("Name can't be blank")
@@ -36,17 +33,6 @@ public class AttributeKey<T : Any> @PublishedApi internal constructor(
     }
 
     override fun toString(): String = "AttributeKey: $name"
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || other !is AttributeKey<*>) return false
-
-        return name == other.name && type == other.type
-    }
-
-    override fun hashCode(): Int {
-        return name.hashCode()
-    }
 }
 
 /**
@@ -54,7 +40,6 @@ public class AttributeKey<T : Any> @PublishedApi internal constructor(
  * @param T is a type of the value stored in the attribute
  * @param name is a name of the attribute
  */
-@Suppress("DEPRECATION")
 @Deprecated(
     "Please use `AttributeKey` class instead",
     replaceWith = ReplaceWith("AttributeKey"),

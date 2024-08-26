@@ -4,7 +4,7 @@
 
 package io.ktor.server.plugins.callid
 
-import io.ktor.server.plugins.callloging.*
+import io.ktor.server.plugins.calllogging.*
 
 /**
  * Put call id into MDC (diagnostic context value) with [name]

@@ -1,6 +1,4 @@
 kotlin {
-    if (fastTarget()) return@kotlin
-
     sourceSets {
         darwinMain {
             dependencies {

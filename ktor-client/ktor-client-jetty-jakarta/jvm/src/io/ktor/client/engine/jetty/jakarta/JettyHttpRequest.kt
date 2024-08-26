@@ -87,7 +87,6 @@ private fun HttpRequestData.prepareHeadersFrame(): HeadersFrame {
     return HeadersFrame(meta, null, body is OutgoingContent.NoContent)
 }
 
-@Suppress("DEPRECATION")
 @OptIn(DelicateCoroutinesApi::class)
 private fun sendRequestBody(request: JettyHttp2Request, content: OutgoingContent, callContext: CoroutineContext) {
     when (content) {
@@ -102,6 +101,7 @@ private fun sendRequestBody(request: JettyHttp2Request, content: OutgoingContent
             writeRequest(source, request, callContext)
         }
         is OutgoingContent.ProtocolUpgrade -> throw UnsupportedContentTypeException(content)
+        is OutgoingContent.ContentWrapper -> sendRequestBody(request, content.delegate(), callContext)
     }
 }
 

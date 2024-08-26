@@ -11,6 +11,7 @@ import io.ktor.utils.io.pool.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.*
+import kotlinx.io.*
 import java.nio.*
 import java.nio.channels.*
 import kotlin.coroutines.*
@@ -40,7 +41,7 @@ public class WebSocketReader(
             readLoop(buffer)
         } catch (expected: ClosedChannelException) {
         } catch (expected: CancellationException) {
-        } catch (io: ChannelIOException) {
+        } catch (io: IOException) {
             queue.cancel()
         } catch (cause: FrameTooBigException) {
             // Bypass exception via queue to prevent cancellation and handle it on the top level.

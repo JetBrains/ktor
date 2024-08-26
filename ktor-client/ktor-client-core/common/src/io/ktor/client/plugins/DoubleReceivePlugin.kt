@@ -65,7 +65,7 @@ public val SaveBodyPlugin: ClientPlugin<SaveBodyPluginConfig> = createClientPlug
         val attributes = response.call.attributes
         if (attributes.contains(SKIP_SAVE_BODY)) return@intercept
 
-        val bodyReplay = ByteChannelReplay(response.content)
+        val bodyReplay = ByteChannelReplay(response.rawContent)
 
         val call = response.call.wrapWithContent { bodyReplay.replay() }
         call.attributes.put(RESPONSE_BODY_SAVED, Unit)

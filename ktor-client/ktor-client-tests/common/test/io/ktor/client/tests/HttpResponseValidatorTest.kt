@@ -13,7 +13,6 @@ import io.ktor.client.tests.utils.*
 import io.ktor.http.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 class HttpResponseValidatorTest {
     private var firstHandler = 0
     private var secondHandler = 0
@@ -30,14 +29,12 @@ class HttpResponseValidatorTest {
                 addHandler { respondOk() }
             }
             HttpResponseValidator {
-                @Suppress("DEPRECATION_ERROR")
-                handleResponseException { cause ->
+                handleResponseException { cause, _ ->
                     firstHandler++
                     assertTrue(cause is CallValidatorTestException)
                 }
 
-                @Suppress("DEPRECATION_ERROR")
-                handleResponseException { cause ->
+                handleResponseException { cause, _ ->
                     secondHandler++
                     assertTrue(cause is CallValidatorTestException)
                 }
@@ -81,8 +78,7 @@ class HttpResponseValidatorTest {
                 addHandler { throw CallValidatorTestException() }
             }
             HttpResponseValidator {
-                @Suppress("DEPRECATION_ERROR")
-                handleResponseException { cause ->
+                handleResponseException { cause, _ ->
                     assertTrue(cause is CallValidatorTestException)
                     firstHandler++
                 }
@@ -111,8 +107,7 @@ class HttpResponseValidatorTest {
                 addHandler { respondOk() }
             }
             HttpResponseValidator {
-                @Suppress("DEPRECATION_ERROR")
-                handleResponseException { cause ->
+                handleResponseException { cause, _ ->
                     assertTrue(cause is CallValidatorTestException)
                     handleTriggered = true
                 }
@@ -136,8 +131,7 @@ class HttpResponseValidatorTest {
                 addHandler { respondOk() }
             }
             HttpResponseValidator {
-                @Suppress("DEPRECATION_ERROR")
-                handleResponseException { cause ->
+                handleResponseException { cause, _ ->
                     assertTrue(cause is CallValidatorTestException)
                     handleTriggered = true
                 }
@@ -161,16 +155,14 @@ class HttpResponseValidatorTest {
                 addHandler { respondOk() }
             }
             HttpResponseValidator {
-                @Suppress("DEPRECATION_ERROR")
-                handleResponseException { cause ->
+                handleResponseException { cause, _ ->
                     firstHandler++
                     assertTrue(cause is CallValidatorTestException)
                 }
             }
 
             HttpResponseValidator {
-                @Suppress("DEPRECATION_ERROR")
-                handleResponseException { cause ->
+                handleResponseException { cause, _ ->
                     secondHandler++
                     assertTrue(cause is CallValidatorTestException)
                 }
@@ -498,7 +490,10 @@ class HttpResponseValidatorTest {
                 client.get {}
                 fail("Should fail")
             } catch (cause: ResponseException) {
-                assertEquals(cause.message?.contains("<body failed decoding>"), true)
+                val message = cause.message
+                assertNotNull(message)
+                assertTrue { message.startsWith("Bad response: HttpResponse[http://localhost") }
+                assertTrue { message.contains("900 Awesome code") }
             }
         }
     }

@@ -70,7 +70,7 @@ public val DropwizardMetrics: ApplicationPlugin<DropwizardMetricsConfig> =
             exceptions.mark()
         }
 
-        on(MonitoringEvent(Routing.RoutingCallStarted)) { call ->
+        on(MonitoringEvent(RoutingRoot.RoutingCallStarted)) { call ->
             val name = call.route.toString()
             val meter = registry.meter(name(baseName, name, "meter"))
             val timer = registry.timer(name(baseName, name, "timer"))

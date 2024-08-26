@@ -5,6 +5,7 @@
 package io.ktor.test.dispatcher
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.test.*
 import kotlin.coroutines.*
 
 /**
@@ -14,6 +15,6 @@ public actual fun testSuspend(
     context: CoroutineContext,
     timeoutMillis: Long,
     block: suspend CoroutineScope.() -> Unit
-): Unit = runBlocking(context) {
+): TestResult = runBlocking(context) {
     withTimeout(timeoutMillis, block)
 }

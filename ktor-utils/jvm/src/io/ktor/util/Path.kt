@@ -66,13 +66,13 @@ internal fun dropLeadingTopDirs(path: String): Int {
         }
 
         val second: Char = path[startIndex + 1]
-        if (second.isPathSeparator()) {
-            startIndex += 2 // skip 2 characters: ./ or .\
+        startIndex += if (second.isPathSeparator()) {
+            2 // skip 2 characters: ./ or .\
         } else if (second == '.') {
             if (startIndex + 2 == path.length) {
-                startIndex += 2 // skip the only 2 characters remaining: ..
+                2 // skip the only 2 characters remaining: ..
             } else if (path[startIndex + 2].isPathSeparator()) {
-                startIndex += 3 // skip 3 characters: ../ or ..\
+                3 // skip 3 characters: ../ or ..\
             } else { // we have a path component starting with two dots that shouldn't be discarded
                 break
             }

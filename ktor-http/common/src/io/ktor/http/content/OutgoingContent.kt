@@ -90,8 +90,8 @@ public sealed class OutgoingContent {
         } else {
             GlobalScope.writer(Dispatchers.Unconfined, autoFlush = true) {
                 val source = readFrom()
-                source.discard(range.start)
-                val limit = range.endInclusive - range.start + 1
+                source.discard(range.first)
+                val limit = range.last - range.first + 1
                 source.copyTo(channel, limit)
             }.channel
         }
@@ -138,4 +138,38 @@ public sealed class OutgoingContent {
             userContext: CoroutineContext
         ): Job
     }
+
+    /**
+     * Variant of an [OutgoingContent] which delegates to provided [OutgoingContent]
+     */
+    public abstract class ContentWrapper(private val delegate: OutgoingContent) : OutgoingContent() {
+        override val contentType: ContentType?
+            get() = delegate.contentType
+        override val contentLength: Long?
+            get() = delegate.contentLength
+        override val status: HttpStatusCode?
+            get() = delegate.status
+        override val headers: Headers
+            get() = delegate.headers
+
+        override fun <T : Any> getProperty(key: AttributeKey<T>): T? = delegate.getProperty(key)
+        override fun <T : Any> setProperty(key: AttributeKey<T>, value: T?): Unit = delegate.setProperty(key, value)
+
+        public fun delegate(): OutgoingContent = delegate
+
+        /**
+         * Returns a copy of this implementation of [ContentWrapper] with provided [OutgoingContent]
+         */
+        public abstract fun copy(delegate: OutgoingContent): ContentWrapper
+    }
+}
+
+/**
+ * Check if current [OutgoingContent] doesn't contain content
+ */
+@InternalAPI
+public fun OutgoingContent.isEmpty(): Boolean = when (this) {
+    is OutgoingContent.NoContent -> true
+    is OutgoingContent.ContentWrapper -> delegate().isEmpty()
+    else -> false
 }

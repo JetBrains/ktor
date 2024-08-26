@@ -29,7 +29,7 @@ internal class GrammarBuilder {
         grammars += StringGrammar(this)
     }
 
-    public fun build(): Grammar = if (grammars.size == 1) grammars.first() else SequenceGrammar(grammars)
+    fun build(): Grammar = if (grammars.size == 1) grammars.first() else SequenceGrammar(grammars)
 }
 
 internal fun grammar(block: GrammarBuilder.() -> Unit): Grammar = GrammarBuilder().apply(block).build()

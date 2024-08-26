@@ -26,7 +26,7 @@ public sealed class PartData(public val dispose: () -> Unit, public val headers:
      * Represents a file item.
      * @property provider of content bytes
      */
-    @Suppress("DEPRECATION")
+
     public class FileItem(
         public val provider: () -> ByteReadChannel,
         dispose: () -> Unit,
@@ -42,7 +42,7 @@ public sealed class PartData(public val dispose: () -> Unit, public val headers:
      * Represents a binary item.
      * @property provider of content bytes
      */
-    @Suppress("DEPRECATION")
+
     public class BinaryItem(
         public val provider: () -> Input,
         dispose: () -> Unit,

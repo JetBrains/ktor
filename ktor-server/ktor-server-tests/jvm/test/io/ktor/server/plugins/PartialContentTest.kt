@@ -20,7 +20,6 @@ import io.ktor.utils.io.core.*
 import java.io.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 class PartialContentTest {
 
     private val localPath = "plugins/StaticContentTest.kt"

@@ -1,0 +1,298 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-network>
+final enum class io.ktor.network.selector/SelectInterest : kotlin/Enum<io.ktor.network.selector/SelectInterest> { // io.ktor.network.selector/SelectInterest|null[0]
+    enum entry ACCEPT // io.ktor.network.selector/SelectInterest.ACCEPT|null[0]
+    enum entry CONNECT // io.ktor.network.selector/SelectInterest.CONNECT|null[0]
+    enum entry READ // io.ktor.network.selector/SelectInterest.READ|null[0]
+    enum entry WRITE // io.ktor.network.selector/SelectInterest.WRITE|null[0]
+
+    final val entries // io.ktor.network.selector/SelectInterest.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.network.selector/SelectInterest> // io.ktor.network.selector/SelectInterest.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.network.selector/SelectInterest // io.ktor.network.selector/SelectInterest.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.network.selector/SelectInterest> // io.ktor.network.selector/SelectInterest.values|values#static(){}[0]
+
+    final object Companion { // io.ktor.network.selector/SelectInterest.Companion|null[0]
+        final val AllInterests // io.ktor.network.selector/SelectInterest.Companion.AllInterests|{}AllInterests[0]
+            final fun <get-AllInterests>(): kotlin/Array<io.ktor.network.selector/SelectInterest> // io.ktor.network.selector/SelectInterest.Companion.AllInterests.<get-AllInterests>|<get-AllInterests>(){}[0]
+    }
+}
+
+abstract interface <#A: out io.ktor.network.sockets/ASocket> io.ktor.network.sockets/Acceptable : io.ktor.network.sockets/ASocket { // io.ktor.network.sockets/Acceptable|null[0]
+    abstract suspend fun accept(): #A // io.ktor.network.sockets/Acceptable.accept|accept(){}[0]
+}
+
+abstract interface <#A: out io.ktor.network.sockets/Configurable<#A, #B>, #B: io.ktor.network.sockets/SocketOptions> io.ktor.network.sockets/Configurable { // io.ktor.network.sockets/Configurable|null[0]
+    abstract var options // io.ktor.network.sockets/Configurable.options|{}options[0]
+        abstract fun <get-options>(): #B // io.ktor.network.sockets/Configurable.options.<get-options>|<get-options>(){}[0]
+        abstract fun <set-options>(#B) // io.ktor.network.sockets/Configurable.options.<set-options>|<set-options>(1:1){}[0]
+
+    open fun configure(kotlin/Function1<#B, kotlin/Unit>): #A // io.ktor.network.sockets/Configurable.configure|configure(kotlin.Function1<1:1,kotlin.Unit>){}[0]
+}
+
+abstract interface io.ktor.network.selector/Selectable { // io.ktor.network.selector/Selectable|null[0]
+    abstract val descriptor // io.ktor.network.selector/Selectable.descriptor|{}descriptor[0]
+        abstract fun <get-descriptor>(): kotlin/Int // io.ktor.network.selector/Selectable.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+}
+
+abstract interface io.ktor.network.selector/SelectorManager : io.ktor.utils.io.core/Closeable, kotlinx.coroutines/CoroutineScope { // io.ktor.network.selector/SelectorManager|null[0]
+    abstract fun notifyClosed(io.ktor.network.selector/Selectable) // io.ktor.network.selector/SelectorManager.notifyClosed|notifyClosed(io.ktor.network.selector.Selectable){}[0]
+    abstract suspend fun select(io.ktor.network.selector/Selectable, io.ktor.network.selector/SelectInterest) // io.ktor.network.selector/SelectorManager.select|select(io.ktor.network.selector.Selectable;io.ktor.network.selector.SelectInterest){}[0]
+
+    final object Companion // io.ktor.network.selector/SelectorManager.Companion|null[0]
+}
+
+abstract interface io.ktor.network.sockets/ABoundSocket { // io.ktor.network.sockets/ABoundSocket|null[0]
+    abstract val localAddress // io.ktor.network.sockets/ABoundSocket.localAddress|{}localAddress[0]
+        abstract fun <get-localAddress>(): io.ktor.network.sockets/SocketAddress // io.ktor.network.sockets/ABoundSocket.localAddress.<get-localAddress>|<get-localAddress>(){}[0]
+}
+
+abstract interface io.ktor.network.sockets/AConnectedSocket { // io.ktor.network.sockets/AConnectedSocket|null[0]
+    abstract val remoteAddress // io.ktor.network.sockets/AConnectedSocket.remoteAddress|{}remoteAddress[0]
+        abstract fun <get-remoteAddress>(): io.ktor.network.sockets/SocketAddress // io.ktor.network.sockets/AConnectedSocket.remoteAddress.<get-remoteAddress>|<get-remoteAddress>(){}[0]
+}
+
+abstract interface io.ktor.network.sockets/AReadable { // io.ktor.network.sockets/AReadable|null[0]
+    abstract fun attachForReading(io.ktor.utils.io/ByteChannel): io.ktor.utils.io/WriterJob // io.ktor.network.sockets/AReadable.attachForReading|attachForReading(io.ktor.utils.io.ByteChannel){}[0]
+}
+
+abstract interface io.ktor.network.sockets/ASocket : io.ktor.utils.io.core/Closeable, kotlinx.coroutines/DisposableHandle { // io.ktor.network.sockets/ASocket|null[0]
+    abstract val socketContext // io.ktor.network.sockets/ASocket.socketContext|{}socketContext[0]
+        abstract fun <get-socketContext>(): kotlinx.coroutines/Job // io.ktor.network.sockets/ASocket.socketContext.<get-socketContext>|<get-socketContext>(){}[0]
+
+    open fun dispose() // io.ktor.network.sockets/ASocket.dispose|dispose(){}[0]
+}
+
+abstract interface io.ktor.network.sockets/AWritable { // io.ktor.network.sockets/AWritable|null[0]
+    abstract fun attachForWriting(io.ktor.utils.io/ByteChannel): io.ktor.utils.io/ReaderJob // io.ktor.network.sockets/AWritable.attachForWriting|attachForWriting(io.ktor.utils.io.ByteChannel){}[0]
+}
+
+abstract interface io.ktor.network.sockets/BoundDatagramSocket : io.ktor.network.sockets/ABoundSocket, io.ktor.network.sockets/ASocket, io.ktor.network.sockets/DatagramReadWriteChannel // io.ktor.network.sockets/BoundDatagramSocket|null[0]
+
+abstract interface io.ktor.network.sockets/ConnectedDatagramSocket : io.ktor.network.sockets/ABoundSocket, io.ktor.network.sockets/AConnectedSocket, io.ktor.network.sockets/ASocket, io.ktor.network.sockets/DatagramReadWriteChannel // io.ktor.network.sockets/ConnectedDatagramSocket|null[0]
+
+abstract interface io.ktor.network.sockets/DatagramReadChannel { // io.ktor.network.sockets/DatagramReadChannel|null[0]
+    abstract val incoming // io.ktor.network.sockets/DatagramReadChannel.incoming|{}incoming[0]
+        abstract fun <get-incoming>(): kotlinx.coroutines.channels/ReceiveChannel<io.ktor.network.sockets/Datagram> // io.ktor.network.sockets/DatagramReadChannel.incoming.<get-incoming>|<get-incoming>(){}[0]
+
+    open suspend fun receive(): io.ktor.network.sockets/Datagram // io.ktor.network.sockets/DatagramReadChannel.receive|receive(){}[0]
+}
+
+abstract interface io.ktor.network.sockets/DatagramReadWriteChannel : io.ktor.network.sockets/DatagramReadChannel, io.ktor.network.sockets/DatagramWriteChannel // io.ktor.network.sockets/DatagramReadWriteChannel|null[0]
+
+abstract interface io.ktor.network.sockets/DatagramWriteChannel { // io.ktor.network.sockets/DatagramWriteChannel|null[0]
+    abstract val outgoing // io.ktor.network.sockets/DatagramWriteChannel.outgoing|{}outgoing[0]
+        abstract fun <get-outgoing>(): kotlinx.coroutines.channels/SendChannel<io.ktor.network.sockets/Datagram> // io.ktor.network.sockets/DatagramWriteChannel.outgoing.<get-outgoing>|<get-outgoing>(){}[0]
+
+    open suspend fun send(io.ktor.network.sockets/Datagram) // io.ktor.network.sockets/DatagramWriteChannel.send|send(io.ktor.network.sockets.Datagram){}[0]
+}
+
+abstract interface io.ktor.network.sockets/ReadWriteSocket : io.ktor.network.sockets/AReadable, io.ktor.network.sockets/ASocket, io.ktor.network.sockets/AWritable // io.ktor.network.sockets/ReadWriteSocket|null[0]
+
+abstract interface io.ktor.network.sockets/ServerSocket : io.ktor.network.sockets/ABoundSocket, io.ktor.network.sockets/ASocket, io.ktor.network.sockets/Acceptable<io.ktor.network.sockets/Socket> // io.ktor.network.sockets/ServerSocket|null[0]
+
+abstract interface io.ktor.network.sockets/Socket : io.ktor.network.sockets/ABoundSocket, io.ktor.network.sockets/AConnectedSocket, io.ktor.network.sockets/ReadWriteSocket, kotlinx.coroutines/CoroutineScope // io.ktor.network.sockets/Socket|null[0]
+
+final class io.ktor.network.selector/ClosedChannelCancellationException : kotlin.coroutines.cancellation/CancellationException { // io.ktor.network.selector/ClosedChannelCancellationException|null[0]
+    constructor <init>() // io.ktor.network.selector/ClosedChannelCancellationException.<init>|<init>(){}[0]
+}
+
+final class io.ktor.network.selector/SocketError : kotlin/IllegalStateException { // io.ktor.network.selector/SocketError|null[0]
+    constructor <init>() // io.ktor.network.selector/SocketError.<init>|<init>(){}[0]
+}
+
+final class io.ktor.network.sockets/Connection { // io.ktor.network.sockets/Connection|null[0]
+    constructor <init>(io.ktor.network.sockets/Socket, io.ktor.utils.io/ByteReadChannel, io.ktor.utils.io/ByteWriteChannel) // io.ktor.network.sockets/Connection.<init>|<init>(io.ktor.network.sockets.Socket;io.ktor.utils.io.ByteReadChannel;io.ktor.utils.io.ByteWriteChannel){}[0]
+
+    final val input // io.ktor.network.sockets/Connection.input|{}input[0]
+        final fun <get-input>(): io.ktor.utils.io/ByteReadChannel // io.ktor.network.sockets/Connection.input.<get-input>|<get-input>(){}[0]
+    final val output // io.ktor.network.sockets/Connection.output|{}output[0]
+        final fun <get-output>(): io.ktor.utils.io/ByteWriteChannel // io.ktor.network.sockets/Connection.output.<get-output>|<get-output>(){}[0]
+    final val socket // io.ktor.network.sockets/Connection.socket|{}socket[0]
+        final fun <get-socket>(): io.ktor.network.sockets/Socket // io.ktor.network.sockets/Connection.socket.<get-socket>|<get-socket>(){}[0]
+}
+
+final class io.ktor.network.sockets/Datagram { // io.ktor.network.sockets/Datagram|null[0]
+    constructor <init>(kotlinx.io/Source, io.ktor.network.sockets/SocketAddress) // io.ktor.network.sockets/Datagram.<init>|<init>(kotlinx.io.Source;io.ktor.network.sockets.SocketAddress){}[0]
+
+    final val address // io.ktor.network.sockets/Datagram.address|{}address[0]
+        final fun <get-address>(): io.ktor.network.sockets/SocketAddress // io.ktor.network.sockets/Datagram.address.<get-address>|<get-address>(){}[0]
+    final val packet // io.ktor.network.sockets/Datagram.packet|{}packet[0]
+        final fun <get-packet>(): kotlinx.io/Source // io.ktor.network.sockets/Datagram.packet.<get-packet>|<get-packet>(){}[0]
+}
+
+final class io.ktor.network.sockets/InetSocketAddress : io.ktor.network.sockets/SocketAddress { // io.ktor.network.sockets/InetSocketAddress|null[0]
+    constructor <init>(kotlin/String, kotlin/Int) // io.ktor.network.sockets/InetSocketAddress.<init>|<init>(kotlin.String;kotlin.Int){}[0]
+
+    final val hostname // io.ktor.network.sockets/InetSocketAddress.hostname|{}hostname[0]
+        final fun <get-hostname>(): kotlin/String // io.ktor.network.sockets/InetSocketAddress.hostname.<get-hostname>|<get-hostname>(){}[0]
+    final val port // io.ktor.network.sockets/InetSocketAddress.port|{}port[0]
+        final fun <get-port>(): kotlin/Int // io.ktor.network.sockets/InetSocketAddress.port.<get-port>|<get-port>(){}[0]
+
+    final fun component1(): kotlin/String // io.ktor.network.sockets/InetSocketAddress.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // io.ktor.network.sockets/InetSocketAddress.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/Int = ...): io.ktor.network.sockets/InetSocketAddress // io.ktor.network.sockets/InetSocketAddress.copy|copy(kotlin.String;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.network.sockets/InetSocketAddress.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.network.sockets/InetSocketAddress.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.network.sockets/InetSocketAddress.toString|toString(){}[0]
+}
+
+final class io.ktor.network.sockets/SocketBuilder : io.ktor.network.sockets/Configurable<io.ktor.network.sockets/SocketBuilder, io.ktor.network.sockets/SocketOptions> { // io.ktor.network.sockets/SocketBuilder|null[0]
+    final var options // io.ktor.network.sockets/SocketBuilder.options|{}options[0]
+        final fun <get-options>(): io.ktor.network.sockets/SocketOptions // io.ktor.network.sockets/SocketBuilder.options.<get-options>|<get-options>(){}[0]
+        final fun <set-options>(io.ktor.network.sockets/SocketOptions) // io.ktor.network.sockets/SocketBuilder.options.<set-options>|<set-options>(io.ktor.network.sockets.SocketOptions){}[0]
+
+    final fun tcp(): io.ktor.network.sockets/TcpSocketBuilder // io.ktor.network.sockets/SocketBuilder.tcp|tcp(){}[0]
+    final fun udp(): io.ktor.network.sockets/UDPSocketBuilder // io.ktor.network.sockets/SocketBuilder.udp|udp(){}[0]
+}
+
+final class io.ktor.network.sockets/SocketTimeoutException : kotlinx.io/IOException { // io.ktor.network.sockets/SocketTimeoutException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.network.sockets/SocketTimeoutException.<init>|<init>(kotlin.String){}[0]
+    constructor <init>(kotlin/String, kotlin/Throwable?) // io.ktor.network.sockets/SocketTimeoutException.<init>|<init>(kotlin.String;kotlin.Throwable?){}[0]
+}
+
+final class io.ktor.network.sockets/TcpSocketBuilder : io.ktor.network.sockets/Configurable<io.ktor.network.sockets/TcpSocketBuilder, io.ktor.network.sockets/SocketOptions> { // io.ktor.network.sockets/TcpSocketBuilder|null[0]
+    constructor <init>(io.ktor.network.selector/SelectorManager, io.ktor.network.sockets/SocketOptions) // io.ktor.network.sockets/TcpSocketBuilder.<init>|<init>(io.ktor.network.selector.SelectorManager;io.ktor.network.sockets.SocketOptions){}[0]
+
+    final var options // io.ktor.network.sockets/TcpSocketBuilder.options|{}options[0]
+        final fun <get-options>(): io.ktor.network.sockets/SocketOptions // io.ktor.network.sockets/TcpSocketBuilder.options.<get-options>|<get-options>(){}[0]
+        final fun <set-options>(io.ktor.network.sockets/SocketOptions) // io.ktor.network.sockets/TcpSocketBuilder.options.<set-options>|<set-options>(io.ktor.network.sockets.SocketOptions){}[0]
+
+    final fun bind(io.ktor.network.sockets/SocketAddress? = ..., kotlin/Function1<io.ktor.network.sockets/SocketOptions.AcceptorOptions, kotlin/Unit> = ...): io.ktor.network.sockets/ServerSocket // io.ktor.network.sockets/TcpSocketBuilder.bind|bind(io.ktor.network.sockets.SocketAddress?;kotlin.Function1<io.ktor.network.sockets.SocketOptions.AcceptorOptions,kotlin.Unit>){}[0]
+    final fun bind(kotlin/String = ..., kotlin/Int = ..., kotlin/Function1<io.ktor.network.sockets/SocketOptions.AcceptorOptions, kotlin/Unit> = ...): io.ktor.network.sockets/ServerSocket // io.ktor.network.sockets/TcpSocketBuilder.bind|bind(kotlin.String;kotlin.Int;kotlin.Function1<io.ktor.network.sockets.SocketOptions.AcceptorOptions,kotlin.Unit>){}[0]
+    final suspend fun connect(io.ktor.network.sockets/SocketAddress, kotlin/Function1<io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions, kotlin/Unit> = ...): io.ktor.network.sockets/Socket // io.ktor.network.sockets/TcpSocketBuilder.connect|connect(io.ktor.network.sockets.SocketAddress;kotlin.Function1<io.ktor.network.sockets.SocketOptions.TCPClientSocketOptions,kotlin.Unit>){}[0]
+    final suspend fun connect(kotlin/String, kotlin/Int, kotlin/Function1<io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions, kotlin/Unit> = ...): io.ktor.network.sockets/Socket // io.ktor.network.sockets/TcpSocketBuilder.connect|connect(kotlin.String;kotlin.Int;kotlin.Function1<io.ktor.network.sockets.SocketOptions.TCPClientSocketOptions,kotlin.Unit>){}[0]
+}
+
+final class io.ktor.network.sockets/UDPSocketBuilder : io.ktor.network.sockets/Configurable<io.ktor.network.sockets/UDPSocketBuilder, io.ktor.network.sockets/SocketOptions.UDPSocketOptions> { // io.ktor.network.sockets/UDPSocketBuilder|null[0]
+    constructor <init>(io.ktor.network.selector/SelectorManager, io.ktor.network.sockets/SocketOptions.UDPSocketOptions) // io.ktor.network.sockets/UDPSocketBuilder.<init>|<init>(io.ktor.network.selector.SelectorManager;io.ktor.network.sockets.SocketOptions.UDPSocketOptions){}[0]
+
+    final var options // io.ktor.network.sockets/UDPSocketBuilder.options|{}options[0]
+        final fun <get-options>(): io.ktor.network.sockets/SocketOptions.UDPSocketOptions // io.ktor.network.sockets/UDPSocketBuilder.options.<get-options>|<get-options>(){}[0]
+        final fun <set-options>(io.ktor.network.sockets/SocketOptions.UDPSocketOptions) // io.ktor.network.sockets/UDPSocketBuilder.options.<set-options>|<set-options>(io.ktor.network.sockets.SocketOptions.UDPSocketOptions){}[0]
+
+    final fun bind(io.ktor.network.sockets/SocketAddress? = ..., kotlin/Function1<io.ktor.network.sockets/SocketOptions.UDPSocketOptions, kotlin/Unit> = ...): io.ktor.network.sockets/BoundDatagramSocket // io.ktor.network.sockets/UDPSocketBuilder.bind|bind(io.ktor.network.sockets.SocketAddress?;kotlin.Function1<io.ktor.network.sockets.SocketOptions.UDPSocketOptions,kotlin.Unit>){}[0]
+    final fun connect(io.ktor.network.sockets/SocketAddress, io.ktor.network.sockets/SocketAddress? = ..., kotlin/Function1<io.ktor.network.sockets/SocketOptions.UDPSocketOptions, kotlin/Unit> = ...): io.ktor.network.sockets/ConnectedDatagramSocket // io.ktor.network.sockets/UDPSocketBuilder.connect|connect(io.ktor.network.sockets.SocketAddress;io.ktor.network.sockets.SocketAddress?;kotlin.Function1<io.ktor.network.sockets.SocketOptions.UDPSocketOptions,kotlin.Unit>){}[0]
+
+    final object Companion // io.ktor.network.sockets/UDPSocketBuilder.Companion|null[0]
+}
+
+final class io.ktor.network.sockets/UnixSocketAddress : io.ktor.network.sockets/SocketAddress { // io.ktor.network.sockets/UnixSocketAddress|null[0]
+    constructor <init>(kotlin/String) // io.ktor.network.sockets/UnixSocketAddress.<init>|<init>(kotlin.String){}[0]
+
+    final val path // io.ktor.network.sockets/UnixSocketAddress.path|{}path[0]
+        final fun <get-path>(): kotlin/String // io.ktor.network.sockets/UnixSocketAddress.path.<get-path>|<get-path>(){}[0]
+
+    final fun component1(): kotlin/String // io.ktor.network.sockets/UnixSocketAddress.component1|component1(){}[0]
+    final fun copy(kotlin/String = ...): io.ktor.network.sockets/UnixSocketAddress // io.ktor.network.sockets/UnixSocketAddress.copy|copy(kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.network.sockets/UnixSocketAddress.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.network.sockets/UnixSocketAddress.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.network.sockets/UnixSocketAddress.toString|toString(){}[0]
+}
+
+final value class io.ktor.network.sockets/TypeOfService { // io.ktor.network.sockets/TypeOfService|null[0]
+    constructor <init>(kotlin/Int) // io.ktor.network.sockets/TypeOfService.<init>|<init>(kotlin.Int){}[0]
+    constructor <init>(kotlin/UByte) // io.ktor.network.sockets/TypeOfService.<init>|<init>(kotlin.UByte){}[0]
+
+    final val intValue // io.ktor.network.sockets/TypeOfService.intValue|{}intValue[0]
+        final inline fun <get-intValue>(): kotlin/Int // io.ktor.network.sockets/TypeOfService.intValue.<get-intValue>|<get-intValue>(){}[0]
+    final val value // io.ktor.network.sockets/TypeOfService.value|{}value[0]
+        final fun <get-value>(): kotlin/UByte // io.ktor.network.sockets/TypeOfService.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.network.sockets/TypeOfService.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.network.sockets/TypeOfService.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.network.sockets/TypeOfService.toString|toString(){}[0]
+
+    final object Companion { // io.ktor.network.sockets/TypeOfService.Companion|null[0]
+        final val IPTOS_LOWCOST // io.ktor.network.sockets/TypeOfService.Companion.IPTOS_LOWCOST|{}IPTOS_LOWCOST[0]
+            final fun <get-IPTOS_LOWCOST>(): io.ktor.network.sockets/TypeOfService // io.ktor.network.sockets/TypeOfService.Companion.IPTOS_LOWCOST.<get-IPTOS_LOWCOST>|<get-IPTOS_LOWCOST>(){}[0]
+        final val IPTOS_LOWDELAY // io.ktor.network.sockets/TypeOfService.Companion.IPTOS_LOWDELAY|{}IPTOS_LOWDELAY[0]
+            final fun <get-IPTOS_LOWDELAY>(): io.ktor.network.sockets/TypeOfService // io.ktor.network.sockets/TypeOfService.Companion.IPTOS_LOWDELAY.<get-IPTOS_LOWDELAY>|<get-IPTOS_LOWDELAY>(){}[0]
+        final val IPTOS_RELIABILITY // io.ktor.network.sockets/TypeOfService.Companion.IPTOS_RELIABILITY|{}IPTOS_RELIABILITY[0]
+            final fun <get-IPTOS_RELIABILITY>(): io.ktor.network.sockets/TypeOfService // io.ktor.network.sockets/TypeOfService.Companion.IPTOS_RELIABILITY.<get-IPTOS_RELIABILITY>|<get-IPTOS_RELIABILITY>(){}[0]
+        final val IPTOS_THROUGHPUT // io.ktor.network.sockets/TypeOfService.Companion.IPTOS_THROUGHPUT|{}IPTOS_THROUGHPUT[0]
+            final fun <get-IPTOS_THROUGHPUT>(): io.ktor.network.sockets/TypeOfService // io.ktor.network.sockets/TypeOfService.Companion.IPTOS_THROUGHPUT.<get-IPTOS_THROUGHPUT>|<get-IPTOS_THROUGHPUT>(){}[0]
+        final val UNDEFINED // io.ktor.network.sockets/TypeOfService.Companion.UNDEFINED|{}UNDEFINED[0]
+            final fun <get-UNDEFINED>(): io.ktor.network.sockets/TypeOfService // io.ktor.network.sockets/TypeOfService.Companion.UNDEFINED.<get-UNDEFINED>|<get-UNDEFINED>(){}[0]
+    }
+}
+
+sealed class io.ktor.network.sockets/SocketAddress { // io.ktor.network.sockets/SocketAddress|null[0]
+    constructor <init>() // io.ktor.network.sockets/SocketAddress.<init>|<init>(){}[0]
+}
+
+sealed class io.ktor.network.sockets/SocketOptions { // io.ktor.network.sockets/SocketOptions|null[0]
+    constructor <init>(kotlin.collections/MutableMap<kotlin/Any, kotlin/Any?>) // io.ktor.network.sockets/SocketOptions.<init>|<init>(kotlin.collections.MutableMap<kotlin.Any,kotlin.Any?>){}[0]
+
+    final val customOptions // io.ktor.network.sockets/SocketOptions.customOptions|{}customOptions[0]
+        final fun <get-customOptions>(): kotlin.collections/MutableMap<kotlin/Any, kotlin/Any?> // io.ktor.network.sockets/SocketOptions.customOptions.<get-customOptions>|<get-customOptions>(){}[0]
+
+    final var reuseAddress // io.ktor.network.sockets/SocketOptions.reuseAddress|{}reuseAddress[0]
+        final fun <get-reuseAddress>(): kotlin/Boolean // io.ktor.network.sockets/SocketOptions.reuseAddress.<get-reuseAddress>|<get-reuseAddress>(){}[0]
+        final fun <set-reuseAddress>(kotlin/Boolean) // io.ktor.network.sockets/SocketOptions.reuseAddress.<set-reuseAddress>|<set-reuseAddress>(kotlin.Boolean){}[0]
+    final var reusePort // io.ktor.network.sockets/SocketOptions.reusePort|{}reusePort[0]
+        final fun <get-reusePort>(): kotlin/Boolean // io.ktor.network.sockets/SocketOptions.reusePort.<get-reusePort>|<get-reusePort>(){}[0]
+        final fun <set-reusePort>(kotlin/Boolean) // io.ktor.network.sockets/SocketOptions.reusePort.<set-reusePort>|<set-reusePort>(kotlin.Boolean){}[0]
+    final var typeOfService // io.ktor.network.sockets/SocketOptions.typeOfService|{}typeOfService[0]
+        final fun <get-typeOfService>(): io.ktor.network.sockets/TypeOfService // io.ktor.network.sockets/SocketOptions.typeOfService.<get-typeOfService>|<get-typeOfService>(){}[0]
+        final fun <set-typeOfService>(io.ktor.network.sockets/TypeOfService) // io.ktor.network.sockets/SocketOptions.typeOfService.<set-typeOfService>|<set-typeOfService>(io.ktor.network.sockets.TypeOfService){}[0]
+
+    open fun copyCommon(io.ktor.network.sockets/SocketOptions) // io.ktor.network.sockets/SocketOptions.copyCommon|copyCommon(io.ktor.network.sockets.SocketOptions){}[0]
+
+    final class AcceptorOptions : io.ktor.network.sockets/SocketOptions { // io.ktor.network.sockets/SocketOptions.AcceptorOptions|null[0]
+        final var backlogSize // io.ktor.network.sockets/SocketOptions.AcceptorOptions.backlogSize|{}backlogSize[0]
+            final fun <get-backlogSize>(): kotlin/Int // io.ktor.network.sockets/SocketOptions.AcceptorOptions.backlogSize.<get-backlogSize>|<get-backlogSize>(){}[0]
+            final fun <set-backlogSize>(kotlin/Int) // io.ktor.network.sockets/SocketOptions.AcceptorOptions.backlogSize.<set-backlogSize>|<set-backlogSize>(kotlin.Int){}[0]
+    }
+
+    final class TCPClientSocketOptions : io.ktor.network.sockets/SocketOptions.PeerSocketOptions { // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions|null[0]
+        final var keepAlive // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.keepAlive|{}keepAlive[0]
+            final fun <get-keepAlive>(): kotlin/Boolean? // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.keepAlive.<get-keepAlive>|<get-keepAlive>(){}[0]
+            final fun <set-keepAlive>(kotlin/Boolean?) // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.keepAlive.<set-keepAlive>|<set-keepAlive>(kotlin.Boolean?){}[0]
+        final var lingerSeconds // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.lingerSeconds|{}lingerSeconds[0]
+            final fun <get-lingerSeconds>(): kotlin/Int // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.lingerSeconds.<get-lingerSeconds>|<get-lingerSeconds>(){}[0]
+            final fun <set-lingerSeconds>(kotlin/Int) // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.lingerSeconds.<set-lingerSeconds>|<set-lingerSeconds>(kotlin.Int){}[0]
+        final var noDelay // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.noDelay|{}noDelay[0]
+            final fun <get-noDelay>(): kotlin/Boolean // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.noDelay.<get-noDelay>|<get-noDelay>(){}[0]
+            final fun <set-noDelay>(kotlin/Boolean) // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.noDelay.<set-noDelay>|<set-noDelay>(kotlin.Boolean){}[0]
+        final var socketTimeout // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.socketTimeout|{}socketTimeout[0]
+            final fun <get-socketTimeout>(): kotlin/Long // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.socketTimeout.<get-socketTimeout>|<get-socketTimeout>(){}[0]
+            final fun <set-socketTimeout>(kotlin/Long) // io.ktor.network.sockets/SocketOptions.TCPClientSocketOptions.socketTimeout.<set-socketTimeout>|<set-socketTimeout>(kotlin.Long){}[0]
+    }
+
+    final class UDPSocketOptions : io.ktor.network.sockets/SocketOptions.PeerSocketOptions { // io.ktor.network.sockets/SocketOptions.UDPSocketOptions|null[0]
+        final var broadcast // io.ktor.network.sockets/SocketOptions.UDPSocketOptions.broadcast|{}broadcast[0]
+            final fun <get-broadcast>(): kotlin/Boolean // io.ktor.network.sockets/SocketOptions.UDPSocketOptions.broadcast.<get-broadcast>|<get-broadcast>(){}[0]
+            final fun <set-broadcast>(kotlin/Boolean) // io.ktor.network.sockets/SocketOptions.UDPSocketOptions.broadcast.<set-broadcast>|<set-broadcast>(kotlin.Boolean){}[0]
+    }
+
+    open class PeerSocketOptions : io.ktor.network.sockets/SocketOptions { // io.ktor.network.sockets/SocketOptions.PeerSocketOptions|null[0]
+        final var receiveBufferSize // io.ktor.network.sockets/SocketOptions.PeerSocketOptions.receiveBufferSize|{}receiveBufferSize[0]
+            final fun <get-receiveBufferSize>(): kotlin/Int // io.ktor.network.sockets/SocketOptions.PeerSocketOptions.receiveBufferSize.<get-receiveBufferSize>|<get-receiveBufferSize>(){}[0]
+            final fun <set-receiveBufferSize>(kotlin/Int) // io.ktor.network.sockets/SocketOptions.PeerSocketOptions.receiveBufferSize.<set-receiveBufferSize>|<set-receiveBufferSize>(kotlin.Int){}[0]
+        final var sendBufferSize // io.ktor.network.sockets/SocketOptions.PeerSocketOptions.sendBufferSize|{}sendBufferSize[0]
+            final fun <get-sendBufferSize>(): kotlin/Int // io.ktor.network.sockets/SocketOptions.PeerSocketOptions.sendBufferSize.<get-sendBufferSize>|<get-sendBufferSize>(){}[0]
+            final fun <set-sendBufferSize>(kotlin/Int) // io.ktor.network.sockets/SocketOptions.PeerSocketOptions.sendBufferSize.<set-sendBufferSize>|<set-sendBufferSize>(kotlin.Int){}[0]
+
+        open fun copyCommon(io.ktor.network.sockets/SocketOptions) // io.ktor.network.sockets/SocketOptions.PeerSocketOptions.copyCommon|copyCommon(io.ktor.network.sockets.SocketOptions){}[0]
+    }
+
+    final object Companion // io.ktor.network.sockets/SocketOptions.Companion|null[0]
+}
+
+final val io.ktor.network.sockets/isClosed // io.ktor.network.sockets/isClosed|@io.ktor.network.sockets.ASocket{}isClosed[0]
+    final fun (io.ktor.network.sockets/ASocket).<get-isClosed>(): kotlin/Boolean // io.ktor.network.sockets/isClosed.<get-isClosed>|<get-isClosed>@io.ktor.network.sockets.ASocket(){}[0]
+
+final fun (io.ktor.network.sockets/AReadable).io.ktor.network.sockets/openReadChannel(): io.ktor.utils.io/ByteReadChannel // io.ktor.network.sockets/openReadChannel|openReadChannel@io.ktor.network.sockets.AReadable(){}[0]
+final fun (io.ktor.network.sockets/AWritable).io.ktor.network.sockets/openWriteChannel(kotlin/Boolean = ...): io.ktor.utils.io/ByteWriteChannel // io.ktor.network.sockets/openWriteChannel|openWriteChannel@io.ktor.network.sockets.AWritable(kotlin.Boolean){}[0]
+final fun (io.ktor.network.sockets/Socket).io.ktor.network.sockets/connection(): io.ktor.network.sockets/Connection // io.ktor.network.sockets/connection|connection@io.ktor.network.sockets.Socket(){}[0]
+final fun <#A: io.ktor.network.sockets/Configurable<#A, *>> (#A).io.ktor.network.sockets/tcpNoDelay(): #A // io.ktor.network.sockets/tcpNoDelay|tcpNoDelay@0:0(){0§<io.ktor.network.sockets.Configurable<0:0,*>>}[0]
+final fun io.ktor.network.selector/SelectorManager(kotlin.coroutines/CoroutineContext = ...): io.ktor.network.selector/SelectorManager // io.ktor.network.selector/SelectorManager|SelectorManager(kotlin.coroutines.CoroutineContext){}[0]
+final fun io.ktor.network.sockets/aSocket(io.ktor.network.selector/SelectorManager): io.ktor.network.sockets/SocketBuilder // io.ktor.network.sockets/aSocket|aSocket(io.ktor.network.selector.SelectorManager){}[0]
+final suspend fun (io.ktor.network.sockets/ASocket).io.ktor.network.sockets/awaitClosed() // io.ktor.network.sockets/awaitClosed|awaitClosed@io.ktor.network.sockets.ASocket(){}[0]

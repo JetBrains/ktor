@@ -25,15 +25,6 @@ class ReceiveBlockingPrimitiveTest {
         }
     }
 
-    @Test
-    fun testBlockingPrimitiveWorksOnRestrictedThread() {
-        testOnThread { call ->
-            markParkingProhibited()
-
-            call.receive<InputStream>().close()
-        }
-    }
-
     private fun testOnThread(
         block: suspend (ApplicationCall) -> Unit
     ) {

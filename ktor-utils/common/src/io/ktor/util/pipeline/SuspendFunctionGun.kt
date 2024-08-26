@@ -11,14 +11,14 @@ import kotlin.coroutines.intrinsics.*
 internal class SuspendFunctionGun<TSubject : Any, TContext : Any>(
     initial: TSubject,
     context: TContext,
-    private val blocks: List<PipelineInterceptorFunction<TSubject, TContext>>
+    private val blocks: List<PipelineInterceptor<TSubject, TContext>>
 ) : PipelineContext<TSubject, TContext>(context) {
 
     override val coroutineContext: CoroutineContext get() = continuation.context
 
     // this is impossible to inline because of property name clash
     // between PipelineContext.context and Continuation.context
-    private val continuation: Continuation<Unit> = object : Continuation<Unit>, CoroutineStackFrame {
+    internal val continuation: Continuation<Unit> = object : Continuation<Unit>, CoroutineStackFrame {
         override val callerFrame: CoroutineStackFrame? get() = peekContinuation() as? CoroutineStackFrame
 
         var currentIndex: Int = Int.MIN_VALUE
@@ -48,7 +48,18 @@ internal class SuspendFunctionGun<TSubject : Any, TContext : Any>(
         }
 
         override val context: CoroutineContext
-            get() = suspensions[lastSuspensionIndex]?.context ?: error("Not started")
+            get() {
+                val continuation = suspensions[lastSuspensionIndex]
+                if (continuation !== this && continuation != null) return continuation.context
+
+                var index = lastSuspensionIndex - 1
+                while (index >= 0) {
+                    val cont = suspensions[index--]
+                    if (cont !== this && cont != null) return cont.context
+                }
+
+                error("Not started")
+            }
 
         override fun resumeWith(result: Result<Unit>) {
             if (result.isFailure) {
@@ -117,7 +128,7 @@ internal class SuspendFunctionGun<TSubject : Any, TContext : Any>(
             val next = blocks[currentIndex]
 
             try {
-                val result = next(this, subject, continuation)
+                val result = pipelineStartCoroutineUninterceptedOrReturn(next, this, subject, continuation)
                 if (result === COROUTINE_SUSPENDED) return false
             } catch (cause: Throwable) {
                 resumeRootWith(Result.failure(cause))
@@ -144,7 +155,7 @@ internal class SuspendFunctionGun<TSubject : Any, TContext : Any>(
         suspensions[lastSuspensionIndex--] = null
     }
 
-    private fun addContinuation(continuation: Continuation<TSubject>) {
+    internal fun addContinuation(continuation: Continuation<TSubject>) {
         suspensions[++lastSuspensionIndex] = continuation
     }
 }

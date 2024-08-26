@@ -15,7 +15,7 @@ private const val CHUNK_BUFFER_SIZE = 4096L
  * Split source [ByteReadChannel] into 2 new ones.
  * Cancel of one channel in split (input or both outputs) cancels other channels.
  */
-@Suppress("DEPRECATION")
+@OptIn(InternalAPI::class)
 public fun ByteReadChannel.split(coroutineScope: CoroutineScope): Pair<ByteReadChannel, ByteReadChannel> {
     val first = ByteChannel(autoFlush = true)
     val second = ByteChannel(autoFlush = true)
@@ -25,6 +25,7 @@ public fun ByteReadChannel.split(coroutineScope: CoroutineScope): Pair<ByteReadC
         try {
             while (!isClosedForRead) {
                 val read = this@split.readAvailable(buffer)
+                if (read <= 0) continue
                 listOf(
                     async { first.writeFully(buffer, 0, read) },
                     async { second.writeFully(buffer, 0, read) }
@@ -55,7 +56,7 @@ public fun ByteReadChannel.split(coroutineScope: CoroutineScope): Pair<ByteReadC
  */
 @OptIn(DelicateCoroutinesApi::class)
 public fun ByteReadChannel.copyToBoth(first: ByteWriteChannel, second: ByteWriteChannel) {
-    GlobalScope.launch(Dispatchers.Unconfined) {
+    GlobalScope.launch(Dispatchers.Default) {
         try {
             while (!isClosedForRead && (!first.isClosedForWrite || !second.isClosedForWrite)) {
                 readRemaining(CHUNK_BUFFER_SIZE).use {
@@ -75,8 +76,8 @@ public fun ByteReadChannel.copyToBoth(first: ByteWriteChannel, second: ByteWrite
             first.close(cause)
             second.close(cause)
         } finally {
-            first.close()
-            second.close()
+            first.flushAndClose()
+            second.flushAndClose()
         }
     }.invokeOnCompletion {
         it ?: return@invokeOnCompletion
@@ -84,8 +85,3 @@ public fun ByteReadChannel.copyToBoth(first: ByteWriteChannel, second: ByteWrite
         second.close(it)
     }
 }
-
-/**
- * Read a channel to byte array.
- */
-public suspend fun ByteReadChannel.toByteArray(): ByteArray = readRemaining().readBytes()

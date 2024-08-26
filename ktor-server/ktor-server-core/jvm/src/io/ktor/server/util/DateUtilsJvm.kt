@@ -30,7 +30,6 @@ public fun Date.toLocalDateTime(): LocalDateTime = LocalDateTime.ofInstant(toIns
 /**
  * Creates [ZonedDateTime] from this [Date]
  */
-@Suppress("DEPRECATION")
 @InternalAPI
 public fun Date.toZonedDateTime(): ZonedDateTime = ZonedDateTime.ofInstant(toInstant(), GreenwichMeanTime)
 

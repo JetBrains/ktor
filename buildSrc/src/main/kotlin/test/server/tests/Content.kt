@@ -61,6 +61,14 @@ internal fun Application.contentTestServer() {
 
                 call.respond("100")
             }
+            get("/big-plain-text") {
+                call.respondText {
+                    buildString {
+                        for (i in 1..10_000)
+                            appendLine("I will not introduce deadlocks.")
+                    }
+                }
+            }
             post("/sign") {
                 val form = call.receiveParameters()
 

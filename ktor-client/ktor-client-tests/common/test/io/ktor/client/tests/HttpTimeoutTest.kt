@@ -12,8 +12,9 @@ import io.ktor.client.statement.*
 import io.ktor.client.tests.utils.*
 import io.ktor.http.*
 import io.ktor.utils.io.*
-import io.ktor.utils.io.core.*
+import io.ktor.utils.io.CancellationException
 import kotlinx.coroutines.*
+import kotlinx.io.*
 import kotlin.test.*
 
 private const val TEST_URL = "$TEST_SERVER/timeout"
@@ -214,33 +215,34 @@ class HttpTimeoutTest : ClientLoader() {
                 parameter("delay", 500)
             }.body<ByteReadChannel>()
 
-            assertFailsWith<HttpRequestTimeoutException> {
+            assertFailsWith<CancellationException> {
                 response.readUTF8Line()
             }
         }
     }
 
     @Test
-    fun testGetRequestTimeoutWithSeparateReceivePerRequestAttributes() = clientTests(listOf("Js")) {
-        config {
-            install(HttpTimeout)
-        }
+    fun testGetRequestTimeoutWithSeparateReceivePerRequestAttributes() =
+        clientTests(listOf("Js", "Curl", "Darwin", "DarwinLegacy")) {
+            config {
+                install(HttpTimeout)
+            }
 
-        test { client ->
-            val response = client.prepareRequest("$TEST_URL/with-stream") {
-                method = HttpMethod.Get
-                parameter("delay", 10000)
+            test { client ->
+                val response = client.prepareRequest("$TEST_URL/with-stream") {
+                    method = HttpMethod.Get
+                    parameter("delay", 10000)
 
-                timeout { requestTimeoutMillis = 1000 }
-            }.body<ByteReadChannel>()
-            assertFailsWith<HttpRequestTimeoutException> {
-                response.readUTF8Line()
+                    timeout { requestTimeoutMillis = 1000 }
+                }.body<ByteReadChannel>()
+                assertFailsWith<CancellationException> {
+                    response.readUTF8Line()
+                }
             }
         }
-    }
 
     @Test
-    fun testGetAfterTimeout() = clientTests(listOf("Curl", "Js")) {
+    fun testGetAfterTimeout() = clientTests(listOf("Curl", "Js", "Darwin", "DarwinLegacy")) {
         config {
             install(HttpTimeout)
         }
@@ -250,7 +252,7 @@ class HttpTimeoutTest : ClientLoader() {
                 parameter("delay", 10000)
                 timeout { requestTimeoutMillis = 1000 }
             }.body<ByteReadChannel>()
-            assertFailsWith<HttpRequestTimeoutException> {
+            assertFailsWith<CancellationException> {
                 response.readUTF8Line()
             }
             val result = client.get("$TEST_URL/with-delay?delay=1") {
@@ -271,7 +273,7 @@ class HttpTimeoutTest : ClientLoader() {
                 parameter("delay", 10)
             }.body<ByteArray>()
 
-            assertEquals("Text", String(response))
+            assertEquals("Text", response.decodeToString(0, 0 + response.size))
         }
     }
 
@@ -288,7 +290,7 @@ class HttpTimeoutTest : ClientLoader() {
                 timeout { requestTimeoutMillis = 1000 }
             }.body<ByteArray>()
 
-            assertEquals("Text", String(response))
+            assertEquals("Text", response.decodeToString(0, 0 + response.size))
         }
     }
 
@@ -299,7 +301,7 @@ class HttpTimeoutTest : ClientLoader() {
         }
 
         test { client ->
-            assertFailsWith<HttpRequestTimeoutException> {
+            assertFailsWith<IOException> {
                 client.get("$TEST_URL/with-stream") {
                     parameter("delay", 4000)
                 }.body<ByteArray>()
@@ -314,7 +316,7 @@ class HttpTimeoutTest : ClientLoader() {
         }
 
         test { client ->
-            assertFailsWith<HttpRequestTimeoutException> {
+            assertFailsWith<IOException> {
                 client.get("$TEST_URL/with-stream") {
                     parameter("delay", 400)
 
@@ -451,7 +453,7 @@ class HttpTimeoutTest : ClientLoader() {
         }
 
         test { client ->
-            assertFailsWith<SocketTimeoutException> {
+            assertFailsWith<IOException> {
                 client.get("$TEST_URL/with-stream") {
                     parameter("delay", 5000)
                 }.body<String>()
@@ -466,7 +468,7 @@ class HttpTimeoutTest : ClientLoader() {
         }
 
         test { client ->
-            assertFailsWith<SocketTimeoutException> {
+            assertFailsWith<IOException> {
                 client.get("$TEST_URL/with-stream") {
                     parameter("delay", 5000)
 

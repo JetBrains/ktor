@@ -31,7 +31,6 @@ public object Android : HttpClientEngineFactory<AndroidEngineConfig> {
         AndroidClientEngine(AndroidEngineConfig().apply(block))
 }
 
-@Suppress("KDocMissingDocumentation")
 public class AndroidEngineContainer : HttpClientEngineContainer {
     override val factory: HttpClientEngineFactory<*> = Android
 

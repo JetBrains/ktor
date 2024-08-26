@@ -19,7 +19,9 @@ import kotlin.test.*
 class JettyCompressionTest :
     CompressionTestSuite<JettyApplicationEngine, JettyApplicationEngineBase.Configuration>(Jetty)
 
-class JettyContentTest : ContentTestSuite<JettyApplicationEngine, JettyApplicationEngineBase.Configuration>(Jetty)
+class JettyJakartaContentTest : ContentTestSuite<JettyApplicationEngine, JettyApplicationEngineBase.Configuration>(
+    Jetty
+)
 
 class JettyHttpServerCommonTest :
     HttpServerCommonTestSuite<JettyApplicationEngine, JettyApplicationEngineBase.Configuration>(Jetty) {
@@ -39,7 +41,7 @@ class JettyHttpServerJvmTest : HttpServerJvmTestSuite<JettyApplicationEngine, Je
     }
 
     @Test
-    fun testServletAttributes() {
+    fun testServletAttributes() = runTest {
         createAndStartServer {
             get("/tomcat/attributes") {
                 call.respondText(

@@ -33,12 +33,6 @@ public class ServerSentEvent(
     }
 }
 
-@Suppress("KDocMissingDocumentation")
-public class SSEException : IllegalStateException {
-    public constructor(cause: Throwable?) : super(cause)
-    public constructor(message: String) : super(message)
-}
-
 @OptIn(InternalAPI::class)
 private fun <T> StringBuilder.appendField(name: String, value: T?) {
     if (value != null) {

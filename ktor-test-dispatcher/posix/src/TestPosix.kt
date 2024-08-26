@@ -5,6 +5,7 @@
 package io.ktor.test.dispatcher
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.test.*
 import kotlin.coroutines.*
 
 /**

@@ -42,12 +42,12 @@ internal class OverridingClassLoader(
                 return loaded
             }
 
-            try {
+            return try {
                 // first try to use the URLClassLoader findClass
-                return super.findClass(name)
+                super.findClass(name)
             } catch (e: ClassNotFoundException) {
                 // if that fails, we ask our real parent classloader to load the class (we give up)
-                return realParent.loadClass(name)
+                realParent.loadClass(name)
             }
         }
 

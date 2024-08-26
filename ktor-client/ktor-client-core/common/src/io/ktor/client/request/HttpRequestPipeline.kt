@@ -12,7 +12,7 @@ import io.ktor.util.pipeline.*
  * An [HttpClient]'s pipeline used for executing [HttpRequest].
  */
 public class HttpRequestPipeline(
-    override val developmentMode: Boolean = false
+    override val developmentMode: Boolean = true
 ) : Pipeline<Any, HttpRequestBuilder>(Before, State, Transform, Render, Send) {
     /**
      * All interceptors accept payload as [subject] and try to convert it to [OutgoingContent].
@@ -50,7 +50,7 @@ public class HttpRequestPipeline(
  * An [HttpClient]'s pipeline used for sending [HttpRequest] to a remote server.
  */
 public class HttpSendPipeline(
-    override val developmentMode: Boolean = false
+    override val developmentMode: Boolean = true
 ) : Pipeline<Any, HttpRequestBuilder>(Before, State, Monitoring, Engine, Receive) {
 
     public companion object Phases {

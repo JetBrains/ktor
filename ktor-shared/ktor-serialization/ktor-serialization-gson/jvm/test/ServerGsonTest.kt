@@ -16,7 +16,6 @@ import io.ktor.server.testing.*
 import java.nio.charset.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 class ServerGsonTest : AbstractServerSerializationTest() {
     private val gson = Gson()
     override val defaultContentType: ContentType = ContentType.Application.Json

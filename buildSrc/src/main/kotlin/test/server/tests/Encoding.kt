@@ -63,6 +63,16 @@ internal fun Application.encodingTestServer() {
                 }
                 setCompressionEndpoints()
             }
+            route("/big-plain-text") {
+                get {
+                    call.respondText {
+                        buildString {
+                            for (i in 1..10_000)
+                                appendLine("I will not introduce deadlocks.")
+                        }
+                    }
+                }
+            }
         }
     }
 }

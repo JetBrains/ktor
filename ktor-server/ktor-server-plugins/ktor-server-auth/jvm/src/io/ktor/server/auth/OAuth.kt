@@ -7,6 +7,7 @@ package io.ktor.server.auth
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.utils.io.errors.*
+import kotlinx.io.IOException
 
 internal actual suspend fun OAuthAuthenticationProvider.oauth1a(
     authProviderName: String?,

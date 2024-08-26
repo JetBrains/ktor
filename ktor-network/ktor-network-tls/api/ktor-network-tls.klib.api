@@ -1,0 +1,350 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-network-tls>
+final enum class io.ktor.network.tls.extensions/HashAlgorithm : kotlin/Enum<io.ktor.network.tls.extensions/HashAlgorithm> { // io.ktor.network.tls.extensions/HashAlgorithm|null[0]
+    enum entry INTRINSIC // io.ktor.network.tls.extensions/HashAlgorithm.INTRINSIC|null[0]
+    enum entry MD5 // io.ktor.network.tls.extensions/HashAlgorithm.MD5|null[0]
+    enum entry NONE // io.ktor.network.tls.extensions/HashAlgorithm.NONE|null[0]
+    enum entry SHA1 // io.ktor.network.tls.extensions/HashAlgorithm.SHA1|null[0]
+    enum entry SHA224 // io.ktor.network.tls.extensions/HashAlgorithm.SHA224|null[0]
+    enum entry SHA256 // io.ktor.network.tls.extensions/HashAlgorithm.SHA256|null[0]
+    enum entry SHA384 // io.ktor.network.tls.extensions/HashAlgorithm.SHA384|null[0]
+    enum entry SHA512 // io.ktor.network.tls.extensions/HashAlgorithm.SHA512|null[0]
+
+    final val code // io.ktor.network.tls.extensions/HashAlgorithm.code|{}code[0]
+        final fun <get-code>(): kotlin/Byte // io.ktor.network.tls.extensions/HashAlgorithm.code.<get-code>|<get-code>(){}[0]
+    final val entries // io.ktor.network.tls.extensions/HashAlgorithm.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.network.tls.extensions/HashAlgorithm> // io.ktor.network.tls.extensions/HashAlgorithm.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val macName // io.ktor.network.tls.extensions/HashAlgorithm.macName|{}macName[0]
+        final fun <get-macName>(): kotlin/String // io.ktor.network.tls.extensions/HashAlgorithm.macName.<get-macName>|<get-macName>(){}[0]
+    final val openSSLName // io.ktor.network.tls.extensions/HashAlgorithm.openSSLName|{}openSSLName[0]
+        final fun <get-openSSLName>(): kotlin/String // io.ktor.network.tls.extensions/HashAlgorithm.openSSLName.<get-openSSLName>|<get-openSSLName>(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.network.tls.extensions/HashAlgorithm // io.ktor.network.tls.extensions/HashAlgorithm.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.network.tls.extensions/HashAlgorithm> // io.ktor.network.tls.extensions/HashAlgorithm.values|values#static(){}[0]
+
+    final object Companion { // io.ktor.network.tls.extensions/HashAlgorithm.Companion|null[0]
+        final fun byCode(kotlin/Byte): io.ktor.network.tls.extensions/HashAlgorithm // io.ktor.network.tls.extensions/HashAlgorithm.Companion.byCode|byCode(kotlin.Byte){}[0]
+    }
+}
+
+final enum class io.ktor.network.tls.extensions/NamedCurve : kotlin/Enum<io.ktor.network.tls.extensions/NamedCurve> { // io.ktor.network.tls.extensions/NamedCurve|null[0]
+    enum entry secp160k1 // io.ktor.network.tls.extensions/NamedCurve.secp160k1|null[0]
+    enum entry secp160r1 // io.ktor.network.tls.extensions/NamedCurve.secp160r1|null[0]
+    enum entry secp160r2 // io.ktor.network.tls.extensions/NamedCurve.secp160r2|null[0]
+    enum entry secp192k1 // io.ktor.network.tls.extensions/NamedCurve.secp192k1|null[0]
+    enum entry secp192r1 // io.ktor.network.tls.extensions/NamedCurve.secp192r1|null[0]
+    enum entry secp224k1 // io.ktor.network.tls.extensions/NamedCurve.secp224k1|null[0]
+    enum entry secp224r1 // io.ktor.network.tls.extensions/NamedCurve.secp224r1|null[0]
+    enum entry secp256k1 // io.ktor.network.tls.extensions/NamedCurve.secp256k1|null[0]
+    enum entry secp256r1 // io.ktor.network.tls.extensions/NamedCurve.secp256r1|null[0]
+    enum entry secp384r1 // io.ktor.network.tls.extensions/NamedCurve.secp384r1|null[0]
+    enum entry secp521r1 // io.ktor.network.tls.extensions/NamedCurve.secp521r1|null[0]
+    enum entry sect163k1 // io.ktor.network.tls.extensions/NamedCurve.sect163k1|null[0]
+    enum entry sect163r1 // io.ktor.network.tls.extensions/NamedCurve.sect163r1|null[0]
+    enum entry sect163r2 // io.ktor.network.tls.extensions/NamedCurve.sect163r2|null[0]
+    enum entry sect193r1 // io.ktor.network.tls.extensions/NamedCurve.sect193r1|null[0]
+    enum entry sect193r2 // io.ktor.network.tls.extensions/NamedCurve.sect193r2|null[0]
+    enum entry sect233k1 // io.ktor.network.tls.extensions/NamedCurve.sect233k1|null[0]
+    enum entry sect233r1 // io.ktor.network.tls.extensions/NamedCurve.sect233r1|null[0]
+    enum entry sect239k1 // io.ktor.network.tls.extensions/NamedCurve.sect239k1|null[0]
+    enum entry sect283k1 // io.ktor.network.tls.extensions/NamedCurve.sect283k1|null[0]
+    enum entry sect283r1 // io.ktor.network.tls.extensions/NamedCurve.sect283r1|null[0]
+    enum entry sect409k1 // io.ktor.network.tls.extensions/NamedCurve.sect409k1|null[0]
+    enum entry sect409r1 // io.ktor.network.tls.extensions/NamedCurve.sect409r1|null[0]
+    enum entry sect571k1 // io.ktor.network.tls.extensions/NamedCurve.sect571k1|null[0]
+    enum entry sect571r1 // io.ktor.network.tls.extensions/NamedCurve.sect571r1|null[0]
+
+    final val code // io.ktor.network.tls.extensions/NamedCurve.code|{}code[0]
+        final fun <get-code>(): kotlin/Short // io.ktor.network.tls.extensions/NamedCurve.code.<get-code>|<get-code>(){}[0]
+    final val entries // io.ktor.network.tls.extensions/NamedCurve.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.network.tls.extensions/NamedCurve> // io.ktor.network.tls.extensions/NamedCurve.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val fieldSize // io.ktor.network.tls.extensions/NamedCurve.fieldSize|{}fieldSize[0]
+        final fun <get-fieldSize>(): kotlin/Int // io.ktor.network.tls.extensions/NamedCurve.fieldSize.<get-fieldSize>|<get-fieldSize>(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.network.tls.extensions/NamedCurve // io.ktor.network.tls.extensions/NamedCurve.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.network.tls.extensions/NamedCurve> // io.ktor.network.tls.extensions/NamedCurve.values|values#static(){}[0]
+
+    final object Companion { // io.ktor.network.tls.extensions/NamedCurve.Companion|null[0]
+        final fun fromCode(kotlin/Short): io.ktor.network.tls.extensions/NamedCurve? // io.ktor.network.tls.extensions/NamedCurve.Companion.fromCode|fromCode(kotlin.Short){}[0]
+    }
+}
+
+final enum class io.ktor.network.tls.extensions/PointFormat : kotlin/Enum<io.ktor.network.tls.extensions/PointFormat> { // io.ktor.network.tls.extensions/PointFormat|null[0]
+    enum entry ANSIX962_COMPRESSED_CHAR2 // io.ktor.network.tls.extensions/PointFormat.ANSIX962_COMPRESSED_CHAR2|null[0]
+    enum entry ANSIX962_COMPRESSED_PRIME // io.ktor.network.tls.extensions/PointFormat.ANSIX962_COMPRESSED_PRIME|null[0]
+    enum entry UNCOMPRESSED // io.ktor.network.tls.extensions/PointFormat.UNCOMPRESSED|null[0]
+
+    final val code // io.ktor.network.tls.extensions/PointFormat.code|{}code[0]
+        final fun <get-code>(): kotlin/Byte // io.ktor.network.tls.extensions/PointFormat.code.<get-code>|<get-code>(){}[0]
+    final val entries // io.ktor.network.tls.extensions/PointFormat.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.network.tls.extensions/PointFormat> // io.ktor.network.tls.extensions/PointFormat.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.network.tls.extensions/PointFormat // io.ktor.network.tls.extensions/PointFormat.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.network.tls.extensions/PointFormat> // io.ktor.network.tls.extensions/PointFormat.values|values#static(){}[0]
+}
+
+final enum class io.ktor.network.tls.extensions/SignatureAlgorithm : kotlin/Enum<io.ktor.network.tls.extensions/SignatureAlgorithm> { // io.ktor.network.tls.extensions/SignatureAlgorithm|null[0]
+    enum entry ANON // io.ktor.network.tls.extensions/SignatureAlgorithm.ANON|null[0]
+    enum entry DSA // io.ktor.network.tls.extensions/SignatureAlgorithm.DSA|null[0]
+    enum entry ECDSA // io.ktor.network.tls.extensions/SignatureAlgorithm.ECDSA|null[0]
+    enum entry ED25519 // io.ktor.network.tls.extensions/SignatureAlgorithm.ED25519|null[0]
+    enum entry ED448 // io.ktor.network.tls.extensions/SignatureAlgorithm.ED448|null[0]
+    enum entry RSA // io.ktor.network.tls.extensions/SignatureAlgorithm.RSA|null[0]
+
+    final val code // io.ktor.network.tls.extensions/SignatureAlgorithm.code|{}code[0]
+        final fun <get-code>(): kotlin/Byte // io.ktor.network.tls.extensions/SignatureAlgorithm.code.<get-code>|<get-code>(){}[0]
+    final val entries // io.ktor.network.tls.extensions/SignatureAlgorithm.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.network.tls.extensions/SignatureAlgorithm> // io.ktor.network.tls.extensions/SignatureAlgorithm.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.network.tls.extensions/SignatureAlgorithm // io.ktor.network.tls.extensions/SignatureAlgorithm.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.network.tls.extensions/SignatureAlgorithm> // io.ktor.network.tls.extensions/SignatureAlgorithm.values|values#static(){}[0]
+
+    final object Companion { // io.ktor.network.tls.extensions/SignatureAlgorithm.Companion|null[0]
+        final fun byCode(kotlin/Byte): io.ktor.network.tls.extensions/SignatureAlgorithm? // io.ktor.network.tls.extensions/SignatureAlgorithm.Companion.byCode|byCode(kotlin.Byte){}[0]
+    }
+}
+
+final enum class io.ktor.network.tls.extensions/TLSExtensionType : kotlin/Enum<io.ktor.network.tls.extensions/TLSExtensionType> { // io.ktor.network.tls.extensions/TLSExtensionType|null[0]
+    enum entry CLIENT_CERTIFICATE_URL // io.ktor.network.tls.extensions/TLSExtensionType.CLIENT_CERTIFICATE_URL|null[0]
+    enum entry EC_POINT_FORMAT // io.ktor.network.tls.extensions/TLSExtensionType.EC_POINT_FORMAT|null[0]
+    enum entry ELLIPTIC_CURVES // io.ktor.network.tls.extensions/TLSExtensionType.ELLIPTIC_CURVES|null[0]
+    enum entry MAX_FRAGMENT_LENGTH // io.ktor.network.tls.extensions/TLSExtensionType.MAX_FRAGMENT_LENGTH|null[0]
+    enum entry SERVER_NAME // io.ktor.network.tls.extensions/TLSExtensionType.SERVER_NAME|null[0]
+    enum entry SIGNATURE_ALGORITHMS // io.ktor.network.tls.extensions/TLSExtensionType.SIGNATURE_ALGORITHMS|null[0]
+    enum entry STATUS_REQUEST // io.ktor.network.tls.extensions/TLSExtensionType.STATUS_REQUEST|null[0]
+    enum entry TRUNCATED_HMAC // io.ktor.network.tls.extensions/TLSExtensionType.TRUNCATED_HMAC|null[0]
+    enum entry TRUSTED_CA_KEYS // io.ktor.network.tls.extensions/TLSExtensionType.TRUSTED_CA_KEYS|null[0]
+
+    final val code // io.ktor.network.tls.extensions/TLSExtensionType.code|{}code[0]
+        final fun <get-code>(): kotlin/Short // io.ktor.network.tls.extensions/TLSExtensionType.code.<get-code>|<get-code>(){}[0]
+    final val entries // io.ktor.network.tls.extensions/TLSExtensionType.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.network.tls.extensions/TLSExtensionType> // io.ktor.network.tls.extensions/TLSExtensionType.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.network.tls.extensions/TLSExtensionType // io.ktor.network.tls.extensions/TLSExtensionType.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.network.tls.extensions/TLSExtensionType> // io.ktor.network.tls.extensions/TLSExtensionType.values|values#static(){}[0]
+
+    final object Companion { // io.ktor.network.tls.extensions/TLSExtensionType.Companion|null[0]
+        final fun byCode(kotlin/Int): io.ktor.network.tls.extensions/TLSExtensionType // io.ktor.network.tls.extensions/TLSExtensionType.Companion.byCode|byCode(kotlin.Int){}[0]
+    }
+}
+
+final enum class io.ktor.network.tls/CipherType : kotlin/Enum<io.ktor.network.tls/CipherType> { // io.ktor.network.tls/CipherType|null[0]
+    enum entry CBC // io.ktor.network.tls/CipherType.CBC|null[0]
+    enum entry GCM // io.ktor.network.tls/CipherType.GCM|null[0]
+
+    final val entries // io.ktor.network.tls/CipherType.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.network.tls/CipherType> // io.ktor.network.tls/CipherType.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.network.tls/CipherType // io.ktor.network.tls/CipherType.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.network.tls/CipherType> // io.ktor.network.tls/CipherType.values|values#static(){}[0]
+}
+
+final enum class io.ktor.network.tls/SecretExchangeType : kotlin/Enum<io.ktor.network.tls/SecretExchangeType> { // io.ktor.network.tls/SecretExchangeType|null[0]
+    enum entry ECDHE // io.ktor.network.tls/SecretExchangeType.ECDHE|null[0]
+    enum entry RSA // io.ktor.network.tls/SecretExchangeType.RSA|null[0]
+
+    final val entries // io.ktor.network.tls/SecretExchangeType.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.network.tls/SecretExchangeType> // io.ktor.network.tls/SecretExchangeType.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val jvmName // io.ktor.network.tls/SecretExchangeType.jvmName|{}jvmName[0]
+        final fun <get-jvmName>(): kotlin/String // io.ktor.network.tls/SecretExchangeType.jvmName.<get-jvmName>|<get-jvmName>(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.network.tls/SecretExchangeType // io.ktor.network.tls/SecretExchangeType.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.network.tls/SecretExchangeType> // io.ktor.network.tls/SecretExchangeType.values|values#static(){}[0]
+}
+
+final class io.ktor.network.tls.extensions/HashAndSign { // io.ktor.network.tls.extensions/HashAndSign|null[0]
+    constructor <init>(io.ktor.network.tls.extensions/HashAlgorithm, io.ktor.network.tls.extensions/SignatureAlgorithm, io.ktor.network.tls/OID? = ...) // io.ktor.network.tls.extensions/HashAndSign.<init>|<init>(io.ktor.network.tls.extensions.HashAlgorithm;io.ktor.network.tls.extensions.SignatureAlgorithm;io.ktor.network.tls.OID?){}[0]
+
+    final val hash // io.ktor.network.tls.extensions/HashAndSign.hash|{}hash[0]
+        final fun <get-hash>(): io.ktor.network.tls.extensions/HashAlgorithm // io.ktor.network.tls.extensions/HashAndSign.hash.<get-hash>|<get-hash>(){}[0]
+    final val name // io.ktor.network.tls.extensions/HashAndSign.name|{}name[0]
+        final fun <get-name>(): kotlin/String // io.ktor.network.tls.extensions/HashAndSign.name.<get-name>|<get-name>(){}[0]
+    final val oid // io.ktor.network.tls.extensions/HashAndSign.oid|{}oid[0]
+        final fun <get-oid>(): io.ktor.network.tls/OID? // io.ktor.network.tls.extensions/HashAndSign.oid.<get-oid>|<get-oid>(){}[0]
+    final val sign // io.ktor.network.tls.extensions/HashAndSign.sign|{}sign[0]
+        final fun <get-sign>(): io.ktor.network.tls.extensions/SignatureAlgorithm // io.ktor.network.tls.extensions/HashAndSign.sign.<get-sign>|<get-sign>(){}[0]
+
+    final fun component1(): io.ktor.network.tls.extensions/HashAlgorithm // io.ktor.network.tls.extensions/HashAndSign.component1|component1(){}[0]
+    final fun component2(): io.ktor.network.tls.extensions/SignatureAlgorithm // io.ktor.network.tls.extensions/HashAndSign.component2|component2(){}[0]
+    final fun component3(): io.ktor.network.tls/OID? // io.ktor.network.tls.extensions/HashAndSign.component3|component3(){}[0]
+    final fun copy(io.ktor.network.tls.extensions/HashAlgorithm = ..., io.ktor.network.tls.extensions/SignatureAlgorithm = ..., io.ktor.network.tls/OID? = ...): io.ktor.network.tls.extensions/HashAndSign // io.ktor.network.tls.extensions/HashAndSign.copy|copy(io.ktor.network.tls.extensions.HashAlgorithm;io.ktor.network.tls.extensions.SignatureAlgorithm;io.ktor.network.tls.OID?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.network.tls.extensions/HashAndSign.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.network.tls.extensions/HashAndSign.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.network.tls.extensions/HashAndSign.toString|toString(){}[0]
+
+    final object Companion // io.ktor.network.tls.extensions/HashAndSign.Companion|null[0]
+}
+
+final class io.ktor.network.tls/CipherSuite { // io.ktor.network.tls/CipherSuite|null[0]
+    constructor <init>(kotlin/Short, kotlin/String, kotlin/String, io.ktor.network.tls/SecretExchangeType, kotlin/String, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/String, kotlin/Int, io.ktor.network.tls.extensions/HashAlgorithm, io.ktor.network.tls.extensions/SignatureAlgorithm, io.ktor.network.tls/CipherType = ...) // io.ktor.network.tls/CipherSuite.<init>|<init>(kotlin.Short;kotlin.String;kotlin.String;io.ktor.network.tls.SecretExchangeType;kotlin.String;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.String;kotlin.Int;io.ktor.network.tls.extensions.HashAlgorithm;io.ktor.network.tls.extensions.SignatureAlgorithm;io.ktor.network.tls.CipherType){}[0]
+
+    final val cipherTagSizeInBytes // io.ktor.network.tls/CipherSuite.cipherTagSizeInBytes|{}cipherTagSizeInBytes[0]
+        final fun <get-cipherTagSizeInBytes>(): kotlin/Int // io.ktor.network.tls/CipherSuite.cipherTagSizeInBytes.<get-cipherTagSizeInBytes>|<get-cipherTagSizeInBytes>(){}[0]
+    final val cipherType // io.ktor.network.tls/CipherSuite.cipherType|{}cipherType[0]
+        final fun <get-cipherType>(): io.ktor.network.tls/CipherType // io.ktor.network.tls/CipherSuite.cipherType.<get-cipherType>|<get-cipherType>(){}[0]
+    final val code // io.ktor.network.tls/CipherSuite.code|{}code[0]
+        final fun <get-code>(): kotlin/Short // io.ktor.network.tls/CipherSuite.code.<get-code>|<get-code>(){}[0]
+    final val exchangeType // io.ktor.network.tls/CipherSuite.exchangeType|{}exchangeType[0]
+        final fun <get-exchangeType>(): io.ktor.network.tls/SecretExchangeType // io.ktor.network.tls/CipherSuite.exchangeType.<get-exchangeType>|<get-exchangeType>(){}[0]
+    final val fixedIvLength // io.ktor.network.tls/CipherSuite.fixedIvLength|{}fixedIvLength[0]
+        final fun <get-fixedIvLength>(): kotlin/Int // io.ktor.network.tls/CipherSuite.fixedIvLength.<get-fixedIvLength>|<get-fixedIvLength>(){}[0]
+    final val hash // io.ktor.network.tls/CipherSuite.hash|{}hash[0]
+        final fun <get-hash>(): io.ktor.network.tls.extensions/HashAlgorithm // io.ktor.network.tls/CipherSuite.hash.<get-hash>|<get-hash>(){}[0]
+    final val ivLength // io.ktor.network.tls/CipherSuite.ivLength|{}ivLength[0]
+        final fun <get-ivLength>(): kotlin/Int // io.ktor.network.tls/CipherSuite.ivLength.<get-ivLength>|<get-ivLength>(){}[0]
+    final val jdkCipherName // io.ktor.network.tls/CipherSuite.jdkCipherName|{}jdkCipherName[0]
+        final fun <get-jdkCipherName>(): kotlin/String // io.ktor.network.tls/CipherSuite.jdkCipherName.<get-jdkCipherName>|<get-jdkCipherName>(){}[0]
+    final val keyStrength // io.ktor.network.tls/CipherSuite.keyStrength|{}keyStrength[0]
+        final fun <get-keyStrength>(): kotlin/Int // io.ktor.network.tls/CipherSuite.keyStrength.<get-keyStrength>|<get-keyStrength>(){}[0]
+    final val keyStrengthInBytes // io.ktor.network.tls/CipherSuite.keyStrengthInBytes|{}keyStrengthInBytes[0]
+        final fun <get-keyStrengthInBytes>(): kotlin/Int // io.ktor.network.tls/CipherSuite.keyStrengthInBytes.<get-keyStrengthInBytes>|<get-keyStrengthInBytes>(){}[0]
+    final val macName // io.ktor.network.tls/CipherSuite.macName|{}macName[0]
+        final fun <get-macName>(): kotlin/String // io.ktor.network.tls/CipherSuite.macName.<get-macName>|<get-macName>(){}[0]
+    final val macStrength // io.ktor.network.tls/CipherSuite.macStrength|{}macStrength[0]
+        final fun <get-macStrength>(): kotlin/Int // io.ktor.network.tls/CipherSuite.macStrength.<get-macStrength>|<get-macStrength>(){}[0]
+    final val macStrengthInBytes // io.ktor.network.tls/CipherSuite.macStrengthInBytes|{}macStrengthInBytes[0]
+        final fun <get-macStrengthInBytes>(): kotlin/Int // io.ktor.network.tls/CipherSuite.macStrengthInBytes.<get-macStrengthInBytes>|<get-macStrengthInBytes>(){}[0]
+    final val name // io.ktor.network.tls/CipherSuite.name|{}name[0]
+        final fun <get-name>(): kotlin/String // io.ktor.network.tls/CipherSuite.name.<get-name>|<get-name>(){}[0]
+    final val openSSLName // io.ktor.network.tls/CipherSuite.openSSLName|{}openSSLName[0]
+        final fun <get-openSSLName>(): kotlin/String // io.ktor.network.tls/CipherSuite.openSSLName.<get-openSSLName>|<get-openSSLName>(){}[0]
+    final val signatureAlgorithm // io.ktor.network.tls/CipherSuite.signatureAlgorithm|{}signatureAlgorithm[0]
+        final fun <get-signatureAlgorithm>(): io.ktor.network.tls.extensions/SignatureAlgorithm // io.ktor.network.tls/CipherSuite.signatureAlgorithm.<get-signatureAlgorithm>|<get-signatureAlgorithm>(){}[0]
+
+    final fun component1(): kotlin/Short // io.ktor.network.tls/CipherSuite.component1|component1(){}[0]
+    final fun component10(): kotlin/String // io.ktor.network.tls/CipherSuite.component10|component10(){}[0]
+    final fun component11(): kotlin/Int // io.ktor.network.tls/CipherSuite.component11|component11(){}[0]
+    final fun component12(): io.ktor.network.tls.extensions/HashAlgorithm // io.ktor.network.tls/CipherSuite.component12|component12(){}[0]
+    final fun component13(): io.ktor.network.tls.extensions/SignatureAlgorithm // io.ktor.network.tls/CipherSuite.component13|component13(){}[0]
+    final fun component14(): io.ktor.network.tls/CipherType // io.ktor.network.tls/CipherSuite.component14|component14(){}[0]
+    final fun component2(): kotlin/String // io.ktor.network.tls/CipherSuite.component2|component2(){}[0]
+    final fun component3(): kotlin/String // io.ktor.network.tls/CipherSuite.component3|component3(){}[0]
+    final fun component4(): io.ktor.network.tls/SecretExchangeType // io.ktor.network.tls/CipherSuite.component4|component4(){}[0]
+    final fun component5(): kotlin/String // io.ktor.network.tls/CipherSuite.component5|component5(){}[0]
+    final fun component6(): kotlin/Int // io.ktor.network.tls/CipherSuite.component6|component6(){}[0]
+    final fun component7(): kotlin/Int // io.ktor.network.tls/CipherSuite.component7|component7(){}[0]
+    final fun component8(): kotlin/Int // io.ktor.network.tls/CipherSuite.component8|component8(){}[0]
+    final fun component9(): kotlin/Int // io.ktor.network.tls/CipherSuite.component9|component9(){}[0]
+    final fun copy(kotlin/Short = ..., kotlin/String = ..., kotlin/String = ..., io.ktor.network.tls/SecretExchangeType = ..., kotlin/String = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/String = ..., kotlin/Int = ..., io.ktor.network.tls.extensions/HashAlgorithm = ..., io.ktor.network.tls.extensions/SignatureAlgorithm = ..., io.ktor.network.tls/CipherType = ...): io.ktor.network.tls/CipherSuite // io.ktor.network.tls/CipherSuite.copy|copy(kotlin.Short;kotlin.String;kotlin.String;io.ktor.network.tls.SecretExchangeType;kotlin.String;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.String;kotlin.Int;io.ktor.network.tls.extensions.HashAlgorithm;io.ktor.network.tls.extensions.SignatureAlgorithm;io.ktor.network.tls.CipherType){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.network.tls/CipherSuite.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.network.tls/CipherSuite.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.network.tls/CipherSuite.toString|toString(){}[0]
+}
+
+final class io.ktor.network.tls/OID { // io.ktor.network.tls/OID|null[0]
+    constructor <init>(kotlin/String) // io.ktor.network.tls/OID.<init>|<init>(kotlin.String){}[0]
+
+    final val asArray // io.ktor.network.tls/OID.asArray|{}asArray[0]
+        final fun <get-asArray>(): kotlin/IntArray // io.ktor.network.tls/OID.asArray.<get-asArray>|<get-asArray>(){}[0]
+    final val identifier // io.ktor.network.tls/OID.identifier|{}identifier[0]
+        final fun <get-identifier>(): kotlin/String // io.ktor.network.tls/OID.identifier.<get-identifier>|<get-identifier>(){}[0]
+
+    final fun component1(): kotlin/String // io.ktor.network.tls/OID.component1|component1(){}[0]
+    final fun copy(kotlin/String = ...): io.ktor.network.tls/OID // io.ktor.network.tls/OID.copy|copy(kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.network.tls/OID.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.network.tls/OID.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.network.tls/OID.toString|toString(){}[0]
+
+    final object Companion { // io.ktor.network.tls/OID.Companion|null[0]
+        final val BasicConstraints // io.ktor.network.tls/OID.Companion.BasicConstraints|{}BasicConstraints[0]
+            final fun <get-BasicConstraints>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.BasicConstraints.<get-BasicConstraints>|<get-BasicConstraints>(){}[0]
+        final val ClientAuth // io.ktor.network.tls/OID.Companion.ClientAuth|{}ClientAuth[0]
+            final fun <get-ClientAuth>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.ClientAuth.<get-ClientAuth>|<get-ClientAuth>(){}[0]
+        final val CommonName // io.ktor.network.tls/OID.Companion.CommonName|{}CommonName[0]
+            final fun <get-CommonName>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.CommonName.<get-CommonName>|<get-CommonName>(){}[0]
+        final val CountryName // io.ktor.network.tls/OID.Companion.CountryName|{}CountryName[0]
+            final fun <get-CountryName>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.CountryName.<get-CountryName>|<get-CountryName>(){}[0]
+        final val ECDSAwithSHA256Encryption // io.ktor.network.tls/OID.Companion.ECDSAwithSHA256Encryption|{}ECDSAwithSHA256Encryption[0]
+            final fun <get-ECDSAwithSHA256Encryption>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.ECDSAwithSHA256Encryption.<get-ECDSAwithSHA256Encryption>|<get-ECDSAwithSHA256Encryption>(){}[0]
+        final val ECDSAwithSHA384Encryption // io.ktor.network.tls/OID.Companion.ECDSAwithSHA384Encryption|{}ECDSAwithSHA384Encryption[0]
+            final fun <get-ECDSAwithSHA384Encryption>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.ECDSAwithSHA384Encryption.<get-ECDSAwithSHA384Encryption>|<get-ECDSAwithSHA384Encryption>(){}[0]
+        final val ECEncryption // io.ktor.network.tls/OID.Companion.ECEncryption|{}ECEncryption[0]
+            final fun <get-ECEncryption>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.ECEncryption.<get-ECEncryption>|<get-ECEncryption>(){}[0]
+        final val ExtKeyUsage // io.ktor.network.tls/OID.Companion.ExtKeyUsage|{}ExtKeyUsage[0]
+            final fun <get-ExtKeyUsage>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.ExtKeyUsage.<get-ExtKeyUsage>|<get-ExtKeyUsage>(){}[0]
+        final val KeyUsage // io.ktor.network.tls/OID.Companion.KeyUsage|{}KeyUsage[0]
+            final fun <get-KeyUsage>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.KeyUsage.<get-KeyUsage>|<get-KeyUsage>(){}[0]
+        final val OrganizationName // io.ktor.network.tls/OID.Companion.OrganizationName|{}OrganizationName[0]
+            final fun <get-OrganizationName>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.OrganizationName.<get-OrganizationName>|<get-OrganizationName>(){}[0]
+        final val OrganizationalUnitName // io.ktor.network.tls/OID.Companion.OrganizationalUnitName|{}OrganizationalUnitName[0]
+            final fun <get-OrganizationalUnitName>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.OrganizationalUnitName.<get-OrganizationalUnitName>|<get-OrganizationalUnitName>(){}[0]
+        final val RSAEncryption // io.ktor.network.tls/OID.Companion.RSAEncryption|{}RSAEncryption[0]
+            final fun <get-RSAEncryption>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.RSAEncryption.<get-RSAEncryption>|<get-RSAEncryption>(){}[0]
+        final val RSAwithSHA1Encryption // io.ktor.network.tls/OID.Companion.RSAwithSHA1Encryption|{}RSAwithSHA1Encryption[0]
+            final fun <get-RSAwithSHA1Encryption>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.RSAwithSHA1Encryption.<get-RSAwithSHA1Encryption>|<get-RSAwithSHA1Encryption>(){}[0]
+        final val RSAwithSHA256Encryption // io.ktor.network.tls/OID.Companion.RSAwithSHA256Encryption|{}RSAwithSHA256Encryption[0]
+            final fun <get-RSAwithSHA256Encryption>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.RSAwithSHA256Encryption.<get-RSAwithSHA256Encryption>|<get-RSAwithSHA256Encryption>(){}[0]
+        final val RSAwithSHA384Encryption // io.ktor.network.tls/OID.Companion.RSAwithSHA384Encryption|{}RSAwithSHA384Encryption[0]
+            final fun <get-RSAwithSHA384Encryption>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.RSAwithSHA384Encryption.<get-RSAwithSHA384Encryption>|<get-RSAwithSHA384Encryption>(){}[0]
+        final val RSAwithSHA512Encryption // io.ktor.network.tls/OID.Companion.RSAwithSHA512Encryption|{}RSAwithSHA512Encryption[0]
+            final fun <get-RSAwithSHA512Encryption>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.RSAwithSHA512Encryption.<get-RSAwithSHA512Encryption>|<get-RSAwithSHA512Encryption>(){}[0]
+        final val ServerAuth // io.ktor.network.tls/OID.Companion.ServerAuth|{}ServerAuth[0]
+            final fun <get-ServerAuth>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.ServerAuth.<get-ServerAuth>|<get-ServerAuth>(){}[0]
+        final val SubjectAltName // io.ktor.network.tls/OID.Companion.SubjectAltName|{}SubjectAltName[0]
+            final fun <get-SubjectAltName>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.SubjectAltName.<get-SubjectAltName>|<get-SubjectAltName>(){}[0]
+        final val secp256r1 // io.ktor.network.tls/OID.Companion.secp256r1|{}secp256r1[0]
+            final fun <get-secp256r1>(): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.secp256r1.<get-secp256r1>|<get-secp256r1>(){}[0]
+
+        final fun fromAlgorithm(kotlin/String): io.ktor.network.tls/OID // io.ktor.network.tls/OID.Companion.fromAlgorithm|fromAlgorithm(kotlin.String){}[0]
+    }
+}
+
+final class io.ktor.network.tls/TLSConfig { // io.ktor.network.tls/TLSConfig|null[0]
+    constructor <init>() // io.ktor.network.tls/TLSConfig.<init>|<init>(){}[0]
+}
+
+final class io.ktor.network.tls/TLSConfigBuilder { // io.ktor.network.tls/TLSConfigBuilder|null[0]
+    constructor <init>() // io.ktor.network.tls/TLSConfigBuilder.<init>|<init>(){}[0]
+
+    final var serverName // io.ktor.network.tls/TLSConfigBuilder.serverName|{}serverName[0]
+        final fun <get-serverName>(): kotlin/String? // io.ktor.network.tls/TLSConfigBuilder.serverName.<get-serverName>|<get-serverName>(){}[0]
+        final fun <set-serverName>(kotlin/String?) // io.ktor.network.tls/TLSConfigBuilder.serverName.<set-serverName>|<set-serverName>(kotlin.String?){}[0]
+
+    final fun build(): io.ktor.network.tls/TLSConfig // io.ktor.network.tls/TLSConfigBuilder.build|build(){}[0]
+}
+
+final class io.ktor.network.tls/TLSException : kotlinx.io/IOException { // io.ktor.network.tls/TLSException|null[0]
+    constructor <init>(kotlin/String, kotlin/Throwable? = ...) // io.ktor.network.tls/TLSException.<init>|<init>(kotlin.String;kotlin.Throwable?){}[0]
+}
+
+final object io.ktor.network.tls/CIOCipherSuites { // io.ktor.network.tls/CIOCipherSuites|null[0]
+    final val ECDHE_ECDSA_AES128_SHA256 // io.ktor.network.tls/CIOCipherSuites.ECDHE_ECDSA_AES128_SHA256|{}ECDHE_ECDSA_AES128_SHA256[0]
+        final fun <get-ECDHE_ECDSA_AES128_SHA256>(): io.ktor.network.tls/CipherSuite // io.ktor.network.tls/CIOCipherSuites.ECDHE_ECDSA_AES128_SHA256.<get-ECDHE_ECDSA_AES128_SHA256>|<get-ECDHE_ECDSA_AES128_SHA256>(){}[0]
+    final val ECDHE_ECDSA_AES256_SHA384 // io.ktor.network.tls/CIOCipherSuites.ECDHE_ECDSA_AES256_SHA384|{}ECDHE_ECDSA_AES256_SHA384[0]
+        final fun <get-ECDHE_ECDSA_AES256_SHA384>(): io.ktor.network.tls/CipherSuite // io.ktor.network.tls/CIOCipherSuites.ECDHE_ECDSA_AES256_SHA384.<get-ECDHE_ECDSA_AES256_SHA384>|<get-ECDHE_ECDSA_AES256_SHA384>(){}[0]
+    final val ECDHE_RSA_AES128_SHA256 // io.ktor.network.tls/CIOCipherSuites.ECDHE_RSA_AES128_SHA256|{}ECDHE_RSA_AES128_SHA256[0]
+        final fun <get-ECDHE_RSA_AES128_SHA256>(): io.ktor.network.tls/CipherSuite // io.ktor.network.tls/CIOCipherSuites.ECDHE_RSA_AES128_SHA256.<get-ECDHE_RSA_AES128_SHA256>|<get-ECDHE_RSA_AES128_SHA256>(){}[0]
+    final val ECDHE_RSA_AES256_SHA384 // io.ktor.network.tls/CIOCipherSuites.ECDHE_RSA_AES256_SHA384|{}ECDHE_RSA_AES256_SHA384[0]
+        final fun <get-ECDHE_RSA_AES256_SHA384>(): io.ktor.network.tls/CipherSuite // io.ktor.network.tls/CIOCipherSuites.ECDHE_RSA_AES256_SHA384.<get-ECDHE_RSA_AES256_SHA384>|<get-ECDHE_RSA_AES256_SHA384>(){}[0]
+    final val SupportedSuites // io.ktor.network.tls/CIOCipherSuites.SupportedSuites|{}SupportedSuites[0]
+        final fun <get-SupportedSuites>(): kotlin.collections/List<io.ktor.network.tls/CipherSuite> // io.ktor.network.tls/CIOCipherSuites.SupportedSuites.<get-SupportedSuites>|<get-SupportedSuites>(){}[0]
+    final val TLS_RSA_WITH_AES128_CBC_SHA // io.ktor.network.tls/CIOCipherSuites.TLS_RSA_WITH_AES128_CBC_SHA|{}TLS_RSA_WITH_AES128_CBC_SHA[0]
+        final fun <get-TLS_RSA_WITH_AES128_CBC_SHA>(): io.ktor.network.tls/CipherSuite // io.ktor.network.tls/CIOCipherSuites.TLS_RSA_WITH_AES128_CBC_SHA.<get-TLS_RSA_WITH_AES128_CBC_SHA>|<get-TLS_RSA_WITH_AES128_CBC_SHA>(){}[0]
+    final val TLS_RSA_WITH_AES256_CBC_SHA // io.ktor.network.tls/CIOCipherSuites.TLS_RSA_WITH_AES256_CBC_SHA|{}TLS_RSA_WITH_AES256_CBC_SHA[0]
+        final fun <get-TLS_RSA_WITH_AES256_CBC_SHA>(): io.ktor.network.tls/CipherSuite // io.ktor.network.tls/CIOCipherSuites.TLS_RSA_WITH_AES256_CBC_SHA.<get-TLS_RSA_WITH_AES256_CBC_SHA>|<get-TLS_RSA_WITH_AES256_CBC_SHA>(){}[0]
+    final val TLS_RSA_WITH_AES_128_GCM_SHA256 // io.ktor.network.tls/CIOCipherSuites.TLS_RSA_WITH_AES_128_GCM_SHA256|{}TLS_RSA_WITH_AES_128_GCM_SHA256[0]
+        final fun <get-TLS_RSA_WITH_AES_128_GCM_SHA256>(): io.ktor.network.tls/CipherSuite // io.ktor.network.tls/CIOCipherSuites.TLS_RSA_WITH_AES_128_GCM_SHA256.<get-TLS_RSA_WITH_AES_128_GCM_SHA256>|<get-TLS_RSA_WITH_AES_128_GCM_SHA256>(){}[0]
+}
+
+final val io.ktor.network.tls.extensions/SupportedNamedCurves // io.ktor.network.tls.extensions/SupportedNamedCurves|{}SupportedNamedCurves[0]
+    final fun <get-SupportedNamedCurves>(): kotlin.collections/List<io.ktor.network.tls.extensions/NamedCurve> // io.ktor.network.tls.extensions/SupportedNamedCurves.<get-SupportedNamedCurves>|<get-SupportedNamedCurves>(){}[0]
+final val io.ktor.network.tls.extensions/SupportedPointFormats // io.ktor.network.tls.extensions/SupportedPointFormats|{}SupportedPointFormats[0]
+    final fun <get-SupportedPointFormats>(): kotlin.collections/List<io.ktor.network.tls.extensions/PointFormat> // io.ktor.network.tls.extensions/SupportedPointFormats.<get-SupportedPointFormats>|<get-SupportedPointFormats>(){}[0]
+final val io.ktor.network.tls.extensions/SupportedSignatureAlgorithms // io.ktor.network.tls.extensions/SupportedSignatureAlgorithms|{}SupportedSignatureAlgorithms[0]
+    final fun <get-SupportedSignatureAlgorithms>(): kotlin.collections/List<io.ktor.network.tls.extensions/HashAndSign> // io.ktor.network.tls.extensions/SupportedSignatureAlgorithms.<get-SupportedSignatureAlgorithms>|<get-SupportedSignatureAlgorithms>(){}[0]
+
+final fun (io.ktor.network.tls.extensions/HashAndSign.Companion).io.ktor.network.tls.extensions/byCode(kotlin/Byte, kotlin/Byte): io.ktor.network.tls.extensions/HashAndSign? // io.ktor.network.tls.extensions/byCode|byCode@io.ktor.network.tls.extensions.HashAndSign.Companion(kotlin.Byte;kotlin.Byte){}[0]
+final fun (io.ktor.network.tls/TLSConfigBuilder).io.ktor.network.tls/takeFrom(io.ktor.network.tls/TLSConfigBuilder) // io.ktor.network.tls/takeFrom|takeFrom@io.ktor.network.tls.TLSConfigBuilder(io.ktor.network.tls.TLSConfigBuilder){}[0]
+final fun io.ktor.network.tls/keysGenerationAlgorithm(kotlin/String): kotlin/String // io.ktor.network.tls/keysGenerationAlgorithm|keysGenerationAlgorithm(kotlin.String){}[0]
+final suspend fun (io.ktor.network.sockets/Connection).io.ktor.network.tls/tls(kotlin.coroutines/CoroutineContext): io.ktor.network.sockets/Socket // io.ktor.network.tls/tls|tls@io.ktor.network.sockets.Connection(kotlin.coroutines.CoroutineContext){}[0]
+final suspend fun (io.ktor.network.sockets/Connection).io.ktor.network.tls/tls(kotlin.coroutines/CoroutineContext, io.ktor.network.tls/TLSConfig): io.ktor.network.sockets/Socket // io.ktor.network.tls/tls|tls@io.ktor.network.sockets.Connection(kotlin.coroutines.CoroutineContext;io.ktor.network.tls.TLSConfig){}[0]
+final suspend fun (io.ktor.network.sockets/Connection).io.ktor.network.tls/tls(kotlin.coroutines/CoroutineContext, kotlin/Function1<io.ktor.network.tls/TLSConfigBuilder, kotlin/Unit>): io.ktor.network.sockets/Socket // io.ktor.network.tls/tls|tls@io.ktor.network.sockets.Connection(kotlin.coroutines.CoroutineContext;kotlin.Function1<io.ktor.network.tls.TLSConfigBuilder,kotlin.Unit>){}[0]
+final suspend fun (io.ktor.network.sockets/Socket).io.ktor.network.tls/tls(kotlin.coroutines/CoroutineContext): io.ktor.network.sockets/Socket // io.ktor.network.tls/tls|tls@io.ktor.network.sockets.Socket(kotlin.coroutines.CoroutineContext){}[0]
+final suspend fun (io.ktor.network.sockets/Socket).io.ktor.network.tls/tls(kotlin.coroutines/CoroutineContext, io.ktor.network.tls/TLSConfig): io.ktor.network.sockets/Socket // io.ktor.network.tls/tls|tls@io.ktor.network.sockets.Socket(kotlin.coroutines.CoroutineContext;io.ktor.network.tls.TLSConfig){}[0]
+final suspend fun (io.ktor.network.sockets/Socket).io.ktor.network.tls/tls(kotlin.coroutines/CoroutineContext, kotlin/Function1<io.ktor.network.tls/TLSConfigBuilder, kotlin/Unit>): io.ktor.network.sockets/Socket // io.ktor.network.tls/tls|tls@io.ktor.network.sockets.Socket(kotlin.coroutines.CoroutineContext;kotlin.Function1<io.ktor.network.tls.TLSConfigBuilder,kotlin.Unit>){}[0]

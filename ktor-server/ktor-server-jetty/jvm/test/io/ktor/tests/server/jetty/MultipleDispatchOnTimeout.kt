@@ -36,10 +36,8 @@ class MultipleDispatchOnTimeout {
             module {
                 intercept(ApplicationCallPipeline.Call) {
                     callCount.incrementAndGet()
-                    val timeout = Math.max(
-                        (call.request as ServletApplicationRequest).servletRequest.asyncContext.timeout,
-                        0
-                    )
+                    val timeout = (call.request as ServletApplicationRequest)
+                        .servletRequest.asyncContext.timeout.coerceAtLeast(0)
                     Thread.sleep(timeout + 1000)
                     call.respondTextWriter {
                         write("A ok!")

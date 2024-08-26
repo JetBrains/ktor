@@ -25,7 +25,6 @@ public class WebSocketExtensionHeader(public val name: String, public val parame
         key to value
     }
 
-    @Suppress("KDocMissingDocumentation")
     override fun toString(): String = "$name ${parametersToString()}"
 
     private fun parametersToString(): String =

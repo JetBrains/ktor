@@ -24,6 +24,14 @@ kotlin.sourceSets {
         }
     }
 
+    wasmJsMain {
+        dependencies {
+            api(npm("node-fetch", libs.versions.node.fetch.version.get()))
+            api(npm("abort-controller", libs.versions.abort.controller.version.get()))
+            api(npm("ws", libs.versions.ws.version.get()))
+        }
+    }
+
     commonTest {
         dependencies {
             api(project(":ktor-test-dispatcher"))

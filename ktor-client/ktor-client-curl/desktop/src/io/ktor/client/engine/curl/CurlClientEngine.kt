@@ -45,11 +45,9 @@ internal class CurlClientEngine(
             val headers = HeadersImpl(rawHeaders.toMap())
             rawHeaders.release()
 
-            val responseBody: Any = if (needToProcessSSE(data, status, headers)) {
-                DefaultClientSSESession(data.body as SSEClientContent, bodyChannel, callContext)
-            } else {
-                bodyChannel
-            }
+            val responseBody: Any = data.attributes.getOrNull(ResponseAdapterAttributeKey)
+                ?.adapt(data, status, headers, bodyChannel, data.body, callContext)
+                ?: bodyChannel
 
             HttpResponseData(
                 status,
@@ -68,10 +66,8 @@ internal class CurlClientEngine(
     }
 }
 
-@Suppress("KDocMissingDocumentation")
 @Deprecated("This exception will be removed in a future release in favor of a better error handling.")
 public class CurlIllegalStateException(cause: String) : IllegalStateException(cause)
 
-@Suppress("KDocMissingDocumentation")
 @Deprecated("This exception will be removed in a future release in favor of a better error handling.")
 public class CurlRuntimeException(cause: String) : RuntimeException(cause)

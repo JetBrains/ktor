@@ -60,7 +60,7 @@ public class WebSocketWriter(
             queue.close(t)
         } finally {
             queue.close(CancellationException("WebSocket closed.", null))
-            writeChannel.close()
+            writeChannel.flushAndClose()
         }
 
         drainQueueAndDiscard()
@@ -164,7 +164,7 @@ public class WebSocketWriter(
 
     private class FlushRequest(parent: Job?) {
         private val done: CompletableJob = Job(parent)
-        public fun complete(): Boolean = done.complete()
+        fun complete(): Boolean = done.complete()
         suspend fun await(): Unit = done.join()
     }
 }

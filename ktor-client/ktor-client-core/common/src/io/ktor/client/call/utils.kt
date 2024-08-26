@@ -7,7 +7,6 @@ package io.ktor.client.call
 import io.ktor.http.*
 import io.ktor.http.content.*
 
-@Suppress("KDocMissingDocumentation")
 public class UnsupportedContentTypeException(content: OutgoingContent) :
     IllegalStateException("Failed to write body: ${content::class}")
 

@@ -11,6 +11,7 @@ public final class io/ktor/server/plugins/cors/CORSConfig {
 	public final fun allowOrigins (Lkotlin/jvm/functions/Function1;)V
 	public final fun allowXHttpMethodOverride ()V
 	public final fun anyHost ()V
+	public final fun anyMethod ()V
 	public final fun exposeHeader (Ljava/lang/String;)V
 	public final fun getAllowCredentials ()Z
 	public final fun getAllowNonSimpleContentTypes ()Z

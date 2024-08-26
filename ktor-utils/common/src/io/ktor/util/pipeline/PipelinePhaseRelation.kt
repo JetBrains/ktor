@@ -23,5 +23,5 @@ internal sealed class PipelinePhaseRelation {
     /**
      * Given phase should be executed last
      */
-    object Last : PipelinePhaseRelation()
+    data object Last : PipelinePhaseRelation()
 }

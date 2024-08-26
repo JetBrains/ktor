@@ -1,0 +1,228 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Alias: native => [iosArm64, iosSimulatorArm64, iosX64, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-test-host>
+abstract interface io.ktor.server.testing/ClientProvider { // io.ktor.server.testing/ClientProvider|null[0]
+    abstract val client // io.ktor.server.testing/ClientProvider.client|{}client[0]
+        abstract fun <get-client>(): io.ktor.client/HttpClient // io.ktor.server.testing/ClientProvider.client.<get-client>|<get-client>(){}[0]
+
+    abstract fun createClient(kotlin/Function1<io.ktor.client/HttpClientConfig<out io.ktor.client.engine/HttpClientEngineConfig>, kotlin/Unit>): io.ktor.client/HttpClient // io.ktor.server.testing/ClientProvider.createClient|createClient(kotlin.Function1<io.ktor.client.HttpClientConfig<out|io.ktor.client.engine.HttpClientEngineConfig>,kotlin.Unit>){}[0]
+}
+
+final class io.ktor.server.testing.client/InvalidTestRequestException : kotlin/IllegalArgumentException { // io.ktor.server.testing.client/InvalidTestRequestException|null[0]
+    constructor <init>(kotlin/String, kotlin.collections/Set<kotlin/String>, kotlin.collections/List<kotlin/String>) // io.ktor.server.testing.client/InvalidTestRequestException.<init>|<init>(kotlin.String;kotlin.collections.Set<kotlin.String>;kotlin.collections.List<kotlin.String>){}[0]
+}
+
+final class io.ktor.server.testing.client/TestHttpClientConfig : io.ktor.client.engine/HttpClientEngineConfig { // io.ktor.server.testing.client/TestHttpClientConfig|null[0]
+    constructor <init>() // io.ktor.server.testing.client/TestHttpClientConfig.<init>|<init>(){}[0]
+
+    final var app // io.ktor.server.testing.client/TestHttpClientConfig.app|{}app[0]
+        final fun <get-app>(): io.ktor.server.testing/TestApplicationEngine // io.ktor.server.testing.client/TestHttpClientConfig.app.<get-app>|<get-app>(){}[0]
+        final fun <set-app>(io.ktor.server.testing/TestApplicationEngine) // io.ktor.server.testing.client/TestHttpClientConfig.app.<set-app>|<set-app>(io.ktor.server.testing.TestApplicationEngine){}[0]
+}
+
+final class io.ktor.server.testing.client/TestHttpClientEngine : io.ktor.client.engine/HttpClientEngineBase { // io.ktor.server.testing.client/TestHttpClientEngine|null[0]
+    constructor <init>(io.ktor.server.testing.client/TestHttpClientConfig) // io.ktor.server.testing.client/TestHttpClientEngine.<init>|<init>(io.ktor.server.testing.client.TestHttpClientConfig){}[0]
+
+    final val config // io.ktor.server.testing.client/TestHttpClientEngine.config|{}config[0]
+        final fun <get-config>(): io.ktor.server.testing.client/TestHttpClientConfig // io.ktor.server.testing.client/TestHttpClientEngine.config.<get-config>|<get-config>(){}[0]
+    final val coroutineContext // io.ktor.server.testing.client/TestHttpClientEngine.coroutineContext|{}coroutineContext[0]
+        final fun <get-coroutineContext>(): kotlin.coroutines/CoroutineContext // io.ktor.server.testing.client/TestHttpClientEngine.coroutineContext.<get-coroutineContext>|<get-coroutineContext>(){}[0]
+    final val supportedCapabilities // io.ktor.server.testing.client/TestHttpClientEngine.supportedCapabilities|{}supportedCapabilities[0]
+        final fun <get-supportedCapabilities>(): kotlin.collections/Set<io.ktor.client.engine/HttpClientEngineCapability<*>> // io.ktor.server.testing.client/TestHttpClientEngine.supportedCapabilities.<get-supportedCapabilities>|<get-supportedCapabilities>(){}[0]
+
+    final fun close() // io.ktor.server.testing.client/TestHttpClientEngine.close|close(){}[0]
+    final suspend fun execute(io.ktor.client.request/HttpRequestData): io.ktor.client.request/HttpResponseData // io.ktor.server.testing.client/TestHttpClientEngine.execute|execute(io.ktor.client.request.HttpRequestData){}[0]
+
+    final object Companion : io.ktor.client.engine/HttpClientEngineFactory<io.ktor.server.testing.client/TestHttpClientConfig> { // io.ktor.server.testing.client/TestHttpClientEngine.Companion|null[0]
+        final fun create(kotlin/Function1<io.ktor.server.testing.client/TestHttpClientConfig, kotlin/Unit>): io.ktor.client.engine/HttpClientEngine // io.ktor.server.testing.client/TestHttpClientEngine.Companion.create|create(kotlin.Function1<io.ktor.server.testing.client.TestHttpClientConfig,kotlin.Unit>){}[0]
+    }
+}
+
+final class io.ktor.server.testing/ApplicationTestBuilder : io.ktor.server.testing/ClientProvider, io.ktor.server.testing/TestApplicationBuilder { // io.ktor.server.testing/ApplicationTestBuilder|null[0]
+    constructor <init>() // io.ktor.server.testing/ApplicationTestBuilder.<init>|<init>(){}[0]
+
+    final val client // io.ktor.server.testing/ApplicationTestBuilder.client|{}client[0]
+        final fun <get-client>(): io.ktor.client/HttpClient // io.ktor.server.testing/ApplicationTestBuilder.client.<get-client>|<get-client>(){}[0]
+
+    final fun createClient(kotlin/Function1<io.ktor.client/HttpClientConfig<out io.ktor.client.engine/HttpClientEngineConfig>, kotlin/Unit>): io.ktor.client/HttpClient // io.ktor.server.testing/ApplicationTestBuilder.createClient|createClient(kotlin.Function1<io.ktor.client.HttpClientConfig<out|io.ktor.client.engine.HttpClientEngineConfig>,kotlin.Unit>){}[0]
+    final suspend fun startApplication() // io.ktor.server.testing/ApplicationTestBuilder.startApplication|startApplication(){}[0]
+}
+
+final class io.ktor.server.testing/ExternalServicesBuilder { // io.ktor.server.testing/ExternalServicesBuilder|null[0]
+    final fun hosts(kotlin/Array<out kotlin/String>..., kotlin/Function1<io.ktor.server.application/Application, kotlin/Unit>) // io.ktor.server.testing/ExternalServicesBuilder.hosts|hosts(kotlin.Array<out|kotlin.String>...;kotlin.Function1<io.ktor.server.application.Application,kotlin.Unit>){}[0]
+}
+
+final class io.ktor.server.testing/TestApplication : io.ktor.server.testing/ClientProvider { // io.ktor.server.testing/TestApplication|null[0]
+    final val client // io.ktor.server.testing/TestApplication.client|{}client[0]
+        final fun <get-client>(): io.ktor.client/HttpClient // io.ktor.server.testing/TestApplication.client.<get-client>|<get-client>(){}[0]
+
+    final fun createClient(kotlin/Function1<io.ktor.client/HttpClientConfig<out io.ktor.client.engine/HttpClientEngineConfig>, kotlin/Unit>): io.ktor.client/HttpClient // io.ktor.server.testing/TestApplication.createClient|createClient(kotlin.Function1<io.ktor.client.HttpClientConfig<out|io.ktor.client.engine.HttpClientEngineConfig>,kotlin.Unit>){}[0]
+    final fun stop() // io.ktor.server.testing/TestApplication.stop|stop(){}[0]
+    final suspend fun start() // io.ktor.server.testing/TestApplication.start|start(){}[0]
+}
+
+final class io.ktor.server.testing/TestApplicationCall : io.ktor.server.engine/BaseApplicationCall, kotlinx.coroutines/CoroutineScope { // io.ktor.server.testing/TestApplicationCall|null[0]
+    constructor <init>(io.ktor.server.application/Application, kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin.coroutines/CoroutineContext) // io.ktor.server.testing/TestApplicationCall.<init>|<init>(io.ktor.server.application.Application;kotlin.Boolean;kotlin.Boolean;kotlin.coroutines.CoroutineContext){}[0]
+
+    final val coroutineContext // io.ktor.server.testing/TestApplicationCall.coroutineContext|{}coroutineContext[0]
+        final fun <get-coroutineContext>(): kotlin.coroutines/CoroutineContext // io.ktor.server.testing/TestApplicationCall.coroutineContext.<get-coroutineContext>|<get-coroutineContext>(){}[0]
+    final val request // io.ktor.server.testing/TestApplicationCall.request|{}request[0]
+        final fun <get-request>(): io.ktor.server.testing/TestApplicationRequest // io.ktor.server.testing/TestApplicationCall.request.<get-request>|<get-request>(){}[0]
+    final val response // io.ktor.server.testing/TestApplicationCall.response|{}response[0]
+        final fun <get-response>(): io.ktor.server.testing/TestApplicationResponse // io.ktor.server.testing/TestApplicationCall.response.<get-response>|<get-response>(){}[0]
+
+    final fun toString(): kotlin/String // io.ktor.server.testing/TestApplicationCall.toString|toString(){}[0]
+}
+
+final class io.ktor.server.testing/TestApplicationEngine : io.ktor.server.engine/BaseApplicationEngine, kotlinx.coroutines/CoroutineScope { // io.ktor.server.testing/TestApplicationEngine|null[0]
+    constructor <init>(io.ktor.server.application/ApplicationEnvironment = ..., io.ktor.events/Events, kotlin/Boolean = ..., kotlin/Function0<io.ktor.server.application/Application>, io.ktor.server.testing/TestApplicationEngine.Configuration) // io.ktor.server.testing/TestApplicationEngine.<init>|<init>(io.ktor.server.application.ApplicationEnvironment;io.ktor.events.Events;kotlin.Boolean;kotlin.Function0<io.ktor.server.application.Application>;io.ktor.server.testing.TestApplicationEngine.Configuration){}[0]
+
+    final val application // io.ktor.server.testing/TestApplicationEngine.application|{}application[0]
+        final fun <get-application>(): io.ktor.server.application/Application // io.ktor.server.testing/TestApplicationEngine.application.<get-application>|<get-application>(){}[0]
+    final val client // io.ktor.server.testing/TestApplicationEngine.client|{}client[0]
+        final fun <get-client>(): io.ktor.client/HttpClient // io.ktor.server.testing/TestApplicationEngine.client.<get-client>|<get-client>(){}[0]
+    final val coroutineContext // io.ktor.server.testing/TestApplicationEngine.coroutineContext|{}coroutineContext[0]
+        final fun <get-coroutineContext>(): kotlin.coroutines/CoroutineContext // io.ktor.server.testing/TestApplicationEngine.coroutineContext.<get-coroutineContext>|<get-coroutineContext>(){}[0]
+    final val engine // io.ktor.server.testing/TestApplicationEngine.engine|{}engine[0]
+        final fun <get-engine>(): io.ktor.client.engine/HttpClientEngine // io.ktor.server.testing/TestApplicationEngine.engine.<get-engine>|<get-engine>(){}[0]
+
+    final var callInterceptor // io.ktor.server.testing/TestApplicationEngine.callInterceptor|{}callInterceptor[0]
+        final fun <get-callInterceptor>(): kotlin.coroutines/SuspendFunction2<io.ktor.util.pipeline/PipelineContext<kotlin/Unit, io.ktor.server.application/PipelineCall>, kotlin/Unit, kotlin/Unit> // io.ktor.server.testing/TestApplicationEngine.callInterceptor.<get-callInterceptor>|<get-callInterceptor>(){}[0]
+        final fun <set-callInterceptor>(kotlin.coroutines/SuspendFunction2<io.ktor.util.pipeline/PipelineContext<kotlin/Unit, io.ktor.server.application/PipelineCall>, kotlin/Unit, kotlin/Unit>) // io.ktor.server.testing/TestApplicationEngine.callInterceptor.<set-callInterceptor>|<set-callInterceptor>(kotlin.coroutines.SuspendFunction2<io.ktor.util.pipeline.PipelineContext<kotlin.Unit,io.ktor.server.application.PipelineCall>,kotlin.Unit,kotlin.Unit>){}[0]
+
+    final fun createCall(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin.coroutines/CoroutineContext = ..., kotlin/Function1<io.ktor.server.testing/TestApplicationRequest, kotlin/Unit>): io.ktor.server.testing/TestApplicationCall // io.ktor.server.testing/TestApplicationEngine.createCall|createCall(kotlin.Boolean;kotlin.Boolean;kotlin.coroutines.CoroutineContext;kotlin.Function1<io.ktor.server.testing.TestApplicationRequest,kotlin.Unit>){}[0]
+    final fun handleRequest(kotlin/Boolean = ..., kotlin/Function1<io.ktor.server.testing/TestApplicationRequest, kotlin/Unit>): io.ktor.server.testing/TestApplicationCall // io.ktor.server.testing/TestApplicationEngine.handleRequest|handleRequest(kotlin.Boolean;kotlin.Function1<io.ktor.server.testing.TestApplicationRequest,kotlin.Unit>){}[0]
+    final fun handleWebSocket(kotlin/String, kotlin/Function1<io.ktor.server.testing/TestApplicationRequest, kotlin/Unit>): io.ktor.server.testing/TestApplicationCall // io.ktor.server.testing/TestApplicationEngine.handleWebSocket|handleWebSocket(kotlin.String;kotlin.Function1<io.ktor.server.testing.TestApplicationRequest,kotlin.Unit>){}[0]
+    final fun hookRequests(kotlin/Function2<io.ktor.server.testing/TestApplicationRequest, kotlin/Function1<io.ktor.server.testing/TestApplicationRequest, kotlin/Unit>, kotlin/Unit>, kotlin/Function1<io.ktor.server.testing/TestApplicationCall, kotlin/Unit>, kotlin/Function0<kotlin/Unit>) // io.ktor.server.testing/TestApplicationEngine.hookRequests|hookRequests(kotlin.Function2<io.ktor.server.testing.TestApplicationRequest,kotlin.Function1<io.ktor.server.testing.TestApplicationRequest,kotlin.Unit>,kotlin.Unit>;kotlin.Function1<io.ktor.server.testing.TestApplicationCall,kotlin.Unit>;kotlin.Function0<kotlin.Unit>){}[0]
+    final fun start(kotlin/Boolean): io.ktor.server.engine/ApplicationEngine // io.ktor.server.testing/TestApplicationEngine.start|start(kotlin.Boolean){}[0]
+    final fun stop(kotlin/Long, kotlin/Long) // io.ktor.server.testing/TestApplicationEngine.stop|stop(kotlin.Long;kotlin.Long){}[0]
+    final suspend fun resolvedConnectors(): kotlin.collections/List<io.ktor.server.engine/EngineConnectorConfig> // io.ktor.server.testing/TestApplicationEngine.resolvedConnectors|resolvedConnectors(){}[0]
+
+    final class Configuration : io.ktor.server.engine/BaseApplicationEngine.Configuration { // io.ktor.server.testing/TestApplicationEngine.Configuration|null[0]
+        constructor <init>() // io.ktor.server.testing/TestApplicationEngine.Configuration.<init>|<init>(){}[0]
+
+        final var dispatcher // io.ktor.server.testing/TestApplicationEngine.Configuration.dispatcher|{}dispatcher[0]
+            final fun <get-dispatcher>(): kotlin.coroutines/CoroutineContext // io.ktor.server.testing/TestApplicationEngine.Configuration.dispatcher.<get-dispatcher>|<get-dispatcher>(){}[0]
+            final fun <set-dispatcher>(kotlin.coroutines/CoroutineContext) // io.ktor.server.testing/TestApplicationEngine.Configuration.dispatcher.<set-dispatcher>|<set-dispatcher>(kotlin.coroutines.CoroutineContext){}[0]
+    }
+}
+
+final class io.ktor.server.testing/TestApplicationRequest : io.ktor.server.engine/BaseApplicationRequest, kotlinx.coroutines/CoroutineScope { // io.ktor.server.testing/TestApplicationRequest|null[0]
+    constructor <init>(io.ktor.server.testing/TestApplicationCall, kotlin/Boolean, io.ktor.http/HttpMethod = ..., kotlin/String = ..., kotlin/Int? = ..., kotlin/String = ...) // io.ktor.server.testing/TestApplicationRequest.<init>|<init>(io.ktor.server.testing.TestApplicationCall;kotlin.Boolean;io.ktor.http.HttpMethod;kotlin.String;kotlin.Int?;kotlin.String){}[0]
+
+    final val cookies // io.ktor.server.testing/TestApplicationRequest.cookies|{}cookies[0]
+        final fun <get-cookies>(): io.ktor.server.request/RequestCookies // io.ktor.server.testing/TestApplicationRequest.cookies.<get-cookies>|<get-cookies>(){}[0]
+    final val coroutineContext // io.ktor.server.testing/TestApplicationRequest.coroutineContext|{}coroutineContext[0]
+        final fun <get-coroutineContext>(): kotlin.coroutines/CoroutineContext // io.ktor.server.testing/TestApplicationRequest.coroutineContext.<get-coroutineContext>|<get-coroutineContext>(){}[0]
+    final val local // io.ktor.server.testing/TestApplicationRequest.local|{}local[0]
+        final fun <get-local>(): io.ktor.http/RequestConnectionPoint // io.ktor.server.testing/TestApplicationRequest.local.<get-local>|<get-local>(){}[0]
+    final val queryParameters // io.ktor.server.testing/TestApplicationRequest.queryParameters|{}queryParameters[0]
+        final fun <get-queryParameters>(): io.ktor.http/Parameters // io.ktor.server.testing/TestApplicationRequest.queryParameters.<get-queryParameters>|<get-queryParameters>(){}[0]
+    final val rawQueryParameters // io.ktor.server.testing/TestApplicationRequest.rawQueryParameters|{}rawQueryParameters[0]
+        final fun <get-rawQueryParameters>(): io.ktor.http/Parameters // io.ktor.server.testing/TestApplicationRequest.rawQueryParameters.<get-rawQueryParameters>|<get-rawQueryParameters>(){}[0]
+
+    final var bodyChannel // io.ktor.server.testing/TestApplicationRequest.bodyChannel|{}bodyChannel[0]
+        final fun <get-bodyChannel>(): io.ktor.utils.io/ByteReadChannel // io.ktor.server.testing/TestApplicationRequest.bodyChannel.<get-bodyChannel>|<get-bodyChannel>(){}[0]
+        final fun <set-bodyChannel>(io.ktor.utils.io/ByteReadChannel) // io.ktor.server.testing/TestApplicationRequest.bodyChannel.<set-bodyChannel>|<set-bodyChannel>(io.ktor.utils.io.ByteReadChannel){}[0]
+    final var method // io.ktor.server.testing/TestApplicationRequest.method|{}method[0]
+        final fun <get-method>(): io.ktor.http/HttpMethod // io.ktor.server.testing/TestApplicationRequest.method.<get-method>|<get-method>(){}[0]
+        final fun <set-method>(io.ktor.http/HttpMethod) // io.ktor.server.testing/TestApplicationRequest.method.<set-method>|<set-method>(io.ktor.http.HttpMethod){}[0]
+    final var port // io.ktor.server.testing/TestApplicationRequest.port|{}port[0]
+        final fun <get-port>(): kotlin/Int? // io.ktor.server.testing/TestApplicationRequest.port.<get-port>|<get-port>(){}[0]
+        final fun <set-port>(kotlin/Int?) // io.ktor.server.testing/TestApplicationRequest.port.<set-port>|<set-port>(kotlin.Int?){}[0]
+    final var protocol // io.ktor.server.testing/TestApplicationRequest.protocol|{}protocol[0]
+        final fun <get-protocol>(): kotlin/String // io.ktor.server.testing/TestApplicationRequest.protocol.<get-protocol>|<get-protocol>(){}[0]
+        final fun <set-protocol>(kotlin/String) // io.ktor.server.testing/TestApplicationRequest.protocol.<set-protocol>|<set-protocol>(kotlin.String){}[0]
+    final var uri // io.ktor.server.testing/TestApplicationRequest.uri|{}uri[0]
+        final fun <get-uri>(): kotlin/String // io.ktor.server.testing/TestApplicationRequest.uri.<get-uri>|<get-uri>(){}[0]
+        final fun <set-uri>(kotlin/String) // io.ktor.server.testing/TestApplicationRequest.uri.<set-uri>|<set-uri>(kotlin.String){}[0]
+    final var version // io.ktor.server.testing/TestApplicationRequest.version|{}version[0]
+        final fun <get-version>(): kotlin/String // io.ktor.server.testing/TestApplicationRequest.version.<get-version>|<get-version>(){}[0]
+        final fun <set-version>(kotlin/String) // io.ktor.server.testing/TestApplicationRequest.version.<set-version>|<set-version>(kotlin.String){}[0]
+
+    final fun addHeader(kotlin/String, kotlin/String) // io.ktor.server.testing/TestApplicationRequest.addHeader|addHeader(kotlin.String;kotlin.String){}[0]
+}
+
+final class io.ktor.server.testing/TestApplicationResponse : io.ktor.server.engine/BaseApplicationResponse, kotlinx.coroutines/CoroutineScope { // io.ktor.server.testing/TestApplicationResponse|null[0]
+    constructor <init>(io.ktor.server.testing/TestApplicationCall, kotlin/Boolean = ...) // io.ktor.server.testing/TestApplicationResponse.<init>|<init>(io.ktor.server.testing.TestApplicationCall;kotlin.Boolean){}[0]
+
+    final val content // io.ktor.server.testing/TestApplicationResponse.content|{}content[0]
+        final fun <get-content>(): kotlin/String? // io.ktor.server.testing/TestApplicationResponse.content.<get-content>|<get-content>(){}[0]
+    final val coroutineContext // io.ktor.server.testing/TestApplicationResponse.coroutineContext|{}coroutineContext[0]
+        final fun <get-coroutineContext>(): kotlin.coroutines/CoroutineContext // io.ktor.server.testing/TestApplicationResponse.coroutineContext.<get-coroutineContext>|<get-coroutineContext>(){}[0]
+    final val headers // io.ktor.server.testing/TestApplicationResponse.headers|{}headers[0]
+        final fun <get-headers>(): io.ktor.server.response/ResponseHeaders // io.ktor.server.testing/TestApplicationResponse.headers.<get-headers>|<get-headers>(){}[0]
+
+    final var byteContent // io.ktor.server.testing/TestApplicationResponse.byteContent|{}byteContent[0]
+        final fun <get-byteContent>(): kotlin/ByteArray? // io.ktor.server.testing/TestApplicationResponse.byteContent.<get-byteContent>|<get-byteContent>(){}[0]
+
+    final fun awaitWebSocket(kotlin/Long) // io.ktor.server.testing/TestApplicationResponse.awaitWebSocket|awaitWebSocket(kotlin.Long){}[0]
+    final fun contentChannel(): io.ktor.utils.io/ByteReadChannel? // io.ktor.server.testing/TestApplicationResponse.contentChannel|contentChannel(){}[0]
+    final fun websocketChannel(): io.ktor.utils.io/ByteReadChannel? // io.ktor.server.testing/TestApplicationResponse.websocketChannel|websocketChannel(){}[0]
+}
+
+open class io.ktor.server.testing/ExpectedTestException : kotlin/Throwable { // io.ktor.server.testing/ExpectedTestException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.server.testing/ExpectedTestException.<init>|<init>(kotlin.String){}[0]
+}
+
+open class io.ktor.server.testing/TestApplicationBuilder { // io.ktor.server.testing/TestApplicationBuilder|null[0]
+    constructor <init>() // io.ktor.server.testing/TestApplicationBuilder.<init>|<init>(){}[0]
+
+    final fun <#A1: io.ktor.util.pipeline/Pipeline<*, io.ktor.server.application/PipelineCall>, #B1: kotlin/Any, #C1: kotlin/Any> install(io.ktor.server.application/Plugin<#A1, #B1, #C1>, kotlin/Function1<#B1, kotlin/Unit> = ...) // io.ktor.server.testing/TestApplicationBuilder.install|install(io.ktor.server.application.Plugin<0:0,0:1,0:2>;kotlin.Function1<0:1,kotlin.Unit>){0§<io.ktor.util.pipeline.Pipeline<*,io.ktor.server.application.PipelineCall>>;1§<kotlin.Any>;2§<kotlin.Any>}[0]
+    final fun application(kotlin/Function1<io.ktor.server.application/Application, kotlin/Unit>) // io.ktor.server.testing/TestApplicationBuilder.application|application(kotlin.Function1<io.ktor.server.application.Application,kotlin.Unit>){}[0]
+    final fun engine(kotlin/Function1<io.ktor.server.testing/TestApplicationEngine.Configuration, kotlin/Unit>) // io.ktor.server.testing/TestApplicationBuilder.engine|engine(kotlin.Function1<io.ktor.server.testing.TestApplicationEngine.Configuration,kotlin.Unit>){}[0]
+    final fun environment(kotlin/Function1<io.ktor.server.engine/ApplicationEnvironmentBuilder, kotlin/Unit>) // io.ktor.server.testing/TestApplicationBuilder.environment|environment(kotlin.Function1<io.ktor.server.engine.ApplicationEnvironmentBuilder,kotlin.Unit>){}[0]
+    final fun externalServices(kotlin/Function1<io.ktor.server.testing/ExternalServicesBuilder, kotlin/Unit>) // io.ktor.server.testing/TestApplicationBuilder.externalServices|externalServices(kotlin.Function1<io.ktor.server.testing.ExternalServicesBuilder,kotlin.Unit>){}[0]
+    final fun routing(kotlin/Function1<io.ktor.server.routing/Route, kotlin/Unit>) // io.ktor.server.testing/TestApplicationBuilder.routing|routing(kotlin.Function1<io.ktor.server.routing.Route,kotlin.Unit>){}[0]
+    final fun testApplicationProperties(kotlin/Function1<io.ktor.server.application/ApplicationPropertiesBuilder, kotlin/Unit>) // io.ktor.server.testing/TestApplicationBuilder.testApplicationProperties|testApplicationProperties(kotlin.Function1<io.ktor.server.application.ApplicationPropertiesBuilder,kotlin.Unit>){}[0]
+}
+
+final object io.ktor.server.testing/It // io.ktor.server.testing/It|null[0]
+
+final object io.ktor.server.testing/On // io.ktor.server.testing/On|null[0]
+
+final object io.ktor.server.testing/TestEngine : io.ktor.server.engine/ApplicationEngineFactory<io.ktor.server.testing/TestApplicationEngine, io.ktor.server.testing/TestApplicationEngine.Configuration> { // io.ktor.server.testing/TestEngine|null[0]
+    final fun configuration(kotlin/Function1<io.ktor.server.testing/TestApplicationEngine.Configuration, kotlin/Unit>): io.ktor.server.testing/TestApplicationEngine.Configuration // io.ktor.server.testing/TestEngine.configuration|configuration(kotlin.Function1<io.ktor.server.testing.TestApplicationEngine.Configuration,kotlin.Unit>){}[0]
+    final fun create(io.ktor.server.application/ApplicationEnvironment, io.ktor.events/Events, kotlin/Boolean, io.ktor.server.testing/TestApplicationEngine.Configuration, kotlin/Function0<io.ktor.server.application/Application>): io.ktor.server.testing/TestApplicationEngine // io.ktor.server.testing/TestEngine.create|create(io.ktor.server.application.ApplicationEnvironment;io.ktor.events.Events;kotlin.Boolean;io.ktor.server.testing.TestApplicationEngine.Configuration;kotlin.Function0<io.ktor.server.application.Application>){}[0]
+}
+
+final fun (io.ktor.server.testing/TestApplicationEngine).io.ktor.server.testing/cookiesSession(kotlin/Function0<kotlin/Unit>) // io.ktor.server.testing/cookiesSession|cookiesSession@io.ktor.server.testing.TestApplicationEngine(kotlin.Function0<kotlin.Unit>){}[0]
+final fun (io.ktor.server.testing/TestApplicationEngine).io.ktor.server.testing/handleRequest(io.ktor.http/HttpMethod, kotlin/String, kotlin/Function1<io.ktor.server.testing/TestApplicationRequest, kotlin/Unit> = ...): io.ktor.server.testing/TestApplicationCall // io.ktor.server.testing/handleRequest|handleRequest@io.ktor.server.testing.TestApplicationEngine(io.ktor.http.HttpMethod;kotlin.String;kotlin.Function1<io.ktor.server.testing.TestApplicationRequest,kotlin.Unit>){}[0]
+final fun (io.ktor.server.testing/TestApplicationRequest).io.ktor.server.testing/setBody(kotlin/ByteArray) // io.ktor.server.testing/setBody|setBody@io.ktor.server.testing.TestApplicationRequest(kotlin.ByteArray){}[0]
+final fun (io.ktor.server.testing/TestApplicationRequest).io.ktor.server.testing/setBody(kotlin/String) // io.ktor.server.testing/setBody|setBody@io.ktor.server.testing.TestApplicationRequest(kotlin.String){}[0]
+final fun (io.ktor.server.testing/TestApplicationRequest).io.ktor.server.testing/setBody(kotlin/String, kotlin.collections/List<io.ktor.http.content/PartData>) // io.ktor.server.testing/setBody|setBody@io.ktor.server.testing.TestApplicationRequest(kotlin.String;kotlin.collections.List<io.ktor.http.content.PartData>){}[0]
+final fun (io.ktor.server.testing/TestApplicationRequest).io.ktor.server.testing/setBody(kotlinx.io/Source) // io.ktor.server.testing/setBody|setBody@io.ktor.server.testing.TestApplicationRequest(kotlinx.io.Source){}[0]
+final fun (io.ktor.server.testing/TestApplicationResponse).io.ktor.server.testing/contentType(): io.ktor.http/ContentType // io.ktor.server.testing/contentType|contentType@io.ktor.server.testing.TestApplicationResponse(){}[0]
+final fun <#A: kotlin/Any?> io.ktor.server.testing/withApplication(io.ktor.server.application/ApplicationEnvironment = ..., kotlin/Function1<io.ktor.server.testing/TestApplicationEngine.Configuration, kotlin/Unit> = ..., kotlin/Function1<io.ktor.server.testing/TestApplicationEngine, #A>): #A // io.ktor.server.testing/withApplication|withApplication(io.ktor.server.application.ApplicationEnvironment;kotlin.Function1<io.ktor.server.testing.TestApplicationEngine.Configuration,kotlin.Unit>;kotlin.Function1<io.ktor.server.testing.TestApplicationEngine,0:0>){0§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?> io.ktor.server.testing/withTestApplication(kotlin/Function1<io.ktor.server.application/Application, kotlin/Unit>, kotlin/Function1<io.ktor.server.testing/TestApplicationEngine, #A>): #A // io.ktor.server.testing/withTestApplication|withTestApplication(kotlin.Function1<io.ktor.server.application.Application,kotlin.Unit>;kotlin.Function1<io.ktor.server.testing.TestApplicationEngine,0:0>){0§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?> io.ktor.server.testing/withTestApplication(kotlin/Function1<io.ktor.server.application/Application, kotlin/Unit>, kotlin/Function1<io.ktor.server.testing/TestApplicationEngine.Configuration, kotlin/Unit> = ..., kotlin/Function1<io.ktor.server.testing/TestApplicationEngine, #A>): #A // io.ktor.server.testing/withTestApplication|withTestApplication(kotlin.Function1<io.ktor.server.application.Application,kotlin.Unit>;kotlin.Function1<io.ktor.server.testing.TestApplicationEngine.Configuration,kotlin.Unit>;kotlin.Function1<io.ktor.server.testing.TestApplicationEngine,0:0>){0§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?> io.ktor.server.testing/withTestApplication(kotlin/Function1<io.ktor.server.testing/TestApplicationEngine, #A>): #A // io.ktor.server.testing/withTestApplication|withTestApplication(kotlin.Function1<io.ktor.server.testing.TestApplicationEngine,0:0>){0§<kotlin.Any?>}[0]
+final fun io.ktor.server.testing/TestApplication(kotlin/Function1<io.ktor.server.testing/TestApplicationBuilder, kotlin/Unit>): io.ktor.server.testing/TestApplication // io.ktor.server.testing/TestApplication|TestApplication(kotlin.Function1<io.ktor.server.testing.TestApplicationBuilder,kotlin.Unit>){}[0]
+final fun io.ktor.server.testing/createTestEnvironment(kotlin/Function1<io.ktor.server.engine/ApplicationEnvironmentBuilder, kotlin/Unit> = ...): io.ktor.server.application/ApplicationEnvironment // io.ktor.server.testing/createTestEnvironment|createTestEnvironment(kotlin.Function1<io.ktor.server.engine.ApplicationEnvironmentBuilder,kotlin.Unit>){}[0]
+final inline fun (io.ktor.server.testing/On).io.ktor.server.testing/it(kotlin/String, kotlin/Function1<io.ktor.server.testing/It, kotlin/Unit>) // io.ktor.server.testing/it|it@io.ktor.server.testing.On(kotlin.String;kotlin.Function1<io.ktor.server.testing.It,kotlin.Unit>){}[0]
+final inline fun io.ktor.server.testing/on(kotlin/String, kotlin/Function1<io.ktor.server.testing/On, kotlin/Unit>) // io.ktor.server.testing/on|on(kotlin.String;kotlin.Function1<io.ktor.server.testing.On,kotlin.Unit>){}[0]
+final suspend fun io.ktor.server.testing/runTestApplication(kotlin.coroutines/CoroutineContext = ..., kotlin.coroutines/SuspendFunction1<io.ktor.server.testing/ApplicationTestBuilder, kotlin/Unit>) // io.ktor.server.testing/runTestApplication|runTestApplication(kotlin.coroutines.CoroutineContext;kotlin.coroutines.SuspendFunction1<io.ktor.server.testing.ApplicationTestBuilder,kotlin.Unit>){}[0]
+
+// Targets: [native]
+final fun io.ktor.server.testing/testApplication(kotlin.coroutines/CoroutineContext = ..., kotlin.coroutines/SuspendFunction1<io.ktor.server.testing/ApplicationTestBuilder, kotlin/Unit>) // io.ktor.server.testing/testApplication|testApplication(kotlin.coroutines.CoroutineContext;kotlin.coroutines.SuspendFunction1<io.ktor.server.testing.ApplicationTestBuilder,kotlin.Unit>){}[0]
+
+// Targets: [native]
+final fun io.ktor.server.testing/testApplication(kotlin.coroutines/SuspendFunction1<io.ktor.server.testing/ApplicationTestBuilder, kotlin/Unit>) // io.ktor.server.testing/testApplication|testApplication(kotlin.coroutines.SuspendFunction1<io.ktor.server.testing.ApplicationTestBuilder,kotlin.Unit>){}[0]
+
+// Targets: [js]
+final fun io.ktor.server.testing/testApplication(kotlin.coroutines/CoroutineContext = ..., kotlin.coroutines/SuspendFunction1<io.ktor.server.testing/ApplicationTestBuilder, kotlin/Unit>): kotlin.js/Promise<kotlin/Unit> // io.ktor.server.testing/testApplication|testApplication(kotlin.coroutines.CoroutineContext;kotlin.coroutines.SuspendFunction1<io.ktor.server.testing.ApplicationTestBuilder,kotlin.Unit>){}[0]
+
+// Targets: [js]
+final fun io.ktor.server.testing/testApplication(kotlin.coroutines/SuspendFunction1<io.ktor.server.testing/ApplicationTestBuilder, kotlin/Unit>): kotlin.js/Promise<kotlin/Unit> // io.ktor.server.testing/testApplication|testApplication(kotlin.coroutines.SuspendFunction1<io.ktor.server.testing.ApplicationTestBuilder,kotlin.Unit>){}[0]
+
+// Targets: [wasmJs]
+final fun io.ktor.server.testing/testApplication(kotlin.coroutines/CoroutineContext = ..., kotlin.coroutines/SuspendFunction1<io.ktor.server.testing/ApplicationTestBuilder, kotlin/Unit>): kotlin.js/Promise<kotlin.js/JsAny?> // io.ktor.server.testing/testApplication|testApplication(kotlin.coroutines.CoroutineContext;kotlin.coroutines.SuspendFunction1<io.ktor.server.testing.ApplicationTestBuilder,kotlin.Unit>){}[0]
+
+// Targets: [wasmJs]
+final fun io.ktor.server.testing/testApplication(kotlin.coroutines/SuspendFunction1<io.ktor.server.testing/ApplicationTestBuilder, kotlin/Unit>): kotlin.js/Promise<kotlin.js/JsAny?> // io.ktor.server.testing/testApplication|testApplication(kotlin.coroutines.SuspendFunction1<io.ktor.server.testing.ApplicationTestBuilder,kotlin.Unit>){}[0]

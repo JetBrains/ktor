@@ -10,13 +10,12 @@ package io.ktor.network.tls
  *
  * @property code numeric algorithm codes
  */
-@Suppress("KDocMissingDocumentation")
 internal object CertificateType {
-    val RSA: Byte = 1
-    val DSS: Byte = 2
-    val RSA_FIXED_DH: Byte = 3
-    val DSS_FIXED_DH: Byte = 4
-    val RSA_EPHEMERAL_DH_RESERVED: Byte = 5
-    val DSS_EPHEMERAL_DH_RESERVED: Byte = 6
-    val FORTEZZA_DMS_RESERVED: Byte = 20
+    const val RSA: Byte = 1
+    const val DSS: Byte = 2
+    const val RSA_FIXED_DH: Byte = 3
+    const val DSS_FIXED_DH: Byte = 4
+    const val RSA_EPHEMERAL_DH_RESERVED: Byte = 5
+    const val DSS_EPHEMERAL_DH_RESERVED: Byte = 6
+    const val FORTEZZA_DMS_RESERVED: Byte = 20
 }

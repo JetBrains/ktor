@@ -7,6 +7,7 @@ package io.ktor.client.engine.android
 import io.ktor.client.network.sockets.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
+import io.ktor.http.*
 import io.ktor.util.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
@@ -68,15 +69,20 @@ internal suspend fun <T> HttpURLConnection.timeoutAwareConnection(
 /**
  * Establish connection and return correspondent [ByteReadChannel].
  */
-@OptIn(InternalAPI::class)
-internal fun HttpURLConnection.content(callContext: CoroutineContext, request: HttpRequestData): ByteReadChannel = try {
-    inputStream?.buffered()
-} catch (_: IOException) {
-    errorStream?.buffered()
-}?.toByteReadChannel(
-    context = callContext,
-    pool = KtorDefaultPool
-)?.let { CoroutineScope(callContext).mapEngineExceptions(it, request) } ?: ByteReadChannel.Empty
+internal fun HttpURLConnection.content(status: Int, callContext: CoroutineContext): ByteReadChannel {
+    if (status in listOf(HttpStatusCode.NotModified.value, HttpStatusCode.NoContent.value)) {
+        return ByteReadChannel.Empty
+    }
+
+    return try {
+        inputStream?.buffered()
+    } catch (_: IOException) {
+        errorStream?.buffered()
+    }?.toByteReadChannel(
+        context = callContext,
+        pool = KtorDefaultPool
+    ) ?: ByteReadChannel.Empty
+}
 
 /**
  * Checks the exception and identifies timeout exception by it.

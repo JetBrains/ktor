@@ -29,7 +29,6 @@ internal actual fun HttpClient.platformResponseDefaultTransformers() {
                     override fun close() {
                         super.close()
                         stream.close()
-                        context.response.complete()
                     }
                 }
                 proceedWith(HttpResponseContainer(info, response))

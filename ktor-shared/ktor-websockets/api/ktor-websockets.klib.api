@@ -1,0 +1,250 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-websockets>
+final enum class io.ktor.websocket/FrameType : kotlin/Enum<io.ktor.websocket/FrameType> { // io.ktor.websocket/FrameType|null[0]
+    enum entry BINARY // io.ktor.websocket/FrameType.BINARY|null[0]
+    enum entry CLOSE // io.ktor.websocket/FrameType.CLOSE|null[0]
+    enum entry PING // io.ktor.websocket/FrameType.PING|null[0]
+    enum entry PONG // io.ktor.websocket/FrameType.PONG|null[0]
+    enum entry TEXT // io.ktor.websocket/FrameType.TEXT|null[0]
+
+    final val controlFrame // io.ktor.websocket/FrameType.controlFrame|{}controlFrame[0]
+        final fun <get-controlFrame>(): kotlin/Boolean // io.ktor.websocket/FrameType.controlFrame.<get-controlFrame>|<get-controlFrame>(){}[0]
+    final val entries // io.ktor.websocket/FrameType.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.websocket/FrameType> // io.ktor.websocket/FrameType.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val opcode // io.ktor.websocket/FrameType.opcode|{}opcode[0]
+        final fun <get-opcode>(): kotlin/Int // io.ktor.websocket/FrameType.opcode.<get-opcode>|<get-opcode>(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.websocket/FrameType // io.ktor.websocket/FrameType.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.websocket/FrameType> // io.ktor.websocket/FrameType.values|values#static(){}[0]
+
+    final object Companion { // io.ktor.websocket/FrameType.Companion|null[0]
+        final fun get(kotlin/Int): io.ktor.websocket/FrameType? // io.ktor.websocket/FrameType.Companion.get|get(kotlin.Int){}[0]
+    }
+}
+
+abstract interface <#A: kotlin/Any, #B: io.ktor.websocket/WebSocketExtension<#A>> io.ktor.websocket/WebSocketExtensionFactory { // io.ktor.websocket/WebSocketExtensionFactory|null[0]
+    abstract val key // io.ktor.websocket/WebSocketExtensionFactory.key|{}key[0]
+        abstract fun <get-key>(): io.ktor.util/AttributeKey<#B> // io.ktor.websocket/WebSocketExtensionFactory.key.<get-key>|<get-key>(){}[0]
+    abstract val rsv1 // io.ktor.websocket/WebSocketExtensionFactory.rsv1|{}rsv1[0]
+        abstract fun <get-rsv1>(): kotlin/Boolean // io.ktor.websocket/WebSocketExtensionFactory.rsv1.<get-rsv1>|<get-rsv1>(){}[0]
+    abstract val rsv2 // io.ktor.websocket/WebSocketExtensionFactory.rsv2|{}rsv2[0]
+        abstract fun <get-rsv2>(): kotlin/Boolean // io.ktor.websocket/WebSocketExtensionFactory.rsv2.<get-rsv2>|<get-rsv2>(){}[0]
+    abstract val rsv3 // io.ktor.websocket/WebSocketExtensionFactory.rsv3|{}rsv3[0]
+        abstract fun <get-rsv3>(): kotlin/Boolean // io.ktor.websocket/WebSocketExtensionFactory.rsv3.<get-rsv3>|<get-rsv3>(){}[0]
+
+    abstract fun install(kotlin/Function1<#A, kotlin/Unit>): #B // io.ktor.websocket/WebSocketExtensionFactory.install|install(kotlin.Function1<1:0,kotlin.Unit>){}[0]
+}
+
+abstract interface <#A: kotlin/Any> io.ktor.websocket/WebSocketExtension { // io.ktor.websocket/WebSocketExtension|null[0]
+    abstract val factory // io.ktor.websocket/WebSocketExtension.factory|{}factory[0]
+        abstract fun <get-factory>(): io.ktor.websocket/WebSocketExtensionFactory<#A, out io.ktor.websocket/WebSocketExtension<#A>> // io.ktor.websocket/WebSocketExtension.factory.<get-factory>|<get-factory>(){}[0]
+    abstract val protocols // io.ktor.websocket/WebSocketExtension.protocols|{}protocols[0]
+        abstract fun <get-protocols>(): kotlin.collections/List<io.ktor.websocket/WebSocketExtensionHeader> // io.ktor.websocket/WebSocketExtension.protocols.<get-protocols>|<get-protocols>(){}[0]
+
+    abstract fun clientNegotiation(kotlin.collections/List<io.ktor.websocket/WebSocketExtensionHeader>): kotlin/Boolean // io.ktor.websocket/WebSocketExtension.clientNegotiation|clientNegotiation(kotlin.collections.List<io.ktor.websocket.WebSocketExtensionHeader>){}[0]
+    abstract fun processIncomingFrame(io.ktor.websocket/Frame): io.ktor.websocket/Frame // io.ktor.websocket/WebSocketExtension.processIncomingFrame|processIncomingFrame(io.ktor.websocket.Frame){}[0]
+    abstract fun processOutgoingFrame(io.ktor.websocket/Frame): io.ktor.websocket/Frame // io.ktor.websocket/WebSocketExtension.processOutgoingFrame|processOutgoingFrame(io.ktor.websocket.Frame){}[0]
+    abstract fun serverNegotiation(kotlin.collections/List<io.ktor.websocket/WebSocketExtensionHeader>): kotlin.collections/List<io.ktor.websocket/WebSocketExtensionHeader> // io.ktor.websocket/WebSocketExtension.serverNegotiation|serverNegotiation(kotlin.collections.List<io.ktor.websocket.WebSocketExtensionHeader>){}[0]
+}
+
+abstract interface io.ktor.websocket/DefaultWebSocketSession : io.ktor.websocket/WebSocketSession { // io.ktor.websocket/DefaultWebSocketSession|null[0]
+    abstract val closeReason // io.ktor.websocket/DefaultWebSocketSession.closeReason|{}closeReason[0]
+        abstract fun <get-closeReason>(): kotlinx.coroutines/Deferred<io.ktor.websocket/CloseReason?> // io.ktor.websocket/DefaultWebSocketSession.closeReason.<get-closeReason>|<get-closeReason>(){}[0]
+
+    abstract var pingIntervalMillis // io.ktor.websocket/DefaultWebSocketSession.pingIntervalMillis|{}pingIntervalMillis[0]
+        abstract fun <get-pingIntervalMillis>(): kotlin/Long // io.ktor.websocket/DefaultWebSocketSession.pingIntervalMillis.<get-pingIntervalMillis>|<get-pingIntervalMillis>(){}[0]
+        abstract fun <set-pingIntervalMillis>(kotlin/Long) // io.ktor.websocket/DefaultWebSocketSession.pingIntervalMillis.<set-pingIntervalMillis>|<set-pingIntervalMillis>(kotlin.Long){}[0]
+    abstract var timeoutMillis // io.ktor.websocket/DefaultWebSocketSession.timeoutMillis|{}timeoutMillis[0]
+        abstract fun <get-timeoutMillis>(): kotlin/Long // io.ktor.websocket/DefaultWebSocketSession.timeoutMillis.<get-timeoutMillis>|<get-timeoutMillis>(){}[0]
+        abstract fun <set-timeoutMillis>(kotlin/Long) // io.ktor.websocket/DefaultWebSocketSession.timeoutMillis.<set-timeoutMillis>|<set-timeoutMillis>(kotlin.Long){}[0]
+
+    abstract fun start(kotlin.collections/List<io.ktor.websocket/WebSocketExtension<*>> = ...) // io.ktor.websocket/DefaultWebSocketSession.start|start(kotlin.collections.List<io.ktor.websocket.WebSocketExtension<*>>){}[0]
+}
+
+abstract interface io.ktor.websocket/WebSocketSession : kotlinx.coroutines/CoroutineScope { // io.ktor.websocket/WebSocketSession|null[0]
+    abstract val extensions // io.ktor.websocket/WebSocketSession.extensions|{}extensions[0]
+        abstract fun <get-extensions>(): kotlin.collections/List<io.ktor.websocket/WebSocketExtension<*>> // io.ktor.websocket/WebSocketSession.extensions.<get-extensions>|<get-extensions>(){}[0]
+    abstract val incoming // io.ktor.websocket/WebSocketSession.incoming|{}incoming[0]
+        abstract fun <get-incoming>(): kotlinx.coroutines.channels/ReceiveChannel<io.ktor.websocket/Frame> // io.ktor.websocket/WebSocketSession.incoming.<get-incoming>|<get-incoming>(){}[0]
+    abstract val outgoing // io.ktor.websocket/WebSocketSession.outgoing|{}outgoing[0]
+        abstract fun <get-outgoing>(): kotlinx.coroutines.channels/SendChannel<io.ktor.websocket/Frame> // io.ktor.websocket/WebSocketSession.outgoing.<get-outgoing>|<get-outgoing>(){}[0]
+
+    abstract var masking // io.ktor.websocket/WebSocketSession.masking|{}masking[0]
+        abstract fun <get-masking>(): kotlin/Boolean // io.ktor.websocket/WebSocketSession.masking.<get-masking>|<get-masking>(){}[0]
+        abstract fun <set-masking>(kotlin/Boolean) // io.ktor.websocket/WebSocketSession.masking.<set-masking>|<set-masking>(kotlin.Boolean){}[0]
+    abstract var maxFrameSize // io.ktor.websocket/WebSocketSession.maxFrameSize|{}maxFrameSize[0]
+        abstract fun <get-maxFrameSize>(): kotlin/Long // io.ktor.websocket/WebSocketSession.maxFrameSize.<get-maxFrameSize>|<get-maxFrameSize>(){}[0]
+        abstract fun <set-maxFrameSize>(kotlin/Long) // io.ktor.websocket/WebSocketSession.maxFrameSize.<set-maxFrameSize>|<set-maxFrameSize>(kotlin.Long){}[0]
+
+    abstract fun terminate() // io.ktor.websocket/WebSocketSession.terminate|terminate(){}[0]
+    abstract suspend fun flush() // io.ktor.websocket/WebSocketSession.flush|flush(){}[0]
+    open suspend fun send(io.ktor.websocket/Frame) // io.ktor.websocket/WebSocketSession.send|send(io.ktor.websocket.Frame){}[0]
+}
+
+final class io.ktor.websocket/CloseReason { // io.ktor.websocket/CloseReason|null[0]
+    constructor <init>(io.ktor.websocket/CloseReason.Codes, kotlin/String) // io.ktor.websocket/CloseReason.<init>|<init>(io.ktor.websocket.CloseReason.Codes;kotlin.String){}[0]
+    constructor <init>(kotlin/Short, kotlin/String) // io.ktor.websocket/CloseReason.<init>|<init>(kotlin.Short;kotlin.String){}[0]
+
+    final val code // io.ktor.websocket/CloseReason.code|{}code[0]
+        final fun <get-code>(): kotlin/Short // io.ktor.websocket/CloseReason.code.<get-code>|<get-code>(){}[0]
+    final val knownReason // io.ktor.websocket/CloseReason.knownReason|{}knownReason[0]
+        final fun <get-knownReason>(): io.ktor.websocket/CloseReason.Codes? // io.ktor.websocket/CloseReason.knownReason.<get-knownReason>|<get-knownReason>(){}[0]
+    final val message // io.ktor.websocket/CloseReason.message|{}message[0]
+        final fun <get-message>(): kotlin/String // io.ktor.websocket/CloseReason.message.<get-message>|<get-message>(){}[0]
+
+    final fun component1(): kotlin/Short // io.ktor.websocket/CloseReason.component1|component1(){}[0]
+    final fun component2(): kotlin/String // io.ktor.websocket/CloseReason.component2|component2(){}[0]
+    final fun copy(kotlin/Short = ..., kotlin/String = ...): io.ktor.websocket/CloseReason // io.ktor.websocket/CloseReason.copy|copy(kotlin.Short;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.websocket/CloseReason.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.websocket/CloseReason.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.websocket/CloseReason.toString|toString(){}[0]
+
+    final enum class Codes : kotlin/Enum<io.ktor.websocket/CloseReason.Codes> { // io.ktor.websocket/CloseReason.Codes|null[0]
+        enum entry CANNOT_ACCEPT // io.ktor.websocket/CloseReason.Codes.CANNOT_ACCEPT|null[0]
+        enum entry CLOSED_ABNORMALLY // io.ktor.websocket/CloseReason.Codes.CLOSED_ABNORMALLY|null[0]
+        enum entry GOING_AWAY // io.ktor.websocket/CloseReason.Codes.GOING_AWAY|null[0]
+        enum entry INTERNAL_ERROR // io.ktor.websocket/CloseReason.Codes.INTERNAL_ERROR|null[0]
+        enum entry NORMAL // io.ktor.websocket/CloseReason.Codes.NORMAL|null[0]
+        enum entry NOT_CONSISTENT // io.ktor.websocket/CloseReason.Codes.NOT_CONSISTENT|null[0]
+        enum entry NO_EXTENSION // io.ktor.websocket/CloseReason.Codes.NO_EXTENSION|null[0]
+        enum entry PROTOCOL_ERROR // io.ktor.websocket/CloseReason.Codes.PROTOCOL_ERROR|null[0]
+        enum entry SERVICE_RESTART // io.ktor.websocket/CloseReason.Codes.SERVICE_RESTART|null[0]
+        enum entry TOO_BIG // io.ktor.websocket/CloseReason.Codes.TOO_BIG|null[0]
+        enum entry TRY_AGAIN_LATER // io.ktor.websocket/CloseReason.Codes.TRY_AGAIN_LATER|null[0]
+        enum entry VIOLATED_POLICY // io.ktor.websocket/CloseReason.Codes.VIOLATED_POLICY|null[0]
+
+        final val code // io.ktor.websocket/CloseReason.Codes.code|{}code[0]
+            final fun <get-code>(): kotlin/Short // io.ktor.websocket/CloseReason.Codes.code.<get-code>|<get-code>(){}[0]
+        final val entries // io.ktor.websocket/CloseReason.Codes.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.websocket/CloseReason.Codes> // io.ktor.websocket/CloseReason.Codes.entries.<get-entries>|<get-entries>#static(){}[0]
+
+        final fun valueOf(kotlin/String): io.ktor.websocket/CloseReason.Codes // io.ktor.websocket/CloseReason.Codes.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<io.ktor.websocket/CloseReason.Codes> // io.ktor.websocket/CloseReason.Codes.values|values#static(){}[0]
+
+        final object Companion { // io.ktor.websocket/CloseReason.Codes.Companion|null[0]
+            final val UNEXPECTED_CONDITION // io.ktor.websocket/CloseReason.Codes.Companion.UNEXPECTED_CONDITION|{}UNEXPECTED_CONDITION[0]
+                final fun <get-UNEXPECTED_CONDITION>(): io.ktor.websocket/CloseReason.Codes // io.ktor.websocket/CloseReason.Codes.Companion.UNEXPECTED_CONDITION.<get-UNEXPECTED_CONDITION>|<get-UNEXPECTED_CONDITION>(){}[0]
+
+            final fun byCode(kotlin/Short): io.ktor.websocket/CloseReason.Codes? // io.ktor.websocket/CloseReason.Codes.Companion.byCode|byCode(kotlin.Short){}[0]
+        }
+    }
+}
+
+final class io.ktor.websocket/FrameTooBigException : kotlin/Exception, kotlinx.coroutines/CopyableThrowable<io.ktor.websocket/FrameTooBigException> { // io.ktor.websocket/FrameTooBigException|null[0]
+    constructor <init>(kotlin/Long) // io.ktor.websocket/FrameTooBigException.<init>|<init>(kotlin.Long){}[0]
+
+    final val frameSize // io.ktor.websocket/FrameTooBigException.frameSize|{}frameSize[0]
+        final fun <get-frameSize>(): kotlin/Long // io.ktor.websocket/FrameTooBigException.frameSize.<get-frameSize>|<get-frameSize>(){}[0]
+    final val message // io.ktor.websocket/FrameTooBigException.message|{}message[0]
+        final fun <get-message>(): kotlin/String // io.ktor.websocket/FrameTooBigException.message.<get-message>|<get-message>(){}[0]
+
+    final fun createCopy(): io.ktor.websocket/FrameTooBigException // io.ktor.websocket/FrameTooBigException.createCopy|createCopy(){}[0]
+}
+
+final class io.ktor.websocket/ProtocolViolationException : kotlin/Exception, kotlinx.coroutines/CopyableThrowable<io.ktor.websocket/ProtocolViolationException> { // io.ktor.websocket/ProtocolViolationException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.websocket/ProtocolViolationException.<init>|<init>(kotlin.String){}[0]
+
+    final val message // io.ktor.websocket/ProtocolViolationException.message|{}message[0]
+        final fun <get-message>(): kotlin/String // io.ktor.websocket/ProtocolViolationException.message.<get-message>|<get-message>(){}[0]
+    final val violation // io.ktor.websocket/ProtocolViolationException.violation|{}violation[0]
+        final fun <get-violation>(): kotlin/String // io.ktor.websocket/ProtocolViolationException.violation.<get-violation>|<get-violation>(){}[0]
+
+    final fun createCopy(): io.ktor.websocket/ProtocolViolationException // io.ktor.websocket/ProtocolViolationException.createCopy|createCopy(){}[0]
+}
+
+final class io.ktor.websocket/WebSocketExtensionHeader { // io.ktor.websocket/WebSocketExtensionHeader|null[0]
+    constructor <init>(kotlin/String, kotlin.collections/List<kotlin/String>) // io.ktor.websocket/WebSocketExtensionHeader.<init>|<init>(kotlin.String;kotlin.collections.List<kotlin.String>){}[0]
+
+    final val name // io.ktor.websocket/WebSocketExtensionHeader.name|{}name[0]
+        final fun <get-name>(): kotlin/String // io.ktor.websocket/WebSocketExtensionHeader.name.<get-name>|<get-name>(){}[0]
+    final val parameters // io.ktor.websocket/WebSocketExtensionHeader.parameters|{}parameters[0]
+        final fun <get-parameters>(): kotlin.collections/List<kotlin/String> // io.ktor.websocket/WebSocketExtensionHeader.parameters.<get-parameters>|<get-parameters>(){}[0]
+
+    final fun parseParameters(): kotlin.sequences/Sequence<kotlin/Pair<kotlin/String, kotlin/String>> // io.ktor.websocket/WebSocketExtensionHeader.parseParameters|parseParameters(){}[0]
+    final fun toString(): kotlin/String // io.ktor.websocket/WebSocketExtensionHeader.toString|toString(){}[0]
+}
+
+final class io.ktor.websocket/WebSocketExtensionsConfig { // io.ktor.websocket/WebSocketExtensionsConfig|null[0]
+    constructor <init>() // io.ktor.websocket/WebSocketExtensionsConfig.<init>|<init>(){}[0]
+
+    final fun <#A1: kotlin/Any> install(io.ktor.websocket/WebSocketExtensionFactory<#A1, *>, kotlin/Function1<#A1, kotlin/Unit> = ...) // io.ktor.websocket/WebSocketExtensionsConfig.install|install(io.ktor.websocket.WebSocketExtensionFactory<0:0,*>;kotlin.Function1<0:0,kotlin.Unit>){0§<kotlin.Any>}[0]
+    final fun build(): kotlin.collections/List<io.ktor.websocket/WebSocketExtension<*>> // io.ktor.websocket/WebSocketExtensionsConfig.build|build(){}[0]
+}
+
+sealed class io.ktor.websocket/Frame { // io.ktor.websocket/Frame|null[0]
+    constructor <init>(kotlin/Boolean, io.ktor.websocket/FrameType, kotlin/ByteArray, kotlinx.coroutines/DisposableHandle = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // io.ktor.websocket/Frame.<init>|<init>(kotlin.Boolean;io.ktor.websocket.FrameType;kotlin.ByteArray;kotlinx.coroutines.DisposableHandle;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+
+    final val data // io.ktor.websocket/Frame.data|{}data[0]
+        final fun <get-data>(): kotlin/ByteArray // io.ktor.websocket/Frame.data.<get-data>|<get-data>(){}[0]
+    final val disposableHandle // io.ktor.websocket/Frame.disposableHandle|{}disposableHandle[0]
+        final fun <get-disposableHandle>(): kotlinx.coroutines/DisposableHandle // io.ktor.websocket/Frame.disposableHandle.<get-disposableHandle>|<get-disposableHandle>(){}[0]
+    final val fin // io.ktor.websocket/Frame.fin|{}fin[0]
+        final fun <get-fin>(): kotlin/Boolean // io.ktor.websocket/Frame.fin.<get-fin>|<get-fin>(){}[0]
+    final val frameType // io.ktor.websocket/Frame.frameType|{}frameType[0]
+        final fun <get-frameType>(): io.ktor.websocket/FrameType // io.ktor.websocket/Frame.frameType.<get-frameType>|<get-frameType>(){}[0]
+    final val rsv1 // io.ktor.websocket/Frame.rsv1|{}rsv1[0]
+        final fun <get-rsv1>(): kotlin/Boolean // io.ktor.websocket/Frame.rsv1.<get-rsv1>|<get-rsv1>(){}[0]
+    final val rsv2 // io.ktor.websocket/Frame.rsv2|{}rsv2[0]
+        final fun <get-rsv2>(): kotlin/Boolean // io.ktor.websocket/Frame.rsv2.<get-rsv2>|<get-rsv2>(){}[0]
+    final val rsv3 // io.ktor.websocket/Frame.rsv3|{}rsv3[0]
+        final fun <get-rsv3>(): kotlin/Boolean // io.ktor.websocket/Frame.rsv3.<get-rsv3>|<get-rsv3>(){}[0]
+
+    final fun copy(): io.ktor.websocket/Frame // io.ktor.websocket/Frame.copy|copy(){}[0]
+    open fun toString(): kotlin/String // io.ktor.websocket/Frame.toString|toString(){}[0]
+
+    final class Binary : io.ktor.websocket/Frame { // io.ktor.websocket/Frame.Binary|null[0]
+        constructor <init>(kotlin/Boolean, kotlin/ByteArray) // io.ktor.websocket/Frame.Binary.<init>|<init>(kotlin.Boolean;kotlin.ByteArray){}[0]
+        constructor <init>(kotlin/Boolean, kotlin/ByteArray, kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // io.ktor.websocket/Frame.Binary.<init>|<init>(kotlin.Boolean;kotlin.ByteArray;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+        constructor <init>(kotlin/Boolean, kotlinx.io/Source) // io.ktor.websocket/Frame.Binary.<init>|<init>(kotlin.Boolean;kotlinx.io.Source){}[0]
+    }
+
+    final class Close : io.ktor.websocket/Frame { // io.ktor.websocket/Frame.Close|null[0]
+        constructor <init>() // io.ktor.websocket/Frame.Close.<init>|<init>(){}[0]
+        constructor <init>(io.ktor.websocket/CloseReason) // io.ktor.websocket/Frame.Close.<init>|<init>(io.ktor.websocket.CloseReason){}[0]
+        constructor <init>(kotlin/ByteArray) // io.ktor.websocket/Frame.Close.<init>|<init>(kotlin.ByteArray){}[0]
+        constructor <init>(kotlinx.io/Source) // io.ktor.websocket/Frame.Close.<init>|<init>(kotlinx.io.Source){}[0]
+    }
+
+    final class Ping : io.ktor.websocket/Frame { // io.ktor.websocket/Frame.Ping|null[0]
+        constructor <init>(kotlin/ByteArray) // io.ktor.websocket/Frame.Ping.<init>|<init>(kotlin.ByteArray){}[0]
+        constructor <init>(kotlinx.io/Source) // io.ktor.websocket/Frame.Ping.<init>|<init>(kotlinx.io.Source){}[0]
+    }
+
+    final class Pong : io.ktor.websocket/Frame { // io.ktor.websocket/Frame.Pong|null[0]
+        constructor <init>(kotlin/ByteArray, kotlinx.coroutines/DisposableHandle = ...) // io.ktor.websocket/Frame.Pong.<init>|<init>(kotlin.ByteArray;kotlinx.coroutines.DisposableHandle){}[0]
+        constructor <init>(kotlinx.io/Source) // io.ktor.websocket/Frame.Pong.<init>|<init>(kotlinx.io.Source){}[0]
+    }
+
+    final class Text : io.ktor.websocket/Frame { // io.ktor.websocket/Frame.Text|null[0]
+        constructor <init>(kotlin/Boolean, kotlin/ByteArray) // io.ktor.websocket/Frame.Text.<init>|<init>(kotlin.Boolean;kotlin.ByteArray){}[0]
+        constructor <init>(kotlin/Boolean, kotlin/ByteArray, kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // io.ktor.websocket/Frame.Text.<init>|<init>(kotlin.Boolean;kotlin.ByteArray;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+        constructor <init>(kotlin/Boolean, kotlinx.io/Source) // io.ktor.websocket/Frame.Text.<init>|<init>(kotlin.Boolean;kotlinx.io.Source){}[0]
+        constructor <init>(kotlin/String) // io.ktor.websocket/Frame.Text.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final object Companion { // io.ktor.websocket/Frame.Companion|null[0]
+        final fun byType(kotlin/Boolean, io.ktor.websocket/FrameType, kotlin/ByteArray, kotlin/Boolean, kotlin/Boolean, kotlin/Boolean): io.ktor.websocket/Frame // io.ktor.websocket/Frame.Companion.byType|byType(kotlin.Boolean;io.ktor.websocket.FrameType;kotlin.ByteArray;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+    }
+}
+
+final fun (io.ktor.websocket/Frame).io.ktor.websocket/readBytes(): kotlin/ByteArray // io.ktor.websocket/readBytes|readBytes@io.ktor.websocket.Frame(){}[0]
+final fun (io.ktor.websocket/Frame.Close).io.ktor.websocket/readReason(): io.ktor.websocket/CloseReason? // io.ktor.websocket/readReason|readReason@io.ktor.websocket.Frame.Close(){}[0]
+final fun (io.ktor.websocket/Frame.Text).io.ktor.websocket/readText(): kotlin/String // io.ktor.websocket/readText|readText@io.ktor.websocket.Frame.Text(){}[0]
+final fun <#A: io.ktor.websocket/WebSocketExtension<*>> (io.ktor.websocket/WebSocketSession).io.ktor.websocket/extension(io.ktor.websocket/WebSocketExtensionFactory<*, #A>): #A // io.ktor.websocket/extension|extension@io.ktor.websocket.WebSocketSession(io.ktor.websocket.WebSocketExtensionFactory<*,0:0>){0§<io.ktor.websocket.WebSocketExtension<*>>}[0]
+final fun <#A: io.ktor.websocket/WebSocketExtension<*>> (io.ktor.websocket/WebSocketSession).io.ktor.websocket/extensionOrNull(io.ktor.websocket/WebSocketExtensionFactory<*, #A>): #A? // io.ktor.websocket/extensionOrNull|extensionOrNull@io.ktor.websocket.WebSocketSession(io.ktor.websocket.WebSocketExtensionFactory<*,0:0>){0§<io.ktor.websocket.WebSocketExtension<*>>}[0]
+final fun io.ktor.websocket/DefaultWebSocketSession(io.ktor.websocket/WebSocketSession, kotlin/Long = ..., kotlin/Long = ...): io.ktor.websocket/DefaultWebSocketSession // io.ktor.websocket/DefaultWebSocketSession|DefaultWebSocketSession(io.ktor.websocket.WebSocketSession;kotlin.Long;kotlin.Long){}[0]
+final fun io.ktor.websocket/RawWebSocket(io.ktor.utils.io/ByteReadChannel, io.ktor.utils.io/ByteWriteChannel, kotlin/Long = ..., kotlin/Boolean = ..., kotlin.coroutines/CoroutineContext): io.ktor.websocket/WebSocketSession // io.ktor.websocket/RawWebSocket|RawWebSocket(io.ktor.utils.io.ByteReadChannel;io.ktor.utils.io.ByteWriteChannel;kotlin.Long;kotlin.Boolean;kotlin.coroutines.CoroutineContext){}[0]
+final fun io.ktor.websocket/parseWebSocketExtensions(kotlin/String): kotlin.collections/List<io.ktor.websocket/WebSocketExtensionHeader> // io.ktor.websocket/parseWebSocketExtensions|parseWebSocketExtensions(kotlin.String){}[0]
+final suspend fun (io.ktor.utils.io/ByteReadChannel).io.ktor.websocket/readFrame(kotlin/Long, kotlin/Int): io.ktor.websocket/Frame // io.ktor.websocket/readFrame|readFrame@io.ktor.utils.io.ByteReadChannel(kotlin.Long;kotlin.Int){}[0]
+final suspend fun (io.ktor.utils.io/ByteWriteChannel).io.ktor.websocket/writeFrame(io.ktor.websocket/Frame, kotlin/Boolean) // io.ktor.websocket/writeFrame|writeFrame@io.ktor.utils.io.ByteWriteChannel(io.ktor.websocket.Frame;kotlin.Boolean){}[0]
+final suspend fun (io.ktor.websocket/WebSocketSession).io.ktor.websocket/close(io.ktor.websocket/CloseReason = ...) // io.ktor.websocket/close|close@io.ktor.websocket.WebSocketSession(io.ktor.websocket.CloseReason){}[0]
+final suspend fun (io.ktor.websocket/WebSocketSession).io.ktor.websocket/close(kotlin/Throwable?) // io.ktor.websocket/close|close@io.ktor.websocket.WebSocketSession(kotlin.Throwable?){}[0]
+final suspend fun (io.ktor.websocket/WebSocketSession).io.ktor.websocket/closeExceptionally(kotlin/Throwable) // io.ktor.websocket/closeExceptionally|closeExceptionally@io.ktor.websocket.WebSocketSession(kotlin.Throwable){}[0]
+final suspend fun (io.ktor.websocket/WebSocketSession).io.ktor.websocket/send(kotlin/ByteArray) // io.ktor.websocket/send|send@io.ktor.websocket.WebSocketSession(kotlin.ByteArray){}[0]
+final suspend fun (io.ktor.websocket/WebSocketSession).io.ktor.websocket/send(kotlin/String) // io.ktor.websocket/send|send@io.ktor.websocket.WebSocketSession(kotlin.String){}[0]

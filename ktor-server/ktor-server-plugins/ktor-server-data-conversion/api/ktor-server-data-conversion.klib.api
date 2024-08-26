@@ -1,0 +1,17 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-data-conversion>
+final object io.ktor.server.plugins.dataconversion/DataConversion : io.ktor.server.application/BaseApplicationPlugin<io.ktor.server.application/ApplicationCallPipeline, io.ktor.util.converters/DataConversion.Configuration, io.ktor.util.converters/DataConversion> { // io.ktor.server.plugins.dataconversion/DataConversion|null[0]
+    final val key // io.ktor.server.plugins.dataconversion/DataConversion.key|{}key[0]
+        final fun <get-key>(): io.ktor.util/AttributeKey<io.ktor.util.converters/DataConversion> // io.ktor.server.plugins.dataconversion/DataConversion.key.<get-key>|<get-key>(){}[0]
+
+    final fun install(io.ktor.server.application/ApplicationCallPipeline, kotlin/Function1<io.ktor.util.converters/DataConversion.Configuration, kotlin/Unit>): io.ktor.util.converters/DataConversion // io.ktor.server.plugins.dataconversion/DataConversion.install|install(io.ktor.server.application.ApplicationCallPipeline;kotlin.Function1<io.ktor.util.converters.DataConversion.Configuration,kotlin.Unit>){}[0]
+}
+
+final val io.ktor.server.plugins.dataconversion/conversionService // io.ktor.server.plugins.dataconversion/conversionService|@io.ktor.server.application.ApplicationCallPipeline{}conversionService[0]
+    final fun (io.ktor.server.application/ApplicationCallPipeline).<get-conversionService>(): io.ktor.util.converters/ConversionService // io.ktor.server.plugins.dataconversion/conversionService.<get-conversionService>|<get-conversionService>@io.ktor.server.application.ApplicationCallPipeline(){}[0]

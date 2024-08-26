@@ -115,7 +115,10 @@ class ConnectionTest {
                         .first()
                 }
         }.use {
-            it.openWriteChannel(autoFlush = true).use { close() }
+            it.openWriteChannel(autoFlush = true).use {
+                @Suppress("DEPRECATION")
+                close()
+            }
         }
     }
 

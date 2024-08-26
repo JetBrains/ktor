@@ -11,7 +11,6 @@ import io.ktor.server.request.*
 import io.ktor.server.testing.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 class ApplicationRequestContentTest {
 
     @Test

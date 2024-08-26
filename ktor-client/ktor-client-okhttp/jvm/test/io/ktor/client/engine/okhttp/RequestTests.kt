@@ -38,7 +38,7 @@ class RequestTests : TestWithKtor() {
     }
 
     class LoggingInterceptor(private val oneShot: Boolean) : Interceptor {
-        override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+        override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
             assertEquals(oneShot, request.body!!.isOneShot())
             return chain.proceed(request)

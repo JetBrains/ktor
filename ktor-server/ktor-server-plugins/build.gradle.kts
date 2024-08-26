@@ -17,7 +17,7 @@ subprojects {
                 dependencies {
                     api(project(":ktor-server:ktor-server-core", configuration = "testOutput"))
 
-                    api("ch.qos.logback:logback-classic:${Versions.logback}")
+                    api("ch.qos.logback:logback-classic:${project.Versions.logback}")
                 }
             }
         }

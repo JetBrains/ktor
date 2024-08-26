@@ -8,6 +8,7 @@ import io.ktor.client.engine.*
 import io.ktor.util.*
 import io.ktor.utils.io.*
 import kotlin.experimental.*
+import kotlin.native.runtime.*
 
 private class TestFailure(val name: String, val cause: Throwable) {
     @OptIn(ExperimentalNativeApi::class)

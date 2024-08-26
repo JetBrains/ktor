@@ -163,20 +163,25 @@ public class HttpRequestRetryConfig {
 
     /**
      * Specifies an exponential delay between retries, which is calculated using the Exponential backoff algorithm.
-     * This delay equals to `base ^ retryCount * 1000 + [0..randomizationMs]`
+     * This delay equals to `(base ^ retryCount-1) * baseDelayMs + [0..randomizationMs]`.
+     *
+     * For the defaults (base delay 1000ms, base 2), this results in 1000ms, 2000ms, 4000ms, 8000ms ... plus a random
+     * value up to 1000ms.
      */
     public fun exponentialDelay(
         base: Double = 2.0,
+        baseDelayMs: Long = 1000,
         maxDelayMs: Long = 60000,
         randomizationMs: Long = 1000,
         respectRetryAfterHeader: Boolean = true
     ) {
         check(base > 0)
+        check(baseDelayMs > 0)
         check(maxDelayMs > 0)
         check(randomizationMs >= 0)
 
         delayMillis(respectRetryAfterHeader) { retry ->
-            val delay = minOf(base.pow(retry).toLong() * 1000L, maxDelayMs)
+            val delay = minOf((base.pow(retry - 1) * baseDelayMs).toLong(), maxDelayMs)
             delay + randomMs(randomizationMs)
         }
     }

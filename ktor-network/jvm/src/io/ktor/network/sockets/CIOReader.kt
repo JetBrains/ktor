@@ -13,7 +13,6 @@ import kotlinx.coroutines.*
 import java.nio.*
 import java.nio.channels.*
 
-@Suppress("DEPRECATION")
 internal fun CoroutineScope.attachForReadingImpl(
     channel: ByteChannel,
     nioChannel: ReadableByteChannel,
@@ -23,7 +22,7 @@ internal fun CoroutineScope.attachForReadingImpl(
     socketOptions: SocketOptions.TCPClientSocketOptions? = null
 ): WriterJob {
     val buffer = pool.borrow()
-    return writer(Dispatchers.Unconfined + CoroutineName("cio-from-nio-reader"), channel) {
+    return writer(Dispatchers.IO + CoroutineName("cio-from-nio-reader"), channel) {
         try {
             val timeout = if (socketOptions?.socketTimeout != null) {
                 createTimeout("reading", socketOptions.socketTimeout) {
@@ -74,14 +73,14 @@ internal fun CoroutineScope.attachForReadingImpl(
     }
 }
 
-@Suppress("DEPRECATION")
+@OptIn(InternalAPI::class)
 internal fun CoroutineScope.attachForReadingDirectImpl(
     channel: ByteChannel,
     nioChannel: ReadableByteChannel,
     selectable: Selectable,
     selector: SelectorManager,
     socketOptions: SocketOptions.TCPClientSocketOptions? = null
-): WriterJob = writer(Dispatchers.Unconfined + CoroutineName("cio-from-nio-reader"), channel) {
+): WriterJob = writer(Dispatchers.IO + CoroutineName("cio-from-nio-reader"), channel) {
     try {
         selectable.interestOp(SelectInterest.READ, false)
 

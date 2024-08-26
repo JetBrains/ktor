@@ -5,19 +5,20 @@
 package io.ktor.client.engine.js
 
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.engine.*
 import io.ktor.client.fetch.RequestInit
 import io.ktor.client.request.*
 import io.ktor.http.content.*
-import io.ktor.util.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
+import kotlinx.io.*
 import org.khronos.webgl.Uint8Array
 import org.w3c.fetch.*
 import kotlin.coroutines.*
 
-@OptIn(InternalAPI::class, DelicateCoroutinesApi::class)
+@OptIn(InternalAPI::class)
 internal suspend fun HttpRequestData.toRaw(
     clientConfig: HttpClientConfig<*>,
     callContext: CoroutineContext
@@ -27,16 +28,7 @@ internal suspend fun HttpRequestData.toRaw(
         jsHeaders[key] = value
     }
 
-    val bodyBytes = when (val content = body) {
-        is OutgoingContent.ByteArrayContent -> content.bytes()
-        is OutgoingContent.ReadChannelContent -> content.readFrom().readRemaining().readBytes()
-        is OutgoingContent.WriteChannelContent -> {
-            GlobalScope.writer(callContext) {
-                content.writeTo(channel)
-            }.channel.readRemaining().readBytes()
-        }
-        else -> null
-    }
+    val bodyBytes = getBodyBytes(body, callContext)
 
     return buildObject {
         method = this@toRaw.method.value
@@ -44,6 +36,22 @@ internal suspend fun HttpRequestData.toRaw(
         redirect = if (clientConfig.followRedirects) RequestRedirect.FOLLOW else RequestRedirect.MANUAL
 
         bodyBytes?.let { body = Uint8Array(it.toTypedArray()) }
+    }
+}
+
+@OptIn(DelicateCoroutinesApi::class)
+private suspend fun getBodyBytes(content: OutgoingContent, callContext: CoroutineContext): ByteArray? {
+    return when (content) {
+        is OutgoingContent.ByteArrayContent -> content.bytes()
+        is OutgoingContent.ReadChannelContent -> content.readFrom().readRemaining().readByteArray()
+        is OutgoingContent.WriteChannelContent -> {
+            GlobalScope.writer(callContext) {
+                content.writeTo(channel)
+            }.channel.readRemaining().readByteArray()
+        }
+        is OutgoingContent.ContentWrapper -> getBodyBytes(content.delegate(), callContext)
+        is OutgoingContent.NoContent -> null
+        is OutgoingContent.ProtocolUpgrade -> throw UnsupportedContentTypeException(content)
     }
 }
 

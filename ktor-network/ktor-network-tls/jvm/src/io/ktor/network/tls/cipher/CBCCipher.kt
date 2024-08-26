@@ -7,6 +7,7 @@ package io.ktor.network.tls.cipher
 import io.ktor.network.tls.*
 import io.ktor.util.*
 import io.ktor.utils.io.core.*
+import kotlinx.io.*
 import java.security.*
 import javax.crypto.*
 import javax.crypto.spec.*
@@ -29,7 +30,7 @@ internal class CBCCipher(
     override fun encrypt(record: TLSRecord): TLSRecord {
         sendCipher.init(Cipher.ENCRYPT_MODE, sendKey, IvParameterSpec(generateNonce(suite.fixedIvLength)))
 
-        val content = record.packet.readBytes()
+        val content = record.packet.readByteArray()
         val macBytes = prepareMac(record, content)
 
         val encryptionData = buildPacket {
@@ -47,10 +48,10 @@ internal class CBCCipher(
 
     override fun decrypt(record: TLSRecord): TLSRecord {
         val packet = record.packet
-        val serverIV = packet.readBytes(suite.fixedIvLength)
+        val serverIV = packet.readByteArray(suite.fixedIvLength)
         receiveCipher.init(Cipher.DECRYPT_MODE, receiveKey, IvParameterSpec(serverIV))
 
-        val content = packet.cipherLoop(receiveCipher).readBytes()
+        val content = packet.cipherLoop(receiveCipher).readByteArray()
 
         val paddingLength = (content[content.size - 1].toInt() and 0xFF)
         val paddingStart = content.size - paddingLength - 1
@@ -84,7 +85,7 @@ internal class CBCCipher(
         return sendMac.doFinal(content)
     }
 
-    private fun BytePacketBuilder.writePadding() {
+    private fun Sink.writePadding() {
         val lastBlockSize = (size + 1) % sendCipher.blockSize
         val paddingSize: Byte = (sendCipher.blockSize - lastBlockSize).toByte()
 

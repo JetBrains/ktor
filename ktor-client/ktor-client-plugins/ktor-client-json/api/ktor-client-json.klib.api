@@ -1,0 +1,62 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Alias: native => [iosArm64, iosSimulatorArm64, iosX64, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-client-json>
+abstract interface io.ktor.client.plugins.json/JsonSerializer { // io.ktor.client.plugins.json/JsonSerializer|null[0]
+    abstract fun read(io.ktor.util.reflect/TypeInfo, kotlinx.io/Source): kotlin/Any // io.ktor.client.plugins.json/JsonSerializer.read|read(io.ktor.util.reflect.TypeInfo;kotlinx.io.Source){}[0]
+    abstract fun write(kotlin/Any, io.ktor.http/ContentType): io.ktor.http.content/OutgoingContent // io.ktor.client.plugins.json/JsonSerializer.write|write(kotlin.Any;io.ktor.http.ContentType){}[0]
+    open fun write(kotlin/Any): io.ktor.http.content/OutgoingContent // io.ktor.client.plugins.json/JsonSerializer.write|write(kotlin.Any){}[0]
+}
+
+final class io.ktor.client.plugins.json/JsonPlugin { // io.ktor.client.plugins.json/JsonPlugin|null[0]
+    final val acceptContentTypes // io.ktor.client.plugins.json/JsonPlugin.acceptContentTypes|{}acceptContentTypes[0]
+        final fun <get-acceptContentTypes>(): kotlin.collections/List<io.ktor.http/ContentType> // io.ktor.client.plugins.json/JsonPlugin.acceptContentTypes.<get-acceptContentTypes>|<get-acceptContentTypes>(){}[0]
+    final val serializer // io.ktor.client.plugins.json/JsonPlugin.serializer|{}serializer[0]
+        final fun <get-serializer>(): io.ktor.client.plugins.json/JsonSerializer // io.ktor.client.plugins.json/JsonPlugin.serializer.<get-serializer>|<get-serializer>(){}[0]
+
+    final class Config { // io.ktor.client.plugins.json/JsonPlugin.Config|null[0]
+        constructor <init>() // io.ktor.client.plugins.json/JsonPlugin.Config.<init>|<init>(){}[0]
+
+        final var acceptContentTypes // io.ktor.client.plugins.json/JsonPlugin.Config.acceptContentTypes|{}acceptContentTypes[0]
+            final fun <get-acceptContentTypes>(): kotlin.collections/List<io.ktor.http/ContentType> // io.ktor.client.plugins.json/JsonPlugin.Config.acceptContentTypes.<get-acceptContentTypes>|<get-acceptContentTypes>(){}[0]
+            final fun <set-acceptContentTypes>(kotlin.collections/List<io.ktor.http/ContentType>) // io.ktor.client.plugins.json/JsonPlugin.Config.acceptContentTypes.<set-acceptContentTypes>|<set-acceptContentTypes>(kotlin.collections.List<io.ktor.http.ContentType>){}[0]
+        final var receiveContentTypeMatchers // io.ktor.client.plugins.json/JsonPlugin.Config.receiveContentTypeMatchers|{}receiveContentTypeMatchers[0]
+            final fun <get-receiveContentTypeMatchers>(): kotlin.collections/List<io.ktor.http/ContentTypeMatcher> // io.ktor.client.plugins.json/JsonPlugin.Config.receiveContentTypeMatchers.<get-receiveContentTypeMatchers>|<get-receiveContentTypeMatchers>(){}[0]
+            final fun <set-receiveContentTypeMatchers>(kotlin.collections/List<io.ktor.http/ContentTypeMatcher>) // io.ktor.client.plugins.json/JsonPlugin.Config.receiveContentTypeMatchers.<set-receiveContentTypeMatchers>|<set-receiveContentTypeMatchers>(kotlin.collections.List<io.ktor.http.ContentTypeMatcher>){}[0]
+        final var serializer // io.ktor.client.plugins.json/JsonPlugin.Config.serializer|{}serializer[0]
+            final fun <get-serializer>(): io.ktor.client.plugins.json/JsonSerializer? // io.ktor.client.plugins.json/JsonPlugin.Config.serializer.<get-serializer>|<get-serializer>(){}[0]
+            final fun <set-serializer>(io.ktor.client.plugins.json/JsonSerializer?) // io.ktor.client.plugins.json/JsonPlugin.Config.serializer.<set-serializer>|<set-serializer>(io.ktor.client.plugins.json.JsonSerializer?){}[0]
+
+        final fun accept(kotlin/Array<out io.ktor.http/ContentType>...) // io.ktor.client.plugins.json/JsonPlugin.Config.accept|accept(kotlin.Array<out|io.ktor.http.ContentType>...){}[0]
+        final fun clearIgnoredTypes() // io.ktor.client.plugins.json/JsonPlugin.Config.clearIgnoredTypes|clearIgnoredTypes(){}[0]
+        final fun ignoreType(kotlin.reflect/KClass<*>) // io.ktor.client.plugins.json/JsonPlugin.Config.ignoreType|ignoreType(kotlin.reflect.KClass<*>){}[0]
+        final fun receive(io.ktor.http/ContentTypeMatcher) // io.ktor.client.plugins.json/JsonPlugin.Config.receive|receive(io.ktor.http.ContentTypeMatcher){}[0]
+        final fun removeIgnoredType(kotlin.reflect/KClass<*>) // io.ktor.client.plugins.json/JsonPlugin.Config.removeIgnoredType|removeIgnoredType(kotlin.reflect.KClass<*>){}[0]
+        final inline fun <#A2: reified kotlin/Any?> ignoreType() // io.ktor.client.plugins.json/JsonPlugin.Config.ignoreType|ignoreType(){0§<kotlin.Any?>}[0]
+        final inline fun <#A2: reified kotlin/Any?> removeIgnoredType() // io.ktor.client.plugins.json/JsonPlugin.Config.removeIgnoredType|removeIgnoredType(){0§<kotlin.Any?>}[0]
+    }
+
+    final object Plugin : io.ktor.client.plugins/HttpClientPlugin<io.ktor.client.plugins.json/JsonPlugin.Config, io.ktor.client.plugins.json/JsonPlugin> { // io.ktor.client.plugins.json/JsonPlugin.Plugin|null[0]
+        final val key // io.ktor.client.plugins.json/JsonPlugin.Plugin.key|{}key[0]
+            final fun <get-key>(): io.ktor.util/AttributeKey<io.ktor.client.plugins.json/JsonPlugin> // io.ktor.client.plugins.json/JsonPlugin.Plugin.key.<get-key>|<get-key>(){}[0]
+
+        final fun install(io.ktor.client.plugins.json/JsonPlugin, io.ktor.client/HttpClient) // io.ktor.client.plugins.json/JsonPlugin.Plugin.install|install(io.ktor.client.plugins.json.JsonPlugin;io.ktor.client.HttpClient){}[0]
+        final fun prepare(kotlin/Function1<io.ktor.client.plugins.json/JsonPlugin.Config, kotlin/Unit>): io.ktor.client.plugins.json/JsonPlugin // io.ktor.client.plugins.json/JsonPlugin.Plugin.prepare|prepare(kotlin.Function1<io.ktor.client.plugins.json.JsonPlugin.Config,kotlin.Unit>){}[0]
+    }
+}
+
+final fun (io.ktor.client/HttpClientConfig<*>).io.ktor.client.plugins.json/Json(kotlin/Function1<io.ktor.client.plugins.json/JsonPlugin.Config, kotlin/Unit>) // io.ktor.client.plugins.json/Json|Json@io.ktor.client.HttpClientConfig<*>(kotlin.Function1<io.ktor.client.plugins.json.JsonPlugin.Config,kotlin.Unit>){}[0]
+final fun io.ktor.client.plugins.json/defaultSerializer(): io.ktor.client.plugins.json/JsonSerializer // io.ktor.client.plugins.json/defaultSerializer|defaultSerializer(){}[0]
+
+// Targets: [native]
+final val io.ktor.client.plugins.json/serializers // io.ktor.client.plugins.json/serializers|{}serializers[0]
+    final fun <get-serializers>(): kotlin.collections/MutableList<io.ktor.client.plugins.json/JsonSerializer> // io.ktor.client.plugins.json/serializers.<get-serializers>|<get-serializers>(){}[0]
+
+// Targets: [js, wasmJs]
+final val io.ktor.client.plugins.json/serializersStore // io.ktor.client.plugins.json/serializersStore|{}serializersStore[0]
+    final fun <get-serializersStore>(): kotlin.collections/MutableList<io.ktor.client.plugins.json/JsonSerializer> // io.ktor.client.plugins.json/serializersStore.<get-serializersStore>|<get-serializersStore>(){}[0]

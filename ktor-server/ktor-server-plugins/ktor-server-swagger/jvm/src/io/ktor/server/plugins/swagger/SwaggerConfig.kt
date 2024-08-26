@@ -13,7 +13,7 @@ public class SwaggerConfig {
     /**
      * Specifies a Swagger UI version to use.
      */
-    public var version: String = "4.14.0"
+    public var version: String = "5.17.12"
 
     /**
      * Specifies a URL for a custom CSS applied to a Swagger UI.

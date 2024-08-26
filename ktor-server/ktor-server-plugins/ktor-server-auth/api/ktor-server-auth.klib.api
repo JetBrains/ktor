@@ -1,0 +1,613 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-auth>
+final enum class io.ktor.server.auth/AuthenticationStrategy : kotlin/Enum<io.ktor.server.auth/AuthenticationStrategy> { // io.ktor.server.auth/AuthenticationStrategy|null[0]
+    enum entry FirstSuccessful // io.ktor.server.auth/AuthenticationStrategy.FirstSuccessful|null[0]
+    enum entry Optional // io.ktor.server.auth/AuthenticationStrategy.Optional|null[0]
+    enum entry Required // io.ktor.server.auth/AuthenticationStrategy.Required|null[0]
+
+    final val entries // io.ktor.server.auth/AuthenticationStrategy.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.server.auth/AuthenticationStrategy> // io.ktor.server.auth/AuthenticationStrategy.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.server.auth/AuthenticationStrategy // io.ktor.server.auth/AuthenticationStrategy.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.server.auth/AuthenticationStrategy> // io.ktor.server.auth/AuthenticationStrategy.values|values#static(){}[0]
+}
+
+final enum class io.ktor.server.auth/OAuthVersion : kotlin/Enum<io.ktor.server.auth/OAuthVersion> { // io.ktor.server.auth/OAuthVersion|null[0]
+    enum entry V10a // io.ktor.server.auth/OAuthVersion.V10a|null[0]
+    enum entry V20 // io.ktor.server.auth/OAuthVersion.V20|null[0]
+
+    final val entries // io.ktor.server.auth/OAuthVersion.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.server.auth/OAuthVersion> // io.ktor.server.auth/OAuthVersion.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.server.auth/OAuthVersion // io.ktor.server.auth/OAuthVersion.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.server.auth/OAuthVersion> // io.ktor.server.auth/OAuthVersion.values|values#static(){}[0]
+}
+
+abstract interface io.ktor.server.auth/Credential // io.ktor.server.auth/Credential|null[0]
+
+abstract interface io.ktor.server.auth/Principal // io.ktor.server.auth/Principal|null[0]
+
+abstract class io.ktor.server.auth/AuthenticationProvider { // io.ktor.server.auth/AuthenticationProvider|null[0]
+    constructor <init>(io.ktor.server.auth/AuthenticationProvider.Config) // io.ktor.server.auth/AuthenticationProvider.<init>|<init>(io.ktor.server.auth.AuthenticationProvider.Config){}[0]
+
+    final val name // io.ktor.server.auth/AuthenticationProvider.name|{}name[0]
+        final fun <get-name>(): kotlin/String? // io.ktor.server.auth/AuthenticationProvider.name.<get-name>|<get-name>(){}[0]
+    final val skipWhen // io.ktor.server.auth/AuthenticationProvider.skipWhen|{}skipWhen[0]
+        final fun <get-skipWhen>(): kotlin.collections/List<kotlin/Function1<io.ktor.server.application/ApplicationCall, kotlin/Boolean>> // io.ktor.server.auth/AuthenticationProvider.skipWhen.<get-skipWhen>|<get-skipWhen>(){}[0]
+
+    abstract suspend fun onAuthenticate(io.ktor.server.auth/AuthenticationContext) // io.ktor.server.auth/AuthenticationProvider.onAuthenticate|onAuthenticate(io.ktor.server.auth.AuthenticationContext){}[0]
+
+    open class Config { // io.ktor.server.auth/AuthenticationProvider.Config|null[0]
+        constructor <init>(kotlin/String?) // io.ktor.server.auth/AuthenticationProvider.Config.<init>|<init>(kotlin.String?){}[0]
+
+        final val name // io.ktor.server.auth/AuthenticationProvider.Config.name|{}name[0]
+            final fun <get-name>(): kotlin/String? // io.ktor.server.auth/AuthenticationProvider.Config.name.<get-name>|<get-name>(){}[0]
+
+        final fun skipWhen(kotlin/Function1<io.ktor.server.application/ApplicationCall, kotlin/Boolean>) // io.ktor.server.auth/AuthenticationProvider.Config.skipWhen|skipWhen(kotlin.Function1<io.ktor.server.application.ApplicationCall,kotlin.Boolean>){}[0]
+    }
+}
+
+final class <#A: kotlin/Any> io.ktor.server.auth/SessionAuthenticationProvider : io.ktor.server.auth/AuthenticationProvider { // io.ktor.server.auth/SessionAuthenticationProvider|null[0]
+    final val type // io.ktor.server.auth/SessionAuthenticationProvider.type|{}type[0]
+        final fun <get-type>(): kotlin.reflect/KClass<#A> // io.ktor.server.auth/SessionAuthenticationProvider.type.<get-type>|<get-type>(){}[0]
+
+    final suspend fun onAuthenticate(io.ktor.server.auth/AuthenticationContext) // io.ktor.server.auth/SessionAuthenticationProvider.onAuthenticate|onAuthenticate(io.ktor.server.auth.AuthenticationContext){}[0]
+
+    final class <#A1: kotlin/Any> Config : io.ktor.server.auth/AuthenticationProvider.Config { // io.ktor.server.auth/SessionAuthenticationProvider.Config|null[0]
+        constructor <init>(kotlin/String?, kotlin.reflect/KClass<#A1>) // io.ktor.server.auth/SessionAuthenticationProvider.Config.<init>|<init>(kotlin.String?;kotlin.reflect.KClass<1:0>){}[0]
+
+        final fun buildProvider(): io.ktor.server.auth/SessionAuthenticationProvider<#A1> // io.ktor.server.auth/SessionAuthenticationProvider.Config.buildProvider|buildProvider(){}[0]
+        final fun challenge(io.ktor.http/Url) // io.ktor.server.auth/SessionAuthenticationProvider.Config.challenge|challenge(io.ktor.http.Url){}[0]
+        final fun challenge(kotlin.coroutines/SuspendFunction2<io.ktor.server.auth/SessionChallengeContext, #A1?, kotlin/Unit>) // io.ktor.server.auth/SessionAuthenticationProvider.Config.challenge|challenge(kotlin.coroutines.SuspendFunction2<io.ktor.server.auth.SessionChallengeContext,1:0?,kotlin.Unit>){}[0]
+        final fun challenge(kotlin/String) // io.ktor.server.auth/SessionAuthenticationProvider.Config.challenge|challenge(kotlin.String){}[0]
+        final fun validate(kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, #A1, kotlin/Any?>) // io.ktor.server.auth/SessionAuthenticationProvider.Config.validate|validate(kotlin.coroutines.SuspendFunction2<io.ktor.server.application.ApplicationCall,1:0,kotlin.Any?>){}[0]
+    }
+
+    final object Companion // io.ktor.server.auth/SessionAuthenticationProvider.Companion|null[0]
+}
+
+final class io.ktor.server.auth/Authentication { // io.ktor.server.auth/Authentication|null[0]
+    constructor <init>(io.ktor.server.auth/AuthenticationConfig) // io.ktor.server.auth/Authentication.<init>|<init>(io.ktor.server.auth.AuthenticationConfig){}[0]
+
+    final fun configure(kotlin/Function1<io.ktor.server.auth/AuthenticationConfig, kotlin/Unit>) // io.ktor.server.auth/Authentication.configure|configure(kotlin.Function1<io.ktor.server.auth.AuthenticationConfig,kotlin.Unit>){}[0]
+
+    final object Companion : io.ktor.server.application/BaseApplicationPlugin<io.ktor.server.application/Application, io.ktor.server.auth/AuthenticationConfig, io.ktor.server.auth/Authentication> { // io.ktor.server.auth/Authentication.Companion|null[0]
+        final val key // io.ktor.server.auth/Authentication.Companion.key|{}key[0]
+            final fun <get-key>(): io.ktor.util/AttributeKey<io.ktor.server.auth/Authentication> // io.ktor.server.auth/Authentication.Companion.key.<get-key>|<get-key>(){}[0]
+
+        final fun install(io.ktor.server.application/Application, kotlin/Function1<io.ktor.server.auth/AuthenticationConfig, kotlin/Unit>): io.ktor.server.auth/Authentication // io.ktor.server.auth/Authentication.Companion.install|install(io.ktor.server.application.Application;kotlin.Function1<io.ktor.server.auth.AuthenticationConfig,kotlin.Unit>){}[0]
+    }
+}
+
+final class io.ktor.server.auth/AuthenticationConfig { // io.ktor.server.auth/AuthenticationConfig|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String?, io.ktor.server.auth/AuthenticationProvider> = ...) // io.ktor.server.auth/AuthenticationConfig.<init>|<init>(kotlin.collections.Map<kotlin.String?,io.ktor.server.auth.AuthenticationProvider>){}[0]
+
+    final fun provider(kotlin/String? = ..., kotlin/Function1<io.ktor.server.auth/DynamicProviderConfig, kotlin/Unit>) // io.ktor.server.auth/AuthenticationConfig.provider|provider(kotlin.String?;kotlin.Function1<io.ktor.server.auth.DynamicProviderConfig,kotlin.Unit>){}[0]
+    final fun register(io.ktor.server.auth/AuthenticationProvider) // io.ktor.server.auth/AuthenticationConfig.register|register(io.ktor.server.auth.AuthenticationProvider){}[0]
+}
+
+final class io.ktor.server.auth/AuthenticationContext { // io.ktor.server.auth/AuthenticationContext|null[0]
+    constructor <init>(io.ktor.server.application/ApplicationCall) // io.ktor.server.auth/AuthenticationContext.<init>|<init>(io.ktor.server.application.ApplicationCall){}[0]
+
+    final val allErrors // io.ktor.server.auth/AuthenticationContext.allErrors|{}allErrors[0]
+        final fun <get-allErrors>(): kotlin.collections/List<io.ktor.server.auth/AuthenticationFailedCause.Error> // io.ktor.server.auth/AuthenticationContext.allErrors.<get-allErrors>|<get-allErrors>(){}[0]
+    final val allFailures // io.ktor.server.auth/AuthenticationContext.allFailures|{}allFailures[0]
+        final fun <get-allFailures>(): kotlin.collections/List<io.ktor.server.auth/AuthenticationFailedCause> // io.ktor.server.auth/AuthenticationContext.allFailures.<get-allFailures>|<get-allFailures>(){}[0]
+    final val challenge // io.ktor.server.auth/AuthenticationContext.challenge|{}challenge[0]
+        final fun <get-challenge>(): io.ktor.server.auth/AuthenticationProcedureChallenge // io.ktor.server.auth/AuthenticationContext.challenge.<get-challenge>|<get-challenge>(){}[0]
+
+    final var call // io.ktor.server.auth/AuthenticationContext.call|{}call[0]
+        final fun <get-call>(): io.ktor.server.application/ApplicationCall // io.ktor.server.auth/AuthenticationContext.call.<get-call>|<get-call>(){}[0]
+    final var principal // io.ktor.server.auth/AuthenticationContext.principal|{}principal[0]
+        final fun <get-principal>(): kotlin/Any? // io.ktor.server.auth/AuthenticationContext.principal.<get-principal>|<get-principal>(){}[0]
+        final fun <set-principal>(kotlin/Any?) // io.ktor.server.auth/AuthenticationContext.principal.<set-principal>|<set-principal>(kotlin.Any?){}[0]
+
+    final fun <#A1: kotlin/Any> principal(kotlin/String?, kotlin.reflect/KClass<#A1>): #A1? // io.ktor.server.auth/AuthenticationContext.principal|principal(kotlin.String?;kotlin.reflect.KClass<0:0>){0§<kotlin.Any>}[0]
+    final fun challenge(kotlin/Any, io.ktor.server.auth/AuthenticationFailedCause, kotlin.coroutines/SuspendFunction2<io.ktor.server.auth/AuthenticationProcedureChallenge, io.ktor.server.application/ApplicationCall, kotlin/Unit>) // io.ktor.server.auth/AuthenticationContext.challenge|challenge(kotlin.Any;io.ktor.server.auth.AuthenticationFailedCause;kotlin.coroutines.SuspendFunction2<io.ktor.server.auth.AuthenticationProcedureChallenge,io.ktor.server.application.ApplicationCall,kotlin.Unit>){}[0]
+    final fun error(kotlin/Any, io.ktor.server.auth/AuthenticationFailedCause) // io.ktor.server.auth/AuthenticationContext.error|error(kotlin.Any;io.ktor.server.auth.AuthenticationFailedCause){}[0]
+    final fun principal(kotlin/Any) // io.ktor.server.auth/AuthenticationContext.principal|principal(kotlin.Any){}[0]
+    final fun principal(kotlin/String? = ..., kotlin/Any) // io.ktor.server.auth/AuthenticationContext.principal|principal(kotlin.String?;kotlin.Any){}[0]
+    final inline fun <#A1: reified kotlin/Any> principal(kotlin/String? = ...): #A1? // io.ktor.server.auth/AuthenticationContext.principal|principal(kotlin.String?){0§<kotlin.Any>}[0]
+
+    final object Companion // io.ktor.server.auth/AuthenticationContext.Companion|null[0]
+}
+
+final class io.ktor.server.auth/AuthenticationProcedureChallenge { // io.ktor.server.auth/AuthenticationProcedureChallenge|null[0]
+    constructor <init>() // io.ktor.server.auth/AuthenticationProcedureChallenge.<init>|<init>(){}[0]
+
+    final var completed // io.ktor.server.auth/AuthenticationProcedureChallenge.completed|{}completed[0]
+        final fun <get-completed>(): kotlin/Boolean // io.ktor.server.auth/AuthenticationProcedureChallenge.completed.<get-completed>|<get-completed>(){}[0]
+
+    final fun complete() // io.ktor.server.auth/AuthenticationProcedureChallenge.complete|complete(){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.auth/AuthenticationProcedureChallenge.toString|toString(){}[0]
+}
+
+final class io.ktor.server.auth/AuthenticationRouteSelector : io.ktor.server.routing/RouteSelector { // io.ktor.server.auth/AuthenticationRouteSelector|null[0]
+    constructor <init>(kotlin.collections/List<kotlin/String?>) // io.ktor.server.auth/AuthenticationRouteSelector.<init>|<init>(kotlin.collections.List<kotlin.String?>){}[0]
+
+    final val names // io.ktor.server.auth/AuthenticationRouteSelector.names|{}names[0]
+        final fun <get-names>(): kotlin.collections/List<kotlin/String?> // io.ktor.server.auth/AuthenticationRouteSelector.names.<get-names>|<get-names>(){}[0]
+
+    final fun evaluate(io.ktor.server.routing/RoutingResolveContext, kotlin/Int): io.ktor.server.routing/RouteSelectorEvaluation // io.ktor.server.auth/AuthenticationRouteSelector.evaluate|evaluate(io.ktor.server.routing.RoutingResolveContext;kotlin.Int){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.auth/AuthenticationRouteSelector.toString|toString(){}[0]
+}
+
+final class io.ktor.server.auth/BasicAuthenticationProvider : io.ktor.server.auth/AuthenticationProvider { // io.ktor.server.auth/BasicAuthenticationProvider|null[0]
+    final suspend fun onAuthenticate(io.ktor.server.auth/AuthenticationContext) // io.ktor.server.auth/BasicAuthenticationProvider.onAuthenticate|onAuthenticate(io.ktor.server.auth.AuthenticationContext){}[0]
+
+    final class Config : io.ktor.server.auth/AuthenticationProvider.Config { // io.ktor.server.auth/BasicAuthenticationProvider.Config|null[0]
+        final var charset // io.ktor.server.auth/BasicAuthenticationProvider.Config.charset|{}charset[0]
+            final fun <get-charset>(): io.ktor.utils.io.charsets/Charset? // io.ktor.server.auth/BasicAuthenticationProvider.Config.charset.<get-charset>|<get-charset>(){}[0]
+            final fun <set-charset>(io.ktor.utils.io.charsets/Charset?) // io.ktor.server.auth/BasicAuthenticationProvider.Config.charset.<set-charset>|<set-charset>(io.ktor.utils.io.charsets.Charset?){}[0]
+        final var realm // io.ktor.server.auth/BasicAuthenticationProvider.Config.realm|{}realm[0]
+            final fun <get-realm>(): kotlin/String // io.ktor.server.auth/BasicAuthenticationProvider.Config.realm.<get-realm>|<get-realm>(){}[0]
+            final fun <set-realm>(kotlin/String) // io.ktor.server.auth/BasicAuthenticationProvider.Config.realm.<set-realm>|<set-realm>(kotlin.String){}[0]
+
+        final fun validate(kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, io.ktor.server.auth/UserPasswordCredential, kotlin/Any?>) // io.ktor.server.auth/BasicAuthenticationProvider.Config.validate|validate(kotlin.coroutines.SuspendFunction2<io.ktor.server.application.ApplicationCall,io.ktor.server.auth.UserPasswordCredential,kotlin.Any?>){}[0]
+    }
+}
+
+final class io.ktor.server.auth/BearerAuthenticationProvider : io.ktor.server.auth/AuthenticationProvider { // io.ktor.server.auth/BearerAuthenticationProvider|null[0]
+    final suspend fun onAuthenticate(io.ktor.server.auth/AuthenticationContext) // io.ktor.server.auth/BearerAuthenticationProvider.onAuthenticate|onAuthenticate(io.ktor.server.auth.AuthenticationContext){}[0]
+
+    final class Config : io.ktor.server.auth/AuthenticationProvider.Config { // io.ktor.server.auth/BearerAuthenticationProvider.Config|null[0]
+        constructor <init>(kotlin/String?) // io.ktor.server.auth/BearerAuthenticationProvider.Config.<init>|<init>(kotlin.String?){}[0]
+
+        final var realm // io.ktor.server.auth/BearerAuthenticationProvider.Config.realm|{}realm[0]
+            final fun <get-realm>(): kotlin/String? // io.ktor.server.auth/BearerAuthenticationProvider.Config.realm.<get-realm>|<get-realm>(){}[0]
+            final fun <set-realm>(kotlin/String?) // io.ktor.server.auth/BearerAuthenticationProvider.Config.realm.<set-realm>|<set-realm>(kotlin.String?){}[0]
+
+        final fun authHeader(kotlin/Function1<io.ktor.server.application/ApplicationCall, io.ktor.http.auth/HttpAuthHeader?>) // io.ktor.server.auth/BearerAuthenticationProvider.Config.authHeader|authHeader(kotlin.Function1<io.ktor.server.application.ApplicationCall,io.ktor.http.auth.HttpAuthHeader?>){}[0]
+        final fun authSchemes(kotlin/String = ..., kotlin/Array<out kotlin/String>...) // io.ktor.server.auth/BearerAuthenticationProvider.Config.authSchemes|authSchemes(kotlin.String;kotlin.Array<out|kotlin.String>...){}[0]
+        final fun authenticate(kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, io.ktor.server.auth/BearerTokenCredential, kotlin/Any?>) // io.ktor.server.auth/BearerAuthenticationProvider.Config.authenticate|authenticate(kotlin.coroutines.SuspendFunction2<io.ktor.server.application.ApplicationCall,io.ktor.server.auth.BearerTokenCredential,kotlin.Any?>){}[0]
+    }
+}
+
+final class io.ktor.server.auth/BearerTokenCredential { // io.ktor.server.auth/BearerTokenCredential|null[0]
+    constructor <init>(kotlin/String) // io.ktor.server.auth/BearerTokenCredential.<init>|<init>(kotlin.String){}[0]
+
+    final val token // io.ktor.server.auth/BearerTokenCredential.token|{}token[0]
+        final fun <get-token>(): kotlin/String // io.ktor.server.auth/BearerTokenCredential.token.<get-token>|<get-token>(){}[0]
+
+    final fun component1(): kotlin/String // io.ktor.server.auth/BearerTokenCredential.component1|component1(){}[0]
+    final fun copy(kotlin/String = ...): io.ktor.server.auth/BearerTokenCredential // io.ktor.server.auth/BearerTokenCredential.copy|copy(kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.auth/BearerTokenCredential.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.server.auth/BearerTokenCredential.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.auth/BearerTokenCredential.toString|toString(){}[0]
+}
+
+final class io.ktor.server.auth/DynamicProviderConfig : io.ktor.server.auth/AuthenticationProvider.Config { // io.ktor.server.auth/DynamicProviderConfig|null[0]
+    constructor <init>(kotlin/String?) // io.ktor.server.auth/DynamicProviderConfig.<init>|<init>(kotlin.String?){}[0]
+
+    final fun authenticate(kotlin/Function1<io.ktor.server.auth/AuthenticationContext, kotlin/Unit>) // io.ktor.server.auth/DynamicProviderConfig.authenticate|authenticate(kotlin.Function1<io.ktor.server.auth.AuthenticationContext,kotlin.Unit>){}[0]
+}
+
+final class io.ktor.server.auth/ForbiddenResponse : io.ktor.http.content/OutgoingContent.NoContent { // io.ktor.server.auth/ForbiddenResponse|null[0]
+    constructor <init>(io.ktor.http.auth/HttpAuthHeader?) // io.ktor.server.auth/ForbiddenResponse.<init>|<init>(io.ktor.http.auth.HttpAuthHeader?){}[0]
+    constructor <init>(kotlin/Array<out io.ktor.http.auth/HttpAuthHeader>...) // io.ktor.server.auth/ForbiddenResponse.<init>|<init>(kotlin.Array<out|io.ktor.http.auth.HttpAuthHeader>...){}[0]
+
+    final val challenges // io.ktor.server.auth/ForbiddenResponse.challenges|{}challenges[0]
+        final fun <get-challenges>(): kotlin/Array<out io.ktor.http.auth/HttpAuthHeader> // io.ktor.server.auth/ForbiddenResponse.challenges.<get-challenges>|<get-challenges>(){}[0]
+    final val headers // io.ktor.server.auth/ForbiddenResponse.headers|{}headers[0]
+        final fun <get-headers>(): io.ktor.http/Headers // io.ktor.server.auth/ForbiddenResponse.headers.<get-headers>|<get-headers>(){}[0]
+    final val status // io.ktor.server.auth/ForbiddenResponse.status|{}status[0]
+        final fun <get-status>(): io.ktor.http/HttpStatusCode // io.ktor.server.auth/ForbiddenResponse.status.<get-status>|<get-status>(){}[0]
+}
+
+final class io.ktor.server.auth/FormAuthChallengeContext { // io.ktor.server.auth/FormAuthChallengeContext|null[0]
+    constructor <init>(io.ktor.server.application/ApplicationCall) // io.ktor.server.auth/FormAuthChallengeContext.<init>|<init>(io.ktor.server.application.ApplicationCall){}[0]
+
+    final val call // io.ktor.server.auth/FormAuthChallengeContext.call|{}call[0]
+        final fun <get-call>(): io.ktor.server.application/ApplicationCall // io.ktor.server.auth/FormAuthChallengeContext.call.<get-call>|<get-call>(){}[0]
+}
+
+final class io.ktor.server.auth/FormAuthenticationProvider : io.ktor.server.auth/AuthenticationProvider { // io.ktor.server.auth/FormAuthenticationProvider|null[0]
+    final suspend fun onAuthenticate(io.ktor.server.auth/AuthenticationContext) // io.ktor.server.auth/FormAuthenticationProvider.onAuthenticate|onAuthenticate(io.ktor.server.auth.AuthenticationContext){}[0]
+
+    final class Config : io.ktor.server.auth/AuthenticationProvider.Config { // io.ktor.server.auth/FormAuthenticationProvider.Config|null[0]
+        final var passwordParamName // io.ktor.server.auth/FormAuthenticationProvider.Config.passwordParamName|{}passwordParamName[0]
+            final fun <get-passwordParamName>(): kotlin/String // io.ktor.server.auth/FormAuthenticationProvider.Config.passwordParamName.<get-passwordParamName>|<get-passwordParamName>(){}[0]
+            final fun <set-passwordParamName>(kotlin/String) // io.ktor.server.auth/FormAuthenticationProvider.Config.passwordParamName.<set-passwordParamName>|<set-passwordParamName>(kotlin.String){}[0]
+        final var userParamName // io.ktor.server.auth/FormAuthenticationProvider.Config.userParamName|{}userParamName[0]
+            final fun <get-userParamName>(): kotlin/String // io.ktor.server.auth/FormAuthenticationProvider.Config.userParamName.<get-userParamName>|<get-userParamName>(){}[0]
+            final fun <set-userParamName>(kotlin/String) // io.ktor.server.auth/FormAuthenticationProvider.Config.userParamName.<set-userParamName>|<set-userParamName>(kotlin.String){}[0]
+
+        final fun challenge(io.ktor.http/Url) // io.ktor.server.auth/FormAuthenticationProvider.Config.challenge|challenge(io.ktor.http.Url){}[0]
+        final fun challenge(kotlin.coroutines/SuspendFunction2<io.ktor.server.auth/FormAuthChallengeContext, io.ktor.server.auth/UserPasswordCredential?, kotlin/Unit>) // io.ktor.server.auth/FormAuthenticationProvider.Config.challenge|challenge(kotlin.coroutines.SuspendFunction2<io.ktor.server.auth.FormAuthChallengeContext,io.ktor.server.auth.UserPasswordCredential?,kotlin.Unit>){}[0]
+        final fun challenge(kotlin/String) // io.ktor.server.auth/FormAuthenticationProvider.Config.challenge|challenge(kotlin.String){}[0]
+        final fun validate(kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, io.ktor.server.auth/UserPasswordCredential, kotlin/Any?>) // io.ktor.server.auth/FormAuthenticationProvider.Config.validate|validate(kotlin.coroutines.SuspendFunction2<io.ktor.server.application.ApplicationCall,io.ktor.server.auth.UserPasswordCredential,kotlin.Any?>){}[0]
+    }
+}
+
+final class io.ktor.server.auth/OAuth2RedirectError : io.ktor.server.auth/AuthenticationFailedCause.Error { // io.ktor.server.auth/OAuth2RedirectError|null[0]
+    constructor <init>(kotlin/String, kotlin/String?) // io.ktor.server.auth/OAuth2RedirectError.<init>|<init>(kotlin.String;kotlin.String?){}[0]
+
+    final val error // io.ktor.server.auth/OAuth2RedirectError.error|{}error[0]
+        final fun <get-error>(): kotlin/String // io.ktor.server.auth/OAuth2RedirectError.error.<get-error>|<get-error>(){}[0]
+    final val errorDescription // io.ktor.server.auth/OAuth2RedirectError.errorDescription|{}errorDescription[0]
+        final fun <get-errorDescription>(): kotlin/String? // io.ktor.server.auth/OAuth2RedirectError.errorDescription.<get-errorDescription>|<get-errorDescription>(){}[0]
+}
+
+final class io.ktor.server.auth/OAuthAuthenticationProvider : io.ktor.server.auth/AuthenticationProvider { // io.ktor.server.auth/OAuthAuthenticationProvider|null[0]
+    final suspend fun onAuthenticate(io.ktor.server.auth/AuthenticationContext) // io.ktor.server.auth/OAuthAuthenticationProvider.onAuthenticate|onAuthenticate(io.ktor.server.auth.AuthenticationContext){}[0]
+
+    final class Config : io.ktor.server.auth/AuthenticationProvider.Config { // io.ktor.server.auth/OAuthAuthenticationProvider.Config|null[0]
+        final var client // io.ktor.server.auth/OAuthAuthenticationProvider.Config.client|{}client[0]
+            final fun <get-client>(): io.ktor.client/HttpClient // io.ktor.server.auth/OAuthAuthenticationProvider.Config.client.<get-client>|<get-client>(){}[0]
+            final fun <set-client>(io.ktor.client/HttpClient) // io.ktor.server.auth/OAuthAuthenticationProvider.Config.client.<set-client>|<set-client>(io.ktor.client.HttpClient){}[0]
+        final var providerLookup // io.ktor.server.auth/OAuthAuthenticationProvider.Config.providerLookup|{}providerLookup[0]
+            final fun <get-providerLookup>(): kotlin/Function1<io.ktor.server.application/ApplicationCall, io.ktor.server.auth/OAuthServerSettings?> // io.ktor.server.auth/OAuthAuthenticationProvider.Config.providerLookup.<get-providerLookup>|<get-providerLookup>(){}[0]
+            final fun <set-providerLookup>(kotlin/Function1<io.ktor.server.application/ApplicationCall, io.ktor.server.auth/OAuthServerSettings?>) // io.ktor.server.auth/OAuthAuthenticationProvider.Config.providerLookup.<set-providerLookup>|<set-providerLookup>(kotlin.Function1<io.ktor.server.application.ApplicationCall,io.ktor.server.auth.OAuthServerSettings?>){}[0]
+        final var urlProvider // io.ktor.server.auth/OAuthAuthenticationProvider.Config.urlProvider|{}urlProvider[0]
+            final fun <get-urlProvider>(): kotlin/Function2<io.ktor.server.application/ApplicationCall, io.ktor.server.auth/OAuthServerSettings, kotlin/String> // io.ktor.server.auth/OAuthAuthenticationProvider.Config.urlProvider.<get-urlProvider>|<get-urlProvider>(){}[0]
+            final fun <set-urlProvider>(kotlin/Function2<io.ktor.server.application/ApplicationCall, io.ktor.server.auth/OAuthServerSettings, kotlin/String>) // io.ktor.server.auth/OAuthAuthenticationProvider.Config.urlProvider.<set-urlProvider>|<set-urlProvider>(kotlin.Function2<io.ktor.server.application.ApplicationCall,io.ktor.server.auth.OAuthServerSettings,kotlin.String>){}[0]
+    }
+}
+
+final class io.ktor.server.auth/RouteAuthenticationConfig { // io.ktor.server.auth/RouteAuthenticationConfig|null[0]
+    constructor <init>() // io.ktor.server.auth/RouteAuthenticationConfig.<init>|<init>(){}[0]
+}
+
+final class io.ktor.server.auth/SessionChallengeContext { // io.ktor.server.auth/SessionChallengeContext|null[0]
+    constructor <init>(io.ktor.server.application/ApplicationCall) // io.ktor.server.auth/SessionChallengeContext.<init>|<init>(io.ktor.server.application.ApplicationCall){}[0]
+
+    final val call // io.ktor.server.auth/SessionChallengeContext.call|{}call[0]
+        final fun <get-call>(): io.ktor.server.application/ApplicationCall // io.ktor.server.auth/SessionChallengeContext.call.<get-call>|<get-call>(){}[0]
+}
+
+final class io.ktor.server.auth/UnauthorizedResponse : io.ktor.http.content/OutgoingContent.NoContent { // io.ktor.server.auth/UnauthorizedResponse|null[0]
+    constructor <init>(kotlin/Array<out io.ktor.http.auth/HttpAuthHeader>...) // io.ktor.server.auth/UnauthorizedResponse.<init>|<init>(kotlin.Array<out|io.ktor.http.auth.HttpAuthHeader>...){}[0]
+
+    final val challenges // io.ktor.server.auth/UnauthorizedResponse.challenges|{}challenges[0]
+        final fun <get-challenges>(): kotlin/Array<out io.ktor.http.auth/HttpAuthHeader> // io.ktor.server.auth/UnauthorizedResponse.challenges.<get-challenges>|<get-challenges>(){}[0]
+    final val headers // io.ktor.server.auth/UnauthorizedResponse.headers|{}headers[0]
+        final fun <get-headers>(): io.ktor.http/Headers // io.ktor.server.auth/UnauthorizedResponse.headers.<get-headers>|<get-headers>(){}[0]
+    final val status // io.ktor.server.auth/UnauthorizedResponse.status|{}status[0]
+        final fun <get-status>(): io.ktor.http/HttpStatusCode // io.ktor.server.auth/UnauthorizedResponse.status.<get-status>|<get-status>(){}[0]
+}
+
+final class io.ktor.server.auth/UserHashedTableAuth { // io.ktor.server.auth/UserHashedTableAuth|null[0]
+    constructor <init>(kotlin/Function1<kotlin/String, kotlin/ByteArray>, kotlin.collections/Map<kotlin/String, kotlin/ByteArray>) // io.ktor.server.auth/UserHashedTableAuth.<init>|<init>(kotlin.Function1<kotlin.String,kotlin.ByteArray>;kotlin.collections.Map<kotlin.String,kotlin.ByteArray>){}[0]
+
+    final val digester // io.ktor.server.auth/UserHashedTableAuth.digester|{}digester[0]
+        final fun <get-digester>(): kotlin/Function1<kotlin/String, kotlin/ByteArray> // io.ktor.server.auth/UserHashedTableAuth.digester.<get-digester>|<get-digester>(){}[0]
+    final val table // io.ktor.server.auth/UserHashedTableAuth.table|{}table[0]
+        final fun <get-table>(): kotlin.collections/Map<kotlin/String, kotlin/ByteArray> // io.ktor.server.auth/UserHashedTableAuth.table.<get-table>|<get-table>(){}[0]
+
+    final fun authenticate(io.ktor.server.auth/UserPasswordCredential): io.ktor.server.auth/UserIdPrincipal? // io.ktor.server.auth/UserHashedTableAuth.authenticate|authenticate(io.ktor.server.auth.UserPasswordCredential){}[0]
+}
+
+final class io.ktor.server.auth/UserIdPrincipal { // io.ktor.server.auth/UserIdPrincipal|null[0]
+    constructor <init>(kotlin/String) // io.ktor.server.auth/UserIdPrincipal.<init>|<init>(kotlin.String){}[0]
+
+    final val name // io.ktor.server.auth/UserIdPrincipal.name|{}name[0]
+        final fun <get-name>(): kotlin/String // io.ktor.server.auth/UserIdPrincipal.name.<get-name>|<get-name>(){}[0]
+
+    final fun component1(): kotlin/String // io.ktor.server.auth/UserIdPrincipal.component1|component1(){}[0]
+    final fun copy(kotlin/String = ...): io.ktor.server.auth/UserIdPrincipal // io.ktor.server.auth/UserIdPrincipal.copy|copy(kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.auth/UserIdPrincipal.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.server.auth/UserIdPrincipal.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.auth/UserIdPrincipal.toString|toString(){}[0]
+}
+
+final class io.ktor.server.auth/UserPasswordCredential { // io.ktor.server.auth/UserPasswordCredential|null[0]
+    constructor <init>(kotlin/String, kotlin/String) // io.ktor.server.auth/UserPasswordCredential.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+    final val name // io.ktor.server.auth/UserPasswordCredential.name|{}name[0]
+        final fun <get-name>(): kotlin/String // io.ktor.server.auth/UserPasswordCredential.name.<get-name>|<get-name>(){}[0]
+    final val password // io.ktor.server.auth/UserPasswordCredential.password|{}password[0]
+        final fun <get-password>(): kotlin/String // io.ktor.server.auth/UserPasswordCredential.password.<get-password>|<get-password>(){}[0]
+
+    final fun component1(): kotlin/String // io.ktor.server.auth/UserPasswordCredential.component1|component1(){}[0]
+    final fun component2(): kotlin/String // io.ktor.server.auth/UserPasswordCredential.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ...): io.ktor.server.auth/UserPasswordCredential // io.ktor.server.auth/UserPasswordCredential.copy|copy(kotlin.String;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.auth/UserPasswordCredential.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.server.auth/UserPasswordCredential.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.auth/UserPasswordCredential.toString|toString(){}[0]
+}
+
+sealed class io.ktor.server.auth/AuthenticationFailedCause { // io.ktor.server.auth/AuthenticationFailedCause|null[0]
+    constructor <init>() // io.ktor.server.auth/AuthenticationFailedCause.<init>|<init>(){}[0]
+
+    open class Error : io.ktor.server.auth/AuthenticationFailedCause { // io.ktor.server.auth/AuthenticationFailedCause.Error|null[0]
+        constructor <init>(kotlin/String) // io.ktor.server.auth/AuthenticationFailedCause.Error.<init>|<init>(kotlin.String){}[0]
+
+        final val message // io.ktor.server.auth/AuthenticationFailedCause.Error.message|{}message[0]
+            final fun <get-message>(): kotlin/String // io.ktor.server.auth/AuthenticationFailedCause.Error.message.<get-message>|<get-message>(){}[0]
+    }
+
+    final object InvalidCredentials : io.ktor.server.auth/AuthenticationFailedCause { // io.ktor.server.auth/AuthenticationFailedCause.InvalidCredentials|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.auth/AuthenticationFailedCause.InvalidCredentials.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.server.auth/AuthenticationFailedCause.InvalidCredentials.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.ktor.server.auth/AuthenticationFailedCause.InvalidCredentials.toString|toString(){}[0]
+    }
+
+    final object NoCredentials : io.ktor.server.auth/AuthenticationFailedCause { // io.ktor.server.auth/AuthenticationFailedCause.NoCredentials|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.auth/AuthenticationFailedCause.NoCredentials.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.server.auth/AuthenticationFailedCause.NoCredentials.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.ktor.server.auth/AuthenticationFailedCause.NoCredentials.toString|toString(){}[0]
+    }
+}
+
+sealed class io.ktor.server.auth/OAuth2Exception : kotlin/Exception { // io.ktor.server.auth/OAuth2Exception|null[0]
+    constructor <init>(kotlin/String, kotlin/String?) // io.ktor.server.auth/OAuth2Exception.<init>|<init>(kotlin.String;kotlin.String?){}[0]
+
+    final val errorCode // io.ktor.server.auth/OAuth2Exception.errorCode|{}errorCode[0]
+        final fun <get-errorCode>(): kotlin/String? // io.ktor.server.auth/OAuth2Exception.errorCode.<get-errorCode>|<get-errorCode>(){}[0]
+
+    final class InvalidGrant : io.ktor.server.auth/OAuth2Exception { // io.ktor.server.auth/OAuth2Exception.InvalidGrant|null[0]
+        constructor <init>(kotlin/String) // io.ktor.server.auth/OAuth2Exception.InvalidGrant.<init>|<init>(kotlin.String){}[0]
+    }
+
+    final class InvalidNonce : io.ktor.server.auth/OAuth2Exception { // io.ktor.server.auth/OAuth2Exception.InvalidNonce|null[0]
+        constructor <init>() // io.ktor.server.auth/OAuth2Exception.InvalidNonce.<init>|<init>(){}[0]
+    }
+
+    final class MissingAccessToken : io.ktor.server.auth/OAuth2Exception { // io.ktor.server.auth/OAuth2Exception.MissingAccessToken|null[0]
+        constructor <init>() // io.ktor.server.auth/OAuth2Exception.MissingAccessToken.<init>|<init>(){}[0]
+    }
+
+    final class UnknownException : io.ktor.server.auth/OAuth2Exception, kotlinx.coroutines/CopyableThrowable<io.ktor.server.auth/OAuth2Exception.UnknownException> { // io.ktor.server.auth/OAuth2Exception.UnknownException|null[0]
+        constructor <init>(kotlin/String, kotlin/String) // io.ktor.server.auth/OAuth2Exception.UnknownException.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+        final fun createCopy(): io.ktor.server.auth/OAuth2Exception.UnknownException // io.ktor.server.auth/OAuth2Exception.UnknownException.createCopy|createCopy(){}[0]
+    }
+
+    final class UnsupportedGrantType : io.ktor.server.auth/OAuth2Exception, kotlinx.coroutines/CopyableThrowable<io.ktor.server.auth/OAuth2Exception.UnsupportedGrantType> { // io.ktor.server.auth/OAuth2Exception.UnsupportedGrantType|null[0]
+        constructor <init>(kotlin/String) // io.ktor.server.auth/OAuth2Exception.UnsupportedGrantType.<init>|<init>(kotlin.String){}[0]
+
+        final val grantType // io.ktor.server.auth/OAuth2Exception.UnsupportedGrantType.grantType|{}grantType[0]
+            final fun <get-grantType>(): kotlin/String // io.ktor.server.auth/OAuth2Exception.UnsupportedGrantType.grantType.<get-grantType>|<get-grantType>(){}[0]
+
+        final fun createCopy(): io.ktor.server.auth/OAuth2Exception.UnsupportedGrantType // io.ktor.server.auth/OAuth2Exception.UnsupportedGrantType.createCopy|createCopy(){}[0]
+    }
+}
+
+sealed class io.ktor.server.auth/OAuthAccessTokenResponse { // io.ktor.server.auth/OAuthAccessTokenResponse|null[0]
+    constructor <init>() // io.ktor.server.auth/OAuthAccessTokenResponse.<init>|<init>(){}[0]
+
+    final class OAuth1a : io.ktor.server.auth/OAuthAccessTokenResponse { // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a|null[0]
+        constructor <init>(kotlin/String, kotlin/String, io.ktor.http/Parameters = ...) // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.<init>|<init>(kotlin.String;kotlin.String;io.ktor.http.Parameters){}[0]
+
+        final val extraParameters // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.extraParameters|{}extraParameters[0]
+            final fun <get-extraParameters>(): io.ktor.http/Parameters // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.extraParameters.<get-extraParameters>|<get-extraParameters>(){}[0]
+        final val token // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.token|{}token[0]
+            final fun <get-token>(): kotlin/String // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.token.<get-token>|<get-token>(){}[0]
+        final val tokenSecret // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.tokenSecret|{}tokenSecret[0]
+            final fun <get-tokenSecret>(): kotlin/String // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.tokenSecret.<get-tokenSecret>|<get-tokenSecret>(){}[0]
+
+        final fun component1(): kotlin/String // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.component1|component1(){}[0]
+        final fun component2(): kotlin/String // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.component2|component2(){}[0]
+        final fun component3(): io.ktor.http/Parameters // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.component3|component3(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String = ..., io.ktor.http/Parameters = ...): io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.copy|copy(kotlin.String;kotlin.String;io.ktor.http.Parameters){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth1a.toString|toString(){}[0]
+    }
+
+    final class OAuth2 : io.ktor.server.auth/OAuthAccessTokenResponse { // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2|null[0]
+        constructor <init>(kotlin/String, kotlin/String, kotlin/Long, kotlin/String?, io.ktor.http/Parameters = ...) // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.<init>|<init>(kotlin.String;kotlin.String;kotlin.Long;kotlin.String?;io.ktor.http.Parameters){}[0]
+        constructor <init>(kotlin/String, kotlin/String, kotlin/Long, kotlin/String?, io.ktor.http/Parameters = ..., kotlin/String? = ...) // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.<init>|<init>(kotlin.String;kotlin.String;kotlin.Long;kotlin.String?;io.ktor.http.Parameters;kotlin.String?){}[0]
+
+        final val accessToken // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.accessToken|{}accessToken[0]
+            final fun <get-accessToken>(): kotlin/String // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.accessToken.<get-accessToken>|<get-accessToken>(){}[0]
+        final val expiresIn // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.expiresIn|{}expiresIn[0]
+            final fun <get-expiresIn>(): kotlin/Long // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.expiresIn.<get-expiresIn>|<get-expiresIn>(){}[0]
+        final val extraParameters // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.extraParameters|{}extraParameters[0]
+            final fun <get-extraParameters>(): io.ktor.http/Parameters // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.extraParameters.<get-extraParameters>|<get-extraParameters>(){}[0]
+        final val refreshToken // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.refreshToken|{}refreshToken[0]
+            final fun <get-refreshToken>(): kotlin/String? // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.refreshToken.<get-refreshToken>|<get-refreshToken>(){}[0]
+        final val tokenType // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.tokenType|{}tokenType[0]
+            final fun <get-tokenType>(): kotlin/String // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.tokenType.<get-tokenType>|<get-tokenType>(){}[0]
+
+        final var state // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.state|{}state[0]
+            final fun <get-state>(): kotlin/String? // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.state.<get-state>|<get-state>(){}[0]
+
+        final fun component1(): kotlin/String // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.component1|component1(){}[0]
+        final fun component2(): kotlin/String // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.component2|component2(){}[0]
+        final fun component3(): kotlin/Long // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.component3|component3(){}[0]
+        final fun component4(): kotlin/String? // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.component4|component4(){}[0]
+        final fun component5(): io.ktor.http/Parameters // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.component5|component5(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/Long = ..., kotlin/String? = ..., io.ktor.http/Parameters = ...): io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2 // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.copy|copy(kotlin.String;kotlin.String;kotlin.Long;kotlin.String?;io.ktor.http.Parameters){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2.toString|toString(){}[0]
+    }
+}
+
+sealed class io.ktor.server.auth/OAuthCallback { // io.ktor.server.auth/OAuthCallback|null[0]
+    constructor <init>() // io.ktor.server.auth/OAuthCallback.<init>|<init>(){}[0]
+
+    final class Error : io.ktor.server.auth/OAuthCallback { // io.ktor.server.auth/OAuthCallback.Error|null[0]
+        constructor <init>(kotlin/String, kotlin/String?) // io.ktor.server.auth/OAuthCallback.Error.<init>|<init>(kotlin.String;kotlin.String?){}[0]
+
+        final val error // io.ktor.server.auth/OAuthCallback.Error.error|{}error[0]
+            final fun <get-error>(): kotlin/String // io.ktor.server.auth/OAuthCallback.Error.error.<get-error>|<get-error>(){}[0]
+        final val errorDescription // io.ktor.server.auth/OAuthCallback.Error.errorDescription|{}errorDescription[0]
+            final fun <get-errorDescription>(): kotlin/String? // io.ktor.server.auth/OAuthCallback.Error.errorDescription.<get-errorDescription>|<get-errorDescription>(){}[0]
+
+        final fun component1(): kotlin/String // io.ktor.server.auth/OAuthCallback.Error.component1|component1(){}[0]
+        final fun component2(): kotlin/String? // io.ktor.server.auth/OAuthCallback.Error.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String? = ...): io.ktor.server.auth/OAuthCallback.Error // io.ktor.server.auth/OAuthCallback.Error.copy|copy(kotlin.String;kotlin.String?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.auth/OAuthCallback.Error.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.server.auth/OAuthCallback.Error.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.ktor.server.auth/OAuthCallback.Error.toString|toString(){}[0]
+    }
+
+    final class TokenPair : io.ktor.server.auth/OAuthCallback { // io.ktor.server.auth/OAuthCallback.TokenPair|null[0]
+        constructor <init>(kotlin/String, kotlin/String) // io.ktor.server.auth/OAuthCallback.TokenPair.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+        final val token // io.ktor.server.auth/OAuthCallback.TokenPair.token|{}token[0]
+            final fun <get-token>(): kotlin/String // io.ktor.server.auth/OAuthCallback.TokenPair.token.<get-token>|<get-token>(){}[0]
+        final val tokenSecret // io.ktor.server.auth/OAuthCallback.TokenPair.tokenSecret|{}tokenSecret[0]
+            final fun <get-tokenSecret>(): kotlin/String // io.ktor.server.auth/OAuthCallback.TokenPair.tokenSecret.<get-tokenSecret>|<get-tokenSecret>(){}[0]
+
+        final fun component1(): kotlin/String // io.ktor.server.auth/OAuthCallback.TokenPair.component1|component1(){}[0]
+        final fun component2(): kotlin/String // io.ktor.server.auth/OAuthCallback.TokenPair.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String = ...): io.ktor.server.auth/OAuthCallback.TokenPair // io.ktor.server.auth/OAuthCallback.TokenPair.copy|copy(kotlin.String;kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.auth/OAuthCallback.TokenPair.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.server.auth/OAuthCallback.TokenPair.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.ktor.server.auth/OAuthCallback.TokenPair.toString|toString(){}[0]
+    }
+
+    final class TokenSingle : io.ktor.server.auth/OAuthCallback { // io.ktor.server.auth/OAuthCallback.TokenSingle|null[0]
+        constructor <init>(kotlin/String, kotlin/String) // io.ktor.server.auth/OAuthCallback.TokenSingle.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+        final val state // io.ktor.server.auth/OAuthCallback.TokenSingle.state|{}state[0]
+            final fun <get-state>(): kotlin/String // io.ktor.server.auth/OAuthCallback.TokenSingle.state.<get-state>|<get-state>(){}[0]
+        final val token // io.ktor.server.auth/OAuthCallback.TokenSingle.token|{}token[0]
+            final fun <get-token>(): kotlin/String // io.ktor.server.auth/OAuthCallback.TokenSingle.token.<get-token>|<get-token>(){}[0]
+
+        final fun component1(): kotlin/String // io.ktor.server.auth/OAuthCallback.TokenSingle.component1|component1(){}[0]
+        final fun component2(): kotlin/String // io.ktor.server.auth/OAuthCallback.TokenSingle.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String = ...): io.ktor.server.auth/OAuthCallback.TokenSingle // io.ktor.server.auth/OAuthCallback.TokenSingle.copy|copy(kotlin.String;kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.auth/OAuthCallback.TokenSingle.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.server.auth/OAuthCallback.TokenSingle.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.ktor.server.auth/OAuthCallback.TokenSingle.toString|toString(){}[0]
+    }
+}
+
+sealed class io.ktor.server.auth/OAuthServerSettings { // io.ktor.server.auth/OAuthServerSettings|null[0]
+    constructor <init>(kotlin/String, io.ktor.server.auth/OAuthVersion) // io.ktor.server.auth/OAuthServerSettings.<init>|<init>(kotlin.String;io.ktor.server.auth.OAuthVersion){}[0]
+
+    final val name // io.ktor.server.auth/OAuthServerSettings.name|{}name[0]
+        final fun <get-name>(): kotlin/String // io.ktor.server.auth/OAuthServerSettings.name.<get-name>|<get-name>(){}[0]
+    final val version // io.ktor.server.auth/OAuthServerSettings.version|{}version[0]
+        final fun <get-version>(): io.ktor.server.auth/OAuthVersion // io.ktor.server.auth/OAuthServerSettings.version.<get-version>|<get-version>(){}[0]
+
+    final class OAuth1aServerSettings : io.ktor.server.auth/OAuthServerSettings { // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings|null[0]
+        constructor <init>(kotlin/String, kotlin/String, kotlin/String, kotlin/String, kotlin/String, kotlin/String, kotlin/Function1<io.ktor.client.request/HttpRequestBuilder, kotlin/Unit> = ...) // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.<init>|<init>(kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.Function1<io.ktor.client.request.HttpRequestBuilder,kotlin.Unit>){}[0]
+
+        final val accessTokenInterceptor // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.accessTokenInterceptor|{}accessTokenInterceptor[0]
+            final fun <get-accessTokenInterceptor>(): kotlin/Function1<io.ktor.client.request/HttpRequestBuilder, kotlin/Unit> // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.accessTokenInterceptor.<get-accessTokenInterceptor>|<get-accessTokenInterceptor>(){}[0]
+        final val accessTokenUrl // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.accessTokenUrl|{}accessTokenUrl[0]
+            final fun <get-accessTokenUrl>(): kotlin/String // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.accessTokenUrl.<get-accessTokenUrl>|<get-accessTokenUrl>(){}[0]
+        final val authorizeUrl // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.authorizeUrl|{}authorizeUrl[0]
+            final fun <get-authorizeUrl>(): kotlin/String // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.authorizeUrl.<get-authorizeUrl>|<get-authorizeUrl>(){}[0]
+        final val consumerKey // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.consumerKey|{}consumerKey[0]
+            final fun <get-consumerKey>(): kotlin/String // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.consumerKey.<get-consumerKey>|<get-consumerKey>(){}[0]
+        final val consumerSecret // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.consumerSecret|{}consumerSecret[0]
+            final fun <get-consumerSecret>(): kotlin/String // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.consumerSecret.<get-consumerSecret>|<get-consumerSecret>(){}[0]
+        final val requestTokenUrl // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.requestTokenUrl|{}requestTokenUrl[0]
+            final fun <get-requestTokenUrl>(): kotlin/String // io.ktor.server.auth/OAuthServerSettings.OAuth1aServerSettings.requestTokenUrl.<get-requestTokenUrl>|<get-requestTokenUrl>(){}[0]
+    }
+
+    final class OAuth2ServerSettings : io.ktor.server.auth/OAuthServerSettings { // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings|null[0]
+        constructor <init>(kotlin/String, kotlin/String, kotlin/String, io.ktor.http/HttpMethod = ..., kotlin/String, kotlin/String, kotlin.collections/List<kotlin/String> = ..., kotlin/Boolean = ..., io.ktor.util/NonceManager = ..., kotlin/Function1<io.ktor.http/URLBuilder, kotlin/Unit> = ..., kotlin/Boolean = ..., kotlin.collections/List<kotlin/Pair<kotlin/String, kotlin/String>> = ..., kotlin.collections/List<kotlin/Pair<kotlin/String, kotlin/String>> = ..., kotlin/Function1<io.ktor.client.request/HttpRequestBuilder, kotlin/Unit> = ..., kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, kotlin/String, kotlin/Unit> = ...) // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.<init>|<init>(kotlin.String;kotlin.String;kotlin.String;io.ktor.http.HttpMethod;kotlin.String;kotlin.String;kotlin.collections.List<kotlin.String>;kotlin.Boolean;io.ktor.util.NonceManager;kotlin.Function1<io.ktor.http.URLBuilder,kotlin.Unit>;kotlin.Boolean;kotlin.collections.List<kotlin.Pair<kotlin.String,kotlin.String>>;kotlin.collections.List<kotlin.Pair<kotlin.String,kotlin.String>>;kotlin.Function1<io.ktor.client.request.HttpRequestBuilder,kotlin.Unit>;kotlin.coroutines.SuspendFunction2<io.ktor.server.application.ApplicationCall,kotlin.String,kotlin.Unit>){}[0]
+
+        final val accessTokenInterceptor // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.accessTokenInterceptor|{}accessTokenInterceptor[0]
+            final fun <get-accessTokenInterceptor>(): kotlin/Function1<io.ktor.client.request/HttpRequestBuilder, kotlin/Unit> // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.accessTokenInterceptor.<get-accessTokenInterceptor>|<get-accessTokenInterceptor>(){}[0]
+        final val accessTokenRequiresBasicAuth // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.accessTokenRequiresBasicAuth|{}accessTokenRequiresBasicAuth[0]
+            final fun <get-accessTokenRequiresBasicAuth>(): kotlin/Boolean // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.accessTokenRequiresBasicAuth.<get-accessTokenRequiresBasicAuth>|<get-accessTokenRequiresBasicAuth>(){}[0]
+        final val accessTokenUrl // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.accessTokenUrl|{}accessTokenUrl[0]
+            final fun <get-accessTokenUrl>(): kotlin/String // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.accessTokenUrl.<get-accessTokenUrl>|<get-accessTokenUrl>(){}[0]
+        final val authorizeUrl // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.authorizeUrl|{}authorizeUrl[0]
+            final fun <get-authorizeUrl>(): kotlin/String // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.authorizeUrl.<get-authorizeUrl>|<get-authorizeUrl>(){}[0]
+        final val authorizeUrlInterceptor // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.authorizeUrlInterceptor|{}authorizeUrlInterceptor[0]
+            final fun <get-authorizeUrlInterceptor>(): kotlin/Function1<io.ktor.http/URLBuilder, kotlin/Unit> // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.authorizeUrlInterceptor.<get-authorizeUrlInterceptor>|<get-authorizeUrlInterceptor>(){}[0]
+        final val clientId // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.clientId|{}clientId[0]
+            final fun <get-clientId>(): kotlin/String // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.clientId.<get-clientId>|<get-clientId>(){}[0]
+        final val clientSecret // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.clientSecret|{}clientSecret[0]
+            final fun <get-clientSecret>(): kotlin/String // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.clientSecret.<get-clientSecret>|<get-clientSecret>(){}[0]
+        final val defaultScopes // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.defaultScopes|{}defaultScopes[0]
+            final fun <get-defaultScopes>(): kotlin.collections/List<kotlin/String> // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.defaultScopes.<get-defaultScopes>|<get-defaultScopes>(){}[0]
+        final val extraAuthParameters // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.extraAuthParameters|{}extraAuthParameters[0]
+            final fun <get-extraAuthParameters>(): kotlin.collections/List<kotlin/Pair<kotlin/String, kotlin/String>> // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.extraAuthParameters.<get-extraAuthParameters>|<get-extraAuthParameters>(){}[0]
+        final val extraTokenParameters // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.extraTokenParameters|{}extraTokenParameters[0]
+            final fun <get-extraTokenParameters>(): kotlin.collections/List<kotlin/Pair<kotlin/String, kotlin/String>> // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.extraTokenParameters.<get-extraTokenParameters>|<get-extraTokenParameters>(){}[0]
+        final val nonceManager // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.nonceManager|{}nonceManager[0]
+            final fun <get-nonceManager>(): io.ktor.util/NonceManager // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.nonceManager.<get-nonceManager>|<get-nonceManager>(){}[0]
+        final val onStateCreated // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.onStateCreated|{}onStateCreated[0]
+            final fun <get-onStateCreated>(): kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, kotlin/String, kotlin/Unit> // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.onStateCreated.<get-onStateCreated>|<get-onStateCreated>(){}[0]
+        final val passParamsInURL // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.passParamsInURL|{}passParamsInURL[0]
+            final fun <get-passParamsInURL>(): kotlin/Boolean // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.passParamsInURL.<get-passParamsInURL>|<get-passParamsInURL>(){}[0]
+        final val requestMethod // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.requestMethod|{}requestMethod[0]
+            final fun <get-requestMethod>(): io.ktor.http/HttpMethod // io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings.requestMethod.<get-requestMethod>|<get-requestMethod>(){}[0]
+    }
+}
+
+final object io.ktor.server.auth/AuthenticationChecked : io.ktor.server.application/Hook<kotlin.coroutines/SuspendFunction1<io.ktor.server.application/ApplicationCall, kotlin/Unit>> { // io.ktor.server.auth/AuthenticationChecked|null[0]
+    final fun install(io.ktor.server.application/ApplicationCallPipeline, kotlin.coroutines/SuspendFunction1<io.ktor.server.application/ApplicationCall, kotlin/Unit>) // io.ktor.server.auth/AuthenticationChecked.install|install(io.ktor.server.application.ApplicationCallPipeline;kotlin.coroutines.SuspendFunction1<io.ktor.server.application.ApplicationCall,kotlin.Unit>){}[0]
+}
+
+final object io.ktor.server.auth/OAuth2RequestParameters { // io.ktor.server.auth/OAuth2RequestParameters|null[0]
+    final const val ClientId // io.ktor.server.auth/OAuth2RequestParameters.ClientId|{}ClientId[0]
+        final fun <get-ClientId>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.ClientId.<get-ClientId>|<get-ClientId>(){}[0]
+    final const val ClientSecret // io.ktor.server.auth/OAuth2RequestParameters.ClientSecret|{}ClientSecret[0]
+        final fun <get-ClientSecret>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.ClientSecret.<get-ClientSecret>|<get-ClientSecret>(){}[0]
+    final const val Code // io.ktor.server.auth/OAuth2RequestParameters.Code|{}Code[0]
+        final fun <get-Code>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.Code.<get-Code>|<get-Code>(){}[0]
+    final const val Error // io.ktor.server.auth/OAuth2RequestParameters.Error|{}Error[0]
+        final fun <get-Error>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.Error.<get-Error>|<get-Error>(){}[0]
+    final const val ErrorDescription // io.ktor.server.auth/OAuth2RequestParameters.ErrorDescription|{}ErrorDescription[0]
+        final fun <get-ErrorDescription>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.ErrorDescription.<get-ErrorDescription>|<get-ErrorDescription>(){}[0]
+    final const val GrantType // io.ktor.server.auth/OAuth2RequestParameters.GrantType|{}GrantType[0]
+        final fun <get-GrantType>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.GrantType.<get-GrantType>|<get-GrantType>(){}[0]
+    final const val Password // io.ktor.server.auth/OAuth2RequestParameters.Password|{}Password[0]
+        final fun <get-Password>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.Password.<get-Password>|<get-Password>(){}[0]
+    final const val RedirectUri // io.ktor.server.auth/OAuth2RequestParameters.RedirectUri|{}RedirectUri[0]
+        final fun <get-RedirectUri>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.RedirectUri.<get-RedirectUri>|<get-RedirectUri>(){}[0]
+    final const val ResponseType // io.ktor.server.auth/OAuth2RequestParameters.ResponseType|{}ResponseType[0]
+        final fun <get-ResponseType>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.ResponseType.<get-ResponseType>|<get-ResponseType>(){}[0]
+    final const val Scope // io.ktor.server.auth/OAuth2RequestParameters.Scope|{}Scope[0]
+        final fun <get-Scope>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.Scope.<get-Scope>|<get-Scope>(){}[0]
+    final const val State // io.ktor.server.auth/OAuth2RequestParameters.State|{}State[0]
+        final fun <get-State>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.State.<get-State>|<get-State>(){}[0]
+    final const val UserName // io.ktor.server.auth/OAuth2RequestParameters.UserName|{}UserName[0]
+        final fun <get-UserName>(): kotlin/String // io.ktor.server.auth/OAuth2RequestParameters.UserName.<get-UserName>|<get-UserName>(){}[0]
+}
+
+final object io.ktor.server.auth/OAuth2ResponseParameters { // io.ktor.server.auth/OAuth2ResponseParameters|null[0]
+    final const val AccessToken // io.ktor.server.auth/OAuth2ResponseParameters.AccessToken|{}AccessToken[0]
+        final fun <get-AccessToken>(): kotlin/String // io.ktor.server.auth/OAuth2ResponseParameters.AccessToken.<get-AccessToken>|<get-AccessToken>(){}[0]
+    final const val Error // io.ktor.server.auth/OAuth2ResponseParameters.Error|{}Error[0]
+        final fun <get-Error>(): kotlin/String // io.ktor.server.auth/OAuth2ResponseParameters.Error.<get-Error>|<get-Error>(){}[0]
+    final const val ErrorDescription // io.ktor.server.auth/OAuth2ResponseParameters.ErrorDescription|{}ErrorDescription[0]
+        final fun <get-ErrorDescription>(): kotlin/String // io.ktor.server.auth/OAuth2ResponseParameters.ErrorDescription.<get-ErrorDescription>|<get-ErrorDescription>(){}[0]
+    final const val ExpiresIn // io.ktor.server.auth/OAuth2ResponseParameters.ExpiresIn|{}ExpiresIn[0]
+        final fun <get-ExpiresIn>(): kotlin/String // io.ktor.server.auth/OAuth2ResponseParameters.ExpiresIn.<get-ExpiresIn>|<get-ExpiresIn>(){}[0]
+    final const val RefreshToken // io.ktor.server.auth/OAuth2ResponseParameters.RefreshToken|{}RefreshToken[0]
+        final fun <get-RefreshToken>(): kotlin/String // io.ktor.server.auth/OAuth2ResponseParameters.RefreshToken.<get-RefreshToken>|<get-RefreshToken>(){}[0]
+    final const val TokenType // io.ktor.server.auth/OAuth2ResponseParameters.TokenType|{}TokenType[0]
+        final fun <get-TokenType>(): kotlin/String // io.ktor.server.auth/OAuth2ResponseParameters.TokenType.<get-TokenType>|<get-TokenType>(){}[0]
+}
+
+final object io.ktor.server.auth/OAuthGrantTypes { // io.ktor.server.auth/OAuthGrantTypes|null[0]
+    final const val AuthorizationCode // io.ktor.server.auth/OAuthGrantTypes.AuthorizationCode|{}AuthorizationCode[0]
+        final fun <get-AuthorizationCode>(): kotlin/String // io.ktor.server.auth/OAuthGrantTypes.AuthorizationCode.<get-AuthorizationCode>|<get-AuthorizationCode>(){}[0]
+    final const val Password // io.ktor.server.auth/OAuthGrantTypes.Password|{}Password[0]
+        final fun <get-Password>(): kotlin/String // io.ktor.server.auth/OAuthGrantTypes.Password.<get-Password>|<get-Password>(){}[0]
+}
+
+final const val io.ktor.server.auth/SessionAuthChallengeKey // io.ktor.server.auth/SessionAuthChallengeKey|{}SessionAuthChallengeKey[0]
+    final fun <get-SessionAuthChallengeKey>(): kotlin/String // io.ktor.server.auth/SessionAuthChallengeKey.<get-SessionAuthChallengeKey>|<get-SessionAuthChallengeKey>(){}[0]
+
+final val io.ktor.server.auth/AuthenticationInterceptors // io.ktor.server.auth/AuthenticationInterceptors|{}AuthenticationInterceptors[0]
+    final fun <get-AuthenticationInterceptors>(): io.ktor.server.application/RouteScopedPlugin<io.ktor.server.auth/RouteAuthenticationConfig> // io.ktor.server.auth/AuthenticationInterceptors.<get-AuthenticationInterceptors>|<get-AuthenticationInterceptors>(){}[0]
+final val io.ktor.server.auth/OAuthKey // io.ktor.server.auth/OAuthKey|{}OAuthKey[0]
+    final fun <get-OAuthKey>(): kotlin/Any // io.ktor.server.auth/OAuthKey.<get-OAuthKey>|<get-OAuthKey>(){}[0]
+final val io.ktor.server.auth/authentication // io.ktor.server.auth/authentication|@io.ktor.server.application.ApplicationCall{}authentication[0]
+    final fun (io.ktor.server.application/ApplicationCall).<get-authentication>(): io.ktor.server.auth/AuthenticationContext // io.ktor.server.auth/authentication.<get-authentication>|<get-authentication>@io.ktor.server.application.ApplicationCall(){}[0]
+
+final fun (io.ktor.server.application/Application).io.ktor.server.auth/authentication(kotlin/Function1<io.ktor.server.auth/AuthenticationConfig, kotlin/Unit>) // io.ktor.server.auth/authentication|authentication@io.ktor.server.application.Application(kotlin.Function1<io.ktor.server.auth.AuthenticationConfig,kotlin.Unit>){}[0]
+final fun (io.ktor.server.auth/AuthenticationConfig).io.ktor.server.auth/basic(kotlin/String? = ..., kotlin/Function1<io.ktor.server.auth/BasicAuthenticationProvider.Config, kotlin/Unit>) // io.ktor.server.auth/basic|basic@io.ktor.server.auth.AuthenticationConfig(kotlin.String?;kotlin.Function1<io.ktor.server.auth.BasicAuthenticationProvider.Config,kotlin.Unit>){}[0]
+final fun (io.ktor.server.auth/AuthenticationConfig).io.ktor.server.auth/bearer(kotlin/String? = ..., kotlin/Function1<io.ktor.server.auth/BearerAuthenticationProvider.Config, kotlin/Unit>) // io.ktor.server.auth/bearer|bearer@io.ktor.server.auth.AuthenticationConfig(kotlin.String?;kotlin.Function1<io.ktor.server.auth.BearerAuthenticationProvider.Config,kotlin.Unit>){}[0]
+final fun (io.ktor.server.auth/AuthenticationConfig).io.ktor.server.auth/form(kotlin/String? = ..., kotlin/Function1<io.ktor.server.auth/FormAuthenticationProvider.Config, kotlin/Unit>) // io.ktor.server.auth/form|form@io.ktor.server.auth.AuthenticationConfig(kotlin.String?;kotlin.Function1<io.ktor.server.auth.FormAuthenticationProvider.Config,kotlin.Unit>){}[0]
+final fun (io.ktor.server.auth/AuthenticationConfig).io.ktor.server.auth/oauth(kotlin/String? = ..., kotlin/Function1<io.ktor.server.auth/OAuthAuthenticationProvider.Config, kotlin/Unit>) // io.ktor.server.auth/oauth|oauth@io.ktor.server.auth.AuthenticationConfig(kotlin.String?;kotlin.Function1<io.ktor.server.auth.OAuthAuthenticationProvider.Config,kotlin.Unit>){}[0]
+final fun (io.ktor.server.request/ApplicationRequest).io.ktor.server.auth/basicAuthenticationCredentials(io.ktor.utils.io.charsets/Charset? = ...): io.ktor.server.auth/UserPasswordCredential? // io.ktor.server.auth/basicAuthenticationCredentials|basicAuthenticationCredentials@io.ktor.server.request.ApplicationRequest(io.ktor.utils.io.charsets.Charset?){}[0]
+final fun (io.ktor.server.request/ApplicationRequest).io.ktor.server.auth/parseAuthorizationHeader(): io.ktor.http.auth/HttpAuthHeader? // io.ktor.server.auth/parseAuthorizationHeader|parseAuthorizationHeader@io.ktor.server.request.ApplicationRequest(){}[0]
+final fun (io.ktor.server.routing/Route).io.ktor.server.auth/authenticate(kotlin/Array<out kotlin/String?>... = ..., io.ktor.server.auth/AuthenticationStrategy, kotlin/Function1<io.ktor.server.routing/Route, kotlin/Unit>): io.ktor.server.routing/Route // io.ktor.server.auth/authenticate|authenticate@io.ktor.server.routing.Route(kotlin.Array<out|kotlin.String?>...;io.ktor.server.auth.AuthenticationStrategy;kotlin.Function1<io.ktor.server.routing.Route,kotlin.Unit>){}[0]
+final fun (io.ktor.server.routing/Route).io.ktor.server.auth/authenticate(kotlin/Array<out kotlin/String?>... = ..., kotlin/Boolean = ..., kotlin/Function1<io.ktor.server.routing/Route, kotlin/Unit>): io.ktor.server.routing/Route // io.ktor.server.auth/authenticate|authenticate@io.ktor.server.routing.Route(kotlin.Array<out|kotlin.String?>...;kotlin.Boolean;kotlin.Function1<io.ktor.server.routing.Route,kotlin.Unit>){}[0]
+final fun <#A: kotlin/Any> (io.ktor.server.auth/AuthenticationConfig).io.ktor.server.auth/session(kotlin/String? = ..., kotlin.reflect/KClass<#A>) // io.ktor.server.auth/session|session@io.ktor.server.auth.AuthenticationConfig(kotlin.String?;kotlin.reflect.KClass<0:0>){0§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any> (io.ktor.server.auth/AuthenticationConfig).io.ktor.server.auth/session(kotlin/String?, kotlin.reflect/KClass<#A>, kotlin/Function1<io.ktor.server.auth/SessionAuthenticationProvider.Config<#A>, kotlin/Unit>) // io.ktor.server.auth/session|session@io.ktor.server.auth.AuthenticationConfig(kotlin.String?;kotlin.reflect.KClass<0:0>;kotlin.Function1<io.ktor.server.auth.SessionAuthenticationProvider.Config<0:0>,kotlin.Unit>){0§<kotlin.Any>}[0]
+final inline fun <#A: reified kotlin/Any> (io.ktor.server.application/ApplicationCall).io.ktor.server.auth/principal(): #A? // io.ktor.server.auth/principal|principal@io.ktor.server.application.ApplicationCall(){0§<kotlin.Any>}[0]
+final inline fun <#A: reified kotlin/Any> (io.ktor.server.application/ApplicationCall).io.ktor.server.auth/principal(kotlin/String?): #A? // io.ktor.server.auth/principal|principal@io.ktor.server.application.ApplicationCall(kotlin.String?){0§<kotlin.Any>}[0]
+final inline fun <#A: reified kotlin/Any> (io.ktor.server.auth/AuthenticationConfig).io.ktor.server.auth/session(kotlin/String? = ...) // io.ktor.server.auth/session|session@io.ktor.server.auth.AuthenticationConfig(kotlin.String?){0§<kotlin.Any>}[0]
+final inline fun <#A: reified kotlin/Any> (io.ktor.server.auth/AuthenticationConfig).io.ktor.server.auth/session(kotlin/String? = ..., noinline kotlin/Function1<io.ktor.server.auth/SessionAuthenticationProvider.Config<#A>, kotlin/Unit>) // io.ktor.server.auth/session|session@io.ktor.server.auth.AuthenticationConfig(kotlin.String?;kotlin.Function1<io.ktor.server.auth.SessionAuthenticationProvider.Config<0:0>,kotlin.Unit>){0§<kotlin.Any>}[0]
+final suspend fun io.ktor.server.auth/verifyWithOAuth2(io.ktor.server.auth/UserPasswordCredential, io.ktor.client/HttpClient, io.ktor.server.auth/OAuthServerSettings.OAuth2ServerSettings): io.ktor.server.auth/OAuthAccessTokenResponse.OAuth2 // io.ktor.server.auth/verifyWithOAuth2|verifyWithOAuth2(io.ktor.server.auth.UserPasswordCredential;io.ktor.client.HttpClient;io.ktor.server.auth.OAuthServerSettings.OAuth2ServerSettings){}[0]

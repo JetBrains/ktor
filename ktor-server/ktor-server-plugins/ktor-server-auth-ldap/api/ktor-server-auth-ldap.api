@@ -1,7 +1,7 @@
 public final class io/ktor/server/auth/ldap/LdapKt {
-	public static final fun ldapAuthenticate (Lio/ktor/server/auth/Credential;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
 	public static final fun ldapAuthenticate (Lio/ktor/server/auth/UserPasswordCredential;Ljava/lang/String;Ljava/lang/String;)Lio/ktor/server/auth/UserIdPrincipal;
-	public static final fun ldapAuthenticate (Lio/ktor/server/auth/UserPasswordCredential;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lio/ktor/server/auth/Principal;
-	public static synthetic fun ldapAuthenticate$default (Lio/ktor/server/auth/Credential;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun ldapAuthenticate (Lio/ktor/server/auth/UserPasswordCredential;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
+	public static final fun ldapAuthenticate (Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
+	public static synthetic fun ldapAuthenticate$default (Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Ljava/lang/Object;
 }
 

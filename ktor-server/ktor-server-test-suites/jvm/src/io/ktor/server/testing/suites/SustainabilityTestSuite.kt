@@ -19,9 +19,11 @@ import io.ktor.server.plugins.requestvalidation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.test.base.*
 import io.ktor.server.testing.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
+import io.ktor.utils.io.core.*
 import io.ktor.utils.io.jvm.javaio.*
 import io.ktor.utils.io.streams.*
 import kotlinx.coroutines.*
@@ -33,8 +35,9 @@ import java.net.*
 import java.util.*
 import java.util.concurrent.*
 import java.util.concurrent.atomic.*
-import kotlin.concurrent.*
+import kotlin.io.use
 import kotlin.test.*
+import kotlin.text.toByteArray
 
 @ExtendWith(RetrySupport::class)
 abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfiguration : ApplicationEngine.Configuration>(
@@ -42,7 +45,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
 ) : EngineTestBase<TEngine, TConfiguration>(hostFactory) {
 
     @Test
-    fun testLoggerOnError() {
+    fun testLoggerOnError() = runTest {
         val message = "expected, ${Random().nextLong()}"
         val collected = LinkedBlockingQueue<Throwable>()
 
@@ -90,7 +93,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @Test
-    fun testIgnorePostContent(): Unit = runBlocking {
+    fun testIgnorePostContent(): Unit = runTest {
         createAndStartServer {
             post("/") {
                 call.respondText("OK")
@@ -133,7 +136,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
                                 val contentLength = response.headers[HttpHeaders.ContentLength].toString().toLong()
                                 channel.discardExact(contentLength)
                                 response.release()
-                            } ?: kotlin.test.fail("No response found for request #$requestNumber")
+                            } ?: fail("No response found for request #$requestNumber")
                         }
                     }
                 }
@@ -144,8 +147,8 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     @Test
     @NoHttp2
     @Ignore
-    open fun testChunkedWrongLength() {
-        val data = ByteArray(16 * 1024, { it.toByte() })
+    open fun testChunkedWrongLength() = runTest {
+        val data = ByteArray(16 * 1024) { it.toByte() }
         val doubleSize = (data.size * 2).toString()
         val halfSize = (data.size / 2).toString()
 
@@ -189,7 +192,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
 
                             override suspend fun writeTo(channel: ByteWriteChannel) {
                                 channel.writeFully(data)
-                                channel.close()
+                                channel.flushAndClose()
                             }
                         }
                     )
@@ -206,7 +209,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
 
                             override suspend fun writeTo(channel: ByteWriteChannel) {
                                 channel.writeFully(data)
-                                channel.close()
+                                channel.flushAndClose()
                             }
                         }
                     )
@@ -240,7 +243,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @Test
-    fun testApplicationScopeCancellation() {
+    fun testApplicationScopeCancellation() = runTest {
         var job: Job? = null
 
         createAndStartServer {
@@ -254,9 +257,10 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
         assertTrue(job!!.isCancelled)
     }
 
+    @RetryableTest(2)
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun testEmbeddedServerCancellation() {
+    fun testEmbeddedServerCancellation() = runTest {
         val parent = Job()
 
         createAndStartServer(parent = parent) {
@@ -270,15 +274,14 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
 
         parent.cancel()
 
-        runBlocking {
-            try {
-                withTimeout(15000L) {
-                    parent.join()
-                }
-            } catch (cause: TimeoutCancellationException) {
-                DebugProbes.printJob(parent)
-                fail("Server did shut down in time after cancelling parent!")
+        val timeMillis = 15000L
+        try {
+            withTimeout(timeMillis) {
+                parent.join()
             }
+        } catch (cause: TimeoutCancellationException) {
+            DebugProbes.printJob(parent)
+            fail("Server did not shut down within timeout (${timeMillis / 1000}s)!")
         }
 
         assertFailsWith<IOException> {
@@ -291,7 +294,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @Test
-    fun testGetWithBody() {
+    fun testGetWithBody() = runTest {
         createAndStartServer {
             install(Compression)
 
@@ -309,7 +312,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @Test
-    fun testRepeatRequest() {
+    fun testRepeatRequest() = runTest {
         createAndStartServer {
             get("/") {
                 call.respond("OK ${call.request.queryParameters["i"]}")
@@ -324,9 +327,9 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
         }
     }
 
-    @OptIn(InternalAPI::class)
-    @RetryableTest(2)
-    open fun testBlockingConcurrency() {
+    @OptIn(InternalAPI::class, ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
+    @RetryableTest(4)
+    open fun testBlockingConcurrency() = runTest {
         val completed = AtomicInteger(0)
         createAndStartServer {
             get("/{index}") {
@@ -347,10 +350,11 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
 
         val random = Random()
         for (i in 1..count) {
-            thread {
+            val dispatcher = newSingleThreadContext("thread-$i")
+            launch(dispatcher) {
                 try {
                     withUrl("/$i") {
-                        content.toInputStream().reader().use { reader ->
+                        rawContent.toInputStream().reader().use { reader ->
                             val firstByte = reader.read()
                             if (firstByte == -1) {
                                 fail("Premature end of response stream at iteration $i")
@@ -366,6 +370,8 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
                 } finally {
                     latch.countDown()
                 }
+            }.invokeOnCompletion {
+                dispatcher.close()
             }
         }
 
@@ -386,7 +392,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
 
     @OptIn(InternalAPI::class)
     @Test
-    fun testBigFile() {
+    fun testBigFile() = runTest {
         val file = File("build/large-file.dat")
         val rnd = Random()
 
@@ -410,12 +416,12 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
         }
 
         withUrl("/file") {
-            assertEquals(originalSha1WithSize, content.toInputStream().crcWithSize())
+            assertEquals(originalSha1WithSize, rawContent.toInputStream().crcWithSize())
         }
     }
 
     @Test
-    fun testBigFileHttpUrlConnection() {
+    fun testBigFileHttpUrlConnection() = runTest {
         val file = File("build/large-file.dat")
         val rnd = Random()
 
@@ -450,7 +456,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @Test
-    open fun testBlockingDeadlock() {
+    open fun testBlockingDeadlock() = runTest {
         createAndStartServer {
             get("/") {
                 call.respondTextWriter(ContentType.Text.Plain.withCharset(Charsets.ISO_8859_1)) {
@@ -518,7 +524,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @Test
-    open fun testChunkedWithVSpace() {
+    open fun testChunkedWithVSpace() = runTest {
         createAndStartServer {
             post("/") {
                 call.receiveParameters()
@@ -559,14 +565,14 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @Test
-    fun testChunkedIsNotFinal() {
+    fun testChunkedIsNotFinal() = runTest {
         createAndStartServer {
             get("/") {
                 call.respondText("Hello, world!", ContentType.Text.Html)
             }
             post("/") {
                 call.receiveParameters()
-                kotlin.test.fail("We should NOT receive any content")
+                fail("We should NOT receive any content")
             }
         }
 
@@ -603,9 +609,10 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
         }
     }
 
+    @RetryableTest(3)
     @Test
     @NoHttp2
-    fun testHeaderIsTooLong() {
+    fun testHeaderIsTooLong() = runTest {
         createAndStartServer {
             get("/") {
                 call.respondText("Hello, world!", ContentType.Text.Plain)
@@ -649,7 +656,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     class CustomFail(message: String) : Throwable(message)
 
     @Test
-    public fun testErrorInApplicationCallPipelineInterceptor() {
+    fun testErrorInApplicationCallPipelineInterceptor() = runTest {
         val exceptions = mutableListOf<Throwable>()
         val loggerDelegate = LoggerFactory.getLogger("io.ktor.test")
         val logger = object : Logger by loggerDelegate {
@@ -685,7 +692,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @Test
-    public fun testErrorInApplicationReceivePipelineInterceptor() {
+    fun testErrorInApplicationReceivePipelineInterceptor() = runTest {
         val exceptions = mutableListOf<Throwable>()
         val loggerDelegate = LoggerFactory.getLogger("io.ktor.test")
         val logger = object : Logger by loggerDelegate {
@@ -724,7 +731,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @Test
-    public fun testErrorInApplicationSendPipelineInterceptor() {
+    fun testErrorInApplicationSendPipelineInterceptor() = runTest {
         val exceptions = mutableListOf<Throwable>()
         val loggerDelegate = LoggerFactory.getLogger("ktor.test")
         val logger = object : Logger by loggerDelegate {
@@ -766,7 +773,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @Test
-    public open fun testErrorInEnginePipelineInterceptor() {
+    open fun testErrorInEnginePipelineInterceptor() = runTest {
         val exceptions = mutableListOf<Throwable>()
         val loggerDelegate = LoggerFactory.getLogger("ktor.test")
         val logger = object : Logger by loggerDelegate {
@@ -800,7 +807,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
 
     @OptIn(InternalAPI::class)
     @Test
-    public fun testRespondBlockingLarge() {
+    fun testRespondBlockingLarge() = runTest {
         val server = createServer {
             routing {
                 get("/blocking/large") {
@@ -817,13 +824,13 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
         withUrl("/blocking/large") {
             assertEquals(HttpStatusCode.OK, status)
             assertEquals(ContentType.Text.Plain, contentType()?.withoutParameters())
-            val result = content.toInputStream().crcWithSize()
+            val result = rawContent.toInputStream().crcWithSize()
             assertEquals(10000 * 13L, result.second)
         }
     }
 
     @Test
-    fun testDoubleHost() {
+    fun testDoubleHost() = runTest {
         createAndStartServer {
             get("/") {
                 call.respond("OK")
@@ -853,7 +860,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
     }
 
     @Test
-    fun testBodySmallerThanContentLength() {
+    fun testBodySmallerThanContentLength() = runTest {
         var failCause: Throwable? = null
         val result = Job()
 
@@ -891,9 +898,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
             }
         }
 
-        runBlocking {
-            result.join()
-        }
+        result.join()
 
         assertTrue(failCause != null)
         assertIs<IOException>(failCause)

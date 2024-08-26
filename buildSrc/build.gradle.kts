@@ -3,30 +3,27 @@
 */
 
 plugins {
-    kotlin("plugin.serialization") version "1.9.20"
-    id("org.gradle.kotlin.kotlin-dsl") version "4.2.1"
+    `kotlin-dsl`
+    kotlin("plugin.serialization") version "1.9.22"
 }
 
-val buildSnapshotTrain = properties["build_snapshot_train"]?.toString()?.toBoolean() == true
+val buildSnapshotTrain = properties["build_snapshot_train"]?.toString().toBoolean()
 
 repositories {
-    maven("https://plugins.gradle.org/m2")
+    mavenCentral()
+    gradlePluginPortal()
     maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
     maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
-
     if (buildSnapshotTrain) {
         mavenLocal()
     }
 }
 
-sourceSets.main {
-}
-
 val ktor_version = "3.0.0-eap-852"
 
 dependencies {
-    implementation(kotlin("gradle-plugin", "1.9.20"))
-    implementation(kotlin("serialization", "1.9.20"))
+    implementation(kotlin("gradle-plugin", "2.0.0"))
+    implementation(kotlin("serialization", "2.0.0"))
 
     val ktlint_version = libs.versions.ktlint.version.get()
     implementation("org.jmailen.gradle:kotlinter-gradle:$ktlint_version")
@@ -47,11 +44,10 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.logback.classic)
+    implementation(libs.tomlj)
+
 }
 
 kotlin {
-    jvmToolchain {
-        check(this is JavaToolchainSpec)
-        languageVersion.set(JavaLanguageVersion.of(8))
-    }
+    jvmToolchain(8)
 }

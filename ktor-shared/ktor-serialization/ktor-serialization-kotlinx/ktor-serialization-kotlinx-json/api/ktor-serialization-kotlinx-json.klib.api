@@ -1,0 +1,18 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-serialization-kotlinx-json>
+final class io.ktor.serialization.kotlinx.json/KotlinxSerializationJsonExtensionProvider : io.ktor.serialization.kotlinx/KotlinxSerializationExtensionProvider { // io.ktor.serialization.kotlinx.json/KotlinxSerializationJsonExtensionProvider|null[0]
+    constructor <init>() // io.ktor.serialization.kotlinx.json/KotlinxSerializationJsonExtensionProvider.<init>|<init>(){}[0]
+
+    final fun extension(kotlinx.serialization/SerialFormat): io.ktor.serialization.kotlinx/KotlinxSerializationExtension? // io.ktor.serialization.kotlinx.json/KotlinxSerializationJsonExtensionProvider.extension|extension(kotlinx.serialization.SerialFormat){}[0]
+}
+
+final val io.ktor.serialization.kotlinx.json/DefaultJson // io.ktor.serialization.kotlinx.json/DefaultJson|{}DefaultJson[0]
+    final fun <get-DefaultJson>(): kotlinx.serialization.json/Json // io.ktor.serialization.kotlinx.json/DefaultJson.<get-DefaultJson>|<get-DefaultJson>(){}[0]
+
+final fun (io.ktor.serialization/Configuration).io.ktor.serialization.kotlinx.json/json(kotlinx.serialization.json/Json = ..., io.ktor.http/ContentType = ...) // io.ktor.serialization.kotlinx.json/json|json@io.ktor.serialization.Configuration(kotlinx.serialization.json.Json;io.ktor.http.ContentType){}[0]

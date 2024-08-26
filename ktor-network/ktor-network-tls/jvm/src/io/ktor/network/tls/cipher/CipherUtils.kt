@@ -7,12 +7,13 @@ package io.ktor.network.tls.cipher
 import io.ktor.network.util.*
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.pool.*
+import kotlinx.io.*
 import java.nio.*
 import javax.crypto.*
 
 internal val CryptoBufferPool: ObjectPool<ByteBuffer> = ByteBufferPool(128, 65536)
 
-internal fun ByteReadPacket.cipherLoop(cipher: Cipher, header: BytePacketBuilder.() -> Unit = {}): ByteReadPacket {
+internal fun Source.cipherLoop(cipher: Cipher, header: Sink.() -> Unit = {}): Source {
     val srcBuffer = DefaultByteBufferPool.borrow()
     var dstBuffer = CryptoBufferPool.borrow()
     var dstBufferFromPool = true
@@ -26,7 +27,7 @@ internal fun ByteReadPacket.cipherLoop(cipher: Cipher, header: BytePacketBuilder
                 val rc = if (srcBuffer.hasRemaining()) readAvailable(srcBuffer) else 0
                 srcBuffer.flip()
 
-                if (!srcBuffer.hasRemaining() && (rc == -1 || this@cipherLoop.isEmpty)) break
+                if (!srcBuffer.hasRemaining() && (rc == -1 || this@cipherLoop.exhausted())) break
 
                 dstBuffer.clear()
 

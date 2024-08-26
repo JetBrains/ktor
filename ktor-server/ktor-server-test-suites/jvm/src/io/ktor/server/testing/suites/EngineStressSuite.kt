@@ -11,7 +11,7 @@ import io.ktor.http.content.*
 import io.ktor.server.engine.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.testing.*
+import io.ktor.server.test.base.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.streams.*
 import kotlinx.coroutines.*
@@ -49,7 +49,7 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
         TimeUnit.MILLISECONDS.toSeconds(timeMillis + gracefulMillis + shutdownMillis).seconds
 
     @Test
-    fun singleConnectionSingleThreadNoPipelining() {
+    fun singleConnectionSingleThreadNoPipelining() = runTest {
         createAndStartServer {
             get("/") {
                 call.respondText(endMarkerCrLf)
@@ -88,7 +88,7 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
     }
 
     @Test
-    fun singleConnectionSingleThreadWithPipelining() {
+    fun singleConnectionSingleThreadWithPipelining() = runTest {
         createAndStartServer {
             get("/") {
                 call.respondText(endMarkerCrLf)
@@ -156,7 +156,7 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
     }
 
     @Test
-    fun singleConnectionHighPressure() {
+    fun singleConnectionHighPressure() = runTest {
         createAndStartServer {
             get("/") {
                 call.respondText(endMarkerCrLf)
@@ -173,7 +173,7 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
     }
 
     @Test
-    fun multipleConnectionsHighPressure() {
+    fun multipleConnectionsHighPressure() = runTest {
         createAndStartServer {
             get("/") {
                 call.respondText(endMarkerCrLf)
@@ -190,7 +190,7 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
     }
 
     @Test
-    fun highLoadStressTest() {
+    fun highLoadStressTest() = runTest {
         createAndStartServer {
             get("/") {
                 call.respondText(endMarkerCrLf)
@@ -207,7 +207,7 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
     }
 
     @Test
-    fun testHttpUpgrade() {
+    fun testHttpUpgrade() = runTest {
         createAndStartServer {
             handle {
                 call.respond(
@@ -224,7 +224,7 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
                                     output.flush()
                                     delay(200)
                                 } finally {
-                                    output.close()
+                                    output.flushAndClose()
                                 }
                             }
                         }
@@ -260,7 +260,7 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
     }
 
     @Test
-    fun testRespondWrite() {
+    fun testRespondWrite() = runTest {
         createAndStartServer {
             get("/") {
                 call.respondTextWriter {
@@ -279,7 +279,7 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
     }
 
     @Test
-    fun test404() {
+    fun test404() = runTest {
         createAndStartServer {
             get("/") {
                 call.respondText("OK")
@@ -294,11 +294,12 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
     }
 
     @Test
-    fun testLongResponse() {
+    fun testLongResponse() = runTest {
         createAndStartServer {
             get("/ll") {
                 call.respond(
                     object : OutgoingContent.WriteChannelContent() {
+
                         override suspend fun writeTo(channel: ByteWriteChannel) {
                             val bb: ByteBuffer = ByteBuffer.allocate(1024)
                             Random().nextBytes(bb.array())
@@ -310,7 +311,7 @@ abstract class EngineStressSuite<TEngine : ApplicationEngine, TConfiguration : A
                                 }
                             }
 
-                            channel.close()
+                            channel.flushAndClose()
                         }
                     }
                 )

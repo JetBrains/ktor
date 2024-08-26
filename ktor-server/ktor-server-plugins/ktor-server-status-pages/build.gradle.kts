@@ -6,7 +6,7 @@ description = ""
 
 kotlin {
     sourceSets {
-        jvmAndNixTest {
+        commonTest {
             dependencies {
                 implementation(project(":ktor-server:ktor-server-plugins:ktor-server-call-id"))
             }

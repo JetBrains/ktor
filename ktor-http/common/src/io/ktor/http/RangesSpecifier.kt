@@ -59,13 +59,13 @@ public data class RangesSpecifier(val unit: String = RangeUnits.Bytes.unitToken,
             return null
         }
 
-        val start = mapped.minByOrNull { it.start }!!.start
-        val endInclusive = mapped.maxByOrNull { it.endInclusive }!!.endInclusive.coerceAtMost(length - 1)
+        val start = mapped.minByOrNull { it.first }!!.first
+        val endInclusive = mapped.maxByOrNull { it.last }!!.last.coerceAtMost(length - 1)
 
         return start..endInclusive
     }
 
-    override fun toString(): String = ranges.joinToString(",", prefix = unit + "=")
+    override fun toString(): String = ranges.joinToString(",", prefix = "$unit=")
 
     private fun <T> T?.toList(): List<T> = if (this == null) emptyList() else listOf(this)
 }

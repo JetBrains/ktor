@@ -16,7 +16,7 @@ import kotlin.test.*
 
 class LogTest {
     @Test
-    fun ignoredTypeMessageForResponseBody() {
+    fun ignoredTypeMessageForResponseBody() = testApplication {
         val logger = LOGGER as Logger
         logger.level = Level.ALL
 
@@ -28,24 +28,22 @@ class LogTest {
             convertResponseBody()
         }
 
-        testApplication {
-            application {
-                install(plugin)
-                routing {
-                    get("/") {
-                        call.respond("test")
-                    }
+        application {
+            install(plugin)
+            routing {
+                get("/") {
+                    call.respond("test")
                 }
             }
-
-            client.get("/")
-
-            listAppender.stop()
-            assertEquals(
-                "Skipping response body transformation from String to OutgoingContent for the GET / request" +
-                    " because the String type is ignored. See [ContentNegotiationConfig::ignoreType].",
-                listAppender.list[0].message
-            )
         }
+
+        client.get("/")
+
+        listAppender.stop()
+        assertEquals(
+            "Skipping response body transformation from String to OutgoingContent for the GET / request" +
+                " because the String type is ignored. See [ContentNegotiationConfig::ignoreType].",
+            listAppender.list[0].message
+        )
     }
 }

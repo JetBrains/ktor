@@ -24,7 +24,6 @@ import java.util.zip.*
 import kotlin.test.*
 import kotlin.text.Charsets
 
-@Suppress("DEPRECATION")
 class PebbleTest {
 
     @Test
@@ -152,84 +151,76 @@ class PebbleTest {
     }
 
     @Test
-    fun `Render template in Spanish with es accept language`() {
-        testApplication {
-            application {
-                setupPebble()
-                install(ConditionalHeaders)
-                routing {
-                    get("/") {
-                        call.respond(PebbleContent(TemplateI18N, emptyMap()))
-                    }
+    fun `Render template in Spanish with es accept language`() = testApplication {
+        application {
+            setupPebble()
+            install(ConditionalHeaders)
+            routing {
+                get("/") {
+                    call.respond(PebbleContent(TemplateI18N, emptyMap()))
                 }
             }
+        }
 
-            client.get("/") {
-                headers.append(HttpHeaders.AcceptLanguage, "es")
-            }.apply {
-                assertContains(bodyAsText(), "<p>Hola, mundo!</p>")
-            }
+        client.get("/") {
+            headers.append(HttpHeaders.AcceptLanguage, "es")
+        }.apply {
+            assertContains(bodyAsText(), "<p>Hola, mundo!</p>")
         }
     }
 
     @Test
-    fun `Render template in English with en accept language`() {
-        testApplication {
-            application {
-                setupPebble()
-                install(ConditionalHeaders)
-                routing {
-                    get("/") {
-                        call.respond(PebbleContent(TemplateI18N, emptyMap()))
-                    }
+    fun `Render template in English with en accept language`() = testApplication {
+        application {
+            setupPebble()
+            install(ConditionalHeaders)
+            routing {
+                get("/") {
+                    call.respond(PebbleContent(TemplateI18N, emptyMap()))
                 }
             }
+        }
 
-            client.get("/") {
-                headers.append(HttpHeaders.AcceptLanguage, "en")
-            }.apply {
-                assertContains(bodyAsText(), "<p>Hello, world!</p>")
-            }
+        client.get("/") {
+            headers.append(HttpHeaders.AcceptLanguage, "en")
+        }.apply {
+            assertContains(bodyAsText(), "<p>Hello, world!</p>")
         }
     }
 
     @Test
-    fun `Render template in default language with no valid accept language header set`() {
-        testApplication {
-            application {
-                setupPebble()
-                install(ConditionalHeaders)
-                routing {
-                    get("/") {
-                        call.respond(PebbleContent(TemplateI18N, emptyMap()))
-                    }
+    fun `Render template in default language with no valid accept language header set`() = testApplication {
+        application {
+            setupPebble()
+            install(ConditionalHeaders)
+            routing {
+                get("/") {
+                    call.respond(PebbleContent(TemplateI18N, emptyMap()))
                 }
             }
+        }
 
-            client.get("/") {
-                headers.append(HttpHeaders.AcceptLanguage, "jp")
-            }.apply {
-                assertContains(bodyAsText(), "<p>Hello, world!</p>")
-            }
+        client.get("/") {
+            headers.append(HttpHeaders.AcceptLanguage, "jp")
+        }.apply {
+            assertContains(bodyAsText(), "<p>Hello, world!</p>")
         }
     }
 
     @Test
-    fun `Render template in default language with no accept language header set`() {
-        testApplication {
-            application {
-                setupPebble()
-                install(ConditionalHeaders)
-                routing {
-                    get("/") {
-                        call.respond(PebbleContent(TemplateI18N, emptyMap()))
-                    }
+    fun `Render template in default language with no accept language header set`() = testApplication {
+        application {
+            setupPebble()
+            install(ConditionalHeaders)
+            routing {
+                get("/") {
+                    call.respond(PebbleContent(TemplateI18N, emptyMap()))
                 }
             }
+        }
 
-            client.get("/").apply {
-                assertContains(bodyAsText(), "<p>Hello, world!</p>")
-            }
+        client.get("/").apply {
+            assertContains(bodyAsText(), "<p>Hello, world!</p>")
         }
     }
 

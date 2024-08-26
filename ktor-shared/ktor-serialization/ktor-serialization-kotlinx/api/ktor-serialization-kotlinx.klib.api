@@ -1,0 +1,39 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Alias: native => [iosArm64, iosSimulatorArm64, iosX64, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-serialization-kotlinx>
+abstract interface io.ktor.serialization.kotlinx/KotlinxSerializationExtension { // io.ktor.serialization.kotlinx/KotlinxSerializationExtension|null[0]
+    abstract suspend fun deserialize(io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, io.ktor.utils.io/ByteReadChannel): kotlin/Any? // io.ktor.serialization.kotlinx/KotlinxSerializationExtension.deserialize|deserialize(io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;io.ktor.utils.io.ByteReadChannel){}[0]
+    abstract suspend fun serialize(io.ktor.http/ContentType, io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, kotlin/Any?): io.ktor.http.content/OutgoingContent? // io.ktor.serialization.kotlinx/KotlinxSerializationExtension.serialize|serialize(io.ktor.http.ContentType;io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;kotlin.Any?){}[0]
+}
+
+abstract interface io.ktor.serialization.kotlinx/KotlinxSerializationExtensionProvider { // io.ktor.serialization.kotlinx/KotlinxSerializationExtensionProvider|null[0]
+    abstract fun extension(kotlinx.serialization/SerialFormat): io.ktor.serialization.kotlinx/KotlinxSerializationExtension? // io.ktor.serialization.kotlinx/KotlinxSerializationExtensionProvider.extension|extension(kotlinx.serialization.SerialFormat){}[0]
+}
+
+final class io.ktor.serialization.kotlinx/KotlinxSerializationConverter : io.ktor.serialization/ContentConverter { // io.ktor.serialization.kotlinx/KotlinxSerializationConverter|null[0]
+    constructor <init>(kotlinx.serialization/SerialFormat) // io.ktor.serialization.kotlinx/KotlinxSerializationConverter.<init>|<init>(kotlinx.serialization.SerialFormat){}[0]
+
+    final suspend fun deserialize(io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, io.ktor.utils.io/ByteReadChannel): kotlin/Any? // io.ktor.serialization.kotlinx/KotlinxSerializationConverter.deserialize|deserialize(io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;io.ktor.utils.io.ByteReadChannel){}[0]
+    final suspend fun serialize(io.ktor.http/ContentType, io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, kotlin/Any?): io.ktor.http.content/OutgoingContent // io.ktor.serialization.kotlinx/KotlinxSerializationConverter.serialize|serialize(io.ktor.http.ContentType;io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;kotlin.Any?){}[0]
+}
+
+final class io.ktor.serialization.kotlinx/KotlinxWebsocketSerializationConverter : io.ktor.serialization/WebsocketContentConverter { // io.ktor.serialization.kotlinx/KotlinxWebsocketSerializationConverter|null[0]
+    constructor <init>(kotlinx.serialization/SerialFormat) // io.ktor.serialization.kotlinx/KotlinxWebsocketSerializationConverter.<init>|<init>(kotlinx.serialization.SerialFormat){}[0]
+
+    final fun isApplicable(io.ktor.websocket/Frame): kotlin/Boolean // io.ktor.serialization.kotlinx/KotlinxWebsocketSerializationConverter.isApplicable|isApplicable(io.ktor.websocket.Frame){}[0]
+    final suspend fun deserialize(io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, io.ktor.websocket/Frame): kotlin/Any? // io.ktor.serialization.kotlinx/KotlinxWebsocketSerializationConverter.deserialize|deserialize(io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;io.ktor.websocket.Frame){}[0]
+    final suspend fun serialize(io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, kotlin/Any?): io.ktor.websocket/Frame // io.ktor.serialization.kotlinx/KotlinxWebsocketSerializationConverter.serialize|serialize(io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;kotlin.Any?){}[0]
+}
+
+final fun (io.ktor.serialization/Configuration).io.ktor.serialization.kotlinx/serialization(io.ktor.http/ContentType, kotlinx.serialization/BinaryFormat) // io.ktor.serialization.kotlinx/serialization|serialization@io.ktor.serialization.Configuration(io.ktor.http.ContentType;kotlinx.serialization.BinaryFormat){}[0]
+final fun (io.ktor.serialization/Configuration).io.ktor.serialization.kotlinx/serialization(io.ktor.http/ContentType, kotlinx.serialization/StringFormat) // io.ktor.serialization.kotlinx/serialization|serialization@io.ktor.serialization.Configuration(io.ktor.http.ContentType;kotlinx.serialization.StringFormat){}[0]
+final fun (kotlinx.serialization.modules/SerializersModule).io.ktor.serialization.kotlinx/serializerForTypeInfo(io.ktor.util.reflect/TypeInfo): kotlinx.serialization/KSerializer<*> // io.ktor.serialization.kotlinx/serializerForTypeInfo|serializerForTypeInfo@kotlinx.serialization.modules.SerializersModule(io.ktor.util.reflect.TypeInfo){}[0]
+
+// Targets: [native]
+final fun io.ktor.serialization.kotlinx/addExtensionProvider(io.ktor.serialization.kotlinx/KotlinxSerializationExtensionProvider) // io.ktor.serialization.kotlinx/addExtensionProvider|addExtensionProvider(io.ktor.serialization.kotlinx.KotlinxSerializationExtensionProvider){}[0]

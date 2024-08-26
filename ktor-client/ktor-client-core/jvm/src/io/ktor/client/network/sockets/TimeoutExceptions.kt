@@ -4,14 +4,10 @@
 
 package io.ktor.client.network.sockets
 
-import io.ktor.client.plugins.*
-import io.ktor.client.request.*
-import io.ktor.util.*
-import io.ktor.utils.io.*
 import java.net.*
 
 /**
- * This exception is thrown in case connect timeout exceeded.
+ * This exception is thrown in case of connect timeout exceeded.
  */
 @Suppress("ACTUAL_WITHOUT_EXPECT")
 public actual class ConnectTimeoutException actual constructor(
@@ -19,24 +15,12 @@ public actual class ConnectTimeoutException actual constructor(
     override val cause: Throwable?
 ) : ConnectException(message)
 
+internal actual typealias InterruptedIOException = java.io.InterruptedIOException
+
 /**
  * This exception is thrown in case socket timeout (read or write) exceeded.
  */
-@Suppress("ACTUAL_WITHOUT_EXPECT")
-public actual class SocketTimeoutException actual constructor(
-    message: String,
-    override val cause: Throwable?
-) : java.net.SocketTimeoutException(message)
+public actual typealias SocketTimeoutException = java.net.SocketTimeoutException
 
-/**
- * Creates [ByteChannel] that maps close exceptions (close the channel with [SocketTimeoutException] if asked to
- * close it with [SocketTimeoutException]).
- */
-@OptIn(InternalAPI::class)
-@Suppress("DEPRECATION")
-internal actual fun ByteChannelWithMappedExceptions(request: HttpRequestData): ByteChannel = ByteChannel { cause ->
-    when (cause?.rootCause) {
-        is java.net.SocketTimeoutException -> SocketTimeoutException(request, cause)
-        else -> cause
-    }
-}
+public actual fun SocketTimeoutException(message: String, cause: Throwable?): SocketTimeoutException =
+    SocketTimeoutException(message).apply { initCause(cause) }

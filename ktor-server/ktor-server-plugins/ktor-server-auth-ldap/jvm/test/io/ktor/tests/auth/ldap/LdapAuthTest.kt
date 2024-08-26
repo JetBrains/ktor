@@ -21,7 +21,7 @@ import javax.naming.ldap.*
 import kotlin.test.*
 
 // TODO unauthorized
-@Suppress("DEPRECATION")
+
 @LDAPServerExtensionTest
 @Ignore("LdapAuthTest is ignored because it is very slow. Run it explicitly when you need.")
 class LdapAuthTest {
@@ -103,9 +103,9 @@ class LdapAuthTest {
             application.install(Authentication) {
                 val ldapUrl = "ldap://$localhost:$port"
                 val configure: (MutableMap<String, Any?>) -> Unit = { env ->
-                    env.put("java.naming.security.principal", "uid=admin,ou=system")
-                    env.put("java.naming.security.credentials", "secret")
-                    env.put("java.naming.security.authentication", "simple")
+                    env["java.naming.security.principal"] = "uid=admin,ou=system"
+                    env["java.naming.security.credentials"] = "secret"
+                    env["java.naming.security.authentication"] = "simple"
                 }
 
                 basic {
@@ -175,11 +175,11 @@ class LdapAuthTest {
     @Test
     fun testEnsureUser(port: Int, ldapCodecService: LdapApiService) {
         val env = Hashtable<String, String>()
-        env.put("java.naming.factory.initial", "com.sun.jndi.ldap.LdapCtxFactory")
-        env.put("java.naming.provider.url", "ldap://$localhost:$port")
-        env.put("java.naming.security.principal", "uid=admin,ou=system")
-        env.put("java.naming.security.credentials", "secret")
-        env.put("java.naming.security.authentication", "simple")
+        env["java.naming.factory.initial"] = "com.sun.jndi.ldap.LdapCtxFactory"
+        env["java.naming.provider.url"] = "ldap://$localhost:$port"
+        env["java.naming.security.principal"] = "uid=admin,ou=system"
+        env["java.naming.security.credentials"] = "secret"
+        env["java.naming.security.authentication"] = "simple"
 
         val ctx = (
             InitialLdapContext(

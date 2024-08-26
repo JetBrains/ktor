@@ -15,13 +15,15 @@ import kotlinx.atomicfu.*
  *
  * @throws UnresolvedAddressException if the [hostname] cannot be resolved.
  */
-public actual abstract class NetworkAddress constructor(
+public actual abstract class NetworkAddress(
     public val hostname: String,
     public val port: Int,
     explicitAddress: Any? = null
 ) {
+    private val _explicitAddress: AtomicRef<Any?> = atomic(explicitAddress)
+
     @InternalAPI
-    public var explicitAddress: AtomicRef<Any?> = atomic(explicitAddress)
+    public var explicitAddress: Any? by _explicitAddress
 
     /**
      * Resolve current socket address.

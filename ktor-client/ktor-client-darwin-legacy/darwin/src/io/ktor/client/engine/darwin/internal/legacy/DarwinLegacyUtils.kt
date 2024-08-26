@@ -7,9 +7,9 @@ package io.ktor.client.engine.darwin.internal.legacy
 import io.ktor.client.call.*
 import io.ktor.http.content.*
 import io.ktor.utils.io.*
-import io.ktor.utils.io.core.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.*
+import kotlinx.io.*
 import platform.Foundation.*
 import platform.posix.*
 
@@ -18,10 +18,11 @@ internal suspend fun OutgoingContent.toNSData(): NSData? = when (this) {
     is OutgoingContent.ByteArrayContent -> bytes().toNSData()
     is OutgoingContent.WriteChannelContent -> GlobalScope.writer(Dispatchers.Unconfined) {
         writeTo(channel)
-    }.channel.readRemaining().readBytes().toNSData()
-    is OutgoingContent.ReadChannelContent -> readFrom().readRemaining().readBytes().toNSData()
+    }.channel.readRemaining().readByteArray().toNSData()
+    is OutgoingContent.ReadChannelContent -> readFrom().readRemaining().readByteArray().toNSData()
     is OutgoingContent.NoContent -> null
-    else -> throw UnsupportedContentTypeException(this)
+    is OutgoingContent.ContentWrapper -> delegate().toNSData()
+    is OutgoingContent.ProtocolUpgrade -> throw UnsupportedContentTypeException(this)
 }
 
 @OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)

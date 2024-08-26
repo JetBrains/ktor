@@ -222,6 +222,11 @@ public final class io/ktor/network/tls/TLSConfigBuilderKt {
 	public static final fun takeFrom (Lio/ktor/network/tls/TLSConfigBuilder;Lio/ktor/network/tls/TLSConfigBuilder;)V
 }
 
+public final class io/ktor/network/tls/TLSException : java/io/IOException {
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
 public final class io/ktor/network/tls/TLSHandshakeType : java/lang/Enum {
 	public static final field Certificate Lio/ktor/network/tls/TLSHandshakeType;
 	public static final field CertificateRequest Lio/ktor/network/tls/TLSHandshakeType;

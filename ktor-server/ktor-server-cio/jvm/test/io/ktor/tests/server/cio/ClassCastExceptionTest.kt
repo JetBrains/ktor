@@ -11,7 +11,7 @@ import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.routing.*
-import io.ktor.server.testing.*
+import io.ktor.server.test.base.*
 import io.ktor.server.websocket.*
 import kotlinx.coroutines.*
 import java.util.concurrent.*

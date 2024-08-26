@@ -10,6 +10,7 @@ package io.ktor.util
 import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
 import io.ktor.utils.io.core.*
+import kotlinx.io.*
 
 private val digits = "0123456789abcdef".toCharArray()
 
@@ -23,8 +24,8 @@ public fun hex(bytes: ByteArray): String {
     var resultIndex = 0
     val digits = digits
 
-    for (index in 0 until bytes.size) {
-        val b = bytes[index].toInt() and 0xff
+    for (element in bytes) {
+        val b = element.toInt() and 0xff
         result[resultIndex++] = digits[b shr 4]
         result[resultIndex++] = digits[b and 0x0f]
     }
@@ -37,7 +38,7 @@ public fun hex(bytes: ByteArray): String {
  */
 public fun hex(s: String): ByteArray {
     val result = ByteArray(s.length / 2)
-    for (idx in 0 until result.size) {
+    for (idx in result.indices) {
         val srcIdx = idx * 2
         val high = s[srcIdx].toString().toInt(16) shl 4
         val low = s[srcIdx + 1].toString().toInt(16)
@@ -59,7 +60,7 @@ public fun generateNonce(size: Int): ByteArray = buildPacket {
     while (this.size < size) {
         writeText(generateNonce())
     }
-}.readBytes(size)
+}.readByteArray(size)
 
 /**
  * Compute SHA-1 hash for the specified [bytes]

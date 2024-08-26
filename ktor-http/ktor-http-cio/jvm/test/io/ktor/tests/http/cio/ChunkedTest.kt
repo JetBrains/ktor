@@ -26,6 +26,7 @@ class ChunkedTest {
         }
     }
 
+    @OptIn(InternalAPI::class)
     @Test
     fun testChunkedWithContentLength() = runBlocking {
         val chunkedContent = listOf(
@@ -120,6 +121,7 @@ class ChunkedTest {
         assertEquals("123456", parsed.readUTF8Line())
     }
 
+    @OptIn(InternalAPI::class)
     @Test
     fun testEncodeEmpty() = runBlocking {
         val encoded = ByteChannel()
@@ -137,6 +139,7 @@ class ChunkedTest {
         assertEquals("0\r\n\r\n", encodedText)
     }
 
+    @OptIn(InternalAPI::class)
     @Test
     fun testEncodeChunks() = runBlocking {
         val output = ByteChannel(false)
@@ -163,6 +166,7 @@ class ChunkedTest {
         assertEquals("6\r\n123456\r\n0\r\n\r\n", encodedText)
     }
 
+    @OptIn(InternalAPI::class)
     @Test
     fun longLoop() = runBlocking {
         val content = ByteChannel(true)

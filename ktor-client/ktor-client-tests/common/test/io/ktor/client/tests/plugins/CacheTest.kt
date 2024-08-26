@@ -285,7 +285,7 @@ class CacheTest : ClientLoader() {
                     proceedWith(
                         object : HttpResponse() {
                             override val call get() = response.call
-                            override val content get() = response.content
+                            override val rawContent get() = response.rawContent
                             override val coroutineContext get() = response.coroutineContext
                             override val headers = headers
                             override val requestTime get() = response.requestTime

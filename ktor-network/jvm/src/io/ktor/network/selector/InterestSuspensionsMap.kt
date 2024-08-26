@@ -9,30 +9,25 @@ import java.util.concurrent.atomic.*
 
 public class InterestSuspensionsMap {
     @Volatile
-    @Suppress("unused")
     private var readHandlerReference: CancellableContinuation<Unit>? = null
 
     @Volatile
-    @Suppress("unused")
     private var writeHandlerReference: CancellableContinuation<Unit>? = null
 
     @Volatile
-    @Suppress("unused")
     private var connectHandlerReference: CancellableContinuation<Unit>? = null
 
     @Volatile
-    @Suppress("unused")
     private var acceptHandlerReference: CancellableContinuation<Unit>? = null
 
     public fun addSuspension(interest: SelectInterest, continuation: CancellableContinuation<Unit>) {
         val updater = updater(interest)
 
         if (!updater.compareAndSet(this, null, continuation)) {
-            throw IllegalStateException("Handler for ${interest.name} is already registered")
+            error("Handler for ${interest.name} is already registered")
         }
     }
 
-    @Suppress("LoopToCallChain")
     public inline fun invokeForEachPresent(readyOps: Int, block: CancellableContinuation<Unit>.() -> Unit) {
         val flags = SelectInterest.flags
 

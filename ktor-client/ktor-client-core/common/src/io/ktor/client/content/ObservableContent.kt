@@ -31,8 +31,11 @@ internal class ObservableContent(
     private val listener: ProgressListener
 ) : OutgoingContent.ReadChannelContent() {
 
+    private val content: ByteReadChannel = getContent(delegate)
+
     @OptIn(DelicateCoroutinesApi::class)
-    private val content: ByteReadChannel = when (delegate) {
+    private fun getContent(delegate: OutgoingContent): ByteReadChannel = when (delegate) {
+        is ContentWrapper -> getContent(delegate.delegate())
         is ByteArrayContent -> ByteReadChannel(delegate.bytes())
         is ProtocolUpgrade -> throw UnsupportedContentTypeException(delegate)
         is NoContent -> ByteReadChannel.Empty

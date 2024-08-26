@@ -10,7 +10,7 @@ import java.io.*
 /**
  * Convert io.ktor.utils.io [Input] to java [InputStream]
  */
-@Suppress("DEPRECATION")
+
 public fun Input.asStream(): InputStream = object : InputStream() {
 
     override fun read(): Int {

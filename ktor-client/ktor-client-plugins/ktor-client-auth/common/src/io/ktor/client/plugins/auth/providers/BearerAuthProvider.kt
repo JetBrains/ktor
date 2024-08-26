@@ -23,7 +23,7 @@ public fun AuthConfig.bearer(block: BearerAuthConfig.() -> Unit) {
 
 public class BearerTokens(
     public val accessToken: String,
-    public val refreshToken: String
+    public val refreshToken: String?
 )
 
 /**

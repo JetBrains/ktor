@@ -7,7 +7,6 @@ package io.ktor.server.servlet.jakarta
 import io.ktor.server.request.*
 import jakarta.servlet.http.*
 
-@Suppress("KDocMissingDocumentation")
 public class ServletApplicationRequestCookies(
     private val servletRequest: HttpServletRequest,
     request: PipelineRequest

@@ -1,0 +1,16 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-body-limit>
+final class io.ktor.server.plugins.bodylimit/RequestBodyLimitConfig { // io.ktor.server.plugins.bodylimit/RequestBodyLimitConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.bodylimit/RequestBodyLimitConfig.<init>|<init>(){}[0]
+
+    final fun bodyLimit(kotlin/Function1<io.ktor.server.application/ApplicationCall, kotlin/Long>) // io.ktor.server.plugins.bodylimit/RequestBodyLimitConfig.bodyLimit|bodyLimit(kotlin.Function1<io.ktor.server.application.ApplicationCall,kotlin.Long>){}[0]
+}
+
+final val io.ktor.server.plugins.bodylimit/RequestBodyLimit // io.ktor.server.plugins.bodylimit/RequestBodyLimit|{}RequestBodyLimit[0]
+    final fun <get-RequestBodyLimit>(): io.ktor.server.application/RouteScopedPlugin<io.ktor.server.plugins.bodylimit/RequestBodyLimitConfig> // io.ktor.server.plugins.bodylimit/RequestBodyLimit.<get-RequestBodyLimit>|<get-RequestBodyLimit>(){}[0]

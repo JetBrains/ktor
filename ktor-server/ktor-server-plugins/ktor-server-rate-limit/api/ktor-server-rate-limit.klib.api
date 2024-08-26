@@ -1,0 +1,80 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-rate-limit>
+abstract interface io.ktor.server.plugins.ratelimit/RateLimiter { // io.ktor.server.plugins.ratelimit/RateLimiter|null[0]
+    abstract suspend fun tryConsume(kotlin/Int = ...): io.ktor.server.plugins.ratelimit/RateLimiter.State // io.ktor.server.plugins.ratelimit/RateLimiter.tryConsume|tryConsume(kotlin.Int){}[0]
+
+    sealed class State { // io.ktor.server.plugins.ratelimit/RateLimiter.State|null[0]
+        constructor <init>() // io.ktor.server.plugins.ratelimit/RateLimiter.State.<init>|<init>(){}[0]
+
+        final class Available : io.ktor.server.plugins.ratelimit/RateLimiter.State { // io.ktor.server.plugins.ratelimit/RateLimiter.State.Available|null[0]
+            constructor <init>(kotlin/Int, kotlin/Int, kotlin/Long) // io.ktor.server.plugins.ratelimit/RateLimiter.State.Available.<init>|<init>(kotlin.Int;kotlin.Int;kotlin.Long){}[0]
+
+            final val limit // io.ktor.server.plugins.ratelimit/RateLimiter.State.Available.limit|{}limit[0]
+                final fun <get-limit>(): kotlin/Int // io.ktor.server.plugins.ratelimit/RateLimiter.State.Available.limit.<get-limit>|<get-limit>(){}[0]
+            final val refillAtTimeMillis // io.ktor.server.plugins.ratelimit/RateLimiter.State.Available.refillAtTimeMillis|{}refillAtTimeMillis[0]
+                final fun <get-refillAtTimeMillis>(): kotlin/Long // io.ktor.server.plugins.ratelimit/RateLimiter.State.Available.refillAtTimeMillis.<get-refillAtTimeMillis>|<get-refillAtTimeMillis>(){}[0]
+            final val remainingTokens // io.ktor.server.plugins.ratelimit/RateLimiter.State.Available.remainingTokens|{}remainingTokens[0]
+                final fun <get-remainingTokens>(): kotlin/Int // io.ktor.server.plugins.ratelimit/RateLimiter.State.Available.remainingTokens.<get-remainingTokens>|<get-remainingTokens>(){}[0]
+        }
+
+        final class Exhausted : io.ktor.server.plugins.ratelimit/RateLimiter.State { // io.ktor.server.plugins.ratelimit/RateLimiter.State.Exhausted|null[0]
+            constructor <init>(kotlin.time/Duration) // io.ktor.server.plugins.ratelimit/RateLimiter.State.Exhausted.<init>|<init>(kotlin.time.Duration){}[0]
+
+            final val toWait // io.ktor.server.plugins.ratelimit/RateLimiter.State.Exhausted.toWait|{}toWait[0]
+                final fun <get-toWait>(): kotlin.time/Duration // io.ktor.server.plugins.ratelimit/RateLimiter.State.Exhausted.toWait.<get-toWait>|<get-toWait>(){}[0]
+        }
+    }
+
+    final object Companion { // io.ktor.server.plugins.ratelimit/RateLimiter.Companion|null[0]
+        final val Unlimited // io.ktor.server.plugins.ratelimit/RateLimiter.Companion.Unlimited|{}Unlimited[0]
+            final fun <get-Unlimited>(): io.ktor.server.plugins.ratelimit/RateLimiter // io.ktor.server.plugins.ratelimit/RateLimiter.Companion.Unlimited.<get-Unlimited>|<get-Unlimited>(){}[0]
+
+        final fun default(kotlin/Int, kotlin.time/Duration, kotlin/Int = ..., kotlin/Function0<kotlin/Long> = ...): io.ktor.server.plugins.ratelimit/RateLimiter // io.ktor.server.plugins.ratelimit/RateLimiter.Companion.default|default(kotlin.Int;kotlin.time.Duration;kotlin.Int;kotlin.Function0<kotlin.Long>){}[0]
+    }
+}
+
+final class io.ktor.server.plugins.ratelimit/RateLimitConfig { // io.ktor.server.plugins.ratelimit/RateLimitConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.ratelimit/RateLimitConfig.<init>|<init>(){}[0]
+
+    final fun global(kotlin/Function1<io.ktor.server.plugins.ratelimit/RateLimitProviderConfig, kotlin/Unit>) // io.ktor.server.plugins.ratelimit/RateLimitConfig.global|global(kotlin.Function1<io.ktor.server.plugins.ratelimit.RateLimitProviderConfig,kotlin.Unit>){}[0]
+    final fun register(io.ktor.server.plugins.ratelimit/RateLimitName = ..., kotlin/Function1<io.ktor.server.plugins.ratelimit/RateLimitProviderConfig, kotlin/Unit>) // io.ktor.server.plugins.ratelimit/RateLimitConfig.register|register(io.ktor.server.plugins.ratelimit.RateLimitName;kotlin.Function1<io.ktor.server.plugins.ratelimit.RateLimitProviderConfig,kotlin.Unit>){}[0]
+}
+
+final class io.ktor.server.plugins.ratelimit/RateLimitProviderConfig { // io.ktor.server.plugins.ratelimit/RateLimitProviderConfig|null[0]
+    constructor <init>(io.ktor.server.plugins.ratelimit/RateLimitName) // io.ktor.server.plugins.ratelimit/RateLimitProviderConfig.<init>|<init>(io.ktor.server.plugins.ratelimit.RateLimitName){}[0]
+
+    final fun modifyResponse(kotlin/Function2<io.ktor.server.application/ApplicationCall, io.ktor.server.plugins.ratelimit/RateLimiter.State, kotlin/Unit>) // io.ktor.server.plugins.ratelimit/RateLimitProviderConfig.modifyResponse|modifyResponse(kotlin.Function2<io.ktor.server.application.ApplicationCall,io.ktor.server.plugins.ratelimit.RateLimiter.State,kotlin.Unit>){}[0]
+    final fun rateLimiter(kotlin/Function2<io.ktor.server.application/ApplicationCall, kotlin/Any, io.ktor.server.plugins.ratelimit/RateLimiter>) // io.ktor.server.plugins.ratelimit/RateLimitProviderConfig.rateLimiter|rateLimiter(kotlin.Function2<io.ktor.server.application.ApplicationCall,kotlin.Any,io.ktor.server.plugins.ratelimit.RateLimiter>){}[0]
+    final fun rateLimiter(kotlin/Int, kotlin.time/Duration, kotlin/Int = ..., kotlin/Function0<kotlin/Long> = ...) // io.ktor.server.plugins.ratelimit/RateLimitProviderConfig.rateLimiter|rateLimiter(kotlin.Int;kotlin.time.Duration;kotlin.Int;kotlin.Function0<kotlin.Long>){}[0]
+    final fun requestKey(kotlin.coroutines/SuspendFunction1<io.ktor.server.application/ApplicationCall, kotlin/Any>) // io.ktor.server.plugins.ratelimit/RateLimitProviderConfig.requestKey|requestKey(kotlin.coroutines.SuspendFunction1<io.ktor.server.application.ApplicationCall,kotlin.Any>){}[0]
+    final fun requestWeight(kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, kotlin/Any, kotlin/Int>) // io.ktor.server.plugins.ratelimit/RateLimitProviderConfig.requestWeight|requestWeight(kotlin.coroutines.SuspendFunction2<io.ktor.server.application.ApplicationCall,kotlin.Any,kotlin.Int>){}[0]
+}
+
+final class io.ktor.server.plugins.ratelimit/RateLimitRouteSelector : io.ktor.server.routing/RouteSelector { // io.ktor.server.plugins.ratelimit/RateLimitRouteSelector|null[0]
+    constructor <init>(io.ktor.server.plugins.ratelimit/RateLimitName) // io.ktor.server.plugins.ratelimit/RateLimitRouteSelector.<init>|<init>(io.ktor.server.plugins.ratelimit.RateLimitName){}[0]
+
+    final val name // io.ktor.server.plugins.ratelimit/RateLimitRouteSelector.name|{}name[0]
+        final fun <get-name>(): io.ktor.server.plugins.ratelimit/RateLimitName // io.ktor.server.plugins.ratelimit/RateLimitRouteSelector.name.<get-name>|<get-name>(){}[0]
+
+    final fun evaluate(io.ktor.server.routing/RoutingResolveContext, kotlin/Int): io.ktor.server.routing/RouteSelectorEvaluation // io.ktor.server.plugins.ratelimit/RateLimitRouteSelector.evaluate|evaluate(io.ktor.server.routing.RoutingResolveContext;kotlin.Int){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.plugins.ratelimit/RateLimitRouteSelector.toString|toString(){}[0]
+}
+
+final value class io.ktor.server.plugins.ratelimit/RateLimitName { // io.ktor.server.plugins.ratelimit/RateLimitName|null[0]
+    constructor <init>(kotlin/String) // io.ktor.server.plugins.ratelimit/RateLimitName.<init>|<init>(kotlin.String){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.plugins.ratelimit/RateLimitName.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.server.plugins.ratelimit/RateLimitName.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.plugins.ratelimit/RateLimitName.toString|toString(){}[0]
+}
+
+final val io.ktor.server.plugins.ratelimit/RateLimit // io.ktor.server.plugins.ratelimit/RateLimit|{}RateLimit[0]
+    final fun <get-RateLimit>(): io.ktor.server.application/ApplicationPlugin<io.ktor.server.plugins.ratelimit/RateLimitConfig> // io.ktor.server.plugins.ratelimit/RateLimit.<get-RateLimit>|<get-RateLimit>(){}[0]
+
+final fun (io.ktor.server.routing/Route).io.ktor.server.plugins.ratelimit/rateLimit(io.ktor.server.plugins.ratelimit/RateLimitName = ..., kotlin/Function1<io.ktor.server.routing/Route, kotlin/Unit>): io.ktor.server.routing/Route // io.ktor.server.plugins.ratelimit/rateLimit|rateLimit@io.ktor.server.routing.Route(io.ktor.server.plugins.ratelimit.RateLimitName;kotlin.Function1<io.ktor.server.routing.Route,kotlin.Unit>){}[0]

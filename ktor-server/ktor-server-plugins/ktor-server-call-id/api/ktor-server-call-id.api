@@ -12,8 +12,8 @@ public final class io/ktor/server/plugins/callid/CallIdConfig {
 }
 
 public final class io/ktor/server/plugins/callid/CallIdJvmKt {
-	public static final fun callIdMdc (Lio/ktor/server/plugins/callloging/CallLoggingConfig;Ljava/lang/String;)V
-	public static synthetic fun callIdMdc$default (Lio/ktor/server/plugins/callloging/CallLoggingConfig;Ljava/lang/String;ILjava/lang/Object;)V
+	public static final fun callIdMdc (Lio/ktor/server/plugins/calllogging/CallLoggingConfig;Ljava/lang/String;)V
+	public static synthetic fun callIdMdc$default (Lio/ktor/server/plugins/calllogging/CallLoggingConfig;Ljava/lang/String;ILjava/lang/Object;)V
 }
 
 public final class io/ktor/server/plugins/callid/CallIdKt {

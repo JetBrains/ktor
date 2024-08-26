@@ -32,7 +32,7 @@ public final class io/ktor/server/auth/jwt/JWTChallengeContext {
 	public final fun getCall ()Lio/ktor/server/application/ApplicationCall;
 }
 
-public final class io/ktor/server/auth/jwt/JWTCredential : io/ktor/server/auth/jwt/JWTPayloadHolder, io/ktor/server/auth/Credential {
+public final class io/ktor/server/auth/jwt/JWTCredential : io/ktor/server/auth/jwt/JWTPayloadHolder {
 	public fun <init> (Lcom/auth0/jwt/interfaces/Payload;)V
 }
 
@@ -51,7 +51,7 @@ public abstract class io/ktor/server/auth/jwt/JWTPayloadHolder {
 	public final fun getSubject ()Ljava/lang/String;
 }
 
-public final class io/ktor/server/auth/jwt/JWTPrincipal : io/ktor/server/auth/jwt/JWTPayloadHolder, io/ktor/server/auth/Principal {
+public final class io/ktor/server/auth/jwt/JWTPrincipal : io/ktor/server/auth/jwt/JWTPayloadHolder {
 	public fun <init> (Lcom/auth0/jwt/interfaces/Payload;)V
 }
 

@@ -5,26 +5,28 @@
 package io.ktor.network.tls
 
 import io.ktor.network.util.*
+import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
+import kotlinx.io.*
 import java.security.*
 
 internal fun Digest(): Digest = Digest(BytePacketBuilder())
 
 @JvmInline
-internal value class Digest(val state: BytePacketBuilder) : Closeable {
+internal value class Digest(val state: Sink) : Closeable {
 
-    fun update(packet: ByteReadPacket) = synchronized(state) {
-        if (packet.isEmpty) return
+    fun update(packet: Source) = synchronized(state) {
+        if (packet.exhausted()) return
         state.writePacket(packet.copy())
     }
 
     fun doHash(hashName: String): ByteArray = synchronized(state) {
-        state.preview { handshakes: ByteReadPacket ->
+        state.preview { handshakes: Source ->
             val digest = MessageDigest.getInstance(hashName)!!
 
             val buffer = DefaultByteBufferPool.borrow()
             try {
-                while (!handshakes.isEmpty) {
+                while (!handshakes.exhausted()) {
                     val rc = handshakes.readAvailable(buffer)
                     if (rc == -1) break
                     buffer.flip()
@@ -40,7 +42,7 @@ internal value class Digest(val state: BytePacketBuilder) : Closeable {
     }
 
     override fun close() {
-        state.release()
+        state.close()
     }
 }
 

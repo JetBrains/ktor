@@ -10,7 +10,7 @@ import kotlin.test.*
 
 class CIOClientCertTest : ClientCertTestSuite<CIOApplicationEngine, CIOApplicationEngine.Configuration>(CIO) {
     @Test
-    public override fun `Server requesting Client Certificate from CIO Client`() {
+    override fun `Server requesting Client Certificate from CIO Client`() {
         assertFailsWith<UnsupportedOperationException> {
             super.`Server requesting Client Certificate from CIO Client`()
         }

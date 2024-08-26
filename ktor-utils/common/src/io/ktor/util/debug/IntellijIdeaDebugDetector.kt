@@ -6,7 +6,7 @@ package io.ktor.util.debug
 
 internal expect object IntellijIdeaDebugDetector {
     /**
-     * Checks whether Intellij Idea debugger is conected to the current Ktor server.
+     * Checks whether Intellij Idea debugger is connected to the current Ktor server.
      * May return true only for JVM debugger.
      * */
     val isDebuggerConnected: Boolean

@@ -8,6 +8,7 @@ package io.ktor.client.tests.utils
 import io.ktor.client.engine.*
 import io.ktor.client.engine.js.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.test.*
 
 /**
  * Helper interface to test client.
@@ -21,7 +22,7 @@ actual abstract class ClientLoader actual constructor(private val timeoutSeconds
         skipEngines: List<String>,
         onlyWithEngine: String?,
         block: suspend TestClientBuilder<HttpClientEngineConfig>.() -> Unit
-    ): dynamic {
+    ): TestResult {
         val skipEnginesLowerCase = skipEngines.map { it.lowercase() }
         return if ((onlyWithEngine != null && onlyWithEngine != "js") || skipEnginesLowerCase.contains("js")) {
             GlobalScope.async {}.asPromise()

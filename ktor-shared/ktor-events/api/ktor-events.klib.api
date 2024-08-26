@@ -1,0 +1,21 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-events>
+final class io.ktor.events/Events { // io.ktor.events/Events|null[0]
+    constructor <init>() // io.ktor.events/Events.<init>|<init>(){}[0]
+
+    final fun <#A1: kotlin/Any?> raise(io.ktor.events/EventDefinition<#A1>, #A1) // io.ktor.events/Events.raise|raise(io.ktor.events.EventDefinition<0:0>;0:0){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> subscribe(io.ktor.events/EventDefinition<#A1>, kotlin/Function1<#A1, kotlin/Unit>): kotlinx.coroutines/DisposableHandle // io.ktor.events/Events.subscribe|subscribe(io.ktor.events.EventDefinition<0:0>;kotlin.Function1<0:0,kotlin.Unit>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> unsubscribe(io.ktor.events/EventDefinition<#A1>, kotlin/Function1<#A1, kotlin/Unit>) // io.ktor.events/Events.unsubscribe|unsubscribe(io.ktor.events.EventDefinition<0:0>;kotlin.Function1<0:0,kotlin.Unit>){0§<kotlin.Any?>}[0]
+}
+
+open class <#A: kotlin/Any?> io.ktor.events/EventDefinition { // io.ktor.events/EventDefinition|null[0]
+    constructor <init>() // io.ktor.events/EventDefinition.<init>|<init>(){}[0]
+}
+
+final fun <#A: kotlin/Any?> (io.ktor.events/Events).io.ktor.events/raiseCatching(io.ktor.events/EventDefinition<#A>, #A, io.ktor.util.logging/Logger? = ...) // io.ktor.events/raiseCatching|raiseCatching@io.ktor.events.Events(io.ktor.events.EventDefinition<0:0>;0:0;io.ktor.util.logging.Logger?){0§<kotlin.Any?>}[0]

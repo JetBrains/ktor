@@ -1,0 +1,34 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-status-pages>
+final class io.ktor.server.plugins.statuspages/StatusPagesConfig { // io.ktor.server.plugins.statuspages/StatusPagesConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.statuspages/StatusPagesConfig.<init>|<init>(){}[0]
+
+    final val exceptions // io.ktor.server.plugins.statuspages/StatusPagesConfig.exceptions|{}exceptions[0]
+        final fun <get-exceptions>(): kotlin.collections/MutableMap<kotlin.reflect/KClass<*>, kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, kotlin/Throwable, kotlin/Unit>> // io.ktor.server.plugins.statuspages/StatusPagesConfig.exceptions.<get-exceptions>|<get-exceptions>(){}[0]
+    final val statuses // io.ktor.server.plugins.statuspages/StatusPagesConfig.statuses|{}statuses[0]
+        final fun <get-statuses>(): kotlin.collections/MutableMap<io.ktor.http/HttpStatusCode, kotlin.coroutines/SuspendFunction3<io.ktor.server.application/ApplicationCall, io.ktor.http.content/OutgoingContent, io.ktor.http/HttpStatusCode, kotlin/Unit>> // io.ktor.server.plugins.statuspages/StatusPagesConfig.statuses.<get-statuses>|<get-statuses>(){}[0]
+
+    final fun <#A1: kotlin/Throwable> exception(kotlin.reflect/KClass<#A1>, kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, #A1, kotlin/Unit>) // io.ktor.server.plugins.statuspages/StatusPagesConfig.exception|exception(kotlin.reflect.KClass<0:0>;kotlin.coroutines.SuspendFunction2<io.ktor.server.application.ApplicationCall,0:0,kotlin.Unit>){0§<kotlin.Throwable>}[0]
+    final fun status(kotlin/Array<out io.ktor.http/HttpStatusCode>..., kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, io.ktor.http/HttpStatusCode, kotlin/Unit>) // io.ktor.server.plugins.statuspages/StatusPagesConfig.status|status(kotlin.Array<out|io.ktor.http.HttpStatusCode>...;kotlin.coroutines.SuspendFunction2<io.ktor.server.application.ApplicationCall,io.ktor.http.HttpStatusCode,kotlin.Unit>){}[0]
+    final fun status(kotlin/Array<out io.ktor.http/HttpStatusCode>..., kotlin.coroutines/SuspendFunction2<io.ktor.server.plugins.statuspages/StatusPagesConfig.StatusContext, io.ktor.http/HttpStatusCode, kotlin/Unit>) // io.ktor.server.plugins.statuspages/StatusPagesConfig.status|status(kotlin.Array<out|io.ktor.http.HttpStatusCode>...;kotlin.coroutines.SuspendFunction2<io.ktor.server.plugins.statuspages.StatusPagesConfig.StatusContext,io.ktor.http.HttpStatusCode,kotlin.Unit>){}[0]
+    final fun unhandled(kotlin.coroutines/SuspendFunction1<io.ktor.server.application/ApplicationCall, kotlin/Unit>) // io.ktor.server.plugins.statuspages/StatusPagesConfig.unhandled|unhandled(kotlin.coroutines.SuspendFunction1<io.ktor.server.application.ApplicationCall,kotlin.Unit>){}[0]
+    final inline fun <#A1: reified kotlin/Throwable> exception(noinline kotlin.coroutines/SuspendFunction2<io.ktor.server.application/ApplicationCall, #A1, kotlin/Unit>) // io.ktor.server.plugins.statuspages/StatusPagesConfig.exception|exception(kotlin.coroutines.SuspendFunction2<io.ktor.server.application.ApplicationCall,0:0,kotlin.Unit>){0§<kotlin.Throwable>}[0]
+
+    final class StatusContext { // io.ktor.server.plugins.statuspages/StatusPagesConfig.StatusContext|null[0]
+        constructor <init>(io.ktor.server.application/ApplicationCall, io.ktor.http.content/OutgoingContent) // io.ktor.server.plugins.statuspages/StatusPagesConfig.StatusContext.<init>|<init>(io.ktor.server.application.ApplicationCall;io.ktor.http.content.OutgoingContent){}[0]
+
+        final val call // io.ktor.server.plugins.statuspages/StatusPagesConfig.StatusContext.call|{}call[0]
+            final fun <get-call>(): io.ktor.server.application/ApplicationCall // io.ktor.server.plugins.statuspages/StatusPagesConfig.StatusContext.call.<get-call>|<get-call>(){}[0]
+        final val content // io.ktor.server.plugins.statuspages/StatusPagesConfig.StatusContext.content|{}content[0]
+            final fun <get-content>(): io.ktor.http.content/OutgoingContent // io.ktor.server.plugins.statuspages/StatusPagesConfig.StatusContext.content.<get-content>|<get-content>(){}[0]
+    }
+}
+
+final val io.ktor.server.plugins.statuspages/StatusPages // io.ktor.server.plugins.statuspages/StatusPages|{}StatusPages[0]
+    final fun <get-StatusPages>(): io.ktor.server.application/ApplicationPlugin<io.ktor.server.plugins.statuspages/StatusPagesConfig> // io.ktor.server.plugins.statuspages/StatusPages.<get-StatusPages>|<get-StatusPages>(){}[0]

@@ -17,7 +17,6 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
-import io.ktor.util.cio.*
 import io.ktor.util.reflect.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
@@ -162,7 +161,7 @@ class ThymeleafTest {
     }
 
     @Test
-    fun testI18nHtmlTemplate() {
+    fun testI18nHtmlTemplate() = testApplication {
         val testCases = mapOf(
             "en" to "Hello, world!",
             "es;q=0.3,en-us;q=0.7" to "Hello, world!",
@@ -170,38 +169,37 @@ class ThymeleafTest {
             "es-419" to "Hola, mundo!",
             "default" to "Hello, world!"
         )
-        testApplication {
-            application {
-                install(Thymeleaf) {
-                    val resolver = ClassLoaderTemplateResolver()
-                    resolver.setTemplateMode("HTML")
-                    resolver.prefix = "templates/"
-                    resolver.suffix = ".html"
-                    setTemplateResolver(resolver)
-                }
-                install(ConditionalHeaders)
-                routing {
-                    get("/") {
-                        if (call.request.acceptLanguage() == "default") {
-                            Locale.setDefault(Locale("en"))
-                            call.respond(ThymeleafContent("i18n_test", mapOf()))
-                        } else {
-                            val languageRanges = Locale.LanguageRange.parse(call.request.acceptLanguage())
-                            val locale = Locale.lookup(languageRanges, Locale.getAvailableLocales().toList())
-                            call.respond(ThymeleafContent("i18n_test", mapOf(), locale = locale))
-                        }
+
+        application {
+            install(Thymeleaf) {
+                val resolver = ClassLoaderTemplateResolver()
+                resolver.setTemplateMode("HTML")
+                resolver.prefix = "templates/"
+                resolver.suffix = ".html"
+                setTemplateResolver(resolver)
+            }
+            install(ConditionalHeaders)
+            routing {
+                get("/") {
+                    if (call.request.acceptLanguage() == "default") {
+                        Locale.setDefault(Locale("en"))
+                        call.respond(ThymeleafContent("i18n_test", mapOf()))
+                    } else {
+                        val languageRanges = Locale.LanguageRange.parse(call.request.acceptLanguage())
+                        val locale = Locale.lookup(languageRanges, Locale.getAvailableLocales().toList())
+                        call.respond(ThymeleafContent("i18n_test", mapOf(), locale = locale))
                     }
                 }
             }
-            testCases.forEach { (language, result) ->
-                val content = client.get("/") {
-                    header(HttpHeaders.AcceptLanguage, language)
-                }.bodyAsText()
+        }
+        testCases.forEach { (language, result) ->
+            val content = client.get("/") {
+                header(HttpHeaders.AcceptLanguage, language)
+            }.bodyAsText()
 
-                assertNotNull(content)
-                val lines = content.lines()
-                assertEquals("<h1>$result</h1>", lines[0])
-            }
+            assertNotNull(content)
+            val lines = content.lines()
+            assertEquals("<h1>$result</h1>", lines[0])
         }
     }
 
@@ -279,7 +277,7 @@ class ThymeleafTest {
     }
 
     companion object {
-        val bax = "$"
+        const val bax = "$"
         private val STRING_TEMPLATE = """
             <p>Hello, [[$bax{id}]]</p>
             <h1 th:text="$bax{title}"></h1>

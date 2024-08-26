@@ -40,7 +40,9 @@ internal class HttpClientCallLogger(private val logger: Logger) {
 
         try {
             val message = requestLog.trim().toString()
-            if (message.isNotEmpty()) logger.log(message)
+            if (message.isNotEmpty()) {
+                logger.log(message)
+            }
         } finally {
             requestLoggedMonitor.complete()
         }

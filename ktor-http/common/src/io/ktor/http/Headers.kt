@@ -24,7 +24,6 @@ public interface Headers : StringValues {
     }
 }
 
-@Suppress("KDocMissingDocumentation")
 public class HeadersBuilder(size: Int = 8) : StringValuesBuilderImpl(true, size) {
     override fun build(): Headers {
         return HeadersImpl(values)
@@ -76,14 +75,12 @@ public fun headersOf(vararg pairs: Pair<String, List<String>>): Headers = Header
  */
 public fun headers(builder: HeadersBuilder.() -> Unit): Headers = Headers.build(builder)
 
-@Suppress("KDocMissingDocumentation")
 public class HeadersImpl(
     values: Map<String, List<String>> = emptyMap()
 ) : Headers, StringValuesImpl(true, values) {
     override fun toString(): String = "Headers ${entries()}"
 }
 
-@Suppress("KDocMissingDocumentation")
 public class HeadersSingleImpl(
     name: String,
     values: List<String>

@@ -13,6 +13,8 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.selects.*
 import kotlinx.coroutines.sync.*
+import kotlinx.io.*
+import kotlinx.io.unsafe.*
 import java.nio.*
 import java.nio.channels.*
 
@@ -48,41 +50,81 @@ internal class DatagramSendChannel(
         return true
     }
 
-    @OptIn(InternalCoroutinesApi::class)
+    @OptIn(InternalCoroutinesApi::class, InternalIoApi::class, UnsafeIoApi::class)
     override fun trySend(element: Datagram): ChannelResult<Unit> {
         if (!lock.tryLock()) return ChannelResult.failure()
 
-        var result = false
-
         try {
-            DefaultDatagramByteBufferPool.useInstance { buffer ->
-                element.packet.copy().readAvailable(buffer)
-                result = channel.send(buffer, element.address.toJavaAddress()) == 0
+            val packetSize = element.packet.remaining
+            var writeWithPool = false
+            UnsafeBufferOperations.readFromHead(element.packet.buffer) { buffer ->
+                val length = buffer.remaining()
+                if (length < packetSize) {
+                    // Packet is too large to read directly.
+                    writeWithPool = true
+                    return@readFromHead
+                }
+
+                val result = channel.send(buffer, element.address.toJavaAddress()) == 0
+                if (result) {
+                    buffer.position(buffer.limit())
+                } else {
+                    buffer.position(0)
+                }
+            }
+            if (writeWithPool) {
+                DefaultDatagramByteBufferPool.useInstance { buffer ->
+                    element.packet.peek().writeMessageTo(buffer)
+
+                    val result = channel.send(buffer, element.address.toJavaAddress()) == 0
+                    if (result) {
+                        element.packet.discard()
+                    }
+                }
             }
         } finally {
             lock.unlock()
         }
 
-        if (result) {
-            element.packet.release()
-        }
-
         return ChannelResult.success(Unit)
     }
 
+    @OptIn(InternalIoApi::class, UnsafeIoApi::class)
     override suspend fun send(element: Datagram) {
         lock.withLock {
             withContext(Dispatchers.IO) {
-                DefaultDatagramByteBufferPool.useInstance { buffer ->
-                    element.writeMessageTo(buffer)
+                val packetSize = element.packet.remaining
+                var writeWithPool = false
+                UnsafeBufferOperations.readFromHead(element.packet.buffer) { buffer ->
+                    val length = buffer.remaining()
+                    if (length < packetSize) {
+                        // Packet is too large to read directly.
+                        writeWithPool = true
+                        return@readFromHead
+                    }
 
                     val rc = channel.send(buffer, element.address.toJavaAddress())
                     if (rc != 0) {
                         socket.interestOp(SelectInterest.WRITE, false)
-                        return@useInstance
+                        buffer.position(buffer.limit()) // consume all data
+                        return@readFromHead
                     }
 
                     sendSuspend(buffer, element.address)
+                    buffer.position(buffer.limit()) // consume all data
+                }
+                if (writeWithPool) {
+                    DefaultDatagramByteBufferPool.useInstance { buffer ->
+                        element.packet.writeMessageTo(buffer)
+
+                        val rc = channel.send(buffer, element.address.toJavaAddress())
+                        if (rc != 0) {
+                            socket.interestOp(SelectInterest.WRITE, false)
+                            return@useInstance
+                        }
+
+                        sendSuspend(buffer, element.address)
+                    }
                 }
             }
         }
@@ -94,7 +136,7 @@ internal class DatagramSendChannel(
             socket.selector.select(socket, SelectInterest.WRITE)
 
             @Suppress("BlockingMethodInNonBlockingContext")
-            // this is actually non-blocking invocation
+            // this is actually a non-blocking invocation
             if (channel.send(buffer, address.toJavaAddress()) != 0) {
                 socket.interestOp(SelectInterest.WRITE, false)
                 break
@@ -146,7 +188,7 @@ private fun failInvokeOnClose(handler: ((cause: Throwable?) -> Unit)?) {
     throw IllegalStateException(message)
 }
 
-private fun Datagram.writeMessageTo(buffer: ByteBuffer) {
-    packet.readAvailable(buffer)
+private fun Source.writeMessageTo(buffer: ByteBuffer) {
+    readFully(buffer)
     buffer.flip()
 }

@@ -128,7 +128,7 @@ public class HttpStatement(
         job.apply {
             complete()
             try {
-                content.cancel()
+                rawContent.cancel()
             } catch (_: Throwable) {
             }
             join()

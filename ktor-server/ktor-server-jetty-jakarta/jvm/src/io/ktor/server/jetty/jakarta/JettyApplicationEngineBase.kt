@@ -66,7 +66,7 @@ public open class JettyApplicationEngineBase(
 
         val connectors = server.connectors.zip(configuration.connectors)
             .map { it.second.withPort((it.first as ServerConnector).localPort) }
-        resolvedConnectors.complete(connectors)
+        resolvedConnectorsDeferred.complete(connectors)
 
         monitor.raiseCatching(ServerReady, environment, environment.log)
 

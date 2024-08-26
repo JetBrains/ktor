@@ -1,1 +1,1 @@
- io.ktor.serialization.kotlinx.json.KotlinxSerializationJsonExtensionProvider
+io.ktor.serialization.kotlinx.json.KotlinxSerializationJsonExtensionProvider

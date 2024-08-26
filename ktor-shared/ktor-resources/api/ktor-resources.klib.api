@@ -1,0 +1,65 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-resources>
+open annotation class io.ktor.resources/Resource : kotlin/Annotation { // io.ktor.resources/Resource|null[0]
+    constructor <init>(kotlin/String) // io.ktor.resources/Resource.<init>|<init>(kotlin.String){}[0]
+
+    final val path // io.ktor.resources/Resource.path|{}path[0]
+        final fun <get-path>(): kotlin/String // io.ktor.resources/Resource.path.<get-path>|<get-path>(){}[0]
+}
+
+final class io.ktor.resources.serialization/ResourcesFormat : kotlinx.serialization/SerialFormat { // io.ktor.resources.serialization/ResourcesFormat|null[0]
+    constructor <init>(kotlinx.serialization.modules/SerializersModule = ...) // io.ktor.resources.serialization/ResourcesFormat.<init>|<init>(kotlinx.serialization.modules.SerializersModule){}[0]
+
+    final val serializersModule // io.ktor.resources.serialization/ResourcesFormat.serializersModule|{}serializersModule[0]
+        final fun <get-serializersModule>(): kotlinx.serialization.modules/SerializersModule // io.ktor.resources.serialization/ResourcesFormat.serializersModule.<get-serializersModule>|<get-serializersModule>(){}[0]
+
+    final fun <#A1: kotlin/Any?> decodeFromParameters(kotlinx.serialization/KSerializer<#A1>, io.ktor.http/Parameters): #A1 // io.ktor.resources.serialization/ResourcesFormat.decodeFromParameters|decodeFromParameters(kotlinx.serialization.KSerializer<0:0>;io.ktor.http.Parameters){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> encodeToParameters(kotlinx.serialization/KSerializer<#A1>, #A1): io.ktor.http/Parameters // io.ktor.resources.serialization/ResourcesFormat.encodeToParameters|encodeToParameters(kotlinx.serialization.KSerializer<0:0>;0:0){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> encodeToPathPattern(kotlinx.serialization/KSerializer<#A1>): kotlin/String // io.ktor.resources.serialization/ResourcesFormat.encodeToPathPattern|encodeToPathPattern(kotlinx.serialization.KSerializer<0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> encodeToQueryParameters(kotlinx.serialization/KSerializer<#A1>): kotlin.collections/Set<io.ktor.resources.serialization/ResourcesFormat.Parameter> // io.ktor.resources.serialization/ResourcesFormat.encodeToQueryParameters|encodeToQueryParameters(kotlinx.serialization.KSerializer<0:0>){0§<kotlin.Any?>}[0]
+
+    final class Parameter { // io.ktor.resources.serialization/ResourcesFormat.Parameter|null[0]
+        constructor <init>(kotlin/String, kotlin/Boolean) // io.ktor.resources.serialization/ResourcesFormat.Parameter.<init>|<init>(kotlin.String;kotlin.Boolean){}[0]
+
+        final val isOptional // io.ktor.resources.serialization/ResourcesFormat.Parameter.isOptional|{}isOptional[0]
+            final fun <get-isOptional>(): kotlin/Boolean // io.ktor.resources.serialization/ResourcesFormat.Parameter.isOptional.<get-isOptional>|<get-isOptional>(){}[0]
+        final val name // io.ktor.resources.serialization/ResourcesFormat.Parameter.name|{}name[0]
+            final fun <get-name>(): kotlin/String // io.ktor.resources.serialization/ResourcesFormat.Parameter.name.<get-name>|<get-name>(){}[0]
+
+        final fun component1(): kotlin/String // io.ktor.resources.serialization/ResourcesFormat.Parameter.component1|component1(){}[0]
+        final fun component2(): kotlin/Boolean // io.ktor.resources.serialization/ResourcesFormat.Parameter.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/Boolean = ...): io.ktor.resources.serialization/ResourcesFormat.Parameter // io.ktor.resources.serialization/ResourcesFormat.Parameter.copy|copy(kotlin.String;kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.resources.serialization/ResourcesFormat.Parameter.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.resources.serialization/ResourcesFormat.Parameter.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.ktor.resources.serialization/ResourcesFormat.Parameter.toString|toString(){}[0]
+    }
+}
+
+final class io.ktor.resources/ResourceSerializationException : kotlin/Exception { // io.ktor.resources/ResourceSerializationException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.resources/ResourceSerializationException.<init>|<init>(kotlin.String){}[0]
+}
+
+final class io.ktor.resources/Resources { // io.ktor.resources/Resources|null[0]
+    constructor <init>(io.ktor.resources/Resources.Configuration) // io.ktor.resources/Resources.<init>|<init>(io.ktor.resources.Resources.Configuration){}[0]
+
+    final val resourcesFormat // io.ktor.resources/Resources.resourcesFormat|{}resourcesFormat[0]
+        final fun <get-resourcesFormat>(): io.ktor.resources.serialization/ResourcesFormat // io.ktor.resources/Resources.resourcesFormat.<get-resourcesFormat>|<get-resourcesFormat>(){}[0]
+
+    final class Configuration { // io.ktor.resources/Resources.Configuration|null[0]
+        constructor <init>() // io.ktor.resources/Resources.Configuration.<init>|<init>(){}[0]
+
+        final var serializersModule // io.ktor.resources/Resources.Configuration.serializersModule|{}serializersModule[0]
+            final fun <get-serializersModule>(): kotlinx.serialization.modules/SerializersModule // io.ktor.resources/Resources.Configuration.serializersModule.<get-serializersModule>|<get-serializersModule>(){}[0]
+            final fun <set-serializersModule>(kotlinx.serialization.modules/SerializersModule) // io.ktor.resources/Resources.Configuration.serializersModule.<set-serializersModule>|<set-serializersModule>(kotlinx.serialization.modules.SerializersModule){}[0]
+    }
+}
+
+final fun <#A: kotlin/Any?> io.ktor.resources/href(io.ktor.resources.serialization/ResourcesFormat, kotlinx.serialization/KSerializer<#A>, #A, io.ktor.http/URLBuilder) // io.ktor.resources/href|href(io.ktor.resources.serialization.ResourcesFormat;kotlinx.serialization.KSerializer<0:0>;0:0;io.ktor.http.URLBuilder){0§<kotlin.Any?>}[0]
+final inline fun <#A: reified kotlin/Any?> io.ktor.resources/href(io.ktor.resources.serialization/ResourcesFormat, #A): kotlin/String // io.ktor.resources/href|href(io.ktor.resources.serialization.ResourcesFormat;0:0){0§<kotlin.Any?>}[0]
+final inline fun <#A: reified kotlin/Any?> io.ktor.resources/href(io.ktor.resources.serialization/ResourcesFormat, #A, io.ktor.http/URLBuilder) // io.ktor.resources/href|href(io.ktor.resources.serialization.ResourcesFormat;0:0;io.ktor.http.URLBuilder){0§<kotlin.Any?>}[0]

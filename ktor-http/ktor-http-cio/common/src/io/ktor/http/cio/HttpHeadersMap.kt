@@ -27,7 +27,7 @@ private val EMPTY_INT_LIST = IntArray(0)
 /**
  * A headers map data structure used in CIO
  */
-@Suppress("KDocMissingDocumentation")
+
 public class HttpHeadersMap internal constructor(private val builder: CharArrayBuilder) {
     public var size: Int = 0
         private set

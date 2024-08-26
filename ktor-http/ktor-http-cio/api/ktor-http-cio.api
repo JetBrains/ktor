@@ -12,8 +12,8 @@ public final class io/ktor/http/cio/CIOHeaders : io/ktor/http/Headers {
 }
 
 public final class io/ktor/http/cio/CIOMultipartDataBase : io/ktor/http/content/MultiPartData, kotlinx/coroutines/CoroutineScope {
-	public fun <init> (Lkotlin/coroutines/CoroutineContext;Lio/ktor/utils/io/ByteReadChannel;Ljava/lang/CharSequence;Ljava/lang/Long;I)V
-	public synthetic fun <init> (Lkotlin/coroutines/CoroutineContext;Lio/ktor/utils/io/ByteReadChannel;Ljava/lang/CharSequence;Ljava/lang/Long;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lkotlin/coroutines/CoroutineContext;Lio/ktor/utils/io/ByteReadChannel;Ljava/lang/CharSequence;Ljava/lang/Long;J)V
+	public synthetic fun <init> (Lkotlin/coroutines/CoroutineContext;Lio/ktor/utils/io/ByteReadChannel;Ljava/lang/CharSequence;Ljava/lang/Long;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
 	public fun readPart (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -87,8 +87,8 @@ public abstract class io/ktor/http/cio/MultipartEvent {
 }
 
 public final class io/ktor/http/cio/MultipartEvent$Epilogue : io/ktor/http/cio/MultipartEvent {
-	public fun <init> (Lio/ktor/utils/io/core/ByteReadPacket;)V
-	public final fun getBody ()Lio/ktor/utils/io/core/ByteReadPacket;
+	public fun <init> (Lkotlinx/io/Source;)V
+	public final fun getBody ()Lkotlinx/io/Source;
 	public fun release ()V
 }
 
@@ -100,14 +100,16 @@ public final class io/ktor/http/cio/MultipartEvent$MultipartPart : io/ktor/http/
 }
 
 public final class io/ktor/http/cio/MultipartEvent$Preamble : io/ktor/http/cio/MultipartEvent {
-	public fun <init> (Lio/ktor/utils/io/core/ByteReadPacket;)V
-	public final fun getBody ()Lio/ktor/utils/io/core/ByteReadPacket;
+	public fun <init> (Lkotlinx/io/Source;)V
+	public final fun getBody ()Lkotlinx/io/Source;
 	public fun release ()V
 }
 
 public final class io/ktor/http/cio/MultipartKt {
-	public static final fun parseMultipart (Lkotlinx/coroutines/CoroutineScope;Lio/ktor/utils/io/ByteReadChannel;Lio/ktor/http/cio/HttpHeadersMap;)Lkotlinx/coroutines/channels/ReceiveChannel;
-	public static final fun parseMultipart (Lkotlinx/coroutines/CoroutineScope;Lio/ktor/utils/io/ByteReadChannel;Ljava/lang/CharSequence;Ljava/lang/Long;)Lkotlinx/coroutines/channels/ReceiveChannel;
+	public static final fun parseMultipart (Lkotlinx/coroutines/CoroutineScope;Lio/ktor/utils/io/ByteReadChannel;Lio/ktor/http/cio/HttpHeadersMap;J)Lkotlinx/coroutines/channels/ReceiveChannel;
+	public static final fun parseMultipart (Lkotlinx/coroutines/CoroutineScope;Lio/ktor/utils/io/ByteReadChannel;Ljava/lang/CharSequence;Ljava/lang/Long;J)Lkotlinx/coroutines/channels/ReceiveChannel;
+	public static synthetic fun parseMultipart$default (Lkotlinx/coroutines/CoroutineScope;Lio/ktor/utils/io/ByteReadChannel;Lio/ktor/http/cio/HttpHeadersMap;JILjava/lang/Object;)Lkotlinx/coroutines/channels/ReceiveChannel;
+	public static synthetic fun parseMultipart$default (Lkotlinx/coroutines/CoroutineScope;Lio/ktor/utils/io/ByteReadChannel;Ljava/lang/CharSequence;Ljava/lang/Long;JILjava/lang/Object;)Lkotlinx/coroutines/channels/ReceiveChannel;
 }
 
 public final class io/ktor/http/cio/ParserException : java/lang/IllegalStateException {
@@ -122,7 +124,7 @@ public final class io/ktor/http/cio/Request : io/ktor/http/cio/HttpMessage {
 
 public final class io/ktor/http/cio/RequestResponseBuilder {
 	public fun <init> ()V
-	public final fun build ()Lio/ktor/utils/io/core/ByteReadPacket;
+	public final fun build ()Lkotlinx/io/Source;
 	public final fun bytes (Ljava/nio/ByteBuffer;)V
 	public final fun bytes ([BII)V
 	public static synthetic fun bytes$default (Lio/ktor/http/cio/RequestResponseBuilder;[BIIILjava/lang/Object;)V

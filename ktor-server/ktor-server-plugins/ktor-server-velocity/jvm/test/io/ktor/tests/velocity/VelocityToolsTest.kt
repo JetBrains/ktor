@@ -18,7 +18,6 @@ import org.apache.velocity.tools.config.*
 import java.util.*
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 class VelocityToolsTest {
 
     @Test

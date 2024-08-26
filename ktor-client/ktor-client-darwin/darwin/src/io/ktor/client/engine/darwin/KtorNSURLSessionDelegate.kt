@@ -105,7 +105,7 @@ public class KtorNSURLSessionDelegate(
         task: NSURLSessionTask
     ): CompletableDeferred<HttpResponseData> {
         val taskHandler = DarwinTaskHandler(request, callContext)
-        taskHandlers.put(task, taskHandler)
+        taskHandlers[task] = taskHandler
         return taskHandler.response
     }
 

@@ -22,13 +22,14 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.server.websocket.WebSockets
+import io.ktor.utils.io.*
 import io.ktor.websocket.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.*
 import kotlin.test.*
 
 /** Base class for [ContentNegotiation] tests. */
-@Suppress("KDocMissingDocumentation")
+
 abstract class AbstractClientContentNegotiationTest : TestWithKtor() {
     private val widget = Widget("Foo", 1000, listOf("a", "b", "c"))
     protected val users = listOf(
@@ -80,7 +81,7 @@ abstract class AbstractClientContentNegotiationTest : TestWithKtor() {
         }
     }
 
-    protected open fun createRoutes(routing: Route): Unit = with(routing) {
+    protected open fun createRoutes(route: Route): Unit = with(route) {
         post("/echo") {
             call.respondWithRequestBody(call.request.contentType())
         }

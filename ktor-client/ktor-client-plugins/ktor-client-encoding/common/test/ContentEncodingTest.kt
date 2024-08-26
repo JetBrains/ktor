@@ -109,4 +109,16 @@ class ContentEncodingTest : ClientLoader() {
             assertEquals("gzip", response.headers[HttpHeaders.ContentEncoding])
         }
     }
+
+    @Test
+    fun testNoEncoding() = clientTests(listOf("OkHttp")) {
+        config {
+            install(ContentEncoding)
+        }
+
+        test { client ->
+            val response = client.get("$TEST_URL/big-plain-text")
+            assertEquals(HttpStatusCode.OK, response.status)
+        }
+    }
 }

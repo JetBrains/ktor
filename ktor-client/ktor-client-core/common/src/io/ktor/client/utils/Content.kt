@@ -13,10 +13,8 @@ import kotlin.coroutines.*
 /**
  * Concrete [OutgoingContent] without a payload.
  */
-public object EmptyContent : OutgoingContent.NoContent() {
+public data object EmptyContent : OutgoingContent.NoContent() {
     override val contentLength: Long = 0
-
-    override fun toString(): String = "EmptyContent"
 }
 
 /**
@@ -73,4 +71,5 @@ public fun OutgoingContent.wrapHeaders(block: (Headers) -> Headers): OutgoingCon
             userContext: CoroutineContext
         ): Job = this@wrapHeaders.upgrade(input, output, engineContext, userContext)
     }
+    is OutgoingContent.ContentWrapper -> delegate().wrapHeaders(block)
 }

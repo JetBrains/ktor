@@ -30,7 +30,6 @@ public object Java : HttpClientEngineFactory<JavaHttpConfig> {
         JavaHttpEngine(JavaHttpConfig().apply(block))
 }
 
-@Suppress("KDocMissingDocumentation")
 public class JavaHttpEngineContainer : HttpClientEngineContainer {
     override val factory: HttpClientEngineFactory<*> = Java
 

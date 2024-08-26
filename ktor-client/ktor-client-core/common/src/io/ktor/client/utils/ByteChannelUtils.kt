@@ -20,7 +20,8 @@ internal fun ByteReadChannel.observable(
         var bytesSend = 0L
         while (!this@observable.isClosedForRead) {
             val read = this@observable.readAvailable(byteArray)
-            channel.writeFully(byteArray, offset = 0, length = read)
+            if (read <= 0) continue
+            channel.writeFully(byteArray, 0, read)
             bytesSend += read
             listener.onProgress(bytesSend, contentLength)
         }

@@ -7,7 +7,6 @@ package io.ktor.websocket
 import java.nio.*
 import java.util.concurrent.atomic.*
 
-@Suppress("KDocMissingDocumentation", "UsePropertyAccessSyntax")
 public class FrameParser {
     private val state = AtomicReference(State.HEADER0)
 

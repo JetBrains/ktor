@@ -52,8 +52,8 @@ internal fun Server.initializeServer(
                         }
 
                         keyStore = (ktorConnector as EngineSSLConnectorConfig).keyStore
-                        setKeyManagerPassword(String(ktorConnector.privateKeyPassword()))
-                        setKeyStorePassword(String(ktorConnector.keyStorePassword()))
+                        keyManagerPassword = String(ktorConnector.privateKeyPassword())
+                        keyStorePassword = String(ktorConnector.keyStorePassword())
 
                         needClientAuth = when {
                             ktorConnector.trustStore != null -> {

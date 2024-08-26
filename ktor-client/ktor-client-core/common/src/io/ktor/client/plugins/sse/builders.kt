@@ -7,12 +7,13 @@ package io.ktor.client.plugins.sse
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.sse.*
 import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlin.time.*
 
+internal val sseRequestAttr = AttributeKey<Boolean>("SSERequestFlag")
 internal val reconnectionTimeAttr = AttributeKey<Duration>("SSEReconnectionTime")
 internal val showCommentEventsAttr = AttributeKey<Boolean>("SSEShowCommentEvents")
 internal val showRetryEventsAttr = AttributeKey<Boolean>("SSEShowRetryEvents")
@@ -40,6 +41,7 @@ public suspend fun HttpClient.serverSentEventsSession(
     val sessionDeferred = CompletableDeferred<ClientSSESession>()
     val statement = prepareRequest {
         block()
+        addAttribute(sseRequestAttr, true)
         addAttribute(reconnectionTimeAttr, reconnectionTime)
         addAttribute(showCommentEventsAttr, showCommentEvents)
         addAttribute(showRetryEventsAttr, showRetryEvents)
@@ -53,7 +55,7 @@ public suspend fun HttpClient.serverSentEventsSession(
         } catch (cause: CancellationException) {
             sessionDeferred.cancel(cause)
         } catch (cause: Throwable) {
-            sessionDeferred.completeExceptionally(SSEException(cause))
+            sessionDeferred.completeExceptionally(mapToSSEException(response = null, cause))
         }
     }
     return sessionDeferred.await()
@@ -106,7 +108,7 @@ public suspend fun HttpClient.serverSentEvents(
     } catch (cause: CancellationException) {
         throw cause
     } catch (cause: Throwable) {
-        throw SSEException(cause)
+        throw mapToSSEException(session.call.response, cause)
     } finally {
         session.cancel()
     }
@@ -239,5 +241,13 @@ public suspend fun HttpClient.sse(
 private fun <T : Any> HttpRequestBuilder.addAttribute(attributeKey: AttributeKey<T>, value: T?) {
     if (value != null) {
         attributes.put(attributeKey, value)
+    }
+}
+
+private fun mapToSSEException(response: HttpResponse?, cause: Throwable): Throwable {
+    return if (cause is SSEClientException && cause.response != null) {
+        cause
+    } else {
+        SSEClientException(response, cause, cause.message)
     }
 }

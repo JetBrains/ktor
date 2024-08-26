@@ -79,7 +79,6 @@ public class NettyChannelInitializer(
         }
     }
 
-    @Suppress("KDocMissingDocumentation")
     override fun initChannel(ch: SocketChannel) {
         with(ch.pipeline()) {
             if (connector is EngineSSLConnectorConfig) {
@@ -115,7 +114,7 @@ public class NettyChannelInitializer(
                     userContext,
                     runningLimit
                 )
-                @Suppress("DEPRECATION")
+
                 pipeline.addLast(Http2MultiplexCodecBuilder.forServer(handler).build())
                 pipeline.channel().closeFuture().addListener {
                     handler.cancel()

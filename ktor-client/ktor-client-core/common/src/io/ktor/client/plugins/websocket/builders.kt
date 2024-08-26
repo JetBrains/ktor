@@ -101,6 +101,7 @@ public suspend fun HttpClient.webSocket(
             block(it)
         } finally {
             it.close()
+            it.incoming.cancel()
         }
     }
 }

@@ -7,6 +7,7 @@ import org.jetbrains.kotlin.buildtools.api.*
 import org.jetbrains.kotlin.gradle.dsl.*
 import org.jetbrains.kotlin.gradle.targets.js.*
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.*
+import org.jetbrains.kotlin.gradle.tasks.*
 import org.jetbrains.kotlin.konan.target.*
 
 buildscript {
@@ -21,7 +22,7 @@ buildscript {
     extra["build_snapshot_train"] = rootProject.properties["build_snapshot_train"]
     val build_snapshot_train: String? by extra
 
-    if (build_snapshot_train?.toBoolean() == true) {
+    if (build_snapshot_train.toBoolean()) {
         extra["kotlin_version"] = rootProject.properties["kotlin_snapshot_version"]
         val kotlin_version: String? by extra
         if (kotlin_version == null) {
@@ -30,8 +31,10 @@ buildscript {
             )
         }
         repositories {
+            maven(url = "https://oss.sonatype.org/content/repositories/snapshots") {
+                mavenContent { snapshotsOnly() }
+            }
             mavenLocal()
-            maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
         }
 
         configurations.classpath {
@@ -43,21 +46,17 @@ buildscript {
         }
     }
 
-    // This flag is also used in settings.gradle to exclude native-only projects
-    extra["native_targets_enabled"] = rootProject.properties["disable_native_targets"] == null
-
     repositories {
-        mavenLocal()
         mavenCentral()
         google()
         gradlePluginPortal()
         maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
+        mavenLocal()
     }
 }
 
 val releaseVersion: String? by extra
 val eapVersion: String? by extra
-val native_targets_enabled: Boolean by extra
 val version = (project.version as String).let { if (it.endsWith("-SNAPSHOT")) it.dropLast("-SNAPSHOT".length) else it }
 
 extra["configuredVersion"] = when {
@@ -68,7 +67,7 @@ extra["configuredVersion"] = when {
 
 println("The build version is ${extra["configuredVersion"]}")
 
-extra["globalM2"] = "$buildDir/m2"
+extra["globalM2"] = "${project.file("build")}/m2"
 extra["publishLocal"] = project.hasProperty("publishLocal")
 
 val configuredVersion: String by extra
@@ -76,6 +75,7 @@ val configuredVersion: String by extra
 apply(from = "gradle/verifier.gradle")
 
 extra["skipPublish"] = mutableListOf(
+    "ktor-server-test-base",
     "ktor-junit"
 )
 extra["nonDefaultProjectStructure"] = mutableListOf(
@@ -85,7 +85,7 @@ extra["nonDefaultProjectStructure"] = mutableListOf(
 
 val disabledExplicitApiModeProjects = listOf(
     "ktor-client-tests",
-    "ktor-server-test-host",
+    "ktor-server-test-base",
     "ktor-server-test-suites",
     "ktor-server-tests",
     "ktor-client-content-negotiation-tests",
@@ -95,10 +95,10 @@ val disabledExplicitApiModeProjects = listOf(
 apply(from = "gradle/compatibility.gradle")
 
 plugins {
-    id("org.jetbrains.dokka") version "1.9.10" apply false
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.2"
-    id("kotlinx-atomicfu") version "0.22.0" apply false
-    id("com.osacky.doctor") version "0.9.1"
+    id("org.jetbrains.dokka") version "1.9.20" apply false
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.16.3"
+    id("org.jetbrains.kotlinx.atomicfu") version "0.25.0" apply false
+    id("com.osacky.doctor") version "0.10.0"
 }
 
 doctor {
@@ -117,13 +117,14 @@ allprojects {
         mavenCentral()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
         maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
+        maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlinx/dev")
     }
 
     val nonDefaultProjectStructure: List<String> by rootProject.extra
     if (nonDefaultProjectStructure.contains(project.name)) return@allprojects
 
     apply(plugin = "kotlin-multiplatform")
-    apply(plugin = "kotlinx-atomicfu")
+    apply(plugin = "org.jetbrains.kotlinx.atomicfu")
 
     configureTargets()
 
@@ -153,14 +154,12 @@ println("Using Kotlin compiler version: ${org.jetbrains.kotlin.config.KotlinComp
 filterSnapshotTests()
 
 fun configureDokka() {
-    if (COMMON_JVM_ONLY) return
-
     allprojects {
         plugins.apply("org.jetbrains.dokka")
 
         val dokkaPlugin by configurations
         dependencies {
-            dokkaPlugin("org.jetbrains.dokka:versioning-plugin:1.9.10")
+            dokkaPlugin("org.jetbrains.dokka:versioning-plugin:1.9.20")
         }
     }
 
@@ -189,20 +188,12 @@ fun Project.setupJvmToolchain() {
     }
 
     kotlin {
-        jvmToolchain {
-            check(this is JavaToolchainSpec)
-            languageVersion = JavaLanguageVersion.of(jdk)
-        }
+        jvmToolchain(jdk)
     }
 }
 
 fun KotlinMultiplatformExtension.setCompilationOptions() {
     targets.all {
-        if (this is KotlinJsTarget) {
-            irTarget?.compilations?.all {
-                configureCompilation()
-            }
-        }
         compilations.all {
             configureCompilation()
         }
@@ -224,13 +215,4 @@ fun KotlinMultiplatformExtension.configureSourceSets() {
                 progressiveMode = true
             }
         }
-
-    if (!COMMON_JVM_ONLY) return
-
-    sourceSets {
-        findByName("jvmMain")?.kotlin?.srcDirs("jvmAndNix/src")
-        findByName("jvmTest")?.kotlin?.srcDirs("jvmAndNix/test")
-        findByName("jvmMain")?.resources?.srcDirs("jvmAndNix/resources")
-        findByName("jvmTest")?.resources?.srcDirs("jvmAndNix/test-resources")
-    }
 }

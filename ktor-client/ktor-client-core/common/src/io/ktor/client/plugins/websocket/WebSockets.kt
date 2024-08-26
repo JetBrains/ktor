@@ -24,16 +24,12 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.websocket.WebSock
 /**
  * Indicates if a client engine supports WebSockets.
  */
-public object WebSocketCapability : HttpClientEngineCapability<Unit> {
-    override fun toString(): String = "WebSocketCapability"
-}
+public data object WebSocketCapability : HttpClientEngineCapability<Unit>
 
 /**
  * Indicates if a client engine supports extensions for WebSocket plugin.
  */
-public object WebSocketExtensionsCapability : HttpClientEngineCapability<Unit> {
-    override fun toString(): String = "WebSocketExtensionsCapability"
-}
+public data object WebSocketExtensionsCapability : HttpClientEngineCapability<Unit>
 
 /**
  * Client WebSocket plugin.
@@ -215,7 +211,6 @@ public class WebSockets internal constructor(
     }
 }
 
-@Suppress("KDocMissingDocumentation")
 public class WebSocketException(message: String, cause: Throwable?) : IllegalStateException(message, cause) {
     // required for backwards binary compatibility
     public constructor(message: String) : this(message, cause = null)

@@ -14,6 +14,11 @@ kotlin.sourceSets {
             api(project(":ktor-client:ktor-client-plugins:ktor-client-content-negotiation"))
         }
     }
+    jvmMain {
+        dependencies {
+            api(libs.kotlinx.coroutines.slf4j)
+        }
+    }
     jvmTest {
         dependencies {
             api(project(":ktor-shared:ktor-serialization:ktor-serialization-jackson"))

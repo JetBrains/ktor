@@ -18,7 +18,7 @@ import kotlin.coroutines.*
 public abstract class HttpClientEngineBase(private val engineName: String) : HttpClientEngine {
     private val closed = atomic(false)
 
-    override val dispatcher: CoroutineDispatcher = ioDispatcher()
+    override val dispatcher: CoroutineDispatcher by lazy { config.dispatcher ?: ioDispatcher() }
 
     override val coroutineContext: CoroutineContext by lazy {
         SilentSupervisor() + dispatcher + CoroutineName("$engineName-context")

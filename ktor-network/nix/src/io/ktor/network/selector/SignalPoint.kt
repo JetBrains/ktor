@@ -90,7 +90,7 @@ internal class SignalPoint : Closeable {
             do {
                 val result = read(readDescriptor, buffer, 1024.convert()).convert<Int>()
                 if (result < 0) {
-                    when (val error = PosixException.forErrno()) {
+                    when (val error = PosixException.forSocketError()) {
                         is PosixException.TryAgainException -> {}
                         else -> throw error
                     }

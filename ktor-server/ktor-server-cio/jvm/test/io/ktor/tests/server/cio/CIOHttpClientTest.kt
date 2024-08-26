@@ -123,7 +123,7 @@ class CIOHttpClientTest {
                         while (copied < chunkSize) {
                             val rc = reader.read(chunkBuffer, 0, minOf(512, chunkSize - copied))
                             if (rc == -1) throw EOFException("Premature end of stream")
-                            requestContentBuffer.append(chunkBuffer, 0, rc)
+                            requestContentBuffer.appendRange(chunkBuffer, 0, rc)
                             copied += rc
                         }
 

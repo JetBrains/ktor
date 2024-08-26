@@ -36,9 +36,9 @@ public enum class FrameType(public val controlFrame: Boolean, public val opcode:
     PONG(true, 0xa);
 
     public companion object {
-        private val maxOpcode = values().maxByOrNull { it.opcode }!!.opcode
+        private val maxOpcode = entries.maxByOrNull { it.opcode }!!.opcode
 
-        private val byOpcodeArray = Array(maxOpcode + 1) { op -> values().singleOrNull { it.opcode == op } }
+        private val byOpcodeArray = Array(maxOpcode + 1) { op -> entries.singleOrNull { it.opcode == op } }
 
         /**
          * Finds [FrameType] instance by numeric [opcode].

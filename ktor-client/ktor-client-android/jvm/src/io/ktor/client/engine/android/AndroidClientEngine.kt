@@ -62,7 +62,7 @@ public class AndroidClientEngine(override val config: AndroidEngineConfig) : Htt
             config.requestConfig(this)
 
             if (data.method in METHODS_WITHOUT_BODY) {
-                if (outgoingContent is OutgoingContent.NoContent) {
+                if (outgoingContent.isEmpty()) {
                     return@apply
                 }
 
@@ -85,7 +85,7 @@ public class AndroidClientEngine(override val config: AndroidEngineConfig) : Htt
             val statusCode = responseMessage?.let { HttpStatusCode(responseCode, it) }
                 ?: HttpStatusCode.fromValue(responseCode)
 
-            val content: ByteReadChannel = current.content(callContext, data)
+            val content: ByteReadChannel = current.content(responseCode, callContext)
             val headerFields: Map<String, List<String>> = current.headerFields
                 .mapKeys { it.key?.lowercase(Locale.getDefault()) ?: "" }
                 .filter { it.key.isNotBlank() }
@@ -93,15 +93,9 @@ public class AndroidClientEngine(override val config: AndroidEngineConfig) : Htt
             val version: HttpProtocolVersion = HttpProtocolVersion.HTTP_1_1
             val responseHeaders = HeadersImpl(headerFields)
 
-            val responseBody: Any = if (needToProcessSSE(data, statusCode, responseHeaders)) {
-                DefaultClientSSESession(
-                    data.body as SSEClientContent,
-                    content,
-                    callContext
-                )
-            } else {
-                content
-            }
+            val responseBody: Any = data.attributes.getOrNull(ResponseAdapterAttributeKey)
+                ?.adapt(data, statusCode, responseHeaders, content, outgoingContent, callContext)
+                ?: content
 
             HttpResponseData(statusCode, requestTime, responseHeaders, version, responseBody, callContext)
         }
@@ -137,6 +131,8 @@ internal suspend fun OutgoingContent.writeTo(
         is OutgoingContent.NoContent -> {
         }
 
-        else -> throw UnsupportedContentTypeException(this)
+        is OutgoingContent.ContentWrapper -> delegate().writeTo(stream, callContext)
+
+        is OutgoingContent.ProtocolUpgrade -> throw UnsupportedContentTypeException(this)
     }
 }

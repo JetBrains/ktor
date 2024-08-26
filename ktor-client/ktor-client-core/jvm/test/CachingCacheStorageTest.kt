@@ -87,8 +87,8 @@ class CachingCacheStorageTest {
 private class InMemoryCacheStorage : CacheStorage {
 
     private val store = mutableMapOf<Url, MutableSet<CachedResponseData>>()
-    internal var findCalledCount = 0
-    internal var findAllCalledCount = 0
+    var findCalledCount = 0
+    var findAllCalledCount = 0
 
     override suspend fun store(url: Url, data: CachedResponseData) {
         val cache = store.computeIfAbsent(url) { mutableSetOf() }

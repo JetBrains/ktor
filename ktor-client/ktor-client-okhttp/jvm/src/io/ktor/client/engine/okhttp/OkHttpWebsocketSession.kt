@@ -144,7 +144,7 @@ internal class OkHttpWebsocketSession(
     /**
      * Creates a new web socket and starts the session.
      */
-    public fun start() {
+    fun start() {
         self.complete(this)
     }
 
@@ -159,7 +159,6 @@ internal class OkHttpWebsocketSession(
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@Suppress("KDocMissingDocumentation")
 public class UnsupportedFrameTypeException(
     private val frame: Frame
 ) : IllegalArgumentException("Unsupported frame type: $frame"), CopyableThrowable<UnsupportedFrameTypeException> {
@@ -169,7 +168,6 @@ public class UnsupportedFrameTypeException(
 }
 
 @OptIn(InternalAPI::class)
-@Suppress("DEPRECATION")
 private fun CloseReason.isReserved() = CloseReason.Codes.byCode(code).let { recognized ->
     recognized == null || recognized == CloseReason.Codes.CLOSED_ABNORMALLY
 }

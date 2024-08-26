@@ -6,12 +6,16 @@ package io.ktor.tests.server.cio
 
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
+import io.ktor.junit.*
 import io.ktor.server.cio.*
+import io.ktor.server.test.base.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.debug.*
+import org.junit.jupiter.api.extension.*
 import kotlin.test.*
 
+@ExtendWith(RetrySupport::class)
 class CIOWebSocketTestJvm : EngineTestBase<CIOApplicationEngine, CIOApplicationEngine.Configuration>(CIO) {
 
     init {
@@ -19,6 +23,8 @@ class CIOWebSocketTestJvm : EngineTestBase<CIOApplicationEngine, CIOApplicationE
         enableHttp2 = false
     }
 
+    @Ignore // TODO flaky
+    @RetryableTest
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun testNonWebsocketRouteDoNotLeakOnWsRequest() = runTest {

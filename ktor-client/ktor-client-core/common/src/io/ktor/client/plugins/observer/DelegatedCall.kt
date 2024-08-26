@@ -75,7 +75,7 @@ internal class DelegatedResponse(
         headers: Headers = origin.headers
     ) : this(call, { content }, origin, headers)
 
-    override val content: ByteReadChannel get() = block()
+    override val rawContent: ByteReadChannel get() = block()
 
     override val coroutineContext: CoroutineContext = origin.coroutineContext
 

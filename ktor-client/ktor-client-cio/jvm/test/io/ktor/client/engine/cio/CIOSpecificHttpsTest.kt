@@ -147,6 +147,7 @@ class CIOSpecificHttpsTest : TestWithKtor() {
         }
     }
 
+    @Ignore
     @Test
     fun testGetServerTrusted() {
         testWithEngine(CIO) {

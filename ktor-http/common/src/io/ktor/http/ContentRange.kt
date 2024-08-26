@@ -27,9 +27,9 @@ public fun contentRangeHeaderValue(
     append(unit)
     append(" ")
     if (range != null) {
-        append(range.start)
+        append(range.first)
         append('-')
-        append(range.endInclusive)
+        append(range.last)
     } else {
         append('*')
     }

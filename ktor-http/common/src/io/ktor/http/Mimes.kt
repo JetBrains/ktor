@@ -428,6 +428,7 @@ private val rawMimes: String
 .jpgv,video/jpeg
 .jpm,video/jpm
 .jps,image/x-jps
+.js,text/javascript
 .js,application/javascript
 .json,application/json
 .jut,image/jutvision

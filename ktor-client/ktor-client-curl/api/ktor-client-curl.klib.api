@@ -1,0 +1,36 @@
+// Klib ABI Dump
+// Targets: [linuxArm64, linuxX64, macosArm64, macosX64, mingwX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-client-curl>
+final class io.ktor.client.engine.curl/CurlClientEngineConfig : io.ktor.client.engine/HttpClientEngineConfig { // io.ktor.client.engine.curl/CurlClientEngineConfig|null[0]
+    constructor <init>() // io.ktor.client.engine.curl/CurlClientEngineConfig.<init>|<init>(){}[0]
+
+    final var caInfo // io.ktor.client.engine.curl/CurlClientEngineConfig.caInfo|{}caInfo[0]
+        final fun <get-caInfo>(): kotlin/String? // io.ktor.client.engine.curl/CurlClientEngineConfig.caInfo.<get-caInfo>|<get-caInfo>(){}[0]
+        final fun <set-caInfo>(kotlin/String?) // io.ktor.client.engine.curl/CurlClientEngineConfig.caInfo.<set-caInfo>|<set-caInfo>(kotlin.String?){}[0]
+    final var caPath // io.ktor.client.engine.curl/CurlClientEngineConfig.caPath|{}caPath[0]
+        final fun <get-caPath>(): kotlin/String? // io.ktor.client.engine.curl/CurlClientEngineConfig.caPath.<get-caPath>|<get-caPath>(){}[0]
+        final fun <set-caPath>(kotlin/String?) // io.ktor.client.engine.curl/CurlClientEngineConfig.caPath.<set-caPath>|<set-caPath>(kotlin.String?){}[0]
+    final var sslVerify // io.ktor.client.engine.curl/CurlClientEngineConfig.sslVerify|{}sslVerify[0]
+        final fun <get-sslVerify>(): kotlin/Boolean // io.ktor.client.engine.curl/CurlClientEngineConfig.sslVerify.<get-sslVerify>|<get-sslVerify>(){}[0]
+        final fun <set-sslVerify>(kotlin/Boolean) // io.ktor.client.engine.curl/CurlClientEngineConfig.sslVerify.<set-sslVerify>|<set-sslVerify>(kotlin.Boolean){}[0]
+}
+
+final class io.ktor.client.engine.curl/CurlIllegalStateException : kotlin/IllegalStateException { // io.ktor.client.engine.curl/CurlIllegalStateException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.client.engine.curl/CurlIllegalStateException.<init>|<init>(kotlin.String){}[0]
+}
+
+final class io.ktor.client.engine.curl/CurlRuntimeException : kotlin/RuntimeException { // io.ktor.client.engine.curl/CurlRuntimeException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.client.engine.curl/CurlRuntimeException.<init>|<init>(kotlin.String){}[0]
+}
+
+final object io.ktor.client.engine.curl/Curl : io.ktor.client.engine/HttpClientEngineFactory<io.ktor.client.engine.curl/CurlClientEngineConfig> { // io.ktor.client.engine.curl/Curl|null[0]
+    final fun create(kotlin/Function1<io.ktor.client.engine.curl/CurlClientEngineConfig, kotlin/Unit>): io.ktor.client.engine/HttpClientEngine // io.ktor.client.engine.curl/Curl.create|create(kotlin.Function1<io.ktor.client.engine.curl.CurlClientEngineConfig,kotlin.Unit>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.client.engine.curl/Curl.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.client.engine.curl/Curl.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.client.engine.curl/Curl.toString|toString(){}[0]
+}

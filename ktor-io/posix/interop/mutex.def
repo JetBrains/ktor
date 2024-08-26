@@ -1,4 +1,4 @@
-package=io.ktor.utils.io.interop.mutex
+package=io.ktor.io.interop.mutex
 ---
 #include <stdio.h>
 #include <stdlib.h>

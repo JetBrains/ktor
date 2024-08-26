@@ -8,7 +8,7 @@ import io.ktor.http.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.response.*
-import io.ktor.server.testing.*
+import io.ktor.server.test.base.*
 import io.netty.channel.*
 import kotlin.test.*
 
@@ -19,7 +19,7 @@ abstract class NettyCustomChannelTest<TEngine : ApplicationEngine, TConfiguratio
     var counter = 0
 
     @Test
-    fun testCustomChannelHandlerInvoked() {
+    fun testCustomChannelHandlerInvoked() = runTest {
         createAndStartServer {
             handle {
                 call.respondText("Hello")

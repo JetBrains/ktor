@@ -22,20 +22,20 @@ internal class InterestControllerHolder {
     /**
      * Flag showing if input is suspended
      */
-    public val inputSuspended: Boolean
+    val inputSuspended: Boolean
         get() = waitingInput.value
 
     /**
      * Flag showing if output is suspended
      */
-    public val outputSuspended: Boolean
+    val outputSuspended: Boolean
         get() = waitingOutput.value
 
     /**
      * Suspend input using [ioControl] and remember it so we may resume later.
      * @throws IllegalStateException if there is another control saved before that wasn't resumed
      */
-    public fun suspendInput(ioControl: IOControl) {
+    fun suspendInput(ioControl: IOControl) {
         waitingInput.value = true
         ioControl.suspendInput()
         interestController.update { before ->
@@ -48,7 +48,7 @@ internal class InterestControllerHolder {
      * Try to resume an io control previously saved. Does nothing if wasn't suspended or already resumed.
      * Stealing is atomic, so for every suspend invocation, only single resume is possible.
      */
-    public fun resumeInputIfPossible() {
+    fun resumeInputIfPossible() {
         interestController.getAndSet(null)?.requestInput()
         waitingInput.value = false
     }
@@ -57,7 +57,7 @@ internal class InterestControllerHolder {
      * Suspend output using [ioControl] and remember it so we may resume later.
      * @throws IllegalStateException if there is another control saved before that wasn't resumed
      */
-    public fun suspendOutput(ioControl: IOControl) {
+    fun suspendOutput(ioControl: IOControl) {
         waitingOutput.value = true
         ioControl.suspendOutput()
         interestController.update { before ->
@@ -70,7 +70,7 @@ internal class InterestControllerHolder {
      * Try to resume an io control previously saved. Does nothing if wasn't suspended or already resumed.
      * Stealing is atomic, so for every suspend invocation, only single resume is possible.
      */
-    public fun resumeOutputIfPossible() {
+    fun resumeOutputIfPossible() {
         interestController.getAndSet(null)?.requestOutput()
         waitingOutput.value = false
     }

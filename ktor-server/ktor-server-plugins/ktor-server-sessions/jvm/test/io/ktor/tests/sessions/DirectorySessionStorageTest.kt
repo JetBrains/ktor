@@ -11,7 +11,7 @@ import java.nio.file.*
 import kotlin.test.*
 
 class DirectorySessionStorageTest {
-    private val dir = Files.createTempDirectory("ktor-tests-").toFile()!!
+    private val dir = Files.createTempDirectory("ktor-tests-").toFile()
     private val storage = directorySessionStorage(dir, false)
 
     @AfterTest

@@ -93,8 +93,8 @@ private fun String.needQuotes(): Boolean {
     if (isEmpty()) return true
     if (isQuoted()) return false
 
-    for (index in 0 until length) {
-        if (HeaderFieldValueSeparators.contains(this[index])) return true
+    for (element in this) {
+        if (HeaderFieldValueSeparators.contains(element)) return true
     }
 
     return false
@@ -137,8 +137,8 @@ public fun String.quote(): String = buildString { this@quote.quoteTo(this) }
 
 private fun String.quoteTo(out: StringBuilder) {
     out.append("\"")
-    for (i in 0 until length) {
-        when (val ch = this[i]) {
+    for (element in this) {
+        when (val ch = element) {
             '\\' -> out.append("\\\\")
             '\n' -> out.append("\\n")
             '\r' -> out.append("\\r")

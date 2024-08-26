@@ -1,0 +1,64 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-client-cio>
+final class io.ktor.client.engine.cio/CIOEngineConfig : io.ktor.client.engine/HttpClientEngineConfig { // io.ktor.client.engine.cio/CIOEngineConfig|null[0]
+    constructor <init>() // io.ktor.client.engine.cio/CIOEngineConfig.<init>|<init>(){}[0]
+
+    final val endpoint // io.ktor.client.engine.cio/CIOEngineConfig.endpoint|{}endpoint[0]
+        final fun <get-endpoint>(): io.ktor.client.engine.cio/EndpointConfig // io.ktor.client.engine.cio/CIOEngineConfig.endpoint.<get-endpoint>|<get-endpoint>(){}[0]
+    final val https // io.ktor.client.engine.cio/CIOEngineConfig.https|{}https[0]
+        final fun <get-https>(): io.ktor.network.tls/TLSConfigBuilder // io.ktor.client.engine.cio/CIOEngineConfig.https.<get-https>|<get-https>(){}[0]
+
+    final var maxConnectionsCount // io.ktor.client.engine.cio/CIOEngineConfig.maxConnectionsCount|{}maxConnectionsCount[0]
+        final fun <get-maxConnectionsCount>(): kotlin/Int // io.ktor.client.engine.cio/CIOEngineConfig.maxConnectionsCount.<get-maxConnectionsCount>|<get-maxConnectionsCount>(){}[0]
+        final fun <set-maxConnectionsCount>(kotlin/Int) // io.ktor.client.engine.cio/CIOEngineConfig.maxConnectionsCount.<set-maxConnectionsCount>|<set-maxConnectionsCount>(kotlin.Int){}[0]
+    final var requestTimeout // io.ktor.client.engine.cio/CIOEngineConfig.requestTimeout|{}requestTimeout[0]
+        final fun <get-requestTimeout>(): kotlin/Long // io.ktor.client.engine.cio/CIOEngineConfig.requestTimeout.<get-requestTimeout>|<get-requestTimeout>(){}[0]
+        final fun <set-requestTimeout>(kotlin/Long) // io.ktor.client.engine.cio/CIOEngineConfig.requestTimeout.<set-requestTimeout>|<set-requestTimeout>(kotlin.Long){}[0]
+
+    final fun https(kotlin/Function1<io.ktor.network.tls/TLSConfigBuilder, kotlin/Unit>): io.ktor.network.tls/TLSConfigBuilder // io.ktor.client.engine.cio/CIOEngineConfig.https|https(kotlin.Function1<io.ktor.network.tls.TLSConfigBuilder,kotlin.Unit>){}[0]
+}
+
+final class io.ktor.client.engine.cio/EndpointConfig { // io.ktor.client.engine.cio/EndpointConfig|null[0]
+    constructor <init>() // io.ktor.client.engine.cio/EndpointConfig.<init>|<init>(){}[0]
+
+    final var allowHalfClose // io.ktor.client.engine.cio/EndpointConfig.allowHalfClose|{}allowHalfClose[0]
+        final fun <get-allowHalfClose>(): kotlin/Boolean // io.ktor.client.engine.cio/EndpointConfig.allowHalfClose.<get-allowHalfClose>|<get-allowHalfClose>(){}[0]
+        final fun <set-allowHalfClose>(kotlin/Boolean) // io.ktor.client.engine.cio/EndpointConfig.allowHalfClose.<set-allowHalfClose>|<set-allowHalfClose>(kotlin.Boolean){}[0]
+    final var connectAttempts // io.ktor.client.engine.cio/EndpointConfig.connectAttempts|{}connectAttempts[0]
+        final fun <get-connectAttempts>(): kotlin/Int // io.ktor.client.engine.cio/EndpointConfig.connectAttempts.<get-connectAttempts>|<get-connectAttempts>(){}[0]
+        final fun <set-connectAttempts>(kotlin/Int) // io.ktor.client.engine.cio/EndpointConfig.connectAttempts.<set-connectAttempts>|<set-connectAttempts>(kotlin.Int){}[0]
+    final var connectTimeout // io.ktor.client.engine.cio/EndpointConfig.connectTimeout|{}connectTimeout[0]
+        final fun <get-connectTimeout>(): kotlin/Long // io.ktor.client.engine.cio/EndpointConfig.connectTimeout.<get-connectTimeout>|<get-connectTimeout>(){}[0]
+        final fun <set-connectTimeout>(kotlin/Long) // io.ktor.client.engine.cio/EndpointConfig.connectTimeout.<set-connectTimeout>|<set-connectTimeout>(kotlin.Long){}[0]
+    final var keepAliveTime // io.ktor.client.engine.cio/EndpointConfig.keepAliveTime|{}keepAliveTime[0]
+        final fun <get-keepAliveTime>(): kotlin/Long // io.ktor.client.engine.cio/EndpointConfig.keepAliveTime.<get-keepAliveTime>|<get-keepAliveTime>(){}[0]
+        final fun <set-keepAliveTime>(kotlin/Long) // io.ktor.client.engine.cio/EndpointConfig.keepAliveTime.<set-keepAliveTime>|<set-keepAliveTime>(kotlin.Long){}[0]
+    final var maxConnectionsPerRoute // io.ktor.client.engine.cio/EndpointConfig.maxConnectionsPerRoute|{}maxConnectionsPerRoute[0]
+        final fun <get-maxConnectionsPerRoute>(): kotlin/Int // io.ktor.client.engine.cio/EndpointConfig.maxConnectionsPerRoute.<get-maxConnectionsPerRoute>|<get-maxConnectionsPerRoute>(){}[0]
+        final fun <set-maxConnectionsPerRoute>(kotlin/Int) // io.ktor.client.engine.cio/EndpointConfig.maxConnectionsPerRoute.<set-maxConnectionsPerRoute>|<set-maxConnectionsPerRoute>(kotlin.Int){}[0]
+    final var pipelineMaxSize // io.ktor.client.engine.cio/EndpointConfig.pipelineMaxSize|{}pipelineMaxSize[0]
+        final fun <get-pipelineMaxSize>(): kotlin/Int // io.ktor.client.engine.cio/EndpointConfig.pipelineMaxSize.<get-pipelineMaxSize>|<get-pipelineMaxSize>(){}[0]
+        final fun <set-pipelineMaxSize>(kotlin/Int) // io.ktor.client.engine.cio/EndpointConfig.pipelineMaxSize.<set-pipelineMaxSize>|<set-pipelineMaxSize>(kotlin.Int){}[0]
+    final var socketTimeout // io.ktor.client.engine.cio/EndpointConfig.socketTimeout|{}socketTimeout[0]
+        final fun <get-socketTimeout>(): kotlin/Long // io.ktor.client.engine.cio/EndpointConfig.socketTimeout.<get-socketTimeout>|<get-socketTimeout>(){}[0]
+        final fun <set-socketTimeout>(kotlin/Long) // io.ktor.client.engine.cio/EndpointConfig.socketTimeout.<set-socketTimeout>|<set-socketTimeout>(kotlin.Long){}[0]
+}
+
+final class io.ktor.client.engine.cio/FailToConnectException : kotlin/Exception { // io.ktor.client.engine.cio/FailToConnectException|null[0]
+    constructor <init>() // io.ktor.client.engine.cio/FailToConnectException.<init>|<init>(){}[0]
+}
+
+final object io.ktor.client.engine.cio/CIO : io.ktor.client.engine/HttpClientEngineFactory<io.ktor.client.engine.cio/CIOEngineConfig> { // io.ktor.client.engine.cio/CIO|null[0]
+    final fun create(kotlin/Function1<io.ktor.client.engine.cio/CIOEngineConfig, kotlin/Unit>): io.ktor.client.engine/HttpClientEngine // io.ktor.client.engine.cio/CIO.create|create(kotlin.Function1<io.ktor.client.engine.cio.CIOEngineConfig,kotlin.Unit>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.client.engine.cio/CIO.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.client.engine.cio/CIO.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.client.engine.cio/CIO.toString|toString(){}[0]
+}
+
+final fun (io.ktor.client.engine.cio/CIOEngineConfig).io.ktor.client.engine.cio/endpoint(kotlin/Function1<io.ktor.client.engine.cio/EndpointConfig, kotlin/Unit>): io.ktor.client.engine.cio/EndpointConfig // io.ktor.client.engine.cio/endpoint|endpoint@io.ktor.client.engine.cio.CIOEngineConfig(kotlin.Function1<io.ktor.client.engine.cio.EndpointConfig,kotlin.Unit>){}[0]

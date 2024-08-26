@@ -1,0 +1,18 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-partial-content>
+final class io.ktor.server.plugins.partialcontent/PartialContentConfig { // io.ktor.server.plugins.partialcontent/PartialContentConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.partialcontent/PartialContentConfig.<init>|<init>(){}[0]
+
+    final var maxRangeCount // io.ktor.server.plugins.partialcontent/PartialContentConfig.maxRangeCount|{}maxRangeCount[0]
+        final fun <get-maxRangeCount>(): kotlin/Int // io.ktor.server.plugins.partialcontent/PartialContentConfig.maxRangeCount.<get-maxRangeCount>|<get-maxRangeCount>(){}[0]
+        final fun <set-maxRangeCount>(kotlin/Int) // io.ktor.server.plugins.partialcontent/PartialContentConfig.maxRangeCount.<set-maxRangeCount>|<set-maxRangeCount>(kotlin.Int){}[0]
+}
+
+final val io.ktor.server.plugins.partialcontent/PartialContent // io.ktor.server.plugins.partialcontent/PartialContent|{}PartialContent[0]
+    final fun <get-PartialContent>(): io.ktor.server.application/RouteScopedPlugin<io.ktor.server.plugins.partialcontent/PartialContentConfig> // io.ktor.server.plugins.partialcontent/PartialContent.<get-PartialContent>|<get-PartialContent>(){}[0]

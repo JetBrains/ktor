@@ -8,10 +8,7 @@ import io.ktor.client.*
 import io.ktor.client.engine.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.debug.*
-import kotlinx.coroutines.debug.junit5.*
-import org.junit.jupiter.api.extension.*
 import java.util.*
-import kotlin.test.*
 import kotlin.time.Duration.Companion.seconds
 
 /**
@@ -28,11 +25,13 @@ actual abstract class ClientLoader actual constructor(val timeoutSeconds: Int) {
     /**
      * Perform test against all clients from dependencies.
      */
+    @OptIn(ExperimentalCoroutinesApi::class)
     actual fun clientTests(
         skipEngines: List<String>,
         onlyWithEngine: String?,
         block: suspend TestClientBuilder<HttpClientEngineConfig>.() -> Unit
     ) {
+        DebugProbes.install()
         for (engine in engines) {
             if (shouldSkip(engine, skipEngines, onlyWithEngine)) {
                 continue
@@ -64,12 +63,20 @@ actual abstract class ClientLoader actual constructor(val timeoutSeconds: Int) {
         )
         val notOnlyEngine = onlyWithEngine != null && engineName.lowercase(locale) != onlyWithEngine.lowercase(locale)
 
-        return platformShouldBeSkipped || engineShouldBeSkipped || notOnlyEngine
+        return (engineShouldBeSkipped && platformShouldBeSkipped) || notOnlyEngine
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     actual fun dumpCoroutines() {
         DebugProbes.dumpCoroutines()
+
+        println("Thread Dump")
+        Thread.getAllStackTraces().forEach { (thread, stackTrace) ->
+            println("Thread: $thread")
+            stackTrace.forEach {
+                println("\t$it")
+            }
+        }
     }
 
     /**

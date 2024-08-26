@@ -83,7 +83,7 @@ internal class KtorCallContextElement(val callContext: CoroutineContext) : Corou
     override val key: CoroutineContext.Key<*>
         get() = KtorCallContextElement
 
-    public companion object : CoroutineContext.Key<KtorCallContextElement>
+    companion object : CoroutineContext.Key<KtorCallContextElement>
 }
 
 /**

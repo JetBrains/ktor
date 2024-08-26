@@ -49,7 +49,17 @@ public fun Route.swaggerUI(path: String, apiFile: File, block: SwaggerConfig.() 
     swaggerUI(path, apiFile.name, content, block)
 }
 
-internal fun Route.swaggerUI(
+/**
+ * Configures a route to serve Swagger UI and its corresponding API specification.
+ *
+ * This function sets up a given path to serve a Swagger UI interface based on the provided API specification.
+ *
+ * @param path The base path where the Swagger UI will be accessible.
+ * @param apiUrl The relative URL for the Swagger API JSON file.
+ * @param api The content of the Swagger API specification.
+ * @param block A configuration block to apply additional Swagger configuration settings.
+ */
+public fun Route.swaggerUI(
     path: String,
     apiUrl: String,
     api: String,

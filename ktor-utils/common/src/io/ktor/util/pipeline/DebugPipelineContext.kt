@@ -14,9 +14,9 @@ import kotlin.coroutines.*
  * @param subject object representing subject that goes along the pipeline
  */
 @KtorDsl
-internal class DebugPipelineContext<TSubject : Any, TContext : Any> constructor(
+internal class DebugPipelineContext<TSubject : Any, TContext : Any>(
     context: TContext,
-    private val interceptors: List<PipelineInterceptorFunction<TSubject, TContext>>,
+    private val interceptors: List<PipelineInterceptor<TSubject, TContext>>,
     subject: TSubject,
     override val coroutineContext: CoroutineContext
 ) : PipelineContext<TSubject, TContext>(context) {
@@ -76,8 +76,7 @@ internal class DebugPipelineContext<TSubject : Any, TContext : Any> constructor(
             }
             val executeInterceptor = interceptors[index]
             this.index = index + 1
-            @Suppress("UNCHECKED_CAST")
-            (executeInterceptor as PipelineInterceptor<TSubject, TContext>).invoke(this, subject)
+            executeInterceptor.invoke(this, subject)
         } while (true)
 
         return subject

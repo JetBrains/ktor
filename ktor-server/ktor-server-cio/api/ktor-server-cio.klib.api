@@ -1,0 +1,103 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-cio>
+final class io.ktor.server.cio.backend/ServerIncomingConnection { // io.ktor.server.cio.backend/ServerIncomingConnection|null[0]
+    constructor <init>(io.ktor.utils.io/ByteReadChannel, io.ktor.utils.io/ByteWriteChannel, io.ktor.util.network/NetworkAddress?, io.ktor.util.network/NetworkAddress?) // io.ktor.server.cio.backend/ServerIncomingConnection.<init>|<init>(io.ktor.utils.io.ByteReadChannel;io.ktor.utils.io.ByteWriteChannel;io.ktor.util.network.NetworkAddress?;io.ktor.util.network.NetworkAddress?){}[0]
+
+    final val input // io.ktor.server.cio.backend/ServerIncomingConnection.input|{}input[0]
+        final fun <get-input>(): io.ktor.utils.io/ByteReadChannel // io.ktor.server.cio.backend/ServerIncomingConnection.input.<get-input>|<get-input>(){}[0]
+    final val localAddress // io.ktor.server.cio.backend/ServerIncomingConnection.localAddress|{}localAddress[0]
+        final fun <get-localAddress>(): io.ktor.util.network/NetworkAddress? // io.ktor.server.cio.backend/ServerIncomingConnection.localAddress.<get-localAddress>|<get-localAddress>(){}[0]
+    final val output // io.ktor.server.cio.backend/ServerIncomingConnection.output|{}output[0]
+        final fun <get-output>(): io.ktor.utils.io/ByteWriteChannel // io.ktor.server.cio.backend/ServerIncomingConnection.output.<get-output>|<get-output>(){}[0]
+    final val remoteAddress // io.ktor.server.cio.backend/ServerIncomingConnection.remoteAddress|{}remoteAddress[0]
+        final fun <get-remoteAddress>(): io.ktor.util.network/NetworkAddress? // io.ktor.server.cio.backend/ServerIncomingConnection.remoteAddress.<get-remoteAddress>|<get-remoteAddress>(){}[0]
+}
+
+final class io.ktor.server.cio.backend/ServerRequestScope : kotlinx.coroutines/CoroutineScope { // io.ktor.server.cio.backend/ServerRequestScope|null[0]
+    final val coroutineContext // io.ktor.server.cio.backend/ServerRequestScope.coroutineContext|{}coroutineContext[0]
+        final fun <get-coroutineContext>(): kotlin.coroutines/CoroutineContext // io.ktor.server.cio.backend/ServerRequestScope.coroutineContext.<get-coroutineContext>|<get-coroutineContext>(){}[0]
+    final val input // io.ktor.server.cio.backend/ServerRequestScope.input|{}input[0]
+        final fun <get-input>(): io.ktor.utils.io/ByteReadChannel // io.ktor.server.cio.backend/ServerRequestScope.input.<get-input>|<get-input>(){}[0]
+    final val localAddress // io.ktor.server.cio.backend/ServerRequestScope.localAddress|{}localAddress[0]
+        final fun <get-localAddress>(): io.ktor.util.network/NetworkAddress? // io.ktor.server.cio.backend/ServerRequestScope.localAddress.<get-localAddress>|<get-localAddress>(){}[0]
+    final val output // io.ktor.server.cio.backend/ServerRequestScope.output|{}output[0]
+        final fun <get-output>(): io.ktor.utils.io/ByteWriteChannel // io.ktor.server.cio.backend/ServerRequestScope.output.<get-output>|<get-output>(){}[0]
+    final val remoteAddress // io.ktor.server.cio.backend/ServerRequestScope.remoteAddress|{}remoteAddress[0]
+        final fun <get-remoteAddress>(): io.ktor.util.network/NetworkAddress? // io.ktor.server.cio.backend/ServerRequestScope.remoteAddress.<get-remoteAddress>|<get-remoteAddress>(){}[0]
+    final val upgraded // io.ktor.server.cio.backend/ServerRequestScope.upgraded|{}upgraded[0]
+        final fun <get-upgraded>(): kotlinx.coroutines/CompletableDeferred<kotlin/Boolean>? // io.ktor.server.cio.backend/ServerRequestScope.upgraded.<get-upgraded>|<get-upgraded>(){}[0]
+
+    final fun withContext(kotlin.coroutines/CoroutineContext): io.ktor.server.cio.backend/ServerRequestScope // io.ktor.server.cio.backend/ServerRequestScope.withContext|withContext(kotlin.coroutines.CoroutineContext){}[0]
+}
+
+final class io.ktor.server.cio/CIOApplicationEngine : io.ktor.server.engine/BaseApplicationEngine { // io.ktor.server.cio/CIOApplicationEngine|null[0]
+    constructor <init>(io.ktor.server.application/ApplicationEnvironment, io.ktor.events/Events, kotlin/Boolean, io.ktor.server.cio/CIOApplicationEngine.Configuration, kotlin/Function0<io.ktor.server.application/Application>) // io.ktor.server.cio/CIOApplicationEngine.<init>|<init>(io.ktor.server.application.ApplicationEnvironment;io.ktor.events.Events;kotlin.Boolean;io.ktor.server.cio.CIOApplicationEngine.Configuration;kotlin.Function0<io.ktor.server.application.Application>){}[0]
+
+    final val configuration // io.ktor.server.cio/CIOApplicationEngine.configuration|{}configuration[0]
+        final fun <get-configuration>(): io.ktor.server.cio/CIOApplicationEngine.Configuration // io.ktor.server.cio/CIOApplicationEngine.configuration.<get-configuration>|<get-configuration>(){}[0]
+
+    final fun start(kotlin/Boolean): io.ktor.server.engine/ApplicationEngine // io.ktor.server.cio/CIOApplicationEngine.start|start(kotlin.Boolean){}[0]
+    final fun stop(kotlin/Long, kotlin/Long) // io.ktor.server.cio/CIOApplicationEngine.stop|stop(kotlin.Long;kotlin.Long){}[0]
+
+    final class Configuration : io.ktor.server.engine/BaseApplicationEngine.Configuration { // io.ktor.server.cio/CIOApplicationEngine.Configuration|null[0]
+        constructor <init>() // io.ktor.server.cio/CIOApplicationEngine.Configuration.<init>|<init>(){}[0]
+
+        final var connectionIdleTimeoutSeconds // io.ktor.server.cio/CIOApplicationEngine.Configuration.connectionIdleTimeoutSeconds|{}connectionIdleTimeoutSeconds[0]
+            final fun <get-connectionIdleTimeoutSeconds>(): kotlin/Int // io.ktor.server.cio/CIOApplicationEngine.Configuration.connectionIdleTimeoutSeconds.<get-connectionIdleTimeoutSeconds>|<get-connectionIdleTimeoutSeconds>(){}[0]
+            final fun <set-connectionIdleTimeoutSeconds>(kotlin/Int) // io.ktor.server.cio/CIOApplicationEngine.Configuration.connectionIdleTimeoutSeconds.<set-connectionIdleTimeoutSeconds>|<set-connectionIdleTimeoutSeconds>(kotlin.Int){}[0]
+        final var reuseAddress // io.ktor.server.cio/CIOApplicationEngine.Configuration.reuseAddress|{}reuseAddress[0]
+            final fun <get-reuseAddress>(): kotlin/Boolean // io.ktor.server.cio/CIOApplicationEngine.Configuration.reuseAddress.<get-reuseAddress>|<get-reuseAddress>(){}[0]
+            final fun <set-reuseAddress>(kotlin/Boolean) // io.ktor.server.cio/CIOApplicationEngine.Configuration.reuseAddress.<set-reuseAddress>|<set-reuseAddress>(kotlin.Boolean){}[0]
+    }
+}
+
+final class io.ktor.server.cio/HttpServer { // io.ktor.server.cio/HttpServer|null[0]
+    constructor <init>(kotlinx.coroutines/Job, kotlinx.coroutines/Job, kotlinx.coroutines/Deferred<io.ktor.network.sockets/ServerSocket>) // io.ktor.server.cio/HttpServer.<init>|<init>(kotlinx.coroutines.Job;kotlinx.coroutines.Job;kotlinx.coroutines.Deferred<io.ktor.network.sockets.ServerSocket>){}[0]
+
+    final val acceptJob // io.ktor.server.cio/HttpServer.acceptJob|{}acceptJob[0]
+        final fun <get-acceptJob>(): kotlinx.coroutines/Job // io.ktor.server.cio/HttpServer.acceptJob.<get-acceptJob>|<get-acceptJob>(){}[0]
+    final val rootServerJob // io.ktor.server.cio/HttpServer.rootServerJob|{}rootServerJob[0]
+        final fun <get-rootServerJob>(): kotlinx.coroutines/Job // io.ktor.server.cio/HttpServer.rootServerJob.<get-rootServerJob>|<get-rootServerJob>(){}[0]
+    final val serverSocket // io.ktor.server.cio/HttpServer.serverSocket|{}serverSocket[0]
+        final fun <get-serverSocket>(): kotlinx.coroutines/Deferred<io.ktor.network.sockets/ServerSocket> // io.ktor.server.cio/HttpServer.serverSocket.<get-serverSocket>|<get-serverSocket>(){}[0]
+}
+
+final class io.ktor.server.cio/HttpServerSettings { // io.ktor.server.cio/HttpServerSettings|null[0]
+    constructor <init>(kotlin/String = ..., kotlin/Int = ..., kotlin/Long = ..., kotlin/Boolean = ...) // io.ktor.server.cio/HttpServerSettings.<init>|<init>(kotlin.String;kotlin.Int;kotlin.Long;kotlin.Boolean){}[0]
+
+    final val connectionIdleTimeoutSeconds // io.ktor.server.cio/HttpServerSettings.connectionIdleTimeoutSeconds|{}connectionIdleTimeoutSeconds[0]
+        final fun <get-connectionIdleTimeoutSeconds>(): kotlin/Long // io.ktor.server.cio/HttpServerSettings.connectionIdleTimeoutSeconds.<get-connectionIdleTimeoutSeconds>|<get-connectionIdleTimeoutSeconds>(){}[0]
+    final val host // io.ktor.server.cio/HttpServerSettings.host|{}host[0]
+        final fun <get-host>(): kotlin/String // io.ktor.server.cio/HttpServerSettings.host.<get-host>|<get-host>(){}[0]
+    final val port // io.ktor.server.cio/HttpServerSettings.port|{}port[0]
+        final fun <get-port>(): kotlin/Int // io.ktor.server.cio/HttpServerSettings.port.<get-port>|<get-port>(){}[0]
+    final val reuseAddress // io.ktor.server.cio/HttpServerSettings.reuseAddress|{}reuseAddress[0]
+        final fun <get-reuseAddress>(): kotlin/Boolean // io.ktor.server.cio/HttpServerSettings.reuseAddress.<get-reuseAddress>|<get-reuseAddress>(){}[0]
+
+    final fun component1(): kotlin/String // io.ktor.server.cio/HttpServerSettings.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // io.ktor.server.cio/HttpServerSettings.component2|component2(){}[0]
+    final fun component3(): kotlin/Long // io.ktor.server.cio/HttpServerSettings.component3|component3(){}[0]
+    final fun component4(): kotlin/Boolean // io.ktor.server.cio/HttpServerSettings.component4|component4(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/Int = ..., kotlin/Long = ..., kotlin/Boolean = ...): io.ktor.server.cio/HttpServerSettings // io.ktor.server.cio/HttpServerSettings.copy|copy(kotlin.String;kotlin.Int;kotlin.Long;kotlin.Boolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.cio/HttpServerSettings.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.server.cio/HttpServerSettings.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.cio/HttpServerSettings.toString|toString(){}[0]
+}
+
+final object io.ktor.server.cio/CIO : io.ktor.server.engine/ApplicationEngineFactory<io.ktor.server.cio/CIOApplicationEngine, io.ktor.server.cio/CIOApplicationEngine.Configuration> { // io.ktor.server.cio/CIO|null[0]
+    final fun configuration(kotlin/Function1<io.ktor.server.cio/CIOApplicationEngine.Configuration, kotlin/Unit>): io.ktor.server.cio/CIOApplicationEngine.Configuration // io.ktor.server.cio/CIO.configuration|configuration(kotlin.Function1<io.ktor.server.cio.CIOApplicationEngine.Configuration,kotlin.Unit>){}[0]
+    final fun create(io.ktor.server.application/ApplicationEnvironment, io.ktor.events/Events, kotlin/Boolean, io.ktor.server.cio/CIOApplicationEngine.Configuration, kotlin/Function0<io.ktor.server.application/Application>): io.ktor.server.cio/CIOApplicationEngine // io.ktor.server.cio/CIO.create|create(io.ktor.server.application.ApplicationEnvironment;io.ktor.events.Events;kotlin.Boolean;io.ktor.server.cio.CIOApplicationEngine.Configuration;kotlin.Function0<io.ktor.server.application.Application>){}[0]
+}
+
+final object io.ktor.server.cio/EngineMain { // io.ktor.server.cio/EngineMain|null[0]
+    final fun main(kotlin/Array<kotlin/String>) // io.ktor.server.cio/EngineMain.main|main(kotlin.Array<kotlin.String>){}[0]
+}
+
+final fun (kotlinx.coroutines/CoroutineScope).io.ktor.server.cio.backend/httpServer(io.ktor.server.cio/HttpServerSettings, kotlin.coroutines/SuspendFunction2<io.ktor.server.cio.backend/ServerRequestScope, io.ktor.http.cio/Request, kotlin/Unit>): io.ktor.server.cio/HttpServer // io.ktor.server.cio.backend/httpServer|httpServer@kotlinx.coroutines.CoroutineScope(io.ktor.server.cio.HttpServerSettings;kotlin.coroutines.SuspendFunction2<io.ktor.server.cio.backend.ServerRequestScope,io.ktor.http.cio.Request,kotlin.Unit>){}[0]
+final fun (kotlinx.coroutines/CoroutineScope).io.ktor.server.cio.backend/startServerConnectionPipeline(io.ktor.server.cio.backend/ServerIncomingConnection, kotlin.time/Duration, kotlin.coroutines/SuspendFunction2<io.ktor.server.cio.backend/ServerRequestScope, io.ktor.http.cio/Request, kotlin/Unit>): kotlinx.coroutines/Job // io.ktor.server.cio.backend/startServerConnectionPipeline|startServerConnectionPipeline@kotlinx.coroutines.CoroutineScope(io.ktor.server.cio.backend.ServerIncomingConnection;kotlin.time.Duration;kotlin.coroutines.SuspendFunction2<io.ktor.server.cio.backend.ServerRequestScope,io.ktor.http.cio.Request,kotlin.Unit>){}[0]

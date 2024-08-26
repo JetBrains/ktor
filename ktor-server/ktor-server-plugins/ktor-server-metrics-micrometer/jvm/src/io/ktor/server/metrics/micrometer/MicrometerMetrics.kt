@@ -164,7 +164,7 @@ public val MicrometerMetrics: ApplicationPlugin<MicrometerMetricsConfig> =
             throw cause
         }
 
-        application.monitor.subscribe(Routing.RoutingCallStarted) { call ->
+        application.monitor.subscribe(RoutingRoot.RoutingCallStarted) { call ->
             call.attributes[measureKey].route = call.route.parent.toString()
         }
     }

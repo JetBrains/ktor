@@ -1,29 +1,28 @@
+/*
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ */
+
 package io.ktor.utils.io.core
 
 public expect interface Closeable {
     public fun close()
 }
 
-public inline fun <C : Closeable, R> C.use(block: (C) -> R): R {
+public inline fun <T : Closeable?, R> T.use(block: (T) -> R): R {
     var closed = false
-
-    return try {
-        block(this)
-    } catch (first: Throwable) {
+    try {
+        return block(this)
+    } catch (cause: Throwable) {
+        closed = true
         try {
-            closed = true
-            close()
-        } catch (second: Throwable) {
-            first.addSuppressedInternal(second)
+            this?.close()
+        } catch (closeException: Throwable) {
+            cause.addSuppressed(closeException)
         }
-
-        throw first
+        throw cause
     } finally {
         if (!closed) {
-            close()
+            this?.close()
         }
     }
 }
-
-@PublishedApi
-internal expect fun Throwable.addSuppressedInternal(other: Throwable)

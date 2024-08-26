@@ -16,10 +16,8 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Assertions.assertAll
 import kotlin.test.*
 
-@Suppress("DEPRECATION")
 class DropwizardMetricsTests {
 
     @Test

@@ -6,76 +6,70 @@ package io.ktor.server.plugins
 
 import io.ktor.server.application.*
 import io.ktor.server.config.*
-import io.ktor.server.config.ConfigLoader.Companion.load
 import io.ktor.server.testing.*
 import kotlin.test.*
 
 class ApplicationPluginConfigurationTest {
 
     @Test
-    fun testReadPropertyFromFile() {
+    fun testReadPropertyFromFile() = testApplication {
         var lastInstalledValue = ""
         val plugin = createApplicationPlugin("PluginWithProperty", "myplugin", ::ConfigWithProperty) {
             lastInstalledValue = pluginConfig.property
         }
 
-        testApplication {
-            environment {
-                config = ConfigLoader.load("test-config.yaml")
-            }
-
-            install(plugin)
+        environment {
+            config = ConfigLoader.load("test-config.yaml")
         }
 
+        install(plugin)
+        startApplication()
         assertEquals("42", lastInstalledValue)
     }
 
     @Test
-    fun testDefaultValueWithoutConfigFile() {
+    fun testDefaultValueWithoutConfigFile() = testApplication {
         var lastInstalledValue = ""
         val plugin = createApplicationPlugin("PluginWithProperty", "myplugin", ::ConfigWithProperty) {
             lastInstalledValue = pluginConfig.property
         }
 
-        testApplication {
-            install(plugin)
-        }
+        install(plugin)
+        startApplication()
         assertEquals("Default Value", lastInstalledValue)
     }
 
     @Test
-    fun testDefaultValueWithEmptyConfigFile() {
+    fun testDefaultValueWithEmptyConfigFile() = testApplication {
         var lastInstalledValue = ""
         val plugin = createApplicationPlugin("PluginWithProperty", "myplugin", ::ConfigWithProperty) {
             lastInstalledValue = pluginConfig.property
         }
 
-        testApplication {
-            install(plugin)
+        install(plugin)
 
-            environment {
-                config = ConfigLoader.load("empty-config.yaml")
-            }
+        environment {
+            config = ConfigLoader.load("empty-config.yaml")
         }
 
+        startApplication()
         assertEquals("Default Value", lastInstalledValue)
     }
 
     @Test
-    fun testComplexPath() {
+    fun testComplexPath() = testApplication {
         var lastInstalledValue = ""
         val plugin = createApplicationPlugin("PluginWithProperty", "db.myplugin", ::ConfigWithProperty) {
             lastInstalledValue = pluginConfig.property
         }
 
-        testApplication {
-            environment {
-                config = ConfigLoader.load("test-config.yaml")
-            }
-
-            install(plugin)
+        environment {
+            config = ConfigLoader.load("test-config.yaml")
         }
 
+        install(plugin)
+
+        startApplication()
         assertEquals("43", lastInstalledValue)
     }
 }

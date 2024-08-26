@@ -1,3 +1,122 @@
+# 3.0.0-beta-2
+> Published 15 July 2024
+
+### Bugfixes
+* io.ktor.util.TextKt.chomp doesn't work on strings with more than one character ([KTOR-7209](https://youtrack.jetbrains.com/issue/KTOR-7209))
+* DefaultRequest plugin overwrites http protocol ([KTOR-5586](https://youtrack.jetbrains.com/issue/KTOR-5586))
+* Ktor build problem; cannot compile native targets ([KTOR-6666](https://youtrack.jetbrains.com/issue/KTOR-6666))
+* SSEException is thrown instead of JobCancellationException when coroutine's job is cancelled ([KTOR-6571](https://youtrack.jetbrains.com/issue/KTOR-6571))
+* SSE request drops request body ([KTOR-6659](https://youtrack.jetbrains.com/issue/KTOR-6659))
+* SSE: UnsupportedContentTypeException when sending POST request using OKHttp engine ([KTOR-6911](https://youtrack.jetbrains.com/issue/KTOR-6911))
+* SSE: NoTransformationFoundException when Logging plugin with LogLevel.ALL is used ([KTOR-6912](https://youtrack.jetbrains.com/issue/KTOR-6912))
+* Installing SSE breaks GET/POST functionality ([KTOR-6614](https://youtrack.jetbrains.com/issue/KTOR-6614))
+* Cookies with a long Max-Age incorrectly expire in AcceptAllCookiesStorage ([KTOR-6646](https://youtrack.jetbrains.com/issue/KTOR-6646))
+* Some dependency versions not tracked ([KTOR-7123](https://youtrack.jetbrains.com/issue/KTOR-7123))
+* CSRF: false positive originMatchesHost validation when default port is explicitly defined ([KTOR-6701](https://youtrack.jetbrains.com/issue/KTOR-6701))
+* Double Transfer-Encoding header while using respondOutputStream on Tomcat ([KTOR-6574](https://youtrack.jetbrains.com/issue/KTOR-6574))
+
+### Improvements
+* HttpCalValidatorConfig class name is misspelled ([KTOR-6625](https://youtrack.jetbrains.com/issue/KTOR-6625))
+* CallLogging: package is misspelled ([KTOR-4273](https://youtrack.jetbrains.com/issue/KTOR-4273))
+* Ambiguous coroutineContext warning in routing handler ([KTOR-5181](https://youtrack.jetbrains.com/issue/KTOR-5181))
+* Tracing: allow changing log level at runtime for routing ([KTOR-7193](https://youtrack.jetbrains.com/issue/KTOR-7193))
+* io.ktor.network.tls.TLSException has internal visibility ([KTOR-6767](https://youtrack.jetbrains.com/issue/KTOR-6767))
+* Auth: Make `refreshToken` of `BearerTokens` class nullable ([KTOR-6928](https://youtrack.jetbrains.com/issue/KTOR-6928))
+* Ktor test application library references internal module ([KTOR-6668](https://youtrack.jetbrains.com/issue/KTOR-6668))
+* CSRF: Confusing error message when Origin validation is enabled and only Referrer header is sent ([KTOR-6702](https://youtrack.jetbrains.com/issue/KTOR-6702))
+* CSRF: validations probably shouldn't be applied to GET/HEAD/OPTIONS requests ([KTOR-6698](https://youtrack.jetbrains.com/issue/KTOR-6698))
+* CSRF: Empty onFailure option is misleading ([KTOR-6687](https://youtrack.jetbrains.com/issue/KTOR-6687))
+* Misleading assertion message in the testEmbeddedServerCancellation test ([KTOR-6657](https://youtrack.jetbrains.com/issue/KTOR-6657))
+* Allow setting "Secure" flag for cookies on localhost ([KTOR-6593](https://youtrack.jetbrains.com/issue/KTOR-6593))
+* SSE: Unable to access response headers ([KTOR-6660](https://youtrack.jetbrains.com/issue/KTOR-6660))
+* SSE: Improve support for testing ([KTOR-3290](https://youtrack.jetbrains.com/issue/KTOR-3290))
+* OAuth handler does not propagate redirection errors to the caller ([KTOR-6605](https://youtrack.jetbrains.com/issue/KTOR-6605))
+* HttpTimeoutTest.testConnect are flaky ([KTOR-1583](https://youtrack.jetbrains.com/issue/KTOR-1583))
+
+### Features
+* Migrate to new kotlinx.io library ([KTOR-6030](https://youtrack.jetbrains.com/issue/KTOR-6030))
+* Change default session serializer to the one that uses kotlinx-serializaion ([KTOR-6175](https://youtrack.jetbrains.com/issue/KTOR-6175))
+* Replace custom withTimeout implementation using WeakTimeoutQueue with coroutines.withTimeout ([KTOR-3658](https://youtrack.jetbrains.com/issue/KTOR-3658))
+* Add Url capability: parsing/validating url strings ([KTOR-360](https://youtrack.jetbrains.com/issue/KTOR-360))
+* SSE: Support handling HTTP failures ([KTOR-6808](https://youtrack.jetbrains.com/issue/KTOR-6808))
+* Ktor client for Kotlin/Wasm ([KTOR-5587](https://youtrack.jetbrains.com/issue/KTOR-5587))
+* CSRF protection feature ([KTOR-2910](https://youtrack.jetbrains.com/issue/KTOR-2910))
+
+# 2.3.12
+> Published 20 June 2024
+
+### Bugfixes
+* NoSuchMethodError when using coroutines 1.9.0-RC ([KTOR-7054](https://youtrack.jetbrains.com/issue/KTOR-7054))
+* Server: Content-Type header for static js, css and svg resources misses charset ([KTOR-6655](https://youtrack.jetbrains.com/issue/KTOR-6655))
+* Embedded Linux device without iso-8859-1 and UTF-16 cannot use ktor-network ([KTOR-7016](https://youtrack.jetbrains.com/issue/KTOR-7016))
+
+### Improvements
+* Update netty to 4.1.111.Final ([KTOR-7094](https://youtrack.jetbrains.com/issue/KTOR-7094))
+* Update netty due to CVE-2024-29025 ([KTOR-7014](https://youtrack.jetbrains.com/issue/KTOR-7014))
+* Update dependency on swagger ([KTOR-7019](https://youtrack.jetbrains.com/issue/KTOR-7019))
+
+# 2.3.11
+> Published 8 May 2024
+
+### Bugfixes
+* Test client ignores socket timeout ([KTOR-6909](https://youtrack.jetbrains.com/issue/KTOR-6909))
+
+# 2.3.10
+> Published 8 April 2024
+
+### Bugfixes
+* CallLogging, StatusPages: response logged twice when status handler is used ([KTOR-6839](https://youtrack.jetbrains.com/issue/KTOR-6839))
+* NodeJS WebSocket client sometimes drops a frame received immediately after handshake ([KTOR-6883](https://youtrack.jetbrains.com/issue/KTOR-6883))
+* IPv6 addresses are not supported in NettyConnectionPoint and CIOConnectionPoint ([KTOR-5383](https://youtrack.jetbrains.com/issue/KTOR-5383))
+* JS browser: "Maximum call stack size exceeded" on HTTP request when targeting es2015 ([KTOR-6878](https://youtrack.jetbrains.com/issue/KTOR-6878))
+* CIO: File upload fails with `NumberFormatException` when uploading file larger than INT_MAX bytes (~2.1 GiB) since 2.3.0 ([KTOR-6851](https://youtrack.jetbrains.com/issue/KTOR-6851))
+* CallLogging: the plugin completely overrides MDC if at least one entry is configured ([KTOR-6642](https://youtrack.jetbrains.com/issue/KTOR-6642))
+* SSE plugin: Duplicated "Content-Type: text/event-stream" headers ([KTOR-6735](https://youtrack.jetbrains.com/issue/KTOR-6735))
+* CIO: "getSubjectAlternativeNames(...) must not be null" when IP-addresses are verified and no SAN in the certificate ([KTOR-6746](https://youtrack.jetbrains.com/issue/KTOR-6746))
+
+### Improvements
+* Inconsistent behavior of Netty and rest engines by returning null or empty string for query parameters without values ([KTOR-6850](https://youtrack.jetbrains.com/issue/KTOR-6850))
+* Android: no logs are present in Logcat with `Logger.ANDROID` ([KTOR-1219](https://youtrack.jetbrains.com/issue/KTOR-1219))
+
+# 2.3.9
+> Published 4 March 2024
+
+### Improvements
+* Allow to set secure cookie even with http scheme ([KTOR-3159](https://youtrack.jetbrains.com/issue/KTOR-3159))
+
+### Bugfixes
+* ContentNegotiation: the plugin appends duplicated MIME type to Accept header ([KTOR-6684](https://youtrack.jetbrains.com/issue/KTOR-6684))
+
+# 2.3.8
+> Published 31 January 2024
+
+### Bugfixes
+* "KeyStoreException: JKS not found" exception on Android when configuring secure connection ([KTOR-6720](https://youtrack.jetbrains.com/issue/KTOR-6720))
+* `URLBuilder` crashes on React Native platforms ([KTOR-6576](https://youtrack.jetbrains.com/issue/KTOR-6576))
+* CIO: Unable to perform WebSocket upgrade when Content-Type header is sent in the request ([KTOR-6366](https://youtrack.jetbrains.com/issue/KTOR-6366))
+* ContentNegotiation: Adding charset to content type of JacksonConverter breaks request matching ([KTOR-6420](https://youtrack.jetbrains.com/issue/KTOR-6420))
+* High Native Server Memory Usage ([KTOR-6321](https://youtrack.jetbrains.com/issue/KTOR-6321))
+* Server ContentNegotiation no longer allows multiple decoders for one Content-Type ([KTOR-5410](https://youtrack.jetbrains.com/issue/KTOR-5410))
+* Logging plugin blocks response body streaming when level is BODY ([KTOR-6482](https://youtrack.jetbrains.com/issue/KTOR-6482))
+* WebSockets: Confusing error message when server doesn't respond with Upgrade ([KTOR-6397](https://youtrack.jetbrains.com/issue/KTOR-6397))
+* {...} (tailcard) does not match URLs ending with '/' ([KTOR-2121](https://youtrack.jetbrains.com/issue/KTOR-2121))
+* HttpCache: NumberFormatException for cache-control with max age more than Int.MAX_VALUE ([KTOR-6505](https://youtrack.jetbrains.com/issue/KTOR-6505))
+* CORS: `allowHost` without the second argument doesn't allow the secure host ([KTOR-6494](https://youtrack.jetbrains.com/issue/KTOR-6494))
+* "ReferenceError: 'self' is not defined" when using URLBuilder in a custom JS engine ([KTOR-5978](https://youtrack.jetbrains.com/issue/KTOR-5978))
+* MDC diagnostic value is changed during logging of the request ([KTOR-6528](https://youtrack.jetbrains.com/issue/KTOR-6528))
+* WebSocket doesn't get terminated when runBlocking is used ([KTOR-6664](https://youtrack.jetbrains.com/issue/KTOR-6664))
+* CIO: "getSubjectAlternativeNames(...) must not be null" error on Android when using CA without SAN since 2.3.5 ([KTOR-6396](https://youtrack.jetbrains.com/issue/KTOR-6396))
+* RequestConnectionPoint should implement toString() ([KTOR-6577](https://youtrack.jetbrains.com/issue/KTOR-6577))
+
+# 2.3.7
+> Published 28 November 2023
+
+### Bugfixes
+* Server ContentNegotiation no longer allows multiple decoders for one Content-Type ([KTOR-5410](https://youtrack.jetbrains.com/issue/KTOR-5410/Server-ContentNegotiation-no-longer-allows-multiple-decoders-for-one-Content-Type))
+* High Native Server Memory Usage ([KTOR-6321](https://youtrack.jetbrains.com/issue/KTOR-6321/High-Native-Server-Memory-Usage))
+* WebSockets: Confusing error message when server doesn't respond with Upgrade ([KTOR-6397](https://youtrack.jetbrains.com/issue/KTOR-6397/WebSockets-Confusing-error-message-when-server-doesnt-respond-with-Upgrade))
+* ContentNegotiation: Adding charset to content type of JacksonConverter breaks request matching ([KTOR-6420](https://youtrack.jetbrains.com/issue/KTOR-6420))
+
 # 3.0.0-beta-1
 > Published 23 November 2023
 

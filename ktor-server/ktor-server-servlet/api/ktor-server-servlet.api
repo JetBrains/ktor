@@ -74,6 +74,7 @@ public class io/ktor/server/servlet/ServletApplicationEngine : io/ktor/server/se
 	protected fun getEnginePipeline ()Lio/ktor/server/engine/EnginePipeline;
 	public final fun getEnvironment ()Lio/ktor/server/application/ApplicationEnvironment;
 	protected fun getLogger ()Lorg/slf4j/Logger;
+	protected fun getManagedByEngineHeaders ()Ljava/util/Set;
 	protected fun getUpgrade ()Lio/ktor/server/servlet/ServletUpgrade;
 	public fun init ()V
 }

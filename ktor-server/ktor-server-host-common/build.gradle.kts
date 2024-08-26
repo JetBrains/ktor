@@ -2,7 +2,7 @@ description = "This module is deprecated. All the contents are moved to `ktor-se
 
 kotlin {
     sourceSets {
-        jvmAndNixMain {
+        commonMain {
             dependencies {
                 api(project(":ktor-server:ktor-server-core"))
             }

@@ -42,6 +42,7 @@ internal fun CoroutineScope.ponger(
  * Launch pinger coroutine on [CoroutineScope] that is sending ping every specified [periodMillis] to [outgoing] channel,
  * waiting for and verifying client's pong frames. It is also handling [timeoutMillis] and sending timeout close frame
  */
+
 internal fun CoroutineScope.pinger(
     outgoing: SendChannel<Frame>,
     periodMillis: Long,
@@ -77,7 +78,7 @@ internal fun CoroutineScope.pinger(
                     // wait for valid pong message
                     while (true) {
                         val msg = channel.receive()
-                        if (String(msg.data, charset = Charsets.ISO_8859_1) == pingMessage) {
+                        if (msg.data.decodeToString(0, 0 + msg.data.size) == pingMessage) {
                             LOGGER.trace("WebSocket Pinger: received valid pong frame $msg")
                             break
                         }

@@ -8,6 +8,7 @@ import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
+import kotlinx.io.*
 import kotlin.contracts.*
 
 /**
@@ -24,7 +25,7 @@ public data class FormPart<T : Any>(val key: String, val value: T, val headers: 
  *
  * Example: [Upload a file](https://ktor.io/docs/request.html#upload_file).
  */
-@Suppress("DEPRECATION")
+
 public fun formData(vararg values: FormPart<*>): List<PartData> {
     val result = mutableListOf<PartData>()
 
@@ -42,7 +43,7 @@ public fun formData(vararg values: FormPart<*>): List<PartData> {
                 partHeaders.append(HttpHeaders.ContentLength, value.size.toString())
                 PartData.BinaryItem({ ByteReadPacket(value) }, {}, partHeaders.build())
             }
-            is ByteReadPacket -> {
+            is Source -> {
                 partHeaders.append(HttpHeaders.ContentLength, value.remaining.toString())
                 PartData.BinaryItem({ value.copy() }, { value.close() }, partHeaders.build())
             }
@@ -60,7 +61,6 @@ public fun formData(vararg values: FormPart<*>): List<PartData> {
                 }
                 PartData.BinaryChannelItem(value.block, partHeaders.build())
             }
-            is Input -> error("Can't use [Input] as part of form: $value. Consider using [InputProvider] instead.")
             else -> error("Unknown form content type: $value")
         }
 
@@ -128,7 +128,7 @@ public class FormBuilder internal constructor() {
     /**
      * Appends a pair [key]:[InputProvider(block)] with optional [headers].
      */
-    @Suppress("DEPRECATION")
+
     public fun appendInput(key: String, headers: Headers = Headers.Empty, size: Long? = null, block: () -> Input) {
         parts += FormPart(key, InputProvider(size, block), headers)
     }
@@ -136,7 +136,7 @@ public class FormBuilder internal constructor() {
     /**
      * Appends a pair [key]:[value] with optional [headers].
      */
-    public fun append(key: String, value: ByteReadPacket, headers: Headers = Headers.Empty) {
+    public fun append(key: String, value: Source, headers: Headers = Headers.Empty) {
         parts += FormPart(key, value, headers)
     }
 
@@ -179,12 +179,13 @@ public class FormBuilder internal constructor() {
 /**
  * Appends a form part with the specified [key] using [bodyBuilder] for its body.
  */
+
 @OptIn(ExperimentalContracts::class)
 public inline fun FormBuilder.append(
     key: String,
     headers: Headers = Headers.Empty,
     size: Long? = null,
-    crossinline bodyBuilder: BytePacketBuilder.() -> Unit
+    crossinline bodyBuilder: Sink.() -> Unit
 ) {
     contract {
         callsInPlace(bodyBuilder, InvocationKind.EXACTLY_ONCE)
@@ -198,7 +199,7 @@ public inline fun FormBuilder.append(
  * @property size estimate for data produced by the block or `null` if no size estimation known
  * @param block: content generator
  */
-@Suppress("DEPRECATION")
+
 public class InputProvider(public val size: Long? = null, public val block: () -> Input)
 
 /**
@@ -211,13 +212,14 @@ public class ChannelProvider(public val size: Long? = null, public val block: ()
 /**
  * Appends a form part with the specified [key], [filename], and optional [contentType] using [bodyBuilder] for its body.
  */
+
 @OptIn(ExperimentalContracts::class)
 public fun FormBuilder.append(
     key: String,
     filename: String,
     contentType: ContentType? = null,
     size: Long? = null,
-    bodyBuilder: BytePacketBuilder.() -> Unit
+    bodyBuilder: Sink.() -> Unit
 ) {
     contract {
         callsInPlace(bodyBuilder, InvocationKind.EXACTLY_ONCE)

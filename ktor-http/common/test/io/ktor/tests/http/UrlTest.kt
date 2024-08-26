@@ -316,4 +316,15 @@ class UrlTest {
         assertTrue(Url("").isRelativePath)
         assertTrue(Url("hello/world").isRelativePath)
     }
+
+    @Test
+    fun testParseUrl() {
+        val url = parseUrl("https://ktor.io/docs")
+        assertNotNull(url)
+        assertEquals("https", url.protocol.name)
+        assertEquals("ktor.io", url.host)
+
+        assertEquals(null, parseUrl("incorrecturl"))
+        assertEquals(null, parseUrl("http://localhost:7000Value"))
+    }
 }

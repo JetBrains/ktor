@@ -6,17 +6,20 @@ package io.ktor.util.cio
 
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
+import kotlinx.io.*
 import kotlin.contracts.*
 
 /**
  * Convert [ByteReadChannel] to [ByteArray]
  */
+
 public suspend fun ByteReadChannel.toByteArray(limit: Int = Int.MAX_VALUE): ByteArray =
-    readRemaining(limit.toLong()).readBytes()
+    readRemaining(limit.toLong()).readByteArray()
 
 /**
  * Executes [block] on [ByteWriteChannel] and close it down correctly whether an exception
  */
+
 @OptIn(ExperimentalContracts::class)
 public inline fun ByteWriteChannel.use(block: ByteWriteChannel.() -> Unit) {
     contract {

@@ -12,7 +12,7 @@ import kotlinx.coroutines.*
 internal suspend fun OutgoingContent.observe(log: ByteWriteChannel): OutgoingContent = when (this) {
     is OutgoingContent.ByteArrayContent -> {
         log.writeFully(bytes())
-        log.close()
+        log.flushAndClose()
         this
     }
     is OutgoingContent.ReadChannelContent -> {
@@ -28,13 +28,13 @@ internal suspend fun OutgoingContent.observe(log: ByteWriteChannel): OutgoingCon
         content.copyToBoth(log, responseChannel)
         LoggedContent(this, responseChannel)
     }
-    else -> {
-        log.close()
+    is OutgoingContent.ContentWrapper -> copy(delegate().observe(log))
+    is OutgoingContent.NoContent, is OutgoingContent.ProtocolUpgrade -> {
+        log.flushAndClose()
         this
     }
 }
 
-@Suppress("DEPRECATION")
 @OptIn(DelicateCoroutinesApi::class)
 private fun OutgoingContent.WriteChannelContent.toReadChannel(): ByteReadChannel =
     GlobalScope.writer(Dispatchers.Default) {

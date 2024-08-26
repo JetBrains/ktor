@@ -55,7 +55,6 @@ internal class CurlRequestData @OptIn(ExperimentalForeignApi::class) constructor
 internal class CurlResponseBuilder(val request: CurlRequestData) {
     val headersBytes = BytePacketBuilder()
     val bodyChannel = ByteChannel(true).apply {
-        @Suppress("DEPRECATION")
         attachJob(request.executionContext)
     }
 }
@@ -90,5 +89,6 @@ internal suspend fun OutgoingContent.toByteChannel(): ByteReadChannel = when (th
 
     is OutgoingContent.ReadChannelContent -> readFrom()
     is OutgoingContent.NoContent -> ByteReadChannel.Empty
-    else -> throw UnsupportedContentTypeException(this@toByteChannel)
+    is OutgoingContent.ContentWrapper -> delegate().toByteChannel()
+    is OutgoingContent.ProtocolUpgrade -> throw UnsupportedContentTypeException(this@toByteChannel)
 }

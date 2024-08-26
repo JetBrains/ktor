@@ -1,0 +1,24 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-default-headers>
+final class io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig { // io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig.<init>|<init>(){}[0]
+
+    final var clock // io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig.clock|{}clock[0]
+        final fun <get-clock>(): io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig.Clock // io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig.clock.<get-clock>|<get-clock>(){}[0]
+        final fun <set-clock>(io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig.Clock) // io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig.clock.<set-clock>|<set-clock>(io.ktor.server.plugins.defaultheaders.DefaultHeadersConfig.Clock){}[0]
+
+    final fun header(kotlin/String, kotlin/String) // io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig.header|header(kotlin.String;kotlin.String){}[0]
+
+    abstract fun interface Clock { // io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig.Clock|null[0]
+        abstract fun now(): kotlin/Long // io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig.Clock.now|now(){}[0]
+    }
+}
+
+final val io.ktor.server.plugins.defaultheaders/DefaultHeaders // io.ktor.server.plugins.defaultheaders/DefaultHeaders|{}DefaultHeaders[0]
+    final fun <get-DefaultHeaders>(): io.ktor.server.application/RouteScopedPlugin<io.ktor.server.plugins.defaultheaders/DefaultHeadersConfig> // io.ktor.server.plugins.defaultheaders/DefaultHeaders.<get-DefaultHeaders>|<get-DefaultHeaders>(){}[0]

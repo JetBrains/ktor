@@ -6,11 +6,12 @@ package io.ktor.websocket
 
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
-import io.ktor.utils.io.bits.*
 import io.ktor.utils.io.core.*
+import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.*
+import kotlinx.io.*
 import kotlin.coroutines.*
 import kotlin.random.*
 
@@ -60,9 +61,11 @@ internal class RawWebSocketCommon(
                     output.flush()
                     if (message is Frame.Close) break@mainLoop
                 }
+
                 is FlushRequest -> {
                     message.complete()
                 }
+
                 else -> throw IllegalArgumentException("unknown message $message")
             }
             _outgoing.close()
@@ -72,7 +75,8 @@ internal class RawWebSocketCommon(
             _outgoing.close(t)
         } finally {
             _outgoing.close(CancellationException("WebSocket closed.", null))
-            output.close()
+
+            output.flushAndClose()
         }
 
         while (true) when (val message = _outgoing.tryReceive().getOrNull() ?: break) {
@@ -99,12 +103,10 @@ internal class RawWebSocketCommon(
             _incoming.close(cause)
         } catch (cause: CancellationException) {
             _incoming.cancel(cause)
-        } catch (eof: EOFException) {
+        } catch (eof: kotlinx.io.EOFException) {
             // no more bytes is possible to read
         } catch (eof: ClosedReceiveChannelException) {
             // no more bytes is possible to read
-        } catch (io: ChannelIOException) {
-            _incoming.cancel()
         } catch (cause: Throwable) {
             _incoming.close(cause)
             throw cause
@@ -146,8 +148,7 @@ internal class RawWebSocketCommon(
     }
 }
 
-@Suppress("DEPRECATION")
-private fun ByteReadPacket.mask(maskKey: Int): ByteReadPacket = withMemory(4) { maskMemory ->
+private fun Source.mask(maskKey: Int): Source = withMemory(4) { maskMemory ->
     maskMemory.storeIntAt(0, maskKey)
     buildPacket {
         repeat(remaining.toInt()) { i ->
@@ -195,6 +196,7 @@ public suspend fun ByteWriteChannel.writeFrame(frame: Frame, masking: Boolean) {
             writeInt(maskKey)
             data.mask(maskKey)
         }
+
         false -> data
     }
     writePacket(maskedData)
@@ -206,6 +208,7 @@ public suspend fun ByteWriteChannel.writeFrame(frame: Frame, masking: Boolean) {
  * @param maxFrameSize maximum frame size that could be read
  * @param lastOpcode last read opcode
  */
+
 @InternalAPI // used in tests
 public suspend fun ByteReadChannel.readFrame(maxFrameSize: Long, lastOpcode: Int): Frame {
     val flagsAndOpcode = readByte().toInt()
@@ -254,7 +257,7 @@ public suspend fun ByteReadChannel.readFrame(maxFrameSize: Long, lastOpcode: Int
     return Frame.byType(
         fin = fin,
         frameType = frameType,
-        data = maskedData.readBytes(),
+        data = maskedData.readByteArray(),
         rsv1 = flagsAndOpcode and 0x40 != 0,
         rsv2 = flagsAndOpcode and 0x20 != 0,
         rsv3 = flagsAndOpcode and 0x10 != 0

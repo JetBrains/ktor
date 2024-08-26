@@ -15,7 +15,7 @@ internal fun WinHttpRequest.readBody(callContext: CoroutineContext): ByteReadCha
     return GlobalScope.writer(callContext) {
         val readBuffer = ByteArrayPool.borrow()
         try {
-            while (isActive) {
+            while (callContext.isActive) {
                 val availableBytes = queryDataAvailable()
                 if (availableBytes <= 0) {
                     break

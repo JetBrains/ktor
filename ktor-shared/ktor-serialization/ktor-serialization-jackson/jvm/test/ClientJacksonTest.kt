@@ -28,8 +28,8 @@ class ClientJacksonTest : AbstractClientContentNegotiationTest() {
         register(contentType, converter)
     }
 
-    override fun createRoutes(routing: Route): Unit = with(routing) {
-        super.createRoutes(routing)
+    override fun createRoutes(route: Route): Unit = with(route) {
+        super.createRoutes(route)
 
         post("/jackson") {
             assertEquals("""{"value":"request"}""", call.receive())

@@ -3,7 +3,6 @@
  */
 package io.ktor.network.selector
 
-import io.ktor.util.*
 import kotlinx.atomicfu.*
 import java.util.concurrent.atomic.*
 
@@ -203,7 +202,6 @@ private class LockFreeMPSCQueueCore<E : Any>(private val capacity: Int) {
     // Placeholder keeps the actual index (not masked) to distinguish placeholders on different wraparounds of array
     private class Placeholder(@JvmField val index: Int)
 
-    @Suppress("PrivatePropertyName")
     companion object {
         internal const val INITIAL_CAPACITY = 8
 

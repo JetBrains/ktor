@@ -8,27 +8,27 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.content.*
+import io.ktor.junit.*
 import io.ktor.server.engine.*
 import io.ktor.server.http.content.*
 import io.ktor.server.plugins.partialcontent.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.testing.*
-import io.ktor.util.*
+import io.ktor.server.test.base.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
+import org.junit.jupiter.api.extension.*
 import java.io.*
 import kotlin.test.*
-import kotlin.test.Test
 
+@ExtendWith(RetrySupport::class)
 abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : ApplicationEngine.Configuration>(
     hostFactory: ApplicationEngineFactory<TEngine, TConfiguration>
 ) : EngineTestBase<TEngine, TConfiguration>(hostFactory) {
-
     @Test
-    fun testTextContent() {
+    fun testTextContent() = runTest {
         createAndStartServer {
             handle {
                 call.respondText("test")
@@ -56,7 +56,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testStream() {
+    fun testStream() = runTest {
         createAndStartServer {
             handle {
                 call.respondTextWriter {
@@ -75,7 +75,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testBinary() {
+    fun testBinary() = runTest {
         createAndStartServer {
             handle {
                 call.respondOutputStream {
@@ -94,7 +94,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testBinaryUsingChannel() {
+    fun testBinaryUsingChannel() = runTest {
         createAndStartServer {
             handle {
                 call.respondBytesWriter {
@@ -113,11 +113,12 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testLocalFileContent() {
-        val file = listOf(File("jvm"), File("ktor-server/ktor-server/jvm"))
-            .filter { it.exists() }
-            .flatMap { it.walkBottomUp().filter { it.extension == "kt" }.asIterable() }
-            .first()
+    fun testLocalFileContent() = runTest {
+        val file =
+            listOf(File("jvm"), File("ktor-server/ktor-server/jvm"))
+                .filter { it.exists() }
+                .flatMap { it.walkBottomUp().filter { it.extension == "kt" }.asIterable() }
+                .first()
 
         testLog.trace("test file is $file")
 
@@ -134,7 +135,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testLocalFileContentRange() {
+    fun testLocalFileContentRange() = runTest {
         val file = loadTestFile()
         testLog.trace("test file is $file")
 
@@ -174,7 +175,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testJarFileContent() {
+    fun testJarFileContent() = runTest {
         createAndStartServer {
             handle {
                 call.respond(call.resolveResource("/ArrayList.class", "java.util")!!)
@@ -196,12 +197,15 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testURIContent() {
+    fun testURIContent() = runTest {
         createAndStartServer {
             handle {
                 call.respond(
                     URIFileContent(
-                        this::class.java.classLoader.getResources("java/util/ArrayList.class").toList().first()
+                        this::class.java.classLoader
+                            .getResources("java/util/ArrayList.class")
+                            .toList()
+                            .first()
                     )
                 )
             }
@@ -222,9 +226,12 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testURIContentLocalFile() {
-        val file = File("build/classes/").walkBottomUp()
-            .filter { it.extension == "class" }.first()
+    fun testURIContentLocalFile() = runTest {
+        val file =
+            File("build/classes/")
+                .walkBottomUp()
+                .filter { it.extension == "class" }
+                .first()
         testLog.trace("test file is $file")
 
         createAndStartServer {
@@ -248,7 +255,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testRequestContentFormData() {
+    fun testRequestContentFormData() = runTest {
         createAndStartServer {
             handle {
                 val parameters = runCatching { call.receiveNullable<Parameters>() }.getOrNull()
@@ -278,8 +285,8 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
 
     @Test
     @NoHttp2
-    open fun testChunked() {
-        val data = ByteArray(16 * 1024, { it.toByte() })
+    open fun testChunked() = runTest {
+        val data = ByteArray(16 * 1024) { it.toByte() }
         val size = data.size.toLong()
 
         createAndStartServer {
@@ -288,7 +295,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
                     object : OutgoingContent.WriteChannelContent() {
                         override suspend fun writeTo(channel: ByteWriteChannel) {
                             channel.writeFully(data)
-                            channel.close()
+                            channel.flushAndClose()
                         }
                     }
                 )
@@ -296,10 +303,11 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
             get("/pseudo-chunked") {
                 call.respond(
                     object : OutgoingContent.WriteChannelContent() {
-                        override val contentLength: Long? get() = size
+                        override val contentLength: Long get() = size
+
                         override suspend fun writeTo(channel: ByteWriteChannel) {
                             channel.writeFully(data)
-                            channel.close()
+                            channel.flushAndClose()
                         }
                     }
                 )
@@ -307,7 +315,8 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
             get("/array") {
                 call.respond(
                     object : OutgoingContent.ByteArrayContent() {
-                        override val contentLength: Long? get() = size
+                        override val contentLength: Long get() = size
+
                         override fun bytes(): ByteArray = data
                     }
                 )
@@ -329,7 +338,8 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
             get("/fixed-read-channel") {
                 call.respond(
                     object : OutgoingContent.ReadChannelContent() {
-                        override val contentLength: Long? get() = size
+                        override val contentLength: Long get() = size
+
                         override fun readFrom(): ByteReadChannel = ByteReadChannel(data)
                     }
                 )
@@ -377,7 +387,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testStreamNoFlush() {
+    fun testStreamNoFlush() = runTest {
         createAndStartServer {
             handle {
                 call.respondTextWriter {
@@ -394,7 +404,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testSendTextWithContentType() {
+    fun testSendTextWithContentType() = runTest {
         createAndStartServer {
             handle {
                 call.respondText("Hello")
@@ -411,8 +421,9 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
         }
     }
 
+    @RetryableTest
     @Test
-    fun testStaticServe() {
+    fun testStaticServe() = runTest {
         createAndStartServer {
             staticResources("/files/", "io/ktor/server/testing/suites")
         }
@@ -441,11 +452,13 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testStaticServeFromDir() {
+    fun testStaticServeFromDir() = runTest {
         val targetClasses = File(classesDir)
 
-        val file = targetClasses.walkBottomUp()
-            .first { it.extension == "class" && !it.name.contains('$') }
+        val file =
+            targetClasses
+                .walkBottomUp()
+                .first { it.extension == "class" && !it.name.contains('$') }
 
         val location = file.parentFile!!
 
@@ -477,7 +490,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testRequestBodyAsyncEcho() {
+    fun testRequestBodyAsyncEcho() = runTest {
         createAndStartServer {
             route("/echo") {
                 handle {
@@ -513,7 +526,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testEchoBlocking() {
+    fun testEchoBlocking() = runTest {
         createAndStartServer {
             post("/") {
                 val text = withContext(Dispatchers.IO) { call.receiveStream().bufferedReader().readText() }
@@ -535,7 +548,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testRequestContentString() {
+    fun testRequestContentString() = runTest {
         createAndStartServer {
             post("/") {
                 call.respond(call.receiveText())
@@ -556,17 +569,24 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
 
     @Test
     @NoHttp2
-    open fun testMultipartFileUpload() {
+    open fun testMultipartFileUpload() = runTest {
         createAndStartServer {
             post("/") {
                 val response = StringBuilder()
-                @Suppress("DEPRECATION")
-                call.receiveMultipart().readAllParts().sortedBy { it.name }.forEach { part ->
+                val parts = mutableListOf<PartData>()
+                call.receiveMultipart().forEachPart {
+                    parts.add(it)
+                }
+
+                parts.sortedBy { it.name }.forEach { part ->
                     when (part) {
                         is PartData.FormItem -> response.append("${part.name}=${part.value}\n")
-                        is PartData.FileItem -> response.append(
-                            "file:${part.name},${part.originalFileName},${part.provider().readRemaining().readText()}\n"
-                        )
+                        is PartData.FileItem ->
+                            response.append(
+                                "file:${part.name},${part.originalFileName},${
+                                    part.provider().readRemaining().readText()
+                                }\n"
+                            )
 
                         is PartData.BinaryItem -> {}
                         is PartData.BinaryChannelItem -> {}
@@ -583,9 +603,10 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
             "/",
             {
                 method = HttpMethod.Post
-                val contentType = ContentType.MultiPart.FormData
-                    .withParameter("boundary", "***bbb***")
-                    .withCharset(Charsets.ISO_8859_1)
+                val contentType =
+                    ContentType.MultiPart.FormData
+                        .withParameter("boundary", "***bbb***")
+                        .withCharset(Charsets.ISO_8859_1)
 
                 setBody(
                     WriterContent(
@@ -621,19 +642,21 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
 
     @Test
     @NoHttp2
-    open fun testMultipartFileUploadLarge() {
+    open fun testMultipartFileUploadLarge() = runTest {
         val numberOfLines = 10000
 
         createAndStartServer {
             post("/") {
                 val response = StringBuilder()
-
-                call.receiveMultipart().forEachPart { part ->
+                call.receiveMultipart(formFieldLimit = 1 * 1024 * 1024).forEachPart { part ->
                     when (part) {
                         is PartData.FormItem -> response.append("${part.name}=${part.value}\n")
                         is PartData.FileItem -> {
-                            @Suppress("DEPRECATION")
-                            val lineSequence = part.streamProvider().bufferedReader().lineSequence()
+                            val lineSequence = part.provider()
+                                .readRemaining()
+                                .readText()
+                                .lines()
+
                             response.append("file:${part.name},${part.originalFileName},${lineSequence.count()}\n")
                         }
 
@@ -654,9 +677,10 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
             "/",
             {
                 method = HttpMethod.Post
-                val contentType = ContentType.MultiPart.FormData
-                    .withParameter("boundary", "***bbb***")
-                    .withCharset(Charsets.ISO_8859_1)
+                val contentType =
+                    ContentType.MultiPart.FormData
+                        .withParameter("boundary", "***bbb***")
+                        .withCharset(Charsets.ISO_8859_1)
 
                 setBody(
                     WriterContent(
@@ -695,7 +719,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testReceiveInputStream() {
+    fun testReceiveInputStream() = runTest {
         createAndStartServer {
             post("/") {
                 call.respond(withContext(Dispatchers.IO) { call.receive<InputStream>().reader().readText() })
@@ -715,7 +739,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
     }
 
     @Test
-    fun testRequestContentInputStream() {
+    fun testRequestContentInputStream() = runTest {
         createAndStartServer {
             post("/") {
                 call.respond(withContext(Dispatchers.IO) { call.receiveStream().reader().readText() })
@@ -731,6 +755,40 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
         ) {
             assertEquals(200, status.value)
             assertEquals("Hello", bodyAsText())
+        }
+    }
+
+    @Test
+    fun testReceivingBodyWithContentLengthMoreThanMaxInt() = runTest {
+        createAndStartServer {
+            post("/") {
+                call.receiveChannel()
+                call.respondText { "OK" }
+            }
+        }
+
+        withUrl(
+            "/",
+            {
+                method = HttpMethod.Post
+                headers.append("Content-Length", (Int.MAX_VALUE.toLong() + 1).toString())
+            }
+        ) {
+            assertEquals(200, status.value)
+            assertEquals("OK", bodyAsText())
+        }
+    }
+
+    @Test
+    fun testAccessingQueryParameterWithoutValue() = runTest {
+        createAndStartServer {
+            get("/") {
+                call.respondText(call.request.queryParameters["auto"].toString())
+            }
+        }
+
+        withUrl("/?auto") {
+            assertEquals("", bodyAsText())
         }
     }
 

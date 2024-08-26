@@ -9,12 +9,12 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.util.*
 import io.ktor.util.logging.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.CancellationException
+import kotlinx.io.*
 
 private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.defaultTransformers")
 
@@ -72,8 +72,7 @@ public fun HttpClient.defaultTransformers() {
                 proceedWith(HttpResponseContainer(info, body.readRemaining().readText().toInt()))
             }
 
-            ByteReadPacket::class,
-            @Suppress("DEPRECATION")
+            Source::class,
             Input::class -> {
                 proceedWith(HttpResponseContainer(info, body.readRemaining()))
             }
@@ -88,7 +87,7 @@ public fun HttpClient.defaultTransformers() {
                 // could be canceled immediately, but it doesn't matter
                 // since the copying job is running under the client job
                 val responseJobHolder = Job(response.coroutineContext[Job])
-                val channel: ByteReadChannel = writer(response.coroutineContext) {
+                val channel: ByteReadChannel = writer(this@defaultTransformers.coroutineContext) {
                     try {
                         body.copyTo(channel, limit = Long.MAX_VALUE)
                     } catch (cause: CancellationException) {
@@ -97,8 +96,6 @@ public fun HttpClient.defaultTransformers() {
                     } catch (cause: Throwable) {
                         response.cancel("Receive failed", cause)
                         throw cause
-                    } finally {
-                        response.complete()
                     }
                 }.also { writerJob ->
                     writerJob.invokeOnCompletion {

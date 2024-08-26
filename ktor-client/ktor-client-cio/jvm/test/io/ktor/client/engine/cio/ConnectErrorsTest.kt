@@ -27,7 +27,6 @@ import kotlin.test.*
 
 @CoroutinesTimeout(5 * 60 * 1000)
 @ExtendWith(RetrySupport::class)
-@Suppress("KDocMissingDocumentation")
 class ConnectErrorsTest {
 
     private val serverSocket = ServerSocket(0, 1)
@@ -54,7 +53,7 @@ class ConnectErrorsTest {
                 try {
                     client.request("http://localhost:${serverSocket.localPort}/")
                     fail("Shouldn't reach here")
-                } catch (_: java.net.ConnectException) {
+                } catch (_: ConnectException) {
                 }
             }
 
@@ -179,7 +178,7 @@ class ConnectErrorsTest {
 
             try {
                 client.get { url(scheme = "https", path = "/", port = serverPort) }.body<String>()
-            } catch (_: java.net.ConnectException) {
+            } catch (_: ConnectException) {
             }
 
             try {

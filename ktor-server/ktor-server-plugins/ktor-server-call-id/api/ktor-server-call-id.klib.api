@@ -1,0 +1,36 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-call-id>
+final class io.ktor.server.plugins.callid/CallIdConfig { // io.ktor.server.plugins.callid/CallIdConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.callid/CallIdConfig.<init>|<init>(){}[0]
+
+    final fun generate(kotlin/Function1<io.ktor.server.application/ApplicationCall, kotlin/String?>) // io.ktor.server.plugins.callid/CallIdConfig.generate|generate(kotlin.Function1<io.ktor.server.application.ApplicationCall,kotlin.String?>){}[0]
+    final fun header(kotlin/String) // io.ktor.server.plugins.callid/CallIdConfig.header|header(kotlin.String){}[0]
+    final fun reply(kotlin/Function2<io.ktor.server.application/ApplicationCall, kotlin/String, kotlin/Unit>) // io.ktor.server.plugins.callid/CallIdConfig.reply|reply(kotlin.Function2<io.ktor.server.application.ApplicationCall,kotlin.String,kotlin.Unit>){}[0]
+    final fun replyToHeader(kotlin/String) // io.ktor.server.plugins.callid/CallIdConfig.replyToHeader|replyToHeader(kotlin.String){}[0]
+    final fun retrieve(kotlin/Function1<io.ktor.server.application/ApplicationCall, kotlin/String?>) // io.ktor.server.plugins.callid/CallIdConfig.retrieve|retrieve(kotlin.Function1<io.ktor.server.application.ApplicationCall,kotlin.String?>){}[0]
+    final fun retrieveFromHeader(kotlin/String) // io.ktor.server.plugins.callid/CallIdConfig.retrieveFromHeader|retrieveFromHeader(kotlin.String){}[0]
+    final fun verify(kotlin/Function1<kotlin/String, kotlin/Boolean>) // io.ktor.server.plugins.callid/CallIdConfig.verify|verify(kotlin.Function1<kotlin.String,kotlin.Boolean>){}[0]
+    final fun verify(kotlin/String, kotlin/Boolean = ...) // io.ktor.server.plugins.callid/CallIdConfig.verify|verify(kotlin.String;kotlin.Boolean){}[0]
+}
+
+final class io.ktor.server.plugins.callid/RejectedCallIdException : kotlin/IllegalArgumentException, kotlinx.coroutines/CopyableThrowable<io.ktor.server.plugins.callid/RejectedCallIdException> { // io.ktor.server.plugins.callid/RejectedCallIdException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.server.plugins.callid/RejectedCallIdException.<init>|<init>(kotlin.String){}[0]
+
+    final val illegalCallId // io.ktor.server.plugins.callid/RejectedCallIdException.illegalCallId|{}illegalCallId[0]
+        final fun <get-illegalCallId>(): kotlin/String // io.ktor.server.plugins.callid/RejectedCallIdException.illegalCallId.<get-illegalCallId>|<get-illegalCallId>(){}[0]
+
+    final fun createCopy(): io.ktor.server.plugins.callid/RejectedCallIdException // io.ktor.server.plugins.callid/RejectedCallIdException.createCopy|createCopy(){}[0]
+}
+
+final val io.ktor.server.plugins.callid/CallId // io.ktor.server.plugins.callid/CallId|{}CallId[0]
+    final fun <get-CallId>(): io.ktor.server.application/RouteScopedPlugin<io.ktor.server.plugins.callid/CallIdConfig> // io.ktor.server.plugins.callid/CallId.<get-CallId>|<get-CallId>(){}[0]
+final val io.ktor.server.plugins.callid/callId // io.ktor.server.plugins.callid/callId|@io.ktor.server.application.ApplicationCall{}callId[0]
+    final fun (io.ktor.server.application/ApplicationCall).<get-callId>(): kotlin/String? // io.ktor.server.plugins.callid/callId.<get-callId>|<get-callId>@io.ktor.server.application.ApplicationCall(){}[0]
+
+final fun (io.ktor.server.plugins.callid/CallIdConfig).io.ktor.server.plugins.callid/generate(kotlin/Int = ..., kotlin/String = ...) // io.ktor.server.plugins.callid/generate|generate@io.ktor.server.plugins.callid.CallIdConfig(kotlin.Int;kotlin.String){}[0]

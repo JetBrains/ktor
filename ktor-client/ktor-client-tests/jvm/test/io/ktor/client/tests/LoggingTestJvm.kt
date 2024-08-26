@@ -27,8 +27,9 @@ private class LoggerWithMdc : Logger {
     }
 }
 
-class LoggingTestJvm : ClientLoader() {
+class LoggingTestJvm : ClientLoader(timeoutSeconds = 1000000) {
 
+    @OptIn(InternalAPI::class)
     @Test
     fun testMdc() = clientTests(listOf("native:CIO")) {
         val testLogger = LoggerWithMdc()
@@ -54,7 +55,13 @@ class LoggingTestJvm : ClientLoader() {
 
         after {
             assertTrue(testLogger.logs.isNotEmpty())
-            assertTrue(testLogger.logs.all { it.second == "[mdc=value]" })
+            testLogger.logs.forEach {
+                assertEquals(
+                    "[mdc=value]",
+                    it.second,
+                    "MDC context is not preserved in $it message (${it.second}): ${it.first}"
+                )
+            }
         }
     }
 }

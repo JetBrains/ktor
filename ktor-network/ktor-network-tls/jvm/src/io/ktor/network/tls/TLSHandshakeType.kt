@@ -10,7 +10,7 @@ import io.ktor.network.tls.extensions.*
  * TLS handshake record type
  * @property code numeric type code
  */
-@Suppress("KDocMissingDocumentation")
+
 public enum class TLSHandshakeType(public val code: Int) {
     HelloRequest(0x00),
     ClientHello(0x01),
@@ -24,7 +24,7 @@ public enum class TLSHandshakeType(public val code: Int) {
     Finished(0x14);
 
     public companion object {
-        private val byCode = Array(256) { idx -> values().firstOrNull { it.code == idx } }
+        private val byCode = Array(256) { idx -> entries.firstOrNull { it.code == idx } }
 
         /**
          * Find handshake type instance by its numeric [code] or fail
@@ -40,14 +40,14 @@ public enum class TLSHandshakeType(public val code: Int) {
  * Server key exchange type with it's [code]
  * @property code numeric exchange type code
  */
-@Suppress("KDocMissingDocumentation")
+
 public enum class ServerKeyExchangeType(public val code: Int) {
     ExplicitPrime(1),
     ExplicitChar(2),
     NamedCurve(3);
 
     public companion object {
-        private val byCode = Array(256) { idx -> values().firstOrNull { it.code == idx } }
+        private val byCode = Array(256) { idx -> entries.firstOrNull { it.code == idx } }
 
         /**
          * Find an instance of [ServerKeyExchangeType] by its numeric code or fail

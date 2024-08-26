@@ -1,7 +1,11 @@
+/*
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ */
+
 package io.ktor.utils.io.errors
 
-import io.ktor.utils.io.core.*
 import kotlinx.cinterop.*
+import kotlinx.io.*
 import platform.posix.*
 import kotlin.native.concurrent.*
 
@@ -115,8 +119,8 @@ public sealed class PosixException(public val errno: Int, message: String) : Exc
     }
 }
 
-internal fun PosixException.wrapIO(): IOException =
-    IOException("I/O operation failed due to posix error code $errno", this)
+internal fun PosixException.wrapIO(): kotlinx.io.IOException =
+    kotlinx.io.IOException("I/O operation failed due to posix error code $errno", this)
 
 @OptIn(ExperimentalForeignApi::class)
 private fun posixErrorToString(errno: Int): String = strerror(errno)?.toKString() ?: "Unknown error code: $errno"

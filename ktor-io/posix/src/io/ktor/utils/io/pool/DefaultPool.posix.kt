@@ -1,3 +1,7 @@
+/*
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ */
+
 package io.ktor.utils.io.pool
 
 import io.ktor.utils.io.*
@@ -8,11 +12,7 @@ import kotlinx.atomicfu.*
 public actual abstract class DefaultPool<T : Any> actual constructor(
     actual final override val capacity: Int
 ) : ObjectPool<T> {
-    @Deprecated(
-        "This API is implementation detail. Consider creating new SynchronizedObject instead",
-        level = DeprecationLevel.WARNING
-    )
-    protected val lock: SynchronizedObject = SynchronizedObject()
+    private val lock: SynchronizedObject = SynchronizedObject()
 
     private val instances = mutableListOf<T>()
 
@@ -32,7 +32,6 @@ public actual abstract class DefaultPool<T : Any> actual constructor(
     protected actual open fun clearInstance(instance: T): T = instance
     protected actual open fun validateInstance(instance: T) {}
 
-    @Suppress("DEPRECATION")
     public actual final override fun borrow(): T = synchronized(lock) {
         if (instances.isEmpty()) {
             _allocated.incrementAndGet()
@@ -44,7 +43,6 @@ public actual abstract class DefaultPool<T : Any> actual constructor(
         return@synchronized result
     }
 
-    @Suppress("DEPRECATION")
     public actual final override fun recycle(instance: T) {
         synchronized(lock) {
             _recycled.incrementAndGet()
@@ -58,7 +56,6 @@ public actual abstract class DefaultPool<T : Any> actual constructor(
         }
     }
 
-    @Suppress("DEPRECATION")
     public actual final override fun dispose() {
         synchronized(lock) {
             instances.forEach { disposeInstance(it) }

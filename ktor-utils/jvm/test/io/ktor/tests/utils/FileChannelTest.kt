@@ -5,6 +5,7 @@
 package io.ktor.tests.utils
 
 import io.ktor.util.cio.*
+import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.*
 import org.junit.jupiter.api.*

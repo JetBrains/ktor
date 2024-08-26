@@ -39,7 +39,7 @@ class JettyHttpServerJvmTest : HttpServerJvmTestSuite<JettyApplicationEngine, Je
     }
 
     @Test
-    fun testServletAttributes() {
+    fun testServletAttributes() = runTest {
         createAndStartServer {
             get("/tomcat/attributes") {
                 call.respondText(

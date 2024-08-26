@@ -1,0 +1,217 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, macosArm64, macosX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Alias: ios => [iosArm64, iosSimulatorArm64, iosX64]
+// Alias: macos => [macosArm64, macosX64]
+// Alias: tvos => [tvosArm64, tvosSimulatorArm64, tvosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-client-darwin>
+final class io.ktor.client.engine.darwin.certificates/PinnedCertificate { // io.ktor.client.engine.darwin.certificates/PinnedCertificate|null[0]
+    constructor <init>(kotlin/String, kotlin/String, kotlin/String) // io.ktor.client.engine.darwin.certificates/PinnedCertificate.<init>|<init>(kotlin.String;kotlin.String;kotlin.String){}[0]
+
+    final val hash // io.ktor.client.engine.darwin.certificates/PinnedCertificate.hash|{}hash[0]
+        final fun <get-hash>(): kotlin/String // io.ktor.client.engine.darwin.certificates/PinnedCertificate.hash.<get-hash>|<get-hash>(){}[0]
+    final val hashAlgorithm // io.ktor.client.engine.darwin.certificates/PinnedCertificate.hashAlgorithm|{}hashAlgorithm[0]
+        final fun <get-hashAlgorithm>(): kotlin/String // io.ktor.client.engine.darwin.certificates/PinnedCertificate.hashAlgorithm.<get-hashAlgorithm>|<get-hashAlgorithm>(){}[0]
+
+    final fun component2(): kotlin/String // io.ktor.client.engine.darwin.certificates/PinnedCertificate.component2|component2(){}[0]
+    final fun component3(): kotlin/String // io.ktor.client.engine.darwin.certificates/PinnedCertificate.component3|component3(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/String = ...): io.ktor.client.engine.darwin.certificates/PinnedCertificate // io.ktor.client.engine.darwin.certificates/PinnedCertificate.copy|copy(kotlin.String;kotlin.String;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.client.engine.darwin.certificates/PinnedCertificate.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.client.engine.darwin.certificates/PinnedCertificate.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.client.engine.darwin.certificates/PinnedCertificate.toString|toString(){}[0]
+
+    final object Companion { // io.ktor.client.engine.darwin.certificates/PinnedCertificate.Companion|null[0]
+        final fun new(kotlin/String, kotlin/String): io.ktor.client.engine.darwin.certificates/PinnedCertificate // io.ktor.client.engine.darwin.certificates/PinnedCertificate.Companion.new|new(kotlin.String;kotlin.String){}[0]
+    }
+}
+
+final class io.ktor.client.engine.darwin/DarwinClientEngineConfig : io.ktor.client.engine/HttpClientEngineConfig { // io.ktor.client.engine.darwin/DarwinClientEngineConfig|null[0]
+    constructor <init>() // io.ktor.client.engine.darwin/DarwinClientEngineConfig.<init>|<init>(){}[0]
+
+    final var challengeHandler // io.ktor.client.engine.darwin/DarwinClientEngineConfig.challengeHandler|{}challengeHandler[0]
+        // Targets: [ios, macos, tvos, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+        final fun <get-challengeHandler>(): kotlin/Function4<platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Long, platform.Foundation/NSURLCredential?, kotlin/Unit>, kotlin/Unit>? // io.ktor.client.engine.darwin/DarwinClientEngineConfig.challengeHandler.<get-challengeHandler>|<get-challengeHandler>(){}[0]
+
+        // Targets: [watchosArm32, watchosArm64]
+        final fun <get-challengeHandler>(): kotlin/Function4<platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Int, platform.Foundation/NSURLCredential?, kotlin/Unit>, kotlin/Unit>? // io.ktor.client.engine.darwin/DarwinClientEngineConfig.challengeHandler.<get-challengeHandler>|<get-challengeHandler>(){}[0]
+    final var preconfiguredSession // io.ktor.client.engine.darwin/DarwinClientEngineConfig.preconfiguredSession|{}preconfiguredSession[0]
+        final fun <get-preconfiguredSession>(): platform.Foundation/NSURLSession? // io.ktor.client.engine.darwin/DarwinClientEngineConfig.preconfiguredSession.<get-preconfiguredSession>|<get-preconfiguredSession>(){}[0]
+    final var requestConfig // io.ktor.client.engine.darwin/DarwinClientEngineConfig.requestConfig|{}requestConfig[0]
+        final fun <get-requestConfig>(): kotlin/Function1<platform.Foundation/NSMutableURLRequest, kotlin/Unit> // io.ktor.client.engine.darwin/DarwinClientEngineConfig.requestConfig.<get-requestConfig>|<get-requestConfig>(){}[0]
+        final fun <set-requestConfig>(kotlin/Function1<platform.Foundation/NSMutableURLRequest, kotlin/Unit>) // io.ktor.client.engine.darwin/DarwinClientEngineConfig.requestConfig.<set-requestConfig>|<set-requestConfig>(kotlin.Function1<platform.Foundation.NSMutableURLRequest,kotlin.Unit>){}[0]
+    final var sessionConfig // io.ktor.client.engine.darwin/DarwinClientEngineConfig.sessionConfig|{}sessionConfig[0]
+        final fun <get-sessionConfig>(): kotlin/Function1<platform.Foundation/NSURLSessionConfiguration, kotlin/Unit> // io.ktor.client.engine.darwin/DarwinClientEngineConfig.sessionConfig.<get-sessionConfig>|<get-sessionConfig>(){}[0]
+        final fun <set-sessionConfig>(kotlin/Function1<platform.Foundation/NSURLSessionConfiguration, kotlin/Unit>) // io.ktor.client.engine.darwin/DarwinClientEngineConfig.sessionConfig.<set-sessionConfig>|<set-sessionConfig>(kotlin.Function1<platform.Foundation.NSURLSessionConfiguration,kotlin.Unit>){}[0]
+
+    final fun configureRequest(kotlin/Function1<platform.Foundation/NSMutableURLRequest, kotlin/Unit>) // io.ktor.client.engine.darwin/DarwinClientEngineConfig.configureRequest|configureRequest(kotlin.Function1<platform.Foundation.NSMutableURLRequest,kotlin.Unit>){}[0]
+    final fun configureSession(kotlin/Function1<platform.Foundation/NSURLSessionConfiguration, kotlin/Unit>) // io.ktor.client.engine.darwin/DarwinClientEngineConfig.configureSession|configureSession(kotlin.Function1<platform.Foundation.NSURLSessionConfiguration,kotlin.Unit>){}[0]
+    final fun usePreconfiguredSession(platform.Foundation/NSURLSession, io.ktor.client.engine.darwin/KtorNSURLSessionDelegate) // io.ktor.client.engine.darwin/DarwinClientEngineConfig.usePreconfiguredSession|usePreconfiguredSession(platform.Foundation.NSURLSession;io.ktor.client.engine.darwin.KtorNSURLSessionDelegate){}[0]
+    final fun usePreconfiguredSession(platform.Foundation/NSURLSession?) // io.ktor.client.engine.darwin/DarwinClientEngineConfig.usePreconfiguredSession|usePreconfiguredSession(platform.Foundation.NSURLSession?){}[0]
+
+    // Targets: [ios, macos, tvos, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+    final fun handleChallenge(kotlin/Function4<platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Long, platform.Foundation/NSURLCredential?, kotlin/Unit>, kotlin/Unit>) // io.ktor.client.engine.darwin/DarwinClientEngineConfig.handleChallenge|handleChallenge(kotlin.Function4<platform.Foundation.NSURLSession,platform.Foundation.NSURLSessionTask,platform.Foundation.NSURLAuthenticationChallenge,kotlin.Function2<kotlin.Long,platform.Foundation.NSURLCredential?,kotlin.Unit>,kotlin.Unit>){}[0]
+
+    // Targets: [watchosArm32, watchosArm64]
+    final fun handleChallenge(kotlin/Function4<platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Int, platform.Foundation/NSURLCredential?, kotlin/Unit>, kotlin/Unit>) // io.ktor.client.engine.darwin/DarwinClientEngineConfig.handleChallenge|handleChallenge(kotlin.Function4<platform.Foundation.NSURLSession,platform.Foundation.NSURLSessionTask,platform.Foundation.NSURLAuthenticationChallenge,kotlin.Function2<kotlin.Int,platform.Foundation.NSURLCredential?,kotlin.Unit>,kotlin.Unit>){}[0]
+}
+
+final class io.ktor.client.engine.darwin/DarwinHttpRequestException : kotlinx.io/IOException { // io.ktor.client.engine.darwin/DarwinHttpRequestException|null[0]
+    constructor <init>(platform.Foundation/NSError) // io.ktor.client.engine.darwin/DarwinHttpRequestException.<init>|<init>(platform.Foundation.NSError){}[0]
+
+    final val origin // io.ktor.client.engine.darwin/DarwinHttpRequestException.origin|{}origin[0]
+        final fun <get-origin>(): platform.Foundation/NSError // io.ktor.client.engine.darwin/DarwinHttpRequestException.origin.<get-origin>|<get-origin>(){}[0]
+}
+
+final class io.ktor.client.engine.darwin/KtorNSURLSessionDelegate : platform.Foundation/NSURLSessionDataDelegateProtocol, platform.Foundation/NSURLSessionWebSocketDelegateProtocol, platform.darwin/NSObject { // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate|null[0]
+    final val debugDescription // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.debugDescription|{}debugDescription[0]
+        final fun <get-debugDescription>(): kotlin/String? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.debugDescription.<get-debugDescription>|objc:debugDescription#Accessor[0]
+    final val description // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.description|{}description[0]
+        final fun <get-description>(): kotlin/String? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.description.<get-description>|objc:description#Accessor[0]
+    final val hash // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.hash|{}hash[0]
+        // Targets: [ios, macos, tvos, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+        final fun <get-hash>(): kotlin/ULong // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.hash.<get-hash>|objc:hash#Accessor[0]
+
+        // Targets: [watchosArm32, watchosArm64]
+        final fun <get-hash>(): kotlin/UInt // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.hash.<get-hash>|objc:hash#Accessor[0]
+    final val superclass // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.superclass|{}superclass[0]
+        final fun <get-superclass>(): kotlinx.cinterop/ObjCClass? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.superclass.<get-superclass>|objc:superclass#Accessor[0]
+
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSError?) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:didBecomeInvalidWithError:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionDataTask, platform.Foundation/NSCachedURLResponse, kotlin/Function1<platform.Foundation/NSCachedURLResponse?, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:dataTask:willCacheResponse:completionHandler:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionDataTask, platform.Foundation/NSData) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:dataTask:didReceiveData:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionDataTask, platform.Foundation/NSURLSessionDownloadTask) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:dataTask:didBecomeDownloadTask:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionDataTask, platform.Foundation/NSURLSessionStreamTask) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:dataTask:didBecomeStreamTask:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:didCreateTask:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:taskIsWaitingForConnectivity:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, kotlin/Function1<platform.Foundation/NSInputStream?, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:task:needNewBodyStream:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, kotlin/Long, kotlin/Function1<platform.Foundation/NSInputStream?, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:task:needNewBodyStreamFromOffset:completionHandler:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, kotlin/Long, kotlin/Long, kotlin/Long) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSError?) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:task:didCompleteWithError:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSHTTPURLResponse) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:task:didReceiveInformationalResponse:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSHTTPURLResponse, platform.Foundation/NSURLRequest, kotlin/Function1<platform.Foundation/NSURLRequest?, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:task:willPerformHTTPRedirection:newRequest:completionHandler:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLSessionTaskMetrics) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:task:didFinishCollectingMetrics:[0]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionWebSocketTask, kotlin/String?) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:webSocketTask:didOpenWithProtocol:[0]
+    final fun URLSessionDidFinishEventsForBackgroundURLSession(platform.Foundation/NSURLSession) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSessionDidFinishEventsForBackgroundURLSession|objc:URLSessionDidFinishEventsForBackgroundURLSession:[0]
+    final fun class(): kotlinx.cinterop/ObjCClass? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.class|objc:class[0]
+    final fun conformsToProtocol(objcnames.classes/Protocol?): kotlin/Boolean // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.conformsToProtocol|objc:conformsToProtocol:[0]
+    final fun copy(): kotlin/Any? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.copy|objc:copy[0]
+    final fun debugDescription(): kotlin/String? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.debugDescription|objc:debugDescription[0]
+    final fun description(): kotlin/String? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.description|objc:description[0]
+    final fun doesNotRecognizeSelector(kotlinx.cinterop/CPointer<out kotlinx.cinterop/CPointed>?) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.doesNotRecognizeSelector|objc:doesNotRecognizeSelector:[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.equals|equals(other:kotlin.Any?){}[0]
+    final fun finalize() // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.finalize|objc:finalize[0]
+    final fun forwardInvocation(objcnames.classes/NSInvocation?) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.forwardInvocation|objc:forwardInvocation:[0]
+    final fun forwardingTargetForSelector(kotlinx.cinterop/CPointer<out kotlinx.cinterop/CPointed>?): kotlin/Any? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.forwardingTargetForSelector|objc:forwardingTargetForSelector:[0]
+    final fun hashCode(): kotlin/Int // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.hashCode|hashCode(){}[0]
+    final fun init(): platform.darwin/NSObject? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.init|objc:init[0]
+    final fun isEqual(kotlin/Any?): kotlin/Boolean // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.isEqual|objc:isEqual:[0]
+    final fun isKindOfClass(kotlinx.cinterop/ObjCClass?): kotlin/Boolean // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.isKindOfClass|objc:isKindOfClass:[0]
+    final fun isMemberOfClass(kotlinx.cinterop/ObjCClass?): kotlin/Boolean // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.isMemberOfClass|objc:isMemberOfClass:[0]
+    final fun isProxy(): kotlin/Boolean // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.isProxy|objc:isProxy[0]
+    final fun methodForSelector(kotlinx.cinterop/CPointer<out kotlinx.cinterop/CPointed>?): kotlinx.cinterop/CPointer<kotlinx.cinterop/CFunction<kotlin/Function0<kotlin/Unit>>>? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.methodForSelector|objc:methodForSelector:[0]
+    final fun methodSignatureForSelector(kotlinx.cinterop/CPointer<out kotlinx.cinterop/CPointed>?): objcnames.classes/NSMethodSignature? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.methodSignatureForSelector|objc:methodSignatureForSelector:[0]
+    final fun mutableCopy(): kotlin/Any? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.mutableCopy|objc:mutableCopy[0]
+    final fun performSelector(kotlinx.cinterop/CPointer<out kotlinx.cinterop/CPointed>?): kotlin/Any? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.performSelector|objc:performSelector:[0]
+    final fun performSelector(kotlinx.cinterop/CPointer<out kotlinx.cinterop/CPointed>?, kotlin/Any?): kotlin/Any? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.performSelector|objc:performSelector:withObject:[0]
+    final fun performSelector(kotlinx.cinterop/CPointer<out kotlinx.cinterop/CPointed>?, kotlin/Any?, kotlin/Any?): kotlin/Any? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.performSelector|objc:performSelector:withObject:withObject:[0]
+    final fun respondsToSelector(kotlinx.cinterop/CPointer<out kotlinx.cinterop/CPointed>?): kotlin/Boolean // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.respondsToSelector|objc:respondsToSelector:[0]
+    final fun superclass(): kotlinx.cinterop/ObjCClass? // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.superclass|objc:superclass[0]
+    final fun toString(): kotlin/String // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.toString|toString(){}[0]
+
+    // Targets: [ios, macos, tvos, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+    constructor <init>(kotlin/Function4<platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Long, platform.Foundation/NSURLCredential?, kotlin/Unit>, kotlin/Unit>?) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.<init>|<init>(challengeHandler:kotlin.Function4<platform.Foundation.NSURLSession,platform.Foundation.NSURLSessionTask,platform.Foundation.NSURLAuthenticationChallenge,kotlin.Function2<kotlin.Long,platform.Foundation.NSURLCredential?,kotlin.Unit>,kotlin.Unit>?){}[0]
+
+    // Targets: [ios, macos, tvos, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Long, platform.Foundation/NSURLCredential?, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:didReceiveChallenge:completionHandler:[0]
+
+    // Targets: [ios, macos, tvos, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionDataTask, platform.Foundation/NSURLResponse, kotlin/Function1<kotlin/Long, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:dataTask:didReceiveResponse:completionHandler:[0]
+
+    // Targets: [ios, macos, tvos, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Long, platform.Foundation/NSURLCredential?, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:task:didReceiveChallenge:completionHandler:[0]
+
+    // Targets: [ios, macos, tvos, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLRequest, kotlin/Function2<kotlin/Long, platform.Foundation/NSURLRequest?, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:task:willBeginDelayedRequest:completionHandler:[0]
+
+    // Targets: [ios, macos, tvos, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionWebSocketTask, kotlin/Long, platform.Foundation/NSData?) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:webSocketTask:didCloseWithCode:reason:[0]
+
+    // Targets: [ios, macos, tvos, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+    final fun hash(): kotlin/ULong // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.hash|objc:hash[0]
+
+    // Targets: [watchosArm32, watchosArm64]
+    constructor <init>(kotlin/Function4<platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Int, platform.Foundation/NSURLCredential?, kotlin/Unit>, kotlin/Unit>?) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.<init>|<init>(challengeHandler:kotlin.Function4<platform.Foundation.NSURLSession,platform.Foundation.NSURLSessionTask,platform.Foundation.NSURLAuthenticationChallenge,kotlin.Function2<kotlin.Int,platform.Foundation.NSURLCredential?,kotlin.Unit>,kotlin.Unit>?){}[0]
+
+    // Targets: [watchosArm32, watchosArm64]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Int, platform.Foundation/NSURLCredential?, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:didReceiveChallenge:completionHandler:[0]
+
+    // Targets: [watchosArm32, watchosArm64]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionDataTask, platform.Foundation/NSURLResponse, kotlin/Function1<kotlin/Int, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:dataTask:didReceiveResponse:completionHandler:[0]
+
+    // Targets: [watchosArm32, watchosArm64]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Int, platform.Foundation/NSURLCredential?, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:task:didReceiveChallenge:completionHandler:[0]
+
+    // Targets: [watchosArm32, watchosArm64]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLRequest, kotlin/Function2<kotlin/Int, platform.Foundation/NSURLRequest?, kotlin/Unit>) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:task:willBeginDelayedRequest:completionHandler:[0]
+
+    // Targets: [watchosArm32, watchosArm64]
+    final fun URLSession(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionWebSocketTask, kotlin/Int, platform.Foundation/NSData?) // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.URLSession|objc:URLSession:webSocketTask:didCloseWithCode:reason:[0]
+
+    // Targets: [watchosArm32, watchosArm64]
+    final fun hash(): kotlin/UInt // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate.hash|objc:hash[0]
+}
+
+final object io.ktor.client.engine.darwin/Darwin : io.ktor.client.engine/HttpClientEngineFactory<io.ktor.client.engine.darwin/DarwinClientEngineConfig> { // io.ktor.client.engine.darwin/Darwin|null[0]
+    final fun create(kotlin/Function1<io.ktor.client.engine.darwin/DarwinClientEngineConfig, kotlin/Unit>): io.ktor.client.engine/HttpClientEngine // io.ktor.client.engine.darwin/Darwin.create|create(kotlin.Function1<io.ktor.client.engine.darwin.DarwinClientEngineConfig,kotlin.Unit>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.client.engine.darwin/Darwin.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.client.engine.darwin/Darwin.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.client.engine.darwin/Darwin.toString|toString(){}[0]
+}
+
+final fun io.ktor.client.engine.darwin/KtorNSURLSessionDelegate(): io.ktor.client.engine.darwin/KtorNSURLSessionDelegate // io.ktor.client.engine.darwin/KtorNSURLSessionDelegate|KtorNSURLSessionDelegate(){}[0]
+
+// Targets: [ios, macos, tvos, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+final class io.ktor.client.engine.darwin.certificates/CertificatePinner : kotlin/Function4<platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Long, platform.Foundation/NSURLCredential?, kotlin/Unit>, kotlin/Unit> { // io.ktor.client.engine.darwin.certificates/CertificatePinner|null[0]
+    final fun copy(kotlin.collections/Set<io.ktor.client.engine.darwin.certificates/PinnedCertificate> = ..., kotlin/Boolean = ...): io.ktor.client.engine.darwin.certificates/CertificatePinner // io.ktor.client.engine.darwin.certificates/CertificatePinner.copy|copy(kotlin.collections.Set<io.ktor.client.engine.darwin.certificates.PinnedCertificate>;kotlin.Boolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.client.engine.darwin.certificates/CertificatePinner.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.client.engine.darwin.certificates/CertificatePinner.hashCode|hashCode(){}[0]
+    final fun invoke(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Long, platform.Foundation/NSURLCredential?, kotlin/Unit>) // io.ktor.client.engine.darwin.certificates/CertificatePinner.invoke|invoke(platform.Foundation.NSURLSession;platform.Foundation.NSURLSessionTask;platform.Foundation.NSURLAuthenticationChallenge;kotlin.Function2<kotlin.Long,platform.Foundation.NSURLCredential?,kotlin.Unit>){}[0]
+    final fun toString(): kotlin/String // io.ktor.client.engine.darwin.certificates/CertificatePinner.toString|toString(){}[0]
+
+    final class Builder { // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder|null[0]
+        constructor <init>(kotlin.collections/MutableList<io.ktor.client.engine.darwin.certificates/PinnedCertificate> = ..., kotlin/Boolean = ...) // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.<init>|<init>(kotlin.collections.MutableList<io.ktor.client.engine.darwin.certificates.PinnedCertificate>;kotlin.Boolean){}[0]
+
+        final fun add(kotlin/String, kotlin/Array<out kotlin/String>...): io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.add|add(kotlin.String;kotlin.Array<out|kotlin.String>...){}[0]
+        final fun build(): io.ktor.client.engine.darwin.certificates/CertificatePinner // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.build|build(){}[0]
+        final fun copy(kotlin.collections/MutableList<io.ktor.client.engine.darwin.certificates/PinnedCertificate> = ..., kotlin/Boolean = ...): io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.copy|copy(kotlin.collections.MutableList<io.ktor.client.engine.darwin.certificates.PinnedCertificate>;kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.toString|toString(){}[0]
+        final fun validateTrust(kotlin/Boolean): io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.validateTrust|validateTrust(kotlin.Boolean){}[0]
+    }
+}
+
+// Targets: [watchosArm32, watchosArm64]
+final class io.ktor.client.engine.darwin.certificates/CertificatePinner : kotlin/Function4<platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Int, platform.Foundation/NSURLCredential?, kotlin/Unit>, kotlin/Unit> { // io.ktor.client.engine.darwin.certificates/CertificatePinner|null[0]
+    final fun copy(kotlin.collections/Set<io.ktor.client.engine.darwin.certificates/PinnedCertificate> = ..., kotlin/Boolean = ...): io.ktor.client.engine.darwin.certificates/CertificatePinner // io.ktor.client.engine.darwin.certificates/CertificatePinner.copy|copy(kotlin.collections.Set<io.ktor.client.engine.darwin.certificates.PinnedCertificate>;kotlin.Boolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.client.engine.darwin.certificates/CertificatePinner.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.client.engine.darwin.certificates/CertificatePinner.hashCode|hashCode(){}[0]
+    final fun invoke(platform.Foundation/NSURLSession, platform.Foundation/NSURLSessionTask, platform.Foundation/NSURLAuthenticationChallenge, kotlin/Function2<kotlin/Int, platform.Foundation/NSURLCredential?, kotlin/Unit>) // io.ktor.client.engine.darwin.certificates/CertificatePinner.invoke|invoke(platform.Foundation.NSURLSession;platform.Foundation.NSURLSessionTask;platform.Foundation.NSURLAuthenticationChallenge;kotlin.Function2<kotlin.Int,platform.Foundation.NSURLCredential?,kotlin.Unit>){}[0]
+    final fun toString(): kotlin/String // io.ktor.client.engine.darwin.certificates/CertificatePinner.toString|toString(){}[0]
+
+    final class Builder { // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder|null[0]
+        constructor <init>(kotlin.collections/MutableList<io.ktor.client.engine.darwin.certificates/PinnedCertificate> = ..., kotlin/Boolean = ...) // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.<init>|<init>(kotlin.collections.MutableList<io.ktor.client.engine.darwin.certificates.PinnedCertificate>;kotlin.Boolean){}[0]
+
+        final fun add(kotlin/String, kotlin/Array<out kotlin/String>...): io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.add|add(kotlin.String;kotlin.Array<out|kotlin.String>...){}[0]
+        final fun build(): io.ktor.client.engine.darwin.certificates/CertificatePinner // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.build|build(){}[0]
+        final fun copy(kotlin.collections/MutableList<io.ktor.client.engine.darwin.certificates/PinnedCertificate> = ..., kotlin/Boolean = ...): io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.copy|copy(kotlin.collections.MutableList<io.ktor.client.engine.darwin.certificates.PinnedCertificate>;kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.toString|toString(){}[0]
+        final fun validateTrust(kotlin/Boolean): io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder // io.ktor.client.engine.darwin.certificates/CertificatePinner.Builder.validateTrust|validateTrust(kotlin.Boolean){}[0]
+    }
+}

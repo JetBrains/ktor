@@ -13,7 +13,7 @@ import io.ktor.util.reflect.*
  * [HttpClient] Pipeline used for executing [HttpResponse].
  */
 public class HttpResponsePipeline(
-    override val developmentMode: Boolean = false
+    override val developmentMode: Boolean = true
 ) : Pipeline<HttpResponseContainer, HttpClientCall>(
     Receive,
     Parse,
@@ -53,7 +53,7 @@ public class HttpResponsePipeline(
  * [HttpClient] Pipeline used for receiving [HttpResponse] without any processing.
  */
 public class HttpReceivePipeline(
-    override val developmentMode: Boolean = false
+    override val developmentMode: Boolean = true
 ) : Pipeline<HttpResponse, Unit>(Before, State, After) {
     public companion object Phases {
         /**

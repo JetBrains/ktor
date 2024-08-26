@@ -10,7 +10,7 @@ import io.ktor.utils.io.*
 import io.ktor.utils.io.errors.*
 
 /**
- * @return `true` if an http upgrade is expected accoding to request [method], [upgrade] header value and
+ * @return `true` if an http upgrade is expected according to request [method], [upgrade] header value and
  * parsed [connectionOptions]
  */
 public fun expectHttpUpgrade(

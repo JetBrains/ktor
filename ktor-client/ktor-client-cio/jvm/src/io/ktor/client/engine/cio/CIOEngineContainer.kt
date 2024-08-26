@@ -9,7 +9,6 @@ import io.ktor.client.engine.*
 import io.ktor.utils.io.*
 
 @InternalAPI
-@Suppress("KDocMissingDocumentation")
 public class CIOEngineContainer : HttpClientEngineContainer {
     override val factory: HttpClientEngineFactory<*> = CIO
 

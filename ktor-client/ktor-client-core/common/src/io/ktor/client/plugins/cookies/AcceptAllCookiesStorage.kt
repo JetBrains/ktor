@@ -66,5 +66,5 @@ public class AcceptAllCookiesStorage(private val clock: () -> Long = { getTimeMi
     }
 
     private fun Cookie.maxAgeOrExpires(createdAt: Long): Long? =
-        maxAge?.let { createdAt + it * 1000 } ?: expires?.timestamp
+        maxAge?.let { createdAt + it * 1000L } ?: expires?.timestamp
 }

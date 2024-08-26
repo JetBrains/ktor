@@ -1,0 +1,173 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-client-auth>
+abstract interface io.ktor.client.plugins.auth/AuthProvider { // io.ktor.client.plugins.auth/AuthProvider|null[0]
+    abstract val sendWithoutRequest // io.ktor.client.plugins.auth/AuthProvider.sendWithoutRequest|{}sendWithoutRequest[0]
+        abstract fun <get-sendWithoutRequest>(): kotlin/Boolean // io.ktor.client.plugins.auth/AuthProvider.sendWithoutRequest.<get-sendWithoutRequest>|<get-sendWithoutRequest>(){}[0]
+
+    abstract fun isApplicable(io.ktor.http.auth/HttpAuthHeader): kotlin/Boolean // io.ktor.client.plugins.auth/AuthProvider.isApplicable|isApplicable(io.ktor.http.auth.HttpAuthHeader){}[0]
+    abstract suspend fun addRequestHeaders(io.ktor.client.request/HttpRequestBuilder, io.ktor.http.auth/HttpAuthHeader? = ...) // io.ktor.client.plugins.auth/AuthProvider.addRequestHeaders|addRequestHeaders(io.ktor.client.request.HttpRequestBuilder;io.ktor.http.auth.HttpAuthHeader?){}[0]
+    open fun sendWithoutRequest(io.ktor.client.request/HttpRequestBuilder): kotlin/Boolean // io.ktor.client.plugins.auth/AuthProvider.sendWithoutRequest|sendWithoutRequest(io.ktor.client.request.HttpRequestBuilder){}[0]
+    open suspend fun refreshToken(io.ktor.client.statement/HttpResponse): kotlin/Boolean // io.ktor.client.plugins.auth/AuthProvider.refreshToken|refreshToken(io.ktor.client.statement.HttpResponse){}[0]
+}
+
+final class io.ktor.client.plugins.auth.providers/BasicAuthConfig { // io.ktor.client.plugins.auth.providers/BasicAuthConfig|null[0]
+    constructor <init>() // io.ktor.client.plugins.auth.providers/BasicAuthConfig.<init>|<init>(){}[0]
+
+    final var password // io.ktor.client.plugins.auth.providers/BasicAuthConfig.password|{}password[0]
+        final fun <get-password>(): kotlin/String // io.ktor.client.plugins.auth.providers/BasicAuthConfig.password.<get-password>|<get-password>(){}[0]
+        final fun <set-password>(kotlin/String) // io.ktor.client.plugins.auth.providers/BasicAuthConfig.password.<set-password>|<set-password>(kotlin.String){}[0]
+    final var realm // io.ktor.client.plugins.auth.providers/BasicAuthConfig.realm|{}realm[0]
+        final fun <get-realm>(): kotlin/String? // io.ktor.client.plugins.auth.providers/BasicAuthConfig.realm.<get-realm>|<get-realm>(){}[0]
+        final fun <set-realm>(kotlin/String?) // io.ktor.client.plugins.auth.providers/BasicAuthConfig.realm.<set-realm>|<set-realm>(kotlin.String?){}[0]
+    final var sendWithoutRequest // io.ktor.client.plugins.auth.providers/BasicAuthConfig.sendWithoutRequest|{}sendWithoutRequest[0]
+        final fun <get-sendWithoutRequest>(): kotlin/Boolean // io.ktor.client.plugins.auth.providers/BasicAuthConfig.sendWithoutRequest.<get-sendWithoutRequest>|<get-sendWithoutRequest>(){}[0]
+        final fun <set-sendWithoutRequest>(kotlin/Boolean) // io.ktor.client.plugins.auth.providers/BasicAuthConfig.sendWithoutRequest.<set-sendWithoutRequest>|<set-sendWithoutRequest>(kotlin.Boolean){}[0]
+    final var username // io.ktor.client.plugins.auth.providers/BasicAuthConfig.username|{}username[0]
+        final fun <get-username>(): kotlin/String // io.ktor.client.plugins.auth.providers/BasicAuthConfig.username.<get-username>|<get-username>(){}[0]
+        final fun <set-username>(kotlin/String) // io.ktor.client.plugins.auth.providers/BasicAuthConfig.username.<set-username>|<set-username>(kotlin.String){}[0]
+
+    final fun credentials(kotlin.coroutines/SuspendFunction0<io.ktor.client.plugins.auth.providers/BasicAuthCredentials?>) // io.ktor.client.plugins.auth.providers/BasicAuthConfig.credentials|credentials(kotlin.coroutines.SuspendFunction0<io.ktor.client.plugins.auth.providers.BasicAuthCredentials?>){}[0]
+    final fun sendWithoutRequest(kotlin/Function1<io.ktor.client.request/HttpRequestBuilder, kotlin/Boolean>) // io.ktor.client.plugins.auth.providers/BasicAuthConfig.sendWithoutRequest|sendWithoutRequest(kotlin.Function1<io.ktor.client.request.HttpRequestBuilder,kotlin.Boolean>){}[0]
+}
+
+final class io.ktor.client.plugins.auth.providers/BasicAuthCredentials { // io.ktor.client.plugins.auth.providers/BasicAuthCredentials|null[0]
+    constructor <init>(kotlin/String, kotlin/String) // io.ktor.client.plugins.auth.providers/BasicAuthCredentials.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+    final val password // io.ktor.client.plugins.auth.providers/BasicAuthCredentials.password|{}password[0]
+        final fun <get-password>(): kotlin/String // io.ktor.client.plugins.auth.providers/BasicAuthCredentials.password.<get-password>|<get-password>(){}[0]
+    final val username // io.ktor.client.plugins.auth.providers/BasicAuthCredentials.username|{}username[0]
+        final fun <get-username>(): kotlin/String // io.ktor.client.plugins.auth.providers/BasicAuthCredentials.username.<get-username>|<get-username>(){}[0]
+}
+
+final class io.ktor.client.plugins.auth.providers/BasicAuthProvider : io.ktor.client.plugins.auth/AuthProvider { // io.ktor.client.plugins.auth.providers/BasicAuthProvider|null[0]
+    constructor <init>(kotlin.coroutines/SuspendFunction0<io.ktor.client.plugins.auth.providers/BasicAuthCredentials?>, kotlin/String? = ..., kotlin/Function1<io.ktor.client.request/HttpRequestBuilder, kotlin/Boolean> = ...) // io.ktor.client.plugins.auth.providers/BasicAuthProvider.<init>|<init>(kotlin.coroutines.SuspendFunction0<io.ktor.client.plugins.auth.providers.BasicAuthCredentials?>;kotlin.String?;kotlin.Function1<io.ktor.client.request.HttpRequestBuilder,kotlin.Boolean>){}[0]
+    constructor <init>(kotlin/String, kotlin/String, kotlin/String? = ..., kotlin/Boolean = ...) // io.ktor.client.plugins.auth.providers/BasicAuthProvider.<init>|<init>(kotlin.String;kotlin.String;kotlin.String?;kotlin.Boolean){}[0]
+
+    final val sendWithoutRequest // io.ktor.client.plugins.auth.providers/BasicAuthProvider.sendWithoutRequest|{}sendWithoutRequest[0]
+        final fun <get-sendWithoutRequest>(): kotlin/Boolean // io.ktor.client.plugins.auth.providers/BasicAuthProvider.sendWithoutRequest.<get-sendWithoutRequest>|<get-sendWithoutRequest>(){}[0]
+
+    final fun isApplicable(io.ktor.http.auth/HttpAuthHeader): kotlin/Boolean // io.ktor.client.plugins.auth.providers/BasicAuthProvider.isApplicable|isApplicable(io.ktor.http.auth.HttpAuthHeader){}[0]
+    final fun sendWithoutRequest(io.ktor.client.request/HttpRequestBuilder): kotlin/Boolean // io.ktor.client.plugins.auth.providers/BasicAuthProvider.sendWithoutRequest|sendWithoutRequest(io.ktor.client.request.HttpRequestBuilder){}[0]
+    final suspend fun addRequestHeaders(io.ktor.client.request/HttpRequestBuilder, io.ktor.http.auth/HttpAuthHeader?) // io.ktor.client.plugins.auth.providers/BasicAuthProvider.addRequestHeaders|addRequestHeaders(io.ktor.client.request.HttpRequestBuilder;io.ktor.http.auth.HttpAuthHeader?){}[0]
+    final suspend fun refreshToken(io.ktor.client.statement/HttpResponse): kotlin/Boolean // io.ktor.client.plugins.auth.providers/BasicAuthProvider.refreshToken|refreshToken(io.ktor.client.statement.HttpResponse){}[0]
+}
+
+final class io.ktor.client.plugins.auth.providers/BearerAuthConfig { // io.ktor.client.plugins.auth.providers/BearerAuthConfig|null[0]
+    constructor <init>() // io.ktor.client.plugins.auth.providers/BearerAuthConfig.<init>|<init>(){}[0]
+
+    final var realm // io.ktor.client.plugins.auth.providers/BearerAuthConfig.realm|{}realm[0]
+        final fun <get-realm>(): kotlin/String? // io.ktor.client.plugins.auth.providers/BearerAuthConfig.realm.<get-realm>|<get-realm>(){}[0]
+        final fun <set-realm>(kotlin/String?) // io.ktor.client.plugins.auth.providers/BearerAuthConfig.realm.<set-realm>|<set-realm>(kotlin.String?){}[0]
+
+    final fun loadTokens(kotlin.coroutines/SuspendFunction0<io.ktor.client.plugins.auth.providers/BearerTokens?>) // io.ktor.client.plugins.auth.providers/BearerAuthConfig.loadTokens|loadTokens(kotlin.coroutines.SuspendFunction0<io.ktor.client.plugins.auth.providers.BearerTokens?>){}[0]
+    final fun refreshTokens(kotlin.coroutines/SuspendFunction1<io.ktor.client.plugins.auth.providers/RefreshTokensParams, io.ktor.client.plugins.auth.providers/BearerTokens?>) // io.ktor.client.plugins.auth.providers/BearerAuthConfig.refreshTokens|refreshTokens(kotlin.coroutines.SuspendFunction1<io.ktor.client.plugins.auth.providers.RefreshTokensParams,io.ktor.client.plugins.auth.providers.BearerTokens?>){}[0]
+    final fun sendWithoutRequest(kotlin/Function1<io.ktor.client.request/HttpRequestBuilder, kotlin/Boolean>) // io.ktor.client.plugins.auth.providers/BearerAuthConfig.sendWithoutRequest|sendWithoutRequest(kotlin.Function1<io.ktor.client.request.HttpRequestBuilder,kotlin.Boolean>){}[0]
+}
+
+final class io.ktor.client.plugins.auth.providers/BearerAuthProvider : io.ktor.client.plugins.auth/AuthProvider { // io.ktor.client.plugins.auth.providers/BearerAuthProvider|null[0]
+    constructor <init>(kotlin.coroutines/SuspendFunction1<io.ktor.client.plugins.auth.providers/RefreshTokensParams, io.ktor.client.plugins.auth.providers/BearerTokens?>, kotlin.coroutines/SuspendFunction0<io.ktor.client.plugins.auth.providers/BearerTokens?>, kotlin/Function1<io.ktor.client.request/HttpRequestBuilder, kotlin/Boolean> = ..., kotlin/String?) // io.ktor.client.plugins.auth.providers/BearerAuthProvider.<init>|<init>(kotlin.coroutines.SuspendFunction1<io.ktor.client.plugins.auth.providers.RefreshTokensParams,io.ktor.client.plugins.auth.providers.BearerTokens?>;kotlin.coroutines.SuspendFunction0<io.ktor.client.plugins.auth.providers.BearerTokens?>;kotlin.Function1<io.ktor.client.request.HttpRequestBuilder,kotlin.Boolean>;kotlin.String?){}[0]
+
+    final val sendWithoutRequest // io.ktor.client.plugins.auth.providers/BearerAuthProvider.sendWithoutRequest|{}sendWithoutRequest[0]
+        final fun <get-sendWithoutRequest>(): kotlin/Boolean // io.ktor.client.plugins.auth.providers/BearerAuthProvider.sendWithoutRequest.<get-sendWithoutRequest>|<get-sendWithoutRequest>(){}[0]
+
+    final fun clearToken() // io.ktor.client.plugins.auth.providers/BearerAuthProvider.clearToken|clearToken(){}[0]
+    final fun isApplicable(io.ktor.http.auth/HttpAuthHeader): kotlin/Boolean // io.ktor.client.plugins.auth.providers/BearerAuthProvider.isApplicable|isApplicable(io.ktor.http.auth.HttpAuthHeader){}[0]
+    final fun sendWithoutRequest(io.ktor.client.request/HttpRequestBuilder): kotlin/Boolean // io.ktor.client.plugins.auth.providers/BearerAuthProvider.sendWithoutRequest|sendWithoutRequest(io.ktor.client.request.HttpRequestBuilder){}[0]
+    final suspend fun addRequestHeaders(io.ktor.client.request/HttpRequestBuilder, io.ktor.http.auth/HttpAuthHeader?) // io.ktor.client.plugins.auth.providers/BearerAuthProvider.addRequestHeaders|addRequestHeaders(io.ktor.client.request.HttpRequestBuilder;io.ktor.http.auth.HttpAuthHeader?){}[0]
+    final suspend fun refreshToken(io.ktor.client.statement/HttpResponse): kotlin/Boolean // io.ktor.client.plugins.auth.providers/BearerAuthProvider.refreshToken|refreshToken(io.ktor.client.statement.HttpResponse){}[0]
+}
+
+final class io.ktor.client.plugins.auth.providers/BearerTokens { // io.ktor.client.plugins.auth.providers/BearerTokens|null[0]
+    constructor <init>(kotlin/String, kotlin/String?) // io.ktor.client.plugins.auth.providers/BearerTokens.<init>|<init>(kotlin.String;kotlin.String?){}[0]
+
+    final val accessToken // io.ktor.client.plugins.auth.providers/BearerTokens.accessToken|{}accessToken[0]
+        final fun <get-accessToken>(): kotlin/String // io.ktor.client.plugins.auth.providers/BearerTokens.accessToken.<get-accessToken>|<get-accessToken>(){}[0]
+    final val refreshToken // io.ktor.client.plugins.auth.providers/BearerTokens.refreshToken|{}refreshToken[0]
+        final fun <get-refreshToken>(): kotlin/String? // io.ktor.client.plugins.auth.providers/BearerTokens.refreshToken.<get-refreshToken>|<get-refreshToken>(){}[0]
+}
+
+final class io.ktor.client.plugins.auth.providers/DigestAuthConfig { // io.ktor.client.plugins.auth.providers/DigestAuthConfig|null[0]
+    constructor <init>() // io.ktor.client.plugins.auth.providers/DigestAuthConfig.<init>|<init>(){}[0]
+
+    final var algorithmName // io.ktor.client.plugins.auth.providers/DigestAuthConfig.algorithmName|{}algorithmName[0]
+        final fun <get-algorithmName>(): kotlin/String // io.ktor.client.plugins.auth.providers/DigestAuthConfig.algorithmName.<get-algorithmName>|<get-algorithmName>(){}[0]
+        final fun <set-algorithmName>(kotlin/String) // io.ktor.client.plugins.auth.providers/DigestAuthConfig.algorithmName.<set-algorithmName>|<set-algorithmName>(kotlin.String){}[0]
+    final var password // io.ktor.client.plugins.auth.providers/DigestAuthConfig.password|{}password[0]
+        final fun <get-password>(): kotlin/String // io.ktor.client.plugins.auth.providers/DigestAuthConfig.password.<get-password>|<get-password>(){}[0]
+        final fun <set-password>(kotlin/String) // io.ktor.client.plugins.auth.providers/DigestAuthConfig.password.<set-password>|<set-password>(kotlin.String){}[0]
+    final var realm // io.ktor.client.plugins.auth.providers/DigestAuthConfig.realm|{}realm[0]
+        final fun <get-realm>(): kotlin/String? // io.ktor.client.plugins.auth.providers/DigestAuthConfig.realm.<get-realm>|<get-realm>(){}[0]
+        final fun <set-realm>(kotlin/String?) // io.ktor.client.plugins.auth.providers/DigestAuthConfig.realm.<set-realm>|<set-realm>(kotlin.String?){}[0]
+    final var username // io.ktor.client.plugins.auth.providers/DigestAuthConfig.username|{}username[0]
+        final fun <get-username>(): kotlin/String // io.ktor.client.plugins.auth.providers/DigestAuthConfig.username.<get-username>|<get-username>(){}[0]
+        final fun <set-username>(kotlin/String) // io.ktor.client.plugins.auth.providers/DigestAuthConfig.username.<set-username>|<set-username>(kotlin.String){}[0]
+
+    final fun credentials(kotlin.coroutines/SuspendFunction0<io.ktor.client.plugins.auth.providers/DigestAuthCredentials?>) // io.ktor.client.plugins.auth.providers/DigestAuthConfig.credentials|credentials(kotlin.coroutines.SuspendFunction0<io.ktor.client.plugins.auth.providers.DigestAuthCredentials?>){}[0]
+}
+
+final class io.ktor.client.plugins.auth.providers/DigestAuthCredentials { // io.ktor.client.plugins.auth.providers/DigestAuthCredentials|null[0]
+    constructor <init>(kotlin/String, kotlin/String) // io.ktor.client.plugins.auth.providers/DigestAuthCredentials.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+    final val password // io.ktor.client.plugins.auth.providers/DigestAuthCredentials.password|{}password[0]
+        final fun <get-password>(): kotlin/String // io.ktor.client.plugins.auth.providers/DigestAuthCredentials.password.<get-password>|<get-password>(){}[0]
+    final val username // io.ktor.client.plugins.auth.providers/DigestAuthCredentials.username|{}username[0]
+        final fun <get-username>(): kotlin/String // io.ktor.client.plugins.auth.providers/DigestAuthCredentials.username.<get-username>|<get-username>(){}[0]
+}
+
+final class io.ktor.client.plugins.auth.providers/DigestAuthProvider : io.ktor.client.plugins.auth/AuthProvider { // io.ktor.client.plugins.auth.providers/DigestAuthProvider|null[0]
+    constructor <init>(kotlin.coroutines/SuspendFunction0<io.ktor.client.plugins.auth.providers/DigestAuthCredentials?>, kotlin/String? = ..., kotlin/String = ...) // io.ktor.client.plugins.auth.providers/DigestAuthProvider.<init>|<init>(kotlin.coroutines.SuspendFunction0<io.ktor.client.plugins.auth.providers.DigestAuthCredentials?>;kotlin.String?;kotlin.String){}[0]
+    constructor <init>(kotlin/String, kotlin/String, kotlin/String? = ..., kotlin/String = ...) // io.ktor.client.plugins.auth.providers/DigestAuthProvider.<init>|<init>(kotlin.String;kotlin.String;kotlin.String?;kotlin.String){}[0]
+
+    final val algorithmName // io.ktor.client.plugins.auth.providers/DigestAuthProvider.algorithmName|{}algorithmName[0]
+        final fun <get-algorithmName>(): kotlin/String // io.ktor.client.plugins.auth.providers/DigestAuthProvider.algorithmName.<get-algorithmName>|<get-algorithmName>(){}[0]
+    final val realm // io.ktor.client.plugins.auth.providers/DigestAuthProvider.realm|{}realm[0]
+        final fun <get-realm>(): kotlin/String? // io.ktor.client.plugins.auth.providers/DigestAuthProvider.realm.<get-realm>|<get-realm>(){}[0]
+    final val sendWithoutRequest // io.ktor.client.plugins.auth.providers/DigestAuthProvider.sendWithoutRequest|{}sendWithoutRequest[0]
+        final fun <get-sendWithoutRequest>(): kotlin/Boolean // io.ktor.client.plugins.auth.providers/DigestAuthProvider.sendWithoutRequest.<get-sendWithoutRequest>|<get-sendWithoutRequest>(){}[0]
+
+    final fun isApplicable(io.ktor.http.auth/HttpAuthHeader): kotlin/Boolean // io.ktor.client.plugins.auth.providers/DigestAuthProvider.isApplicable|isApplicable(io.ktor.http.auth.HttpAuthHeader){}[0]
+    final fun sendWithoutRequest(io.ktor.client.request/HttpRequestBuilder): kotlin/Boolean // io.ktor.client.plugins.auth.providers/DigestAuthProvider.sendWithoutRequest|sendWithoutRequest(io.ktor.client.request.HttpRequestBuilder){}[0]
+    final suspend fun addRequestHeaders(io.ktor.client.request/HttpRequestBuilder, io.ktor.http.auth/HttpAuthHeader?) // io.ktor.client.plugins.auth.providers/DigestAuthProvider.addRequestHeaders|addRequestHeaders(io.ktor.client.request.HttpRequestBuilder;io.ktor.http.auth.HttpAuthHeader?){}[0]
+    final suspend fun refreshToken(io.ktor.client.statement/HttpResponse): kotlin/Boolean // io.ktor.client.plugins.auth.providers/DigestAuthProvider.refreshToken|refreshToken(io.ktor.client.statement.HttpResponse){}[0]
+}
+
+final class io.ktor.client.plugins.auth.providers/RefreshTokensParams { // io.ktor.client.plugins.auth.providers/RefreshTokensParams|null[0]
+    constructor <init>(io.ktor.client/HttpClient, io.ktor.client.statement/HttpResponse, io.ktor.client.plugins.auth.providers/BearerTokens?) // io.ktor.client.plugins.auth.providers/RefreshTokensParams.<init>|<init>(io.ktor.client.HttpClient;io.ktor.client.statement.HttpResponse;io.ktor.client.plugins.auth.providers.BearerTokens?){}[0]
+
+    final val client // io.ktor.client.plugins.auth.providers/RefreshTokensParams.client|{}client[0]
+        final fun <get-client>(): io.ktor.client/HttpClient // io.ktor.client.plugins.auth.providers/RefreshTokensParams.client.<get-client>|<get-client>(){}[0]
+    final val oldTokens // io.ktor.client.plugins.auth.providers/RefreshTokensParams.oldTokens|{}oldTokens[0]
+        final fun <get-oldTokens>(): io.ktor.client.plugins.auth.providers/BearerTokens? // io.ktor.client.plugins.auth.providers/RefreshTokensParams.oldTokens.<get-oldTokens>|<get-oldTokens>(){}[0]
+    final val response // io.ktor.client.plugins.auth.providers/RefreshTokensParams.response|{}response[0]
+        final fun <get-response>(): io.ktor.client.statement/HttpResponse // io.ktor.client.plugins.auth.providers/RefreshTokensParams.response.<get-response>|<get-response>(){}[0]
+
+    final fun (io.ktor.client.request/HttpRequestBuilder).markAsRefreshTokenRequest() // io.ktor.client.plugins.auth.providers/RefreshTokensParams.markAsRefreshTokenRequest|markAsRefreshTokenRequest@io.ktor.client.request.HttpRequestBuilder(){}[0]
+}
+
+final class io.ktor.client.plugins.auth/AuthConfig { // io.ktor.client.plugins.auth/AuthConfig|null[0]
+    constructor <init>() // io.ktor.client.plugins.auth/AuthConfig.<init>|<init>(){}[0]
+
+    final val providers // io.ktor.client.plugins.auth/AuthConfig.providers|{}providers[0]
+        final fun <get-providers>(): kotlin.collections/MutableList<io.ktor.client.plugins.auth/AuthProvider> // io.ktor.client.plugins.auth/AuthConfig.providers.<get-providers>|<get-providers>(){}[0]
+}
+
+final val io.ktor.client.plugins.auth/Auth // io.ktor.client.plugins.auth/Auth|{}Auth[0]
+    final fun <get-Auth>(): io.ktor.client.plugins.api/ClientPlugin<io.ktor.client.plugins.auth/AuthConfig> // io.ktor.client.plugins.auth/Auth.<get-Auth>|<get-Auth>(){}[0]
+final val io.ktor.client.plugins.auth/AuthCircuitBreaker // io.ktor.client.plugins.auth/AuthCircuitBreaker|{}AuthCircuitBreaker[0]
+    final fun <get-AuthCircuitBreaker>(): io.ktor.util/AttributeKey<kotlin/Unit> // io.ktor.client.plugins.auth/AuthCircuitBreaker.<get-AuthCircuitBreaker>|<get-AuthCircuitBreaker>(){}[0]
+final val io.ktor.client.plugins.auth/AuthProvidersKey // io.ktor.client.plugins.auth/AuthProvidersKey|{}AuthProvidersKey[0]
+    final fun <get-AuthProvidersKey>(): io.ktor.util/AttributeKey<kotlin.collections/List<io.ktor.client.plugins.auth/AuthProvider>> // io.ktor.client.plugins.auth/AuthProvidersKey.<get-AuthProvidersKey>|<get-AuthProvidersKey>(){}[0]
+final val io.ktor.client.plugins.auth/authProviders // io.ktor.client.plugins.auth/authProviders|@io.ktor.client.HttpClient{}authProviders[0]
+    final fun (io.ktor.client/HttpClient).<get-authProviders>(): kotlin.collections/List<io.ktor.client.plugins.auth/AuthProvider> // io.ktor.client.plugins.auth/authProviders.<get-authProviders>|<get-authProviders>@io.ktor.client.HttpClient(){}[0]
+
+final fun (io.ktor.client.plugins.auth/AuthConfig).io.ktor.client.plugins.auth.providers/basic(kotlin/Function1<io.ktor.client.plugins.auth.providers/BasicAuthConfig, kotlin/Unit>) // io.ktor.client.plugins.auth.providers/basic|basic@io.ktor.client.plugins.auth.AuthConfig(kotlin.Function1<io.ktor.client.plugins.auth.providers.BasicAuthConfig,kotlin.Unit>){}[0]
+final fun (io.ktor.client.plugins.auth/AuthConfig).io.ktor.client.plugins.auth.providers/bearer(kotlin/Function1<io.ktor.client.plugins.auth.providers/BearerAuthConfig, kotlin/Unit>) // io.ktor.client.plugins.auth.providers/bearer|bearer@io.ktor.client.plugins.auth.AuthConfig(kotlin.Function1<io.ktor.client.plugins.auth.providers.BearerAuthConfig,kotlin.Unit>){}[0]
+final fun (io.ktor.client.plugins.auth/AuthConfig).io.ktor.client.plugins.auth.providers/digest(kotlin/Function1<io.ktor.client.plugins.auth.providers/DigestAuthConfig, kotlin/Unit>) // io.ktor.client.plugins.auth.providers/digest|digest@io.ktor.client.plugins.auth.AuthConfig(kotlin.Function1<io.ktor.client.plugins.auth.providers.DigestAuthConfig,kotlin.Unit>){}[0]
+final fun (io.ktor.client/HttpClientConfig<*>).io.ktor.client.plugins.auth/Auth(kotlin/Function1<io.ktor.client.plugins.auth/AuthConfig, kotlin/Unit>) // io.ktor.client.plugins.auth/Auth|Auth@io.ktor.client.HttpClientConfig<*>(kotlin.Function1<io.ktor.client.plugins.auth.AuthConfig,kotlin.Unit>){}[0]
+final inline fun <#A: reified io.ktor.client.plugins.auth/AuthProvider> (io.ktor.client/HttpClient).io.ktor.client.plugins.auth/authProvider(): #A? // io.ktor.client.plugins.auth/authProvider|authProvider@io.ktor.client.HttpClient(){0§<io.ktor.client.plugins.auth.AuthProvider>}[0]

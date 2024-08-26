@@ -10,8 +10,8 @@ internal open class DelegatingMutableSet<From, To>(
     private val convert: To.() -> From
 ) : MutableSet<To> {
 
-    public open fun Collection<To>.convert(): Collection<From> = map { it.convert() }
-    public open fun Collection<From>.convertTo(): Collection<To> = map { it.convertTo() }
+    open fun Collection<To>.convert(): Collection<From> = map { it.convert() }
+    open fun Collection<From>.convertTo(): Collection<To> = map { it.convertTo() }
 
     override val size: Int = delegate.size
 
@@ -25,9 +25,9 @@ internal open class DelegatingMutableSet<From, To>(
 
     override fun remove(element: To): Boolean = delegate.remove(element.convert())
 
-    override fun removeAll(elements: Collection<To>): Boolean = delegate.removeAll(elements.convert())
+    override fun removeAll(elements: Collection<To>): Boolean = delegate.removeAll(elements.convert().toSet())
 
-    override fun retainAll(elements: Collection<To>): Boolean = delegate.retainAll(elements.convert())
+    override fun retainAll(elements: Collection<To>): Boolean = delegate.retainAll(elements.convert().toSet())
 
     override fun contains(element: To): Boolean = delegate.contains(element.convert())
 

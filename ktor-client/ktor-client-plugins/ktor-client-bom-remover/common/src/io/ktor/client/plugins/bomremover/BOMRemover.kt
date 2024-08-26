@@ -9,6 +9,7 @@ import io.ktor.client.call.*
 import io.ktor.client.plugins.api.*
 import io.ktor.client.statement.*
 import io.ktor.utils.io.*
+import kotlinx.coroutines.*
 
 /**
  * BOMRemover plugin that allows you to remove Byte Order Mark from response body.
@@ -38,14 +39,14 @@ public val BOMRemover: ClientPlugin<Unit> = createClientPlugin(
         }
 
         var offset = 0
-        context.writer {
+        GlobalScope.writer {
             for (bom in BOMs) {
                 if (length >= bom.size && bom.indices.all { beginning[it] == bom[it] }) {
                     offset = bom.size
                     break
                 }
             }
-            channel.writeFully(beginning, offset, length - offset)
+            channel.writeFully(beginning, startIndex = offset, endIndex = length)
 
             body.copyTo(channel)
         }.channel

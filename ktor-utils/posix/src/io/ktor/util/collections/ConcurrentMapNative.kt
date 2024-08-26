@@ -77,5 +77,5 @@ public actual class ConcurrentMap<Key, Value> public actual constructor(
         return other == delegate
     }
 
-    override fun toString(): String = "ConcurrentMapJs by $delegate"
+    override fun toString(): String = "ConcurrentMapNative by $delegate"
 }

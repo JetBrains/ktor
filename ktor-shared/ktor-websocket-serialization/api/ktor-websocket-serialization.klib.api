@@ -1,0 +1,12 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-websocket-serialization>
+final suspend fun (io.ktor.websocket/WebSocketSession).io.ktor.websocket.serialization/receiveDeserializedBase(io.ktor.util.reflect/TypeInfo, io.ktor.serialization/WebsocketContentConverter, io.ktor.utils.io.charsets/Charset): kotlin/Any? // io.ktor.websocket.serialization/receiveDeserializedBase|receiveDeserializedBase@io.ktor.websocket.WebSocketSession(io.ktor.util.reflect.TypeInfo;io.ktor.serialization.WebsocketContentConverter;io.ktor.utils.io.charsets.Charset){}[0]
+final suspend fun (io.ktor.websocket/WebSocketSession).io.ktor.websocket.serialization/sendSerializedBase(kotlin/Any?, io.ktor.util.reflect/TypeInfo, io.ktor.serialization/WebsocketContentConverter, io.ktor.utils.io.charsets/Charset) // io.ktor.websocket.serialization/sendSerializedBase|sendSerializedBase@io.ktor.websocket.WebSocketSession(kotlin.Any?;io.ktor.util.reflect.TypeInfo;io.ktor.serialization.WebsocketContentConverter;io.ktor.utils.io.charsets.Charset){}[0]
+final suspend inline fun <#A: reified kotlin/Any?> (io.ktor.websocket/WebSocketSession).io.ktor.websocket.serialization/receiveDeserializedBase(io.ktor.serialization/WebsocketContentConverter, io.ktor.utils.io.charsets/Charset): kotlin/Any? // io.ktor.websocket.serialization/receiveDeserializedBase|receiveDeserializedBase@io.ktor.websocket.WebSocketSession(io.ktor.serialization.WebsocketContentConverter;io.ktor.utils.io.charsets.Charset){0§<kotlin.Any?>}[0]
+final suspend inline fun <#A: reified kotlin/Any?> (io.ktor.websocket/WebSocketSession).io.ktor.websocket.serialization/sendSerializedBase(kotlin/Any?, io.ktor.serialization/WebsocketContentConverter, io.ktor.utils.io.charsets/Charset) // io.ktor.websocket.serialization/sendSerializedBase|sendSerializedBase@io.ktor.websocket.WebSocketSession(kotlin.Any?;io.ktor.serialization.WebsocketContentConverter;io.ktor.utils.io.charsets.Charset){0§<kotlin.Any?>}[0]

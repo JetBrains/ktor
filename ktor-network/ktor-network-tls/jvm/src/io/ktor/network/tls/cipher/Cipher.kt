@@ -9,12 +9,12 @@ import java.nio.*
 
 internal interface TLSCipher {
 
-    public fun encrypt(record: TLSRecord): TLSRecord
+    fun encrypt(record: TLSRecord): TLSRecord
 
-    public fun decrypt(record: TLSRecord): TLSRecord
+    fun decrypt(record: TLSRecord): TLSRecord
 
-    public companion object {
-        public fun fromSuite(suite: CipherSuite, keyMaterial: ByteArray): TLSCipher =
+    companion object {
+        fun fromSuite(suite: CipherSuite, keyMaterial: ByteArray): TLSCipher =
             when (suite.cipherType) {
                 CipherType.GCM -> GCMCipher(suite, keyMaterial)
                 CipherType.CBC -> CBCCipher(suite, keyMaterial)

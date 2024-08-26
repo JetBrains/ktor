@@ -20,6 +20,7 @@ kotlin.sourceSets {
             api(project(":ktor-client:ktor-client-mock"))
             api(project(":ktor-test-dispatcher"))
             api(libs.kotlin.test)
+            api(libs.kotlinx.coroutines.test)
         }
     }
     commonTest {
@@ -69,7 +70,7 @@ kotlin.sourceSets {
         }
     }
 
-    jvmAndNixTest {
+    jvmAndPosixTest {
         dependencies {
             runtimeOnly(project(":ktor-client:ktor-client-cio"))
         }

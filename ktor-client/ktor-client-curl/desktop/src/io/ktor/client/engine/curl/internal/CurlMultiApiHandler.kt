@@ -4,13 +4,13 @@
 
 package io.ktor.client.engine.curl.internal
 
-import io.ktor.client.engine.curl.*
 import io.ktor.client.plugins.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.locks.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.*
+import kotlinx.io.*
 import libcurl.*
 
 private class RequestHolder @OptIn(ExperimentalForeignApi::class) constructor(
@@ -34,9 +34,8 @@ internal class CurlMultiApiHandler : Closeable {
     private val cancelledHandles = mutableSetOf<Pair<EasyHandle, Throwable>>()
 
     @OptIn(ExperimentalForeignApi::class)
-    @Suppress("DEPRECATION")
     private val multiHandle: MultiHandle = curl_multi_init()
-        ?: throw CurlRuntimeException("Could not initialize curl multi handle")
+        ?: throw RuntimeException("Could not initialize curl multi handle")
 
     private val easyHandlesToUnpauseLock = SynchronizedObject()
 
@@ -58,8 +57,7 @@ internal class CurlMultiApiHandler : Closeable {
     @OptIn(ExperimentalForeignApi::class)
     fun scheduleRequest(request: CurlRequestData, deferred: CompletableDeferred<CurlSuccess>): EasyHandle {
         val easyHandle = curl_easy_init()
-            ?: throw @Suppress("DEPRECATION")
-            CurlIllegalStateException("Could not initialize an easy handle")
+            ?: error("Could not initialize an easy handle")
 
         val bodyStartedReceiving = CompletableDeferred<Unit>()
         val responseData = CurlResponseBuilder(request)
@@ -225,9 +223,8 @@ internal class CurlMultiApiHandler : Closeable {
                 val messagePtr = curl_multi_info_read(multiHandle, messagesLeft.ptr)
                 val message = messagePtr?.pointed ?: continue
 
-                @Suppress("DEPRECATION")
                 val easyHandle = message.easy_handle
-                    ?: throw CurlIllegalStateException("Got a null easy handle from the message")
+                    ?: error("Got a null easy handle from the message")
 
                 try {
                     val result = processCompletedEasyHandle(message.msg, easyHandle, message.data.result)
@@ -257,7 +254,7 @@ internal class CurlMultiApiHandler : Closeable {
                 return CurlFail(cause)
             } finally {
                 responseBuilder.bodyChannel.close(cause)
-                responseBuilder.headersBytes.release()
+                responseBuilder.headersBytes.close()
             }
         } finally {
             curl_multi_remove_handle(multiHandle, easyHandle).verify()
@@ -286,7 +283,7 @@ internal class CurlMultiApiHandler : Closeable {
                     ?: collectSuccessResponse(easyHandle)!!
             } finally {
                 responseBuilder.bodyChannel.close(null)
-                responseBuilder.headersBytes.release()
+                responseBuilder.headersBytes.close()
             }
         } finally {
             curl_multi_remove_handle(multiHandle, easyHandle).verify()
@@ -305,8 +302,7 @@ internal class CurlMultiApiHandler : Closeable {
 
         if (message != CURLMSG.CURLMSG_DONE) {
             return CurlFail(
-                @Suppress("DEPRECATION")
-                CurlIllegalStateException("Request $request failed: $message")
+                IllegalStateException("Request $request failed: $message")
             )
         }
 
@@ -322,16 +318,14 @@ internal class CurlMultiApiHandler : Closeable {
 
         if (result == CURLE_PEER_FAILED_VERIFICATION) {
             return CurlFail(
-                @Suppress("DEPRECATION")
-                CurlIllegalStateException(
+                IllegalStateException(
                     "TLS verification failed for request: $request. Reason: $errorMessage"
                 )
             )
         }
 
         return CurlFail(
-            @Suppress("DEPRECATION")
-            CurlIllegalStateException("Connection failed for request: $request. Reason: $errorMessage")
+            IllegalStateException("Connection failed for request: $request. Reason: $errorMessage")
         )
     }
 
@@ -353,7 +347,7 @@ internal class CurlMultiApiHandler : Closeable {
 
         val responseBuilder = responseDataRef.value!!.fromCPointer<CurlResponseBuilder>()
         with(responseBuilder) {
-            val headers = headersBytes.build().readBytes()
+            val headers = headersBytes.build().readByteArray()
 
             CurlSuccess(
                 httpStatusCode.value.toInt(),

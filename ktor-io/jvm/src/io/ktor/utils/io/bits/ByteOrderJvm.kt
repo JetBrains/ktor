@@ -12,7 +12,7 @@ public actual inline fun Short.reverseByteOrder(): Short = java.lang.Short.rever
  * Reverse number's byte order
  */
 @Suppress("NOTHING_TO_INLINE")
-public actual inline fun Int.reverseByteOrder(): Int = java.lang.Integer.reverseBytes(this)
+public actual inline fun Int.reverseByteOrder(): Int = Integer.reverseBytes(this)
 
 /**
  * Reverse number's byte order
@@ -26,7 +26,7 @@ public actual inline fun Long.reverseByteOrder(): Long = java.lang.Long.reverseB
 @Suppress("NOTHING_TO_INLINE")
 public actual inline fun Float.reverseByteOrder(): Float =
     java.lang.Float.intBitsToFloat(
-        java.lang.Integer.reverseBytes(
+        Integer.reverseBytes(
             java.lang.Float.floatToRawIntBits(this)
         )
     )

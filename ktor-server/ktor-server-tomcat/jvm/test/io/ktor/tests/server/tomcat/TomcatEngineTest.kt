@@ -82,7 +82,7 @@ class TomcatHttpServerJvmTest :
     }
 
     @Test
-    fun testServletAttributes() {
+    fun testServletAttributes() = runTest {
         createAndStartServer {
             get("/tomcat/attributes") {
                 call.respondText(

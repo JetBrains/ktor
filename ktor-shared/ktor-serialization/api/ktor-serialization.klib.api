@@ -1,0 +1,51 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-serialization>
+abstract interface io.ktor.serialization/Configuration { // io.ktor.serialization/Configuration|null[0]
+    abstract fun <#A1: io.ktor.serialization/ContentConverter> register(io.ktor.http/ContentType, #A1, kotlin/Function1<#A1, kotlin/Unit> = ...) // io.ktor.serialization/Configuration.register|register(io.ktor.http.ContentType;0:0;kotlin.Function1<0:0,kotlin.Unit>){0§<io.ktor.serialization.ContentConverter>}[0]
+}
+
+abstract interface io.ktor.serialization/ContentConverter { // io.ktor.serialization/ContentConverter|null[0]
+    abstract suspend fun deserialize(io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, io.ktor.utils.io/ByteReadChannel): kotlin/Any? // io.ktor.serialization/ContentConverter.deserialize|deserialize(io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;io.ktor.utils.io.ByteReadChannel){}[0]
+    abstract suspend fun serialize(io.ktor.http/ContentType, io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, kotlin/Any?): io.ktor.http.content/OutgoingContent? // io.ktor.serialization/ContentConverter.serialize|serialize(io.ktor.http.ContentType;io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;kotlin.Any?){}[0]
+}
+
+abstract interface io.ktor.serialization/WebsocketContentConverter { // io.ktor.serialization/WebsocketContentConverter|null[0]
+    abstract fun isApplicable(io.ktor.websocket/Frame): kotlin/Boolean // io.ktor.serialization/WebsocketContentConverter.isApplicable|isApplicable(io.ktor.websocket.Frame){}[0]
+    abstract suspend fun deserialize(io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, io.ktor.websocket/Frame): kotlin/Any? // io.ktor.serialization/WebsocketContentConverter.deserialize|deserialize(io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;io.ktor.websocket.Frame){}[0]
+    open suspend fun serialize(io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, kotlin/Any?): io.ktor.websocket/Frame // io.ktor.serialization/WebsocketContentConverter.serialize|serialize(io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;kotlin.Any?){}[0]
+}
+
+final class io.ktor.serialization/JsonConvertException : io.ktor.serialization/ContentConvertException { // io.ktor.serialization/JsonConvertException|null[0]
+    constructor <init>(kotlin/String, kotlin/Throwable? = ...) // io.ktor.serialization/JsonConvertException.<init>|<init>(kotlin.String;kotlin.Throwable?){}[0]
+}
+
+final class io.ktor.serialization/WebsocketConverterNotFoundException : io.ktor.serialization/WebsocketContentConvertException { // io.ktor.serialization/WebsocketConverterNotFoundException|null[0]
+    constructor <init>(kotlin/String, kotlin/Throwable? = ...) // io.ktor.serialization/WebsocketConverterNotFoundException.<init>|<init>(kotlin.String;kotlin.Throwable?){}[0]
+}
+
+final class io.ktor.serialization/WebsocketDeserializeException : io.ktor.serialization/WebsocketContentConvertException { // io.ktor.serialization/WebsocketDeserializeException|null[0]
+    constructor <init>(kotlin/String, kotlin/Throwable? = ..., io.ktor.websocket/Frame) // io.ktor.serialization/WebsocketDeserializeException.<init>|<init>(kotlin.String;kotlin.Throwable?;io.ktor.websocket.Frame){}[0]
+
+    final val frame // io.ktor.serialization/WebsocketDeserializeException.frame|{}frame[0]
+        final fun <get-frame>(): io.ktor.websocket/Frame // io.ktor.serialization/WebsocketDeserializeException.frame.<get-frame>|<get-frame>(){}[0]
+}
+
+open class io.ktor.serialization/ContentConvertException : kotlin/Exception { // io.ktor.serialization/ContentConvertException|null[0]
+    constructor <init>(kotlin/String, kotlin/Throwable? = ...) // io.ktor.serialization/ContentConvertException.<init>|<init>(kotlin.String;kotlin.Throwable?){}[0]
+}
+
+open class io.ktor.serialization/WebsocketContentConvertException : io.ktor.serialization/ContentConvertException { // io.ktor.serialization/WebsocketContentConvertException|null[0]
+    constructor <init>(kotlin/String, kotlin/Throwable? = ...) // io.ktor.serialization/WebsocketContentConvertException.<init>|<init>(kotlin.String;kotlin.Throwable?){}[0]
+}
+
+final fun (io.ktor.http/Headers).io.ktor.serialization/suitableCharset(io.ktor.utils.io.charsets/Charset = ...): io.ktor.utils.io.charsets/Charset // io.ktor.serialization/suitableCharset|suitableCharset@io.ktor.http.Headers(io.ktor.utils.io.charsets.Charset){}[0]
+final fun (io.ktor.http/Headers).io.ktor.serialization/suitableCharsetOrNull(io.ktor.utils.io.charsets/Charset = ...): io.ktor.utils.io.charsets/Charset? // io.ktor.serialization/suitableCharsetOrNull|suitableCharsetOrNull@io.ktor.http.Headers(io.ktor.utils.io.charsets.Charset){}[0]
+final suspend fun (kotlin.collections/List<io.ktor.serialization/ContentConverter>).io.ktor.serialization/deserialize(io.ktor.utils.io/ByteReadChannel, io.ktor.util.reflect/TypeInfo, io.ktor.utils.io.charsets/Charset): kotlin/Any // io.ktor.serialization/deserialize|deserialize@kotlin.collections.List<io.ktor.serialization.ContentConverter>(io.ktor.utils.io.ByteReadChannel;io.ktor.util.reflect.TypeInfo;io.ktor.utils.io.charsets.Charset){}[0]
+final suspend inline fun <#A: reified kotlin/Any?> (io.ktor.serialization/WebsocketContentConverter).io.ktor.serialization/deserialize(io.ktor.websocket/Frame, io.ktor.utils.io.charsets/Charset = ...): #A // io.ktor.serialization/deserialize|deserialize@io.ktor.serialization.WebsocketContentConverter(io.ktor.websocket.Frame;io.ktor.utils.io.charsets.Charset){0§<kotlin.Any?>}[0]
+final suspend inline fun <#A: reified kotlin/Any?> (io.ktor.serialization/WebsocketContentConverter).io.ktor.serialization/serialize(#A, io.ktor.utils.io.charsets/Charset = ...): io.ktor.websocket/Frame // io.ktor.serialization/serialize|serialize@io.ktor.serialization.WebsocketContentConverter(0:0;io.ktor.utils.io.charsets.Charset){0§<kotlin.Any?>}[0]

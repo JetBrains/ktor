@@ -11,7 +11,7 @@ kotlin {
                 api(project(":ktor-shared:ktor-call-id"))
             }
         }
-        jvmAndNixTest {
+        commonTest {
             dependencies {
                 api(project(":ktor-server:ktor-server-test-host"))
                 api(project(":ktor-server:ktor-server-plugins:ktor-server-call-id"))
@@ -19,3 +19,7 @@ kotlin {
         }
     }
 }
+
+// tests need server, so can't be run in browser
+tasks.named("jsBrowserTest") { onlyIf { false } }
+tasks.named("wasmJsBrowserTest") { onlyIf { false } }

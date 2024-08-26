@@ -15,7 +15,7 @@ import io.ktor.server.plugins.compression.*
 import io.ktor.server.plugins.partialcontent.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.testing.*
+import io.ktor.server.test.base.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.*
 import java.io.*
@@ -28,7 +28,7 @@ abstract class CompressionTestSuite<TEngine : ApplicationEngine, TConfiguration 
 
     @OptIn(InternalAPI::class)
     @Test
-    fun testLocalFileContentWithCompression() {
+    fun testLocalFileContentWithCompression() = runTest {
         val file = loadTestFile()
         testLog.trace("test file is $file")
 
@@ -41,14 +41,14 @@ abstract class CompressionTestSuite<TEngine : ApplicationEngine, TConfiguration 
 
         withUrl("/", { header(HttpHeaders.AcceptEncoding, "gzip") }) {
             assertEquals(200, status.value)
-            assertEquals(file.readText(), GZIPInputStream(content.toInputStream()).reader().use { it.readText() })
+            assertEquals(file.readText(), GZIPInputStream(rawContent.toInputStream()).reader().use { it.readText() })
             assertEquals("gzip", headers[HttpHeaders.ContentEncoding])
         }
     }
 
     @OptIn(InternalAPI::class)
     @Test
-    fun testStreamingContentWithCompression() {
+    fun testStreamingContentWithCompression() = runTest {
         val file = loadTestFile()
         testLog.trace("test file is $file")
 
@@ -67,13 +67,13 @@ abstract class CompressionTestSuite<TEngine : ApplicationEngine, TConfiguration 
 
         withUrl("/", { header(HttpHeaders.AcceptEncoding, "gzip") }) {
             assertEquals(200, status.value)
-            assertEquals("Hello!", GZIPInputStream(content.toInputStream()).reader().use { it.readText() })
+            assertEquals("Hello!", GZIPInputStream(rawContent.toInputStream()).reader().use { it.readText() })
             assertEquals("gzip", headers[HttpHeaders.ContentEncoding])
         }
     }
 
     @Test
-    fun testLocalFileContentRangeWithCompression() {
+    fun testLocalFileContentRangeWithCompression() = runTest {
         val file = loadTestFile()
         testLog.trace("test file is $file")
 
@@ -106,7 +106,7 @@ abstract class CompressionTestSuite<TEngine : ApplicationEngine, TConfiguration 
     }
 
     @Test
-    fun testCompressionWriteToLarge() {
+    fun testCompressionWriteToLarge() = runTest {
         val count = 655350
         fun Appendable.produceText() {
             for (i in 1..count) {

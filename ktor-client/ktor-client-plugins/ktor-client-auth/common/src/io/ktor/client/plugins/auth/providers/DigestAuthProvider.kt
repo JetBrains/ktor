@@ -28,7 +28,6 @@ public fun AuthConfig.digest(block: DigestAuthConfig.() -> Unit) {
 /**
  * A configuration for [DigestAuthProvider].
  */
-@Suppress("KDocMissingDocumentation")
 @KtorDsl
 public class DigestAuthConfig {
 
@@ -77,7 +76,6 @@ public class DigestAuthCredentials(
  *
  * You can learn more from [Digest authentication](https://ktor.io/docs/digest-client.html).
  */
-@Suppress("KDocMissingDocumentation")
 public class DigestAuthProvider(
     private val credentials: suspend () -> DigestAuthCredentials?,
     @Deprecated("This will become private", level = DeprecationLevel.ERROR) public val realm: String? = null,
@@ -113,7 +111,6 @@ public class DigestAuthProvider(
 
     override fun sendWithoutRequest(request: HttpRequestBuilder): Boolean = false
 
-    @Suppress("DEPRECATION")
     override fun isApplicable(auth: HttpAuthHeader): Boolean {
         if (auth !is HttpAuthHeader.Parameterized || auth.authScheme != AuthScheme.Digest) {
             LOGGER.trace("Digest Auth Provider is not applicable for $auth")
@@ -144,7 +141,6 @@ public class DigestAuthProvider(
         return true
     }
 
-    @Suppress("DEPRECATION")
     override suspend fun addRequestHeaders(request: HttpRequestBuilder, authHeader: HttpAuthHeader?) {
         val nonceCount = requestCounter.incrementAndGet()
         val methodName = request.method.value.uppercase()

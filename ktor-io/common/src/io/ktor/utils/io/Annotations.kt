@@ -1,6 +1,6 @@
 /*
-* Copyright 2014-2021 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
-*/
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ */
 
 package io.ktor.utils.io
 
@@ -9,7 +9,6 @@ package io.ktor.utils.io
  * It could be modified or removed without any notice. Using it outside Ktor could cause undefined behaviour and/or
  * any unexpected effects.
  */
-@Suppress("DEPRECATION")
 @RequiresOptIn(
     level = RequiresOptIn.Level.ERROR,
     message = "This API is internal in Ktor and should not be used. It could be removed or changed without notice."
@@ -29,7 +28,6 @@ public annotation class InternalAPI
 /**
  * API marked with this annotation is experimental and is not guaranteed to be stable.
  */
-@Suppress("DEPRECATION")
 @RequiresOptIn(
     level = RequiresOptIn.Level.WARNING,
     message = "This API is experimental. " +

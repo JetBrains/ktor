@@ -17,8 +17,8 @@ internal actual suspend fun deserializeSequence(
     format: Json,
     content: ByteReadChannel,
     typeInfo: TypeInfo
-): Sequence<Any?>? {
-    return withContext(Dispatchers.IO) {
+): Sequence<Any?>? =
+    withContext(Dispatchers.IO) {
         val inputStream = content.toInputStream()
         // kotlinx.serialization provides optimized sequence deserialization
         // Elements are parsed lazily when the resulting Sequence is evaluated.
@@ -27,4 +27,3 @@ internal actual suspend fun deserializeSequence(
         val serializer = format.serializersModule.serializerForTypeInfo(elementTypeInfo)
         format.decodeToSequence(inputStream, serializer)
     }
-}

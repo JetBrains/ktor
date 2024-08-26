@@ -59,7 +59,7 @@ public class KtorLegacyNSURLSessionDelegate(
         task: NSURLSessionTask
     ): CompletableDeferred<HttpResponseData> {
         val taskHandler = DarwinLegacyTaskHandler(request, callContext)
-        taskHandlers.put(task, taskHandler)
+        taskHandlers[task] = taskHandler
         return taskHandler.response
     }
 

@@ -89,9 +89,10 @@ internal class ApacheRequestEntityProducer(
     private val producerJob = Job()
     override val coroutineContext: CoroutineContext = callContext + producerJob
 
-    @Suppress("DEPRECATION")
+    private val channel: ByteReadChannel = getChannel(callContext, requestData.body)
+
     @OptIn(DelicateCoroutinesApi::class)
-    private val channel: ByteReadChannel = when (val body = requestData.body) {
+    private fun getChannel(callContext: CoroutineContext, body: OutgoingContent): ByteReadChannel = when (body) {
         is OutgoingContent.ByteArrayContent -> ByteReadChannel(body.bytes())
         is OutgoingContent.ProtocolUpgrade -> throw UnsupportedContentTypeException(body)
         is OutgoingContent.NoContent -> ByteReadChannel.Empty
@@ -99,6 +100,7 @@ internal class ApacheRequestEntityProducer(
         is OutgoingContent.WriteChannelContent -> GlobalScope.writer(callContext, autoFlush = true) {
             body.writeTo(channel)
         }.channel
+        is OutgoingContent.ContentWrapper -> getChannel(callContext, body.delegate())
     }
 
     init {

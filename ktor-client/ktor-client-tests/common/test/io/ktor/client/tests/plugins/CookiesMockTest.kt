@@ -62,4 +62,34 @@ class CookiesMockTest {
             client.get {}.body<String>()
         }
     }
+
+    @Test
+    fun testWithLeadingDotInDomain() = testWithEngine(MockEngine) {
+        config {
+            install(HttpCookies)
+
+            engine {
+                addHandler {
+                    respond(
+                        "OK",
+                        HttpStatusCode.OK,
+                        headersOf(
+                            HttpHeaders.SetCookie,
+                            "myServer=value; Domain=.vk.com; secure"
+                        )
+                    )
+                }
+            }
+        }
+
+        test { client ->
+            client.get("https://m.vk.com").body<Unit>()
+            assertTrue(client.cookies("https://.vk.com").isNotEmpty())
+            assertTrue(client.cookies("https://vk.com").isNotEmpty())
+            assertTrue(client.cookies("https://m.vk.com").isNotEmpty())
+            assertTrue(client.cookies("https://m.vk.com").isNotEmpty())
+
+            assertTrue(client.cookies("https://google.com").isEmpty())
+        }
+    }
 }

@@ -26,7 +26,6 @@ import java.util.zip.*
 import kotlin.test.*
 import kotlin.text.Charsets
 
-@Suppress("DEPRECATION")
 class VelocityTest {
     @Test
     fun testName() {

@@ -141,7 +141,7 @@ data class CompoundSession(val part: Part = Part(779))
 
 sealed class SealedSession {
     data class SS(val e: Int = 834) : SealedSession()
-    object E : SealedSession()
+    data object E : SealedSession()
 }
 
 data class SessionWithSealedMember(val member: SealedSession = SealedSession.SS())

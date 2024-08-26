@@ -5,11 +5,14 @@
 package io.ktor.server.servlet.jakarta
 
 import io.ktor.events.*
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.config.*
 import io.ktor.server.config.ConfigLoader.Companion.load
 import io.ktor.server.engine.*
+import io.ktor.server.servlet.jakarta.ServletApplicationEngine.Companion.ApplicationAttributeKey
 import io.ktor.util.*
+import jakarta.servlet.*
 import jakarta.servlet.annotation.*
 import org.slf4j.*
 import kotlin.coroutines.*
@@ -19,6 +22,13 @@ import kotlin.coroutines.*
  */
 @MultipartConfig
 public open class ServletApplicationEngine : KtorServlet() {
+
+    override val managedByEngineHeaders: Set<String>
+        get() = if (servletContext.isTomcat()) {
+            setOf(HttpHeaders.TransferEncoding, HttpHeaders.Connection)
+        } else {
+            emptySet()
+        }
 
     private val embeddedServer: EmbeddedServer<ApplicationEngine, ApplicationEngine.Configuration>? by lazy {
         servletContext.getAttribute(ApplicationAttributeKey)?.let {
@@ -42,7 +52,7 @@ public open class ServletApplicationEngine : KtorServlet() {
         val applicationIdPath = "ktor.application.id"
 
         val combinedConfig = parametersConfig
-            .withFallback(ConfigLoader.load(parametersConfig.tryGetString(configPath)))
+            .withFallback(load(parametersConfig.tryGetString(configPath)))
 
         val applicationId = combinedConfig.tryGetString(applicationIdPath) ?: "Application"
 
@@ -156,3 +166,6 @@ private object EmptyEngineFactory : ApplicationEngineFactory<ApplicationEngine, 
         }
     }
 }
+
+internal fun ServletContext.isTomcat() =
+    getAttribute(ApplicationAttributeKey) == null && serverInfo.contains("tomcat", ignoreCase = true)

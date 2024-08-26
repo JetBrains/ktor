@@ -20,7 +20,7 @@ public enum class TLSAlertLevel(public val code: Int) {
     FATAL(2);
 
     public companion object {
-        private val byCode = Array(256) { idx -> values().firstOrNull { it.code == idx } }
+        private val byCode = Array(256) { idx -> entries.firstOrNull { it.code == idx } }
 
         /**
          * Find alert level by its numeric [code] or fail
@@ -66,7 +66,7 @@ public enum class TLSAlertType(public val code: Int) {
     UnsupportedExtension(110);
 
     public companion object {
-        private val byCode = Array(256) { idx -> TLSAlertType.values().firstOrNull { it.code == idx } }
+        private val byCode = Array(256) { idx -> entries.firstOrNull { it.code == idx } }
 
         /**
          * Find TLS alert instance by its numeric [code] or fail

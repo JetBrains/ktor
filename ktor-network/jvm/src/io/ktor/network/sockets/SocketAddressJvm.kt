@@ -45,9 +45,7 @@ public actual class InetSocketAddress internal constructor(
 
         other as InetSocketAddress
 
-        if (address != other.address) return false
-
-        return true
+        return address == other.address
     }
 
     actual override fun hashCode(): Int {
@@ -93,9 +91,7 @@ public actual class UnixSocketAddress internal constructor(
 
         other as UnixSocketAddress
 
-        if (address != other.address) return false
-
-        return true
+        return address == other.address
     }
 
     actual override fun hashCode(): Int {

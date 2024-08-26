@@ -1,0 +1,25 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm32, watchosArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-config-yaml>
+final class io.ktor.server.config.yaml/YamlConfig : io.ktor.server.config/ApplicationConfig { // io.ktor.server.config.yaml/YamlConfig|null[0]
+    final fun checkEnvironmentVariables() // io.ktor.server.config.yaml/YamlConfig.checkEnvironmentVariables|checkEnvironmentVariables(){}[0]
+    final fun config(kotlin/String): io.ktor.server.config/ApplicationConfig // io.ktor.server.config.yaml/YamlConfig.config|config(kotlin.String){}[0]
+    final fun configList(kotlin/String): kotlin.collections/List<io.ktor.server.config/ApplicationConfig> // io.ktor.server.config.yaml/YamlConfig.configList|configList(kotlin.String){}[0]
+    final fun keys(): kotlin.collections/Set<kotlin/String> // io.ktor.server.config.yaml/YamlConfig.keys|keys(){}[0]
+    final fun property(kotlin/String): io.ktor.server.config/ApplicationConfigValue // io.ktor.server.config.yaml/YamlConfig.property|property(kotlin.String){}[0]
+    final fun propertyOrNull(kotlin/String): io.ktor.server.config/ApplicationConfigValue? // io.ktor.server.config.yaml/YamlConfig.propertyOrNull|propertyOrNull(kotlin.String){}[0]
+    final fun toMap(): kotlin.collections/Map<kotlin/String, kotlin/Any?> // io.ktor.server.config.yaml/YamlConfig.toMap|toMap(){}[0]
+}
+
+final class io.ktor.server.config.yaml/YamlConfigLoader : io.ktor.server.config/ConfigLoader { // io.ktor.server.config.yaml/YamlConfigLoader|null[0]
+    constructor <init>() // io.ktor.server.config.yaml/YamlConfigLoader.<init>|<init>(){}[0]
+
+    final fun load(kotlin/String?): io.ktor.server.config/ApplicationConfig? // io.ktor.server.config.yaml/YamlConfigLoader.load|load(kotlin.String?){}[0]
+}
+
+final fun io.ktor.server.config.yaml/YamlConfig(kotlin/String?): io.ktor.server.config.yaml/YamlConfig? // io.ktor.server.config.yaml/YamlConfig|YamlConfig(kotlin.String?){}[0]

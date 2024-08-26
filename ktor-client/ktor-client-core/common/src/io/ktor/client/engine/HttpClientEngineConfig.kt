@@ -5,6 +5,7 @@
 package io.ktor.client.engine
 
 import io.ktor.utils.io.*
+import kotlinx.coroutines.*
 
 /**
  * Base configuration for [HttpClientEngine].
@@ -15,10 +16,15 @@ public open class HttpClientEngineConfig {
      * Specifies network threads count advice.
      */
     @Deprecated(
-        "The [threadsCount] property is deprecated. The [Dispatchers.IO] is used by default.",
+        "The [threadsCount] property is deprecated. Consider setting [dispatcher] instead.",
         level = DeprecationLevel.ERROR
     )
     public var threadsCount: Int = 4
+
+    /**
+     * Allow specifying the coroutine dispatcher to use for IO operations.
+     */
+    public var dispatcher: CoroutineDispatcher? = null
 
     /**
      * Enables HTTP pipelining advice.

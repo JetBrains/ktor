@@ -1,0 +1,23 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-call-id>
+final class io.ktor.callid/KtorCallIdContextElement : kotlin.coroutines/CoroutineContext.Element { // io.ktor.callid/KtorCallIdContextElement|null[0]
+    constructor <init>(kotlin/String) // io.ktor.callid/KtorCallIdContextElement.<init>|<init>(kotlin.String){}[0]
+
+    final val callId // io.ktor.callid/KtorCallIdContextElement.callId|{}callId[0]
+        final fun <get-callId>(): kotlin/String // io.ktor.callid/KtorCallIdContextElement.callId.<get-callId>|<get-callId>(){}[0]
+    final val key // io.ktor.callid/KtorCallIdContextElement.key|{}key[0]
+        final fun <get-key>(): kotlin.coroutines/CoroutineContext.Key<*> // io.ktor.callid/KtorCallIdContextElement.key.<get-key>|<get-key>(){}[0]
+
+    final object Companion : kotlin.coroutines/CoroutineContext.Key<io.ktor.callid/KtorCallIdContextElement> // io.ktor.callid/KtorCallIdContextElement.Companion|null[0]
+}
+
+final const val io.ktor.callid/CALL_ID_DEFAULT_DICTIONARY // io.ktor.callid/CALL_ID_DEFAULT_DICTIONARY|{}CALL_ID_DEFAULT_DICTIONARY[0]
+    final fun <get-CALL_ID_DEFAULT_DICTIONARY>(): kotlin/String // io.ktor.callid/CALL_ID_DEFAULT_DICTIONARY.<get-CALL_ID_DEFAULT_DICTIONARY>|<get-CALL_ID_DEFAULT_DICTIONARY>(){}[0]
+
+final suspend fun io.ktor.callid/withCallId(kotlin/String, kotlin.coroutines/SuspendFunction0<kotlin/Unit>) // io.ktor.callid/withCallId|withCallId(kotlin.String;kotlin.coroutines.SuspendFunction0<kotlin.Unit>){}[0]

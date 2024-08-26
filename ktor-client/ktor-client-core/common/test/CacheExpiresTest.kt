@@ -129,7 +129,7 @@ class CacheExpiresTest {
             get() = error("Shouldn't be used")
 
         @OptIn(InternalAPI::class)
-        override val content: ByteReadChannel
+        override val rawContent: ByteReadChannel
             get() = error("Shouldn't be used")
         override val coroutineContext: CoroutineContext
             get() = error("Shouldn't be used")

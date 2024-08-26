@@ -4,20 +4,22 @@
 
 package io.ktor.tests.utils
 
+import io.ktor.junit.*
 import io.ktor.util.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.debug.junit5.*
+import org.junit.jupiter.api.extension.*
 import java.io.*
 import java.nio.*
 import java.util.zip.*
 import kotlin.random.*
 import kotlin.test.*
-import kotlin.test.Test
 
 @CoroutinesTimeout(60_000)
+@ExtendWith(RetrySupport::class)
 class DeflaterReadChannelTest : CoroutineScope {
     private val testJob = Job()
     override val coroutineContext get() = testJob + Dispatchers.Unconfined
@@ -112,7 +114,7 @@ class DeflaterReadChannelTest : CoroutineScope {
         testWriteChannel(text, asyncOf(text))
     }
 
-    @Test
+    @RetryableTest(3)
     fun testFaultyGzippedBiggerThan8k() {
         val text = buildString {
             for (i in 1..65536) {
@@ -123,7 +125,17 @@ class DeflaterReadChannelTest : CoroutineScope {
         testFaultyWriteChannel(asyncOf(text))
     }
 
-    private fun asyncOf(text: String): ByteReadChannel = asyncOf(ByteBuffer.wrap(text.toByteArray(Charsets.ISO_8859_1)))
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun asyncOf(text: String): ByteReadChannel = GlobalScope.writer {
+        var current = 0
+        while (current < text.length) {
+            val size = Random.nextInt(1, 16)
+            val end = minOf(current + size, text.length)
+            channel.writeFully(text.substring(current, end).toByteArray(Charsets.UTF_8))
+            current = end
+        }
+    }.channel
+
     private fun asyncOf(bb: ByteBuffer): ByteReadChannel = ByteReadChannel(bb)
 
     private fun InputStream.ungzip() = GZIPInputStream(this)

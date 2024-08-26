@@ -5,7 +5,6 @@
 package io.ktor.client.engine.apache5
 
 import io.ktor.client.plugins.*
-import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.util.date.*
@@ -54,15 +53,10 @@ internal suspend fun CloseableHttpAsyncClient.sendRequest(
         )
 
         val headers = HeadersImpl(rawHeaders)
-        val body: Any = if (needToProcessSSE(requestData, status, headers)) {
-            DefaultClientSSESession(
-                requestData.body as SSEClientContent,
-                bodyConsumer.responseChannel,
-                callContext
-            )
-        } else {
-            bodyConsumer.responseChannel
-        }
+        val body: Any = requestData.attributes.getOrNull(ResponseAdapterAttributeKey)
+            ?.adapt(requestData, status, headers, bodyConsumer.responseChannel, requestData.body, callContext)
+            ?: bodyConsumer.responseChannel
+
         return HttpResponseData(status, requestTime, headers, version, body, callContext)
     } catch (cause: Exception) {
         future.cancel(true)

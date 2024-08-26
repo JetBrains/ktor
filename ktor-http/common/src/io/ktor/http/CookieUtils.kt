@@ -22,7 +22,7 @@ internal class StringLexer(val source: String) {
      *
      * @param predicate character test
      */
-    public fun test(predicate: (Char) -> Boolean): Boolean =
+    fun test(predicate: (Char) -> Boolean): Boolean =
         index < source.length && predicate(source[index])
 
     /**
@@ -30,7 +30,7 @@ internal class StringLexer(val source: String) {
      *
      * @param predicate character test
      */
-    public fun accept(predicate: (Char) -> Boolean): Boolean =
+    fun accept(predicate: (Char) -> Boolean): Boolean =
         test(predicate).also { if (it) index++ }
 
     /**
@@ -39,7 +39,7 @@ internal class StringLexer(val source: String) {
      * @param predicate character test
      * @see [accept]
      */
-    public fun acceptWhile(predicate: (Char) -> Boolean): Boolean {
+    fun acceptWhile(predicate: (Char) -> Boolean): Boolean {
         if (!test(predicate)) return false
         while (test(predicate)) index++
         return true
@@ -52,7 +52,7 @@ internal class StringLexer(val source: String) {
      * @param block scope of traversal to be captured
      * @return The traversed span of the source string
      */
-    public inline fun capture(block: StringLexer.() -> Unit): String {
+    inline fun capture(block: StringLexer.() -> Unit): String {
         val start = index
         block()
         return source.substring(start, index)
@@ -148,7 +148,7 @@ internal inline fun String.tryParseTime(success: (Int, Int, Int) -> Unit) {
 internal inline fun String.tryParseMonth(success: (Month) -> Unit) {
     if (length < 3) return
 
-    for (month in Month.values()) {
+    for (month in Month.entries) {
         if (this.startsWith(month.value, ignoreCase = true)) {
             success(month)
             return
@@ -283,7 +283,7 @@ internal class CookieDateParser {
     /**
      * Parses cookie expiration date from the [source].
      */
-    public fun parse(source: String): GMTDate {
+    fun parse(source: String): GMTDate {
         val lexer = StringLexer(source)
         val builder = CookieDateBuilder()
 
@@ -336,7 +336,7 @@ internal class CookieDateBuilder {
     var month: Month? = null
     var year: Int? = null
 
-    public fun build(): GMTDate = GMTDate(seconds!!, minutes!!, hours!!, dayOfMonth!!, month!!, year!!)
+    fun build(): GMTDate = GMTDate(seconds!!, minutes!!, hours!!, dayOfMonth!!, month!!, year!!)
 }
 
 /**

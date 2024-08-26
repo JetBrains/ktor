@@ -32,13 +32,11 @@ private val initHook = Darwin
  * You can learn more about client engines from [Engines](https://ktor.io/docs/http-client-engines.html).
  */
 @OptIn(InternalAPI::class)
-public object Darwin : HttpClientEngineFactory<DarwinClientEngineConfig> {
+public data object Darwin : HttpClientEngineFactory<DarwinClientEngineConfig> {
     init {
         engines.append(this)
     }
 
     override fun create(block: DarwinClientEngineConfig.() -> Unit): HttpClientEngine =
         DarwinClientEngine(DarwinClientEngineConfig().apply(block))
-
-    override fun toString(): String = "Darwin"
 }

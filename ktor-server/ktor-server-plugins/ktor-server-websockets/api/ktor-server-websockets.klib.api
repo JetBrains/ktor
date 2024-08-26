@@ -1,0 +1,99 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-websockets>
+abstract interface io.ktor.server.websocket/DefaultWebSocketServerSession : io.ktor.server.websocket/WebSocketServerSession, io.ktor.websocket/DefaultWebSocketSession // io.ktor.server.websocket/DefaultWebSocketServerSession|null[0]
+
+abstract interface io.ktor.server.websocket/WebSocketServerSession : io.ktor.websocket/WebSocketSession { // io.ktor.server.websocket/WebSocketServerSession|null[0]
+    abstract val call // io.ktor.server.websocket/WebSocketServerSession.call|{}call[0]
+        abstract fun <get-call>(): io.ktor.server.application/ApplicationCall // io.ktor.server.websocket/WebSocketServerSession.call.<get-call>|<get-call>(){}[0]
+}
+
+final class io.ktor.server.websocket/WebSocketUpgrade : io.ktor.http.content/OutgoingContent.ProtocolUpgrade { // io.ktor.server.websocket/WebSocketUpgrade|null[0]
+    constructor <init>(io.ktor.server.application/ApplicationCall, kotlin/String? = ..., kotlin.coroutines/SuspendFunction1<io.ktor.websocket/WebSocketSession, kotlin/Unit>) // io.ktor.server.websocket/WebSocketUpgrade.<init>|<init>(io.ktor.server.application.ApplicationCall;kotlin.String?;kotlin.coroutines.SuspendFunction1<io.ktor.websocket.WebSocketSession,kotlin.Unit>){}[0]
+    constructor <init>(io.ktor.server.application/ApplicationCall, kotlin/String? = ..., kotlin/Boolean = ..., kotlin.coroutines/SuspendFunction1<io.ktor.websocket/WebSocketSession, kotlin/Unit>) // io.ktor.server.websocket/WebSocketUpgrade.<init>|<init>(io.ktor.server.application.ApplicationCall;kotlin.String?;kotlin.Boolean;kotlin.coroutines.SuspendFunction1<io.ktor.websocket.WebSocketSession,kotlin.Unit>){}[0]
+
+    final val call // io.ktor.server.websocket/WebSocketUpgrade.call|{}call[0]
+        final fun <get-call>(): io.ktor.server.application/ApplicationCall // io.ktor.server.websocket/WebSocketUpgrade.call.<get-call>|<get-call>(){}[0]
+    final val handle // io.ktor.server.websocket/WebSocketUpgrade.handle|{}handle[0]
+        final fun <get-handle>(): kotlin.coroutines/SuspendFunction1<io.ktor.websocket/WebSocketSession, kotlin/Unit> // io.ktor.server.websocket/WebSocketUpgrade.handle.<get-handle>|<get-handle>(){}[0]
+    final val headers // io.ktor.server.websocket/WebSocketUpgrade.headers|{}headers[0]
+        final fun <get-headers>(): io.ktor.http/Headers // io.ktor.server.websocket/WebSocketUpgrade.headers.<get-headers>|<get-headers>(){}[0]
+    final val protocol // io.ktor.server.websocket/WebSocketUpgrade.protocol|{}protocol[0]
+        final fun <get-protocol>(): kotlin/String? // io.ktor.server.websocket/WebSocketUpgrade.protocol.<get-protocol>|<get-protocol>(){}[0]
+
+    final suspend fun upgrade(io.ktor.utils.io/ByteReadChannel, io.ktor.utils.io/ByteWriteChannel, kotlin.coroutines/CoroutineContext, kotlin.coroutines/CoroutineContext): kotlinx.coroutines/Job // io.ktor.server.websocket/WebSocketUpgrade.upgrade|upgrade(io.ktor.utils.io.ByteReadChannel;io.ktor.utils.io.ByteWriteChannel;kotlin.coroutines.CoroutineContext;kotlin.coroutines.CoroutineContext){}[0]
+
+    final object Companion // io.ktor.server.websocket/WebSocketUpgrade.Companion|null[0]
+}
+
+final class io.ktor.server.websocket/WebSockets : kotlinx.coroutines/CoroutineScope { // io.ktor.server.websocket/WebSockets|null[0]
+    constructor <init>(kotlin/Long, kotlin/Long, kotlin/Long, kotlin/Boolean) // io.ktor.server.websocket/WebSockets.<init>|<init>(kotlin.Long;kotlin.Long;kotlin.Long;kotlin.Boolean){}[0]
+
+    final val contentConverter // io.ktor.server.websocket/WebSockets.contentConverter|{}contentConverter[0]
+        final fun <get-contentConverter>(): io.ktor.serialization/WebsocketContentConverter? // io.ktor.server.websocket/WebSockets.contentConverter.<get-contentConverter>|<get-contentConverter>(){}[0]
+    final val coroutineContext // io.ktor.server.websocket/WebSockets.coroutineContext|{}coroutineContext[0]
+        final fun <get-coroutineContext>(): kotlin.coroutines/CoroutineContext // io.ktor.server.websocket/WebSockets.coroutineContext.<get-coroutineContext>|<get-coroutineContext>(){}[0]
+    final val extensionsConfig // io.ktor.server.websocket/WebSockets.extensionsConfig|{}extensionsConfig[0]
+        final fun <get-extensionsConfig>(): io.ktor.websocket/WebSocketExtensionsConfig // io.ktor.server.websocket/WebSockets.extensionsConfig.<get-extensionsConfig>|<get-extensionsConfig>(){}[0]
+    final val masking // io.ktor.server.websocket/WebSockets.masking|{}masking[0]
+        final fun <get-masking>(): kotlin/Boolean // io.ktor.server.websocket/WebSockets.masking.<get-masking>|<get-masking>(){}[0]
+    final val maxFrameSize // io.ktor.server.websocket/WebSockets.maxFrameSize|{}maxFrameSize[0]
+        final fun <get-maxFrameSize>(): kotlin/Long // io.ktor.server.websocket/WebSockets.maxFrameSize.<get-maxFrameSize>|<get-maxFrameSize>(){}[0]
+    final val pingIntervalMillis // io.ktor.server.websocket/WebSockets.pingIntervalMillis|{}pingIntervalMillis[0]
+        final fun <get-pingIntervalMillis>(): kotlin/Long // io.ktor.server.websocket/WebSockets.pingIntervalMillis.<get-pingIntervalMillis>|<get-pingIntervalMillis>(){}[0]
+    final val timeoutMillis // io.ktor.server.websocket/WebSockets.timeoutMillis|{}timeoutMillis[0]
+        final fun <get-timeoutMillis>(): kotlin/Long // io.ktor.server.websocket/WebSockets.timeoutMillis.<get-timeoutMillis>|<get-timeoutMillis>(){}[0]
+
+    final class WebSocketOptions { // io.ktor.server.websocket/WebSockets.WebSocketOptions|null[0]
+        constructor <init>() // io.ktor.server.websocket/WebSockets.WebSocketOptions.<init>|<init>(){}[0]
+
+        final var contentConverter // io.ktor.server.websocket/WebSockets.WebSocketOptions.contentConverter|{}contentConverter[0]
+            final fun <get-contentConverter>(): io.ktor.serialization/WebsocketContentConverter? // io.ktor.server.websocket/WebSockets.WebSocketOptions.contentConverter.<get-contentConverter>|<get-contentConverter>(){}[0]
+            final fun <set-contentConverter>(io.ktor.serialization/WebsocketContentConverter?) // io.ktor.server.websocket/WebSockets.WebSocketOptions.contentConverter.<set-contentConverter>|<set-contentConverter>(io.ktor.serialization.WebsocketContentConverter?){}[0]
+        final var masking // io.ktor.server.websocket/WebSockets.WebSocketOptions.masking|{}masking[0]
+            final fun <get-masking>(): kotlin/Boolean // io.ktor.server.websocket/WebSockets.WebSocketOptions.masking.<get-masking>|<get-masking>(){}[0]
+            final fun <set-masking>(kotlin/Boolean) // io.ktor.server.websocket/WebSockets.WebSocketOptions.masking.<set-masking>|<set-masking>(kotlin.Boolean){}[0]
+        final var maxFrameSize // io.ktor.server.websocket/WebSockets.WebSocketOptions.maxFrameSize|{}maxFrameSize[0]
+            final fun <get-maxFrameSize>(): kotlin/Long // io.ktor.server.websocket/WebSockets.WebSocketOptions.maxFrameSize.<get-maxFrameSize>|<get-maxFrameSize>(){}[0]
+            final fun <set-maxFrameSize>(kotlin/Long) // io.ktor.server.websocket/WebSockets.WebSocketOptions.maxFrameSize.<set-maxFrameSize>|<set-maxFrameSize>(kotlin.Long){}[0]
+        final var pingPeriodMillis // io.ktor.server.websocket/WebSockets.WebSocketOptions.pingPeriodMillis|{}pingPeriodMillis[0]
+            final fun <get-pingPeriodMillis>(): kotlin/Long // io.ktor.server.websocket/WebSockets.WebSocketOptions.pingPeriodMillis.<get-pingPeriodMillis>|<get-pingPeriodMillis>(){}[0]
+            final fun <set-pingPeriodMillis>(kotlin/Long) // io.ktor.server.websocket/WebSockets.WebSocketOptions.pingPeriodMillis.<set-pingPeriodMillis>|<set-pingPeriodMillis>(kotlin.Long){}[0]
+        final var timeoutMillis // io.ktor.server.websocket/WebSockets.WebSocketOptions.timeoutMillis|{}timeoutMillis[0]
+            final fun <get-timeoutMillis>(): kotlin/Long // io.ktor.server.websocket/WebSockets.WebSocketOptions.timeoutMillis.<get-timeoutMillis>|<get-timeoutMillis>(){}[0]
+            final fun <set-timeoutMillis>(kotlin/Long) // io.ktor.server.websocket/WebSockets.WebSocketOptions.timeoutMillis.<set-timeoutMillis>|<set-timeoutMillis>(kotlin.Long){}[0]
+
+        final fun extensions(kotlin/Function1<io.ktor.websocket/WebSocketExtensionsConfig, kotlin/Unit>) // io.ktor.server.websocket/WebSockets.WebSocketOptions.extensions|extensions(kotlin.Function1<io.ktor.websocket.WebSocketExtensionsConfig,kotlin.Unit>){}[0]
+    }
+
+    final object Plugin : io.ktor.server.application/BaseApplicationPlugin<io.ktor.server.application/Application, io.ktor.server.websocket/WebSockets.WebSocketOptions, io.ktor.server.websocket/WebSockets> { // io.ktor.server.websocket/WebSockets.Plugin|null[0]
+        final val EXTENSIONS_KEY // io.ktor.server.websocket/WebSockets.Plugin.EXTENSIONS_KEY|{}EXTENSIONS_KEY[0]
+            final fun <get-EXTENSIONS_KEY>(): io.ktor.util/AttributeKey<kotlin.collections/List<io.ktor.websocket/WebSocketExtension<*>>> // io.ktor.server.websocket/WebSockets.Plugin.EXTENSIONS_KEY.<get-EXTENSIONS_KEY>|<get-EXTENSIONS_KEY>(){}[0]
+        final val key // io.ktor.server.websocket/WebSockets.Plugin.key|{}key[0]
+            final fun <get-key>(): io.ktor.util/AttributeKey<io.ktor.server.websocket/WebSockets> // io.ktor.server.websocket/WebSockets.Plugin.key.<get-key>|<get-key>(){}[0]
+
+        final fun install(io.ktor.server.application/Application, kotlin/Function1<io.ktor.server.websocket/WebSockets.WebSocketOptions, kotlin/Unit>): io.ktor.server.websocket/WebSockets // io.ktor.server.websocket/WebSockets.Plugin.install|install(io.ktor.server.application.Application;kotlin.Function1<io.ktor.server.websocket.WebSockets.WebSocketOptions,kotlin.Unit>){}[0]
+    }
+}
+
+final val io.ktor.server.websocket/application // io.ktor.server.websocket/application|@io.ktor.server.websocket.WebSocketServerSession{}application[0]
+    final fun (io.ktor.server.websocket/WebSocketServerSession).<get-application>(): io.ktor.server.application/Application // io.ktor.server.websocket/application.<get-application>|<get-application>@io.ktor.server.websocket.WebSocketServerSession(){}[0]
+final val io.ktor.server.websocket/converter // io.ktor.server.websocket/converter|@io.ktor.server.websocket.WebSocketServerSession{}converter[0]
+    final fun (io.ktor.server.websocket/WebSocketServerSession).<get-converter>(): io.ktor.serialization/WebsocketContentConverter? // io.ktor.server.websocket/converter.<get-converter>|<get-converter>@io.ktor.server.websocket.WebSocketServerSession(){}[0]
+
+final fun (io.ktor.server.routing/Route).io.ktor.server.websocket/webSocket(kotlin/String, kotlin/String? = ..., kotlin.coroutines/SuspendFunction1<io.ktor.server.websocket/DefaultWebSocketServerSession, kotlin/Unit>) // io.ktor.server.websocket/webSocket|webSocket@io.ktor.server.routing.Route(kotlin.String;kotlin.String?;kotlin.coroutines.SuspendFunction1<io.ktor.server.websocket.DefaultWebSocketServerSession,kotlin.Unit>){}[0]
+final fun (io.ktor.server.routing/Route).io.ktor.server.websocket/webSocket(kotlin/String? = ..., kotlin.coroutines/SuspendFunction1<io.ktor.server.websocket/DefaultWebSocketServerSession, kotlin/Unit>) // io.ktor.server.websocket/webSocket|webSocket@io.ktor.server.routing.Route(kotlin.String?;kotlin.coroutines.SuspendFunction1<io.ktor.server.websocket.DefaultWebSocketServerSession,kotlin.Unit>){}[0]
+final fun (io.ktor.server.routing/Route).io.ktor.server.websocket/webSocketRaw(kotlin/String, kotlin/String? = ..., kotlin.coroutines/SuspendFunction1<io.ktor.server.websocket/WebSocketServerSession, kotlin/Unit>) // io.ktor.server.websocket/webSocketRaw|webSocketRaw@io.ktor.server.routing.Route(kotlin.String;kotlin.String?;kotlin.coroutines.SuspendFunction1<io.ktor.server.websocket.WebSocketServerSession,kotlin.Unit>){}[0]
+final fun (io.ktor.server.routing/Route).io.ktor.server.websocket/webSocketRaw(kotlin/String, kotlin/String? = ..., kotlin/Boolean = ..., kotlin.coroutines/SuspendFunction1<io.ktor.server.websocket/WebSocketServerSession, kotlin/Unit>) // io.ktor.server.websocket/webSocketRaw|webSocketRaw@io.ktor.server.routing.Route(kotlin.String;kotlin.String?;kotlin.Boolean;kotlin.coroutines.SuspendFunction1<io.ktor.server.websocket.WebSocketServerSession,kotlin.Unit>){}[0]
+final fun (io.ktor.server.routing/Route).io.ktor.server.websocket/webSocketRaw(kotlin/String? = ..., kotlin.coroutines/SuspendFunction1<io.ktor.server.websocket/WebSocketServerSession, kotlin/Unit>) // io.ktor.server.websocket/webSocketRaw|webSocketRaw@io.ktor.server.routing.Route(kotlin.String?;kotlin.coroutines.SuspendFunction1<io.ktor.server.websocket.WebSocketServerSession,kotlin.Unit>){}[0]
+final fun (io.ktor.server.routing/Route).io.ktor.server.websocket/webSocketRaw(kotlin/String? = ..., kotlin/Boolean = ..., kotlin.coroutines/SuspendFunction1<io.ktor.server.websocket/WebSocketServerSession, kotlin/Unit>) // io.ktor.server.websocket/webSocketRaw|webSocketRaw@io.ktor.server.routing.Route(kotlin.String?;kotlin.Boolean;kotlin.coroutines.SuspendFunction1<io.ktor.server.websocket.WebSocketServerSession,kotlin.Unit>){}[0]
+final fun io.ktor.server.websocket/WebSockets(kotlin.time/Duration?, kotlin.time/Duration, kotlin/Long, kotlin/Boolean): io.ktor.server.websocket/WebSockets // io.ktor.server.websocket/WebSockets|WebSockets(kotlin.time.Duration?;kotlin.time.Duration;kotlin.Long;kotlin.Boolean){}[0]
+final suspend fun (io.ktor.server.websocket/WebSocketServerSession).io.ktor.server.websocket/sendSerialized(kotlin/Any?, io.ktor.util.reflect/TypeInfo) // io.ktor.server.websocket/sendSerialized|sendSerialized@io.ktor.server.websocket.WebSocketServerSession(kotlin.Any?;io.ktor.util.reflect.TypeInfo){}[0]
+final suspend fun <#A: kotlin/Any?> (io.ktor.server.websocket/WebSocketServerSession).io.ktor.server.websocket/receiveDeserialized(io.ktor.util.reflect/TypeInfo): #A // io.ktor.server.websocket/receiveDeserialized|receiveDeserialized@io.ktor.server.websocket.WebSocketServerSession(io.ktor.util.reflect.TypeInfo){0§<kotlin.Any?>}[0]
+final suspend inline fun <#A: reified kotlin/Any?> (io.ktor.server.websocket/WebSocketServerSession).io.ktor.server.websocket/receiveDeserialized(): #A // io.ktor.server.websocket/receiveDeserialized|receiveDeserialized@io.ktor.server.websocket.WebSocketServerSession(){0§<kotlin.Any?>}[0]
+final suspend inline fun <#A: reified kotlin/Any?> (io.ktor.server.websocket/WebSocketServerSession).io.ktor.server.websocket/sendSerialized(#A) // io.ktor.server.websocket/sendSerialized|sendSerialized@io.ktor.server.websocket.WebSocketServerSession(0:0){0§<kotlin.Any?>}[0]

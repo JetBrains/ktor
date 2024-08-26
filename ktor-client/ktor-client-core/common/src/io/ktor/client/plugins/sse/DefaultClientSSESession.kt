@@ -14,7 +14,7 @@ public class DefaultClientSSESession(
     content: SSEClientContent,
     private var input: ByteReadChannel,
     override val coroutineContext: CoroutineContext,
-) : ClientSSESession {
+) : SSESession {
     private var lastEventId: String? = null
     private var reconnectionTimeMillis = content.reconnectionTime.inWholeMilliseconds
     private val showCommentEvents = content.showCommentEvents

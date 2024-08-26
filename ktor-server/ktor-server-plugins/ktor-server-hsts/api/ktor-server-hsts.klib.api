@@ -1,0 +1,38 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-hsts>
+final class io.ktor.server.plugins.hsts/HSTSConfig : io.ktor.server.plugins.hsts/HSTSHostConfig { // io.ktor.server.plugins.hsts/HSTSConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.hsts/HSTSConfig.<init>|<init>(){}[0]
+
+    final fun filter(kotlin/Function1<io.ktor.server.application/ApplicationCall, kotlin/Boolean>) // io.ktor.server.plugins.hsts/HSTSConfig.filter|filter(kotlin.Function1<io.ktor.server.application.ApplicationCall,kotlin.Boolean>){}[0]
+    final fun withHost(kotlin/String, kotlin/Function1<io.ktor.server.plugins.hsts/HSTSHostConfig, kotlin/Unit>) // io.ktor.server.plugins.hsts/HSTSConfig.withHost|withHost(kotlin.String;kotlin.Function1<io.ktor.server.plugins.hsts.HSTSHostConfig,kotlin.Unit>){}[0]
+}
+
+open class io.ktor.server.plugins.hsts/HSTSHostConfig { // io.ktor.server.plugins.hsts/HSTSHostConfig|null[0]
+    constructor <init>() // io.ktor.server.plugins.hsts/HSTSHostConfig.<init>|<init>(){}[0]
+
+    final val customDirectives // io.ktor.server.plugins.hsts/HSTSHostConfig.customDirectives|{}customDirectives[0]
+        final fun <get-customDirectives>(): kotlin.collections/MutableMap<kotlin/String, kotlin/String?> // io.ktor.server.plugins.hsts/HSTSHostConfig.customDirectives.<get-customDirectives>|<get-customDirectives>(){}[0]
+
+    final var includeSubDomains // io.ktor.server.plugins.hsts/HSTSHostConfig.includeSubDomains|{}includeSubDomains[0]
+        final fun <get-includeSubDomains>(): kotlin/Boolean // io.ktor.server.plugins.hsts/HSTSHostConfig.includeSubDomains.<get-includeSubDomains>|<get-includeSubDomains>(){}[0]
+        final fun <set-includeSubDomains>(kotlin/Boolean) // io.ktor.server.plugins.hsts/HSTSHostConfig.includeSubDomains.<set-includeSubDomains>|<set-includeSubDomains>(kotlin.Boolean){}[0]
+    final var maxAgeInSeconds // io.ktor.server.plugins.hsts/HSTSHostConfig.maxAgeInSeconds|{}maxAgeInSeconds[0]
+        final fun <get-maxAgeInSeconds>(): kotlin/Long // io.ktor.server.plugins.hsts/HSTSHostConfig.maxAgeInSeconds.<get-maxAgeInSeconds>|<get-maxAgeInSeconds>(){}[0]
+        final fun <set-maxAgeInSeconds>(kotlin/Long) // io.ktor.server.plugins.hsts/HSTSHostConfig.maxAgeInSeconds.<set-maxAgeInSeconds>|<set-maxAgeInSeconds>(kotlin.Long){}[0]
+    final var preload // io.ktor.server.plugins.hsts/HSTSHostConfig.preload|{}preload[0]
+        final fun <get-preload>(): kotlin/Boolean // io.ktor.server.plugins.hsts/HSTSHostConfig.preload.<get-preload>|<get-preload>(){}[0]
+        final fun <set-preload>(kotlin/Boolean) // io.ktor.server.plugins.hsts/HSTSHostConfig.preload.<set-preload>|<set-preload>(kotlin.Boolean){}[0]
+}
+
+final val io.ktor.server.plugins.hsts/HSTS // io.ktor.server.plugins.hsts/HSTS|{}HSTS[0]
+    final fun <get-HSTS>(): io.ktor.server.application/RouteScopedPlugin<io.ktor.server.plugins.hsts/HSTSConfig> // io.ktor.server.plugins.hsts/HSTS.<get-HSTS>|<get-HSTS>(){}[0]
+
+final var io.ktor.server.plugins.hsts/maxAgeDuration // io.ktor.server.plugins.hsts/maxAgeDuration|@io.ktor.server.plugins.hsts.HSTSConfig{}maxAgeDuration[0]
+    final fun (io.ktor.server.plugins.hsts/HSTSConfig).<get-maxAgeDuration>(): kotlin.time/Duration // io.ktor.server.plugins.hsts/maxAgeDuration.<get-maxAgeDuration>|<get-maxAgeDuration>@io.ktor.server.plugins.hsts.HSTSConfig(){}[0]
+    final fun (io.ktor.server.plugins.hsts/HSTSConfig).<set-maxAgeDuration>(kotlin.time/Duration) // io.ktor.server.plugins.hsts/maxAgeDuration.<set-maxAgeDuration>|<set-maxAgeDuration>@io.ktor.server.plugins.hsts.HSTSConfig(kotlin.time.Duration){}[0]

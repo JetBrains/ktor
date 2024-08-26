@@ -33,9 +33,7 @@ public class DarwinClientEngineConfig : HttpClientEngineConfig() {
             replaceWith = ReplaceWith("this.configureRequest(value)"),
             level = DeprecationLevel.ERROR
         )
-        set(value) {
-            field = value
-        }
+        set
 
     /**
      * A session configuration.
@@ -46,9 +44,7 @@ public class DarwinClientEngineConfig : HttpClientEngineConfig() {
             replaceWith = ReplaceWith("this.configureSession(value)"),
             level = DeprecationLevel.ERROR
         )
-        set(value) {
-            field = value
-        }
+        set
 
     /**
      * Handles the challenge of HTTP responses [NSURLSession].

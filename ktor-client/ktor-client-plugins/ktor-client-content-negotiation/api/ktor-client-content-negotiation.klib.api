@@ -1,0 +1,30 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-client-content-negotiation>
+final class io.ktor.client.plugins.contentnegotiation/ContentConverterException : kotlin/Exception { // io.ktor.client.plugins.contentnegotiation/ContentConverterException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.client.plugins.contentnegotiation/ContentConverterException.<init>|<init>(kotlin.String){}[0]
+}
+
+final class io.ktor.client.plugins.contentnegotiation/ContentNegotiationConfig : io.ktor.serialization/Configuration { // io.ktor.client.plugins.contentnegotiation/ContentNegotiationConfig|null[0]
+    constructor <init>() // io.ktor.client.plugins.contentnegotiation/ContentNegotiationConfig.<init>|<init>(){}[0]
+
+    final fun <#A1: io.ktor.serialization/ContentConverter> register(io.ktor.http/ContentType, #A1, io.ktor.http/ContentTypeMatcher, kotlin/Function1<#A1, kotlin/Unit>) // io.ktor.client.plugins.contentnegotiation/ContentNegotiationConfig.register|register(io.ktor.http.ContentType;0:0;io.ktor.http.ContentTypeMatcher;kotlin.Function1<0:0,kotlin.Unit>){0§<io.ktor.serialization.ContentConverter>}[0]
+    final fun <#A1: io.ktor.serialization/ContentConverter> register(io.ktor.http/ContentType, #A1, kotlin/Function1<#A1, kotlin/Unit>) // io.ktor.client.plugins.contentnegotiation/ContentNegotiationConfig.register|register(io.ktor.http.ContentType;0:0;kotlin.Function1<0:0,kotlin.Unit>){0§<io.ktor.serialization.ContentConverter>}[0]
+    final fun clearIgnoredTypes() // io.ktor.client.plugins.contentnegotiation/ContentNegotiationConfig.clearIgnoredTypes|clearIgnoredTypes(){}[0]
+    final fun ignoreType(kotlin.reflect/KClass<*>) // io.ktor.client.plugins.contentnegotiation/ContentNegotiationConfig.ignoreType|ignoreType(kotlin.reflect.KClass<*>){}[0]
+    final fun removeIgnoredType(kotlin.reflect/KClass<*>) // io.ktor.client.plugins.contentnegotiation/ContentNegotiationConfig.removeIgnoredType|removeIgnoredType(kotlin.reflect.KClass<*>){}[0]
+    final inline fun <#A1: reified kotlin/Any?> ignoreType() // io.ktor.client.plugins.contentnegotiation/ContentNegotiationConfig.ignoreType|ignoreType(){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> removeIgnoredType() // io.ktor.client.plugins.contentnegotiation/ContentNegotiationConfig.removeIgnoredType|removeIgnoredType(){0§<kotlin.Any?>}[0]
+}
+
+final object io.ktor.client.plugins.contentnegotiation/JsonContentTypeMatcher : io.ktor.http/ContentTypeMatcher { // io.ktor.client.plugins.contentnegotiation/JsonContentTypeMatcher|null[0]
+    final fun contains(io.ktor.http/ContentType): kotlin/Boolean // io.ktor.client.plugins.contentnegotiation/JsonContentTypeMatcher.contains|contains(io.ktor.http.ContentType){}[0]
+}
+
+final val io.ktor.client.plugins.contentnegotiation/ContentNegotiation // io.ktor.client.plugins.contentnegotiation/ContentNegotiation|{}ContentNegotiation[0]
+    final fun <get-ContentNegotiation>(): io.ktor.client.plugins.api/ClientPlugin<io.ktor.client.plugins.contentnegotiation/ContentNegotiationConfig> // io.ktor.client.plugins.contentnegotiation/ContentNegotiation.<get-ContentNegotiation>|<get-ContentNegotiation>(){}[0]

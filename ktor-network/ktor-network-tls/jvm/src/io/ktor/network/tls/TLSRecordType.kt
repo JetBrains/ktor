@@ -8,7 +8,7 @@ package io.ktor.network.tls
  * TLS record type with it's numeric [code]
  * @property code numeric record type code
  */
-@Suppress("KDocMissingDocumentation")
+
 public enum class TLSRecordType(public val code: Int) {
     ChangeCipherSpec(0x14),
     Alert(0x15),
@@ -16,7 +16,7 @@ public enum class TLSRecordType(public val code: Int) {
     ApplicationData(0x17);
 
     public companion object {
-        private val byCode = Array(256) { idx -> values().firstOrNull { it.code == idx } }
+        private val byCode = Array(256) { idx -> entries.firstOrNull { it.code == idx } }
 
         /**
          * Find an instance of [TLSRecordType] by its numeric code or fail

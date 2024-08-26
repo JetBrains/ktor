@@ -11,6 +11,7 @@ import io.ktor.client.statement.*
 import io.ktor.client.tests.utils.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
+import kotlinx.io.*
 import kotlin.test.*
 
 class HttpStatementTest : ClientLoader() {
@@ -24,7 +25,7 @@ class HttpStatementTest : ClientLoader() {
                     repeat(42) {
                         writeInt(42)
                     }
-                }.readBytes(42)
+                }.readByteArray(42)
 
                 val actual = it.readBytes(42)
 
@@ -46,11 +47,26 @@ class HttpStatementTest : ClientLoader() {
 
         test { client ->
             val response = client.get("$TEST_SERVER/compression/gzip")
-            assertTrue(!response.coroutineContext[Job]!!.isCompleted)
+            assertTrue(response.coroutineContext[Job]!!.isCompleted)
 
             val content = response.body<String>()
             assertEquals("Compressed response!", content)
-            assertTrue(response.coroutineContext[Job]!!.isCompleted)
+        }
+    }
+
+    @Test
+    fun testJobFinishedAfterResponseRead() = clientTests {
+        test { client ->
+            client.prepareGet("$TEST_SERVER/content/hello").execute().apply {
+                assertTrue(call.coroutineContext.job.isCompleted)
+            }
+
+            client.prepareGet("$TEST_SERVER/content/hello").execute {
+                assertFalse(it.call.coroutineContext.job.isCompleted)
+                it
+            }.apply {
+                assertTrue(call.coroutineContext.job.isCompleted)
+            }
         }
     }
 }

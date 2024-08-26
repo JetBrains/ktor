@@ -1,0 +1,31 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-sse>
+final class io.ktor.sse/ServerSentEvent { // io.ktor.sse/ServerSentEvent|null[0]
+    constructor <init>(kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/Long? = ..., kotlin/String? = ...) // io.ktor.sse/ServerSentEvent.<init>|<init>(kotlin.String?;kotlin.String?;kotlin.String?;kotlin.Long?;kotlin.String?){}[0]
+
+    final val comments // io.ktor.sse/ServerSentEvent.comments|{}comments[0]
+        final fun <get-comments>(): kotlin/String? // io.ktor.sse/ServerSentEvent.comments.<get-comments>|<get-comments>(){}[0]
+    final val data // io.ktor.sse/ServerSentEvent.data|{}data[0]
+        final fun <get-data>(): kotlin/String? // io.ktor.sse/ServerSentEvent.data.<get-data>|<get-data>(){}[0]
+    final val event // io.ktor.sse/ServerSentEvent.event|{}event[0]
+        final fun <get-event>(): kotlin/String? // io.ktor.sse/ServerSentEvent.event.<get-event>|<get-event>(){}[0]
+    final val id // io.ktor.sse/ServerSentEvent.id|{}id[0]
+        final fun <get-id>(): kotlin/String? // io.ktor.sse/ServerSentEvent.id.<get-id>|<get-id>(){}[0]
+    final val retry // io.ktor.sse/ServerSentEvent.retry|{}retry[0]
+        final fun <get-retry>(): kotlin/Long? // io.ktor.sse/ServerSentEvent.retry.<get-retry>|<get-retry>(){}[0]
+
+    final fun toString(): kotlin/String // io.ktor.sse/ServerSentEvent.toString|toString(){}[0]
+}
+
+final const val io.ktor.sse/COLON // io.ktor.sse/COLON|{}COLON[0]
+    final fun <get-COLON>(): kotlin/String // io.ktor.sse/COLON.<get-COLON>|<get-COLON>(){}[0]
+final const val io.ktor.sse/END_OF_LINE // io.ktor.sse/END_OF_LINE|{}END_OF_LINE[0]
+    final fun <get-END_OF_LINE>(): kotlin/String // io.ktor.sse/END_OF_LINE.<get-END_OF_LINE>|<get-END_OF_LINE>(){}[0]
+final const val io.ktor.sse/SPACE // io.ktor.sse/SPACE|{}SPACE[0]
+    final fun <get-SPACE>(): kotlin/String // io.ktor.sse/SPACE.<get-SPACE>|<get-SPACE>(){}[0]

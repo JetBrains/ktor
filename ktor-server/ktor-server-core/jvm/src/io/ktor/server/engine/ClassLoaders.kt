@@ -52,7 +52,7 @@ private fun ClassLoader.urlClassPath(): List<URL>? {
  * Unlike the old way, this doesn't require any black magic so works well on all JDKs
  * from JDK6 to the latest.
  */
-private fun ClassLoader.urlClassPathByPackagesList(): List<URL>? {
+private fun ClassLoader.urlClassPathByPackagesList(): List<URL> {
     val allPackagePaths = ClassLoaderDelegate(this).packagesList().map { it.replace('.', '/') }
         .flatMapTo(HashSet<String>()) { packageName ->
             val segments = packageName.split('/')
@@ -73,5 +73,5 @@ private fun Class<*>.findURLClassPathField(): Field? {
  * to get access to [getPackages] function that is unfortunately protected.
  */
 private class ClassLoaderDelegate(delegate: ClassLoader) : ClassLoader(delegate) {
-    internal fun packagesList(): List<String> = getPackages().map { it.name }
+    fun packagesList(): List<String> = getPackages().map { it.name }
 }

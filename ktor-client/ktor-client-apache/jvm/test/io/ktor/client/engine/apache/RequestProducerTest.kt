@@ -18,7 +18,7 @@ import java.nio.*
 import kotlin.coroutines.*
 import kotlin.test.*
 
-@kotlin.Suppress("BlockingMethodInNonBlockingContext")
+@Suppress("BlockingMethodInNonBlockingContext")
 class RequestProducerTest {
 
     @OptIn(InternalAPI::class)
@@ -85,7 +85,7 @@ class RequestProducerTest {
         producer.close()
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
+    @OptIn(DelicateCoroutinesApi::class, InternalAPI::class)
     @Test
     fun testProducingReadChannelContent() = runBlocking {
         val content = ByteChannel(true)
@@ -226,6 +226,7 @@ private class TestEncoder : ContentEncoder {
         src.limit()
     }
 
+    @OptIn(InternalAPI::class)
     override fun complete() {
         channel.close()
     }

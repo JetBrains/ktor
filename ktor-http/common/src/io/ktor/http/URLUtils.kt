@@ -19,6 +19,25 @@ public fun Url(urlString: String): Url = URLBuilder(urlString).build()
 public fun Url(builder: URLBuilder): Url = URLBuilder().takeFrom(builder).build()
 
 /**
+ * Construct a [Url] by applying [block] an empty [UrlBuilder].
+ */
+public fun buildUrl(block: URLBuilder.() -> Unit): Url = URLBuilder().apply(block).build()
+
+/**
+ * Parses the given URL string and returns a [Url] object if valid, otherwise, it returns `null`.
+ *
+ * @param urlString The URL string to be parsed.
+ * @return A [Url] object if the URL is valid or `null` otherwise.
+ */
+public fun parseUrl(urlString: String): Url? {
+    return try {
+        URLBuilder(urlString).takeIf { it.host.isNotEmpty() }?.build()
+    } catch (cause: URLParserException) {
+        null
+    }
+}
+
+/**
  * Construct [URLBuilder] from [urlString].
  */
 @Suppress("FunctionName")

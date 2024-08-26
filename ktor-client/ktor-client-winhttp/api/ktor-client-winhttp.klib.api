@@ -1,0 +1,42 @@
+// Klib ABI Dump
+// Targets: [mingwX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-client-winhttp>
+final enum class io.ktor.client.engine.winhttp/WinHttpSecurityProtocol : kotlin/Enum<io.ktor.client.engine.winhttp/WinHttpSecurityProtocol> { // io.ktor.client.engine.winhttp/WinHttpSecurityProtocol|null[0]
+    enum entry Default // io.ktor.client.engine.winhttp/WinHttpSecurityProtocol.Default|null[0]
+    enum entry Tls10 // io.ktor.client.engine.winhttp/WinHttpSecurityProtocol.Tls10|null[0]
+    enum entry Tls11 // io.ktor.client.engine.winhttp/WinHttpSecurityProtocol.Tls11|null[0]
+    enum entry Tls12 // io.ktor.client.engine.winhttp/WinHttpSecurityProtocol.Tls12|null[0]
+    enum entry Tls13 // io.ktor.client.engine.winhttp/WinHttpSecurityProtocol.Tls13|null[0]
+
+    final val entries // io.ktor.client.engine.winhttp/WinHttpSecurityProtocol.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.ktor.client.engine.winhttp/WinHttpSecurityProtocol> // io.ktor.client.engine.winhttp/WinHttpSecurityProtocol.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.ktor.client.engine.winhttp/WinHttpSecurityProtocol // io.ktor.client.engine.winhttp/WinHttpSecurityProtocol.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.ktor.client.engine.winhttp/WinHttpSecurityProtocol> // io.ktor.client.engine.winhttp/WinHttpSecurityProtocol.values|values#static(){}[0]
+}
+
+final class io.ktor.client.engine.winhttp/WinHttpClientEngineConfig : io.ktor.client.engine/HttpClientEngineConfig { // io.ktor.client.engine.winhttp/WinHttpClientEngineConfig|null[0]
+    constructor <init>() // io.ktor.client.engine.winhttp/WinHttpClientEngineConfig.<init>|<init>(){}[0]
+
+    final var protocolVersion // io.ktor.client.engine.winhttp/WinHttpClientEngineConfig.protocolVersion|{}protocolVersion[0]
+        final fun <get-protocolVersion>(): io.ktor.http/HttpProtocolVersion // io.ktor.client.engine.winhttp/WinHttpClientEngineConfig.protocolVersion.<get-protocolVersion>|<get-protocolVersion>(){}[0]
+        final fun <set-protocolVersion>(io.ktor.http/HttpProtocolVersion) // io.ktor.client.engine.winhttp/WinHttpClientEngineConfig.protocolVersion.<set-protocolVersion>|<set-protocolVersion>(io.ktor.http.HttpProtocolVersion){}[0]
+    final var securityProtocols // io.ktor.client.engine.winhttp/WinHttpClientEngineConfig.securityProtocols|{}securityProtocols[0]
+        final fun <get-securityProtocols>(): io.ktor.client.engine.winhttp/WinHttpSecurityProtocol // io.ktor.client.engine.winhttp/WinHttpClientEngineConfig.securityProtocols.<get-securityProtocols>|<get-securityProtocols>(){}[0]
+        final fun <set-securityProtocols>(io.ktor.client.engine.winhttp/WinHttpSecurityProtocol) // io.ktor.client.engine.winhttp/WinHttpClientEngineConfig.securityProtocols.<set-securityProtocols>|<set-securityProtocols>(io.ktor.client.engine.winhttp.WinHttpSecurityProtocol){}[0]
+    final var sslVerify // io.ktor.client.engine.winhttp/WinHttpClientEngineConfig.sslVerify|{}sslVerify[0]
+        final fun <get-sslVerify>(): kotlin/Boolean // io.ktor.client.engine.winhttp/WinHttpClientEngineConfig.sslVerify.<get-sslVerify>|<get-sslVerify>(){}[0]
+        final fun <set-sslVerify>(kotlin/Boolean) // io.ktor.client.engine.winhttp/WinHttpClientEngineConfig.sslVerify.<set-sslVerify>|<set-sslVerify>(kotlin.Boolean){}[0]
+}
+
+final object io.ktor.client.engine.winhttp/WinHttp : io.ktor.client.engine/HttpClientEngineFactory<io.ktor.client.engine.winhttp/WinHttpClientEngineConfig> { // io.ktor.client.engine.winhttp/WinHttp|null[0]
+    final fun create(kotlin/Function1<io.ktor.client.engine.winhttp/WinHttpClientEngineConfig, kotlin/Unit>): io.ktor.client.engine/HttpClientEngine // io.ktor.client.engine.winhttp/WinHttp.create|create(kotlin.Function1<io.ktor.client.engine.winhttp.WinHttpClientEngineConfig,kotlin.Unit>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.client.engine.winhttp/WinHttp.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.client.engine.winhttp/WinHttp.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.client.engine.winhttp/WinHttp.toString|toString(){}[0]
+}

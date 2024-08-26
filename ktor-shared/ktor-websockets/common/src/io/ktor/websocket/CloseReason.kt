@@ -30,7 +30,6 @@ public data class CloseReason(val code: Short, val message: String) {
      *
      * see https://tools.ietf.org/html/rfc6455#section-7.4 for list of codes
      */
-    @Suppress("KDocMissingDocumentation")
     public enum class Codes(public val code: Short) {
         NORMAL(1000),
         GOING_AWAY(1001),
@@ -49,7 +48,7 @@ public data class CloseReason(val code: Short, val message: String) {
         TRY_AGAIN_LATER(1013);
 
         public companion object {
-            private val byCodeMap = values().associateBy { it.code }
+            private val byCodeMap = entries.associateBy { it.code }
 
             @Deprecated(
                 "Use INTERNAL_ERROR instead.",

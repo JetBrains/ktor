@@ -16,7 +16,6 @@ import java.io.*
 import java.lang.reflect.*
 import kotlin.coroutines.*
 
-@Suppress("KDocMissingDocumentation")
 public open class AsyncServletApplicationCall(
     application: Application,
     servletRequest: HttpServletRequest,
@@ -53,7 +52,6 @@ public open class AsyncServletApplicationCall(
     }
 }
 
-@Suppress("KDocMissingDocumentation")
 public class AsyncServletApplicationRequest(
     call: PipelineCall,
     servletRequest: HttpServletRequest,
@@ -86,7 +84,6 @@ public open class AsyncServletApplicationResponse(
     override val coroutineContext: CoroutineContext,
     managedByEngineHeaders: Set<String> = emptySet()
 ) : ServletApplicationResponse(call, servletResponse, managedByEngineHeaders), CoroutineScope {
-    @Suppress("DEPRECATION")
     override fun createResponseJob(): ReaderJob =
         servletWriter(servletResponse.outputStream)
 

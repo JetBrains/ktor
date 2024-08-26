@@ -21,14 +21,4 @@ class TomcatWebSocketTest :
     @Ignore
     override fun testFragmentedFlagsFromTheFirstFrame() {
     }
-
-    @RetryableTest(3)
-    override fun testWebSocketGenericSequence() {
-        super.testWebSocketGenericSequence()
-    }
-
-    @RetryableTest(3)
-    override fun testConnectionWithContentType() {
-        super.testConnectionWithContentType()
-    }
 }

@@ -1,16 +1,14 @@
 description = ""
 
 kotlin.sourceSets {
-    jvmAndNixMain {
+    commonMain {
         dependencies {
-            api(kotlin("test"))
-
             implementation(project(":ktor-server:ktor-server-plugins:ktor-server-forwarded-header"))
             implementation(project(":ktor-server:ktor-server-plugins:ktor-server-auto-head-response"))
             implementation(project(":ktor-server:ktor-server-plugins:ktor-server-status-pages"))
-            implementation(project(":ktor-server:ktor-server-test-host"))
             implementation(project(":ktor-server:ktor-server-plugins:ktor-server-hsts"))
             implementation(project(":ktor-server:ktor-server-plugins:ktor-server-websockets"))
+            implementation(project(":ktor-server:ktor-server-test-base"))
         }
     }
 

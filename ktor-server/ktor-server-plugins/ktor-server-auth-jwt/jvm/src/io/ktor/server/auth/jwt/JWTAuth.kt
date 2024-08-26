@@ -120,14 +120,14 @@ public abstract class JWTPayloadHolder(
  * @param payload JWT
  * @see Payload
  */
-public class JWTCredential(payload: Payload) : Credential, JWTPayloadHolder(payload)
+public class JWTCredential(payload: Payload) : JWTPayloadHolder(payload)
 
 /**
  * A JWT principal that consists of the specified [payload].
  * @param payload JWT
  * @see Payload
  */
-public class JWTPrincipal(payload: Payload) : Principal, JWTPayloadHolder(payload)
+public class JWTPrincipal(payload: Payload) : JWTPayloadHolder(payload)
 
 /**
  * A JWT verifier function used to verify a token format and its signature.
@@ -296,7 +296,7 @@ public class JWTAuthenticationProvider internal constructor(config: Config) : Au
          * Allows you to perform additional validations on the JWT payload.
          * @return a principal (usually an instance of [JWTPrincipal]) or `null`
          */
-        public fun validate(validate: suspend ApplicationCall.(JWTCredential) -> Principal?) {
+        public fun validate(validate: suspend ApplicationCall.(JWTCredential) -> Any?) {
             authenticationFunction = validate
         }
 

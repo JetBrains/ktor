@@ -14,7 +14,7 @@ private val FIXED_HEADERS_PART_LENGTH = 14 + HttpHeaders.ContentType.length + Ht
 /**
  * Start multirange response writer coroutine
  */
-@Suppress("DEPRECATION")
+
 internal actual fun CoroutineScope.writeMultipleRangesImpl(
     channelProducer: (LongRange) -> ByteReadChannel,
     ranges: List<LongRange>,

@@ -6,7 +6,7 @@ package io.ktor.network.tls.platform
 
 internal class PlatformVersion(val major: String, val minor: Int) {
 
-    public companion object {
+    companion object {
         operator fun invoke(rawVersion: String): PlatformVersion {
             try {
                 val versionString = rawVersion.split('-', '_')

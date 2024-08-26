@@ -1,6 +1,6 @@
 kotlin {
     createCInterop("threadUtils", nixTargets()) {
-        defFile = File(projectDir, "nix/interop/threadUtils.def")
+        definitionFile = File(projectDir, "nix/interop/threadUtils.def")
     }
 
     sourceSets {
@@ -12,6 +12,11 @@ kotlin {
         commonTest {
             dependencies {
                 api(project(":ktor-test-dispatcher"))
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation(project(":ktor-shared:ktor-junit"))
             }
         }
     }

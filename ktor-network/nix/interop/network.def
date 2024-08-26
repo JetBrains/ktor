@@ -34,3 +34,7 @@ void selector_release_fd_set(selection_set set) {
 int selector_pselect(int descriptor, selection_set read_set, selection_set write_set, selection_set error_set) {
     return pselect(descriptor, read_set.value, write_set.value, error_set.value, NULL, NULL);
 }
+
+static inline int fd_setsize() {
+    return FD_SETSIZE;
+}

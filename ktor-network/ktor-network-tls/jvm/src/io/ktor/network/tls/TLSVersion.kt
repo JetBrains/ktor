@@ -4,11 +4,12 @@
 
 package io.ktor.network.tls
 
+import kotlin.enums.*
+
 /**
  * TLS version
  * @property code numeric TLS version code
  */
-@Suppress("KDocMissingDocumentation")
 public enum class TLSVersion(public val code: Int) {
     SSL3(0x0300),
     TLS10(0x0301),
@@ -16,7 +17,7 @@ public enum class TLSVersion(public val code: Int) {
     TLS12(0x0303);
 
     public companion object {
-        private val byOrdinal = values()
+        private val byOrdinal: List<TLSVersion> = entries
 
         /**
          * Find version instance by its numeric [code] or fail
