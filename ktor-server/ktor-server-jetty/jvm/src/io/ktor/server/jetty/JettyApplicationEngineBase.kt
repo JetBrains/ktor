@@ -37,6 +37,12 @@ public open class JettyApplicationEngineBase(
         public var configureServer: Server.() -> Unit = {}
 
         /**
+         * Property function that will be called during Jetty server initialization with the http configuration instance
+         * that is passed to the managed connectors as a receiver.
+         */
+        public var httpConfiguration: HttpConfiguration.() -> Unit = {}
+
+        /**
          * The duration of time that a connection can be idle before the connector takes action to close the connection.
          */
         public var idleTimeout: Duration = 30.seconds
