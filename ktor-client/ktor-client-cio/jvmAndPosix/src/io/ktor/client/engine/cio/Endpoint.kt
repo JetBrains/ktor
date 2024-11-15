@@ -94,7 +94,6 @@ internal class Endpoint(
         deliveryPoint.send(task)
     }
 
-    @OptIn(InternalAPI::class)
     private suspend fun makeDedicatedRequest(
         request: HttpRequestData,
         callContext: CoroutineContext
@@ -118,7 +117,7 @@ internal class Endpoint(
                 } catch (cause: Throwable) {
                     LOGGER.debug("An error occurred while closing connection", cause)
                 } finally {
-                    releaseConnection()
+                    releaseConnection(connection.socket)
                 }
             }
 
@@ -193,7 +192,7 @@ internal class Endpoint(
             coroutineContext
         )
 
-        pipeline.pipelineContext.invokeOnCompletion { releaseConnection() }
+        pipeline.pipelineContext.invokeOnCompletion { releaseConnection(connection.socket) }
     }
 
     @Suppress("UNUSED_EXPRESSION")
@@ -248,7 +247,7 @@ internal class Endpoint(
                     } catch (_: Throwable) {
                     }
 
-                    connectionFactory.release(address)
+                    connectionFactory.release(socket)
                     throw cause
                 }
             }
@@ -288,9 +287,8 @@ internal class Endpoint(
         return connectTimeout to socketTimeout
     }
 
-    private fun releaseConnection() {
-        val address = connectionAddress ?: return
-        connectionFactory.release(address)
+    private fun releaseConnection(socket: Socket) {
+        connectionFactory.release(socket)
         connections.decrementAndGet()
     }
 
