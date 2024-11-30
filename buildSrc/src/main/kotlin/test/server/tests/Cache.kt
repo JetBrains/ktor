@@ -114,6 +114,10 @@ internal fun Application.cacheTestServer() {
                 call.response.header(HttpHeaders.CacheControl, "max-age=${Long.MAX_VALUE}000")
                 call.respond(HttpStatusCode.OK)
             }
+            get("/invalid-max-age") {
+                call.response.header(HttpHeaders.CacheControl, "max-age: 120")
+                call.respond(HttpStatusCode.OK)
+            }
         }
     }
 }

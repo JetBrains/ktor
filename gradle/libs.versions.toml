@@ -5,7 +5,7 @@ kotlinx-html = "0.11.0"
 kotlinx-datetime = "0.6.1"
 kotlinx-io = "0.5.4"
 coroutines = "1.9.0"
-atomicfu = "0.26.0"
+atomicfu = "0.26.1"
 serialization = "1.7.3"
 binaryCompatibilityValidator = "0.16.3"
 dokka = "1.9.20"
@@ -14,7 +14,7 @@ ktlint = "3.15.0"
 kotlinx-browser = "0.2"
 
 # Used for test server in buildSrc
-ktor = "3.1.0-eap-1153"
+ktor = "3.1.0-eap-1172"
 
 netty = "4.1.115.Final"
 netty-tcnative = "2.0.69.Final"

@@ -820,6 +820,21 @@ class CacheTest : ClientLoader() {
         }
     }
 
+    @Test
+    fun testInvalidMaxAge() = clientTests {
+        config {
+            install(HttpCache)
+        }
+
+        test { client ->
+            val url = Url("$TEST_SERVER/cache/invalid-max-age")
+
+            client.get(url).apply {
+                assertEquals(HttpStatusCode.OK, status)
+            }
+        }
+    }
+
     /**
      * Does delay and ensures that the [GMTDate] measurements report at least
      * the specified number of [milliseconds].
