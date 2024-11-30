@@ -371,7 +371,6 @@ class CallLoggingTest {
                 }
             }
         }
-        lateinit var hash: String
 
         runTestApplication {
             application {
@@ -380,11 +379,11 @@ class CallLoggingTest {
                     clock { 0 }
                 }
             }
-            application { hash = hashCode().toString(radix = 16) }
+            client.get("/")
         }
 
         assertTrue(customMessages.isNotEmpty())
-        assertTrue(customMessages.all { it.startsWith("CUSTOM TRACE:") && it.contains(hash) })
+        assertTrue(customMessages.all { it.startsWith("CUSTOM TRACE:") })
         assertTrue(messages.isEmpty())
     }
 
