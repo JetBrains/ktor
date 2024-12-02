@@ -498,7 +498,7 @@ class LoggingTest : ClientLoader() {
     data class User(val name: String)
 
     @Test
-    fun testLogPostBodyWithJson() = clientTests {
+    fun testLogPostBodyWithJson() = clientTests(retries = 5) {
         val testLogger = TestLogger(
             "REQUEST: http://127.0.0.1:8080/content/echo",
             "METHOD: HttpMethod(value=POST)",

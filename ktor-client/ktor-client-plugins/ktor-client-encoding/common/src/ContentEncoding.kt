@@ -15,7 +15,7 @@ import io.ktor.util.*
 import io.ktor.util.logging.*
 import io.ktor.util.pipeline.*
 import io.ktor.utils.io.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 
 private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.compression.ContentEncoding")
 
@@ -130,7 +130,11 @@ public val ContentEncoding: ClientPlugin<ContentEncodingConfig> =
 
             val headers = headers {
                 response.headers.forEach { name, values ->
-                    if (name.equals(HttpHeaders.ContentEncoding, ignoreCase = true)) return@forEach
+                    if (name.equals(HttpHeaders.ContentEncoding, ignoreCase = true) ||
+                        name.equals(HttpHeaders.ContentLength, ignoreCase = true)
+                    ) {
+                        return@forEach
+                    }
                     appendAll(name, values)
                 }
                 val remainingEncodings = encodings.filter { !encodings.contains(it) }

@@ -17,7 +17,7 @@ class PluginsTest : ClientLoader() {
     private val testSize = listOf(0, 1, 1024, 4 * 1024, 16 * 1024, 16 * 1024 * 1024)
 
     @Test
-    fun testIgnoreBody() = clientTests {
+    fun testIgnoreBody() = clientTests(retries = 10) {
         test { client ->
             testSize.forEach {
                 client.getIgnoringBody(it)

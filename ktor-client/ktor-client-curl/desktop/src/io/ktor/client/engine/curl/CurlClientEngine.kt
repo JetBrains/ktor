@@ -11,7 +11,6 @@ import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.cio.*
-import io.ktor.util.*
 import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
@@ -42,7 +41,7 @@ internal class CurlClientEngine(
 
             val status = HttpStatusCode.fromValue(status)
 
-            val headers = HeadersImpl(rawHeaders.toMap())
+            val headers = filterCurlHeaders(rawHeaders)
             rawHeaders.release()
 
             val responseBody: Any = data.attributes.getOrNull(ResponseAdapterAttributeKey)
@@ -64,6 +63,23 @@ internal class CurlClientEngine(
         super.close()
         curlProcessor.close()
     }
+}
+
+/**
+ * Curl provides raw response headers while performing request decoding.
+ * This can lead to an invalid content-length header or trigger the content encoding plugin wrongly.
+ *
+ * We need to filter out the headers that are no longer valid.
+ */
+internal fun filterCurlHeaders(raw: HttpHeadersMap): Headers {
+    val builder = raw.toBuilder()
+
+    if (builder.contains(HttpHeaders.ContentEncoding)) {
+        builder.remove(HttpHeaders.ContentEncoding)
+        builder.remove(HttpHeaders.ContentLength)
+    }
+
+    return builder.build()
 }
 
 @Deprecated("This exception will be removed in a future release in favor of a better error handling.")

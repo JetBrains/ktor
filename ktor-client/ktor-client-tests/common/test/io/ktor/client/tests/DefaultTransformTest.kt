@@ -9,21 +9,20 @@ import io.ktor.client.call.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.test.dispatcher.*
+import kotlinx.coroutines.test.runTest
 import kotlin.test.*
 
 class DefaultTransformTest {
 
     @Test
-    fun testReadingHeadResponseAsByteArray() = testSuspend {
-        val httpClient = HttpClient(MockEngine) {
+    fun testReadingHeadResponseAsByteArray() = runTest {
+        val client = HttpClient(MockEngine) {
             engine {
                 addHandler { _ ->
                     respond("", headers = headersOf(HttpHeaders.ContentLength, "123"))
                 }
             }
         }
-
-        httpClient.head("http://host/path").body<ByteArray>()
+        client.head("http://host/path").body<ByteArray>()
     }
 }

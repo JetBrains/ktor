@@ -21,7 +21,7 @@ import io.ktor.util.date.*
 import io.ktor.util.logging.*
 import io.ktor.util.pipeline.*
 import io.ktor.utils.io.*
-import kotlin.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 internal object CacheControl {
     internal val NO_STORE = HeaderValue("no-store")
@@ -208,8 +208,11 @@ public class HttpCache private constructor(
                     LOGGER.trace("Caching response for ${response.call.request.url}")
                     val cachedData = plugin.cacheResponse(response)
                     if (cachedData != null) {
-                        val reusableResponse =
-                            cachedData.createResponse(scope, response.request, response.coroutineContext)
+                        val reusableResponse = cachedData.createResponse(
+                            scope,
+                            response.request,
+                            response.coroutineContext
+                        )
                         proceedWith(reusableResponse)
                         return@intercept
                     }

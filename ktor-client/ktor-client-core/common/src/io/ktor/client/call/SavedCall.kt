@@ -10,8 +10,8 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.util.date.*
 import io.ktor.utils.io.*
-import kotlinx.io.*
-import kotlin.coroutines.*
+import kotlinx.io.readByteArray
+import kotlin.coroutines.CoroutineContext
 
 internal class SavedHttpCall(
     client: HttpClient,
@@ -23,6 +23,8 @@ internal class SavedHttpCall(
     init {
         this.request = SavedHttpRequest(this, request)
         this.response = SavedHttpResponse(this, responseBody, response)
+
+        checkContentLength(response.contentLength(), responseBody.size.toLong(), request.method)
     }
 
     /**

@@ -79,6 +79,12 @@ public fun HttpClient.defaultTransformers() {
 
             ByteArray::class -> {
                 val bytes = body.toByteArray()
+                val contentLength = context.response.contentLength()
+
+                if (context.request.method != HttpMethod.Head) {
+                    checkContentLength(contentLength, bytes.size.toLong())
+                }
+
                 proceedWith(HttpResponseContainer(info, bytes))
             }
 
@@ -122,6 +128,12 @@ public fun HttpClient.defaultTransformers() {
     }
 
     platformResponseDefaultTransformers()
+}
+
+private fun checkContentLength(contentLength: Long?, bytes: Long) {
+    check(contentLength == null || contentLength == bytes) {
+        "Content-Length mismatch: expected $contentLength bytes, but received $bytes bytes"
+    }
 }
 
 internal expect fun platformRequestDefaultTransform(

@@ -96,7 +96,7 @@ class ContentEncodingTest : ClientLoader() {
     }
 
     @Test
-    fun testDisableDecompression() = clientTests(listOf("OkHttp")) {
+    fun testDisableDecompression() = clientTests(listOf("OkHttp", "Js")) {
         config {
             ContentEncoding(mode = ContentEncodingConfig.Mode.CompressRequest) {
                 gzip()

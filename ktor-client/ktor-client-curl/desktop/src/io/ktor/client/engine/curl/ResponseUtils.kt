@@ -4,19 +4,18 @@
 
 package io.ktor.client.engine.curl
 
+import io.ktor.http.HeadersBuilder
 import io.ktor.http.cio.*
 
-internal fun HttpHeadersMap.toMap(): Map<String, List<String>> {
-    val result = mutableMapOf<String, MutableList<String>>()
+internal fun HttpHeadersMap.toBuilder(): HeadersBuilder {
+    val builder = HeadersBuilder()
 
     for (index in 0 until size) {
         val key = nameAt(index).toString()
         val value = valueAt(index).toString()
 
-        if (result[key]?.add(value) == null) {
-            result[key] = mutableListOf(value)
-        }
+        builder.append(key, value)
     }
 
-    return result
+    return builder
 }

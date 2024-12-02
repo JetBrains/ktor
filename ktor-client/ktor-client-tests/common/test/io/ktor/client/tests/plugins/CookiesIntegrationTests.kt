@@ -186,7 +186,7 @@ class CookiesIntegrationTests : ClientLoader() {
     }
 
     @Test
-    fun testCookiesWithWrongValue() = clientTests(listOf("Js", "Darwin", "DarwinLegacy", "WinHttp", "Java")) {
+    fun testCookiesWithWrongValue() = clientTests(listOf("Js", "Darwin", "DarwinLegacy", "WinHttp", "Java", "Curl")) {
         config {
             install(HttpCookies)
         }

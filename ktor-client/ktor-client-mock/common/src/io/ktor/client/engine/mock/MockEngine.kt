@@ -31,7 +31,7 @@ public class MockEngine(override val config: MockEngineConfig) : HttpClientEngin
     private var invocationCount: Int = 0
 
     init {
-        check(config.requestHandlers.size > 0) {
+        check(config.requestHandlers.isNotEmpty()) {
             "No request handler provided in [MockEngineConfig], please provide at least one."
         }
     }

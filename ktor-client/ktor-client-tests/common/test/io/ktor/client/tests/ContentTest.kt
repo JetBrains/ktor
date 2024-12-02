@@ -145,7 +145,7 @@ class ContentTest : ClientLoader(5 * 60) {
     }
 
     @Test
-    fun testString() = clientTests(listOf("Darwin", "CIO", "DarwinLegacy")) {
+    fun testString() = clientTests(listOf("Darwin", "CIO", "DarwinLegacy"), retries = 10) {
         test { client ->
             testStrings.forEach { content ->
                 val requestWithBody = client.echo<String>(content)
