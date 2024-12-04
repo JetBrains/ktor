@@ -21,6 +21,8 @@ private val escapeRegex: Regex = "\\\\.".toRegex()
  * @throws [ParseException] on invalid header
  *
  * @see [parseAuthorizationHeaders]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.auth.parseAuthorizationHeader)
  */
 public fun parseAuthorizationHeader(headerValue: String): HttpAuthHeader? {
     var index = 0

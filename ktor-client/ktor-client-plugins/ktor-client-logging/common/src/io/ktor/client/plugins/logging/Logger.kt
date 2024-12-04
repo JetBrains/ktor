@@ -6,10 +6,14 @@ package io.ktor.client.plugins.logging
 
 /**
  * [HttpClient] Logger.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.logging.Logger)
  */
 public interface Logger {
     /**
      * Add [message] to log.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.logging.Logger.log)
      */
     public fun log(message: String)
 
@@ -18,6 +22,8 @@ public interface Logger {
 
 /**
  * Default logger to use.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.logging.DEFAULT)
  */
 public expect val Logger.Companion.DEFAULT: Logger
 

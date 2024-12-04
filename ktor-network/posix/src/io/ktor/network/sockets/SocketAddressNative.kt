@@ -14,6 +14,8 @@ public actual class InetSocketAddress actual constructor(
      * Create a copy of [InetSocketAddress].
      *
      * Note that this may trigger a name service reverse lookup.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.InetSocketAddress.copy)
      */
     public actual fun copy(hostname: String, port: Int): InetSocketAddress {
         return InetSocketAddress(hostname, port)
@@ -54,6 +56,8 @@ public actual class UnixSocketAddress actual constructor(
 ) : SocketAddress() {
     /**
      * The path of the socket address.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.UnixSocketAddress.component1)
      */
     public actual operator fun component1(): String {
         return path

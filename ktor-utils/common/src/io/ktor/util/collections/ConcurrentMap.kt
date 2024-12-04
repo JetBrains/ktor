@@ -8,6 +8,8 @@ internal const val INITIAL_CAPACITY = 32
 
 /**
  * Ktor concurrent map implementation. Please do not use it.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.collections.ConcurrentMap)
  */
 public expect class ConcurrentMap<Key, Value>(
     initialCapacity: Int = INITIAL_CAPACITY
@@ -15,6 +17,8 @@ public expect class ConcurrentMap<Key, Value>(
 
     /**
      * Computes [block] and inserts result in map. The [block] will be evaluated at most once.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.collections.ConcurrentMap.computeIfAbsent)
      */
     public fun computeIfAbsent(key: Key, block: () -> Value): Value
 

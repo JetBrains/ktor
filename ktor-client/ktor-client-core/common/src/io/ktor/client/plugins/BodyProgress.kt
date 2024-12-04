@@ -25,6 +25,8 @@ private val DownloadProgressListenerAttributeKey =
 
 /**
  * Plugin that provides observable progress for uploads and downloads
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.BodyProgress)
  */
 public val BodyProgress: ClientPlugin<Unit> = createClientPlugin("BodyProgress") {
 

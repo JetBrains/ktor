@@ -9,6 +9,8 @@ import io.ktor.util.*
 /**
  * Process path components such as `.` and `..`, replacing redundant path components including all leading.
  * It also discards all reserved characters and component names that are reserved (such as `CON`, `NUL`).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.util.normalizePathComponents)
  */
 public fun List<String>.normalizePathComponents(): List<String> {
     for (index in indices) {

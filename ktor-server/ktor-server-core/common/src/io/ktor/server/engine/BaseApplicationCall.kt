@@ -10,6 +10,8 @@ import io.ktor.util.*
 
 /**
  * Base class for implementing an [PipelineCall].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.BaseApplicationCall)
  */
 public abstract class BaseApplicationCall(final override val application: Application) : PipelineCall {
     public final override val attributes: Attributes = Attributes()

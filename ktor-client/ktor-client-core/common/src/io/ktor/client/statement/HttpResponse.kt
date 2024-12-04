@@ -18,11 +18,15 @@ import kotlinx.io.*
  * An [HttpClient]'s response, a second part of [HttpClientCall].
  *
  * Learn more from [Receiving responses](https://ktor.io/docs/response.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.statement.HttpResponse)
  */
 public abstract class HttpResponse : HttpMessage, CoroutineScope {
     /**
      * The associated [HttpClientCall] containing both
      * the underlying [HttpClientCall.request] and [HttpClientCall.response].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.statement.HttpResponse.call)
      */
     public abstract val call: HttpClientCall
 
@@ -70,6 +74,8 @@ public abstract class HttpResponse : HttpMessage, CoroutineScope {
  * This content doesn't go through any interceptors from [HttpResponsePipeline].
  *
  * If you need to read the content as decoded bytes, use the [bodyAsChannel] method instead.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.statement.content)
  */
 @InternalAPI
 @Deprecated(

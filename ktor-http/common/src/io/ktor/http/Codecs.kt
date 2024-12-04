@@ -45,6 +45,8 @@ private val SPECIAL_SYMBOLS = listOf('-', '.', '_', '~').map { it.code.toByte() 
 /**
  * Encode url part as specified in
  * https://tools.ietf.org/html/rfc3986#section-2
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.encodeURLQueryComponent)
  */
 public fun String.encodeURLQueryComponent(
     encodeFull: Boolean = false,

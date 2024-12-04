@@ -39,6 +39,8 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.HttpCache")
  * the client executes only the first request and skips the second one since data is already saved in a cache.
  *
  * You can learn more from [Caching](https://ktor.io/docs/client-caching.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cache.HttpCache)
  */
 public class HttpCache private constructor(
     @Deprecated(
@@ -56,6 +58,8 @@ public class HttpCache private constructor(
 ) {
     /**
      * A configuration for the [HttpCache] plugin.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cache.HttpCache.Config)
      */
     @KtorDsl
     public class Config {
@@ -66,6 +70,8 @@ public class HttpCache private constructor(
         /**
          * Specifies if the client where this plugin is installed is shared among multiple users.
          * When set to true, all responses with `private` Cache-Control directive will not be cached.
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cache.HttpCache.Config.isShared)
          */
         public var isShared: Boolean = false
 

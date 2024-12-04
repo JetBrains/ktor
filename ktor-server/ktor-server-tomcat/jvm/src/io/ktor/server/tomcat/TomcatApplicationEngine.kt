@@ -25,6 +25,8 @@ import kotlin.coroutines.*
 
 /**
  * Tomcat application engine that runs it in embedded mode
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.tomcat.TomcatApplicationEngine)
  */
 public class TomcatApplicationEngine(
     environment: ApplicationEnvironment,
@@ -35,11 +37,15 @@ public class TomcatApplicationEngine(
 ) : BaseApplicationEngine(environment, monitor, developmentMode) {
     /**
      * Tomcat engine specific configuration builder
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.tomcat.TomcatApplicationEngine.Configuration)
      */
     public class Configuration : BaseApplicationEngine.Configuration() {
         /**
          * Property to provide a lambda that will be called
          * during Tomcat server initialization with the server instance as argument.
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.tomcat.TomcatApplicationEngine.Configuration.configureTomcat)
          */
         public var configureTomcat: Tomcat.() -> Unit = {}
     }

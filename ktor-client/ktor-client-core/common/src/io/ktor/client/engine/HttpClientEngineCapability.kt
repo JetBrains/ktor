@@ -15,6 +15,8 @@ internal val ENGINE_CAPABILITIES_KEY =
 
 /**
  * Default capabilities expected to be supported by engine.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.DEFAULT_CAPABILITIES)
  */
 public val DEFAULT_CAPABILITIES: Set<HttpClientEngineCapability<*>> = setOf(HttpTimeoutCapability)
 

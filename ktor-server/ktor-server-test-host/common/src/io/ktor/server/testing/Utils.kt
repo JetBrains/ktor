@@ -13,16 +13,22 @@ import kotlinx.io.*
 
 /**
  * [on] function receiver object
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.testing.On)
  */
 public object On
 
 /**
  * [it] function receiver object
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.testing.It)
  */
 public object It
 
 /**
  * DSL for creating a test case
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.testing.on)
  */
 @Suppress("UNUSED_PARAMETER")
 public inline fun on(comment: String, body: On.() -> Unit): Unit = On.body()

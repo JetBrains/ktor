@@ -6,6 +6,8 @@ package io.ktor.server.sessions
 
 /**
  * A caching storage for sessions.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.CacheStorage)
  */
 public class CacheStorage(
     public val delegate: SessionStorage,

@@ -14,6 +14,8 @@ import java.time.*
 
 /**
  * Construct [LastModifiedVersion] version from a [ZonedDateTime] instance
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.content.LastModifiedVersion)
  */
 public fun LastModifiedVersion(lastModified: ZonedDateTime): LastModifiedVersion =
     LastModifiedVersion(lastModified.toGMTDate())

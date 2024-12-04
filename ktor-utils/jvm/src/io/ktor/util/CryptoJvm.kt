@@ -15,6 +15,8 @@ import java.security.*
  * Create a digest function with the specified [algorithm] and [salt] provider.
  * @param algorithm digest algorithm name
  * @param salt a function computing a salt for a particular hash input value
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.getDigestFunction)
  */
 public fun getDigestFunction(algorithm: String, salt: (value: String) -> String): (String) -> ByteArray = { e ->
     getDigest(e, algorithm, salt)

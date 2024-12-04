@@ -14,11 +14,15 @@ import kotlin.coroutines.*
 
 /**
  * Builder for configuring the environment of the Ktor application.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ApplicationEnvironmentBuilder)
  */
 @KtorDsl
 public actual class ApplicationEnvironmentBuilder {
     /**
      * Root class loader.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ApplicationEnvironmentBuilder.classLoader)
      */
     public var classLoader: ClassLoader = ApplicationEnvironmentBuilder::class.java.classLoader
 

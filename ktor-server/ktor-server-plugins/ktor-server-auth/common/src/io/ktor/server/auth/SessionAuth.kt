@@ -17,6 +17,8 @@ import kotlin.reflect.*
  * @property type of session
  * @property challengeFunction to be used if there is no session
  * @property validator applied to an application all and session providing a [Principal]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.SessionAuthenticationProvider)
  */
 public class SessionAuthenticationProvider<T : Any> private constructor(
     config: Config<T>
@@ -118,6 +120,8 @@ public class SessionAuthenticationProvider<T : Any> private constructor(
  * This provider provides the ability to authenticate a user that already has an associated session.
  *
  * To learn how to configure the session provider, see [Session authentication](https://ktor.io/docs/session-auth.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.session)
  */
 public inline fun <reified T : Any> AuthenticationConfig.session(
     name: String? = null

@@ -14,6 +14,8 @@ import io.ktor.util.pipeline.*
  * Register a status page file(s) using [filePattern] for multiple status [code] list
  * @param code vararg list of status codes handled by this configuration
  * @param filePattern path to status file with optional `#` character(s) that will be replaced with numeric status code
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.statuspages.statusFile)
  */
 public fun StatusPagesConfig.statusFile(vararg code: HttpStatusCode, filePattern: String) {
     status(*code) { call, status ->

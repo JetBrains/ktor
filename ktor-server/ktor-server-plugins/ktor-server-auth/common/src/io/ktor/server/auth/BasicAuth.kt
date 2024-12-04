@@ -16,6 +16,8 @@ import io.ktor.utils.io.charsets.*
  *
  * @see [basic]
  * @property name is the name of the provider, or `null` for a default provider.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.BasicAuthenticationProvider)
  */
 public class BasicAuthenticationProvider internal constructor(
     config: Config
@@ -92,6 +94,8 @@ public class BasicAuthenticationProvider internal constructor(
  * Installs the basic [Authentication] provider.
  * You can use basic authentication for logging in users and protecting specific routes.
  * To learn how to configure it, see [Basic authentication](https://ktor.io/docs/basic.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.basic)
  */
 public fun AuthenticationConfig.basic(
     name: String? = null,

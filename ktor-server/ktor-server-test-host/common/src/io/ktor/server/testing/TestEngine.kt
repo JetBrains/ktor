@@ -12,6 +12,8 @@ import io.ktor.util.logging.*
 
 /**
  * Creates an engine environment for a test application.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.testing.createTestEnvironment)
  */
 public fun createTestEnvironment(
     configure: ApplicationEnvironmentBuilder.() -> Unit = {}

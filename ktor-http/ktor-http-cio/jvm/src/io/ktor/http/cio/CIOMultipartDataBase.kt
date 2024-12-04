@@ -13,6 +13,8 @@ import kotlin.coroutines.*
 
 /**
  * Represents a multipart data object that does parse and convert parts to ktor's [PartData]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.CIOMultipartDataBase)
  */
 @InternalAPI
 public class CIOMultipartDataBase(

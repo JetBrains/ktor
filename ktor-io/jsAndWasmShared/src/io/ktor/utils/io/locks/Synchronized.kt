@@ -14,6 +14,8 @@ import io.ktor.utils.io.*
  * from the standard library that is available for JVM.
  * The [SynchronizedObject] superclass gets erased (transformed to Any) on JVM and JS,
  * with `synchronized` leaving no trace in the code on JS and getting replaced with built-in monitors for locking on JVM.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.locks.SynchronizedObject)
  */
 @InternalAPI
 public actual typealias SynchronizedObject = Any

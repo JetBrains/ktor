@@ -9,6 +9,8 @@ import kotlin.coroutines.*
 
 /**
  * The default call ID's generator dictionary.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.callid.CALL_ID_DEFAULT_DICTIONARY)
  */
 public const val CALL_ID_DEFAULT_DICTIONARY: String = "abcdefghijklmnopqrstuvwxyz0123456789+/=-"
 

@@ -15,6 +15,8 @@ import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Web url for tests.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.tests.utils.TEST_SERVER)
  */
 const val TEST_SERVER: String = "http://127.0.0.1:8080"
 

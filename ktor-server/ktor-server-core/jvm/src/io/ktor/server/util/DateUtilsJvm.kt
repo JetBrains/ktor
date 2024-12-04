@@ -12,6 +12,8 @@ import java.util.concurrent.*
 
 /**
  * Convert [Instant] to [GMTDate]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.util.toGMTDate)
  */
 public fun Instant.toGMTDate(): GMTDate =
     GMTDate(TimeUnit.SECONDS.toMillis(atZone(ZoneOffset.UTC).toEpochSecond()))

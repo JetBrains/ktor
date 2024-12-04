@@ -11,6 +11,8 @@ import kotlin.reflect.*
 /**
  * An authentication context for a call.
  * @param call instance of [ApplicationCall] this context is for.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.AuthenticationContext)
  */
 public class AuthenticationContext(call: ApplicationCall) {
 

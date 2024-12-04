@@ -20,12 +20,16 @@ import io.ktor.client.utils.makeJsObject
  * ```
  *
  * You can learn more about client engines from [Engines](https://ktor.io/docs/http-client-engines.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.js.Js)
  */
 public actual object Js : HttpClientEngineFactory<JsClientEngineConfig> {
     override fun create(block: JsClientEngineConfig.() -> Unit): HttpClientEngine =
         JsClientEngine(JsClientEngineConfig().apply(block))
 }
 
+*
+* [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.js.JsClientEngineConfig)
 /** Configuration for the [Js] client. */
 public actual open class JsClientEngineConfig : HttpClientEngineConfig() {
     /**
@@ -43,6 +47,8 @@ public actual open class JsClientEngineConfig : HttpClientEngineConfig() {
      *     }
      * }
      * ```
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.js.JsClientEngineConfig.nodeOptions)
      */
     public var nodeOptions: JsAny = makeJsObject()
 }

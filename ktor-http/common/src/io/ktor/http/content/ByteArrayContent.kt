@@ -8,6 +8,8 @@ import io.ktor.http.*
 
 /**
  * Implementation of the [OutgoingContent.ByteArrayContent] for sending array of bytes
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.ByteArrayContent)
  */
 public class ByteArrayContent(
     private val bytes: ByteArray,

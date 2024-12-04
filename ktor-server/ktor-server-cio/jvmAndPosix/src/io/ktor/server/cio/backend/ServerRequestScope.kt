@@ -16,6 +16,8 @@ import kotlin.coroutines.*
  * @property output channel connected to response body
  * @property remoteAddress of the client (if known)
  * @property localAddress on which the client was accepted (if known)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.backend.ServerRequestScope)
  */
 public class ServerRequestScope internal constructor(
     override val coroutineContext: CoroutineContext,
@@ -27,6 +29,8 @@ public class ServerRequestScope internal constructor(
 ) : CoroutineScope {
     /**
      * Creates another request scope with same parameters except coroutine context
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.backend.ServerRequestScope.withContext)
      */
     public fun withContext(coroutineContext: CoroutineContext): ServerRequestScope =
         ServerRequestScope(

@@ -34,6 +34,8 @@ internal expect val DefaultIgnoredTypes: Set<KClass<*>>
  * Consider to add one of the following dependencies:
  * - ktor-client-gson
  * - ktor-client-json
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.json.defaultSerializer)
  */
 public expect fun defaultSerializer(): JsonSerializer
 

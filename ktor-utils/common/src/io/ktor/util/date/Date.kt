@@ -15,6 +15,8 @@ import kotlin.time.*
 /**
  * Day of week
  * [value] is 3 letter shortcut
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.date.WeekDay)
  */
 public enum class WeekDay(public val value: String) {
     MONDAY("Mon"),
@@ -28,6 +30,8 @@ public enum class WeekDay(public val value: String) {
     public companion object {
         /**
          * Lookup an instance by [ordinal]
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.date.WeekDay.Companion.from)
          */
         public fun from(ordinal: Int): WeekDay = entries[ordinal]
 
@@ -42,6 +46,8 @@ public enum class WeekDay(public val value: String) {
 /**
  * Month
  * [value] is 3 letter shortcut
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.date.Month)
  */
 public enum class Month(public val value: String) {
     JANUARY("Jan"),
@@ -60,6 +66,8 @@ public enum class Month(public val value: String) {
     public companion object {
         /**
          * Lookup an instance by [ordinal]
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.date.Month.Companion.from)
          */
         public fun from(ordinal: Int): Month = entries[ordinal]
 
@@ -84,6 +92,8 @@ public enum class Month(public val value: String) {
  * @property year: year in common era(CE: https://en.wikipedia.org/wiki/Common_Era)
  *
  * @property timestamp is a number of epoch milliseconds
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.date.GMTDate)
  */
 @Serializable
 public data class GMTDate(
@@ -116,6 +126,8 @@ public data class GMTDate(
 /**
  * Create new gmt date from the [timestamp].
  * @param timestamp is a number of epoch milliseconds (it is `now` by default).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.date.GMTDate)
  */
 public expect fun GMTDate(timestamp: Long? = null): GMTDate
 

@@ -31,6 +31,8 @@ internal expect val DefaultIgnoredTypes: Set<KClass<*>>
 
 /**
  * A [ContentNegotiation] configuration that is used during installation.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.contentnegotiation.ContentNegotiationConfig)
  */
 @KtorDsl
 public class ContentNegotiationConfig : Configuration {
@@ -48,6 +50,8 @@ public class ContentNegotiationConfig : Configuration {
 
     /**
      * Registers a [contentType] to a specified [converter] with an optional [configuration] script for a converter.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.contentnegotiation.ContentNegotiationConfig.register)
      */
     public override fun <T : ContentConverter> register(
         contentType: ContentType,
@@ -130,6 +134,8 @@ public class ContentNegotiationConfig : Configuration {
  *    Ktor supports the following formats out-of-the-box: `JSON`, `XML`, and `CBOR`.
  *
  * You can learn more from [Content negotiation and serialization](https://ktor.io/docs/serialization-client.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.contentnegotiation.ContentNegotiation)
  */
 @OptIn(InternalAPI::class)
 public val ContentNegotiation: ClientPlugin<ContentNegotiationConfig> = createClientPlugin(

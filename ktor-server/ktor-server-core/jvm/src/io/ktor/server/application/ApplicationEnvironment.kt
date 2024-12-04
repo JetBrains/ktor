@@ -11,6 +11,8 @@ import kotlin.coroutines.*
 
 /**
  * Represents an environment in which [Application] runs
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ApplicationEnvironment)
  */
 public actual interface ApplicationEnvironment {
 
@@ -18,6 +20,8 @@ public actual interface ApplicationEnvironment {
      * [ClassLoader] used to load application.
      *
      * Useful for various reflection-based services, like dependency injection.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ApplicationEnvironment.classLoader)
      */
     public val classLoader: ClassLoader
 

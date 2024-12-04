@@ -11,6 +11,8 @@ import io.ktor.server.engine.*
 
 /**
  * An [ApplicationEngineFactory] providing a Tomcat-based [ApplicationEngine]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.tomcat.jakarta.Tomcat)
  */
 public object Tomcat : ApplicationEngineFactory<TomcatApplicationEngine, TomcatApplicationEngine.Configuration> {
 

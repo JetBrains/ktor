@@ -21,6 +21,8 @@ import kotlinx.coroutines.flow.*
  * serialization and deserialization
  *
  * Implementations must override at least one of [serialize] or [serialize] methods.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.ContentConverter)
  */
 public interface ContentConverter {
 
@@ -36,6 +38,8 @@ public interface ContentConverter {
      * @param value to be converted
      *
      * @return a converted [OutgoingContent] value, or null if [value] isn't suitable for this converter
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.ContentConverter.serialize)
      */
     public suspend fun serialize(
         contentType: ContentType,
@@ -54,6 +58,8 @@ public interface ContentConverter {
 
 /**
  * Detect suitable charset for an application call by `Accept` header or fallback to [defaultCharset]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.suitableCharset)
  */
 public fun Headers.suitableCharset(defaultCharset: Charset = Charsets.UTF_8): Charset =
     suitableCharsetOrNull(defaultCharset) ?: defaultCharset

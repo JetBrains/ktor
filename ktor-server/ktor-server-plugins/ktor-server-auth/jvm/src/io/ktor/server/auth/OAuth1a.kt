@@ -248,11 +248,15 @@ private fun parametersString(parameters: List<HeaderValueParam>): String =
 
 /**
  * An OAuth1a server error.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuth1aException)
  */
 public sealed class OAuth1aException(message: String) : Exception(message) {
 
     /**
      * Thrown when an OAuth1a server didn't provide access token.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuth1aException.MissingTokenException)
      */
     public class MissingTokenException : OAuth1aException("The OAuth1a server didn't provide access token")
 }

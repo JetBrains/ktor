@@ -19,6 +19,8 @@ private const val CACHE_LOAD_FACTOR = 0.75f
 
 /**
  * Create a new instance of thread safe [LRUCache] and return it.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.createLRUCache)
  */
 @InternalAPI
 public fun <K, V> createLRUCache(supplier: (K) -> V, close: (V) -> Unit, maxSize: Int): Map<K, V> =

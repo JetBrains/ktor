@@ -9,17 +9,23 @@ import io.ktor.util.pipeline.*
 
 /**
  * Server response send pipeline.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.ApplicationSendPipeline)
  */
 public open class ApplicationSendPipeline(
     override val developmentMode: Boolean = false
 ) : Pipeline<Any, PipelineCall>(Before, Transform, Render, ContentEncoding, TransferEncoding, After, Engine) {
     /**
      * Send pipeline phases.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.ApplicationSendPipeline.Phases)
      */
     @Suppress("PublicApiImplicitType")
     public companion object Phases {
         /**
          * The earliest phase that happens before any other
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.ApplicationSendPipeline.Phases.Before)
          */
         public val Before: PipelinePhase = PipelinePhase("Before")
 

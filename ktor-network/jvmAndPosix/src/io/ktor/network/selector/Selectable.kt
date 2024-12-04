@@ -8,6 +8,8 @@ import kotlinx.coroutines.*
 
 /**
  * A selectable entity with selectable NIO [channel], [interestedOps] subscriptions.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.selector.Selectable)
  */
 public expect interface Selectable
 

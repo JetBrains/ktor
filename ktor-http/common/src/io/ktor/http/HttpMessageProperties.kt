@@ -10,6 +10,8 @@ import io.ktor.utils.io.charsets.*
 
 /**
  * Set `Content-Type` header.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.contentType)
  */
 public fun HttpMessageBuilder.contentType(type: ContentType): Unit =
     headers.set(HttpHeaders.ContentType, type.toString())

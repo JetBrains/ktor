@@ -15,6 +15,8 @@ import io.ktor.utils.io.*
  * @property method HTTP method
  * @property url builder
  * @property headers builder
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.DefaultResponsePushBuilder)
  */
 @InternalAPI
 @UseHttp2Push

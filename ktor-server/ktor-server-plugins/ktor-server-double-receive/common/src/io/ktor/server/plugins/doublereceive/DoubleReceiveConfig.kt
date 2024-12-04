@@ -11,6 +11,8 @@ import io.ktor.utils.io.*
 
 /**
  * A configuration for the [DoubleReceive] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.doublereceive.DoubleReceiveConfig)
  */
 @KtorDsl
 public class DoubleReceiveConfig {
@@ -24,6 +26,8 @@ public class DoubleReceiveConfig {
      * as a stream multiple times.
      *
      * @see [DoubleReceive]
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.doublereceive.DoubleReceiveConfig.cacheRawRequest)
      */
     public var cacheRawRequest: Boolean = true
 

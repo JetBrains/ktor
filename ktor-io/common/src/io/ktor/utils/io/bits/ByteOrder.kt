@@ -6,6 +6,8 @@ package io.ktor.utils.io.bits
 
 /**
  * Reverse number's byte order
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.bits.reverseByteOrder)
  */
 public expect fun Short.reverseByteOrder(): Short
 

@@ -19,6 +19,8 @@ import kotlin.reflect.*
 
 /**
  * Adds special handling for receiving [Sequence] and sending [Flow] bodies for the Json format.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.kotlinx.json.KotlinxSerializationJsonExtensionProvider)
  */
 public class KotlinxSerializationJsonExtensionProvider : KotlinxSerializationExtensionProvider {
     override fun extension(format: SerialFormat): KotlinxSerializationExtension? {

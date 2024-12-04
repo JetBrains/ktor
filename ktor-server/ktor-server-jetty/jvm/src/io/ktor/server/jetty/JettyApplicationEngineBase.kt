@@ -14,6 +14,8 @@ import kotlin.time.Duration.Companion.seconds
 
 /**
  * [ApplicationEngine] base type for running in a standalone Jetty
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.jetty.JettyApplicationEngineBase)
  */
 public open class JettyApplicationEngineBase(
     environment: ApplicationEnvironment,
@@ -28,11 +30,15 @@ public open class JettyApplicationEngineBase(
 
     /**
      * Jetty-specific engine configuration
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.jetty.JettyApplicationEngineBase.Configuration)
      */
     public class Configuration : BaseApplicationEngine.Configuration() {
         /**
          * Property function that will be called during Jetty server initialization
          * with the server instance as receiver.
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.jetty.JettyApplicationEngineBase.Configuration.configureServer)
          */
         public var configureServer: Server.() -> Unit = {}
 

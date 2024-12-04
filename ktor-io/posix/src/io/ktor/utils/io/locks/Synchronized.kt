@@ -21,6 +21,8 @@ import kotlin.native.internal.NativePtr
  * from the standard library that is available for JVM.
  * The [SynchronizedObject] superclass gets erased (transformed to Any) on JVM and JS,
  * with `synchronized` leaving no trace in the code on JS and getting replaced with built-in monitors for locking on JVM.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.locks.SynchronizedObject)
  */
 @OptIn(ExperimentalForeignApi::class)
 @InternalAPI
@@ -31,6 +33,8 @@ public actual open class SynchronizedObject {
     /**
      * Acquires the lock. If the lock is already held by another thread, the current thread
      * will block until it can acquire the lock.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.locks.SynchronizedObject.lock)
      */
     public fun lock() {
         val currentThreadId = pthread_self()!!
@@ -242,6 +246,8 @@ public actual open class SynchronizedObject {
  * [ReentrantLock] is designed for delegation. You write `val lock = reentrantLock()` to construct its instance and
  * use `lock/tryLock/unlock` functions or `lock.withLock { ... }` extension function similarly to
  * the way jucl.ReentrantLock is used on JVM. On JVM it is a typealias to the later class, erased on JS.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.locks.ReentrantLock)
  */
 @InternalAPI
 public actual typealias ReentrantLock = SynchronizedObject

@@ -7,6 +7,8 @@ package io.ktor.http
 /**
  * Represents an HTTP method (verb)
  * @property value contains method name
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.HttpMethod)
  */
 public data class HttpMethod(val value: String) {
     @Suppress("KDocMissingDocumentation", "PublicApiImplicitType")

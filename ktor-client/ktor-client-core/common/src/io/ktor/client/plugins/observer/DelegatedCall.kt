@@ -16,6 +16,8 @@ import kotlin.coroutines.*
 
 /**
  * Wrap existing [HttpClientCall] with new [content].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.observer.wrapWithContent)
  */
 public fun HttpClientCall.wrapWithContent(content: ByteReadChannel): HttpClientCall {
     return DelegatedCall(client, content, this)

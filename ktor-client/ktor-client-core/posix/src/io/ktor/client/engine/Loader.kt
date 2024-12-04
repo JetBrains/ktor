@@ -13,12 +13,16 @@ private typealias EngineFactory = HttpClientEngineFactory<HttpClientEngineConfig
 /**
  * Shared engines collection for.
  * Use [append] to enable engine auto discover in [HttpClient()].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.engines)
  */
 public object engines : Iterable<EngineFactory> {
     private val head = atomic<Node?>(null)
 
     /**
      * Add engine to head.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.engines.append)
      */
     public fun append(item: EngineFactory) {
         while (true) {

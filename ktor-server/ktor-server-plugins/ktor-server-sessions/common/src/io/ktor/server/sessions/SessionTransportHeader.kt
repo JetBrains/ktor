@@ -14,6 +14,8 @@ import io.ktor.server.response.*
  *
  * @property name is a header name
  * @property transformers is a list of registered session transformers
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionTransportHeader)
  */
 public class SessionTransportHeader(
     public val name: String,

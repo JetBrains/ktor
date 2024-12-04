@@ -24,6 +24,8 @@ import kotlinx.coroutines.*
  * the same request configuration.
  *
  * Example: [Streaming data](https://ktor.io/docs/response.html#streaming)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.statement.HttpStatement)
  */
 public class HttpStatement(
     private val builder: HttpRequestBuilder,
@@ -44,6 +46,8 @@ public class HttpStatement(
      *
      * @param block A suspend function that receives the [HttpResponse] for streaming.
      * @return The result of executing [block] with the streaming [response].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.statement.HttpStatement.execute)
      */
     public suspend fun <T> execute(block: suspend (response: HttpResponse) -> T): T = unwrapRequestTimeoutException {
         val response = fetchStreamingResponse()

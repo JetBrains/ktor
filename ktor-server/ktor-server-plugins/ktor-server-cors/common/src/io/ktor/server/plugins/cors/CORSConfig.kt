@@ -11,6 +11,8 @@ import io.ktor.utils.io.*
 
 /**
  * A configuration for the [io.ktor.server.plugins.cors.routing.CORS] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.cors.CORSConfig)
  */
 @KtorDsl
 public class CORSConfig {
@@ -20,6 +22,8 @@ public class CORSConfig {
 
         /**
          * The default CORS max age value.
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.cors.CORSConfig.Companion.CORS_DEFAULT_MAX_AGE)
          */
         public const val CORS_DEFAULT_MAX_AGE: Long = 24L * 3600 // 1 day
 
@@ -71,6 +75,8 @@ public class CORSConfig {
 
     /**
      * Allowed [CORS] hosts.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.cors.CORSConfig.hosts)
      */
     public val hosts: MutableSet<String> = HashSet()
 

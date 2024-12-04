@@ -12,6 +12,8 @@ import io.ktor.utils.io.*
 
 /**
  * Default outgoing content transformation
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.content.transformDefaultContent)
  */
 public fun transformDefaultContent(call: ApplicationCall, value: Any): OutgoingContent? = when (value) {
     is OutgoingContent -> value

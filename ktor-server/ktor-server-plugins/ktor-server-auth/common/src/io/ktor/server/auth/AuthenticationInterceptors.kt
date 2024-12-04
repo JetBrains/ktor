@@ -31,6 +31,8 @@ internal object AuthenticationHook : Hook<suspend (ApplicationCall) -> Unit> {
  * A hook that is executed after authentication was checked.
  * Note that this hook is also executed for optional authentication or for routes without any authentication,
  * resulting in [ApplicationCall.principal] being `null`.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.AuthenticationChecked)
  */
 public object AuthenticationChecked : Hook<suspend (ApplicationCall) -> Unit> {
     internal val AfterAuthenticationPhase: PipelinePhase = PipelinePhase("AfterAuthentication")
@@ -47,6 +49,8 @@ public object AuthenticationChecked : Hook<suspend (ApplicationCall) -> Unit> {
 
 /**
  * A plugin that authenticates calls. Usually used via the [authenticate] function inside routing.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.AuthenticationInterceptors)
  */
 public val AuthenticationInterceptors: RouteScopedPlugin<RouteAuthenticationConfig> = createRouteScopedPlugin(
     "AuthenticationInterceptors",

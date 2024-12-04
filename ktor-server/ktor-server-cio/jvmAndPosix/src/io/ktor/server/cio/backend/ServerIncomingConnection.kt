@@ -13,6 +13,8 @@ import io.ktor.utils.io.*
  * @property output channel connected to outgoing bytes end
  * @property remoteAddress of the client (optional)
  * @property localAddress on which the client was accepted (optional)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.backend.ServerIncomingConnection)
  */
 @InternalAPI
 public class ServerIncomingConnection(

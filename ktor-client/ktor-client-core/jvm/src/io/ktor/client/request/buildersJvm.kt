@@ -13,6 +13,8 @@ import java.net.*
 /**
  * Executes a [HttpClient] request, with the specified [url] as URL and
  * an optional [block] receiving an [HttpRequestBuilder] for further configuring the request.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.request)
  */
 public suspend fun HttpClient.request(
     url: URL,

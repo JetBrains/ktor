@@ -11,6 +11,8 @@ import platform.Foundation.*
 
 /**
  * A challenge handler type for [NSURLSession].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.darwin.ChallengeHandler)
  */
 @OptIn(UnsafeNumber::class)
 public typealias ChallengeHandler = (

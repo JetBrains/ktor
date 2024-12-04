@@ -16,6 +16,8 @@ import io.ktor.util.*
  * You can use `AutoHeadResponse` to avoid creating a separate `head` handler if you need to somehow process a response
  * on the client before getting the actual content.
  * You can learn more from [AutoHeadResponse](https://ktor.io/docs/autoheadresponse.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.autohead.AutoHeadResponse)
  */
 public val AutoHeadResponse: ApplicationPlugin<Unit> = createApplicationPlugin("AutoHeadResponse") {
     onCall { call ->

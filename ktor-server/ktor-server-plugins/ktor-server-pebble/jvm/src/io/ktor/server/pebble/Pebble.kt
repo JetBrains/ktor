@@ -16,6 +16,8 @@ import java.util.*
 
 /**
  * Configuration for the [Pebble] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.pebble.PebbleConfiguration)
  */
 @KtorDsl
 public class PebbleConfiguration : PebbleEngine.Builder() {
@@ -23,6 +25,8 @@ public class PebbleConfiguration : PebbleEngine.Builder() {
     /**
      * Allows you to define currently available language translations
      * must follow IETF BCP 47 language tag string specification
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.pebble.PebbleConfiguration.availableLanguages)
      */
     public var availableLanguages: List<String>? = null
 }
@@ -35,6 +39,8 @@ public class PebbleConfiguration : PebbleEngine.Builder() {
  * @param locale which is used to resolve templates (optional)
  * @param etag value for `E-Tag` header (optional)
  * @param contentType response's content type which is set to `text/html;charset=utf-8` by default
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.pebble.PebbleContent)
  */
 public class PebbleContent(
     public val template: String,
@@ -48,6 +54,8 @@ public class PebbleContent(
  * A plugin that allows you to use Pebble templates as views within your application.
  * Provides the ability to respond with [PebbleContent].
  * You can learn more from [Pebble](https://ktor.io/docs/pebble.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.pebble.Pebble)
  */
 public val Pebble: ApplicationPlugin<PebbleConfiguration> = createApplicationPlugin("Pebble", ::PebbleConfiguration) {
     val engine = pluginConfig.build()

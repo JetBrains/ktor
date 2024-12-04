@@ -6,6 +6,8 @@ package io.ktor.util.collections
 
 /**
  * Concurrent set implemented on top of [ConcurrentMap]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.collections.ConcurrentSet)
  */
 @Suppress("FunctionName")
 public fun <Key : Any> ConcurrentSet(): MutableSet<Key> = object : MutableSet<Key> {

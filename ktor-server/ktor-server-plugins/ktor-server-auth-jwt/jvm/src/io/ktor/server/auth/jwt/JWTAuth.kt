@@ -24,6 +24,8 @@ internal val JWTLogger: Logger = LoggerFactory.getLogger("io.ktor.auth.jwt")
 
 /**
  * Shortcut functions for standard registered JWT claims.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.jwt.JWTPayloadHolder)
  */
 public abstract class JWTPayloadHolder(
     /**
@@ -34,6 +36,8 @@ public abstract class JWTPayloadHolder(
 
     /**
      * Gets a value of the `iss` (issuer) claim, which specifies the issuer of the JWT.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.jwt.JWTPayloadHolder.issuer)
      */
     public val issuer: String? get() = payload.issuer
 
@@ -119,6 +123,8 @@ public abstract class JWTPayloadHolder(
  * A JWT credential that consists of the specified [payload].
  * @param payload JWT
  * @see Payload
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.jwt.JWTCredential)
  */
 public class JWTCredential(payload: Payload) : JWTPayloadHolder(payload)
 
@@ -126,11 +132,15 @@ public class JWTCredential(payload: Payload) : JWTPayloadHolder(payload)
  * A JWT principal that consists of the specified [payload].
  * @param payload JWT
  * @see Payload
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.jwt.JWTPrincipal)
  */
 public class JWTPrincipal(payload: Payload) : JWTPayloadHolder(payload)
 
 /**
  * A JWT verifier function used to verify a token format and its signature.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.jwt.JWTConfigureFunction)
  */
 public typealias JWTConfigureFunction = Verification.() -> Unit
 

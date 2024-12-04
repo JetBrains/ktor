@@ -15,6 +15,8 @@ import org.slf4j.event.*
 
 /**
  * A configuration for the [CallLogging] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.calllogging.CallLoggingConfig)
  */
 @KtorDsl
 public class CallLoggingConfig {
@@ -28,6 +30,8 @@ public class CallLoggingConfig {
     /**
      * Specifies a logging level for the [CallLogging] plugin.
      * The default level is [Level.INFO].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.calllogging.CallLoggingConfig.level)
      */
     public var level: Level = Level.INFO
 

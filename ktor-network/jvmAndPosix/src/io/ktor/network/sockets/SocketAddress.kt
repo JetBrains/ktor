@@ -14,6 +14,8 @@ public expect class InetSocketAddress(
      * The hostname of the socket address.
      *
      * Note that this may trigger a name service reverse lookup.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.InetSocketAddress.hostname)
      */
     public val hostname: String
 
@@ -51,6 +53,8 @@ public expect class UnixSocketAddress(
 ) : SocketAddress {
     /**
      * The path of the socket address.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.UnixSocketAddress.path)
      */
     public val path: String
 

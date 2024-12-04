@@ -10,6 +10,8 @@ import io.ktor.util.date.*
 
 /**
  * Gets the associated URL's host.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.host)
  */
 public var HttpRequestBuilder.host: String
     get() = url.host

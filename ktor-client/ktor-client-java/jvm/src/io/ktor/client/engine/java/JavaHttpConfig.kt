@@ -9,11 +9,15 @@ import java.net.http.*
 
 /**
  * A configuration for the [Java] client engine.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.java.JavaHttpConfig)
  */
 public class JavaHttpConfig : HttpClientEngineConfig() {
 
     /**
      * An HTTP version to use.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.java.JavaHttpConfig.protocolVersion)
      */
     public var protocolVersion: HttpClient.Version = HttpClient.Version.HTTP_1_1
 

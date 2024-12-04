@@ -11,6 +11,8 @@ import io.ktor.util.*
 
 /**
  * Generates a string representing this [ApplicationRequest] suitable for logging
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.logging.toLogString)
  */
 public fun ApplicationRequest.toLogString(): String = "${httpMethod.value} - ${path()}"
 

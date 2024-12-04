@@ -22,6 +22,8 @@ import kotlinx.coroutines.*
  *     install(BOMRemover)
  * }
  * ```
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.bomremover.BOMRemover)
  */
 public val BOMRemover: ClientPlugin<Unit> = createClientPlugin(
     name = "BOMRemover",

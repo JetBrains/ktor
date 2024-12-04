@@ -13,6 +13,8 @@ import java.net.*
 /**
  * Represents a content that is served from the specified [uri]
  * @property uri that is used as a source
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.URIFileContent)
  */
 public class URIFileContent(
     public val uri: URI,

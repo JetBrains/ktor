@@ -13,6 +13,8 @@ import kotlin.time.Duration.Companion.milliseconds
  *
  * @param pingInterval - interval between [FrameType.PING] messages.
  * @param maxFrameSize - max size of a single websocket frame.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.websocket.WebSockets)
  */
 public fun WebSockets(
     pingInterval: Duration?,

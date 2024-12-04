@@ -24,6 +24,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.HttpRequestRetry")
 
 /**
  * Occurs on request retry.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpRequestRetryEvent)
  */
 public val HttpRequestRetryEvent: EventDefinition<HttpRetryEventData> = EventDefinition()
 

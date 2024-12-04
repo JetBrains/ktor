@@ -14,6 +14,8 @@ import kotlin.coroutines.intrinsics.*
 
 /**
  * Default CIO selector manager implementation
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.selector.ActorSelectorManager)
  */
 public class ActorSelectorManager(context: CoroutineContext) : SelectorManagerSupport(), Closeable, CoroutineScope {
     @Volatile

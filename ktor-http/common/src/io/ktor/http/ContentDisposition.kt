@@ -6,6 +6,8 @@ package io.ktor.http
 
 /**
  * Represents `Content-Disposition` header value
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.ContentDisposition)
  */
 public class ContentDisposition(
     disposition: String,
@@ -13,6 +15,8 @@ public class ContentDisposition(
 ) : HeaderValueWithParameters(disposition, parameters) {
     /**
      * Content disposition value without parameters
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.ContentDisposition.disposition)
      */
     public val disposition: String get() = content
 

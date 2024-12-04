@@ -15,6 +15,8 @@ import javax.net.ssl.*
  * @property certificates: list of client certificate chains with private keys.
  * @property cipherSuites: list of allowed [CipherSuite]s.
  * @property serverName: custom server name for TLS server name extension.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.TLSConfig)
  */
 public actual class TLSConfig(
     public val random: SecureRandom,
@@ -28,5 +30,7 @@ public actual class TLSConfig(
  * Client certificate chain with private key.
  * @property certificateChain: client certificate chain.
  * @property key: [PrivateKey] for certificate chain.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.CertificateAndKey)
  */
 public class CertificateAndKey(public val certificateChain: Array<X509Certificate>, public val key: PrivateKey)

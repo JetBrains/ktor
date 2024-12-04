@@ -7,12 +7,16 @@ package io.ktor.util.collections
 
 /**
  * Ktor concurrent map implementation. Please do not use it.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.collections.ConcurrentMap)
  */
 public actual class ConcurrentMap<Key, Value> public actual constructor(initialCapacity: Int) : MutableMap<Key, Value> {
     private val delegate = LinkedHashMap<Key, Value>(initialCapacity)
 
     /**
      * Computes [block] and inserts result in map. The [block] will be evaluated at most once.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.collections.ConcurrentMap.computeIfAbsent)
      */
     public actual fun computeIfAbsent(key: Key, block: () -> Value): Value {
         if (delegate.containsKey(key)) return delegate[key]!!

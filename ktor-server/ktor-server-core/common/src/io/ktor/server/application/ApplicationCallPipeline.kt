@@ -10,6 +10,8 @@ import io.ktor.util.pipeline.*
 
 /**
  * Pipeline configuration for executing [PipelineCall] instances.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ApplicationCallPipeline)
  */
 @Suppress("PublicApiImplicitType")
 public open class ApplicationCallPipeline public constructor(
@@ -24,6 +26,8 @@ public open class ApplicationCallPipeline public constructor(
 ) {
     /**
      * Pipeline for receiving content
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ApplicationCallPipeline.receivePipeline)
      */
     public val receivePipeline: ApplicationReceivePipeline = ApplicationReceivePipeline(developmentMode)
 
@@ -75,6 +79,8 @@ public open class ApplicationCallPipeline public constructor(
 
 /**
  * Current call for the context
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.call)
  */
 public inline val PipelineContext<*, PipelineCall>.call: PipelineCall get() = context
 

@@ -22,6 +22,8 @@ import kotlinx.coroutines.*
  *
  * @param call that is starting SSE session.
  * @param handle function that is started once SSE session created.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sse.SSEServerContent)
  */
 public class SSEServerContent(
     public val call: ApplicationCall,

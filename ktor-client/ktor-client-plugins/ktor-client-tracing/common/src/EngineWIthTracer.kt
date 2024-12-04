@@ -17,6 +17,8 @@ import io.ktor.utils.io.*
 /**
  * Engine with tracer that wraps request execution into tracing functionality. Calls correspondent [tracer] method on
  * every important processing event.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugin.tracing.EngineWithTracer)
  */
 @InternalAPI
 class EngineWithTracer(

@@ -21,6 +21,8 @@ import kotlin.coroutines.*
 
 /**
  * Cache storage interface.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cache.storage.HttpCacheStorage)
  */
 @Deprecated("Use new [CacheStorage] instead.", level = DeprecationLevel.ERROR)
 @Suppress("DEPRECATION_ERROR")
@@ -28,6 +30,8 @@ public abstract class HttpCacheStorage {
 
     /**
      * Store [value] in cache storage for [url] key.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cache.storage.HttpCacheStorage.store)
      */
     public abstract fun store(url: Url, value: HttpCacheEntry)
 
@@ -63,11 +67,15 @@ internal suspend fun HttpCacheStorage.store(url: Url, value: HttpResponse, isSha
 
 /**
  * Cache storage interface.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cache.storage.CacheStorage)
  */
 public interface CacheStorage {
 
     /**
      * Store [value] in cache storage for [url] key.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cache.storage.CacheStorage.store)
      */
     public suspend fun store(url: Url, data: CachedResponseData)
 
@@ -96,6 +104,8 @@ public interface CacheStorage {
 
 /**
  * Store [response] in cache storage.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cache.storage.store)
  */
 @Deprecated(
     message = "Please use method with `response.varyKeys()` and `isShared` arguments",

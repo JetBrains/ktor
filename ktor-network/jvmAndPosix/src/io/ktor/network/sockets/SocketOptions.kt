@@ -8,6 +8,8 @@ internal const val INFINITE_TIMEOUT_MS = Long.MAX_VALUE
 
 /**
  * Socket options builder
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.SocketOptions)
  */
 @OptIn(ExperimentalUnsignedTypes::class)
 public sealed class SocketOptions(
@@ -46,6 +48,8 @@ public sealed class SocketOptions(
 
     /**
      * ToS value, [TypeOfService.UNDEFINED] by default, may not work with old JDK (will be silently ignored)
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.SocketOptions.typeOfService)
      */
     public var typeOfService: TypeOfService = TypeOfService.UNDEFINED
 

@@ -23,6 +23,8 @@ private val DisableLogging = AttributeKey<Unit>("DisableLogging")
 
 /**
  * A configuration for the [Logging] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.logging.LoggingConfig)
  */
 @KtorDsl
 public class LoggingConfig {
@@ -33,6 +35,8 @@ public class LoggingConfig {
 
     /**
      * Specifies a [Logger] instance.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.logging.LoggingConfig.logger)
      */
     public var logger: Logger
         get() = _logger ?: Logger.DEFAULT
@@ -68,6 +72,8 @@ public class LoggingConfig {
  * A client's plugin that provides the capability to log HTTP calls.
  *
  * You can learn more from [Logging](https://ktor.io/docs/client-logging.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.logging.Logging)
  */
 @OptIn(InternalAPI::class)
 public val Logging: ClientPlugin<LoggingConfig> = createClientPlugin("Logging", ::LoggingConfig) {

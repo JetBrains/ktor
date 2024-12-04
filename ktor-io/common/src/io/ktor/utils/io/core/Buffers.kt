@@ -9,6 +9,8 @@ import kotlinx.io.Buffer
 
 /**
  * Read the specified number of bytes specified (optional, read all remaining by default)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.core.readBytes)
  */
 public fun Buffer.readBytes(count: Int = size.toInt()): ByteArray {
     return readByteArray(count)

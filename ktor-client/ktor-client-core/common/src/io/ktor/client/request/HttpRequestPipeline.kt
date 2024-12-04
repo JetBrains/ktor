@@ -10,6 +10,8 @@ import io.ktor.util.pipeline.*
 
 /**
  * An [HttpClient]'s pipeline used for executing [HttpRequest].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpRequestPipeline)
  */
 public class HttpRequestPipeline(
     override val developmentMode: Boolean = true
@@ -17,10 +19,14 @@ public class HttpRequestPipeline(
     /**
      * All interceptors accept payload as [subject] and try to convert it to [OutgoingContent].
      * Last phase should proceed with [HttpClientCall].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpRequestPipeline.Phases)
      */
     public companion object Phases {
         /**
          * The earliest phase that happens before any other.
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpRequestPipeline.Phases.Before)
          */
         public val Before: PipelinePhase = PipelinePhase("Before")
 
@@ -48,6 +54,8 @@ public class HttpRequestPipeline(
 
 /**
  * An [HttpClient]'s pipeline used for sending [HttpRequest] to a remote server.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpSendPipeline)
  */
 public class HttpSendPipeline(
     override val developmentMode: Boolean = true
@@ -56,6 +64,8 @@ public class HttpSendPipeline(
     public companion object Phases {
         /**
          * The earliest phase that happens before any other.
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpSendPipeline.Phases.Before)
          */
         public val Before: PipelinePhase = PipelinePhase("Before")
 

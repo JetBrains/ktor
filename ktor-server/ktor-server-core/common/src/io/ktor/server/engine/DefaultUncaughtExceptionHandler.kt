@@ -13,6 +13,8 @@ import kotlin.coroutines.*
 /**
  * Handles all uncaught exceptions and logs errors with the specified [logger]
  * ignoring [CancellationException] and [IOException].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.DefaultUncaughtExceptionHandler)
  */
 public class DefaultUncaughtExceptionHandler(
     private val logger: () -> Logger

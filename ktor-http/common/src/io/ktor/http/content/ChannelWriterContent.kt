@@ -10,6 +10,8 @@ import io.ktor.utils.io.*
 /**
  * [OutgoingContent] to respond with [ByteWriteChannel].
  * The stream would be automatically closed after [body] finish.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.ChannelWriterContent)
  */
 public class ChannelWriterContent(
     private val body: suspend ByteWriteChannel.() -> Unit,

@@ -11,6 +11,8 @@ import io.ktor.util.*
 
 /**
  * OAuth versions used in configuration.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthVersion)
  */
 
 public enum class OAuthVersion {
@@ -21,6 +23,8 @@ public enum class OAuthVersion {
  * OAuth server settings.
  * @property name configuration name
  * @property version OAuth version (1a or 2)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthServerSettings)
  */
 public sealed class OAuthServerSettings(public val name: String, public val version: OAuthVersion) {
     /**
@@ -30,6 +34,8 @@ public sealed class OAuthServerSettings(public val name: String, public val vers
      * @property accessTokenUrl OAuth server access token request URL
      * @property consumerKey consumer key parameter (provided by OAuth server vendor)
      * @property consumerSecret a secret key parameter (provided by OAuth server vendor)
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthServerSettings.OAuth1aServerSettings)
      */
     public class OAuth1aServerSettings(
         name: String,
@@ -58,6 +64,8 @@ public sealed class OAuthServerSettings(public val name: String, public val vers
      * @property extraAuthParameters extra parameters to send during authentication
      * @property extraTokenParameters extra parameters to send with getting access token call
      * @property accessTokenInterceptor an interceptor function to customize access token request
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthServerSettings.OAuth2ServerSettings)
      */
     public class OAuth2ServerSettings(
         name: String,
@@ -83,12 +91,16 @@ public sealed class OAuthServerSettings(public val name: String, public val vers
 
 /**
  * OAuth callback parameters.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthCallback)
  */
 public sealed class OAuthCallback {
     /**
      * An OAuth1a token pair callback parameters.
      * @property token OAuth1a token
      * @property tokenSecret OAuth1a token secret
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthCallback.TokenPair)
      */
     public data class TokenPair(val token: String, val tokenSecret: String) : OAuthCallback()
 
@@ -96,6 +108,8 @@ public sealed class OAuthCallback {
      * An OAuth2 token callback parameter.
      * @property token OAuth2 token provided by server
      * @property state passed from a client (ktor server) during authorization startup
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthCallback.TokenSingle)
      */
     public data class TokenSingle(val token: String, val state: String) : OAuthCallback()
 
@@ -103,12 +117,16 @@ public sealed class OAuthCallback {
      * Oauth2 error callback parameters
      * @property error the error code passed from the identity provider
      * @property errorDescription optionally passed, human-readable description of the error code
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthCallback.Error)
      */
     public data class Error(val error: String, val errorDescription: String?) : OAuthCallback()
 }
 
 /**
  * An OAuth access token acquired from the server.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthAccessTokenResponse)
  */
 public sealed class OAuthAccessTokenResponse {
     /**
@@ -116,6 +134,8 @@ public sealed class OAuthAccessTokenResponse {
      * @property token itself
      * @property tokenSecret token secret to be used with [token]
      * @property extraParameters contains additional parameters provided by the server
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthAccessTokenResponse.OAuth1a)
      */
     public data class OAuth1a(
         val token: String,
@@ -131,6 +151,8 @@ public sealed class OAuthAccessTokenResponse {
      * @property refreshToken to be used to refresh access token after expiration
      * @property state generated state used for the OAuth procedure
      * @property extraParameters contains additional parameters provided by the server
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthAccessTokenResponse.OAuth2)
      */
     public data class OAuth2(
         val accessToken: String,
@@ -158,6 +180,8 @@ public sealed class OAuthAccessTokenResponse {
 
 /**
  * OAuth grant types constants.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthGrantTypes)
  */
 
 public object OAuthGrantTypes {

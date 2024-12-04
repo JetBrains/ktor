@@ -19,6 +19,8 @@ import kotlin.reflect.*
 /**
  * A hook that is invoked as a first step in processing a call.
  * Useful for validating, updating a call based on proxy information, etc.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.hooks.CallSetup)
  */
 public object CallSetup : Hook<suspend (ApplicationCall) -> Unit> {
     override fun install(pipeline: ApplicationCallPipeline, handler: suspend (ApplicationCall) -> Unit) {
@@ -30,6 +32,8 @@ public object CallSetup : Hook<suspend (ApplicationCall) -> Unit> {
 
 /**
  * A hook that is invoked when a call fails with an exception.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.hooks.CallFailed)
  */
 public object CallFailed : Hook<suspend (call: ApplicationCall, cause: Throwable) -> Unit> {
 
@@ -54,6 +58,8 @@ public object CallFailed : Hook<suspend (call: ApplicationCall, cause: Throwable
 
 /**
  * A shortcut hook for [Application.monitor] subscription.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.hooks.MonitoringEvent)
  */
 public class MonitoringEvent<Param : Any, Event : EventDefinition<Param>>(
     private val event: Event
@@ -75,6 +81,8 @@ public class MonitoringEvent<Param : Any, Event : EventDefinition<Param>>(
  * Useful for metrics, logging, etc.
  *
  * Can be renamed or removed from public API in the future.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.hooks.Metrics)
  */
 @InternalAPI
 public object Metrics : Hook<suspend (ApplicationCall) -> Unit> {
@@ -87,6 +95,8 @@ public object Metrics : Hook<suspend (ApplicationCall) -> Unit> {
 
 /**
  * A hook that is invoked when a response body comes through all transformations and is ready to be sent.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.hooks.ResponseBodyReadyForSend)
  */
 public object ResponseBodyReadyForSend :
     Hook<suspend ResponseBodyReadyForSend.Context.(ApplicationCall, OutgoingContent) -> Unit> {
@@ -109,6 +119,8 @@ public object ResponseBodyReadyForSend :
 /**
  * A hook that is invoked when response was successfully sent to a client.
  * Useful for cleaning up opened resources or finishing measurements.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.hooks.ResponseSent)
  */
 public object ResponseSent : Hook<(ApplicationCall) -> Unit> {
     override fun install(pipeline: ApplicationCallPipeline, handler: (ApplicationCall) -> Unit) {
@@ -121,6 +133,8 @@ public object ResponseSent : Hook<(ApplicationCall) -> Unit> {
 
 /**
  * A hook that is invoked when a request is about to be received. It gives control over the raw request body.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.hooks.ReceiveRequestBytes)
  */
 public object ReceiveRequestBytes : Hook<(call: ApplicationCall, body: ByteReadChannel) -> ByteReadChannel> {
     override fun install(
@@ -138,6 +152,8 @@ public object ReceiveRequestBytes : Hook<(call: ApplicationCall, body: ByteReadC
 /**
  * A hook that is invoked before `Transform` phase.
  * Useful for some plugins which used for templates as views within application.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.hooks.BeforeResponseTransform)
  */
 @InternalAPI
 public class BeforeResponseTransform<T : Any>(private val clazz: KClass<T>) :

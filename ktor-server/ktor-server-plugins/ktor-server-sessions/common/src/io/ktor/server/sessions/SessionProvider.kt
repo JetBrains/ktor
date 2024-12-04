@@ -13,6 +13,8 @@ import kotlin.reflect.*
  * @param tracker specifies the [SessionTracker] for this provider
  * @property name session name
  * @property type session instance type
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionProvider)
  */
 public class SessionProvider<S : Any>(
     public val name: String,

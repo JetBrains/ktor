@@ -12,6 +12,8 @@ import io.ktor.util.collections.*
  * Note that [SessionStorageMemory] is intended for development only.
  *
  * @see [Sessions]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionStorageMemory)
  */
 public class SessionStorageMemory : SessionStorage {
     private val sessions = ConcurrentMap<String, String>()

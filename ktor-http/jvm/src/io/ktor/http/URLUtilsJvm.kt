@@ -8,6 +8,8 @@ import java.net.*
 
 /**
  * Take URI components from [uri]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.takeFrom)
  */
 public fun URLBuilder.takeFrom(uri: URI): URLBuilder {
     uri.scheme?.let {

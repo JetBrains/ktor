@@ -11,10 +11,14 @@ import kotlinx.io.*
 
 /**
  * Base type for all async sockets
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.ASocket)
  */
 public interface ASocket : Closeable, DisposableHandle {
     /**
      * Represents a socket lifetime, completes at socket closure
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.ASocket.socketContext)
      */
     public val socketContext: Job
 
@@ -28,6 +32,8 @@ public interface ASocket : Closeable, DisposableHandle {
 
 /**
  * Check if the socket is closed
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.isClosed)
  */
 public val ASocket.isClosed: Boolean get() = socketContext.isCompleted
 

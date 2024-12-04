@@ -14,12 +14,16 @@ import kotlin.coroutines.*
 
 /**
  * Engine environment configuration builder
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ApplicationEnvironmentBuilder)
  */
 @KtorDsl
 public actual class ApplicationEnvironmentBuilder {
 
     /**
      * Application logger
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ApplicationEnvironmentBuilder.log)
      */
     public actual var log: Logger = KtorSimpleLogger("io.ktor.server.Application")
 

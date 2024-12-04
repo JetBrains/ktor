@@ -20,6 +20,8 @@ internal val REQUIRED_RESPONSE_LANGUAGE = AttributeKey<String>("ResponseLanguage
  * I18n configuration. Currently supports [encoding] and [defaultLanguage]
  *
  * [defaultLanguage] must follow IETF BCP 47 language tag string specification
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.i18n.I18nConfiguration)
  */
 public class I18nConfiguration {
     public var availableLanguages: List<String> = listOf("en-US")
@@ -33,6 +35,8 @@ public class I18nConfiguration {
  *    defaultLanguage = "pt-BR"
  *    encoding = StandardCharsets.UTF_8
  * }
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.i18n.I18n)
  */
 public val I18n: ApplicationPlugin<I18nConfiguration> = createApplicationPlugin(
     "I18n",

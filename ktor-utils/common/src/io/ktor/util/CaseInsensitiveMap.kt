@@ -6,6 +6,8 @@ package io.ktor.util
 
 /**
  * A map with case-insensitive [String] keys
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.CaseInsensitiveMap)
  */
 public class CaseInsensitiveMap<Value : Any> : MutableMap<String, Value> {
     private val delegate = mutableMapOf<CaseInsensitiveString, Value>()

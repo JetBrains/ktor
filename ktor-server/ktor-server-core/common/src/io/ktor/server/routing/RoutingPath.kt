@@ -10,11 +10,15 @@ import io.ktor.http.*
  * A parsed routing path. Consist of number of segments [parts].
  *
  * @property parts contains parsed routing path segments
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingPath)
  */
 public class RoutingPath private constructor(public val parts: List<RoutingPathSegment>) {
     public companion object {
         /**
          * A constant for a root routing path.
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingPath.Companion.root)
          */
         public val root: RoutingPath = RoutingPath(listOf())
 
@@ -45,20 +49,28 @@ public class RoutingPath private constructor(public val parts: List<RoutingPathS
  * A single routing path segment.
  * @property value - segment text value
  * @property kind - segment kind (constant or parameter)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingPathSegment)
  */
 public data class RoutingPathSegment(val value: String, val kind: RoutingPathSegmentKind)
 
 /**
  * Possible routing path segment kinds.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingPathSegmentKind)
  */
 public enum class RoutingPathSegmentKind {
     /**
      * A constant path segment.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingPathSegmentKind.Constant)
      */
     Constant,
 
     /**
      * A parameter path segment (a wildcard, a named parameter, or both).
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingPathSegmentKind.Parameter)
      */
     Parameter
 }

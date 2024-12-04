@@ -9,6 +9,8 @@ import kotlinx.atomicfu.*
 public interface ObjectPool<T : Any> : AutoCloseable {
     /**
      * Pool capacity
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.pool.ObjectPool.capacity)
      */
     public val capacity: Int
 
@@ -38,6 +40,8 @@ public interface ObjectPool<T : Any> : AutoCloseable {
 
 /**
  * A pool implementation of zero capacity that always creates new instances
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.pool.NoPoolImpl)
  */
 public abstract class NoPoolImpl<T : Any> : ObjectPool<T> {
     override val capacity: Int
@@ -50,6 +54,8 @@ public abstract class NoPoolImpl<T : Any> : ObjectPool<T> {
 
 /**
  * A pool that produces at most one instance
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.pool.SingleInstancePool)
  */
 public abstract class SingleInstancePool<T : Any> : ObjectPool<T> {
     private val borrowed = atomic(0)
@@ -111,10 +117,14 @@ public abstract class SingleInstancePool<T : Any> : ObjectPool<T> {
 
 /**
  * Default object pool implementation.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.pool.DefaultPool)
  */
 public expect abstract class DefaultPool<T : Any>(capacity: Int) : ObjectPool<T> {
     /**
      * Pool capacity.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.pool.DefaultPool.capacity)
      */
     final override val capacity: Int
 
@@ -147,6 +157,8 @@ public expect abstract class DefaultPool<T : Any>(capacity: Int) : ObjectPool<T>
 
 /**
  * Borrows and instance of [T] from the pool, invokes [block] with it and finally recycles it
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.pool.useBorrowed)
  */
 @Deprecated("Use useInstance instead", ReplaceWith("useInstance(block)"))
 public inline fun <T : Any, R> ObjectPool<T>.useBorrowed(block: (T) -> R): R {

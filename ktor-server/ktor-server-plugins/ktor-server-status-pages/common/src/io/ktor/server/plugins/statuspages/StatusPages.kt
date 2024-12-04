@@ -21,6 +21,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.server.plugins.statuspages.Status
 
 /**
  * Specifies how the exception should be handled.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.statuspages.HandlerFunction)
  */
 public typealias HandlerFunction = suspend (call: ApplicationCall, cause: Throwable) -> Unit
 

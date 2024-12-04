@@ -12,24 +12,32 @@ import io.ktor.utils.io.*
 
 /**
  * A context for [ClientPluginBuilder.onRequest] callback.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.OnRequestContext)
  */
 @KtorDsl
 public class OnRequestContext internal constructor()
 
 /**
  * A context for [ClientPluginBuilder.onResponse] callback.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.OnResponseContext)
  */
 @KtorDsl
 public class OnResponseContext internal constructor()
 
 /**
  * A context for [ClientPluginBuilder.transformRequestBody] callback.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.TransformRequestBodyContext)
  */
 @KtorDsl
 public class TransformRequestBodyContext internal constructor()
 
 /**
  * A context for [ClientPluginBuilder.transformResponseBody] callback.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.TransformResponseBodyContext)
  */
 @KtorDsl
 public class TransformResponseBodyContext internal constructor()

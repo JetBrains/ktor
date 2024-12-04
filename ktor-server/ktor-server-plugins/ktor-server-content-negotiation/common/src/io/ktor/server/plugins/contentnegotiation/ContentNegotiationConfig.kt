@@ -22,6 +22,8 @@ internal expect val DefaultIgnoredTypes: Set<KClass<*>>
 
 /**
  * A configuration for the [ContentNegotiation] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.contentnegotiation.ContentNegotiationConfig)
  */
 @KtorDsl
 public class ContentNegotiationConfig : Configuration {
@@ -32,6 +34,8 @@ public class ContentNegotiationConfig : Configuration {
 
     /**
      * Checks that the `ContentType` header value of a response suits the `Accept` header value of a request.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.contentnegotiation.ContentNegotiationConfig.checkAcceptHeaderCompliance)
      */
     public var checkAcceptHeaderCompliance: Boolean = false
 

@@ -10,6 +10,8 @@ import kotlin.coroutines.*
 
 /**
  * Test runner for jvm suspend tests.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.test.dispatcher.testSuspend)
  */
 public actual fun testSuspend(
     context: CoroutineContext,

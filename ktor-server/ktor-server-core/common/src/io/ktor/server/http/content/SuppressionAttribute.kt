@@ -9,6 +9,8 @@ import io.ktor.util.*
 
 /**
  * Attribute that could be added to an application call to prevent its response from being compressed
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.content.SuppressionAttribute)
  */
 @Deprecated(
     "Please use suppressCompression() and isCompressionSuppressed) instead",

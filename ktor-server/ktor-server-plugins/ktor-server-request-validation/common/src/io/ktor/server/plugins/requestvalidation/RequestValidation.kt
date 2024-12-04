@@ -12,15 +12,21 @@ import kotlinx.io.*
 
 /**
  * A result of validation.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.requestvalidation.ValidationResult)
  */
 public sealed class ValidationResult {
     /**
      * A successful result of validation.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.requestvalidation.ValidationResult.Valid)
      */
     public data object Valid : ValidationResult()
 
     /**
      * An unsuccessful result of validation. All errors are stored in the [reasons] list.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.requestvalidation.ValidationResult.Invalid)
      */
     public class Invalid(
         /**
@@ -34,10 +40,14 @@ public sealed class ValidationResult {
 
 /**
  * A validator that should be registered with [RequestValidation] plugin
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.requestvalidation.Validator)
  */
 public interface Validator {
     /**
      * Validates the [value].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.requestvalidation.Validator.validate)
      */
     public suspend fun validate(value: Any): ValidationResult
 
@@ -63,6 +73,8 @@ public interface Validator {
  *     }
  * }
  * ```
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.requestvalidation.RequestValidation)
  */
 public val RequestValidation: RouteScopedPlugin<RequestValidationConfig> = createRouteScopedPlugin(
     "RequestValidation",

@@ -13,6 +13,8 @@ import kotlinx.coroutines.*
 
 /**
  * Installs the [WebSockets] plugin using the [config] as configuration.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.websocket.WebSockets)
  */
 public fun HttpClientConfig<*>.WebSockets(config: WebSockets.Config.() -> Unit) {
     install(WebSockets) {

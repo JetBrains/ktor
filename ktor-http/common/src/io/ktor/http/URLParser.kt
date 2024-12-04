@@ -11,6 +11,8 @@ internal val ROOT_PATH = listOf("")
 /**
  * Take url parts from [urlString]
  * throws [URLParserException]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.takeFrom)
  */
 public fun URLBuilder.takeFrom(urlString: String): URLBuilder {
     if (urlString.isBlank()) return this

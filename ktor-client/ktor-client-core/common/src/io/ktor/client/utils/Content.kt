@@ -12,6 +12,8 @@ import kotlin.coroutines.*
 
 /**
  * Concrete [OutgoingContent] without a payload.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.utils.EmptyContent)
  */
 public data object EmptyContent : OutgoingContent.NoContent() {
     override val contentLength: Long = 0
@@ -20,6 +22,8 @@ public data object EmptyContent : OutgoingContent.NoContent() {
 /**
  * Generates a new [OutgoingContent] of the same abstract type
  * but with [OutgoingContent.headers] transformed by the specified [block].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.utils.wrapHeaders)
  */
 public fun OutgoingContent.wrapHeaders(block: (Headers) -> Headers): OutgoingContent = when (this) {
     is OutgoingContent.NoContent -> object : OutgoingContent.NoContent() {

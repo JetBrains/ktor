@@ -14,6 +14,8 @@ import kotlinx.coroutines.*
 
 /**
  * [HttpClientEngine] for writing tests without network.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.mock.MockEngine)
  */
 public class MockEngine(override val config: MockEngineConfig) : HttpClientEngineBase("ktor-mock") {
     override val supportedCapabilities: Set<HttpClientEngineCapability<out Any>> = setOf(

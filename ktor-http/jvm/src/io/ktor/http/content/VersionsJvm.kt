@@ -19,6 +19,8 @@ import java.util.*
  *  https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.25
  *
  *  @param lastModified of the current content, for example file's last modified date
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.LastModifiedVersion)
  */
 public fun LastModifiedVersion(lastModified: Date): LastModifiedVersion =
     LastModifiedVersion(GMTDate(lastModified.time))

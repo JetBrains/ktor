@@ -12,6 +12,8 @@ import io.ktor.utils.io.*
  *
  * The [HttpClientEngine] is selected from the dependencies.
  * https://ktor.io/docs/http-client-engines.html
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.HttpClient)
  */
 @OptIn(InternalAPI::class)
 @KtorDsl

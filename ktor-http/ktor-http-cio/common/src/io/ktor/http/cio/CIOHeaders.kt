@@ -9,6 +9,8 @@ import io.ktor.util.*
 
 /**
  * An adapter from CIO low-level headers map to ktor [Headers] interface
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.CIOHeaders)
  */
 public class CIOHeaders(private val headers: HttpHeadersMap) : Headers {
 

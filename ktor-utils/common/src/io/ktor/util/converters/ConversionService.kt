@@ -9,10 +9,14 @@ import kotlin.reflect.*
 
 /**
  * Data conversion service that does serialization and deserialization to/from list of strings
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.converters.ConversionService)
  */
 public interface ConversionService {
     /**
      * Deserialize [values] to an instance of [type]
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.converters.ConversionService.fromValues)
      */
     public fun fromValues(values: List<String>, type: TypeInfo): Any?
 
@@ -24,6 +28,8 @@ public interface ConversionService {
 
 /**
  * The default conversion service that supports only basic types and enums
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.converters.DefaultConversionService)
  */
 public object DefaultConversionService : ConversionService {
     override fun toValues(value: Any?): List<String> {
@@ -112,5 +118,7 @@ internal expect fun platformDefaultToValues(value: Any): List<String>?
 
 /**
  * Thrown when failed to convert value
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.converters.DataConversionException)
  */
 public open class DataConversionException(message: String = "Invalid data format") : Exception(message)

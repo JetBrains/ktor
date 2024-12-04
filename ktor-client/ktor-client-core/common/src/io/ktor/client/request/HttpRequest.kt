@@ -22,11 +22,15 @@ import kotlin.reflect.*
 
 /**
  * A request for [HttpClient], first part of [HttpClientCall].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpRequest)
  */
 public interface HttpRequest : HttpMessage, CoroutineScope {
     /**
      * The associated [HttpClientCall] containing both
      * the underlying [HttpClientCall.request] and [HttpClientCall.response].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpRequest.call)
      */
     public val call: HttpClientCall
 
@@ -57,10 +61,14 @@ public interface HttpRequest : HttpMessage, CoroutineScope {
  * Contains parameters used to make an HTTP request.
  *
  * Learn more from [Making requests](https://ktor.io/docs/request.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpRequestBuilder)
  */
 public class HttpRequestBuilder : HttpMessageBuilder {
     /**
      * [URLBuilder] to configure the URL for this request.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpRequestBuilder.url)
      */
     public val url: URLBuilder = URLBuilder()
 
@@ -177,6 +185,8 @@ public class HttpRequestBuilder : HttpMessageBuilder {
 /**
  * Actual data of the [HttpRequest], including [url], [method], [headers], [body] and [executionContext].
  * Built by [HttpRequestBuilder].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpRequestData)
  */
 public class HttpRequestData @InternalAPI constructor(
     public val url: Url,
@@ -188,6 +198,8 @@ public class HttpRequestData @InternalAPI constructor(
 ) {
     /**
      * Retrieve extension by its key.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpRequestData.getCapabilityOrNull)
      */
     public fun <T> getCapabilityOrNull(key: HttpClientEngineCapability<T>): T? {
         @Suppress("UNCHECKED_CAST")
@@ -205,6 +217,8 @@ public class HttpRequestData @InternalAPI constructor(
 
 /**
  * Data prepared for [HttpResponse].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.HttpResponseData)
  */
 public class HttpResponseData(
     public val statusCode: HttpStatusCode,
@@ -221,6 +235,8 @@ public class HttpResponseData(
 
 /**
  * Executes a [block] that configures the [HeadersBuilder] associated to this request.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.headers)
  */
 public fun HttpMessageBuilder.headers(block: HeadersBuilder.() -> Unit): HeadersBuilder = headers.apply(block)
 

@@ -65,6 +65,8 @@ internal class SavedHttpResponse(
 
 /**
  * Fetch data for [HttpClientCall] and close the origin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.call.save)
  */
 
 @OptIn(InternalAPI::class)

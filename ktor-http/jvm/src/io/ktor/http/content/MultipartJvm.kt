@@ -9,6 +9,8 @@ import java.io.*
 
 /**
  * Provides file item's content as an [InputStream]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.streamProvider)
  */
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated("This API uses blocking InputStream. Please use provider() directly.")

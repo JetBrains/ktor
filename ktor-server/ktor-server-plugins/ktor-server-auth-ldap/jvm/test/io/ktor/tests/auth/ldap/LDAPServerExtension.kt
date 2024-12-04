@@ -23,6 +23,8 @@ annotation class LDAPServerExtensionTest
  *
  * This is an adaption of the LDAP functionality found in
  * `org.apache.directory.server.core.integ.FrameworkRunner` for JUnit5.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.tests.auth.ldap.LDAPServerExtension)
  */
 @CreateLdapServer(transports = [CreateTransport(protocol = "LDAP")])
 class LDAPServerExtension : BeforeAllCallback, AfterAllCallback, ParameterResolver {

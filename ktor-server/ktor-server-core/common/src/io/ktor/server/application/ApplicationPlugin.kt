@@ -16,6 +16,8 @@ import kotlinx.coroutines.*
  * @param TPipeline is the type of the pipeline this plugin is compatible with
  * @param TConfiguration is the configuration object type for this Plugin
  * @param TPlugin is the instance type of the Plugin object
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.Plugin)
  */
 @Suppress("AddVarianceModifier")
 public interface Plugin<
@@ -25,6 +27,8 @@ public interface Plugin<
     > {
     /**
      * A unique key that identifies a plugin.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.Plugin.key)
      */
     public val key: AttributeKey<TPlugin>
 
@@ -39,6 +43,8 @@ public interface Plugin<
  * @param TPipeline is the type of the pipeline this plugin is compatible with
  * @param TConfiguration is the configuration object type for this Plugin
  * @param TPlugin is the instance type of the Plugin object
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.BaseApplicationPlugin)
  */
 public interface BaseApplicationPlugin<
     in TPipeline : Pipeline<*, PipelineCall>,
@@ -49,6 +55,8 @@ public interface BaseApplicationPlugin<
 /**
  * Defines a [Plugin](https://ktor.io/docs/plugins.html) that is installed into Application.
  * @param TConfiguration is the configuration object type for this Plugin
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ApplicationPlugin)
  */
 public interface ApplicationPlugin<out TConfiguration : Any> :
     BaseApplicationPlugin<Application, TConfiguration, PluginInstance>
@@ -57,6 +65,8 @@ internal val pluginRegistryKey = AttributeKey<Attributes>("ApplicationPluginRegi
 
 /**
  * Returns the existing plugin registry or registers and returns a new one.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.pluginRegistry)
  */
 public val <A : Pipeline<*, PipelineCall>> A.pluginRegistry: Attributes
     get() = attributes.computeIfAbsent(pluginRegistryKey) { Attributes(true) }

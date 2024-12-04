@@ -20,6 +20,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.HttpRedirect")
 
 /**
  * Occurs when receiving a response with a redirect message.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpResponseRedirectEvent)
  */
 public val HttpResponseRedirectEvent: EventDefinition<HttpResponse> = EventDefinition()
 

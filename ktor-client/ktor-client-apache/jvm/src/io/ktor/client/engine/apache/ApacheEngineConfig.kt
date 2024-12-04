@@ -11,6 +11,8 @@ import javax.net.ssl.*
 
 /**
  * A configuration for the [Apache] client engine.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.apache.ApacheEngineConfig)
  */
 public class ApacheEngineConfig : HttpClientEngineConfig() {
     /**
@@ -18,6 +20,8 @@ public class ApacheEngineConfig : HttpClientEngineConfig() {
      * Disabled by default.
      *
      * _Note: By default, the Apache client allows `50` redirects._
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.apache.ApacheEngineConfig.followRedirects)
      */
     public var followRedirects: Boolean = false
 

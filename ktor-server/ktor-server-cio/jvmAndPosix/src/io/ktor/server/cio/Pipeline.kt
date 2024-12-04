@@ -11,6 +11,8 @@ import kotlin.native.concurrent.*
 
 /**
  * HTTP request handler function
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.HttpRequestHandler)
  */
 public typealias HttpRequestHandler = suspend ServerRequestScope.(request: Request) -> Unit
 

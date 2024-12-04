@@ -34,6 +34,8 @@ public object ConfigKeys {
 
 /**
  * Creates an [ApplicationEnvironment] instance from command line arguments
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.CommandLineConfig)
  */
 public fun CommandLineConfig(args: Array<String>): CommandLineConfig {
     val argumentsPairs = args.mapNotNull { it.splitPair('=') }

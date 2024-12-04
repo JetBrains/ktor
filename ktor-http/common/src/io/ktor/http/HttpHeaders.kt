@@ -169,6 +169,8 @@ public object HttpHeaders {
 
 /**
  * Thrown when an attempt to set unsafe header detected. A header is unsafe if listed in [HttpHeaders.UnsafeHeadersList].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.UnsafeHeaderException)
  */
 public class UnsafeHeaderException(header: String) : IllegalArgumentException(
     "Header(s) $header are controlled by the engine and " +
@@ -181,6 +183,8 @@ public class UnsafeHeaderException(header: String) : IllegalArgumentException(
  * without delimiters "double quote" and the following characters: `(),/:;<=>?@[\]{}`.
  * @property headerName that was tried to use
  * @property position at which validation failed
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.IllegalHeaderNameException)
  */
 public class IllegalHeaderNameException(public val headerName: String, public val position: Int) :
     IllegalArgumentException(
@@ -193,6 +197,8 @@ public class IllegalHeaderNameException(public val headerName: String, public va
  * A header value should only consist from visible characters, spaces and/or HTAB (0x09).
  * @property headerValue that was tried to use
  * @property position at which validation failed
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.IllegalHeaderValueException)
  */
 public class IllegalHeaderValueException(public val headerValue: String, public val position: Int) :
     IllegalArgumentException(

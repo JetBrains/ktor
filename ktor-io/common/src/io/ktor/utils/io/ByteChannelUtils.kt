@@ -8,6 +8,8 @@ import kotlinx.coroutines.*
 
 /**
  * Ensures that when the given job is canceled, the ByteChannel is canceled with the same exception.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.attachJob)
  */
 public fun ByteChannel.attachJob(job: Job) {
     job.invokeOnCompletion {

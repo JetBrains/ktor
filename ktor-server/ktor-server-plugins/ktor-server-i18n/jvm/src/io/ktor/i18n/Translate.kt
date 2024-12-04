@@ -9,6 +9,8 @@ import java.util.*
 
 /**
  * Translate a message key to an accepted language specified in HTTP request
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.i18n.i18n)
  */
 public fun RoutingContext.i18n(key: String): String {
     val bestMatchLanguage = call.attributes[REQUIRED_RESPONSE_LANGUAGE]

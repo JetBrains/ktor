@@ -13,12 +13,16 @@ import kotlinx.coroutines.channels.*
  * - [Server WebSockets](https://ktor.io/docs/websocket.html)
  * - [Client WebSockets](https://ktor.io/docs/websocket-client.html)
  *
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.WebSocketSession)
  */
 public interface WebSocketSession : CoroutineScope {
     /**
      * Enables or disables masking output messages by a random XOR mask.
      * Note that changing this flag on the fly could be applied to the messages already sent (enqueued earlier)
      * as the sending pipeline works asynchronously.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.WebSocketSession.masking)
      */
     public var masking: Boolean
 
@@ -81,6 +85,8 @@ public interface WebSocketSession : CoroutineScope {
  *
  * @return extension instance.
  * @throws [IllegalStateException] if the extension is not found.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.extension)
  */
 public fun <T : WebSocketExtension<*>> WebSocketSession.extension(extension: WebSocketExtensionFactory<*, T>): T =
     extensionOrNull(extension) ?: error("Extension $extension not found.")

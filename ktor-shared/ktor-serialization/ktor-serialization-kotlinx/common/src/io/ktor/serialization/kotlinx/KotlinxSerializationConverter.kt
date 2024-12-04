@@ -20,6 +20,8 @@ import kotlin.jvm.*
 
 /**
  * Creates a converter serializing with the specified string [format]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.kotlinx.KotlinxSerializationConverter)
  */
 @OptIn(ExperimentalSerializationApi::class, InternalSerializationApi::class)
 public class KotlinxSerializationConverter(
@@ -105,6 +107,8 @@ public class KotlinxSerializationConverter(
 /**
  * Register kotlinx.serialization converter into [ContentNegotiation] plugin
  * with the specified [contentType] and binary [format] (such as CBOR, ProtoBuf)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.kotlinx.serialization)
  */
 public fun Configuration.serialization(contentType: ContentType, format: BinaryFormat) {
     register(contentType, KotlinxSerializationConverter(format))

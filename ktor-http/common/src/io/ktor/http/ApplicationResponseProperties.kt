@@ -6,5 +6,7 @@ package io.ktor.http
 
 /**
  * Set `E-Tag` header
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.etag)
  */
 public fun HeadersBuilder.etag(entityTag: String): Unit = set(HttpHeaders.ETag, entityTag)

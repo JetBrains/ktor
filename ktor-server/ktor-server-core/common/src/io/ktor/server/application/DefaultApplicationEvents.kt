@@ -14,6 +14,8 @@ import kotlin.native.concurrent.*
  *
  * Note, that application itself cannot receive this event because it fires before application is created
  * It is meant to be used by engines.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ApplicationStarting)
  */
 public val ApplicationStarting: EventDefinition<Application> = EventDefinition()
 

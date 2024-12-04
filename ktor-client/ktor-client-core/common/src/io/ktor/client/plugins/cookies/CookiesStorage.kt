@@ -10,10 +10,14 @@ import io.ktor.utils.io.core.*
 
 /**
  * A storage for [Cookie].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cookies.CookiesStorage)
  */
 public interface CookiesStorage : Closeable {
     /**
      * Gets a map of [String] to [Cookie] for a specific host.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cookies.CookiesStorage.get)
      */
     public suspend fun get(requestUrl: Url): List<Cookie>
 
@@ -25,6 +29,8 @@ public interface CookiesStorage : Closeable {
 
 /**
  * Adds a [cookie] with the [urlString] key to storage.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cookies.addCookie)
  */
 public suspend fun CookiesStorage.addCookie(urlString: String, cookie: Cookie) {
     addCookie(Url(urlString), cookie)

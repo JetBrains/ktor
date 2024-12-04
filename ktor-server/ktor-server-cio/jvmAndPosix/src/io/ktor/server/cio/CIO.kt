@@ -10,6 +10,8 @@ import io.ktor.server.engine.*
 
 /**
  * An [ApplicationEngineFactory] providing a CIO-based [ApplicationEngine]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.CIO)
  */
 public object CIO : ApplicationEngineFactory<CIOApplicationEngine, CIOApplicationEngine.Configuration> {
 

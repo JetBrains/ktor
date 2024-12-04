@@ -14,6 +14,8 @@ import io.ktor.utils.io.*
  * from the standard library that is available for JVM.
  * The [SynchronizedObject] superclass gets erased (transformed to Any) on JVM and JS,
  * with `synchronized` leaving no trace in the code on JS and getting replaced with built-in monitors for locking on JVM.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.locks.SynchronizedObject)
  */
 @InternalAPI
 public expect open class SynchronizedObject()
@@ -24,12 +26,16 @@ public expect open class SynchronizedObject()
  * [ReentrantLock] is designed for delegation. You write `val lock = reentrantLock()` to construct its instance and
  * use `lock/tryLock/unlock` functions or `lock.withLock { ... }` extension function similarly to
  * the way jucl.ReentrantLock is used on JVM. On JVM it is a typealias to the later class, erased on JS.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.locks.ReentrantLock)
  */
 @InternalAPI
 public expect class ReentrantLock {
     /**
      * Acquires the lock. If the lock is already held by another thread, the current thread
      * will block until it can acquire the lock.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.locks.ReentrantLock.lock)
      */
     public fun lock()
 
@@ -51,6 +57,8 @@ public expect class ReentrantLock {
 
 /**
  * Creates a new [ReentrantLock] instance.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.locks.reentrantLock)
  */
 @InternalAPI
 public expect fun reentrantLock(): ReentrantLock

@@ -10,6 +10,8 @@ import java.nio.*
 
 /**
  * Write [source] buffer content moving its position.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.core.writeByteBuffer)
  */
 @Deprecated(
     "[writeByteBuffer] is deprecated. Consider using [transferFrom] instead",

@@ -9,6 +9,8 @@ import java.security.*
 
 /**
  * Adds a secure connector to this engine environment
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.sslConnector)
  */
 public inline fun ApplicationEngine.Configuration.sslConnector(
     keyStore: KeyStore,

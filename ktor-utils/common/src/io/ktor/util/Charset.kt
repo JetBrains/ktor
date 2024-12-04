@@ -6,6 +6,8 @@ package io.ktor.util
 
 /**
  * Check if [Char] is in lower case
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.isLowerCase)
  */
 public fun Char.isLowerCase(): Boolean = lowercaseChar() == this
 

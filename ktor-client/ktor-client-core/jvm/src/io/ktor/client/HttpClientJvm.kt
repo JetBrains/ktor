@@ -17,6 +17,8 @@ import java.util.*
  * An exception is thrown if no implementations found.
  *
  * See https://ktor.io/docs/http-client-engines.html
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.HttpClient)
  */
 @KtorDsl
 public actual fun HttpClient(

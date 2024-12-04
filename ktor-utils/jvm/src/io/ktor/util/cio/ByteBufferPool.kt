@@ -12,5 +12,7 @@ internal const val DEFAULT_KTOR_POOL_SIZE = 2048
 
 /**
  * The default ktor byte buffer pool
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.cio.KtorDefaultPool)
  */
 public val KtorDefaultPool: ObjectPool<ByteBuffer> = ByteBufferPool(DEFAULT_KTOR_POOL_SIZE, DEFAULT_BUFFER_SIZE)

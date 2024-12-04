@@ -25,6 +25,8 @@ import java.io.*
  *     }
  * }
  * ```
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.content.singlePageApplication)
  */
 public fun Route.singlePageApplication(configBuilder: SPAConfig.() -> Unit = {}) {
     val config = SPAConfig()

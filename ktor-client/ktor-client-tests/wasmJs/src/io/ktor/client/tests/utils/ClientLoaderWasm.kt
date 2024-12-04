@@ -12,10 +12,14 @@ import kotlinx.coroutines.test.*
 
 /**
  * Helper interface to test client.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.tests.utils.ClientLoader)
  */
 actual abstract class ClientLoader actual constructor(private val timeoutSeconds: Int) {
     /**
      * Perform test against all clients from dependencies.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.tests.utils.ClientLoader.clientTests)
      */
     @OptIn(DelicateCoroutinesApi::class)
     actual fun clientTests(

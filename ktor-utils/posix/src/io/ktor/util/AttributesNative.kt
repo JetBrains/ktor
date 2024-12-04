@@ -10,6 +10,8 @@ private const val ATTRIBUTES_INITIAL_CAPACITY = 32
 
 /**
  * Create native specific attributes instance.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.Attributes)
  */
 public actual fun Attributes(concurrent: Boolean): Attributes = AttributesNative()
 

@@ -12,6 +12,8 @@ public class WinHttpClientEngineConfig : HttpClientEngineConfig() {
     /**
      * A value indicating whether HTTP 2.0 protocol is enabled in WinHTTP.
      * The default value is true.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.winhttp.WinHttpClientEngineConfig.protocolVersion)
      */
     public var protocolVersion: HttpProtocolVersion = HttpProtocolVersion.HTTP_2_0
 

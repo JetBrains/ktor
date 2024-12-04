@@ -10,6 +10,8 @@ import io.ktor.util.date.*
 
 /**
  * Specifies a key for the VersionList extension property for [OutgoingContent].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.VersionListProperty)
  */
 public val VersionListProperty: AttributeKey<List<Version>> = AttributeKey("VersionList")
 

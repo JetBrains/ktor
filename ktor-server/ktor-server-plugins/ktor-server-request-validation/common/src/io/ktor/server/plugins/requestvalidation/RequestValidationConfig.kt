@@ -8,6 +8,8 @@ import kotlin.reflect.*
 
 /**
  * A config for [RequestValidation] plugin
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.requestvalidation.RequestValidationConfig)
  */
 public class RequestValidationConfig {
 
@@ -18,6 +20,8 @@ public class RequestValidationConfig {
     /**
      * Enables validation of the request body length matches the [Content-Length] header.
      * If the length doesn't match, body channel will be cancelled with [IOException].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.requestvalidation.RequestValidationConfig.validateContentLength)
      */
     public fun validateContentLength() {
         validateContentLength = true

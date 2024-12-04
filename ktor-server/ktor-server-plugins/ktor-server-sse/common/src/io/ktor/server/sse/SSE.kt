@@ -24,5 +24,7 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.server.plugins.sse.SSE")
  *     }
  * }
  * ```
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sse.SSE)
  */
 public val SSE: ApplicationPlugin<Unit> = createApplicationPlugin("SSE") {}

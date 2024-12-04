@@ -13,12 +13,16 @@ import io.ktor.utils.io.*
 
 /**
  *  A configuration for the [HSTS] settings for a host.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.hsts.HSTSHostConfig)
  */
 @KtorDsl
 public open class HSTSHostConfig {
     /**
      * Specifies the `preload` HSTS directive, which allows you to include your domain name
      * in the HSTS preload list.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.hsts.HSTSHostConfig.preload)
      */
     public var preload: Boolean = false
 
@@ -44,6 +48,8 @@ public open class HSTSHostConfig {
 
 /**
  *  A configuration for the [HSTS] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.hsts.HSTSConfig)
  */
 @KtorDsl
 public class HSTSConfig : HSTSHostConfig() {
@@ -56,6 +62,8 @@ public class HSTSConfig : HSTSHostConfig() {
 
     /**
      * Set specific configuration for a [host].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.hsts.HSTSConfig.withHost)
      */
     public fun withHost(host: String, configure: HSTSHostConfig.() -> Unit) {
         this.hostSpecific[host] = HSTSHostConfig().apply(configure)
@@ -82,6 +90,8 @@ internal const val DEFAULT_HSTS_MAX_AGE: Long = 365L * 24 * 3600 // 365 days
  * }
  * ```
  * You can learn more from [HSTS](https://ktor.io/docs/hsts.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.hsts.HSTS)
  */
 public val HSTS: RouteScopedPlugin<HSTSConfig> = createRouteScopedPlugin("HSTS", ::HSTSConfig) {
     fun constructHeaderValue(config: HSTSHostConfig) = buildString {

@@ -12,12 +12,16 @@ import io.ktor.util.pipeline.*
 /**
  * Application engine pipeline. One usually don't need to install interceptors here unless your are writing
  * your own engine implementation
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.EnginePipeline)
  */
 public class EnginePipeline(
     override val developmentMode: Boolean = false
 ) : Pipeline<Unit, PipelineCall>(Before, Call) {
     /**
      * Pipeline for receiving content
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.EnginePipeline.receivePipeline)
      */
     public val receivePipeline: ApplicationReceivePipeline = ApplicationReceivePipeline(developmentMode)
 

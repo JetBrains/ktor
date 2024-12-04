@@ -11,6 +11,8 @@ import io.ktor.http.*
  *
  * @property acceptEncoding The encoding type as a string, such as "gzip", "compress", "br", etc.
  * @param parameters Optional list of parameters associated with the encoding, such as quality values (q-values).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.header.AcceptEncoding)
  */
 public class AcceptEncoding(
     public val acceptEncoding: String,
@@ -22,6 +24,8 @@ public class AcceptEncoding(
      *
      * @param acceptEncoding The encoding type, such as "gzip", "compress", "br", etc.
      * @param qValue The quality value (q-value) associated with this encoding.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.header.AcceptEncoding.AcceptEncoding)
      */
     public constructor(acceptEncoding: String, qValue: Double) : this(
         acceptEncoding,

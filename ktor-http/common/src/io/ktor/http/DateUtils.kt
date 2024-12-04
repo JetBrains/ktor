@@ -25,6 +25,8 @@ private val HTTP_DATE_FORMATS = listOf(
  * Convert valid http date [String] to [GMTDate] trying various http date formats from [HTTP_DATE_FORMATS]
  *
  * Note that only GMT(UTC) date is valid http date.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.fromHttpToGmtDate)
  */
 public fun String.fromHttpToGmtDate(): GMTDate = with(trim()) {
     for (format in HTTP_DATE_FORMATS) {

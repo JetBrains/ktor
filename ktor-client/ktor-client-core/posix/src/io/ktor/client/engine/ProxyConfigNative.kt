@@ -13,6 +13,8 @@ import io.ktor.util.network.*
  * See [ProxyBuilder] to create proxy.
  *
  * @param url: proxy url address.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.ProxyConfig)
  */
 public actual class ProxyConfig(public val url: Url) {
     override fun toString(): String = buildString {
@@ -37,6 +39,8 @@ public actual class ProxyConfig(public val url: Url) {
  * Resolve remote address of [ProxyConfig].
  *
  * This operation can block.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.resolveAddress)
  */
 public actual fun ProxyConfig.resolveAddress(): NetworkAddress = NetworkAddress(url.host, url.port)
 

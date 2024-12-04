@@ -15,12 +15,16 @@ import kotlin.coroutines.*
 
 /**
  * Engine environment configuration builder
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ApplicationEnvironmentBuilder)
  */
 @KtorDsl
 public expect class ApplicationEnvironmentBuilder() {
 
     /**
      * Application logger
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ApplicationEnvironmentBuilder.log)
      */
     public var log: Logger
 

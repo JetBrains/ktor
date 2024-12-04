@@ -14,6 +14,8 @@ import io.ktor.utils.io.*
 
 /**
  * Installs the client's [BearerAuthProvider].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.auth.providers.bearer)
  */
 public fun AuthConfig.bearer(block: BearerAuthConfig.() -> Unit) {
     with(BearerAuthConfig().apply(block)) {

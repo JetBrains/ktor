@@ -7,6 +7,8 @@ package io.ktor.server.html
 /**
  * A template that expands inside [TOuter].
  * @see [respondHtmlTemplate]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.html.Template)
  */
 public interface Template<in TOuter> {
     public fun TOuter.apply()
@@ -15,6 +17,8 @@ public interface Template<in TOuter> {
 /**
  * A placeholder that is inserted inside [TOuter].
  * @see [respondHtmlTemplate]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.html.Placeholder)
  */
 public open class Placeholder<TOuter> {
     private var content: TOuter.(Placeholder<TOuter>) -> Unit = { }
@@ -33,6 +37,8 @@ public open class Placeholder<TOuter> {
 /**
  * A placeholder that can be used to insert the content that appears multiple times (for example, list items).
  * @see [respondHtmlTemplate]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.html.PlaceholderList)
  */
 public open class PlaceholderList<TOuter, TInner> {
     private var items = ArrayList<PlaceholderItem<TInner>>()
@@ -59,6 +65,8 @@ public open class PlaceholderList<TOuter, TInner> {
 
 /**
  * An item of a [PlaceholderList] when it is expanded.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.html.PlaceholderItem)
  */
 public class PlaceholderItem<TOuter>(public val index: Int, public val collection: List<PlaceholderItem<TOuter>>) :
     Placeholder<TOuter>() {
@@ -68,6 +76,8 @@ public class PlaceholderItem<TOuter>(public val index: Int, public val collectio
 
 /**
  * Inserts every element of [PlaceholderList].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.html.each)
  */
 public fun <TOuter, TInner> TOuter.each(
     items: PlaceholderList<TOuter, TInner>,

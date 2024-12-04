@@ -26,6 +26,8 @@ import kotlin.text.*
  * @param objectMapper a configured instance of [ObjectMapper]
  * @param streamRequestBody if set to true, will stream request body, without keeping it whole in memory.
  * This will set `Transfer-Encoding: chunked` header.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.jackson.JacksonConverter)
  */
 public class JacksonConverter(
     private val objectMapper: ObjectMapper = jacksonObjectMapper(),
@@ -151,6 +153,8 @@ public class JacksonConverter(
  * @param streamRequestBody if set to true, will stream request body, without keeping it whole in memory.
  * This will set `Transfer-Encoding: chunked` header.
  * @param block a configuration block for [ObjectMapper]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.jackson.jackson)
  */
 public fun Configuration.jackson(
     contentType: ContentType = ContentType.Application.Json,

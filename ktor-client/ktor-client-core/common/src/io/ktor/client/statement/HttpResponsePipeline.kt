@@ -11,6 +11,8 @@ import io.ktor.util.reflect.*
 
 /**
  * [HttpClient] Pipeline used for executing [HttpResponse].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.statement.HttpResponsePipeline)
  */
 public class HttpResponsePipeline(
     override val developmentMode: Boolean = true
@@ -24,6 +26,8 @@ public class HttpResponsePipeline(
     public companion object Phases {
         /**
          * The earliest phase that happens before any other
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.statement.HttpResponsePipeline.Phases.Receive)
          */
         public val Receive: PipelinePhase = PipelinePhase("Receive")
 
@@ -51,6 +55,8 @@ public class HttpResponsePipeline(
 
 /**
  * [HttpClient] Pipeline used for receiving [HttpResponse] without any processing.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.statement.HttpReceivePipeline)
  */
 public class HttpReceivePipeline(
     override val developmentMode: Boolean = true
@@ -58,6 +64,8 @@ public class HttpReceivePipeline(
     public companion object Phases {
         /**
          * The earliest phase that happens before any other
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.statement.HttpReceivePipeline.Phases.Before)
          */
         public val Before: PipelinePhase = PipelinePhase("Before")
 
@@ -77,5 +85,7 @@ public class HttpReceivePipeline(
  * Class representing a typed [response] with an attached [expectedType].
  * @param expectedType: information about expected type.
  * @param response: current response state.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.statement.HttpResponseContainer)
  */
 public data class HttpResponseContainer(val expectedType: TypeInfo, val response: Any)

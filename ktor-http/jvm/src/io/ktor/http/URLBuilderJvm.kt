@@ -8,6 +8,8 @@ import java.net.*
 
 /**
  * Construct [Url] from [String]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.invoke)
  */
 public operator fun Url.Companion.invoke(fullUrl: String): Url = URLBuilder().apply {
     takeFrom(URI(fullUrl))

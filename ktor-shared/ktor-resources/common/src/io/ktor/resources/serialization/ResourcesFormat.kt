@@ -12,6 +12,8 @@ import kotlinx.serialization.modules.*
 
 /**
  * A format to (de)serialize resources instances
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.resources.serialization.ResourcesFormat)
  */
 @OptIn(ExperimentalSerializationApi::class)
 public class ResourcesFormat(
@@ -20,6 +22,8 @@ public class ResourcesFormat(
 
     /**
      * A query parameter description
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.resources.serialization.ResourcesFormat.Parameter)
      */
     public data class Parameter(
         val name: String,
@@ -28,6 +32,8 @@ public class ResourcesFormat(
 
     /**
      * Builds a path pattern for a given [serializer]
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.resources.serialization.ResourcesFormat.encodeToPathPattern)
      */
     public fun <T> encodeToPathPattern(serializer: KSerializer<T>): String {
         val pathBuilder = StringBuilder()

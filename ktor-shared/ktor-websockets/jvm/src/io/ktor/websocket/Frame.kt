@@ -16,6 +16,8 @@ import java.nio.*
  * @property frameType enum value
  * @property data - a frame content or fragment content
  * @property disposableHandle could be invoked when the frame is processed
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.Frame)
  */
 
 public actual sealed class Frame actual constructor(
@@ -29,6 +31,8 @@ public actual sealed class Frame actual constructor(
 ) {
     /**
      * Frame content
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.Frame.buffer)
      */
     public val buffer: ByteBuffer = ByteBuffer.wrap(data)
 

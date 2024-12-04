@@ -9,6 +9,8 @@ import io.ktor.http.parsing.regex.*
 
 /**
  * Check if [host] is IPv4 or IPv6 address.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.hostIsIp)
  */
 public fun hostIsIp(host: String): Boolean = IP_PARSER.match(host)
 

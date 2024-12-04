@@ -57,6 +57,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.DefaultRequest")
  * client.get("https://some.url") { HttpHeaders.ContentType = ContentType.Application.Xml }
  *   // <- requests "https://some.url/", ContentType = Application.Xml
  * ```
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.DefaultRequest)
  */
 public class DefaultRequest private constructor(private val block: DefaultRequestBuilder.() -> Unit) {
 
@@ -157,6 +159,8 @@ public class DefaultRequest private constructor(private val block: DefaultReques
 
     /**
      * Configuration object for [DefaultRequestBuilder] plugin
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.DefaultRequest.DefaultRequestBuilder)
      */
     @KtorDsl
     public class DefaultRequestBuilder internal constructor() : HttpMessageBuilder {
@@ -220,6 +224,8 @@ public class DefaultRequest private constructor(private val block: DefaultReques
 
 /**
  * Set default request parameters. See [DefaultRequest]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.defaultRequest)
  */
 public fun HttpClientConfig<*>.defaultRequest(block: DefaultRequest.DefaultRequestBuilder.() -> Unit) {
     install(DefaultRequest) {

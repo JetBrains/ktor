@@ -6,6 +6,8 @@ package io.ktor.util
 
 /**
  * Escapes the characters in a String using HTML entities
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.escapeHTML)
  */
 public fun String.escapeHTML(): String {
     val text = this@escapeHTML

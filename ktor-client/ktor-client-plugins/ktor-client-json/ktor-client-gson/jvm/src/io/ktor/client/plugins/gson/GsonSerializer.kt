@@ -14,6 +14,8 @@ import io.ktor.utils.io.core.*
 
 /**
  * [JsonSerializer] using [Gson] as backend.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.gson.GsonSerializer)
  */
 @Deprecated(
     "Please use ContentNegotiation plugin and its converters: https://ktor.io/docs/migration-to-20x.html#serialization-client", // ktlint-disable max-line-length

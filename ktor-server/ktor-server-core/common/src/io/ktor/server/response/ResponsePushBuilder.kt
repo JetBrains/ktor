@@ -14,6 +14,8 @@ import io.ktor.http.content.*
  * @property headers request headers
  * @property method request method
  * @property versions request versions (last modification date, etag, and so on)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.ResponsePushBuilder)
  */
 @UseHttp2Push
 public interface ResponsePushBuilder {

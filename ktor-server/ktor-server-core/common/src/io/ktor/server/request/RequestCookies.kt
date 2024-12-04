@@ -11,6 +11,8 @@ import io.ktor.util.collections.*
  * Server request's cookies.
  * @see [ApplicationRequest.cookies]
  * @property request application request to fetch cookies from
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.RequestCookies)
  */
 public open class RequestCookies(protected val request: ApplicationRequest) {
     private val map = ConcurrentMap<Pair<CookieEncoding, String>, String>()
@@ -19,6 +21,8 @@ public open class RequestCookies(protected val request: ApplicationRequest) {
      * Provides access to raw cookie values.
      * These values are not decoded so could have percent encoded values, quotes, escape characters, and so on.
      * It is recommended to use [get] instead.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.RequestCookies.rawCookies)
      */
     public val rawCookies: Map<String, String> by lazy { fetchCookies() }
 

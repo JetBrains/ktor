@@ -9,6 +9,8 @@ import kotlinx.io.*
 
 /**
  * Reads exactly [count] bytes of the [HttpResponse.rawContent].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.statement.readBytes)
  */
 @OptIn(InternalAPI::class)
 public suspend fun HttpResponse.readBytes(count: Int): ByteArray = ByteArray(count).also {

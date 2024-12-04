@@ -9,12 +9,16 @@ package io.ktor.http
  * @property name specifies name of the protocol, e.g. "HTTP".
  * @property major specifies protocol major version.
  * @property minor specifies protocol minor version.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.HttpProtocolVersion)
  */
 public data class HttpProtocolVersion(val name: String, val major: Int, val minor: Int) {
     @Suppress("PublicApiImplicitType")
     public companion object {
         /**
          * HTTP/2.0 version.
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.HttpProtocolVersion.Companion.HTTP_2_0)
          */
         public val HTTP_2_0: HttpProtocolVersion = HttpProtocolVersion("HTTP", 2, 0)
 

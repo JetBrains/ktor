@@ -80,6 +80,8 @@ internal class DelegatingTestClientEngine(
 
 /**
  * Thrown when a request is made to an unknown resource
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.testing.client.InvalidTestRequestException)
  */
 public class InvalidTestRequestException(
     authority: String,

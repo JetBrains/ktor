@@ -28,6 +28,8 @@ import kotlinx.serialization.*
 import kotlinx.serialization.builtins.*
 import kotlin.test.*
 
+*
+* [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.contentnegotiation.tests.AbstractClientContentNegotiationTest)
 /** Base class for [ContentNegotiation] tests. */
 
 abstract class AbstractClientContentNegotiationTest : TestWithKtor() {

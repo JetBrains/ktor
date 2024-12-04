@@ -24,6 +24,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.HttpTimeout")
 
 /**
  * An [HttpTimeout] extension configuration that is used during installation.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpTimeoutConfig)
  */
 @KtorDsl
 public class HttpTimeoutConfig {
@@ -34,6 +36,8 @@ public class HttpTimeoutConfig {
 
     /**
      * Creates a new instance of [HttpTimeoutConfig].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpTimeoutConfig.HttpTimeoutConfig)
      */
     public constructor(
         requestTimeoutMillis: Long? = null,
@@ -119,6 +123,8 @@ public data object HttpTimeoutCapability : HttpClientEngineCapability<HttpTimeou
  * - __socket timeout__ — a maximum time of inactivity between two data packets when exchanging data with a server.
  *
  * You can learn more from [Timeout](https://ktor.io/docs/timeout.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpTimeout)
  */
 @OptIn(InternalAPI::class)
 public val HttpTimeout: ClientPlugin<HttpTimeoutConfig> = createClientPlugin(

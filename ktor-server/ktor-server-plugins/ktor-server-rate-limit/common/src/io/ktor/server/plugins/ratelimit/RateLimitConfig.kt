@@ -16,6 +16,8 @@ import kotlin.time.*
 
 /**
  * A config for the [RateLimit] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.ratelimit.RateLimitConfig)
  */
 @KtorDsl
 public class RateLimitConfig {
@@ -25,6 +27,8 @@ public class RateLimitConfig {
 
     /**
      * Registers the Rate-Limit provider that can be used in sub-routes via the [Route.rateLimit] function.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.ratelimit.RateLimitConfig.register)
      */
     public fun register(name: RateLimitName = LIMITER_NAME_EMPTY, block: RateLimitProviderConfig.() -> Unit) {
         if (providers.containsKey(name)) {
@@ -51,12 +55,16 @@ public class RateLimitConfig {
 
 /**
  * A name of registered [RateLimit] provider.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.ratelimit.RateLimitName)
  */
 @JvmInline
 public value class RateLimitName(internal val name: String)
 
 /**
  * A config for [RateLimit] provider inside [RateLimiterConfig].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.ratelimit.RateLimitProviderConfig)
  */
 @KtorDsl
 public class RateLimitProviderConfig(internal val name: RateLimitName) {
@@ -84,6 +92,8 @@ public class RateLimitProviderConfig(internal val name: RateLimitName) {
 
     /**
      * Sets [RateLimit] for this provider based on [ApplicationCall] and `key` of this request.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.ratelimit.RateLimitProviderConfig.rateLimiter)
      */
     public fun rateLimiter(provider: (call: ApplicationCall, key: Any) -> RateLimiter) {
         rateLimiterProvider = provider

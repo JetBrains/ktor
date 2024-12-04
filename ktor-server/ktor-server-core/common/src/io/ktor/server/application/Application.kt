@@ -14,6 +14,8 @@ import kotlin.coroutines.*
 
 /**
  * A builder for [ServerConfig].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ServerConfigBuilder)
  */
 public class ServerConfigBuilder(
     public val environment: ApplicationEnvironment
@@ -23,6 +25,8 @@ public class ServerConfigBuilder(
 
     /**
      * Paths to wait for application reload.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ServerConfigBuilder.watchPaths)
      */
     public var watchPaths: List<String> = listOf(WORKING_DIRECTORY_PATH)
 
@@ -55,6 +59,8 @@ public class ServerConfigBuilder(
 /**
  * Core configuration for a running server.
  * Contains modules, paths, and environment details.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ServerConfig)
  */
 public class ServerConfig internal constructor(
     public val environment: ApplicationEnvironment,
@@ -70,6 +76,8 @@ public class ServerConfig internal constructor(
 
 /**
  * Creates an [ServerConfig] instance.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.serverConfig)
  */
 public fun serverConfig(
     environment: ApplicationEnvironment = applicationEnvironment {},

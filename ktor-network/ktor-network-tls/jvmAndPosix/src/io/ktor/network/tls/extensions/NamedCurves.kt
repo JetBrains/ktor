@@ -10,6 +10,8 @@ import kotlin.native.concurrent.*
  * Named curves for Elliptic Curves.
  * @property code curve numeric code
  * @property fieldSize curve size in bits, affects key and signature size, performance and security strength
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.extensions.NamedCurve)
  */
 @Suppress("KDocMissingDocumentation", "EnumEntryName")
 public enum class NamedCurve(public val code: Short, public val fieldSize: Int) {
@@ -43,6 +45,8 @@ public enum class NamedCurve(public val code: Short, public val fieldSize: Int) 
         /**
          * Find named curve by numeric [code]
          * @return [NamedCurve] instance or `null`
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.extensions.NamedCurve.Companion.fromCode)
          */
         public fun fromCode(code: Short): NamedCurve? = entries.find { it.code == code }
     }
@@ -50,6 +54,8 @@ public enum class NamedCurve(public val code: Short, public val fieldSize: Int) 
 
 /**
  * List of supported named curves
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.extensions.SupportedNamedCurves)
  */
 
 public val SupportedNamedCurves: List<NamedCurve> = listOf(

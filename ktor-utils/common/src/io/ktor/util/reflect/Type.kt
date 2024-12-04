@@ -8,6 +8,8 @@ import kotlin.reflect.*
 
 /**
  * Information about type.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.reflect.Type)
  */
 @Deprecated("Not used anymore in common code as it was needed only for JVM target.")
 public expect interface Type

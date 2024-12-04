@@ -4,6 +4,8 @@ package io.ktor.utils.io.bits
 
 /**
  * Reverse number's byte order
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.bits.reverseByteOrder)
  */
 @Suppress("NOTHING_TO_INLINE")
 public actual inline fun Short.reverseByteOrder(): Short = java.lang.Short.reverseBytes(this)

@@ -12,6 +12,8 @@ import java.net.*
  * Proxy configuration.
  *
  * See [ProxyBuilder] to create proxy.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.ProxyConfig)
  */
 public actual typealias ProxyConfig = Proxy
 

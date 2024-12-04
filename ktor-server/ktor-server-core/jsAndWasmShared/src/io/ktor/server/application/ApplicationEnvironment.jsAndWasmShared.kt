@@ -14,6 +14,8 @@ public actual interface ApplicationEnvironment {
 
     /**
      * Configuration for the [Application]
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ApplicationEnvironment.config)
      */
     public actual val config: ApplicationConfig
 

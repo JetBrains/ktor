@@ -9,6 +9,8 @@ import io.ktor.server.engine.*
 
 /**
  * Tomcat engine
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.tomcat.EngineMain)
  */
 @Deprecated(
     "The ktor-server-tomcat module is deprecated and will be removed in the next major release as it " +
@@ -18,6 +20,8 @@ public object EngineMain {
     /**
      * Main function for starting EngineMain with Tomcat
      * Creates an embedded Tomcat application with an environment built from command line arguments.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.tomcat.EngineMain.main)
      */
     @JvmStatic
     public fun main(args: Array<String>) {

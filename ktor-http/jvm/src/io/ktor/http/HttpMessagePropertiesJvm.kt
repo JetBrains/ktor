@@ -18,6 +18,8 @@ private fun formatHttpDate(date: Date): String = HTTP_DATE_FORMAT.format(date)
 
 /**
  * Set `If-Modified-Since` header.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.ifModifiedSince)
  */
 public fun HttpMessageBuilder.ifModifiedSince(date: Date): Unit =
     headers.set(HttpHeaders.IfModifiedSince, formatHttpDate(date))

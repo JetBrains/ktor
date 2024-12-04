@@ -25,17 +25,23 @@ internal const val DEFAULT_FORM_FIELD_MAX_SIZE: Long = 50 * 1024 * 1024
 /**
  * A pipeline for processing incoming content.
  * When executed, this pipeline starts with an instance of [ByteReadChannel].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.ApplicationReceivePipeline)
  */
 public open class ApplicationReceivePipeline(
     override val developmentMode: Boolean = false
 ) : Pipeline<Any, PipelineCall>(Before, Transform, After) {
     /**
      * Pipeline phases.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.ApplicationReceivePipeline.Phases)
      */
     @Suppress("PublicApiImplicitType")
     public companion object Phases {
         /**
          * Executes before any transformations are made.
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.ApplicationReceivePipeline.Phases.Before)
          */
         public val Before: PipelinePhase = PipelinePhase("Before")
 
@@ -54,6 +60,8 @@ public open class ApplicationReceivePipeline(
 /**
  * Receives content for this request.
  * @return instance of [T] received from this call, or `null` if content cannot be transformed to the requested type.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.receiveOrNull)
  */
 @Deprecated(
     "receiveOrNull is ambiguous with receiveNullable and going to be removed in 3.0.0. " +

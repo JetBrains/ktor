@@ -6,6 +6,8 @@ package io.ktor.http
 
 /**
  * Select default port value from protocol.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.DEFAULT_PORT)
  */
 public const val DEFAULT_PORT: Int = 0
 

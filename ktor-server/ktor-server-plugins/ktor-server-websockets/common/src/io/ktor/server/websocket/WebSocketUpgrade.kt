@@ -28,6 +28,8 @@ import kotlin.coroutines.*
  * @param protocol web socket negotiated protocol name (optional)
  * @param installExtensions specifies if WebSocket extensions should be installed in current session.
  * @param handle function that is started once HTTP upgrade complete and the session will end once this function exit
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.websocket.WebSocketUpgrade)
  */
 public class WebSocketUpgrade(
     public val call: ApplicationCall,
@@ -49,6 +51,8 @@ public class WebSocketUpgrade(
      * @param call that is starting web socket session
      * @param protocol web socket negotiated protocol name (optional)
      * @param handle function that is started once HTTP upgrade complete and the session will end once this function exit
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.websocket.WebSocketUpgrade.WebSocketUpgrade)
      */
     @Suppress("unused")
     public constructor(

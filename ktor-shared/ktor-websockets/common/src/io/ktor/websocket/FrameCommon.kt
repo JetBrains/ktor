@@ -15,6 +15,8 @@ import kotlinx.io.*
  * @property frameType enum value
  * @property data - a frame content or fragment content
  * @property disposableHandle could be invoked when the frame is processed
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.Frame)
  */
 
 public expect sealed class Frame private constructor(
@@ -138,6 +140,8 @@ public expect sealed class Frame private constructor(
 /**
  * Reads text content from the text frame.
  * Shouldn't be used for fragmented frames: such frames need to be reassembled first.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.readText)
  */
 public fun Frame.Text.readText(): String {
     require(fin) { "Text could be only extracted from non-fragmented frame" }

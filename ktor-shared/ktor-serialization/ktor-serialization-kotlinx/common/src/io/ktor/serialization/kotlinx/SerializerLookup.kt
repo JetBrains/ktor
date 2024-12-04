@@ -14,6 +14,8 @@ import kotlinx.serialization.modules.*
 @ExperimentalSerializationApi
 /**
  * Attempts to create a serializer for the given [typeInfo]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.kotlinx.serializerForTypeInfo)
  */
 public fun SerializersModule.serializerForTypeInfo(typeInfo: TypeInfo): KSerializer<*> {
     val module = this

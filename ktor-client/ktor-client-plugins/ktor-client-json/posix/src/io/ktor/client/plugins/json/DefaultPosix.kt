@@ -9,6 +9,8 @@ import io.ktor.utils.io.*
 
 /**
  * Platform default serializer.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.json.defaultSerializer)
  */
 
 @OptIn(InternalAPI::class)

@@ -8,6 +8,8 @@ import io.ktor.utils.io.*
 
 /**
  * A configuration for the [Sessions] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionsConfig)
  */
 @KtorDsl
 public class SessionsConfig {
@@ -15,6 +17,8 @@ public class SessionsConfig {
 
     /**
      * Gets a list of session providers to be registered.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionsConfig.providers)
      */
     public val providers: List<SessionProvider<*>> get() = registered.toList()
 

@@ -10,6 +10,8 @@ import kotlinx.io.*
 
 /**
  * For streaming input it should be [Input.endOfInput] instead.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.core.isEmpty)
  */
 @Deprecated("Use exhausted() instead", ReplaceWith("exhausted()"))
 public val Source.isEmpty: Boolean

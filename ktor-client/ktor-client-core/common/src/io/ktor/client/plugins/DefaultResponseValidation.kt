@@ -19,6 +19,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.DefaultResponseVal
 /**
  * Default response validation.
  * Check the response status code in range (0..299).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.addDefaultResponseValidation)
  */
 public fun HttpClientConfig<*>.addDefaultResponseValidation() {
     HttpResponseValidator {

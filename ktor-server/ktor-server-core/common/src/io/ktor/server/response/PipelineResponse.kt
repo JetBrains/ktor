@@ -12,10 +12,14 @@ import io.ktor.server.application.*
  * To learn how to send responses inside route handlers, see [Sending responses](https://ktor.io/docs/responses.html).
  * @see [ApplicationCall]
  * @see [io.ktor.server.request.ApplicationRequest]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.ApplicationResponse)
  */
 public interface ApplicationResponse {
     /**
      * Provides access to headers for the current response.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.ApplicationResponse.headers)
      */
     public val headers: ResponseHeaders
 
@@ -62,10 +66,14 @@ public interface ApplicationResponse {
  * To learn how to send responses inside route handlers, see [Sending responses](https://ktor.io/docs/responses.html).
  * @see [PipelineCall]
  * @see [io.ktor.server.request.PipelineRequest]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.PipelineResponse)
  */
 public interface PipelineResponse : ApplicationResponse {
     /**
      * An [PipelineCall] instance this [PipelineResponse] is attached to.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.PipelineResponse.call)
      */
     public override val call: PipelineCall
 

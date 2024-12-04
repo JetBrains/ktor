@@ -8,6 +8,8 @@ import io.ktor.client.engine.*
 
 /**
  * A configuration for the [Curl] client engine.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.curl.CurlClientEngineConfig)
  */
 public class CurlClientEngineConfig : HttpClientEngineConfig() {
     /**
@@ -17,6 +19,8 @@ public class CurlClientEngineConfig : HttpClientEngineConfig() {
 
     /**
      * Sets path to Certificate Authority (CA) bundle using `CURLOPT_CAINFO`.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.curl.CurlClientEngineConfig.caInfo)
      */
     public var caInfo: String? = null
 

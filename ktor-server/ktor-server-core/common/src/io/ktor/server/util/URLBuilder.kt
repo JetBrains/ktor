@@ -11,6 +11,8 @@ import io.ktor.server.request.*
 
 /**
  * Creates an url using current call's schema, path and parameters as initial
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.util.createFromCall)
  */
 public fun URLBuilder.Companion.createFromCall(call: ApplicationCall): URLBuilder {
     val origin = call.request.origin

@@ -29,6 +29,8 @@ internal const val CONFIG_KEY_THROW_ON_EXCEPTION = "ktor.test.throwOnException"
 /**
  * A test engine that provides a way to simulate application calls to the existing application module(s)
  * without actual HTTP connection.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.testing.TestApplicationEngine)
  */
 public class TestApplicationEngine(
     environment: ApplicationEnvironment = createTestEnvironment(),

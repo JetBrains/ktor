@@ -16,6 +16,8 @@ import io.ktor.utils.io.jvm.javaio.toByteReadChannel as toByteReadChannelImpl
  * Open a channel and launch a coroutine to copy bytes from the input stream to the channel.
  * Please note that it may block your async code when started on [Dispatchers.Unconfined]
  * since [InputStream] is blocking on it's nature
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.cio.toByteReadChannel)
  */
 @Deprecated(
     "Use variant from 'ktor-io' module instead",

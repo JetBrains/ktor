@@ -10,12 +10,16 @@ internal expect val CONFIG_PATH: List<String>
  * Loads an application configuration.
  * An implementation of this interface should return [ApplicationConfig] if applicable configuration is found
  * or `null` otherwise.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.config.ConfigLoader)
  */
 public interface ConfigLoader {
     /**
      * Tries loading an application configuration from the specified [path].
      *
      * @return configuration or null if the path is not found or configuration format is not supported.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.config.ConfigLoader.load)
      */
     public fun load(path: String?): ApplicationConfig?
 
@@ -52,5 +56,7 @@ public interface ConfigLoader {
 
 /**
  * List of all registered [ConfigLoader] implementations.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.config.configLoaders)
  */
 public expect val configLoaders: List<ConfigLoader>

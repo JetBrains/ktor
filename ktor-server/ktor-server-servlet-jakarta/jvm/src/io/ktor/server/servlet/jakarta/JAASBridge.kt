@@ -10,6 +10,8 @@ import java.security.*
 
 /**
  * Returns Java's JAAS Principal
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.servlet.jakarta.javaSecurityPrincipal)
  */
 public val ApplicationRequest.javaSecurityPrincipal: Principal?
     get() = when (this) {

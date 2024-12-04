@@ -9,6 +9,8 @@ import io.ktor.server.engine.*
 
 /**
  * Jetty engine
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.jetty.EngineMain)
  */
 @Deprecated(
     "The ktor-server-jetty module is deprecated and will be removed in the next major release as it " +
@@ -18,6 +20,8 @@ public object EngineMain {
     /**
      * Main function for starting EngineMain with Jetty
      * Creates an embedded Jetty application with an environment built from command line arguments.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.jetty.EngineMain.main)
      */
     @JvmStatic
     public fun main(args: Array<String>) {

@@ -13,6 +13,8 @@ import io.ktor.http.*
  * an optional [block] receiving an [HttpRequestBuilder] for configuring the request.
  *
  * Learn more from [Making requests](https://ktor.io/docs/request.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.get)
  */
 public suspend inline fun HttpClient.get(
     url: Url,

@@ -8,6 +8,8 @@ import io.ktor.util.*
 
 /**
  * Construct [Url] from [urlString].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.Url)
  */
 @Suppress("FunctionName")
 public fun Url(urlString: String): Url = URLBuilder(urlString).build()

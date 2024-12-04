@@ -10,10 +10,14 @@ private const val SameSiteKey: String = "SameSite"
 
 /**
  * String constant options for SameSite cookie attribute.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SameSite)
  */
 public object SameSite {
     /**
      * Only sends cookies from the origin's site.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SameSite.Strict)
      */
     public const val Strict: String = "Strict"
 
@@ -32,6 +36,8 @@ public object SameSite {
 /**
  * Cookie configuration extension to supply the "SameSite" attribute for
  * preventing cross-site request forgery (CSRF) attacks.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.sameSite)
  */
 public var CookieConfiguration.sameSite: String?
     get() = extensions[SameSiteKey]

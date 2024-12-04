@@ -9,6 +9,8 @@ package io.ktor.server.auth
  *
  * @see [Authentication]
  * @property name of user
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.UserIdPrincipal)
  */
 public data class UserIdPrincipal(val name: String)
 
@@ -18,6 +20,8 @@ public data class UserIdPrincipal(val name: String)
  * @see [Authentication]
  * @property name
  * @property password
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.UserPasswordCredential)
  */
 public data class UserPasswordCredential(val name: String, val password: String)
 
@@ -31,6 +35,8 @@ public data class BearerTokenCredential(val token: String)
  * @see [form]
  * @property digester a hash function to compute password digest
  * @property table of usernames and hashed passwords
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.UserHashedTableAuth)
  */
 public class UserHashedTableAuth(public val digester: (String) -> ByteArray, public val table: Map<String, ByteArray>) {
     init {

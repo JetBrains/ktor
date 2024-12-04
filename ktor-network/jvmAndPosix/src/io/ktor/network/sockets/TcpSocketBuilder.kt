@@ -8,6 +8,8 @@ import io.ktor.network.selector.*
 
 /**
  * TCP socket builder
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.TcpSocketBuilder)
  */
 public class TcpSocketBuilder internal constructor(
     private val selector: SelectorManager,
@@ -15,6 +17,8 @@ public class TcpSocketBuilder internal constructor(
 ) : Configurable<TcpSocketBuilder, SocketOptions.PeerSocketOptions> {
     /**
      * Connect to [hostname] and [port].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.TcpSocketBuilder.connect)
      */
     public suspend fun connect(
         hostname: String,

@@ -21,6 +21,8 @@ internal suspend fun HttpCacheEntry(isShared: Boolean, response: HttpResponse): 
 
 /**
  * Client single response cache with [expires] and [varyKeys].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cache.HttpCacheEntry)
  */
 public class HttpCacheEntry internal constructor(
     public val expires: GMTDate,

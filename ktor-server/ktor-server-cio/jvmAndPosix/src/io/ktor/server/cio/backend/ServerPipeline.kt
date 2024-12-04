@@ -28,6 +28,8 @@ import kotlin.time.*
  * @param handler to be invoked for every incoming request
  *
  * @return pipeline job
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.backend.startServerConnectionPipeline)
  */
 @Suppress("DEPRECATION_ERROR", "DEPRECATION")
 @InternalAPI

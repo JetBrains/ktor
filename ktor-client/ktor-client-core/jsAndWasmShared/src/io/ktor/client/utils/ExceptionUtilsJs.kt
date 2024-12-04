@@ -8,6 +8,8 @@ import io.ktor.utils.io.*
 
 /**
  * If the exception contains cause that differs from [CancellationException] returns it otherwise returns itself.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.utils.unwrapCancellationException)
  */
 public actual fun Throwable.unwrapCancellationException(): Throwable {
     var exception: Throwable? = this

@@ -6,5 +6,7 @@ package io.ktor.server.application
 
 /**
  * An instance of the plugin installed to your application.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.PluginInstance)
  * */
 public class PluginInstance internal constructor(internal val builder: PluginBuilder<*>)

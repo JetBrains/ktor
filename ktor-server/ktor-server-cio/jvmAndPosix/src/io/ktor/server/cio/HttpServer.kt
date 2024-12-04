@@ -12,6 +12,8 @@ import kotlinx.coroutines.*
  * @property rootServerJob server job - root for all jobs
  * @property acceptJob client connections accepting job
  * @property serverSocket a deferred server socket instance, could be completed with error if it failed to bind
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.HttpServer)
  */
 public class HttpServer(
     public val rootServerJob: Job,
@@ -25,6 +27,8 @@ public class HttpServer(
  * @property port to listen to
  * @property connectionIdleTimeoutSeconds time to live for IDLE connections
  * @property reuseAddress allow the server to bind to an address that is already in use
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.HttpServerSettings)
  */
 public data class HttpServerSettings(
     val host: String = "0.0.0.0",

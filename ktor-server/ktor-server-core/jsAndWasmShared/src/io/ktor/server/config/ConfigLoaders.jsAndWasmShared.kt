@@ -14,6 +14,8 @@ internal actual val CONFIG_PATH: List<String>
 
 /**
  * List of all registered [ConfigLoader] implementations.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.config.configLoaders)
  */
 public actual val configLoaders: List<ConfigLoader>
     get() = _configLoaders

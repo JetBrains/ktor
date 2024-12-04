@@ -11,6 +11,8 @@ import io.ktor.util.converters.DataConversion
 
 /**
  * Object for installing [io.ktor.util.converters.DataConversion] plugin
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.dataconversion.DataConversion)
  */
 public object DataConversion :
     BaseApplicationPlugin<ApplicationCallPipeline, DataConversion.Configuration, DataConversion> {
@@ -28,6 +30,8 @@ public object DataConversion :
 
 /**
  * Lookup for a conversion service. Returns the default one if the plugin wasn't installed
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.dataconversion.conversionService)
  */
 @Suppress("DEPRECATION_ERROR")
 public val ApplicationCallPipeline.conversionService: ConversionService

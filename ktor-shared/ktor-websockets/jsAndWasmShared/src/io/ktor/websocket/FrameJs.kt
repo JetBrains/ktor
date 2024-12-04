@@ -15,6 +15,8 @@ import kotlinx.io.*
  * @property frameType enum value
  * @property data - a frame content or fragment content
  * @property disposableHandle could be invoked when the frame is processed
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.Frame)
  */
 
 public actual sealed class Frame actual constructor(
@@ -31,6 +33,8 @@ public actual sealed class Frame actual constructor(
      * In a RAW web socket session a big text frame could be fragmented
      * (separated into several text frames so they have [fin] = false except the last one).
      * Note that usually there is no need to handle fragments unless you have a RAW web socket session.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.Frame.Binary)
      */
     public actual class Binary actual constructor(
         fin: Boolean,
@@ -50,6 +54,8 @@ public actual sealed class Frame actual constructor(
      * Please note that a boundary between fragments could be in the middle of multi-byte (unicode) character
      * so don't apply String constructor to every fragment but use decoder loop instead of concatenate fragments first.
      * Note that usually there is no need to handle fragments unless you have a RAW web socket session.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.Frame.Text)
      */
     public actual class Text actual constructor(
         fin: Boolean,
@@ -66,6 +72,8 @@ public actual sealed class Frame actual constructor(
     /**
      * Represents a low-level level close frame. It could be sent to indicate web socket session end.
      * Usually there is no need to send/handle it unless you have a RAW web socket session.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.Frame.Close)
      */
     public actual class Close actual constructor(
         data: ByteArray
@@ -84,6 +92,8 @@ public actual sealed class Frame actual constructor(
     /**
      * Represents a low-level ping frame. Could be sent to test connection (peer should reply with [Pong]).
      * Usually there is no need to send/handle it unless you have a RAW web socket session.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.Frame.Ping)
      */
     public actual class Ping actual constructor(
         data: ByteArray
@@ -94,6 +104,8 @@ public actual sealed class Frame actual constructor(
     /**
      * Represents a low-level pong frame. Should be sent in reply to a [Ping] frame.
      * Usually there is no need to send/handle it unless you have a RAW web socket session.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.Frame.Pong)
      */
     public actual class Pong actual constructor(
         data: ByteArray,

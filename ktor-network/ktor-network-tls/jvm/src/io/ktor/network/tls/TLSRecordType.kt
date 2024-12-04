@@ -7,6 +7,8 @@ package io.ktor.network.tls
 /**
  * TLS record type with it's numeric [code]
  * @property code numeric record type code
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.TLSRecordType)
  */
 
 public enum class TLSRecordType(public val code: Int) {
@@ -20,6 +22,8 @@ public enum class TLSRecordType(public val code: Int) {
 
         /**
          * Find an instance of [TLSRecordType] by its numeric code or fail
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.TLSRecordType.Companion.byCode)
          */
         public fun byCode(code: Int): TLSRecordType = when (code) {
             in 0..255 -> byCode[code]

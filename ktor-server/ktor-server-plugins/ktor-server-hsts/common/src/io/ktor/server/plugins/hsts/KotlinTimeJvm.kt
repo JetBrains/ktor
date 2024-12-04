@@ -10,6 +10,8 @@ import kotlin.time.Duration.Companion.seconds
 
 /**
  * Duration to tell the client to keep the host in a list of known HSTS hosts.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.hsts.maxAgeDuration)
  */
 public var HSTSConfig.maxAgeDuration: Duration
     get() = maxAgeInSeconds.seconds

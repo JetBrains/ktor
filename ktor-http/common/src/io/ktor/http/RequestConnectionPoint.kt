@@ -8,10 +8,14 @@ package io.ktor.http
  * Represents request address information is used to make a call.
  * There are at least two possible instances: "local" is how we see request at the server application and
  * "actual" is what we can recover from proxy provided headers.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.RequestConnectionPoint)
  */
 public interface RequestConnectionPoint {
     /**
      * Scheme, for example "http" or "https"
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.RequestConnectionPoint.scheme)
      */
     public val scheme: String
 

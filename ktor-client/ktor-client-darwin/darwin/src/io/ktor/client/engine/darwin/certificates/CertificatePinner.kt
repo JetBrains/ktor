@@ -105,6 +105,8 @@ import platform.Security.*
  * This class was heavily inspired by OkHttp, which is a great Http library for Android
  * https://square.github.io/okhttp/4.x/okhttp/okhttp3/-certificate-pinner/
  * https://github.com/square/okhttp/blob/master/okhttp/src/main/java/okhttp3/CertificatePinner.kt
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.darwin.certificates.CertificatePinner)
  */
 @OptIn(UnsafeNumber::class)
 public data class CertificatePinner(

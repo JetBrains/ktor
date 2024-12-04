@@ -14,6 +14,8 @@ internal expect val SHUTDOWN_HOOK_ENABLED: Boolean
  * Please note that a shutdown hook only registered when the application is running. If the application
  * is already stopped then there will be no hook and no [stop] function invocation possible.
  * So [stop] block will be called once or never.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.addShutdownHook)
  */
 public fun EmbeddedServer<*, *>.addShutdownHook(stop: () -> Unit) {
     if (SHUTDOWN_HOOK_ENABLED) {

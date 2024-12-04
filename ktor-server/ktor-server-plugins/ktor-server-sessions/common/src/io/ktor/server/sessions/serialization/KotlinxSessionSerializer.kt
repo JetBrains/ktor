@@ -10,6 +10,8 @@ import kotlinx.serialization.modules.*
 
 /**
  * Returns a [SessionSerializer] based on `kotlinx.serialization` library.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.serialization.KotlinxSessionSerializer)
  */
 @Suppress("FunctionName")
 public inline fun <reified T : Any> KotlinxSessionSerializer(

@@ -16,6 +16,8 @@ import java.nio.file.*
  *
  * The [writer] parameter will be called later when engine is ready to produce content.
  * Provided [Writer] will be closed automatically.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.respondTextWriter)
  */
 public suspend fun ApplicationCall.respondTextWriter(
     contentType: ContentType? = null,

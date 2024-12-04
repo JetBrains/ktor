@@ -8,6 +8,8 @@ package io.ktor.http
  * Range specifier for partial content requests (RFC 2616 sec 14.35.1)
  * @property unit range units, usually bytes
  * @property ranges a list of requested ranges (could be open or closed ranges)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.RangesSpecifier)
  */
 public data class RangesSpecifier(val unit: String = RangeUnits.Bytes.unitToken, val ranges: List<ContentRange>) {
 

@@ -13,6 +13,8 @@ private val ResponseTypeAttributeKey: AttributeKey<TypeInfo> = AttributeKey("Res
 /**
  * A type of response object that is passed in the [respond] function.
  * Can be useful for custom serializations.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.responseType)
  */
 public var ApplicationResponse.responseType: TypeInfo?
     get() = call.attributes.getOrNull(ResponseTypeAttributeKey)

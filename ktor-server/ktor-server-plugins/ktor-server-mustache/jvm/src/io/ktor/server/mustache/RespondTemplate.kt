@@ -12,6 +12,8 @@ import io.ktor.server.response.*
  * Responds with the specified [template] passing a data [model].
  *
  * @see MustacheContent
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.mustache.respondTemplate)
  */
 public suspend fun ApplicationCall.respondTemplate(
     template: String,

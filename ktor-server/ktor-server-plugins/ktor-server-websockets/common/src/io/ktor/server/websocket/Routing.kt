@@ -26,6 +26,8 @@ import kotlinx.coroutines.CancellationException
  * When a WebSocket session is created, a [handler] lambda will be called with WebSocket session instance on receiver.
  * Once [handler] function returns, the WebSocket connection will be terminated immediately. For RAW WebSockets
  * it is important to perform close sequence properly.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.websocket.webSocketRaw)
  */
 public fun Route.webSocketRaw(
     path: String,

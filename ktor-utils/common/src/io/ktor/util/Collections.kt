@@ -6,6 +6,8 @@ package io.ktor.util
 
 /**
  * Create an instance of case-insensitive mutable map. For internal use only.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.caseInsensitiveMap)
  */
 public fun <Value : Any> caseInsensitiveMap(): MutableMap<String, Value> = CaseInsensitiveMap()
 

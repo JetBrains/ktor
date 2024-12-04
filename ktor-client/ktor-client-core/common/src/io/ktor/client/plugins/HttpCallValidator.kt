@@ -21,6 +21,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.HttpCallValidator"
 
 /**
  * [HttpCallValidator] configuration.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpCallValidatorConfig)
  */
 @KtorDsl
 public class HttpCallValidatorConfig {
@@ -35,6 +37,8 @@ public class HttpCallValidatorConfig {
     /**
      * Add [CallRequestExceptionHandler].
      * Last added handler executes first.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpCallValidatorConfig.handleResponseException)
      */
     public fun handleResponseException(block: CallRequestExceptionHandler) {
         responseExceptionHandlers += RequestExceptionHandlerWrapper(block)
@@ -61,6 +65,8 @@ public class HttpCallValidatorConfig {
  * Response validator method.
  *
  * You could throw an exception to fail the response.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.ResponseValidator)
  */
 public typealias ResponseValidator = suspend (response: HttpResponse) -> Unit
 

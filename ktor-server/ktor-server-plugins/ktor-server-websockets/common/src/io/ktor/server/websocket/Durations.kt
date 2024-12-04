@@ -27,6 +27,8 @@ import kotlin.time.Duration.Companion.milliseconds
  * @param timeout write/ping timeout after that a connection will be closed.
  * @param maxFrameSize maximum frame that could be received or sent.
  * @param masking whether masking need to be enabled (useful for security).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.websocket.WebSockets)
  */
 public fun WebSockets(
     pingInterval: Duration?,

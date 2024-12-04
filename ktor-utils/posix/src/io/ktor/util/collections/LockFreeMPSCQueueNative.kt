@@ -18,6 +18,8 @@ private typealias Core<E> = LockFreeMPSCQueueCore<E>
  * Thread 1: addLast(1) = true, removeFirstOrNull() = null
  * Thread 2: addLast(2) = 2 // this operation is concurrent with both operations in the first thread
  * ```
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.collections.LockFreeMPSCQueue)
  */
 @InternalAPI
 public class LockFreeMPSCQueue<E : Any> {

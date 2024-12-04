@@ -9,6 +9,8 @@ import kotlin.coroutines.*
 
 /**
  * Empty [Encoder] that doesn't do any changes.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.Identity)
  */
 public object Identity : Encoder {
     override fun encode(
@@ -29,10 +31,14 @@ public object Identity : Encoder {
 
 /**
  * Content encoder.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.Encoder)
  */
 public interface Encoder {
     /**
      * Launch coroutine to encode [source] bytes.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.Encoder.encode)
      */
     public fun encode(
         source: ByteReadChannel,

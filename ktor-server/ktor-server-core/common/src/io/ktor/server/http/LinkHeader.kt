@@ -9,6 +9,8 @@ import io.ktor.server.response.*
 
 /**
  * Append `Link` header to HTTP response
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.link)
  */
 public fun ApplicationResponse.link(header: LinkHeader): Unit = headers.append(HttpHeaders.Link, header.toString())
 

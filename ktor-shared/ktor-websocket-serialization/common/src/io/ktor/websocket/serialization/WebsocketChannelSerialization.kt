@@ -21,6 +21,8 @@ import io.ktor.websocket.*
  * @param data The data to serialize
  * @param converter The WebSocket converter
  * @param charset Response charset
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.serialization.sendSerializedBase)
  */
 @InternalAPI
 public suspend inline fun <reified T> WebSocketSession.sendSerializedBase(

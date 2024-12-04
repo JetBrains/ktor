@@ -22,6 +22,8 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.server.engine.DefaultTransform")
 
 /**
  * Default send transformation
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.installDefaultTransformations)
  */
 public fun ApplicationSendPipeline.installDefaultTransformations() {
     intercept(ApplicationSendPipeline.Render) { value ->

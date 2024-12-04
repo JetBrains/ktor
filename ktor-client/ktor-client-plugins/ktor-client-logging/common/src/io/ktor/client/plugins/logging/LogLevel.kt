@@ -6,6 +6,8 @@ package io.ktor.client.plugins.logging
 
 /**
  * [Logging]  log level.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.logging.LogLevel)
  */
 public enum class LogLevel(
     public val info: Boolean,

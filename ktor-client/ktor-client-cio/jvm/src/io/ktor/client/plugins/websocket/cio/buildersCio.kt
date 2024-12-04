@@ -13,6 +13,8 @@ import kotlinx.coroutines.*
 
 /**
  * Creates a raw [ClientWebSocketSession]: no ping-pong and other service messages are used.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.websocket.cio.webSocketRawSession)
  */
 public suspend fun HttpClient.webSocketRawSession(
     method: HttpMethod = HttpMethod.Get,

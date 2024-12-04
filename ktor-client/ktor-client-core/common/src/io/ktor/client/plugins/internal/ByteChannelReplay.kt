@@ -91,5 +91,7 @@ internal class ByteChannelReplay(private val origin: ByteReadChannel) {
 
 /**
  * Thrown when a second attempt to read the body is made while the first call is blocked.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.internal.SaveBodyAbandonedReadException)
  */
 public class SaveBodyAbandonedReadException : RuntimeException("Save body abandoned")

@@ -20,6 +20,8 @@ internal val showRetryEventsAttr = AttributeKey<Boolean>("SSEShowRetryEvents")
 
 /**
  * Installs the [SSE] plugin using the [config] as configuration.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.sse.SSE)
  */
 public fun HttpClientConfig<*>.SSE(config: SSEConfig.() -> Unit) {
     install(SSE) {

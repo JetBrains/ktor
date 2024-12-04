@@ -11,6 +11,8 @@ import io.ktor.utils.io.core.*
 /**
  * Represents a base HTTP message type for request and response
  * @property headers request/response headers
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.HttpMessage)
  */
 public abstract class HttpMessage internal constructor(
     public val headers: HttpHeadersMap,
@@ -19,6 +21,8 @@ public abstract class HttpMessage internal constructor(
 
     /**
      * Release all memory resources hold by this message
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.HttpMessage.release)
      */
     public fun release() {
         builder.release()
@@ -38,6 +42,8 @@ public abstract class HttpMessage internal constructor(
  * @property method
  * @property uri
  * @property version
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.Request)
  */
 public class Request internal constructor(
     public val method: HttpMethod,
@@ -52,6 +58,8 @@ public class Request internal constructor(
  * @property version
  * @property status
  * @property statusText
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.Response)
  */
 public class Response internal constructor(
     public val version: CharSequence,

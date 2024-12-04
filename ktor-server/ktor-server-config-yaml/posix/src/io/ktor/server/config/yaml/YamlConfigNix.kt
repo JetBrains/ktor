@@ -25,6 +25,8 @@ private val initHook = init()
  * Loads a configuration from the YAML file, if found.
  * On JVM, loads a configuration from application resources, if exist; otherwise, reads a configuration from a file.
  * On Native, always reads a configuration from a file.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.config.yaml.YamlConfig)
  */
 public actual fun YamlConfig(path: String?): YamlConfig? {
     val resolvedPath = when {

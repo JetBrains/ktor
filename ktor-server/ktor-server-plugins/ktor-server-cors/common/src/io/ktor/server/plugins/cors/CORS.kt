@@ -27,6 +27,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.server.plugins.cors.CORS")
  * ```
  *
  * You can learn more from [CORS](https://ktor.io/docs/cors.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.cors.CORS)
  */
 @Deprecated(
     message = "This plugin was moved to io.ktor.server.plugins.cors.routing",

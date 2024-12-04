@@ -13,6 +13,8 @@ import java.io.*
  * and blocking on output
  *
  * @return number of bytes copied
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.jvm.javaio.copyTo)
  */
 @OptIn(InternalAPI::class, InternalIoApi::class)
 public suspend fun ByteReadChannel.copyTo(out: OutputStream, limit: Long = Long.MAX_VALUE): Long {

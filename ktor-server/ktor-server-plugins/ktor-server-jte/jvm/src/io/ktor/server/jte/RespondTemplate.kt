@@ -12,6 +12,8 @@ import io.ktor.server.response.*
  * Responds with the specified [template] passing [params].
  *
  * @see JteContent
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.jte.respondTemplate)
  */
 public suspend fun ApplicationCall.respondTemplate(
     template: String,

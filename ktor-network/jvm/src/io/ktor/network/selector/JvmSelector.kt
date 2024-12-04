@@ -8,6 +8,8 @@ import java.nio.channels.*
 public actual interface Selectable : Closeable, DisposableHandle {
     /**
      * Current selectable suspensions map
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.selector.Selectable.suspensions)
      */
     public val suspensions: InterestSuspensionsMap
 

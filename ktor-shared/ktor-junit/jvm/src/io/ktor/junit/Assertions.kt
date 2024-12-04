@@ -6,6 +6,8 @@ package io.ktor.junit
 
 /**
  * Convenience function for asserting on all elements of a collection.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.junit.assertAll)
  */
 fun <T> assertAll(collection: Iterable<T>, message: String? = null, predicate: (T) -> Boolean) {
     org.junit.jupiter.api.assertAll(

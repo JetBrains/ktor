@@ -22,6 +22,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.HttpCookies")
  * By default, it uses an in-memory storage, but you can also implement a persistent storage using [CookiesStorage].
  *
  * You can learn more from [Cookies](https://ktor.io/docs/http-cookies.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cookies.HttpCookies)
  */
 public class HttpCookies internal constructor(
     private val storage: CookiesStorage,
@@ -34,6 +36,8 @@ public class HttpCookies internal constructor(
 
     /**
      * Gets all the cookies associated with a specific [requestUrl].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cookies.HttpCookies.get)
      */
     public suspend fun get(requestUrl: Url): List<Cookie> {
         initializer.join()
@@ -132,6 +136,8 @@ private fun renderClientCookies(cookies: List<Cookie>): String =
 
 /**
  * Gets all the cookies for the specified [url] for this [HttpClient].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cookies.cookies)
  */
 public suspend fun HttpClient.cookies(url: Url): List<Cookie> = pluginOrNull(HttpCookies)?.get(url) ?: emptyList()
 

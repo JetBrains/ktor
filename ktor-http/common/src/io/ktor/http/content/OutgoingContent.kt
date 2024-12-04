@@ -12,15 +12,21 @@ import kotlin.coroutines.*
 
 /**
  * A subject of pipeline when body of HTTP message is `null`
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.NullBody)
  */
 public object NullBody
 
 /**
  * Information about the content to be sent to the peer, recognized by a client or server engine
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.OutgoingContent)
  */
 public sealed class OutgoingContent {
     /**
      * Specifies [ContentType] for this resource.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.OutgoingContent.contentType)
      */
     public open val contentType: ContentType? get() = null
 
@@ -166,6 +172,8 @@ public sealed class OutgoingContent {
 
 /**
  * Check if current [OutgoingContent] doesn't contain content
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.isEmpty)
  */
 @InternalAPI
 public fun OutgoingContent.isEmpty(): Boolean = when (this) {

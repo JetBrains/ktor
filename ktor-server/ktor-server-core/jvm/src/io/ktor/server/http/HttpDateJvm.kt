@@ -11,6 +11,8 @@ import java.util.*
 
 /**
  * Format as HTTP date (GMT)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.toHttpDateString)
  */
 public fun Temporal.toHttpDateString(): String = httpDateFormat.format(this)
 

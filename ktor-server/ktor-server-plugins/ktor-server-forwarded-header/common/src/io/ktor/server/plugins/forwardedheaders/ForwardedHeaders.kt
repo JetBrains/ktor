@@ -16,6 +16,8 @@ import io.ktor.utils.io.*
 
 /**
  * A key for the application call attribute that is used to cache parsed header values.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.forwardedheaders.FORWARDED_PARSED_KEY)
  */
 public val FORWARDED_PARSED_KEY: AttributeKey<List<ForwardedHeaderValue>> =
     AttributeKey("ForwardedParsedKey")

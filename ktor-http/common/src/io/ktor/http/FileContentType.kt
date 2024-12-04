@@ -9,6 +9,8 @@ import io.ktor.utils.io.charsets.*
 
 /**
  * Default [ContentType] for [extension]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.defaultForFileExtension)
  */
 public fun ContentType.Companion.defaultForFileExtension(extension: String): ContentType =
     ContentType.fromFileExtension(extension).selectDefault()

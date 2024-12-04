@@ -14,6 +14,8 @@ import io.ktor.util.*
  *
  * @param configuration names of RateLimit providers defined in the [RateLimit] plugin configuration.
  * @throws IllegalArgumentException if there are no registered providers referred by [configuration] names.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.ratelimit.rateLimit)
  */
 public fun Route.rateLimit(
     configuration: RateLimitName = LIMITER_NAME_EMPTY,

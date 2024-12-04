@@ -12,6 +12,8 @@ import io.ktor.utils.io.*
 
 /**
  * A configuration for the [Compression] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.compression.CompressionOptions)
  */
 public data class CompressionOptions(
     /**
@@ -26,6 +28,8 @@ public data class CompressionOptions(
 
 /**
  * An encoder configuration for the [Compression] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.compression.CompressionEncoderConfig)
  */
 public data class CompressionEncoderConfig(
     /**
@@ -44,6 +48,8 @@ public data class CompressionEncoderConfig(
 
 /**
  * A configuration for the [Compression] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.compression.CompressionConfig)
  */
 @KtorDsl
 public class CompressionConfig : ConditionsHolderBuilder {
@@ -54,6 +60,8 @@ public class CompressionConfig : ConditionsHolderBuilder {
 
     /**
      * Specifies if the plugin should compress response, decompress request, or both.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.compression.CompressionConfig.mode)
      */
     public var mode: Mode = Mode.All
 
@@ -104,10 +112,14 @@ public class CompressionConfig : ConditionsHolderBuilder {
 
 /**
  * A builder for conditions.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.compression.ConditionsHolderBuilder)
  */
 public interface ConditionsHolderBuilder {
     /**
      * Preconditions applied to every response object to check if it should be compressed.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.compression.ConditionsHolderBuilder.conditions)
      */
     public val conditions: MutableList<ApplicationCall.(OutgoingContent) -> Boolean>
 }
@@ -116,6 +128,8 @@ public interface ConditionsHolderBuilder {
  * A builder for compression encoder configuration.
  * @property name of encoder
  * @property encoder instance
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.compression.CompressionEncoderBuilder)
  */
 @Suppress("MemberVisibilityCanBePrivate")
 public class CompressionEncoderBuilder internal constructor(
@@ -123,6 +137,8 @@ public class CompressionEncoderBuilder internal constructor(
 ) : ConditionsHolderBuilder {
     /**
      * A list of conditions for this encoder
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.compression.CompressionEncoderBuilder.conditions)
      */
     override val conditions: ArrayList<ApplicationCall.(OutgoingContent) -> Boolean> = arrayListOf()
 
@@ -138,6 +154,8 @@ public class CompressionEncoderBuilder internal constructor(
 
 /**
  * Appends the `gzip` encoder with the [block] configuration.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.compression.gzip)
  */
 public fun CompressionConfig.gzip(block: CompressionEncoderBuilder.() -> Unit = {}) {
     encoder(GZipEncoder, block)

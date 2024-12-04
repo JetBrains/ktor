@@ -14,6 +14,8 @@ import javax.naming.directory.*
  * This function accepts a credential and validates it against a specified LDAP server.
  *
  * To learn more about LDAP authentication in Ktor, see [LDAP](https://ktor.io/docs/ldap.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.ldap.ldapAuthenticate)
  */
 public fun <K : Any, P : Any> ldapAuthenticate(
     credential: K,

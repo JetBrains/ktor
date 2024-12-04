@@ -8,11 +8,15 @@ import io.ktor.utils.io.*
 
 /**
  * A hook that can be registered in [PluginBuilder].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.Hook)
  */
 @KtorDsl
 public interface Hook<HookHandler> {
     /**
      * Specifies how to install a hook in the [pipeline].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.Hook.install)
      */
     public fun install(pipeline: ApplicationCallPipeline, handler: HookHandler)
 }

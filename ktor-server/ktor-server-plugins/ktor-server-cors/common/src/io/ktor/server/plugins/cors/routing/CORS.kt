@@ -20,6 +20,8 @@ import io.ktor.server.plugins.cors.*
  * ```
  *
  * You can learn more from [CORS](https://ktor.io/docs/cors.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.cors.routing.CORS)
  */
 public val CORS: RouteScopedPlugin<CORSConfig> = createRouteScopedPlugin("CORS", ::CORSConfig) {
     buildPlugin()

@@ -8,6 +8,8 @@ import kotlinx.io.IOException
 
 /**
  * This exception is thrown in case connect timeout exceeded.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.network.sockets.ConnectTimeoutException)
  */
 public actual class ConnectTimeoutException actual constructor(
     message: String,
@@ -18,6 +20,8 @@ public actual open class InterruptedIOException : IOException()
 
 /**
  * This exception is thrown in case socket timeout (read or write) exceeded.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.network.sockets.SocketTimeoutException)
  */
 public actual class SocketTimeoutException internal constructor(
     override val message: String?,

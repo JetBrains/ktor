@@ -10,10 +10,14 @@ import io.ktor.network.tls.*
 
 /**
  * A configuration for the [CIO] client engine.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.cio.CIOEngineConfig)
  */
 public class CIOEngineConfig : HttpClientEngineConfig() {
     /**
      * Provides access to [Endpoint] settings.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.cio.CIOEngineConfig.endpoint)
      */
     public val endpoint: EndpointConfig = EndpointConfig()
 
@@ -44,6 +48,8 @@ public class CIOEngineConfig : HttpClientEngineConfig() {
 
 /**
  * Provides access to [Endpoint] settings.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.cio.endpoint)
  */
 public fun CIOEngineConfig.endpoint(block: EndpointConfig.() -> Unit): EndpointConfig = endpoint.apply(block)
 

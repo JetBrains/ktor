@@ -13,10 +13,14 @@ private typealias ExtensionInstaller = () -> WebSocketExtension<*>
  * [WebSocketExtensionsConfig.install] method to install the WebSocket extension in client or server.
  *
  * Usually this interface is implemented in `companion object` of the origin [WebSocketExtension].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.WebSocketExtensionFactory)
  */
 public interface WebSocketExtensionFactory<ConfigType : Any, ExtensionType : WebSocketExtension<ConfigType>> {
     /**
      * A key used to locate an extension.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.WebSocketExtensionFactory.key)
      */
     public val key: AttributeKey<ExtensionType>
 
@@ -53,11 +57,15 @@ public interface WebSocketExtensionFactory<ConfigType : Any, ExtensionType : Web
 /**
  * A WebSocket extension instance.
  * This instance is created for each WebSocket request, for every installed extension by [WebSocketExtensionFactory].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.WebSocketExtension)
  */
 public interface WebSocketExtension<ConfigType : Any> {
 
     /**
      * Reference to the [WebSocketExtensionFactory], which produced this extension.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.WebSocketExtension.factory)
      */
     public val factory: WebSocketExtensionFactory<ConfigType, out WebSocketExtension<ConfigType>>
 
@@ -101,6 +109,8 @@ public interface WebSocketExtension<ConfigType : Any> {
 
 /**
  * Extensions configuration for the WebSocket client and server plugins.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.WebSocketExtensionsConfig)
  */
 public class WebSocketExtensionsConfig {
     private val installers: MutableList<ExtensionInstaller> = mutableListOf()
@@ -108,6 +118,8 @@ public class WebSocketExtensionsConfig {
 
     /**
      * Installs the provided [extension] using [config]. Every extension is processed in order of installation.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.WebSocketExtensionsConfig.install)
      */
     public fun <ConfigType : Any> install(
         extension: WebSocketExtensionFactory<ConfigType, *>,

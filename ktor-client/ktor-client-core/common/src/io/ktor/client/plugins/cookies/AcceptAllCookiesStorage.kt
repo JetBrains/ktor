@@ -12,6 +12,8 @@ import kotlin.math.*
 
 /**
  * [CookiesStorage] that stores all the cookies in an in-memory map.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.cookies.AcceptAllCookiesStorage)
  */
 public class AcceptAllCookiesStorage(private val clock: () -> Long = { getTimeMillis() }) : CookiesStorage {
 

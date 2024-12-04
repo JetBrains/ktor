@@ -11,6 +11,8 @@ import kotlinx.html.*
 /**
  * Responds to a client with an HTML response built based on a specified template.
  * You can learn more from [HTML DSL](https://ktor.io/docs/html-dsl.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.html.respondHtmlTemplate)
  */
 public suspend fun <TTemplate : Template<HTML>> ApplicationCall.respondHtmlTemplate(
     template: TTemplate,

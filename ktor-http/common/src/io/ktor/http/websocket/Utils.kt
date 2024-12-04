@@ -12,6 +12,8 @@ private const val WEBSOCKET_SERVER_ACCEPT_TAIL = "258EAFA5-E914-47DA-95CA-C5AB0D
 
 /**
  * Calculates `Sec-WebSocket-Accept` header value
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.websocket.websocketServerAccept)
  */
 public fun websocketServerAccept(nonce: String): String =
     sha1("${nonce.trim()}$WEBSOCKET_SERVER_ACCEPT_TAIL".toByteArray(Charsets.ISO_8859_1)).encodeBase64()
