@@ -6,6 +6,8 @@ package io.ktor.util
 
 /**
  * Returns `true` if [other] range is fully contained inside [this] range
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.contains)
  */
 public operator fun LongRange.contains(other: LongRange): Boolean =
     other.first >= start && other.last <= endInclusive

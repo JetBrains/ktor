@@ -22,6 +22,8 @@ import kotlinx.io.IOException
 
 /**
  * Default engine pipeline for all engines. Use it only if you are writing your own application engine implementation.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.defaultEnginePipeline)
  */
 public fun defaultEnginePipeline(config: ApplicationConfig, developmentMode: Boolean): EnginePipeline {
     val pipeline = EnginePipeline(developmentMode)

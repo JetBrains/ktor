@@ -8,11 +8,15 @@ import io.ktor.util.*
 
 /**
  * Represents HTTP headers as a map from case-insensitive names to collection of [String] values
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.Headers)
  */
 public interface Headers : StringValues {
     public companion object {
         /**
          * Empty [Headers] instance
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.Headers.Companion.Empty)
          */
         public val Empty: Headers = EmptyHeaders
 
@@ -51,6 +55,8 @@ private object EmptyHeaders : Headers {
 
 /**
  * Returns empty headers
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.headersOf)
  */
 public fun headersOf(): Headers = Headers.Empty
 

@@ -11,6 +11,8 @@ import java.io.*
 
 /**
  * Represents a content that is produced by [body] function
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.WriterContent)
  */
 public class WriterContent(
     private val body: suspend Writer.() -> Unit,

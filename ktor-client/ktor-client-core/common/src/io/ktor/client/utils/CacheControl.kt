@@ -6,6 +6,8 @@ package io.ktor.client.utils
 
 /**
  * List of [CacheControl] known values.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.utils.CacheControl)
  */
 @Suppress("KDocMissingDocumentation", "MemberVisibilityCanBePrivate")
 public object CacheControl {

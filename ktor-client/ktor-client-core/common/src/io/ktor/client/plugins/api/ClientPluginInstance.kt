@@ -11,6 +11,8 @@ import io.ktor.utils.io.core.*
 
 /**
  * An instance of [ClientPlugin] that can be installed into [HttpClient].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.ClientPluginInstance)
  */
 public class ClientPluginInstance<PluginConfig : Any> internal constructor(
     private val key: AttributeKey<ClientPluginInstance<PluginConfig>>,

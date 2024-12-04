@@ -24,6 +24,8 @@ import kotlin.jvm.*
  *     }
  * }
  * ```
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.route)
  */
 @KtorDsl
 public fun Route.route(path: Regex, build: Route.() -> Unit): Route =

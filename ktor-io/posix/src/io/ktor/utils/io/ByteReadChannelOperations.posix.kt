@@ -9,6 +9,8 @@ import kotlinx.cinterop.*
 /**
  * Reads all available bytes to [dst] buffer and returns immediately or suspends if no bytes available
  * @return number of bytes were read or `-1` if the channel has been closed
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.readAvailable)
  */
 @OptIn(ExperimentalForeignApi::class, InternalAPI::class)
 public suspend fun ByteReadChannel.readAvailable(dst: CPointer<ByteVar>, offset: Int, length: Int): Int {

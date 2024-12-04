@@ -64,6 +64,8 @@ internal fun CharSequence.parseHexLong(): Long {
 
 /**
  * Converts [CharSequence] representation in decimal format to [Long]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.internals.parseDecLong)
  */
 public fun CharSequence.parseDecLong(): Long {
     val length = length

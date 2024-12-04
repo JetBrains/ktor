@@ -8,5 +8,7 @@ import java.util.*
 
 /**
  * Wraps into an unmodifiable set
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.unmodifiable)
  */
 public actual fun <T> Set<T>.unmodifiable(): Set<T> = Collections.unmodifiableSet(this)

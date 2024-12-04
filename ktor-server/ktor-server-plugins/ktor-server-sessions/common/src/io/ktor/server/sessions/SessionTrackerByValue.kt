@@ -13,6 +13,8 @@ import kotlin.reflect.*
  *
  * @property type is a session instance type
  * @property serializer session serializer
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionTrackerByValue)
  */
 public class SessionTrackerByValue<S : Any>(
     public val type: KClass<S>,

@@ -11,6 +11,8 @@ import java.nio.ByteBuffer
 
 /**
  * Builds an HTTP request or response
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.RequestResponseBuilder)
  */
 
 public actual class RequestResponseBuilder actual constructor() {
@@ -18,6 +20,8 @@ public actual class RequestResponseBuilder actual constructor() {
 
     /**
      * Append response status line
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.RequestResponseBuilder.responseLine)
      */
     public actual fun responseLine(version: CharSequence, status: Int, statusText: CharSequence) {
         packet.writeText(version)

@@ -20,6 +20,8 @@ import kotlin.jvm.*
 /**
  * Sends a [message] as a response.
  * @see [io.ktor.server.response.ApplicationResponse]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.respond)
  */
 public suspend inline fun <reified T : Any> ApplicationCall.respond(message: T) {
     respond(message, typeInfo<T>())

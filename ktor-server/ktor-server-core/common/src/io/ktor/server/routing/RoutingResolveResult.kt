@@ -10,10 +10,14 @@ import io.ktor.http.*
  * Represents a result of routing resolution.
  *
  * @property route specifies a routing node for successful resolution, or nearest one for failed.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingResolveResult)
  */
 public sealed class RoutingResolveResult(public val route: RoutingNode) {
     /**
      * Provides all captured values for this result.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingResolveResult.parameters)
      */
     public abstract val parameters: Parameters
 

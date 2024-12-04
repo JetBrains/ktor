@@ -33,6 +33,8 @@ private val KnownPosixErrors = mapOf(
  * Represents a POSIX error. Could be thrown when a POSIX function returns error code.
  * @property errno error code that caused this exception
  * @property message error text
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.errors.PosixException)
  */
 public sealed class PosixException(public val errno: Int, message: String) : Exception(message) {
     public class BadFileDescriptorException(message: String) : PosixException(EBADF, message)
@@ -75,6 +77,8 @@ public sealed class PosixException(public val errno: Int, message: String) : Exc
          * @param errno error code returned by [posix.platform.errno]
          * @param posixFunctionName optional function name to be included to the exception message
          * @return an instance of [PosixException] or it's subtype
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.errors.PosixException.Companion.forErrno)
          */
         @OptIn(ExperimentalForeignApi::class)
         public fun forErrno(

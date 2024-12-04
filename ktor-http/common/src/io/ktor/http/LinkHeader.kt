@@ -6,6 +6,8 @@ package io.ktor.http
 
 /**
  * Represents a `Link` header value as per RFC 5988
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.LinkHeader)
  */
 public class LinkHeader(
     uri: String,

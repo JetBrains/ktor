@@ -34,6 +34,8 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.server.websocket.WebSockets")
  * @param maxFrameSize maximum frame that could be received or sent.
  * @param masking whether masking need to be enabled (useful for security).
  * @param extensionsConfig is configuration for WebSocket extensions.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.websocket.WebSockets)
  */
 public class WebSockets private constructor(
     public val pingIntervalMillis: Long,

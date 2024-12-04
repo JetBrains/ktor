@@ -31,6 +31,8 @@ import javax.crypto.spec.*
  * @property signAlgorithm is a signing algorithm name
  * @property backwardCompatibleRead before Ktor 3.0.0, MAC was calculated over decrypted data.
  * Set to true to support old clients.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionTransportTransformerEncrypt)
  */
 public class SessionTransportTransformerEncrypt(
     public val encryptionKeySpec: SecretKeySpec,
@@ -49,6 +51,8 @@ public class SessionTransportTransformerEncrypt(
 
     /**
      * A size of the key used to encrypt session data.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionTransportTransformerEncrypt.encryptionKeySize)
      */
     public val encryptionKeySize: Int get() = encryptionKeySpec.encoded.size
 

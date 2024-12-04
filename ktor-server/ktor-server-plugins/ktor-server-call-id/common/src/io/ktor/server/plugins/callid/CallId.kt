@@ -22,6 +22,8 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.server.plugins.callid.CallId")
 
 /**
  * A function that retrieves or generates call id using provided call
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.callid.CallIdProvider)
  */
 public typealias CallIdProvider = (call: ApplicationCall) -> String?
 

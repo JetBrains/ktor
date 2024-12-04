@@ -32,6 +32,8 @@ private const val MIN_WINDOW_BITS: Int = 8
  *
  * Implements WebSocket deflate extension from [RFC-7692](https://tools.ietf.org/html/rfc7692).
  * This implementation is using window size = 15 due to limitations of [Deflater] implementation.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.WebSocketDeflateExtension)
  */
 public class WebSocketDeflateExtension internal constructor(
     private val config: Config

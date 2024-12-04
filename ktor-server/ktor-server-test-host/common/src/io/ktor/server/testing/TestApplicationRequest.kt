@@ -18,6 +18,8 @@ import kotlinx.coroutines.*
  * @property version HTTP version to sent or executed
  * @property port (Optional) HTTP port to send request to
  * @property protocol HTTP protocol to be used or was used
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.testing.TestApplicationRequest)
  */
 public class TestApplicationRequest(
     call: TestApplicationCall,

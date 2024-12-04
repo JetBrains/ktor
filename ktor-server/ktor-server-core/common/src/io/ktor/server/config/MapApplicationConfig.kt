@@ -6,6 +6,8 @@ package io.ktor.server.config
 
 /**
  * Mutable application config backed by a hash map
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.config.MapApplicationConfig)
  */
 public open class MapApplicationConfig : ApplicationConfig {
     /**

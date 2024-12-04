@@ -11,6 +11,8 @@ import io.ktor.client.engine.darwin.certificates.LegacyCertificatesInfo.HASH_ALG
 /**
  * Represents a pinned certificate. Recommended using [Builder.add] to construct
  * [LegacyCertificatePinner]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.darwin.certificates.LegacyPinnedCertificate)
  */
 public data class LegacyPinnedCertificate(
     /**

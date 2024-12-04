@@ -17,6 +17,8 @@ import io.ktor.http.content.*
  * Otherwise, form parameters are sent in a POST request body.
  *
  * Example: [Form parameters](https://ktor.io/docs/request.html#form_parameters).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.forms.submitForm)
  */
 public suspend inline fun HttpClient.submitForm(
     formParameters: Parameters = Parameters.Empty,

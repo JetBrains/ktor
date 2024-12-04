@@ -10,6 +10,8 @@ import java.io.*
  * Creates a storage that serializes a session's data to a file under the [rootDir] directory.
  *
  * @see [Sessions]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.directorySessionStorage)
  */
 public fun directorySessionStorage(rootDir: File, cached: Boolean = true): SessionStorage = when (cached) {
     true -> CacheStorage(DirectoryStorage(rootDir), 60000)

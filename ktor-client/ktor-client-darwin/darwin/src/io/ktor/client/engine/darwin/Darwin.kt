@@ -30,6 +30,8 @@ private val initHook = Darwin
  * ```
  *
  * You can learn more about client engines from [Engines](https://ktor.io/docs/http-client-engines.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.darwin.Darwin)
  */
 @OptIn(InternalAPI::class)
 public data object Darwin : HttpClientEngineFactory<DarwinClientEngineConfig> {

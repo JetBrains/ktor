@@ -10,6 +10,8 @@ import io.ktor.utils.io.*
 
 /**
  * A configuration for the [Authentication] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.AuthenticationConfig)
  */
 @KtorDsl
 public class AuthenticationConfig(providers: Map<String?, AuthenticationProvider> = emptyMap()) {
@@ -18,6 +20,8 @@ public class AuthenticationConfig(providers: Map<String?, AuthenticationProvider
     /**
      * Registers a provider with the specified [name] and allows you to [configure] it.
      * @throws IllegalArgumentException if a provider with the same name is already installed.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.AuthenticationConfig.provider)
      */
     public fun provider(name: String? = null, configure: DynamicProviderConfig.() -> Unit) {
         requireProviderNotRegistered(name)
@@ -77,11 +81,15 @@ public class AuthenticationConfig(providers: Map<String?, AuthenticationProvider
  *
  * You can learn how to configure various authentication providers from
  * [Authentication and authorization](https://ktor.io/docs/authentication.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.Authentication)
  */
 public class Authentication(internal var config: AuthenticationConfig) {
 
     /**
      * Configures an already installed plugin.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.Authentication.configure)
      */
     public fun configure(block: AuthenticationConfig.() -> Unit) {
         val newConfiguration = config.copy()
@@ -104,6 +112,8 @@ public class Authentication(internal var config: AuthenticationConfig) {
 
 /**
  * Retrieves an [AuthenticationContext] for `this` call.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.authentication)
  */
 public val ApplicationCall.authentication: AuthenticationContext
     get() = AuthenticationContext.from(this)

@@ -10,6 +10,8 @@ import kotlin.coroutines.*
 
 /**
  * Creates the selector manager for current platform.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.selector.SelectorManager)
  */
 @Suppress("FunctionName")
 public expect fun SelectorManager(

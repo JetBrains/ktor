@@ -22,6 +22,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.defaultTransformer
  * Install default transformers.
  * Usually installed by default so there is no need to use it
  * unless you have disabled it via [HttpClientConfig.useDefaultTransformers].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.defaultTransformers)
  */
 @OptIn(InternalAPI::class)
 public fun HttpClient.defaultTransformers() {

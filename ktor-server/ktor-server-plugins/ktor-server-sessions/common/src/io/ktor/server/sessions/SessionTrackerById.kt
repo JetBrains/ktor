@@ -14,6 +14,8 @@ import kotlin.reflect.*
  *
  * @param SessionType to search ID for
  * @return session id or `null` if no session ID sent by the client
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.sessionId)
  */
 public inline fun <reified SessionType : Any> ApplicationCall.sessionId(): String? {
     return sessionId(SessionType::class)

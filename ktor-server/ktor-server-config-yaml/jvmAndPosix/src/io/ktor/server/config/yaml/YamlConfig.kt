@@ -10,12 +10,16 @@ internal const val DEFAULT_YAML_FILENAME = "application.yaml"
 
 /**
  * Loads [ApplicationConfig] from a YAML file.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.config.yaml.YamlConfigLoader)
  */
 public class YamlConfigLoader : ConfigLoader {
     /**
      * Tries loading an application configuration from the specified [path].
      *
      * @return configuration or null if the path is not found or a configuration format is not supported.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.config.yaml.YamlConfigLoader.load)
      */
     override fun load(path: String?): ApplicationConfig? {
         return YamlConfig(path)?.apply { checkEnvironmentVariables() }
@@ -26,6 +30,8 @@ public class YamlConfigLoader : ConfigLoader {
  * Loads a configuration from the YAML file, if found.
  * On JVM, loads a configuration from application resources, if exists; otherwise, reads a configuration from a file.
  * On Native, always reads a configuration from a file.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.config.yaml.YamlConfig)
  */
 public expect fun YamlConfig(path: String?): YamlConfig?
 

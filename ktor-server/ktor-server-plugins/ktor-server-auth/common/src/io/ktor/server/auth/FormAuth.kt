@@ -13,6 +13,8 @@ import io.ktor.server.response.*
  * A form-based authentication provider.
  *
  * @see [form]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.FormAuthenticationProvider)
  */
 public class FormAuthenticationProvider internal constructor(config: Config) : AuthenticationProvider(config) {
     private val userParamName: String = config.userParamName
@@ -110,6 +112,8 @@ public class FormAuthenticationProvider internal constructor(config: Config) : A
  * Installs the form-based [Authentication] provider.
  * Form-based authentication uses a web form to collect credential information and authenticate a user.
  * To learn how to configure it, see [Form-based authentication](https://ktor.io/docs/form.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.form)
  */
 public fun AuthenticationConfig.form(
     name: String? = null,

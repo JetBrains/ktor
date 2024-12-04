@@ -14,6 +14,8 @@ import kotlin.coroutines.*
 
 /**
  * Default user agent to use in ktor client.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.KTOR_DEFAULT_USER_AGENT)
  */
 @InternalAPI
 public val KTOR_DEFAULT_USER_AGENT: String = "ktor-client"

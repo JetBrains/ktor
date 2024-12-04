@@ -9,12 +9,16 @@ import io.ktor.utils.io.*
 
 /**
  * A hook that can be registered in [ClientPluginBuilder].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.ClientHook)
  */
 @KtorDsl
 public interface ClientHook<HookHandler> {
 
     /**
      * Specifies how to install a hook into [client].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.ClientHook.install)
      */
     public fun install(client: HttpClient, handler: HookHandler)
 }

@@ -23,6 +23,8 @@ import kotlin.jvm.*
  * @property secure send it via secure connection only
  * @property httpOnly only transfer cookie over HTTP, no access from JavaScript
  * @property extensions additional cookie extensions
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.Cookie)
  */
 @Serializable
 public data class Cookie(
@@ -41,25 +43,35 @@ public data class Cookie(
 
 /**
  * Cooke encoding strategy
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.CookieEncoding)
  */
 public enum class CookieEncoding {
     /**
      * No encoding (could be dangerous)
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.CookieEncoding.RAW)
      */
     RAW,
 
     /**
      * Double quotes with slash-escaping
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.CookieEncoding.DQUOTES)
      */
     DQUOTES,
 
     /**
      * URI encoding
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.CookieEncoding.URI_ENCODING)
      */
     URI_ENCODING,
 
     /**
      * BASE64 encoding
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.CookieEncoding.BASE64_ENCODING)
      */
     BASE64_ENCODING
 }
@@ -68,6 +80,8 @@ private val loweredPartNames = setOf("max-age", "expires", "domain", "path", "se
 
 /**
  * Parse server's `Set-Cookie` header value
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.parseServerSetCookieHeader)
  */
 public fun parseServerSetCookieHeader(cookiesHeader: String): Cookie {
     val asMap = parseClientCookiesHeader(cookiesHeader, false)

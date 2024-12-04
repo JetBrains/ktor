@@ -12,6 +12,8 @@ import kotlinx.io.Buffer
 /**
  * Creates a channel for reading from the specified byte array. Please note that it could use [content] directly
  * or copy its bytes depending on the platform
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.ByteReadChannel)
  */
 public fun ByteReadChannel(content: ByteArray, offset: Int = 0, length: Int = content.size): ByteReadChannel {
     val source = Buffer().also {

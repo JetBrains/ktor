@@ -9,11 +9,15 @@ import kotlinx.coroutines.*
 
 /**
  * Base configuration for [HttpClientEngine].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.HttpClientEngineConfig)
  */
 @KtorDsl
 public open class HttpClientEngineConfig {
     /**
      * Specifies network threads count advice.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.HttpClientEngineConfig.threadsCount)
      */
     @Deprecated(
         "The [threadsCount] property is deprecated. Consider setting [dispatcher] instead.",

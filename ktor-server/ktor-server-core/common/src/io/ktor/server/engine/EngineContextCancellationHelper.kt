@@ -11,6 +11,8 @@ import kotlinx.coroutines.*
 
 /**
  * Stop server on job cancellation. The returned deferred need to be completed or cancelled.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.stopServerOnCancellation)
  */
 @OptIn(InternalAPI::class)
 public fun ApplicationEngine.stopServerOnCancellation(

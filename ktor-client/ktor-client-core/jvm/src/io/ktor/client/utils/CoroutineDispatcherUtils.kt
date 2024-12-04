@@ -9,6 +9,8 @@ import kotlinx.coroutines.*
 
 /**
  * Creates [CoroutineDispatcher] based on thread pool of [threadCount] threads.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.utils.clientDispatcher)
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 @InternalAPI

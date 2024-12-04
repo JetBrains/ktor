@@ -6,11 +6,15 @@ package io.ktor.util
 
 /**
  * Provides data structure for associating a [String] with a [List] of Strings
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.StringValues)
  */
 public interface StringValues {
     public companion object {
         /**
          * Empty [StringValues] instance
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.StringValues.Companion.Empty)
          */
         public val Empty: StringValues = StringValuesImpl()
 
@@ -27,6 +31,8 @@ public interface StringValues {
 
     /**
      * Specifies if map has case-sensitive or case-insensitive names
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.StringValues.caseInsensitiveName)
      */
     public val caseInsensitiveName: Boolean
 
@@ -286,6 +292,8 @@ public open class StringValuesBuilderImpl(
 
 /**
  * Build an instance of [StringValues] from a vararg list of pairs
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.valuesOf)
  */
 public fun valuesOf(vararg pairs: Pair<String, List<String>>, caseInsensitiveKey: Boolean = false): StringValues {
     return StringValuesImpl(caseInsensitiveKey, pairs.asList().toMap())

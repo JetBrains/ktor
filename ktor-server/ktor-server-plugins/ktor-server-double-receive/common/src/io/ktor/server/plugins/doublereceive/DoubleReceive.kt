@@ -24,6 +24,8 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.server.plugins.doublereceive.Dou
  *
  * You can learn more from [DoubleReceive](https://ktor.io/docs/double-receive.html).
  *
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.doublereceive.DoubleReceive)
  */
 public val DoubleReceive: RouteScopedPlugin<DoubleReceiveConfig> = createRouteScopedPlugin(
     "DoubleReceive",

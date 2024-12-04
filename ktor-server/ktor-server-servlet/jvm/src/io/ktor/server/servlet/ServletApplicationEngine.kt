@@ -19,6 +19,8 @@ import kotlin.coroutines.*
 
 /**
  * This servlet need to be installed into a servlet container
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.servlet.ServletApplicationEngine)
  */
 @MultipartConfig
 public open class ServletApplicationEngine : KtorServlet() {

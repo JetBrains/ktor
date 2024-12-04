@@ -25,6 +25,8 @@ import kotlin.coroutines.*
 
 /**
  * A [ChannelInitializer] implementation that sets up the default ktor channel pipeline
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.netty.NettyChannelInitializer)
  */
 public class NettyChannelInitializer(
     private val applicationProvider: () -> Application,

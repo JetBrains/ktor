@@ -23,6 +23,8 @@ import java.util.concurrent.atomic.*
 
 /**
  * A configuration for the [MicrometerMetrics] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.metrics.micrometer.MicrometerMetricsConfig)
  */
 @KtorDsl
 public class MicrometerMetricsConfig {
@@ -36,6 +38,8 @@ public class MicrometerMetricsConfig {
      * - "custom.metric.name.active"
      * - "custom.metric.name.seconds.max"
      * @see [MicrometerMetrics]
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.metrics.micrometer.MicrometerMetricsConfig.metricName)
      */
     public var metricName: String = "ktor.http.server.requests"
 
@@ -107,6 +111,8 @@ public class MicrometerMetricsConfig {
  * You can customize these metrics or create new ones.
  *
  * You can learn more from [Micrometer metrics](https://ktor.io/docs/micrometer-metrics.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.metrics.micrometer.MicrometerMetrics)
  */
 public val MicrometerMetrics: ApplicationPlugin<MicrometerMetricsConfig> =
     createApplicationPlugin("MicrometerMetrics", ::MicrometerMetricsConfig) {

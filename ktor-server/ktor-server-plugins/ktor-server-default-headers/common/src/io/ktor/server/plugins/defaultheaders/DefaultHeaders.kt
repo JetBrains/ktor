@@ -15,6 +15,8 @@ import kotlinx.atomicfu.*
 /**
  * A configuration for the [DefaultHeaders] plugin.
  * Allows you to configure additional default headers.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.defaultheaders.DefaultHeadersConfig)
  */
 @KtorDsl
 public class DefaultHeadersConfig {
@@ -25,6 +27,8 @@ public class DefaultHeadersConfig {
 
     /**
      * Adds a standard header with the specified [name] and [value].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.defaultheaders.DefaultHeadersConfig.header)
      */
     public fun header(name: String, value: String): Unit = headers.append(name, value)
 
@@ -64,6 +68,8 @@ public class DefaultHeadersConfig {
  * }
  * ```
  * You can learn more from [Default headers](https://ktor.io/docs/default-headers.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.defaultheaders.DefaultHeaders)
  */
 public val DefaultHeaders: RouteScopedPlugin<DefaultHeadersConfig> = createRouteScopedPlugin(
     "DefaultHeaders",

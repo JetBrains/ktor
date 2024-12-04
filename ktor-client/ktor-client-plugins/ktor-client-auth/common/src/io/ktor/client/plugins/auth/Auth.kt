@@ -30,6 +30,8 @@ public class AuthConfig {
 
 /**
  * Shows that request should skip auth and refresh token procedure.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.auth.AuthCircuitBreaker)
  */
 public val AuthCircuitBreaker: AttributeKey<Unit> = AttributeKey("auth-request")
 

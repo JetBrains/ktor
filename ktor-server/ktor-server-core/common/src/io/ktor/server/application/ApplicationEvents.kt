@@ -6,6 +6,8 @@ package io.ktor.server.application
 
 /**
  * Provides events for [Application] lifecycle.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ApplicationEvents)
  */
 @Deprecated(
     "ApplicationEvents has been renamed to Events.",

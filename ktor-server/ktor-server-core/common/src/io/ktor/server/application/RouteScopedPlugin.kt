@@ -10,6 +10,8 @@ import io.ktor.server.routing.*
  * Defines a [Plugin](https://ktor.io/docs/plugins.html) that can be installed into a [RoutingNode].
  * @param TConfiguration is the configuration object type for this Plugin
  * @param TPlugin is the instance type of the Plugin object
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.BaseRouteScopedPlugin)
  */
 public interface BaseRouteScopedPlugin<TConfiguration : Any, TPlugin : Any> :
     Plugin<ApplicationCallPipeline, TConfiguration, TPlugin>
@@ -17,6 +19,8 @@ public interface BaseRouteScopedPlugin<TConfiguration : Any, TPlugin : Any> :
 /**
  * Defines a Plugin that can be installed into [RoutingNode]
  * @param TConfiguration is the configuration object type for this Plugin
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.RouteScopedPlugin)
  */
 public interface RouteScopedPlugin<TConfiguration : Any> : BaseRouteScopedPlugin<TConfiguration, PluginInstance>
 
@@ -24,6 +28,8 @@ public interface RouteScopedPlugin<TConfiguration : Any> : BaseRouteScopedPlugin
  * Finds the plugin [F] in the current [RoutingNode]. If not found, search in the parent [RoutingNode].
  *
  * @return [F] instance or `null` if not found
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.findPluginInRoute)
  */
 public fun <F : Any> RoutingNode.findPluginInRoute(plugin: Plugin<*, *, F>): F? {
     var current = this

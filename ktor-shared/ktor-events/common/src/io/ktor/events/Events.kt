@@ -16,6 +16,8 @@ public class Events {
 
     /**
      * Subscribe [handler] to an event specified by [definition]
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.events.Events.subscribe)
      */
     public fun <T> subscribe(definition: EventDefinition<T>, handler: EventHandler<T>): DisposableHandle {
         val registration = HandlerRegistration(handler)
@@ -60,6 +62,8 @@ public class Events {
 
 /**
  * Raises an event the same way as [Events.raise] but catches an exception and logs it if the [logger] is provided
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.events.raiseCatching)
  */
 public fun <T> Events.raiseCatching(definition: EventDefinition<T>, value: T, logger: Logger? = null) {
     try {

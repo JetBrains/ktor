@@ -6,5 +6,7 @@ package io.ktor.util.internal
 
 /**
  * Internal helper for setting cause on [Throwable] in MPP
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.internal.initCauseBridge)
  */
 public expect fun Throwable.initCauseBridge(cause: Throwable)

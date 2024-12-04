@@ -9,6 +9,8 @@ import kotlin.coroutines.*
 
 /**
  * Print [Job] children tree.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.printDebugTree)
  */
 public fun Job.printDebugTree(offset: Int = 0) {
     println(" ".repeat(offset) + this)

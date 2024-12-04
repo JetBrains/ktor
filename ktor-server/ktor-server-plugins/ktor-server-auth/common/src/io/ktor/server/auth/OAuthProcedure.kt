@@ -13,6 +13,8 @@ private val Logger: Logger = KtorSimpleLogger("io.ktor.auth.oauth")
 
 /**
  * An OAuth provider key.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.OAuthKey)
  */
 public val OAuthKey: Any = "OAuth"
 

@@ -15,6 +15,8 @@ import kotlin.coroutines.*
 
 /**
  * A hook that executes first in request processing.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.SetupRequest)
  */
 public object SetupRequest : ClientHook<suspend (HttpRequestBuilder) -> Unit> {
     override fun install(client: HttpClient, handler: suspend (HttpRequestBuilder) -> Unit) {
@@ -27,6 +29,8 @@ public object SetupRequest : ClientHook<suspend (HttpRequestBuilder) -> Unit> {
 /**
  * A hook that can inspect response and initiate additional requests if needed.
  * Useful for handling redirects, retries, authentication, etc.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.Send)
  */
 public object Send : ClientHook<suspend Send.Sender.(HttpRequestBuilder) -> HttpClientCall> {
 
@@ -36,6 +40,8 @@ public object Send : ClientHook<suspend Send.Sender.(HttpRequestBuilder) -> Http
     ) : CoroutineScope {
         /**
          * Continues execution of the request.
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.Send.Sender.proceed)
          */
         public suspend fun proceed(requestBuilder: HttpRequestBuilder): HttpClientCall =
             httpSendSender.execute(requestBuilder)
@@ -53,6 +59,8 @@ public object Send : ClientHook<suspend Send.Sender.(HttpRequestBuilder) -> Http
  * For example, if a request results in redirect,
  * [ClientPluginBuilder.onRequest] will be executed only for the original request,
  * but this hook will be executed for both original and redirected requests.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.SendingRequest)
  */
 public object SendingRequest :
     ClientHook<suspend (request: HttpRequestBuilder, content: OutgoingContent) -> Unit> {
@@ -69,6 +77,8 @@ public object SendingRequest :
 
 /**
  * A shortcut hook for [HttpClient.monitor] subscription.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.MonitoringEvent)
  */
 public class MonitoringEvent<Param : Any, Event : EventDefinition<Param>>(private val event: Event) :
     ClientHook<(Param) -> Unit> {

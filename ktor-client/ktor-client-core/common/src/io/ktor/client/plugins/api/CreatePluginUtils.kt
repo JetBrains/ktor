@@ -11,6 +11,8 @@ import io.ktor.utils.io.*
 
 /**
  * Client plugins factory.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.ClientPlugin)
  */
 public interface ClientPlugin<PluginConfig : Any> : HttpClientPlugin<PluginConfig, ClientPluginInstance<PluginConfig>>
 
@@ -43,6 +45,8 @@ public interface ClientPlugin<PluginConfig : Any> : HttpClientPlugin<PluginConfi
  * Note that it may be modified later when a user of your plugin calls [HttpClientConfig.install].
  * @param body Allows you to define handlers ([onRequest], [onResponse], and so on) that
  * can modify the behaviour of an [HttpClient] where your plugin is installed.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.createClientPlugin)
  **/
 public fun <PluginConfigT : Any> createClientPlugin(
     name: String,

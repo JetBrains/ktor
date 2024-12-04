@@ -8,6 +8,8 @@ import io.ktor.http.*
 
 /**
  * Matcher that accepts all extended json content types
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.contentnegotiation.JsonContentTypeMatcher)
  */
 public object JsonContentTypeMatcher : ContentTypeMatcher {
     override fun contains(contentType: ContentType): Boolean {

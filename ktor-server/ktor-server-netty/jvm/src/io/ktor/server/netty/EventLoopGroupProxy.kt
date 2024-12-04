@@ -17,6 +17,8 @@ import kotlin.reflect.*
 /**
  * Transparently allows for the creation of [EventLoopGroup]'s utilising the optimal implementation for
  * a given operating system, subject to availability, or falling back to [NioEventLoopGroup] if none is available.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.netty.EventLoopGroupProxy)
  */
 public class EventLoopGroupProxy(
     public val channel: KClass<out ServerSocketChannel>,

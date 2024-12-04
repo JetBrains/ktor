@@ -12,6 +12,8 @@ import jakarta.servlet.*
 /**
  * Provides jakarta.servlet request attributes or fail it the underlying engine is not
  * servlet-backed.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.servlet.jakarta.servletRequestAttributes)
  */
 public val ApplicationRequest.servletRequestAttributes: Map<String, Any>
     get() = call.attributes[servletRequestAttributesKey]

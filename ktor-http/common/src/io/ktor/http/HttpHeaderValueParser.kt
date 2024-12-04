@@ -9,6 +9,8 @@ package io.ktor.http
  * @property name of parameter
  * @property value of parameter
  * @property escapeValue specifies if the value should be escaped
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.HeaderValueParam)
  */
 public data class HeaderValueParam(val name: String, val value: String, val escapeValue: Boolean) {
 
@@ -30,10 +32,14 @@ public data class HeaderValueParam(val name: String, val value: String, val esca
  * Represents a header value. Similar to [HeaderValueWithParameters]
  * @property value
  * @property params for this value (could be empty)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.HeaderValue)
  */
 public data class HeaderValue(val value: String, val params: List<HeaderValueParam> = emptyList()) {
     /**
      * Value's quality according to `q` parameter or `1.0` if missing or invalid
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.HeaderValue.quality)
      */
     val quality: Double = params.firstOrNull { it.name == "q" }
         ?.value
@@ -44,6 +50,8 @@ public data class HeaderValue(val value: String, val params: List<HeaderValuePar
 
 /**
  * Parse header value and sort multiple values according to qualities
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.parseAndSortHeader)
  */
 public fun parseAndSortHeader(header: String?): List<HeaderValue> =
     parseHeaderValue(header).sortedByDescending { it.quality }

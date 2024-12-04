@@ -9,11 +9,15 @@ import kotlin.time.*
 
 /**
  * An interface for rate limiters.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.ratelimit.RateLimiter)
  */
 public interface RateLimiter {
 
     /**
      * Tries to consume the [tokens] amount of tokens and returns state of the rate limiter.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.ratelimit.RateLimiter.tryConsume)
      */
     public suspend fun tryConsume(tokens: Int = 1): State
 

@@ -11,6 +11,8 @@ import java.time.*
 
 /**
  * Creates [CachingOptions] instance with [ZonedDateTime] expiration time
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.content.CachingOptions)
  */
 public fun CachingOptions(cacheControl: CacheControl? = null, expires: ZonedDateTime): CachingOptions =
     CachingOptions(cacheControl, expires.toGMTDate())

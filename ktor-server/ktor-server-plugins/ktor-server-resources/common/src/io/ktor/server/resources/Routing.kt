@@ -16,6 +16,8 @@ import kotlinx.serialization.*
  * Registers a route [body] for a resource defined by the [T] class.
  *
  * A class [T] **must** be annotated with [io.ktor.resources.Resource].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.resources.resource)
  */
 public inline fun <reified T : Any> Route.resource(noinline body: Route.() -> Unit): Route {
     val serializer = serializer<T>()

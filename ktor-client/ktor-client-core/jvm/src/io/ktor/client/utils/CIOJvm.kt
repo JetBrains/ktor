@@ -11,5 +11,7 @@ import java.nio.*
 
 /**
  * Singleton pool of [ByteBuffer] objects used for [HttpClient].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.utils.HttpClientDefaultPool)
  */
 public val HttpClientDefaultPool: ByteBufferPool = ByteBufferPool()

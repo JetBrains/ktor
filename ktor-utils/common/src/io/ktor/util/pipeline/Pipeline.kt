@@ -26,6 +26,8 @@ internal expect fun <TSubject : Any, TContext : Any> pipelineStartCoroutineUnint
 
 /**
  * Represents an execution pipeline for asynchronous extensible computations
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.pipeline.Pipeline)
  */
 
 public open class Pipeline<TSubject : Any, TContext : Any>(
@@ -33,6 +35,8 @@ public open class Pipeline<TSubject : Any, TContext : Any>(
 ) {
     /**
      * Provides common place to store pipeline attributes
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.pipeline.Pipeline.attributes)
      */
     public val attributes: Attributes = Attributes(concurrent = true)
 
@@ -477,6 +481,8 @@ public open class Pipeline<TSubject : Any, TContext : Any>(
 
 /**
  * Executes this pipeline
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.pipeline.execute)
  */
 @Suppress("NOTHING_TO_INLINE")
 public suspend inline fun <TContext : Any> Pipeline<Unit, TContext>.execute(

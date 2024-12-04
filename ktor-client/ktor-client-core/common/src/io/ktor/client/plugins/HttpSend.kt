@@ -15,6 +15,8 @@ import kotlinx.coroutines.*
 
 /**
  * HttpSend pipeline interceptor function
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpSendInterceptor)
  */
 public typealias HttpSendInterceptor = suspend Sender.(HttpRequestBuilder) -> HttpClientCall
 

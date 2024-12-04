@@ -12,6 +12,8 @@ import io.ktor.server.request.*
  * A result of a route evaluation against a call.
  *
  * @param succeeded indicates if a route matches the current [RoutingResolveContext]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RouteSelectorEvaluation)
  */
 @Suppress("RemoveRedundantQualifierName", "PublicApiImplicitType")
 public sealed class RouteSelectorEvaluation(
@@ -23,6 +25,8 @@ public sealed class RouteSelectorEvaluation(
      * @param quality indicates a quality of this route as compared to other sibling routes
      * @param parameters is an instance of [Parameters] with parameters filled by [RouteSelector]
      * @param segmentIncrement is a value indicating how many path segments has been consumed by a selector
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RouteSelectorEvaluation.Success)
      */
     public data class Success(
         public val quality: Double,
@@ -36,6 +40,8 @@ public sealed class RouteSelectorEvaluation(
      * @param quality indicates a quality of this route as compared to other sibling routes
      * @param failureStatusCode response status code in case of failure.
      * Usually one of 400, 404, 405. Ignored on successful evaluation
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RouteSelectorEvaluation.Failure)
      */
     public data class Failure(
         public val quality: Double,
@@ -179,17 +185,23 @@ public sealed class RouteSelectorEvaluation(
  * Serves as the base type for routing selectors.
  *
  * @param quality indicates how good this selector is compared to siblings
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RouteSelector)
  */
 public abstract class RouteSelector {
 
     /**
      * Evaluates this selector against [context] and a path segment at [segmentIndex].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RouteSelector.evaluate)
      */
     public abstract suspend fun evaluate(context: RoutingResolveContext, segmentIndex: Int): RouteSelectorEvaluation
 }
 
 /**
  * A selector for a routing root.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RootRouteSelector)
  */
 public class RootRouteSelector(rootPath: String = "") : RouteSelector() {
 
@@ -233,6 +245,8 @@ public class RootRouteSelector(rootPath: String = "") : RouteSelector() {
  * Evaluates a route against a constant query parameter value.
  * @param name is a name of the query parameter
  * @param value is a value of the query parameter
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.ConstantParameterRouteSelector)
  */
 public data class ConstantParameterRouteSelector(
     val name: String,
@@ -252,6 +266,8 @@ public data class ConstantParameterRouteSelector(
 /**
  * Evaluates a route against a query parameter value and captures its value.
  * @param name is a name of the query parameter
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.ParameterRouteSelector)
  */
 public data class ParameterRouteSelector(
     val name: String
@@ -274,6 +290,8 @@ public data class ParameterRouteSelector(
 /**
  * Evaluates a route against an optional query parameter value and captures its value, if found.
  * @param name is a name of the query parameter
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.OptionalParameterRouteSelector)
  */
 public data class OptionalParameterRouteSelector(
     val name: String
@@ -296,6 +314,8 @@ public data class OptionalParameterRouteSelector(
 /**
  * Evaluates a route against a constant path segment.
  * @param value is a value of the path segment
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.PathSegmentConstantRouteSelector)
  */
 public data class PathSegmentConstantRouteSelector(
     val value: String
@@ -313,6 +333,8 @@ public data class PathSegmentConstantRouteSelector(
 
 /**
  * Evaluates a route against a single trailing slash.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.TrailingSlashRouteSelector)
  */
 public object TrailingSlashRouteSelector : RouteSelector() {
 
@@ -334,6 +356,8 @@ public object TrailingSlashRouteSelector : RouteSelector() {
  * @param name is the name of the parameter to capture values to
  * @param prefix is an optional suffix
  * @param suffix is an optional prefix
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.PathSegmentParameterRouteSelector)
  */
 public data class PathSegmentParameterRouteSelector(
     val name: String,
@@ -360,6 +384,8 @@ public data class PathSegmentParameterRouteSelector(
  * @param name is the name of the parameter to capture values to
  * @param prefix is an optional suffix
  * @param suffix is an optional prefix
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.PathSegmentOptionalParameterRouteSelector)
  */
 public data class PathSegmentOptionalParameterRouteSelector(
     val name: String,
@@ -383,6 +409,8 @@ public data class PathSegmentOptionalParameterRouteSelector(
 
 /**
  * Evaluates a route against any single path segment.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.PathSegmentWildcardRouteSelector)
  */
 public object PathSegmentWildcardRouteSelector : RouteSelector() {
     override suspend fun evaluate(context: RoutingResolveContext, segmentIndex: Int): RouteSelectorEvaluation {
@@ -399,6 +427,8 @@ public object PathSegmentWildcardRouteSelector : RouteSelector() {
  * Evaluates a route against any number of trailing path segments, and captures their values.
  * @param name is the name of the parameter to capture values to
  * @property prefix before the tailcard (static text)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.PathSegmentTailcardRouteSelector)
  */
 public data class PathSegmentTailcardRouteSelector(
     val name: String = "",
@@ -449,6 +479,8 @@ public data class PathSegmentTailcardRouteSelector(
  * Evaluates a route as a result of the OR operation using two other selectors.
  * @param first is a first selector
  * @param second is a second selector
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.OrRouteSelector)
  */
 @Suppress("unused")
 public data class OrRouteSelector(
@@ -472,6 +504,8 @@ public data class OrRouteSelector(
  * Evaluates a route as a result of the AND operation using two other selectors.
  * @param first is a first selector
  * @param second is a second selector
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.AndRouteSelector)
  */
 @Suppress("unused")
 public data class AndRouteSelector(
@@ -502,6 +536,8 @@ public data class AndRouteSelector(
 /**
  * Evaluates a route against an [HttpMethod].
  * @param method is an instance of [HttpMethod]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.HttpMethodRouteSelector)
  */
 public data class HttpMethodRouteSelector(
     val method: HttpMethod
@@ -521,6 +557,8 @@ public data class HttpMethodRouteSelector(
  * Evaluates a route against a header in the request.
  * @param name is the name of the header
  * @param value is the value of the header
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.HttpHeaderRouteSelector)
  */
 public data class HttpHeaderRouteSelector(
     val name: String,
@@ -568,6 +606,8 @@ internal data class ContentTypeHeaderRouteSelector(
 /**
  * Evaluates a route against a `Content-Type` in the [HttpHeaders.Accept] request header.
  * @param contentType is an instance of [ContentType]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.HttpAcceptRouteSelector)
  */
 public data class HttpAcceptRouteSelector(
     val contentType: ContentType
@@ -585,6 +625,8 @@ public data class HttpAcceptRouteSelector(
 /**
  * Evaluates a route against a `Content-Type` in the [HttpHeaders.Accept] request header.
  * @param contentTypes a list of [ContentType] to accept
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.HttpMultiAcceptRouteSelector)
  */
 public data class HttpMultiAcceptRouteSelector(
     val contentTypes: List<ContentType>

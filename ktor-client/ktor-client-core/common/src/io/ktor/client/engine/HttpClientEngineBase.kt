@@ -14,6 +14,8 @@ import kotlin.coroutines.*
  * Abstract implementation of [HttpClientEngine] responsible for lifecycle control of [dispatcher] and
  * [coroutineContext] as well as proper call context management. Should be considered as the best parent class for
  * custom [HttpClientEngine] implementations.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.HttpClientEngineBase)
  */
 public abstract class HttpClientEngineBase(private val engineName: String) : HttpClientEngine {
     private val closed = atomic(false)
@@ -35,6 +37,8 @@ public abstract class HttpClientEngineBase(private val engineName: String) : Htt
 
 /**
  * An exception indicating that the client's engine is already closed.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.ClientEngineClosedException)
  */
 public class ClientEngineClosedException(override val cause: Throwable? = null) :
     IllegalStateException("Client already closed")

@@ -18,6 +18,8 @@ private val RESPONSE_BODY_SAVED = AttributeKey<Unit>("ResponseBodySaved")
 
 /**
  * Configuration for [SaveBodyPlugin]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.SaveBodyPluginConfig)
  */
 public class SaveBodyPluginConfig {
     /**
@@ -29,6 +31,8 @@ public class SaveBodyPluginConfig {
      *     skipSavingBody()
      * }
      * ```
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.SaveBodyPluginConfig.disabled)
      */
     public var disabled: Boolean = false
 }
@@ -51,6 +55,8 @@ public class SaveBodyPluginConfig {
  *     }
  * }
  * ```
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.SaveBodyPlugin)
  */
 @OptIn(InternalAPI::class)
 public val SaveBodyPlugin: ClientPlugin<SaveBodyPluginConfig> = createClientPlugin(

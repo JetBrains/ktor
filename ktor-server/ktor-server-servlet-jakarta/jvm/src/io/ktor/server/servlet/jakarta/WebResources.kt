@@ -15,11 +15,15 @@ import kotlin.random.*
 
 /**
  * Web resources serve configuration
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.servlet.jakarta.WebResourcesConfig)
  */
 public class WebResourcesConfig internal constructor() {
     /**
      * Path predicates to be included. All files will be served if no include rules specified.
      * A path provided to a predicate is always slash-separated (`/`).
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.servlet.jakarta.WebResourcesConfig.includes)
      */
     public val includes: MutableList<(String) -> Boolean> = mutableListOf()
 
@@ -59,6 +63,8 @@ public class WebResourcesConfig internal constructor() {
  * Serve web resources (usually a directory named webapp containing WEB-INF/web.xml). Note that WEB-INF directory
  * itself is not served by default.
  * @param subPath slash-delimited web resources root path (relative to webapp directory)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.servlet.jakarta.webResources)
  */
 @OptIn(InternalAPI::class)
 public fun Route.webResources(subPath: String = "/", configure: WebResourcesConfig.() -> Unit = {}) {

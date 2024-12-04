@@ -10,6 +10,8 @@ import io.ktor.utils.io.*
 
 /**
  * An HTTP parser exception
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.ParserException)
  */
 public class ParserException(message: String) : IllegalStateException(message)
 
@@ -20,6 +22,8 @@ private val hostForbiddenSymbols = setOf('/', '?', '#', '@')
 
 /**
  * Parse an HTTP request line and headers
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.parseRequest)
  */
 public suspend fun parseRequest(input: ByteReadChannel): Request? {
     val builder = CharArrayBuilder()

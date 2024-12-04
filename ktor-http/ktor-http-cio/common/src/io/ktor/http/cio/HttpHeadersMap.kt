@@ -26,6 +26,8 @@ private val EMPTY_INT_LIST = IntArray(0)
 
 /**
  * A headers map data structure used in CIO
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.HttpHeadersMap)
  */
 
 public class HttpHeadersMap internal constructor(private val builder: CharArrayBuilder) {

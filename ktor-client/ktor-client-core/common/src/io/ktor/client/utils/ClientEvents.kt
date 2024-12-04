@@ -11,6 +11,8 @@ import kotlin.native.concurrent.*
 
 /**
  * Occurs after the creation of a new request
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.utils.HttpRequestCreated)
  */
 public val HttpRequestCreated: EventDefinition<HttpRequestBuilder> = EventDefinition()
 

@@ -13,6 +13,8 @@ import kotlin.reflect.*
 /**
  * Represents request and connection parameters possibly overridden via https headers.
  * By default, it fallbacks to [ApplicationRequest.local]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.origin)
  */
 
 public val ApplicationRequest.origin: RequestConnectionPoint

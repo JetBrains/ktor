@@ -8,6 +8,8 @@ import io.ktor.server.config.*
 
 /**
  * The port the current application is running on, as defined by the configuration at start-up.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.port)
  **/
 public val ApplicationConfig.port: Int get() = propertyOrNull("ktor.deployment.port")?.getString()?.toInt() ?: 8080
 

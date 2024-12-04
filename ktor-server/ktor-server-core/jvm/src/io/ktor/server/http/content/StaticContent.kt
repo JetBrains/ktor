@@ -22,6 +22,8 @@ import kotlin.io.path.*
  * Attribute to assign the path of a static file served in the response.  The main use of this attribute is to indicate
  * to subsequent interceptors that a static file was served via the `ApplicationCall.isStaticContent()` extension
  * function.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.content.StaticFileLocationProperty)
  */
 public val StaticFileLocationProperty: AttributeKey<String> = AttributeKey("StaticFileLocation")
 

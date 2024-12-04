@@ -67,6 +67,8 @@ private object ContentEncoding : Hook<suspend ContentEncoding.Context.(PipelineC
  * ```
  *
  * You can learn more from [Compression](https://ktor.io/docs/compression.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.compression.Compression)
  */
 public val Compression: RouteScopedPlugin<CompressionConfig> = createRouteScopedPlugin(
     "Compression",

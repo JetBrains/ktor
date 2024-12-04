@@ -24,6 +24,8 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.server.sessions.Sessions")
  *
  * You can learn more from [Sessions](https://ktor.io/docs/sessions.html).
  * @property providers list of session providers
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.Sessions)
  */
 public val Sessions: RouteScopedPlugin<SessionsConfig> = createRouteScopedPlugin("Sessions", ::SessionsConfig) {
     val providers = pluginConfig.providers.toList()

@@ -14,6 +14,8 @@ import io.ktor.utils.io.*
  *  @property id event ID.
  *  @property retry reconnection time, in milliseconds to wait before reconnecting.
  *  @property comments comment lines starting with a ':' character.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.sse.ServerSentEvent)
  */
 public class ServerSentEvent(
     public val data: String? = null,

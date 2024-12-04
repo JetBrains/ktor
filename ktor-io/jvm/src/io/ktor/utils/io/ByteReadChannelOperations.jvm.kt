@@ -13,6 +13,8 @@ import java.nio.channels.*
 
 /**
  * Creates a channel for reading from the specified byte buffer.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.ByteReadChannel)
  */
 public fun ByteReadChannel(content: ByteBuffer): ByteReadChannel {
     val packet = buildPacket {

@@ -9,6 +9,8 @@ import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * A config for the [SSE] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.sse.SSEConfig)
  */
 public class SSEConfig {
     internal var showCommentEvents = false
@@ -19,6 +21,8 @@ public class SSEConfig {
      * the client will wait for the specified time before attempting to reconnect.
      *
      * Note: this parameter is not supported for some engines.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.sse.SSEConfig.reconnectionTime)
      */
     public var reconnectionTime: Duration = 3000.milliseconds
 

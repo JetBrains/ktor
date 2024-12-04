@@ -13,6 +13,8 @@ import kotlinx.serialization.*
  * Constructs a URL for the [resource].
  *
  * The class of the [resource] instance **must** be annotated with [Resource].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.resources.href)
  */
 public inline fun <reified T> href(
     resourcesFormat: ResourcesFormat,

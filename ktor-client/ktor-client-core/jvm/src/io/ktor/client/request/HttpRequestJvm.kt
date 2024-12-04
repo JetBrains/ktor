@@ -8,6 +8,8 @@ import io.ktor.http.*
 
 /**
  * Sets the [HttpRequestBuilder.url] from [url].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.url)
  */
 public fun HttpRequestBuilder.url(url: java.net.URL): URLBuilder = this.url.takeFrom(url)
 

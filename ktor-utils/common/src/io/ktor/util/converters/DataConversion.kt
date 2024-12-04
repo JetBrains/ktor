@@ -11,6 +11,8 @@ import kotlin.reflect.*
 
 /**
  * Data conversion plugin to serialize and deserialize types using [converters] registry
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.converters.DataConversion)
  */
 public class DataConversion(configuration: Configuration) : ConversionService {
     private val converters: Map<KClass<*>, ConversionService> = configuration.converters.toMap()
@@ -70,6 +72,8 @@ public class DataConversion(configuration: Configuration) : ConversionService {
 
 /**
  * Implementation of [ConversionService] that delegates [fromValues] and [toValues] to [decoder] and [encoder]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.converters.DelegatingConversionService)
  */
 public class DelegatingConversionService(
     private val klass: KClass<*>,

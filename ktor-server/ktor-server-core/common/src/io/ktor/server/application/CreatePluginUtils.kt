@@ -31,6 +31,8 @@ import io.ktor.util.pipeline.*
  * Note that it may be modified later when a user of your plugin calls [Application.install].
  * @param body Allows you to define handlers ([onCall], [onCallReceive], [onCallRespond] and so on) that
  * can modify the behaviour of an [Application] where your plugin is installed.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.createApplicationPlugin)
  */
 public fun <PluginConfigT : Any> createApplicationPlugin(
     name: String,

@@ -9,6 +9,8 @@ import java.io.*
 /**
  * Append a [relativePath] safely that means that adding any extra `..` path elements will not let
  * access anything out of the reference directory (unless you have symbolic or hard links or multiple mount points)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.combineSafe)
  */
 public fun File.combineSafe(relativePath: String): File = combineSafe(this, File(relativePath))
 

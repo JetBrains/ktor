@@ -14,6 +14,8 @@ import java.nio.charset.*
  * @param destination is the buffer to copy bytes to
  * @param limit is an optional parameter specifying maximum number of bytes to be moved
  * @return number of bytes moved
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.moveTo)
  */
 public fun ByteBuffer.moveTo(destination: ByteBuffer, limit: Int = Int.MAX_VALUE): Int {
     val size = minOf(limit, remaining(), destination.remaining())

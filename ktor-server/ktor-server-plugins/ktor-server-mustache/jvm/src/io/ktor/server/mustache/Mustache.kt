@@ -19,6 +19,8 @@ import java.io.*
  * @param model to be passed during template rendering
  * @param etag value for the `E-Tag` header (optional)
  * @param contentType of response (optional, `text/html` with the UTF-8 character encoding by default)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.mustache.MustacheContent)
  */
 public class MustacheContent(
     public val template: String,
@@ -36,6 +38,8 @@ public class MustacheConfig {
  * A plugin that allows you to use Mustache templates as views within your application.
  * Provides the ability to respond with [MustacheContent].
  * You can learn more from [Mustache](https://ktor.io/docs/mustache.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.mustache.Mustache)
  */
 public val Mustache: ApplicationPlugin<MustacheConfig> = createApplicationPlugin("Mustache", ::MustacheConfig) {
     val mustacheFactory = pluginConfig.mustacheFactory

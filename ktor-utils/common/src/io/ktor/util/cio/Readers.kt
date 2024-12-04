@@ -11,6 +11,8 @@ import kotlin.contracts.*
 
 /**
  * Convert [ByteReadChannel] to [ByteArray]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.cio.toByteArray)
  */
 
 public suspend fun ByteReadChannel.toByteArray(limit: Int = Int.MAX_VALUE): ByteArray =

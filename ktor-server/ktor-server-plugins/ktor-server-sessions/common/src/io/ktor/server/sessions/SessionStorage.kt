@@ -8,10 +8,14 @@ package io.ktor.server.sessions
  * A storage that provides the ability to [write], [read], and [invalidate] session data.
  *
  * @see [Sessions]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionStorage)
  */
 public interface SessionStorage {
     /**
      * Writes a session [value] for [id].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionStorage.write)
      */
     public suspend fun write(id: String, value: String)
 

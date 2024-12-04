@@ -9,6 +9,8 @@ import org.khronos.webgl.*
 
 /**
  * Find a charset by name.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.charsets.forName)
  */
 public actual fun Charsets.forName(name: String): Charset = Charset.forName(name)
 

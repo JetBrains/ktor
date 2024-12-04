@@ -11,6 +11,8 @@ import io.ktor.utils.io.*
 
 /**
  * A configuration for the [io.ktor.server.plugins.csrf.CSRF] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.csrf.CSRFConfig)
  */
 @KtorDsl
 public class CSRFConfig {
@@ -26,6 +28,8 @@ public class CSRFConfig {
      * @param origin expected "Origin" header, revealing the URL of the site leading up
      *               to the path (e.g. https://google.com)
      * @see [CSRF Cheatsheet, Verifying Origin with standard headers](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#verifying-origin-with-standard-headers)
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.csrf.CSRFConfig.allowOrigin)
      */
     public fun allowOrigin(origin: String) {
         allowedOrigins += Url(origin)

@@ -15,6 +15,8 @@ import io.ktor.utils.io.*
 
 /**
  * A configuration for the [ConditionalHeaders] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.conditionalheaders.ConditionalHeadersConfig)
  */
 @KtorDsl
 public class ConditionalHeadersConfig {
@@ -43,6 +45,8 @@ internal val VersionProvidersKey: AttributeKey<List<suspend (ApplicationCall, Ou
 
 /**
  * Retrieves versions such as [LastModifiedVersion] or [EntityTagVersion] for a given content.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.conditionalheaders.versionsFor)
  */
 public suspend fun ApplicationCall.versionsFor(content: OutgoingContent): List<Version> {
     val versionProviders = application.attributes.getOrNull(VersionProvidersKey)

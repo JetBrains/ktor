@@ -14,6 +14,8 @@ import java.util.*
 /**
  * Loads all implementations of the service [T] using [ServiceLoader.load].
  * @see loadServiceOrNull
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.reflect.loadServices)
  */
 @InternalAPI
 public inline fun <reified T : Any> loadServices(): List<T> = ServiceLoader.load(

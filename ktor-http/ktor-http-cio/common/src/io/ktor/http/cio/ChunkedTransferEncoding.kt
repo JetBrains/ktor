@@ -24,6 +24,8 @@ private val ChunkSizeBufferPool: ObjectPool<StringBuilder> =
 
 /**
  * Decoder job type
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.DecoderJob)
  */
 public typealias DecoderJob = WriterJob
 

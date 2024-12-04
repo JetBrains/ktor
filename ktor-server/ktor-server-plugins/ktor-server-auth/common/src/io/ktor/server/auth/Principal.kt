@@ -8,12 +8,16 @@ import kotlin.reflect.*
 
 /**
  * A marker interface indicating that a class represents credentials for authentication.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.Credential)
  */
 @Deprecated("This interface can be safely removed")
 public interface Credential
 
 /**
  * A marker interface indicating that a class represents an authenticated principal.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.Principal)
  */
 @Deprecated("This interface can be safely removed")
 public interface Principal

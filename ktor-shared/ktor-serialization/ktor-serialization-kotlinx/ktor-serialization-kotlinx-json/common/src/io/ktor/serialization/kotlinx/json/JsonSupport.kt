@@ -20,6 +20,8 @@ import kotlin.native.concurrent.*
  * - keys and values are quoted, non-quoted are not allowed
  *
  * See [Json] for more details.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.kotlinx.json.DefaultJson)
  */
 
 public val DefaultJson: Json =

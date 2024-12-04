@@ -16,6 +16,8 @@ import kotlin.random.*
 
 /**
  * A utility class to build an [ApplicationPlugin] instance.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.PluginBuilder)
  **/
 @KtorDsl
 @Suppress("UNUSED_PARAMETER", "DEPRECATION")
@@ -25,6 +27,8 @@ public abstract class PluginBuilder<PluginConfig : Any> internal constructor(
 
     /**
      * A reference to the [Application] where the plugin is installed.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.PluginBuilder.application)
      */
     public abstract val application: Application
 

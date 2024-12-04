@@ -18,6 +18,8 @@ import kotlinx.atomicfu.*
 
 /**
  * Installs the client's [DigestAuthProvider].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.auth.providers.digest)
  */
 public fun AuthConfig.digest(block: DigestAuthConfig.() -> Unit) {
     val config = DigestAuthConfig().apply(block)

@@ -12,6 +12,8 @@ import io.ktor.utils.io.*
  * The context associated with the call that is currently being processed by server.
  * Every call handler ([PluginBuilder.onCall], [PluginBuilder.onCallReceive], [PluginBuilder.onCallRespond], and so on)
  * of your plugin has a derivative of [CallContext] as a receiver.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.CallContext)
  **/
 @KtorDsl
 public open class CallContext<PluginConfig : Any> internal constructor(
@@ -27,6 +29,8 @@ public open class CallContext<PluginConfig : Any> internal constructor(
  * of your [PluginBuilder].
  *
  * @see CallContext
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.OnCallContext)
  **/
 @KtorDsl
 public class OnCallContext<PluginConfig : Any> internal constructor(
@@ -36,6 +40,8 @@ public class OnCallContext<PluginConfig : Any> internal constructor(
 
 /**
  * Contains type information about the current request or response body when performing a transformation.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.TransformBodyContext)
  * */
 @KtorDsl
 public class TransformBodyContext(public val requestedType: TypeInfo?)
@@ -45,6 +51,8 @@ public class TransformBodyContext(public val requestedType: TypeInfo?)
  * [OnCallReceiveContext] is a receiver for [PluginBuilder.onCallReceive] handler of your [PluginBuilder].
  *
  * @see CallContext
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.OnCallReceiveContext)
  **/
 @KtorDsl
 public class OnCallReceiveContext<PluginConfig : Any> internal constructor(
@@ -54,6 +62,8 @@ public class OnCallReceiveContext<PluginConfig : Any> internal constructor(
     /**
      * Specifies how to transform a request body that is being received from a client.
      * If another plugin has already made the transformation, then your [transformBody] handler is not executed.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.OnCallReceiveContext.transformBody)
      **/
     public suspend fun transformBody(transform: suspend TransformBodyContext.(body: ByteReadChannel) -> Any) {
         val receiveBody = context.subject as? ByteReadChannel ?: return
@@ -70,6 +80,8 @@ public class OnCallReceiveContext<PluginConfig : Any> internal constructor(
  *  [OnCallRespondContext] is a receiver for [PluginBuilder.onCallRespond] handler of your [PluginBuilder].
  *
  * @see CallContext
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.OnCallRespondContext)
  **/
 @KtorDsl
 public class OnCallRespondContext<PluginConfig : Any> internal constructor(
@@ -78,6 +90,8 @@ public class OnCallRespondContext<PluginConfig : Any> internal constructor(
 ) : CallContext<PluginConfig>(pluginConfig, context) {
     /**
      * Specifies how to transform a response body that is being sent to a client.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.OnCallRespondContext.transformBody)
      **/
     public suspend fun transformBody(transform: suspend TransformBodyContext.(body: Any) -> Any) {
         val transformContext = TransformBodyContext(context.call.response.responseType)

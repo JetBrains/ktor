@@ -67,6 +67,8 @@ public data class OID(public val identifier: String) {
  * and
  * [KeyPairGenerator](https://docs.oracle.com/en/java/javase/17/docs/specs/security/standard-names.html#keypairgenerator-algorithms)
  * sections in the Java Security Standard Algorithm Names Specification for information about standard algorithm names.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.keysGenerationAlgorithm)
  */
 public fun keysGenerationAlgorithm(algorithm: String): String = when {
     algorithm.endsWith("ecdsa", ignoreCase = true) -> "EC"

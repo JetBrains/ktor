@@ -11,10 +11,14 @@ import io.ktor.websocket.*
  * Tracer interface invoked at crucial points of the request processing to handle important events such as a start of
  * the request processing, a receiving of response headers, a receiving of data and so on. Implementations of this
  * interface are responsible for saving and presenting these events.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugin.tracing.Tracer)
  */
 interface Tracer {
     /**
      * Indicates that the request processing has been start and request will be sent soon.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugin.tracing.Tracer.requestWillBeSent)
      */
     fun requestWillBeSent(requestId: String, requestData: HttpRequestData)
 

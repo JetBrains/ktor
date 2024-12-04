@@ -11,6 +11,8 @@ import io.ktor.utils.io.core.*
 
 /**
  * Client json serializer.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.json.JsonSerializer)
  */
 @Deprecated(
     "Please use ContentNegotiation plugin and its converters: https://ktor.io/docs/migration-to-20x.html#serialization-client", // ktlint-disable max-line-length
@@ -19,6 +21,8 @@ import io.ktor.utils.io.core.*
 public interface JsonSerializer {
     /**
      * Convert data object to [OutgoingContent].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.json.JsonSerializer.write)
      */
     public fun write(data: Any, contentType: ContentType): OutgoingContent
 

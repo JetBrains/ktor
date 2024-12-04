@@ -8,6 +8,8 @@ import io.ktor.client.engine.*
 
 /**
  * Tracing wrapper that wraps [HttpClientEngineFactory] and creates [EngineWithTracer] instead of original engine.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugin.tracing.TracingWrapper)
  */
 class TracingWrapper<T : HttpClientEngineConfig>(
     private val delegate: HttpClientEngineFactory<T>,

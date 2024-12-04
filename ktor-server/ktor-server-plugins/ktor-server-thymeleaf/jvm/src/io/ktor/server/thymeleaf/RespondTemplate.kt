@@ -11,6 +11,8 @@ import java.util.*
 
 /**
  * Respond with a [template] applying a data [model].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.thymeleaf.respondTemplate)
  */
 public suspend fun ApplicationCall.respondTemplate(
     template: String,

@@ -9,6 +9,8 @@ import kotlin.enums.*
 /**
  * TLS version
  * @property code numeric TLS version code
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.TLSVersion)
  */
 public enum class TLSVersion(public val code: Int) {
     SSL3(0x0300),
@@ -21,6 +23,8 @@ public enum class TLSVersion(public val code: Int) {
 
         /**
          * Find version instance by its numeric [code] or fail
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.TLSVersion.Companion.byCode)
          */
         public fun byCode(code: Int): TLSVersion = when (code) {
             in 0x0300..0x0303 -> byOrdinal[code - 0x0300]

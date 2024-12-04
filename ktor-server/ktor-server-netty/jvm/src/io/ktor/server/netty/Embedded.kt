@@ -11,6 +11,8 @@ import io.ktor.server.engine.*
 
 /**
  * An [ApplicationEngineFactory] providing a Netty-based [ApplicationEngine]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.netty.Netty)
  */
 public object Netty : ApplicationEngineFactory<NettyApplicationEngine, NettyApplicationEngine.Configuration> {
 

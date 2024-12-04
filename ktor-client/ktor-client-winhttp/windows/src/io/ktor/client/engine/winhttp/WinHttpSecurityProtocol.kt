@@ -6,6 +6,8 @@ package io.ktor.client.engine.winhttp
 
 /**
  * Defines which transport security protocol should be used during establishing connection.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.winhttp.WinHttpSecurityProtocol)
  */
 public enum class WinHttpSecurityProtocol(internal val value: Int) {
     Default(0),

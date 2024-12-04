@@ -18,6 +18,8 @@ import java.util.jar.*
  *
  * @param jarFile is an instance of [File] representing a Jar
  * @param resourcePath is an instance of a resource inside a Jar file
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.content.JarFileContent)
  */
 public class JarFileContent(
     public val jarFile: File,

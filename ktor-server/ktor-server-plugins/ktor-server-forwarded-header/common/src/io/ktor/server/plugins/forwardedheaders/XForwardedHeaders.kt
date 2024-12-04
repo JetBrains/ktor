@@ -14,12 +14,16 @@ import io.ktor.utils.io.*
 
 /**
  * A configuration for the [XForwardedHeaders] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.forwardedheaders.XForwardedHeadersConfig)
  */
 @KtorDsl
 public class XForwardedHeadersConfig {
     /**
      * Gets headers used to identify the original host requested by the client.
      * Default are `X-Forwarded-Server` and `X-Forwarded-Host`.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.forwardedheaders.XForwardedHeadersConfig.hostHeaders)
      */
     public val hostHeaders: ArrayList<String> = arrayListOf(HttpHeaders.XForwardedHost, HttpHeaders.XForwardedServer)
 
@@ -182,6 +186,8 @@ public class XForwardedHeadersConfig {
 
 /**
  * Values of the `X-Forward-*` headers. Each property may contain multiple comma-separated values.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.forwardedheaders.XForwardedHeaderValues)
  */
 public data class XForwardedHeaderValues(
     /**
@@ -212,6 +218,8 @@ public data class XForwardedHeaderValues(
  *
  * To learn how to install and use [XForwardedHeaders], see
  * [Forwarded headers](https://ktor.io/docs/forward-headers.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.forwardedheaders.XForwardedHeaders)
  */
 public val XForwardedHeaders: ApplicationPlugin<XForwardedHeadersConfig> = createApplicationPlugin(
     "XForwardedHeaders",

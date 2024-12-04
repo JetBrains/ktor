@@ -17,6 +17,8 @@ import kotlin.native.concurrent.*
  * - defaults are serialized
  *
  * See [Cbor] for more details.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.kotlinx.cbor.DefaultCbor)
  */
 @OptIn(ExperimentalSerializationApi::class)
 public val DefaultCbor: Cbor = Cbor {

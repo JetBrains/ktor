@@ -17,6 +17,8 @@ import io.ktor.server.plugins.*
  *
  * @param host exact host name that is treated literally
  * @param port to be tested or `0` to pass all ports
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.host)
  */
 public fun Route.host(host: String, port: Int = 0, build: Route.() -> Unit): Route {
     return host(listOf(host), emptyList(), if (port > 0) listOf(port) else emptyList(), build)

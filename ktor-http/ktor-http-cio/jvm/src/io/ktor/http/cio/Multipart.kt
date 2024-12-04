@@ -18,11 +18,15 @@ import java.nio.ByteBuffer
 
 /**
  * Represents a multipart content starting event. Every part need to be completely consumed or released via [release]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.MultipartEvent)
  */
 
 public sealed class MultipartEvent {
     /**
      * Release underlying data/packet.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.MultipartEvent.release)
      */
     public abstract fun release()
 
@@ -133,6 +137,8 @@ private suspend fun ByteReadChannel.skipIfFoundReadCount(prefix: ByteString): Lo
 
 /**
  * Starts a multipart parser coroutine producing multipart events
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.parseMultipart)
  */
 public fun CoroutineScope.parseMultipart(
     input: ByteReadChannel,

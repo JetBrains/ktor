@@ -14,6 +14,8 @@ import kotlin.time.*
 
 /**
  * Tests client request with multi-part form data.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.tests.MultiPartFormDataTest)
  */
 class MultiPartFormDataTest : ClientLoader() {
 

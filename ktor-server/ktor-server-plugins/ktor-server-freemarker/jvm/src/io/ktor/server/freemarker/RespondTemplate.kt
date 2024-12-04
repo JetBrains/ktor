@@ -12,6 +12,8 @@ import io.ktor.server.response.*
  * Responds with the specified [template] and data [model].
  *
  * @see FreeMarkerContent
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.freemarker.respondTemplate)
  */
 public suspend fun ApplicationCall.respondTemplate(
     template: String,

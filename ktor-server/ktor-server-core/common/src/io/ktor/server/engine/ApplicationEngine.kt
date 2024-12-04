@@ -10,16 +10,22 @@ import kotlinx.coroutines.*
 
 /**
  * An engine which runs an application.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ApplicationEngine)
  */
 public interface ApplicationEngine {
 
     /**
      * A configuration for the [ApplicationEngine].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ApplicationEngine.Configuration)
      */
     @Suppress("MemberVisibilityCanBePrivate")
     public open class Configuration {
         /**
          * Returns the current parallelism level (e.g. the number of available processors).
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ApplicationEngine.Configuration.parallelism)
          */
         public val parallelism: Int = availableProcessorsBridge()
 
@@ -71,6 +77,8 @@ public interface ApplicationEngine {
      * If [environment]'s [connector]s was configured to use port=0, you can use this function to get an actual port
      * for these connectors.
      * Available after a server is started.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ApplicationEngine.resolvedConnectors)
      */
     public suspend fun resolvedConnectors(): List<EngineConnectorConfig>
 

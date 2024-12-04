@@ -18,6 +18,8 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.server.plugins.partialcontent.Pa
 
 /**
  * A configuration for the [PartialContent] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.partialcontent.PartialContentConfig)
  */
 @KtorDsl
 public class PartialContentConfig {
@@ -25,6 +27,8 @@ public class PartialContentConfig {
      * Specifies a maximum number of ranges that might be accepted from an HTTP request.
      *
      * If an HTTP request specifies more ranges, they will all be merged into a single range.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.partialcontent.PartialContentConfig.maxRangeCount)
      */
     public var maxRangeCount: Int by Delegates.vetoable(10) { _, _, new ->
         new > 0 || throw IllegalArgumentException("Bad maxRangeCount value $new")
@@ -36,6 +40,8 @@ public class PartialContentConfig {
  * This plugin is useful for streaming content or resuming partial downloads.
  *
  * To learn more, see [Partial content](https://ktor.io/docs/partial-content.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.partialcontent.PartialContent)
  */
 public val PartialContent: RouteScopedPlugin<PartialContentConfig> = createRouteScopedPlugin(
     "PartialContent",

@@ -12,12 +12,16 @@ import javax.net.ssl.*
 
 /**
  * [TLSConfig] builder.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.TLSConfigBuilder)
  */
 public actual class TLSConfigBuilder {
     /**
      * List of client certificate chains with private keys.
      *
      * The Chain will be used only if the first certificate in the chain is issued by server's certificate.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.TLSConfigBuilder.certificates)
      */
     public val certificates: MutableList<CertificateAndKey> = mutableListOf()
 
@@ -67,6 +71,8 @@ public actual class TLSConfigBuilder {
 
 /**
  * Append config from [other] builder.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.takeFrom)
  */
 public actual fun TLSConfigBuilder.takeFrom(other: TLSConfigBuilder) {
     certificates += other.certificates

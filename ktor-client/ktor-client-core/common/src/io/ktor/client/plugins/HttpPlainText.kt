@@ -21,6 +21,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.HttpPlainText")
 
 /**
  * Charset configuration for [HttpPlainText] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpPlainTextConfig)
  */
 @KtorDsl
 public class HttpPlainTextConfig {
@@ -29,6 +31,8 @@ public class HttpPlainTextConfig {
 
     /**
      * Add [charset] to allowed list with selected [quality].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpPlainTextConfig.register)
      */
     public fun register(charset: Charset, quality: Float? = null) {
         quality?.let { check(it in 0.0..1.0) }
@@ -61,6 +65,8 @@ public class HttpPlainTextConfig {
  * and processes the response body as [String].
  *
  * To configure charsets set following properties in [HttpPlainText.Config].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpPlainText)
  */
 public val HttpPlainText: ClientPlugin<HttpPlainTextConfig> =
     createClientPlugin("HttpPlainText", ::HttpPlainTextConfig) {

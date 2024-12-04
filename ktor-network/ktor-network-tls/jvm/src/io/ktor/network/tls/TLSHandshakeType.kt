@@ -9,6 +9,8 @@ import io.ktor.network.tls.extensions.*
 /**
  * TLS handshake record type
  * @property code numeric type code
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.TLSHandshakeType)
  */
 
 public enum class TLSHandshakeType(public val code: Int) {
@@ -28,6 +30,8 @@ public enum class TLSHandshakeType(public val code: Int) {
 
         /**
          * Find handshake type instance by its numeric [code] or fail
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.TLSHandshakeType.Companion.byCode)
          */
         public fun byCode(code: Int): TLSHandshakeType = when (code) {
             in 0..0xff -> byCode[code]
@@ -39,6 +43,8 @@ public enum class TLSHandshakeType(public val code: Int) {
 /**
  * Server key exchange type with it's [code]
  * @property code numeric exchange type code
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.ServerKeyExchangeType)
  */
 
 public enum class ServerKeyExchangeType(public val code: Int) {
@@ -51,6 +57,8 @@ public enum class ServerKeyExchangeType(public val code: Int) {
 
         /**
          * Find an instance of [ServerKeyExchangeType] by its numeric code or fail
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.ServerKeyExchangeType.Companion.byCode)
          */
         public fun byCode(code: Int): ServerKeyExchangeType {
             val result = if (code in 0..0xff) byCode[code] else null

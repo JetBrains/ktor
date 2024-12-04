@@ -10,6 +10,8 @@ import io.ktor.http.*
 
 /**
  * Appends a header with the specified [name] and [value] to a response.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.header)
  */
 public fun ApplicationResponse.header(name: String, value: String): Unit = headers.append(name, value)
 

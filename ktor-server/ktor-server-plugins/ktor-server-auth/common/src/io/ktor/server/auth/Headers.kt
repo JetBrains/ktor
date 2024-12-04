@@ -12,6 +12,8 @@ import io.ktor.server.request.*
 
 /**
  * Parses an authorization header from a [ApplicationRequest] returning a [HttpAuthHeader].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.parseAuthorizationHeader)
  */
 public fun ApplicationRequest.parseAuthorizationHeader(): HttpAuthHeader? = headers.parseAuthorizationHeader()
 

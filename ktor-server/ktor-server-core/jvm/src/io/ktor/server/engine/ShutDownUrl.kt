@@ -21,10 +21,14 @@ import kotlin.system.*
  *
  * @property url to handle
  * @property exitCode is a function to compute a process exit code
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ShutDownUrl)
  */
 public class ShutDownUrl(public val url: String, public val exitCode: ApplicationCall.() -> Int) {
     /**
      * Shuts down an application using the specified [call].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ShutDownUrl.doShutdown)
      */
     public suspend fun doShutdown(call: ApplicationCall) {
         call.application.log.warn("Shutdown URL was called: server is going down")

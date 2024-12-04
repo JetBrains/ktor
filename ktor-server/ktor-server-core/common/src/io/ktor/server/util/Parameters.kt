@@ -26,6 +26,8 @@ import kotlin.reflect.*
  *
  * @throws MissingRequestParameterException if no values associated with name
  * @throws ParameterConversionException when conversion from String to [R] fails
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.util.getValue)
  */
 public inline operator fun <reified R : Any> Parameters.getValue(thisRef: Any?, property: KProperty<*>): R {
     return getOrFail<R>(property.name)

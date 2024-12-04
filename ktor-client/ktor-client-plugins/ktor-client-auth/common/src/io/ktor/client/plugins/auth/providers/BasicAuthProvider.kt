@@ -16,6 +16,8 @@ import io.ktor.utils.io.core.*
 
 /**
  * Installs the client's [BasicAuthProvider].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.auth.providers.basic)
  */
 @KtorDsl
 public fun AuthConfig.basic(block: BasicAuthConfig.() -> Unit) {

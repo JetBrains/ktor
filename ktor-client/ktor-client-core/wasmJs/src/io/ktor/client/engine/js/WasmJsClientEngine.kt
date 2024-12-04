@@ -174,6 +174,8 @@ internal fun org.w3c.fetch.Headers.mapToKtor(): Headers = buildHeaders {
 /**
  * Wrapper for javascript `error` objects.
  * @property origin: fail reason
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.js.JsError)
  */
 @Suppress("MemberVisibilityCanBePrivate")
 public class JsError(public val origin: JsAny) : Throwable("Error from javascript[$origin].")

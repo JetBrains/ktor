@@ -6,12 +6,16 @@ package io.ktor.server.sessions
 
 /**
  * A transformer used to sign and encrypt session data.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionTransportTransformer)
  */
 public interface SessionTransportTransformer {
     /**
      * Untransforms a [transportValue] that represents a transformed session.
      *
      * @return Untransformed value or null
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.SessionTransportTransformer.transformRead)
      */
     public fun transformRead(transportValue: String): String?
 
@@ -28,6 +32,8 @@ public interface SessionTransportTransformer {
  * If any of the unapplication of transformations fail returning a null, this function also returns null.
  *
  * @return A string representing the original session contents.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.transformRead)
  */
 public fun List<SessionTransportTransformer>.transformRead(cookieValue: String?): String? {
     val value = cookieValue ?: return null

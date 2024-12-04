@@ -22,6 +22,8 @@ import kotlin.coroutines.*
  * @param parent is a parent node in the tree, or null for root node.
  * @param selector is an instance of [RouteSelector] for this node.
  * @param developmentMode is flag to switch report level for stack traces.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingNode)
  */
 
 @KtorDsl
@@ -34,6 +36,8 @@ public open class RoutingNode(
 
     /**
      * List of child routes for this node.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingNode.children)
      */
     public val children: List<RoutingNode> get() = childList
 
@@ -140,6 +144,8 @@ public open class RoutingNode(
  * To learn how to handle incoming requests, see [Handling requests](https://ktor.io/docs/requests.html).
  * @see [RoutingCall]
  * @see [RoutingResponse]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingRequest)
  */
 public class RoutingRequest internal constructor(
     public val pathVariables: Parameters,
@@ -161,6 +167,8 @@ public class RoutingRequest internal constructor(
  * To learn how to send responses inside route handlers, see [Sending responses](https://ktor.io/docs/responses.html).
  * @see [RoutingCall]
  * @see [RoutingRequest]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingResponse)
  */
 public class RoutingResponse internal constructor(
     public override val call: RoutingCall,
@@ -191,6 +199,8 @@ public class RoutingResponse internal constructor(
  * A single act of communication between a client and server that is handled in [RoutingRoot].
  * @see [io.ktor.server.request.ApplicationRequest]
  * @see [io.ktor.server.response.ApplicationResponse]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingCall)
  */
 public class RoutingCall internal constructor(
     /**
@@ -232,6 +242,8 @@ public class RoutingCall internal constructor(
 
 /**
  * The context of a [RoutingHandler] that is used to handle a [RoutingCall].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingContext)
  */
 public class RoutingContext(
     public val call: RoutingCall
@@ -239,6 +251,8 @@ public class RoutingContext(
 
 /**
  * A function that handles a [RoutingCall].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingHandler)
  */
 public typealias RoutingHandler = suspend RoutingContext.() -> Unit
 

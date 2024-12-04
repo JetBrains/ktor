@@ -8,6 +8,8 @@ import io.ktor.util.*
 
 /**
  * Format `Content-Range` header value
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.contentRangeHeaderValue)
  */
 public fun contentRangeHeaderValue(
     range: LongRange?,

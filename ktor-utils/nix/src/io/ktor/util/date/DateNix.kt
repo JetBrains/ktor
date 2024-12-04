@@ -14,6 +14,8 @@ internal actual fun system_time(tm: CValuesRef<tm>?): Long = timegm(tm).convert(
 /**
  * Gets current system time in milliseconds since a certain moment in the past,
  * only delta between two subsequent calls makes sense.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.date.getTimeMillis)
  */
 @OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
 public actual fun getTimeMillis(): Long = memScoped {

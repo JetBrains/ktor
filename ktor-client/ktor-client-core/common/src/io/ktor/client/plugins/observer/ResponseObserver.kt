@@ -16,6 +16,8 @@ import kotlin.coroutines.*
 
 /**
  * [ResponseObserver] callback.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.observer.ResponseHandler)
  */
 public typealias ResponseHandler = suspend (HttpResponse) -> Unit
 

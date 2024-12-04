@@ -6,6 +6,8 @@ package io.ktor.server.engine
 
 /**
  * Returns new instance of [EngineConnectorConfig] based on [this] with modified port
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.withPort)
  */
 public actual fun EngineConnectorConfig.withPort(
     otherPort: Int

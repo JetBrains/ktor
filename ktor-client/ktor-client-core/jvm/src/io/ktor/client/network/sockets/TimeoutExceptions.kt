@@ -8,6 +8,8 @@ import java.net.*
 
 /**
  * This exception is thrown in case of connect timeout exceeded.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.network.sockets.ConnectTimeoutException)
  */
 @Suppress("ACTUAL_WITHOUT_EXPECT")
 public actual class ConnectTimeoutException actual constructor(
@@ -19,6 +21,8 @@ internal actual typealias InterruptedIOException = java.io.InterruptedIOExceptio
 
 /**
  * This exception is thrown in case socket timeout (read or write) exceeded.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.network.sockets.SocketTimeoutException)
  */
 public actual typealias SocketTimeoutException = java.net.SocketTimeoutException
 

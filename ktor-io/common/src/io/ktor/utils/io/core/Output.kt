@@ -8,6 +8,8 @@ import io.ktor.utils.io.*
 
 /**
  * This shouldn't be implemented directly. Inherit [Output] instead.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.core.Output)
  */
 @Deprecated(IO_DEPRECATION_MESSAGE, replaceWith = ReplaceWith("Sink", "kotlinx.io"))
 public typealias Output = kotlinx.io.Sink

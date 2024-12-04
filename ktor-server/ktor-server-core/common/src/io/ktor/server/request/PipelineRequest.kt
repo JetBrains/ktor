@@ -13,6 +13,8 @@ import io.ktor.utils.io.*
  * To learn how to handle incoming requests, see [Handling requests](https://ktor.io/docs/requests.html).
  * @see [io.ktor.server.application.ApplicationCall]
  * @see [io.ktor.server.response.ApplicationResponse]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.ApplicationRequest)
  */
 public interface ApplicationRequest {
 
@@ -20,6 +22,8 @@ public interface ApplicationRequest {
      * Provides access to headers for the current request.
      * You can also get access to specific headers using dedicated extension functions,
      * such as [acceptEncoding], [contentType], [cacheControl], and so on.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.ApplicationRequest.headers)
      */
     public val headers: Headers
 
@@ -61,10 +65,14 @@ public interface ApplicationRequest {
  * To learn how to handle incoming requests, see [Handling requests](https://ktor.io/docs/requests.html).
  * @see [PipelineCall]
  * @see [io.ktor.server.response.PipelineResponse]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.PipelineRequest)
  */
 public interface PipelineRequest : ApplicationRequest {
     /**
      * An [PipelineCall] instance this [PipelineRequest] is attached to.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.PipelineRequest.call)
      */
     public override val call: PipelineCall
 
@@ -88,6 +96,8 @@ public interface PipelineRequest : ApplicationRequest {
 
 /**
  * Internal helper function to encode raw parameters. Should not be used directly.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.encodeParameters)
  */
 public fun ApplicationRequest.encodeParameters(parameters: Parameters): Parameters {
     return ParametersBuilder().apply {

@@ -18,6 +18,8 @@ import kotlin.time.Duration.Companion.seconds
 
 /**
  * Helper interface to test client.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.tests.utils.ClientLoader)
  */
 actual abstract class ClientLoader actual constructor(val timeoutSeconds: Int) {
 
@@ -26,6 +28,8 @@ actual abstract class ClientLoader actual constructor(val timeoutSeconds: Int) {
 
     /**
      * Perform test against all clients from dependencies.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.tests.utils.ClientLoader.clientTests)
      */
     @OptIn(ExperimentalCoroutinesApi::class)
     actual fun clientTests(

@@ -25,10 +25,14 @@ internal data class CertificateInfo(
 
 /**
  * Builder for certificate
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.certificates.CertificateBuilder)
  */
 public class CertificateBuilder internal constructor() {
     /**
      * Certificate hash algorithm
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.certificates.CertificateBuilder.hash)
      */
     public var hash: HashAlgorithm = HashAlgorithm.SHA1
 
@@ -144,6 +148,8 @@ public class CertificateBuilder internal constructor() {
 
 /**
  * Builder for key store
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.certificates.KeyStoreBuilder)
  */
 public class KeyStoreBuilder internal constructor() {
     private val certificates = mutableMapOf<String, CertificateInfo>()
@@ -151,6 +157,8 @@ public class KeyStoreBuilder internal constructor() {
     /**
      * Generate a certificate and append to the key store.
      * If there is a certificate with the same [alias] then it will be replaced
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.certificates.KeyStoreBuilder.certificate)
      */
     public fun certificate(alias: String, block: CertificateBuilder.() -> Unit) {
         certificates[alias] = CertificateBuilder().apply(block).build()
@@ -172,6 +180,8 @@ public class KeyStoreBuilder internal constructor() {
 
 /**
  * Create a keystore and configure it in [block] function
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.tls.certificates.buildKeyStore)
  */
 public fun buildKeyStore(block: KeyStoreBuilder.() -> Unit): KeyStore = KeyStoreBuilder().apply(block).build()
 

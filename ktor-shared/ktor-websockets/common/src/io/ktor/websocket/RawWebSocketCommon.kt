@@ -23,6 +23,8 @@ import kotlin.random.*
  * @param maxFrameSize is an initial [maxFrameSize] value for [WebSocketSession]
  * @param masking is an initial [masking] value for [WebSocketSession]
  * @param coroutineContext is a [CoroutineContext] to execute reading/writing from/to connection
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.RawWebSocket)
  */
 @Suppress("FunctionName")
 public expect fun RawWebSocket(

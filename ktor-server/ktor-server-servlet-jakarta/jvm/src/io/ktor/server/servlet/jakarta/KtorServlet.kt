@@ -18,6 +18,8 @@ import kotlin.coroutines.*
 
 /**
  * A base class for servlet engine implementations
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.servlet.jakarta.KtorServlet)
  */
 public abstract class KtorServlet : HttpServlet(), CoroutineScope {
     /**
@@ -149,5 +151,7 @@ public abstract class KtorServlet : HttpServlet(), CoroutineScope {
 
 /**
  * Attribute that is added by ktor servlet to application attributes to hold [ServletContext] instance.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.servlet.jakarta.ServletContextAttribute)
  */
 public val ServletContextAttribute: AttributeKey<ServletContext> = AttributeKey("servlet-context")

@@ -25,6 +25,8 @@ private val AFTER_CALL_PHASE = PipelinePhase("After")
 
 /**
  * [ApplicationEngine] implementation for running in a standalone Netty
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.netty.NettyApplicationEngine)
  */
 public class NettyApplicationEngine(
     environment: ApplicationEnvironment,
@@ -36,11 +38,15 @@ public class NettyApplicationEngine(
 
     /**
      * Configuration for the [NettyApplicationEngine]
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.netty.NettyApplicationEngine.Configuration)
      */
     public class Configuration : BaseApplicationEngine.Configuration() {
 
         /**
          * Number of concurrently running requests from the same http pipeline
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.netty.NettyApplicationEngine.Configuration.runningLimit)
          */
         public var runningLimit: Int = 32
 

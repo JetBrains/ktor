@@ -20,6 +20,8 @@ internal var ApplicationCall.ignoreTrailingSlash: Boolean
 /**
  * A plugin that enables ignoring a trailing slash when resolving URLs.
  * @see [Application.routing]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.IgnoreTrailingSlash)
  */
 public val IgnoreTrailingSlash: ApplicationPlugin<Unit> = createApplicationPlugin("IgnoreTrailingSlash") {
     onCall { call ->

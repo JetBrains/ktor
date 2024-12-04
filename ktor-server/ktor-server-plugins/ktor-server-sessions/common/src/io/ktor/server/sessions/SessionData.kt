@@ -11,6 +11,8 @@ import kotlin.reflect.*
 /**
  * Gets a current session or fails if the [Sessions] plugin is not installed.
  * @throws MissingApplicationPluginException
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.sessions)
  */
 public val ApplicationCall.sessions: CurrentSession
     get() = attributes.getOrNull(SessionDataKey) ?: reportMissingSession()

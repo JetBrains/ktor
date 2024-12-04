@@ -9,10 +9,14 @@ import kotlinx.coroutines.test.*
 
 /**
  * Helper interface to test client.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.tests.utils.ClientLoader)
  */
 expect abstract class ClientLoader(timeoutSeconds: Int = 60) {
     /**
      * Perform test against all clients from dependencies.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.tests.utils.ClientLoader.clientTests)
      */
     fun clientTests(
         skipEngines: List<String> = emptyList(),

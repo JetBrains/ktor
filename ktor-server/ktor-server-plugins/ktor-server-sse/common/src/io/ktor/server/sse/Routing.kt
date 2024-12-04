@@ -18,6 +18,8 @@ import io.ktor.server.routing.*
  * to send events to the connected clients.
  *
  * @see ServerSSESession
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sse.sse)
  */
 public fun Route.sse(path: String, handler: suspend ServerSSESession.() -> Unit) {
     plugin(SSE)

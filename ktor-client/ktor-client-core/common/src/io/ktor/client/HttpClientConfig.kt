@@ -15,6 +15,8 @@ import kotlin.collections.set
  * A mutable [HttpClient] configuration.
  * Learn more about the client's configuration from
  * [Creating and configuring a client](https://ktor.io/docs/create-client.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.HttpClientConfig)
  */
 @KtorDsl
 public class HttpClientConfig<T : HttpClientEngineConfig> {
@@ -28,6 +30,8 @@ public class HttpClientConfig<T : HttpClientEngineConfig> {
      * Allows you to configure engine parameters.
      *
      * You can learn more from [Engines](https://ktor.io/docs/http-client-engines.html).
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.HttpClientConfig.engine)
      */
     public fun engine(block: T.() -> Unit) {
         val oldConfig = engineConfig

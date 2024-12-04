@@ -28,6 +28,8 @@ import io.ktor.client.request.request as requestBuilder
 
 /**
  * Executes a [HttpClient] GET request, with a URL built from [resource] and the information from the [builder]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.resources.get)
  */
 public suspend inline fun <reified T : Any> HttpClient.get(
     resource: T,

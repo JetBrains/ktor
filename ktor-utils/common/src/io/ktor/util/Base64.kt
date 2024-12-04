@@ -19,6 +19,8 @@ private val BASE64_INVERSE_ALPHABET = IntArray(256) {
 
 /**
  * Encode [String] in base64 format and UTF-8 character encoding.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.encodeBase64)
  */
 public fun String.encodeBase64(): String = buildPacket {
     writeText(this@encodeBase64)

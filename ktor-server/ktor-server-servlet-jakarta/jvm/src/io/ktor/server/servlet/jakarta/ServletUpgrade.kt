@@ -15,10 +15,14 @@ import kotlin.coroutines.*
 
 /**
  * Servlet upgrade processing
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.servlet.jakarta.ServletUpgrade)
  */
 public interface ServletUpgrade {
     /**
      * Perform HTTP upgrade using engine's native API
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.servlet.jakarta.ServletUpgrade.performUpgrade)
      */
     public suspend fun performUpgrade(
         upgrade: OutgoingContent.ProtocolUpgrade,
@@ -32,6 +36,8 @@ public interface ServletUpgrade {
 /**
  * The default servlet upgrade implementation using Servlet API.
  * Please note that some servlet containers may not support it or it may be broken.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.servlet.jakarta.DefaultServletUpgrade)
  */
 public object DefaultServletUpgrade : ServletUpgrade {
     @OptIn(InternalAPI::class)

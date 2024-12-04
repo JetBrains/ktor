@@ -9,6 +9,8 @@ import okhttp3.*
 
 /**
  * A configuration for the [OkHttp] client engine.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.okhttp.OkHttpConfig)
  */
 public class OkHttpConfig : HttpClientEngineConfig() {
 
@@ -21,6 +23,8 @@ public class OkHttpConfig : HttpClientEngineConfig() {
 
     /**
      * Allows you to specify a preconfigured [OkHttpClient] instance.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.okhttp.OkHttpConfig.preconfigured)
      */
     public var preconfigured: OkHttpClient? = null
 

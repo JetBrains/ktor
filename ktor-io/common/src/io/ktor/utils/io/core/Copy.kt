@@ -11,6 +11,8 @@ import kotlinx.io.*
  * Depending on actual input and output implementation it could be zero-copy or copy byte per byte.
  * All regular types such as [ByteReadPacket], [BytePacketBuilder], [Input] and [Output]
  * are always optimized so no bytes will be copied.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.core.copyTo)
  */
 @Deprecated(
     "Use transferTo instead",

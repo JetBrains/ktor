@@ -17,6 +17,8 @@ internal const val CHANNEL_MAX_SIZE: Int = 1024 * 1024
 
 /**
  * Sequential (non-concurrent) byte channel implementation
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.ByteChannel)
  */
 public class ByteChannel(public val autoFlush: Boolean = false) : ByteReadChannel, BufferedByteWriteChannel {
     private val flushBuffer: Buffer = Buffer()
@@ -268,6 +270,8 @@ public class ByteChannel(public val autoFlush: Boolean = false) : ByteReadChanne
 
 /**
  * Thrown when a coroutine awaiting I/O is replaced by another.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.ConcurrentIOException)
  */
 public class ConcurrentIOException(
     taskName: String,

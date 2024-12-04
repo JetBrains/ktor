@@ -20,6 +20,8 @@ import io.ktor.server.application.*
  * @param port the port to match against
  *
  * @throws IllegalArgumentException if the port is outside the range of TCP/UDP ports
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.localPort)
  */
 public fun Route.localPort(port: Int, build: Route.() -> Unit): Route {
     require(port in 1..65535) { "Port $port must be a positive number between 1 and 65,535" }

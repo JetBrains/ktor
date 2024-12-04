@@ -10,6 +10,8 @@ import io.ktor.util.converters.DataConversion
 
 /**
  * Object for installing [io.ktor.util.converters.DataConversion] as plugin
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.DataConversion)
  */
 public object DataConversion : HttpClientPlugin<DataConversion.Configuration, DataConversion> {
     override val key: AttributeKey<DataConversion> = AttributeKey("DataConversion")

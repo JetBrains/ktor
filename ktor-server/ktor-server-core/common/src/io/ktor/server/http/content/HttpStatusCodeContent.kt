@@ -10,6 +10,8 @@ import io.ktor.http.content.*
 /**
  * Represents a simple status code response with no content
  * @param value - status code to be sent
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.content.HttpStatusCodeContent)
  */
 public class HttpStatusCodeContent(private val value: HttpStatusCode) : OutgoingContent.NoContent() {
     override val status: HttpStatusCode

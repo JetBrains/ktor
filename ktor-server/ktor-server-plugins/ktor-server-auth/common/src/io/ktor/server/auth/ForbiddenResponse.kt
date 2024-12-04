@@ -11,6 +11,8 @@ import io.ktor.http.content.*
 /**
  * Response content with the `403 Forbidden` status code and the `WWW-Authenticate` header of supplied [challenges]
  * @param challenges to be passed in the `WWW-Authenticate` header.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.ForbiddenResponse)
  */
 public class ForbiddenResponse(public vararg val challenges: HttpAuthHeader) : OutgoingContent.NoContent() {
     public constructor(challenge: HttpAuthHeader?) : this(*if (challenge == null) emptyArray() else arrayOf(challenge))

@@ -10,6 +10,8 @@ import kotlin.time.Duration.Companion.seconds
 
 /**
  * Duration to tell the client to keep CORS options.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.cors.maxAgeDuration)
  */
 public var CORSConfig.maxAgeDuration: Duration
     get() = maxAgeInSeconds.seconds

@@ -15,6 +15,8 @@ import kotlin.coroutines.*
 
 /**
  * Creates an instance of [KtorLegacyNSURLSessionDelegate]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.darwin.KtorLegacyNSURLSessionDelegate)
  */
 @OptIn(UnsafeNumber::class)
 public fun KtorLegacyNSURLSessionDelegate(): KtorLegacyNSURLSessionDelegate {

@@ -14,6 +14,8 @@ import kotlinx.io.Buffer
  *
  * Concurrent unsafe: the same memory could be shared between different instances of [Buffer] however you can't
  * read/write using the same [Buffer] instance from different threads.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.core.Buffer)
  */
 @Deprecated(
     IO_DEPRECATION_MESSAGE,

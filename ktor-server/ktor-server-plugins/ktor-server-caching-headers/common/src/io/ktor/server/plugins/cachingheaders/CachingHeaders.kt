@@ -12,6 +12,8 @@ import io.ktor.utils.io.*
 
 /**
  * A configuration for the [CachingHeaders] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.cachingheaders.CachingHeadersConfig)
  */
 @KtorDsl
 public class CachingHeadersConfig {
@@ -48,6 +50,8 @@ public class CachingHeadersConfig {
  * ```
  *
  * You can learn more from [Caching headers](https://ktor.io/docs/caching.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.cachingheaders.CachingHeaders)
  */
 public val CachingHeaders: RouteScopedPlugin<CachingHeadersConfig> = createRouteScopedPlugin(
     "Caching Headers",

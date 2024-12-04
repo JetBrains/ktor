@@ -27,6 +27,8 @@ private val notFound404_11 = RequestResponseBuilder().apply {
 
 /**
  * This is just an example demonstrating how to create CIO low-level http server
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.tests.server.cio.main)
  */
 @OptIn(DelicateCoroutinesApi::class)
 fun main() {

@@ -16,6 +16,8 @@ import kotlin.io.use
  * your async code and freeze the whole application when runs on a pool that is not intended for blocking operations.
  * This is why [coroutineContext] should have [Dispatchers.IO] or
  * a coroutine dispatcher that is properly configured for blocking IO.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.cio.readChannel)
  */
 public fun Path.readChannel(
     start: Long = 0,

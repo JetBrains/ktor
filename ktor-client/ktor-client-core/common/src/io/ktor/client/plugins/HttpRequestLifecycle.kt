@@ -15,6 +15,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.HttpRequestLifecyc
 /**
  * A client's HTTP plugin that sets up [HttpRequestBuilder.executionContext] and completes it when the pipeline is fully
  * processed.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.HttpRequestLifecycle)
  */
 public val HttpRequestLifecycle: ClientPlugin<Unit> = createClientPlugin("RequestLifecycle") {
     on(SetupRequestContext) { request, proceed ->

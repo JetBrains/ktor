@@ -8,6 +8,8 @@ import io.ktor.utils.io.charsets.*
 
 /**
  * Parse URL query parameters. Shouldn't be used for urlencoded forms because of `+` character.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.parseUrlEncodedParameters)
  */
 public fun String.parseUrlEncodedParameters(defaultEncoding: Charset = Charsets.UTF_8, limit: Int = 1000): Parameters {
     val parameters: List<Pair<String, String>> =

@@ -18,6 +18,8 @@ internal const val NONCE_SIZE_IN_BYTES = 16
 
 /**
  * Encode [bytes] as a HEX string with no spaces, newlines and `0x` prefixes.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.hex)
  */
 public fun hex(bytes: ByteArray): String {
     val result = CharArray(bytes.size * 2)

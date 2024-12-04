@@ -17,6 +17,8 @@ import kotlin.contracts.*
  * @param key multipart name
  * @param value content, could be [String], [Number], [ByteArray], [ByteReadPacket] or [InputProvider]
  * @param headers part headers, note that some servers may fail if an unknown header provided
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.forms.FormPart)
  */
 public data class FormPart<T : Any>(val key: String, val value: T, val headers: Headers = Headers.Empty)
 
@@ -24,6 +26,8 @@ public data class FormPart<T : Any>(val key: String, val value: T, val headers: 
  * Builds a multipart form from [values].
  *
  * Example: [Upload a file](https://ktor.io/docs/request.html#upload_file).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.forms.formData)
  */
 
 public fun formData(vararg values: FormPart<*>): List<PartData> {

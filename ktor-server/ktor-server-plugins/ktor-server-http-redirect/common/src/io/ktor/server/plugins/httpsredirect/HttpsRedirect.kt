@@ -13,11 +13,15 @@ import io.ktor.utils.io.*
 
 /**
  * A configuration for the [HttpsRedirect] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.httpsredirect.HttpsRedirectConfig)
  */
 @KtorDsl
 public class HttpsRedirectConfig {
     /**
      * Specifies an HTTPS port (443 by default) used to redirect HTTP requests.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.httpsredirect.HttpsRedirectConfig.sslPort)
      */
     public var sslPort: Int = URLProtocol.HTTPS.defaultPort
 
@@ -70,6 +74,8 @@ public class HttpsRedirectConfig {
  * ```
  *
  * You can learn more from [HttpsRedirect](https://ktor.io/docs/https-redirect.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.httpsredirect.HttpsRedirect)
  */
 public val HttpsRedirect: ApplicationPlugin<HttpsRedirectConfig> = createApplicationPlugin(
     "HttpsRedirect",

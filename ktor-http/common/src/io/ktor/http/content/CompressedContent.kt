@@ -13,6 +13,8 @@ import kotlin.coroutines.*
 
 /**
  * Returns [OutgoingContent] compressed with [contentEncoder] if possible.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.compressed)
  */
 public fun OutgoingContent.compressed(
     contentEncoder: ContentEncoder,

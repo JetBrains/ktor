@@ -22,6 +22,8 @@ public expect abstract class Charset {
 
 /**
  * Check if a charset is supported by the current platform.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.charsets.isSupported)
  */
 public expect fun Charsets.isSupported(name: String): Boolean
 

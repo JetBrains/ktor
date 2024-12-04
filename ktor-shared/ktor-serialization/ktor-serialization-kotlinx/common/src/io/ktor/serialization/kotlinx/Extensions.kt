@@ -18,6 +18,8 @@ internal fun extensions(format: SerialFormat): List<KotlinxSerializationExtensio
 
 /**
  * A factory for [KotlinxSerializationExtension]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.kotlinx.KotlinxSerializationExtensionProvider)
  */
 public interface KotlinxSerializationExtensionProvider {
     public fun extension(format: SerialFormat): KotlinxSerializationExtension?
@@ -25,6 +27,8 @@ public interface KotlinxSerializationExtensionProvider {
 
 /**
  * An extension for [KotlinxSerializationConverter] that can add format-specific logic
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.kotlinx.KotlinxSerializationExtension)
  */
 public interface KotlinxSerializationExtension {
 

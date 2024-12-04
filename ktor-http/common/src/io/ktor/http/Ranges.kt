@@ -10,27 +10,37 @@ import kotlin.math.*
 /**
  * Possible content range units: bytes and none
  * @property unitToken Lower-case unit name
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.RangeUnits)
  */
 public enum class RangeUnits(public val unitToken: String) {
     /**
      * Range unit `bytes`
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.RangeUnits.Bytes)
      */
     Bytes("bytes"),
 
     /**
      * Range unit `none`
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.RangeUnits.None)
      */
     None("none")
 }
 
 /**
  * Represents a `Range` header's particular range
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.ContentRange)
  */
 public sealed class ContentRange {
     /**
      * Represents a `Content-Range` bounded from both sides
      * @property from index from which the content should begin
      * @property to the last index the content should end at (inclusive)
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.ContentRange.Bounded)
      */
     public data class Bounded(val from: Long, val to: Long) : ContentRange() {
         override fun toString(): String = "$from-$to"
@@ -39,6 +49,8 @@ public sealed class ContentRange {
     /**
      * Represents a `Content-Range` bounded at the beginning (skip first bytes, show tail)
      * @property from index from which the content should begin
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.ContentRange.TailFrom)
      */
     public data class TailFrom(val from: Long) : ContentRange() {
         override fun toString(): String = "$from-"
@@ -47,6 +59,8 @@ public sealed class ContentRange {
     /**
      * Represents a `Content-Range` bounded by tail size
      * @property lastCount number of tail bytes
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.ContentRange.Suffix)
      */
     public data class Suffix(val lastCount: Long) : ContentRange() {
         override fun toString(): String = "-$lastCount"
@@ -55,6 +69,8 @@ public sealed class ContentRange {
 
 /**
  * Parse `Range` header value
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.parseRangesSpecifier)
  */
 public fun parseRangesSpecifier(rangeSpec: String): RangesSpecifier? {
     try {

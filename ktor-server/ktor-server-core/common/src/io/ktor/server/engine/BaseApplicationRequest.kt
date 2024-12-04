@@ -12,6 +12,8 @@ import kotlinx.atomicfu.*
 
 /**
  * Base class for implementing [PipelineRequest]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.BaseApplicationRequest)
  */
 public abstract class BaseApplicationRequest(final override val call: PipelineCall) : PipelineRequest {
 

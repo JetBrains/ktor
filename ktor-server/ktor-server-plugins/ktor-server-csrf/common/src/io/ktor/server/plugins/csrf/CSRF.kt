@@ -31,6 +31,8 @@ import io.ktor.server.request.*
  *  ```
  *
  * @see io.ktor.server.sessions.SameSite for preventing cookies from being used when navigating from external sites
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.csrf.CSRF)
  */
 public val CSRF: RouteScopedPlugin<CSRFConfig> = createRouteScopedPlugin("CSRF", ::CSRFConfig) {
     val checkHost = pluginConfig.originMatchesHost

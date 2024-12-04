@@ -22,6 +22,8 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.websocket.WebSocket")
 /**
  * Ping interval meaning pinger is disabled.
  * @see DefaultWebSocketSession.pingIntervalMillis
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.PINGER_DISABLED)
  */
 public const val PINGER_DISABLED: Long = 0
 

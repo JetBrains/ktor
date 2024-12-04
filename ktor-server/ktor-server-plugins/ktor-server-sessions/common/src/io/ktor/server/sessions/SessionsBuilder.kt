@@ -10,6 +10,8 @@ import kotlin.reflect.*
 /**
  * Configures [Sessions] to pass a session identifier in cookies using the [name] `Set-Cookie` attribute and
  * store the serialized session's data in the server [storage].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.cookie)
  */
 public inline fun <reified S : Any> SessionsConfig.cookie(name: String, storage: SessionStorage) {
     cookie<S>(name, typeInfo<S>(), storage)

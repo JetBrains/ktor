@@ -20,6 +20,8 @@ import kotlin.io.path.*
  * Supported pre compressed file types and associated extensions
  *
  * **See Also:** [Accept-Encoding](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.content.CompressedFileType)
  */
 public enum class CompressedFileType(public val extension: String, public val encoding: String = extension) {
     BROTLI("br"),

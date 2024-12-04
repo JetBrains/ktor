@@ -12,10 +12,14 @@ import io.ktor.http.auth.*
 
 /**
  * An authentication provider.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.auth.AuthProvider)
  */
 public interface AuthProvider {
     /**
      * Waits for [HttpStatusCode.Unauthorized] to send credentials.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.auth.AuthProvider.sendWithoutRequest)
      */
     @Deprecated("Please use sendWithoutRequest function instead", level = DeprecationLevel.ERROR)
     public val sendWithoutRequest: Boolean

@@ -8,6 +8,8 @@ import io.ktor.http.*
 
 /**
  * Builds an instance of [Headers] using the [block] function.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.utils.buildHeaders)
  */
 public fun buildHeaders(block: HeadersBuilder.() -> Unit = {}): Headers =
     HeadersBuilder().apply(block).build()

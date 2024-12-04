@@ -9,6 +9,8 @@ package io.ktor.http.parsing
  * a string to one of the specific types, but that the string does not
  * have the appropriate format.
  * Please check the message for more details on the failure.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.parsing.ParseException)
  * */
 public class ParseException(
     override val message: String,

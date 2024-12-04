@@ -13,6 +13,8 @@ import kotlin.coroutines.*
 
 /**
  * Default [HttpRequest] implementation.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.DefaultHttpRequest)
  */
 @InternalAPI
 public open class DefaultHttpRequest(override val call: HttpClientCall, data: HttpRequestData) : HttpRequest {

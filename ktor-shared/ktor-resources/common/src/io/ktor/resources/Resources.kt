@@ -10,11 +10,15 @@ import kotlinx.serialization.modules.*
 
 /**
  * Resources plugin instance.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.resources.Resources)
  */
 public class Resources(configuration: Configuration) {
 
     /**
      * The format instance used to (de)serialize resources instances
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.resources.Resources.resourcesFormat)
      */
     public val resourcesFormat: ResourcesFormat = ResourcesFormat(configuration.serializersModule)
 

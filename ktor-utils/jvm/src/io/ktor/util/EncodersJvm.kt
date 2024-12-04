@@ -37,6 +37,8 @@ private infix fun Int.has(flag: Int) = this and flag != 0
 
 /**
  * Implementation of Deflate [Encoder].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.Deflate)
  */
 public val Deflate: Encoder = object : Encoder {
     override fun encode(source: ByteReadChannel, coroutineContext: CoroutineContext): ByteReadChannel =

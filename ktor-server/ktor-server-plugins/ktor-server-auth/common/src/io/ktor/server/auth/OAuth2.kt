@@ -270,6 +270,8 @@ private fun decodeContent(content: String, contentType: ContentType): Parameters
  * Implements Resource Owner Password Credentials Grant.
  *
  * Takes [UserPasswordCredential] and validates it using OAuth2 sequence, provides [OAuthAccessTokenResponse.OAuth2] if succeeds.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.verifyWithOAuth2)
  */
 public suspend fun verifyWithOAuth2(
     credential: UserPasswordCredential,

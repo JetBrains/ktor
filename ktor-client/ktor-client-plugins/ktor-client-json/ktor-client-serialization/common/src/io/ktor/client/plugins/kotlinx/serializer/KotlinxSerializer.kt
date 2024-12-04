@@ -18,6 +18,8 @@ import kotlinx.serialization.modules.*
 
 /**
  * A [JsonSerializer] implemented for kotlinx [Serializable] classes.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.kotlinx.serializer.KotlinxSerializer)
  */
 @Deprecated(
     "Please use ContentNegotiation plugin and its converters: https://ktor.io/docs/migration-to-20x.html#serialization-client", // ktlint-disable max-line-length

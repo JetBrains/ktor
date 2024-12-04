@@ -34,6 +34,8 @@ import io.ktor.http.*
  * @return [HttpResponse] The response received from the server after executing the request.
  *
  * For more details, see [Making requests](https://ktor.io/docs/request.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.request.request)
  */
 public suspend inline fun HttpClient.request(
     builder: HttpRequestBuilder = HttpRequestBuilder()

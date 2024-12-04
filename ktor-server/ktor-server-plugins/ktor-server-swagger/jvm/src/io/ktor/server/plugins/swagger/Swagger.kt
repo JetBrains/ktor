@@ -20,6 +20,8 @@ import java.io.*
  * This method tries to lookup [swaggerFile] in the resources first, and if it's not found, it will try to read it from
  * the file system using [java.io.File].
  *
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.swagger.swaggerUI)
  */
 public fun Route.swaggerUI(
     path: String,

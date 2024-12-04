@@ -17,6 +17,8 @@ import io.ktor.utils.io.*
 
 /**
  * An utility class used to build a [ClientPlugin] instance.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.ClientPluginBuilder)
  **/
 @KtorDsl
 public class ClientPluginBuilder<PluginConfig : Any> internal constructor(
@@ -43,6 +45,8 @@ public class ClientPluginBuilder<PluginConfig : Any> internal constructor(
      * @see [createClientPlugin]
      *
      * @param block An action that needs to be executed when a client creates an HTTP request.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.api.ClientPluginBuilder.onRequest)
      */
     public fun onRequest(
         block: suspend OnRequestContext.(request: HttpRequestBuilder, content: Any) -> Unit

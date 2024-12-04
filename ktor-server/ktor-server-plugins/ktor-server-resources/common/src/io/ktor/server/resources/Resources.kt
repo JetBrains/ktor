@@ -43,6 +43,8 @@ import io.ktor.resources.Resources as ResourcesCore
  * Client: [Type-safe requests](https://ktor.io/docs/type-safe-request.html)
  *
  * @see Resource
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.resources.Resources)
  */
 public object Resources : BaseApplicationPlugin<Application, ResourcesCore.Configuration, ResourcesCore> {
 
@@ -58,6 +60,8 @@ public object Resources : BaseApplicationPlugin<Application, ResourcesCore.Confi
  * Constructs a URL for [resource].
  *
  * The class of the [resource] instance **must** be annotated with [Resource].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.resources.href)
  */
 public inline fun <reified T : Any> Application.href(resource: T): String {
     return href(plugin(Resources).resourcesFormat, resource)

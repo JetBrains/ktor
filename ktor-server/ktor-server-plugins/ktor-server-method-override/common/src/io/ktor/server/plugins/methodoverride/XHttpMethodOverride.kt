@@ -19,6 +19,8 @@ import io.ktor.utils.io.*
  * Ktor will process this request using the `delete` route handler.
  *
  * To learn more, see [XHttpMethodOverride](https://ktor.io/docs/x-http-method-override.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.methodoverride.XHttpMethodOverride)
  */
 public val XHttpMethodOverride: ApplicationPlugin<XHttpMethodOverrideConfig> = createApplicationPlugin(
     "XHttpMethodOverride",

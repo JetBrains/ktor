@@ -8,11 +8,15 @@ import io.ktor.util.*
 
 /**
  * Represents HTTP parameters as a map from case-insensitive names to collection of [String] values
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.Parameters)
  */
 public interface Parameters : StringValues {
     public companion object {
         /**
          * Empty [Parameters] instance
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.Parameters.Companion.Empty)
          */
         public val Empty: Parameters = EmptyParameters
 

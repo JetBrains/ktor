@@ -8,5 +8,7 @@ import io.ktor.util.*
 
 /**
  * Generates a secure random session ID
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.generateSessionId)
  */
 public fun generateSessionId(): String = generateNonce() + generateNonce()

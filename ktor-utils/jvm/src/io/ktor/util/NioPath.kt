@@ -10,6 +10,8 @@ import java.nio.file.*
 /**
  * Append a [relativePath] safely that means that adding any extra `..` path elements will not let
  * access anything out of the reference directory (unless you have symbolic or hard links or multiple mount points)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.combineSafe)
  */
 public fun Path.combineSafe(relativePath: Path): Path {
     val normalized = relativePath.normalizeAndRelativize()

@@ -11,6 +11,8 @@ import kotlin.jvm.*
  * A WebSocket close reason.
  * @property code - close reason code as per RFC 6455, recommended to be one of [CloseReason.Codes]
  * @property message - a close reason message, could be empty
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.CloseReason)
  */
 public data class CloseReason(val code: Short, val message: String) {
     public constructor(code: Codes, message: String) : this(code.code, message)

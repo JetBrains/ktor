@@ -15,6 +15,8 @@ import java.io.*
  * OutgoingContent representing a local [file] with a specified [contentType], [expires] date and [caching]
  *
  * @param file specifies the File to be served to a client
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.content.LocalFileContent)
  */
 public class LocalFileContent(
     public val file: File,
@@ -30,6 +32,8 @@ public class LocalFileContent(
 
 /**
  * Creates an instance of [LocalFileContent] for a file designated by [relativePath] in a [baseDir]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.content.LocalFileContent)
  */
 public fun LocalFileContent(
     baseDir: File,

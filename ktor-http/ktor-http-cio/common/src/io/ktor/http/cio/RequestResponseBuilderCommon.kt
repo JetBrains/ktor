@@ -10,10 +10,14 @@ import kotlinx.io.*
 
 /**
  * Builds an HTTP request or response
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.RequestResponseBuilder)
  */
 public expect class RequestResponseBuilder() {
     /**
      * Append response status line
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.RequestResponseBuilder.responseLine)
      */
     public fun responseLine(version: CharSequence, status: Int, statusText: CharSequence)
 

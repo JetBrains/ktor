@@ -14,6 +14,8 @@ import io.ktor.utils.io.*
  * Produces HTTP/2 push from server to client or sets HTTP/1.x hint header
  * or does nothing.
  * Exact behaviour is up to engine implementation.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.push)
  */
 @UseHttp2Push
 public fun ApplicationCall.push(pathAndQuery: String) {

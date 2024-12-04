@@ -25,6 +25,8 @@ import kotlinx.coroutines.*
  *
  * @param environment instance of [ApplicationEnvironment] for this engine
  * @param pipeline pipeline to use with this engine
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.BaseApplicationEngine)
  */
 public abstract class BaseApplicationEngine(
     public final override val environment: ApplicationEnvironment,
@@ -35,6 +37,8 @@ public abstract class BaseApplicationEngine(
 
     /**
      * Configuration for the [BaseApplicationEngine].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.BaseApplicationEngine.Configuration)
      */
     public open class Configuration : ApplicationEngine.Configuration()
 

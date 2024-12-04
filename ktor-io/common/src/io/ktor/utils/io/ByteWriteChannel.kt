@@ -13,6 +13,8 @@ import kotlinx.io.*
  *
  * Operations on this channel cannot be invoked concurrently, unless explicitly specified otherwise
  * in the description. Exceptions are [close] and [flush].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.ByteWriteChannel)
  */
 public interface ByteWriteChannel {
 

@@ -10,6 +10,8 @@ import kotlin.coroutines.*
 
 /**
  * Initialize plugins debug mode for [block]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.debug.initContextInDebugMode)
  */
 public suspend fun <T> initContextInDebugMode(
     block: suspend () -> T

@@ -13,10 +13,14 @@ import kotlinx.coroutines.*
  * An [ServerSSESession] allows the server to send [ServerSentEvent] to the client over a single HTTP connection.
  *
  * @see [SSE]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sse.ServerSSESession)
  */
 public interface ServerSSESession : CoroutineScope {
     /**
      * Associated received [call] that originating this session.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sse.ServerSSESession.call)
      */
     public val call: ApplicationCall
 

@@ -21,6 +21,8 @@ private val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.compression.Conten
 
 /**
  * A configuration for the [ContentEncoding] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.compression.ContentEncodingConfig)
  */
 @KtorDsl
 public class ContentEncodingConfig {
@@ -86,6 +88,8 @@ public class ContentEncodingConfig {
  * - Decodes content received from a server to obtain the original payload.
  *
  * You can learn more from [Content encoding](https://ktor.io/docs/content-encoding.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.compression.ContentEncoding)
  */
 @OptIn(InternalAPI::class)
 public val ContentEncoding: ClientPlugin<ContentEncodingConfig> =

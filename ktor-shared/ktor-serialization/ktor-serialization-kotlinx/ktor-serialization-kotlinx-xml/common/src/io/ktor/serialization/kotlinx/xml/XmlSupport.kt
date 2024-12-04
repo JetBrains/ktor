@@ -20,6 +20,8 @@ import nl.adaptivity.xmlutil.serialization.*
  * - Polymorphic serialization is disabled.
  *
  * See [XML] for more details.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.kotlinx.xml.DefaultXml)
  */
 public val DefaultXml: XML = XML {
     repairNamespaces = true

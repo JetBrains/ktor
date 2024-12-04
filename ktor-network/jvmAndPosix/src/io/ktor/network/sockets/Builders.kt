@@ -7,6 +7,8 @@ import io.ktor.network.selector.*
 
 /**
  * Start building a socket
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.sockets.aSocket)
  */
 public fun aSocket(selector: SelectorManager): SocketBuilder = SocketBuilder(selector, SocketOptions.create())
 

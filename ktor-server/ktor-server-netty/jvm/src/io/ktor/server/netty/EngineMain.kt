@@ -9,11 +9,15 @@ import io.ktor.server.engine.*
 
 /**
  * Netty engine
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.netty.EngineMain)
  */
 public object EngineMain {
     /**
      * Main function for starting EngineMain with Netty
      * Creates an embedded Netty application with an environment built from command line arguments.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.netty.EngineMain.main)
      */
     @JvmStatic
     public fun main(args: Array<String>) {

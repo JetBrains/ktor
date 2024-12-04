@@ -22,6 +22,8 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.server.plugins.contentnegotiatio
 /**
  * A functional type for accepted content types contributor.
  * @see ContentNegotiation.Configuration.accept
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.contentnegotiation.AcceptHeaderContributor)
  */
 public typealias AcceptHeaderContributor = (
     call: ApplicationCall,

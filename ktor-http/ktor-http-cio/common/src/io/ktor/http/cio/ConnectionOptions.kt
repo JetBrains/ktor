@@ -12,6 +12,8 @@ import io.ktor.http.cio.internals.*
  * @property keepAlive `true` for `Connection: keep-alive`
  * @property upgrade `true` for `Connection: upgrade`
  * @property extraOptions a list of extra connection header options other than close, keep-alive and upgrade
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.ConnectionOptions)
  */
 public class ConnectionOptions(
     public val close: Boolean = false,
@@ -22,6 +24,8 @@ public class ConnectionOptions(
     public companion object {
         /**
          * An instance for `Connection: close`
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.ConnectionOptions.Companion.Close)
          */
         public val Close: ConnectionOptions = ConnectionOptions(close = true)
 

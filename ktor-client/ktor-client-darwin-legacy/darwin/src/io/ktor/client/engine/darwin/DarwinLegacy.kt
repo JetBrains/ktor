@@ -31,6 +31,8 @@ private val initHook = DarwinLegacy
  * ```
  *
  * You can learn more about client engines from [Engines](https://ktor.io/docs/http-client-engines.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.darwin.DarwinLegacy)
  */
 @OptIn(InternalAPI::class)
 public data object DarwinLegacy : HttpClientEngineFactory<DarwinLegacyClientEngineConfig> {

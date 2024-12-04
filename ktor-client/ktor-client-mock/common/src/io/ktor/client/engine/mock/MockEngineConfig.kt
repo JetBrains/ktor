@@ -13,6 +13,8 @@ import kotlin.coroutines.*
 
 /**
  * Single [HttpClientCall] to [HttpResponse] mapper.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.mock.MockRequestHandler)
  */
 public typealias MockRequestHandler = suspend MockRequestHandleScope.(request: HttpRequestData) -> HttpResponseData
 

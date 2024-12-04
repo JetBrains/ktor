@@ -18,6 +18,8 @@ import java.io.*
 
 /**
  * A jackson converter for the [WebSockets] plugin
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.jackson.JacksonWebsocketContentConverter)
  */
 public class JacksonWebsocketContentConverter(
     private val objectmapper: ObjectMapper = jacksonObjectMapper()

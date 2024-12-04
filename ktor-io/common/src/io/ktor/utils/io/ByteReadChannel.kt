@@ -11,6 +11,8 @@ import kotlinx.io.*
  * This is a **single-reader channel**.
  *
  * Operations on this channel cannot be invoked concurrently.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.ByteReadChannel)
  */
 public interface ByteReadChannel {
 

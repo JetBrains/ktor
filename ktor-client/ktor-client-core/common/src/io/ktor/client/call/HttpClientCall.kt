@@ -22,6 +22,8 @@ import kotlin.reflect.*
  * A pair of a [request] and [response] for a specific [HttpClient].
  *
  * @property client the client that executed the call.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.call.HttpClientCall)
  */
 public open class HttpClientCall(
     public val client: HttpClient
@@ -130,6 +132,8 @@ public open class HttpClientCall(
  *
  * @throws NoTransformationFoundException If no transformation is found for the type [T].
  * @throws DoubleReceiveException If already called [body].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.call.body)
  */
 public suspend inline fun <reified T> HttpClientCall.body(): T = bodyNullable(typeInfo<T>()) as T
 

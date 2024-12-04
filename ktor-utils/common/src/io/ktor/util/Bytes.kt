@@ -8,6 +8,8 @@ import io.ktor.utils.io.*
 
 /**
  * Read [Short] in network order(BE) with specified [offset] from [ByteArray].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.readShort)
  */
 @InternalAPI
 public fun ByteArray.readShort(offset: Int): Short {

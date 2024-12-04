@@ -8,6 +8,8 @@ import io.ktor.server.application.*
 
 /**
  * A predicate function that accepts an application call and returns `true` or `false`.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.auth.ApplicationCallPredicate)
  */
 public typealias ApplicationCallPredicate = (ApplicationCall) -> Boolean
 

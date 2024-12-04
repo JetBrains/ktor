@@ -9,6 +9,8 @@ import kotlin.contracts.*
 
 /**
  * Build a byte packet in [block] lambda. Creates a temporary builder and releases it in case of failure
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.utils.io.core.buildPacket)
  */
 @OptIn(ExperimentalContracts::class)
 public inline fun buildPacket(block: Sink.() -> Unit): Source {

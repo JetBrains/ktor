@@ -10,10 +10,14 @@ import kotlin.jvm.*
 
 /**
  * Default engine with main function that starts CIO engine using application.conf
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.EngineMain)
  */
 public object EngineMain {
     /**
      * CIO engine entry point
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.EngineMain.main)
      */
     @JvmStatic
     public fun main(args: Array<String>) {

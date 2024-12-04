@@ -6,12 +6,16 @@ package io.ktor.server.plugins.swagger
 
 /**
  * A configuration for the Swagger UI endpoint.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.swagger.SwaggerConfig)
  */
 public class SwaggerConfig {
     internal var customStyle: String? = null
 
     /**
      * Specifies a Swagger UI version to use.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.swagger.SwaggerConfig.version)
      */
     public var version: String = "5.17.12"
 

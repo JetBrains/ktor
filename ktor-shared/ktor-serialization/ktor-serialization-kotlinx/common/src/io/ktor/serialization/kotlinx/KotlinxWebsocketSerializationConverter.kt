@@ -18,6 +18,8 @@ import kotlinx.serialization.*
 /**
  * Creates a converter for WebSocket serializing with the specified string [format] and
  * [defaultCharset] (optional, usually it is UTF-8).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.serialization.kotlinx.KotlinxWebsocketSerializationConverter)
  */
 @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
 public class KotlinxWebsocketSerializationConverter(

@@ -11,6 +11,8 @@ import kotlinx.atomicfu.*
 /**
  * This is an internal implementation for copy-on-write concurrent map.
  * It is very limited since it is not intended as general purpose implementation.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.collections.CopyOnWriteHashMap)
  */
 @InternalAPI
 public class CopyOnWriteHashMap<K : Any, V : Any> {
@@ -18,6 +20,8 @@ public class CopyOnWriteHashMap<K : Any, V : Any> {
 
     /**
      * @see MutableMap.put
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.collections.CopyOnWriteHashMap.put)
      */
     public fun put(key: K, value: V): V? {
         do {

@@ -11,6 +11,8 @@ import kotlinx.coroutines.*
 
 /**
  * [ApplicationEngine] implementation for running in a standalone Jetty
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.jetty.jakarta.JettyApplicationEngine)
  */
 public class JettyApplicationEngine(
     environment: ApplicationEnvironment,

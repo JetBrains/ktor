@@ -20,6 +20,8 @@ import java.util.concurrent.ConcurrentHashMap
  * @param mimeResolve is a function that resolves content type by file extension, optional
  *
  * @return [LocalFileContent] or [JarFileContent] or `null`
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.http.content.resolveResource)
  */
 @OptIn(InternalAPI::class)
 public fun ApplicationCall.resolveResource(

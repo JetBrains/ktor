@@ -16,6 +16,8 @@ import kotlin.coroutines.*
  * An application call handled by [RoutingRoot].
  * @property call original call from [io.ktor.server.engine.ApplicationEngine]
  * @property route is the selected route
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingPipelineCall)
  */
 public class RoutingPipelineCall(
     public val engineCall: PipelineCall,
@@ -47,6 +49,8 @@ public class RoutingPipelineCall(
 
 /**
  * An application request handled by [RoutingRoot].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingPipelineRequest)
  */
 public class RoutingPipelineRequest(
     override val call: RoutingPipelineCall,
@@ -56,6 +60,8 @@ public class RoutingPipelineRequest(
 
 /**
  * An application response handled by [RoutingRoot].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.routing.RoutingPipelineResponse)
  */
 public class RoutingPipelineResponse(
     override val call: RoutingPipelineCall,

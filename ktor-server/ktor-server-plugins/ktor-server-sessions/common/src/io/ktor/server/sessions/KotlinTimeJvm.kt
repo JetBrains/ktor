@@ -12,6 +12,8 @@ import kotlin.time.Duration.Companion.seconds
  * Cookie time to live duration or `null` for session cookies.
  * Session cookies are client-driven. For example, a web browser usually removes session
  * cookies at browser or window close unless the session is restored.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.maxAge)
  */
 public var CookieConfiguration.maxAge: Duration?
     get() = maxAgeInSeconds?.seconds

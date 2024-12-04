@@ -18,6 +18,8 @@ import java.io.*
  *
  * The documentation is generated using [StaticHtml2Codegen] by default. It can be customized using config in [block].
  * See [OpenAPIConfig] for more details.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.openapi.openAPI)
  */
 public fun Route.openAPI(
     path: String,

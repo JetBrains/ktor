@@ -8,6 +8,8 @@ import java.util.concurrent.*
 
 /**
  * Create JVM specific attributes instance.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.Attributes)
  */
 public actual fun Attributes(concurrent: Boolean): Attributes =
     if (concurrent) ConcurrentSafeAttributes() else HashMapAttributes()

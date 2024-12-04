@@ -6,6 +6,8 @@ package io.ktor.util
 
 /**
  * Generates a nonce string 32 characters long. Could block if the system's entropy source is empty
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.generateNonce)
  */
 public actual fun generateNonce(): String {
     val bytes = ByteArray(16)

@@ -12,6 +12,8 @@ import java.io.*
 /**
  * [OutgoingContent] to respond with [OutputStream].
  * The stream would be automatically closed after [body] finish.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.OutputStreamContent)
  */
 public class OutputStreamContent(
     private val body: suspend OutputStream.() -> Unit,

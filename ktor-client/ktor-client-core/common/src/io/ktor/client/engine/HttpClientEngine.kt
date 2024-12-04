@@ -20,10 +20,14 @@ internal val CLIENT_CONFIG = AttributeKey<HttpClientConfig<*>>("client-config")
 
 /**
  * Serves as the base interface for an [HttpClient]'s engine.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.HttpClientEngine)
  */
 public interface HttpClientEngine : CoroutineScope, Closeable {
     /**
      * Specifies [CoroutineDispatcher] for I/O operations.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.HttpClientEngine.dispatcher)
      */
     public val dispatcher: CoroutineDispatcher
 
@@ -109,10 +113,14 @@ public interface HttpClientEngine : CoroutineScope, Closeable {
 
 /**
  * A factory of [HttpClientEngine] with a specific [T] of [HttpClientEngineConfig].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.HttpClientEngineFactory)
  */
 public interface HttpClientEngineFactory<out T : HttpClientEngineConfig> {
     /**
      * Creates a new [HttpClientEngine] optionally specifying a [block] configuring [T].
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.HttpClientEngineFactory.create)
      */
     public fun create(block: T.() -> Unit = {}): HttpClientEngine
 }
@@ -120,6 +128,8 @@ public interface HttpClientEngineFactory<out T : HttpClientEngineConfig> {
 /**
  * Creates a new [HttpClientEngineFactory] based on this one
  * with further configurations from the [nested] block.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.config)
  */
 public fun <T : HttpClientEngineConfig> HttpClientEngineFactory<T>.config(
     nested: T.() -> Unit

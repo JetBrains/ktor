@@ -10,6 +10,8 @@ import kotlin.io.path.*
 
 /**
  * @return default content type for [file] by its extension
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.defaultForFile)
  */
 public fun ContentType.Companion.defaultForFile(file: File): ContentType =
     ContentType.fromFileExtension(file.extension).selectDefault()

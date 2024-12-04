@@ -15,16 +15,22 @@ import io.ktor.websocket.serialization.*
 
 /**
  * Client specific [WebSocketSession].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.websocket.ClientWebSocketSession)
  */
 public interface ClientWebSocketSession : WebSocketSession {
     /**
      * [HttpClientCall] associated with session.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.websocket.ClientWebSocketSession.call)
      */
     public val call: HttpClientCall
 }
 
 /**
  * ClientSpecific [DefaultWebSocketSession].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.websocket.DefaultClientWebSocketSession)
  */
 public class DefaultClientWebSocketSession(
     override val call: HttpClientCall,
@@ -38,6 +44,8 @@ internal class DelegatingClientWebSocketSession(
 
 /**
  * Converter for web socket session
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.websocket.converter)
  */
 public val DefaultClientWebSocketSession.converter: WebsocketContentConverter?
     get() = call.client.pluginOrNull(WebSockets)?.contentConverter

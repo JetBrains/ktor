@@ -33,6 +33,8 @@ internal val RateLimitersForCallKey =
 
 /**
  * A plugin that provides rate limiting for incoming requests.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.ratelimit.RateLimit)
  */
 public val RateLimit: ApplicationPlugin<RateLimitConfig> = createApplicationPlugin("RateLimit", ::RateLimitConfig) {
     val global = pluginConfig.global

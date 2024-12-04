@@ -12,11 +12,15 @@ import kotlin.coroutines.*
 
 /**
  * Represents an environment in which [Application] runs
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ApplicationEnvironment)
  */
 public expect interface ApplicationEnvironment {
 
     /**
      * Instance of [Logger] to be used for logging.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.application.ApplicationEnvironment.log)
      */
     public val log: Logger
 

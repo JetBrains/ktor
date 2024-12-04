@@ -21,6 +21,8 @@ import kotlin.test.assertEquals
 
 /**
  * This tests uses a CA, which creates server and client certificates.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.testing.suites.ClientCertTestSuite)
  */
 abstract class ClientCertTestSuite<Engine : ApplicationEngine, Configuration : ApplicationEngine.Configuration>(
     val engine: ApplicationEngineFactory<Engine, Configuration>

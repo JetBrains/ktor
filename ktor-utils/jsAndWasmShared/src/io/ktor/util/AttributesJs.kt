@@ -6,6 +6,8 @@ package io.ktor.util
 
 /**
  * Create ES specific [Attributes] instance.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.Attributes)
  */
 @JsName("AttributesJsFn")
 public actual fun Attributes(concurrent: Boolean): Attributes = AttributesJs()

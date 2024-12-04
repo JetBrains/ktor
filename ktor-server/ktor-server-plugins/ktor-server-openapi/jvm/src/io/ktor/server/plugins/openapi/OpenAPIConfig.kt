@@ -11,10 +11,14 @@ import io.swagger.v3.parser.core.models.*
 
 /**
  * Configuration for OpenAPI endpoint.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.openapi.OpenAPIConfig)
  */
 public class OpenAPIConfig {
     /**
      * Specifies a parser used to parse OpenAPI.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.openapi.OpenAPIConfig.parser)
      */
     public var parser: OpenAPIParser = OpenAPIParser()
 

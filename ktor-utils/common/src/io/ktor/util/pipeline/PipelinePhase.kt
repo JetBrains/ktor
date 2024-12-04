@@ -8,6 +8,8 @@ package io.ktor.util.pipeline
  * Represents a phase in a pipeline
  *
  * @param name a name for this phase
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.pipeline.PipelinePhase)
  */
 public class PipelinePhase(public val name: String) {
     override fun toString(): String = "Phase('$name')"
@@ -15,5 +17,7 @@ public class PipelinePhase(public val name: String) {
 
 /**
  * An exception about misconfigured phases in a pipeline
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.pipeline.InvalidPhaseException)
  */
 public class InvalidPhaseException(message: String) : Throwable(message)

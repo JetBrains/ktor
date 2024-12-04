@@ -39,6 +39,8 @@ import kotlinx.serialization.*
  * ```
  *
  * @property path the route path, including the class property names wrapped with curly braces.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.resources.Resource)
  */
 @OptIn(ExperimentalSerializationApi::class)
 @SerialInfo

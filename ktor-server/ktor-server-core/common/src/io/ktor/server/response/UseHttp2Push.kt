@@ -13,6 +13,8 @@ package io.ktor.server.response
  * to use it, so feel free to opt in this annotation to eliminate this warning, if
  * you are sure that you need it. For example, it makes sense to use with
  * a non-browser client that for sure supports HTTP/2 push.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.UseHttp2Push)
  */
 @RequiresOptIn(
     "HTTP/2 push is no longer supported by some web browsers.",

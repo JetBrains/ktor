@@ -9,6 +9,8 @@ import java.nio.*
 
 /**
  * Read data chunks from [ByteReadChannel] using buffer
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.cio.pass)
  */
 @InternalAPI
 public suspend inline fun ByteReadChannel.pass(buffer: ByteBuffer, block: (ByteBuffer) -> Unit) {

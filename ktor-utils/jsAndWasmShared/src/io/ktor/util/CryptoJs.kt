@@ -10,6 +10,8 @@ import kotlin.js.*
 
 /**
  * Generates a nonce string.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.generateNonce)
  */
 public actual fun generateNonce(): String {
     val buffer = ByteArray(NONCE_SIZE_IN_BYTES).toJsArray()

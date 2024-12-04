@@ -11,6 +11,8 @@ import io.ktor.utils.io.core.*
 /**
  * Represents a text content that could be sent
  * @property text to be sent
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.content.TextContent)
  */
 public class TextContent(
     public val text: String,

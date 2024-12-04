@@ -68,6 +68,8 @@ class OverridingClassLoaderTest {
 
 /**
  * A class that loads resources as they generally do.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.ChildLoadedClass)
  */
 @Suppress("UNUSED")
 class ChildLoadedClass(

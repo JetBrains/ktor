@@ -21,10 +21,14 @@ private class TestFailure(val name: String, val cause: Throwable) {
 
 /**
  * Helper interface to test client.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.tests.utils.ClientLoader)
  */
 actual abstract class ClientLoader actual constructor(private val timeoutSeconds: Int) {
     /**
      * Perform test against all clients from dependencies.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.tests.utils.ClientLoader.clientTests)
      */
     @OptIn(InternalAPI::class)
     actual fun clientTests(

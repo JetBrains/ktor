@@ -13,6 +13,8 @@ import io.ktor.utils.io.charsets.*
 
 /**
  * Gets the first value of a [name] header or returns `null` if missing.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.request.header)
  */
 public fun ApplicationRequest.header(name: String): String? = headers[name]
 

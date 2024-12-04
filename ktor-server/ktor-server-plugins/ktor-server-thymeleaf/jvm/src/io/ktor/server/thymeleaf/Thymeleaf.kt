@@ -22,6 +22,8 @@ import java.util.*
  * @param contentType of response (optional, `text/html` with UTF-8 character encoding by default)
  * @param locale object represents a specific geographical, political, or cultural region
  * @param fragments names from the [template] that is resolved by Thymeleaf
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.thymeleaf.ThymeleafContent)
  */
 public class ThymeleafContent(
     public val template: String,
@@ -36,6 +38,8 @@ public class ThymeleafContent(
  * A plugin that allows you to use Thymeleaf templates as views within your application.
  * Provides the ability to respond with [ThymeleafContent].
  * You can learn more from [Thymeleaf](https://ktor.io/docs/thymeleaf.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.thymeleaf.Thymeleaf)
  */
 public val Thymeleaf: ApplicationPlugin<TemplateEngine> = createApplicationPlugin(
     "Thymeleaf",

@@ -17,6 +17,8 @@ import kotlinx.html.stream.*
 /**
  * Responds to a client with an HTML response using the specified [block] to build an HTML page.
  * You can learn more from [HTML DSL](https://ktor.io/docs/html-dsl.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.html.respondHtml)
  */
 public suspend fun ApplicationCall.respondHtml(status: HttpStatusCode = HttpStatusCode.OK, block: HTML.() -> Unit) {
     val text = buildString {

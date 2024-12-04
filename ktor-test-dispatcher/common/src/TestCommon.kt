@@ -12,6 +12,8 @@ import kotlin.time.Duration.Companion.seconds
 
 /**
  * Test runner for common suspend tests.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.test.dispatcher.testSuspend)
  */
 @Deprecated(
     "testSuspend is deprecated, use runTest function instead",

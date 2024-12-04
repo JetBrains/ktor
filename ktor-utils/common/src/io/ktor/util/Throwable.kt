@@ -8,6 +8,8 @@ import io.ktor.utils.io.*
 
 /**
  * Root cause of the [Throwable].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.rootCause)
  */
 @InternalAPI
 public val Throwable.rootCause: Throwable?

@@ -24,6 +24,8 @@ import io.ktor.client.engine.*
  * ```
  *
  * You can learn more about client engines from [Engines](https://ktor.io/docs/http-client-engines.html).
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.apache5.Apache5)
  */
 public object Apache5 : HttpClientEngineFactory<Apache5EngineConfig> {
     override fun create(block: Apache5EngineConfig.() -> Unit): HttpClientEngine {

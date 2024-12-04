@@ -9,6 +9,8 @@ import kotlinx.coroutines.*
 
 /**
  * Raised when peers send frames which violate the Websocket RFC
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.websocket.ProtocolViolationException)
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 public class ProtocolViolationException(

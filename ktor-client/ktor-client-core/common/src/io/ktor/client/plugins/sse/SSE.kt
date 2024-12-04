@@ -20,6 +20,8 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.client.plugins.sse.SSE")
 
 /**
  * Indicates if a client engine supports Server-sent events.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.sse.SSECapability)
  */
 public data object SSECapability : HttpClientEngineCapability<Unit>
 
@@ -35,6 +37,8 @@ public data object SSECapability : HttpClientEngineCapability<Unit>
  *     val event = incoming.receive()
  * }
  * ```
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.sse.SSE)
  */
 @OptIn(InternalAPI::class)
 public val SSE: ClientPlugin<SSEConfig> = createClientPlugin(

@@ -10,6 +10,8 @@ import io.ktor.utils.io.charsets.*
  * Represents a value for a `Content-Type` header.
  * @property contentType represents a type part of the media type.
  * @property contentSubtype represents a subtype part of the media type.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.ContentType)
  */
 public class ContentType private constructor(
     public val contentType: String,
@@ -286,11 +288,15 @@ public class ContentType private constructor(
 
 /**
  * Exception thrown when a content type string is malformed.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.BadContentTypeFormatException)
  */
 public class BadContentTypeFormatException(value: String) : Exception("Bad Content-Type format: $value")
 
 /**
  * Creates a copy of `this` type with the added charset parameter with [charset] value.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.withCharset)
  */
 public fun ContentType.withCharset(charset: Charset): ContentType =
     withParameter("charset", charset.name)

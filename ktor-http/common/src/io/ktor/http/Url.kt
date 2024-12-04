@@ -17,6 +17,8 @@ package io.ktor.http
  * @property user username part of URL
  * @property password password part of URL
  * @property trailingQuery keep trailing question character even if there are no query parameters
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.Url)
  */
 public class Url internal constructor(
     protocol: URLProtocol?,
@@ -227,6 +229,8 @@ public class Url internal constructor(
 
 /**
  * [Url] authority.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.authority)
  */
 public val Url.authority: String
     get() = buildString {

@@ -15,6 +15,8 @@ import javax.crypto.spec.*
  * @property algorithm HMAC algorithm name, `HmacSHA256` by default
  * @property timeoutMillis specifies the amount of time for a nonce to be considered valid
  * @property nonceGenerator function that produces random values
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.StatelessHmacNonceManager)
  */
 public class StatelessHmacNonceManager(
     public val keySpec: SecretKeySpec,
@@ -24,6 +26,8 @@ public class StatelessHmacNonceManager(
 ) : NonceManager {
     /**
      * Helper constructor that makes a secret key from [key] ByteArray
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.StatelessHmacNonceManager.StatelessHmacNonceManager)
      */
     public constructor(
         key: ByteArray,

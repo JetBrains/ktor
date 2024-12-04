@@ -13,6 +13,8 @@ import kotlinx.coroutines.*
 
 /**
  * A configuration for [RequestBodyLimit] plugin.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.bodylimit.RequestBodyLimitConfig)
  */
 public class RequestBodyLimitConfig {
     internal var bodyLimit: (ApplicationCall) -> Long = { Long.MAX_VALUE }
@@ -20,6 +22,8 @@ public class RequestBodyLimitConfig {
     /**
      * Sets a limit for the maximum allowed size for incoming request bodies.
      * The block should return [Long.MAX_VALUE] if the body size is unlimited.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.bodylimit.RequestBodyLimitConfig.bodyLimit)
      */
     public fun bodyLimit(block: (ApplicationCall) -> Long) {
         bodyLimit = block
@@ -28,6 +32,8 @@ public class RequestBodyLimitConfig {
 
 /**
  * A plugin that limits the maximum allowed size for incoming request bodies.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.bodylimit.RequestBodyLimit)
  */
 public val RequestBodyLimit: RouteScopedPlugin<RequestBodyLimitConfig> = createRouteScopedPlugin(
     "RequestBodyLimit",

@@ -31,6 +31,8 @@ import io.ktor.resources.Resources as ResourcesCore
  * ```
  *
  * @see Resource
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.resources.Resources)
  */
 public object Resources : HttpClientPlugin<ResourcesCore.Configuration, ResourcesCore> {
 
@@ -50,6 +52,8 @@ public object Resources : HttpClientPlugin<ResourcesCore.Configuration, Resource
  * Constructs a URL for [resource].
  *
  * The class of the [resource] instance **must** be annotated with [Resource].
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.resources.href)
  */
 public inline fun <reified T : Any> HttpClient.href(resource: T): String {
     return href(plugin(Resources).resourcesFormat, resource)

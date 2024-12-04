@@ -14,6 +14,8 @@ private const val CHUNK_BUFFER_SIZE = 4096L
 /**
  * Split source [ByteReadChannel] into 2 new ones.
  * Cancel of one channel in split (input or both outputs) cancels other channels.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.util.split)
  */
 @OptIn(InternalAPI::class)
 public fun ByteReadChannel.split(coroutineScope: CoroutineScope): Pair<ByteReadChannel, ByteReadChannel> {

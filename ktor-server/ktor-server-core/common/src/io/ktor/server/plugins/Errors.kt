@@ -16,6 +16,8 @@ import kotlin.reflect.*
  * wrong/missing request parameters, body content or header values.
  * Throwing this exception in a handler will lead to 400 Bad Request response
  * unless a custom [io.ktor.plugins.StatusPages] handler registered.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.BadRequestException)
  */
 public open class BadRequestException(message: String, cause: Throwable? = null) : Exception(message, cause)
 
@@ -23,12 +25,16 @@ public open class BadRequestException(message: String, cause: Throwable? = null)
  * This exception means that the requested resource is not found.
  * HTTP status 404 Not found will be replied when this exception is thrown and not caught.
  * 404 status page could be configured by registering a custom [io.ktor.plugins.StatusPages] handler.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.NotFoundException)
  */
 public class NotFoundException(message: String? = "Resource not found") : Exception(message)
 
 /**
  * This exception is thrown when a required parameter with name [parameterName] is missing
  * @property parameterName of missing request parameter
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.MissingRequestParameterException)
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 public class MissingRequestParameterException(
@@ -45,6 +51,8 @@ public class MissingRequestParameterException(
  * This exception is thrown when a required parameter with name [parameterName] couldn't be converted to the [type]
  * @property parameterName of missing request parameter
  * @property type this parameter is unable to convert to
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.ParameterConversionException)
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 public class ParameterConversionException(
@@ -64,6 +72,8 @@ public class ParameterConversionException(
  * Thrown when content cannot be transformed to the desired type.
  * It is not defined which status code will be replied when an exception of this type is thrown and not caught.
  * Depending on child type it could be 4xx or 5xx status code. By default it will be 500 Internal Server Error.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.ContentTransformationException)
  */
 public abstract class ContentTransformationException(message: String) : IOException(message)
 
@@ -82,6 +92,8 @@ public class CannotTransformContentToTypeException(
 /**
  * Thrown when there is no conversion for a content type configured.
  * HTTP status 415 Unsupported Media Type will be replied when this exception is thrown and not caught.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.UnsupportedMediaTypeException)
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 public class UnsupportedMediaTypeException(
@@ -97,6 +109,8 @@ public class UnsupportedMediaTypeException(
 /**
  * Thrown when request body is larger than the set limit.
  * HTTP status 413 Payload Too Large will be replied when this exception is thrown and not caught.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.plugins.PayloadTooLargeException)
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 public class PayloadTooLargeException(

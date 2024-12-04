@@ -19,6 +19,8 @@ import kotlin.concurrent.*
 
 /**
  * Engine that based on CIO backend
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.CIOApplicationEngine)
  */
 public class CIOApplicationEngine(
     environment: ApplicationEnvironment,
@@ -30,11 +32,15 @@ public class CIOApplicationEngine(
 
     /**
      * CIO-based server configuration
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.CIOApplicationEngine.Configuration)
      */
     public class Configuration : BaseApplicationEngine.Configuration() {
         /**
          * Number of seconds that the server will keep HTTP IDLE connections open.
          * A connection is IDLE if there are no active requests running.
+         *
+         * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.cio.CIOApplicationEngine.Configuration.connectionIdleTimeoutSeconds)
          */
         public var connectionIdleTimeoutSeconds: Int = 45
 

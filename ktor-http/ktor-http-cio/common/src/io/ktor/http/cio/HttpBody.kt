@@ -12,6 +12,8 @@ import io.ktor.utils.io.errors.*
 /**
  * @return `true` if an http upgrade is expected according to request [method], [upgrade] header value and
  * parsed [connectionOptions]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.cio.expectHttpUpgrade)
  */
 public fun expectHttpUpgrade(
     method: HttpMethod,

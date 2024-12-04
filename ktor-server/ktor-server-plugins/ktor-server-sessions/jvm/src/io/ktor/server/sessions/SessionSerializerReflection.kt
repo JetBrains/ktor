@@ -25,6 +25,8 @@ private const val TYPE_TOKEN_PARAMETER_NAME: String = "\$type"
  * A serialized format is textual and optimized for size as it could be transferred via HTTP headers or cookies.
  *
  * @property T is a session instance class handled by this serializer
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.reflectionSessionSerializer)
  */
 public inline fun <reified T : Any> reflectionSessionSerializer(): SessionSerializer<T> =
     reflectionSessionSerializer(typeOf<T>())

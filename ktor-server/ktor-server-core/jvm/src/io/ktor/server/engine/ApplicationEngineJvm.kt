@@ -12,6 +12,8 @@ import java.util.concurrent.*
  * @param gracePeriod the maximum amount of time for activity to cool down
  * @param timeout the maximum amount of time to wait until server stops gracefully
  * @param timeUnit the [TimeUnit] for [gracePeriod] and [timeout]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.engine.stop)
  */
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")
 public fun ApplicationEngine.stop(gracePeriod: Long, timeout: Long, timeUnit: TimeUnit) {

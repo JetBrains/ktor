@@ -11,6 +11,8 @@ import java.time.temporal.*
 
 /**
  * Append HTTP response header with temporal [date] (date, time and so on)
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.response.header)
  */
 public fun ApplicationResponse.header(name: String, date: Temporal): Unit =
     headers.append(name, date.toHttpDateString())

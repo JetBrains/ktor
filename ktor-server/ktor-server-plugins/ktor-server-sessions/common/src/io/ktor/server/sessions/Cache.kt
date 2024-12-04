@@ -10,11 +10,15 @@ import kotlin.coroutines.*
 
 /**
  * A cache for [CookieStorage]
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.Cache)
  */
 public interface Cache<in K : Any, V : Any> {
 
     /**
      * Returns value for [key] or computes ans saves it if it's not found in the cache.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.sessions.Cache.getOrCompute)
      */
     public suspend fun getOrCompute(key: K): V
 

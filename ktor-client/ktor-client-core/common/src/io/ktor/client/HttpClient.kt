@@ -323,6 +323,8 @@ import kotlin.coroutines.*
  *
  * By directly setting the engine (e.g., `Apache`, `OkHttp`), you can optimize startup performance
  * by preventing the default service loader mechanism.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.HttpClient)
  */
 @KtorDsl
 public expect fun HttpClient(

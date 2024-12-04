@@ -10,12 +10,16 @@ import org.eclipse.jetty.util.ssl.*
 
 /**
  * A configuration for the [Jetty] client engine.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.jetty.jakarta.JettyEngineConfig)
  */
 public class JettyEngineConfig : HttpClientEngineConfig() {
     internal var config: (HTTP2Client) -> Unit = {}
 
     /**
      * Allows you to configure [SSL](https://ktor.io/docs/client-ssl.html) settings for this engine.
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.jetty.jakarta.JettyEngineConfig.sslContextFactory)
      */
     public var sslContextFactory: SslContextFactory = SslContextFactory.Client()
 

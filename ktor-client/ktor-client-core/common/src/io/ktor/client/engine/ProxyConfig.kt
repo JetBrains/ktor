@@ -9,11 +9,15 @@ import io.ktor.util.network.*
 
 /**
  * A [proxy](https://ktor.io/docs/proxy.html) configuration.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.ProxyConfig)
  */
 public expect class ProxyConfig
 
 /**
  * A type of the configured proxy.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.engine.type)
  */
 public expect val ProxyConfig.type: ProxyType
 

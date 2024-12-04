@@ -7,6 +7,8 @@ package io.ktor.server.config
 /**
  * Merge configuration combining all their keys.
  * If key is not found in one of the configs, search will continue in the next config in the list.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.server.config.merge)
  */
 @Deprecated(
     "Use mergeWith/withFallback instead.",

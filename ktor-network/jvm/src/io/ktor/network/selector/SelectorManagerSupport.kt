@@ -13,6 +13,8 @@ import kotlin.coroutines.*
 
 /**
  * Base class for NIO selector managers
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.network.selector.SelectorManagerSupport)
  */
 public abstract class SelectorManagerSupport internal constructor() : SelectorManager {
     public final override val provider: SelectorProvider = SelectorProvider.provider()

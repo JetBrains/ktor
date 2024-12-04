@@ -18,6 +18,8 @@ import kotlin.test.*
  * This test class demonstrates how request cookies behave in a client
  * when expired and redirected by server (session log out);
  * and how [HttpCookies] feature manages request cookies in this context.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.tests.CookiesAndRedirectMockedTest)
  */
 class CookiesAndRedirectMockedTest {
     @Test

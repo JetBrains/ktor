@@ -16,6 +16,8 @@ private val HeaderFieldValueSeparators =
  *
  * @property content header's content without parameters
  * @property parameters
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.HeaderValueWithParameters)
  */
 public abstract class HeaderValueWithParameters(
     protected val content: String,
@@ -24,6 +26,8 @@ public abstract class HeaderValueWithParameters(
 
     /**
      * The first value for the parameter with [name] comparing case-insensitively or `null` if no such parameters found
+     *
+     * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.HeaderValueWithParameters.parameter)
      */
     public fun parameter(name: String): String? {
         for (index in 0..parameters.lastIndex) {
@@ -68,6 +72,8 @@ public abstract class HeaderValueWithParameters(
 
 /**
  * Append formatted header value to the builder
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.http.append)
  */
 public fun StringValuesBuilder.append(name: String, value: HeaderValueWithParameters) {
     append(name, value.toString())

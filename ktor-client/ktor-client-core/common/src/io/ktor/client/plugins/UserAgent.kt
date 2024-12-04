@@ -21,6 +21,8 @@ public class UserAgentConfig(public var agent: String = "Ktor http-client")
  * A plugin that adds a `User-Agent` header to all requests.
  *
  * @property agent a `User-Agent` header value.
+ *
+ * [Report a problem](https://ktor.io/feedback?fqname=io.ktor.client.plugins.UserAgent)
  */
 public val UserAgent: ClientPlugin<UserAgentConfig> = createClientPlugin("UserAgent", ::UserAgentConfig) {
 
