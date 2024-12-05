@@ -11,7 +11,9 @@ import io.ktor.i18n.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class TranslationTest {
 
@@ -93,7 +95,7 @@ class TranslationTest {
 
         routing {
             get("/") {
-                val value = i18n("some_key")
+                val value = i18n("some_key").fixJava8Encoding()
                 call.respond(HttpStatusCode.OK, value)
             }
         }
@@ -107,4 +109,19 @@ class TranslationTest {
         val contentAsString = response.bodyAsText()
         assertEquals("Русский Ключ", contentAsString)
     }
+
+    /**
+     * On Java 8 PropertyResourceBundle requires properties to be encoded in ISO-8859-1,
+     * while starting from Java 9 the default encoding is UTF-8.
+     */
+    private fun String.fixJava8Encoding(): String {
+        return if (javaVersion.startsWith("1.8")) {
+            // Encode string in UTF-8 instead of ISO-8859-1
+            this.toByteArray(Charsets.ISO_8859_1).toString(Charsets.UTF_8)
+        } else {
+            this
+        }
+    }
 }
+
+private val javaVersion = System.getProperty("java.version")

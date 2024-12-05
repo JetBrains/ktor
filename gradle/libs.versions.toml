@@ -36,13 +36,13 @@ okio = "3.9.1"
 
 json-simple = "1.1.1"
 gson = "2.11.0"
-jackson = "2.18.1"
+jackson = "2.18.2"
 
 junit = "5.11.3"
 slf4j = "2.0.16"
 logback = "1.5.12"
 
-dropwizard = "4.2.28"
+dropwizard = "4.2.29"
 micrometer = "1.13.6"
 
 jansi = "2.4.1"

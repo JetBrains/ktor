@@ -6,10 +6,10 @@
 package io.ktor.server.test.base
 
 import io.ktor.junit.*
+import io.ktor.junit.coroutines.*
 import io.ktor.test.dispatcher.*
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.debug.junit5.CoroutinesTimeout
 import kotlinx.coroutines.test.TestResult
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInfo

@@ -6,7 +6,7 @@ package io.ktor.tests.utils
 
 import io.ktor.util.*
 import java.util.*
-import java.util.concurrent.atomic.*
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.concurrent.*
 import kotlin.test.*
 

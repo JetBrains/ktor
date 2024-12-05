@@ -7,8 +7,9 @@ description = "Common extensions for JUnit 5 testing framework"
 kotlin.sourceSets {
     jvmMain {
         dependencies {
-            api(libs.kotlin.test)
             api(libs.kotlin.test.junit5)
+            api(libs.junit)
+            implementation(libs.kotlinx.coroutines.debug)
         }
     }
 }

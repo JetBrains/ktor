@@ -21,8 +21,8 @@ import kotlin.time.Duration.Companion.seconds
  */
 actual abstract class ClientLoader actual constructor(val timeoutSeconds: Int) {
 
-    @OptIn(InternalAPI::class)
-    private val engines: List<HttpClientEngineContainer> by lazy { loadServices<HttpClientEngineContainer>() }
+    private val engines: List<HttpClientEngineContainer>
+        get() = supportedEngines
 
     /**
      * Perform test against all clients from dependencies.
@@ -112,6 +112,21 @@ actual abstract class ClientLoader actual constructor(val timeoutSeconds: Int) {
         }
 
         error(message)
+    }
+}
+
+@OptIn(InternalAPI::class)
+private val supportedEngines by lazy {
+    val enginesIterator = loadServicesAsSequence<HttpClientEngineContainer>().iterator()
+
+    buildList {
+        while (enginesIterator.hasNext()) {
+            try {
+                add(enginesIterator.next())
+            } catch (_: UnsupportedClassVersionError) {
+                // Ignore clients compiled against newer JVM
+            }
+        }
     }
 }
 

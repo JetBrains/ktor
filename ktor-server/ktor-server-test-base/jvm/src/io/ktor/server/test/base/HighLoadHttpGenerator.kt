@@ -13,7 +13,7 @@ import java.nio.ByteOrder
 import java.nio.channels.*
 import java.nio.channels.spi.*
 import java.util.concurrent.*
-import java.util.concurrent.atomic.*
+import java.util.concurrent.atomic.AtomicLong
 import kotlin.concurrent.*
 import kotlin.io.use
 import kotlin.text.toByteArray

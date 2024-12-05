@@ -23,9 +23,6 @@ kotlin.sourceSets {
             implementation(project(":ktor-server:ktor-server-plugins:ktor-server-conditional-headers"))
             implementation(project(":ktor-server:ktor-server-plugins:ktor-server-default-headers"))
             implementation(project(":ktor-server:ktor-server-plugins:ktor-server-request-validation"))
-
-            implementation(libs.kotlin.test.junit5)
-
             implementation(libs.kotlinx.coroutines.debug)
         }
     }

@@ -4,8 +4,9 @@
 
 package io.ktor.util
 
-import java.io.*
-import java.nio.file.*
+import java.io.File
+import java.nio.file.InvalidPathException
+import java.nio.file.Path
 
 /**
  * Append a [relativePath] safely that means that adding any extra `..` path elements will not let
@@ -17,6 +18,10 @@ public fun Path.combineSafe(relativePath: Path): Path {
         throw InvalidPathException(relativePath.toString(), "Relative path $relativePath beginning with .. is invalid")
     }
     check(!normalized.isAbsolute) { "Bad relative path $relativePath" }
+
+    // On JVM 8 ZipPath implementation misses this check,
+    // so we have to check the path is not empty to not get an `ArrayIndexOutOfBoundsException`
+    if (nameCount == 0) return normalized
 
     return resolve(normalized)
 }

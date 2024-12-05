@@ -77,7 +77,7 @@ private class ServletWriter(val output: ServletOutputStream) : WriteListener {
                 }
 
                 awaitReady()
-                output.write(buffer, 0, rc)
+                output.write(buffer, start, rc)
                 awaitReady()
                 rc
             }

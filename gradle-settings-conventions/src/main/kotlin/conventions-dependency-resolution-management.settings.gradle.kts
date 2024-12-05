@@ -81,6 +81,14 @@ dependencyResolutionManagement {
             } else if (kotlinVersion != null) {
                 version("kotlin", kotlinVersion)
             }
+
+            downgradeTestDependencies()
         }
     }
+}
+
+fun VersionCatalogBuilder.downgradeTestDependencies() {
+    val testJdk = JavaVersion.current().majorVersion.toInt()
+
+    if (testJdk < 11) version("logback", "1.3.14") // Java 8 support dropped in Logback 1.4.x
 }

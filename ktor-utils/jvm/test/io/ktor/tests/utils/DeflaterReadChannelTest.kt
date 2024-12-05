@@ -4,12 +4,12 @@
 
 package io.ktor.tests.utils
 
+import io.ktor.junit.coroutines.*
 import io.ktor.util.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.debug.junit5.CoroutinesTimeout
 import java.io.File
 import java.io.IOException
 import java.io.InputStream

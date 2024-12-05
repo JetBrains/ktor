@@ -1,22 +1,26 @@
 /*
- * Copyright 2014-2019 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
 package io.ktor.network.sockets.tests
 
+import io.ktor.junit.coroutines.*
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.debug.junit5.*
-import java.io.*
-import java.nio.channels.*
-import java.util.concurrent.*
+import java.io.IOException
+import java.nio.channels.CancelledKeyException
+import java.nio.channels.ClosedChannelException
 import java.util.concurrent.CancellationException
-import kotlin.concurrent.*
-import kotlin.coroutines.*
-import kotlin.test.*
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.Executors
+import kotlin.concurrent.Volatile
+import kotlin.concurrent.thread
+import kotlin.coroutines.CoroutineContext
+import kotlin.test.AfterTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @CoroutinesTimeout(15_000)
 class ServerSocketTest : CoroutineScope {

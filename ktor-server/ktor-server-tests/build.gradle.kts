@@ -15,6 +15,7 @@ kotlin.sourceSets {
     jvmTest {
         dependencies {
             implementation(libs.jansi)
+            implementation(project(":ktor-client:ktor-client-plugins:ktor-client-encoding"))
             api(project(":ktor-server:ktor-server-core", configuration = "testOutput"))
             api(libs.logback.classic)
             api(project(":ktor-server:ktor-server-plugins:ktor-server-sse"))

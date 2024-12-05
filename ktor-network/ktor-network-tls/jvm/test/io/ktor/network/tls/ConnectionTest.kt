@@ -1,32 +1,37 @@
 /*
- * Copyright 2014-2023 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
 // ktlint-disable experimental:argument-list-wrapping
 package io.ktor.network.tls
 
+import io.ktor.junit.coroutines.*
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
-import io.ktor.network.sockets.InetSocketAddress
 import io.ktor.network.tls.certificates.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
-import io.netty.bootstrap.*
-import io.netty.channel.*
-import io.netty.channel.nio.*
-import io.netty.channel.socket.*
-import io.netty.channel.socket.nio.*
-import io.netty.handler.ssl.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.debug.junit5.*
-import java.io.*
+import io.netty.bootstrap.ServerBootstrap
+import io.netty.channel.ChannelInitializer
+import io.netty.channel.EventLoopGroup
+import io.netty.channel.nio.NioEventLoopGroup
+import io.netty.channel.socket.SocketChannel
+import io.netty.channel.socket.nio.NioServerSocketChannel
+import io.netty.handler.ssl.SslContextBuilder
+import io.netty.handler.ssl.SslHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import java.io.File
+import java.io.IOException
 import java.net.ServerSocket
-import java.security.*
-import java.security.cert.*
-import javax.net.ssl.*
-import kotlin.test.*
+import java.security.KeyStore
+import java.security.PrivateKey
+import java.security.cert.X509Certificate
+import javax.net.ssl.TrustManagerFactory
+import javax.net.ssl.X509TrustManager
 import kotlin.test.Ignore
 import kotlin.test.Test
+import kotlin.test.fail
 
 @Suppress("UNCHECKED_CAST")
 @CoroutinesTimeout(20_000)

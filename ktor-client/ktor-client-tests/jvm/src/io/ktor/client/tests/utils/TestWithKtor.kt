@@ -1,17 +1,19 @@
 /*
- * Copyright 2014-2022 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
 package io.ktor.client.tests.utils
 
-import ch.qos.logback.classic.*
+import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.Logger
+import io.ktor.junit.coroutines.*
 import io.ktor.server.engine.*
-import kotlinx.coroutines.debug.junit5.*
-import org.junit.jupiter.api.*
-import org.slf4j.*
-import java.net.*
-import java.util.concurrent.*
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.slf4j.LoggerFactory
+import java.net.ServerSocket
+import java.net.Socket
+import java.util.concurrent.TimeUnit
 
 @CoroutinesTimeout(5 * 60 * 1000)
 abstract class TestWithKtor {

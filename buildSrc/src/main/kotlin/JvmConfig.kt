@@ -2,19 +2,17 @@
  * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
-import internal.*
-import org.gradle.api.*
-import org.gradle.api.tasks.testing.*
-import org.gradle.jvm.tasks.*
-import org.gradle.jvm.toolchain.*
+import internal.libs
+import org.gradle.api.Project
+import org.gradle.api.tasks.testing.Test
+import org.gradle.jvm.tasks.Jar
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.jvm.toolchain.JavaToolchainService
 import org.gradle.kotlin.dsl.*
-import org.jetbrains.kotlin.gradle.targets.jvm.tasks.*
+import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
 fun Project.configureJvm() {
-    val compileJdk = when (name) {
-        in jdk11Modules -> 11
-        else -> 8
-    }
+    val compileJdk = project.requiredJdkVersion
 
     kotlin {
         jvm()
@@ -90,8 +88,7 @@ fun Project.configureJvm() {
  * On CI use the default JDK.
  */
 private fun Test.configureJavaToolchain(compileJdk: Int) {
-    // JUnit 5 requires JDK 11+
-    val testJdk = (if (CI) currentJdk else compileJdk).coerceAtLeast(11)
+    val testJdk = if (CI) currentJdk else compileJdk
     val javaToolchains = project.the<JavaToolchainService>()
 
     javaLauncher = javaToolchains.launcherFor {

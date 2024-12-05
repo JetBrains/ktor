@@ -22,11 +22,16 @@ import io.ktor.server.testing.*
 import io.ktor.util.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.*
-import kotlinx.coroutines.*
-import kotlinx.io.*
-import java.time.*
-import java.util.zip.*
-import kotlin.coroutines.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.io.readByteArray
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.util.zip.GZIPInputStream
+import java.util.zip.Inflater
+import java.util.zip.InflaterInputStream
+import kotlin.coroutines.CoroutineContext
 import kotlin.test.*
 
 class CompressionTest {

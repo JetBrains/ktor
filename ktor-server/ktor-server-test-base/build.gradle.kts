@@ -26,9 +26,6 @@ kotlin.sourceSets {
             if (jetty_alpn_boot_version != null) {
                 api(libs.jetty.alpn.boot)
             }
-
-            api(libs.junit)
-            implementation(libs.kotlinx.coroutines.debug)
         }
     }
 }

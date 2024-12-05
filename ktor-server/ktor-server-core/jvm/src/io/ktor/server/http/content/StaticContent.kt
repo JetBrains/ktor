@@ -4,7 +4,7 @@
 
 package io.ktor.server.http.content
 
-import com.sun.nio.file.*
+import com.sun.nio.file.SensitivityWatchEventModifier
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
@@ -13,10 +13,14 @@ import io.ktor.server.http.content.FileSystemPaths.Companion.paths
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.util.*
-import java.io.*
-import java.net.*
-import java.nio.file.*
-import kotlin.io.path.*
+import java.io.File
+import java.net.URL
+import java.nio.file.FileSystem
+import java.nio.file.FileSystems
+import java.nio.file.Path
+import java.nio.file.StandardWatchEventKinds
+import kotlin.io.path.isDirectory
+import kotlin.io.path.pathString
 
 /**
  * Attribute to assign the path of a static file served in the response.  The main use of this attribute is to indicate
@@ -616,7 +620,7 @@ private suspend fun ApplicationCall.respondStaticPath(
     defaultPath: String?
 ) {
     val relativePath = parameters.getAll(pathParameterName)?.joinToString(File.separator) ?: return
-    val requestedPath = fileSystem.getPath(basePath ?: "").combineSafe(fileSystem.getPath(relativePath))
+    val requestedPath = fileSystem.getPath(basePath.orEmpty()).combineSafe(fileSystem.getPath(relativePath))
 
     suspend fun checkExclude(path: Path): Boolean {
         if (!exclude(path)) return false

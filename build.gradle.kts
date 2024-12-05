@@ -131,13 +131,8 @@ fun configureDokka() {
 configureDokka()
 
 fun Project.setupJvmToolchain() {
-    val jdk = when (project.name) {
-        in jdk11Modules -> 11
-        else -> 8
-    }
-
     kotlin {
-        jvmToolchain(jdk)
+        jvmToolchain(project.requiredJdkVersion)
     }
 }
 
