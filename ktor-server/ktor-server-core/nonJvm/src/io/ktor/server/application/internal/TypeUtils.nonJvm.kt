@@ -4,7 +4,10 @@
 
 package io.ktor.server.application.internal
 
-import kotlin.reflect.*
+import kotlin.reflect.KClass
+import kotlin.reflect.KClassifier
+import kotlin.reflect.KType
+import kotlin.reflect.KTypeProjection
 
 internal actual fun <T : Any> starProjectedTypeBridge(klass: KClass<T>): KType = ErasedType(klass)
 

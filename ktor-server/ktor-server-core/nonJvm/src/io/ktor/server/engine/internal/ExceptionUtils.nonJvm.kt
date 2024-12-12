@@ -4,7 +4,6 @@
 
 package io.ktor.server.engine.internal
 
-import io.ktor.utils.io.errors.*
 import kotlinx.io.IOException
 
 public actual open class ClosedChannelException(message: String) : IOException(message)
