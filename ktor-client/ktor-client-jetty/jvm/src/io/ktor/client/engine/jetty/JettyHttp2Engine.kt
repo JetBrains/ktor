@@ -6,6 +6,7 @@ package io.ktor.client.engine.jetty
 
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
 import io.ktor.util.*
 import io.ktor.utils.io.*
@@ -17,7 +18,7 @@ internal class JettyHttp2Engine(
     override val config: JettyEngineConfig
 ) : HttpClientEngineBase("ktor-jetty") {
 
-    override val supportedCapabilities = setOf(HttpTimeoutCapability)
+    override val supportedCapabilities = setOf(HttpTimeoutCapability, SSECapability)
 
     /**
      * Cache that keeps least recently used [HTTP2Client] instances. Set "0" to avoid caching.
@@ -28,7 +29,7 @@ internal class JettyHttp2Engine(
         val callContext = callContext()
         val jettyClient = getOrCreateClient(data)
 
-        return data.executeRequest(jettyClient, config, callContext)
+        return data.executeRequest(data, jettyClient, config, callContext)
     }
 
     /** Only for tests */

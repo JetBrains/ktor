@@ -24,7 +24,9 @@ import java.net.*
 import java.nio.*
 import kotlin.coroutines.*
 
+@OptIn(InternalAPI::class)
 internal suspend fun HttpRequestData.executeRequest(
+    data: HttpRequestData,
     client: HTTP2Client,
     config: JettyEngineConfig,
     callContext: CoroutineContext
@@ -47,13 +49,16 @@ internal suspend fun HttpRequestData.executeRequest(
     sendRequestBody(jettyRequest, body, callContext)
 
     val (status, headers) = responseListener.awaitHeaders()
+    val responseBody: Any = data.attributes.getOrNull(ResponseAdapterAttributeKey)
+        ?.adapt(data, status, headers, responseChannel, data.body, callContext)
+        ?: responseChannel
 
     return HttpResponseData(
         status,
         requestTime,
         headers,
         HttpProtocolVersion.HTTP_2_0,
-        responseChannel,
+        responseBody,
         callContext
     )
 }

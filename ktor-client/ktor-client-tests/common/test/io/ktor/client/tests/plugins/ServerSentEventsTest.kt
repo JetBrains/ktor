@@ -420,6 +420,8 @@ class ServerSentEventsTest : ClientLoader(timeoutSeconds = 120) {
         }
 
         test { client ->
+            println(client.engine)
+            throw IllegalArgumentException()
             client.sse({
                 url("$TEST_SERVER/sse")
                 method = HttpMethod.Post
