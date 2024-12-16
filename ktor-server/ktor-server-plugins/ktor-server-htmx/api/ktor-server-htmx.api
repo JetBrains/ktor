@@ -1,0 +1,130 @@
+public abstract interface annotation class io/ktor/server/htmx/ExperimentalHtmxApi : java/lang/annotation/Annotation {
+}
+
+public final class io/ktor/server/htmx/HXRequestHeaders {
+	public static final synthetic fun box-impl (Lio/ktor/http/Headers;)Lio/ktor/server/htmx/HXRequestHeaders;
+	public static fun constructor-impl (Lio/ktor/http/Headers;)Lio/ktor/http/Headers;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Lio/ktor/http/Headers;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Lio/ktor/http/Headers;Lio/ktor/http/Headers;)Z
+	public static final fun getCurrentUrl-impl (Lio/ktor/http/Headers;)Lio/ktor/http/Url;
+	public static final fun getPrompt-impl (Lio/ktor/http/Headers;)Ljava/lang/String;
+	public static final fun getTargetId-impl (Lio/ktor/http/Headers;)Ljava/lang/String;
+	public static final fun getTriggerId-impl (Lio/ktor/http/Headers;)Ljava/lang/String;
+	public static final fun getTriggerName-impl (Lio/ktor/http/Headers;)Ljava/lang/String;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Lio/ktor/http/Headers;)I
+	public static final fun isBoosted-impl (Lio/ktor/http/Headers;)Z
+	public static final fun isHistoryRestore-impl (Lio/ktor/http/Headers;)Z
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Lio/ktor/http/Headers;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Lio/ktor/http/Headers;
+}
+
+public final class io/ktor/server/htmx/HXResponseHeaders : io/ktor/server/htmx/StringMap {
+	public fun <init> (Lio/ktor/server/response/ResponseHeaders;)V
+	public fun get (Ljava/lang/String;)Ljava/lang/String;
+	public final fun getLocation ()Ljava/lang/String;
+	public final fun getPushUrl ()Ljava/lang/String;
+	public final fun getRedirect ()Ljava/lang/String;
+	public final fun getRefresh ()Ljava/lang/String;
+	public final fun getReplaceUrl ()Ljava/lang/String;
+	public fun remove (Ljava/lang/String;)Ljava/lang/String;
+	public fun set (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun setLocation (Ljava/lang/String;)V
+	public final fun setPushUrl (Ljava/lang/String;)V
+	public final fun setRedirect (Ljava/lang/String;)V
+	public final fun setRefresh (Ljava/lang/String;)V
+}
+
+public final class io/ktor/server/htmx/HXRoute : io/ktor/server/routing/Route {
+	public static final synthetic fun box-impl (Lio/ktor/server/routing/Route;)Lio/ktor/server/htmx/HXRoute;
+	public static fun constructor-impl (Lio/ktor/server/routing/Route;)Lio/ktor/server/routing/Route;
+	public fun createChild (Lio/ktor/server/routing/RouteSelector;)Lio/ktor/server/routing/Route;
+	public static fun createChild-impl (Lio/ktor/server/routing/Route;Lio/ktor/server/routing/RouteSelector;)Lio/ktor/server/routing/Route;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Lio/ktor/server/routing/Route;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Lio/ktor/server/routing/Route;Lio/ktor/server/routing/Route;)Z
+	public fun getAttributes ()Lio/ktor/util/Attributes;
+	public static fun getAttributes-impl (Lio/ktor/server/routing/Route;)Lio/ktor/util/Attributes;
+	public fun getEnvironment ()Lio/ktor/server/application/ApplicationEnvironment;
+	public static fun getEnvironment-impl (Lio/ktor/server/routing/Route;)Lio/ktor/server/application/ApplicationEnvironment;
+	public fun getParent ()Lio/ktor/server/routing/Route;
+	public static fun getParent-impl (Lio/ktor/server/routing/Route;)Lio/ktor/server/routing/Route;
+	public fun handle (Lkotlin/jvm/functions/Function2;)V
+	public static fun handle-impl (Lio/ktor/server/routing/Route;Lkotlin/jvm/functions/Function2;)V
+	public fun hashCode ()I
+	public static fun hashCode-impl (Lio/ktor/server/routing/Route;)I
+	public fun install (Lio/ktor/server/application/Plugin;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static fun install-impl (Lio/ktor/server/routing/Route;Lio/ktor/server/application/Plugin;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public fun plugin (Lio/ktor/server/application/Plugin;)Ljava/lang/Object;
+	public static fun plugin-impl (Lio/ktor/server/routing/Route;Lio/ktor/server/application/Plugin;)Ljava/lang/Object;
+	public static final fun target-impl (Lio/ktor/server/routing/Route;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/routing/Route;
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Lio/ktor/server/routing/Route;)Ljava/lang/String;
+	public static final fun trigger-impl (Lio/ktor/server/routing/Route;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/routing/Route;
+	public final synthetic fun unbox-impl ()Lio/ktor/server/routing/Route;
+}
+
+public final class io/ktor/server/htmx/HxAttributes : io/ktor/server/htmx/StringMapDelegate {
+	public fun <init> (Lkotlinx/html/impl/DelegatingMap;)V
+	public fun get (Ljava/lang/String;)Ljava/lang/String;
+	public final fun getGet ()Ljava/lang/String;
+	public synthetic fun getMap ()Ljava/util/Map;
+	public fun getMap ()Lkotlinx/html/impl/DelegatingMap;
+	public final fun getOn-z9gkZp0 ()Ljava/util/Map;
+	public final fun getPost ()Ljava/lang/String;
+	public final fun getPushUrl ()Ljava/lang/String;
+	public final fun getSelect ()Ljava/lang/String;
+	public final fun getSelectOob ()Ljava/lang/String;
+	public final fun getSwap ()Ljava/lang/String;
+	public final fun getSwapOob ()Ljava/lang/String;
+	public final fun getTarget ()Ljava/lang/String;
+	public final fun getTrigger ()Ljava/lang/String;
+	public final fun getVals ()Ljava/lang/String;
+	public final fun on (Ljava/lang/String;Ljava/lang/String;)V
+	public fun remove (Ljava/lang/String;)Ljava/lang/String;
+	public fun set (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun setGet (Ljava/lang/String;)V
+	public final fun setPost (Ljava/lang/String;)V
+	public final fun setPushUrl (Ljava/lang/String;)V
+	public final fun setSelect (Ljava/lang/String;)V
+	public final fun setSelectOob (Ljava/lang/String;)V
+	public final fun setSwap (Ljava/lang/String;)V
+	public final fun setSwapOob (Ljava/lang/String;)V
+	public final fun setTarget (Ljava/lang/String;)V
+	public final fun setTrigger (Ljava/lang/String;)V
+	public final fun setVals (Ljava/lang/String;)V
+}
+
+public final class io/ktor/server/htmx/HxAttributes$On {
+	public static final synthetic fun box-impl (Ljava/util/Map;)Lio/ktor/server/htmx/HxAttributes$On;
+	public static fun constructor-impl (Ljava/util/Map;)Ljava/util/Map;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Ljava/util/Map;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Ljava/util/Map;Ljava/util/Map;)Z
+	public static final fun get-impl (Ljava/util/Map;Ljava/lang/String;)Ljava/lang/String;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Ljava/util/Map;)I
+	public static final fun set-impl (Ljava/util/Map;Ljava/lang/String;Ljava/lang/String;)V
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Ljava/util/Map;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Ljava/util/Map;
+}
+
+public final class io/ktor/server/htmx/HxAttributesKt {
+	public static final fun getHx (Lkotlinx/html/impl/DelegatingMap;)Lio/ktor/server/htmx/HxAttributes;
+	public static final fun hx (Lkotlinx/html/impl/DelegatingMap;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/ktor/server/htmx/HxHeadersKt {
+	public static final fun getHx (Lio/ktor/server/routing/RoutingRequest;)Lio/ktor/http/Headers;
+	public static final fun getHx (Lio/ktor/server/routing/RoutingResponse;)Lio/ktor/server/htmx/HXResponseHeaders;
+	public static final fun isHtmx (Lio/ktor/server/routing/RoutingRequest;)Z
+}
+
+public final class io/ktor/server/htmx/HxRoutingKt {
+	public static final fun getHx (Lio/ktor/server/routing/Route;)Lio/ktor/server/routing/Route;
+	public static final fun hx (Lio/ktor/server/routing/Route;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/routing/Route;
+}
+

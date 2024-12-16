@@ -1,0 +1,145 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.ktor:ktor-server-htmx>
+open annotation class io.ktor.server.htmx/ExperimentalHtmxApi : kotlin/Annotation { // io.ktor.server.htmx/ExperimentalHtmxApi|null[0]
+    constructor <init>() // io.ktor.server.htmx/ExperimentalHtmxApi.<init>|<init>(){}[0]
+}
+
+final class io.ktor.server.htmx/HXResponseHeaders : io.ktor.server.htmx/StringMap { // io.ktor.server.htmx/HXResponseHeaders|null[0]
+    constructor <init>(io.ktor.server.response/ResponseHeaders) // io.ktor.server.htmx/HXResponseHeaders.<init>|<init>(io.ktor.server.response.ResponseHeaders){}[0]
+
+    final val replaceUrl // io.ktor.server.htmx/HXResponseHeaders.replaceUrl|{}replaceUrl[0]
+        final fun <get-replaceUrl>(): kotlin/String? // io.ktor.server.htmx/HXResponseHeaders.replaceUrl.<get-replaceUrl>|<get-replaceUrl>(){}[0]
+
+    final var location // io.ktor.server.htmx/HXResponseHeaders.location|{}location[0]
+        final fun <get-location>(): kotlin/String? // io.ktor.server.htmx/HXResponseHeaders.location.<get-location>|<get-location>(){}[0]
+        final fun <set-location>(kotlin/String?) // io.ktor.server.htmx/HXResponseHeaders.location.<set-location>|<set-location>(kotlin.String?){}[0]
+    final var pushUrl // io.ktor.server.htmx/HXResponseHeaders.pushUrl|{}pushUrl[0]
+        final fun <get-pushUrl>(): kotlin/String? // io.ktor.server.htmx/HXResponseHeaders.pushUrl.<get-pushUrl>|<get-pushUrl>(){}[0]
+        final fun <set-pushUrl>(kotlin/String?) // io.ktor.server.htmx/HXResponseHeaders.pushUrl.<set-pushUrl>|<set-pushUrl>(kotlin.String?){}[0]
+    final var redirect // io.ktor.server.htmx/HXResponseHeaders.redirect|{}redirect[0]
+        final fun <get-redirect>(): kotlin/String? // io.ktor.server.htmx/HXResponseHeaders.redirect.<get-redirect>|<get-redirect>(){}[0]
+        final fun <set-redirect>(kotlin/String?) // io.ktor.server.htmx/HXResponseHeaders.redirect.<set-redirect>|<set-redirect>(kotlin.String?){}[0]
+    final var refresh // io.ktor.server.htmx/HXResponseHeaders.refresh|{}refresh[0]
+        final fun <get-refresh>(): kotlin/String? // io.ktor.server.htmx/HXResponseHeaders.refresh.<get-refresh>|<get-refresh>(){}[0]
+        final fun <set-refresh>(kotlin/String?) // io.ktor.server.htmx/HXResponseHeaders.refresh.<set-refresh>|<set-refresh>(kotlin.String?){}[0]
+
+    final fun get(kotlin/String): kotlin/String? // io.ktor.server.htmx/HXResponseHeaders.get|get(kotlin.String){}[0]
+    final fun remove(kotlin/String): kotlin/String? // io.ktor.server.htmx/HXResponseHeaders.remove|remove(kotlin.String){}[0]
+    final fun set(kotlin/String, kotlin/String) // io.ktor.server.htmx/HXResponseHeaders.set|set(kotlin.String;kotlin.String){}[0]
+}
+
+final class io.ktor.server.htmx/HxAttributes : io.ktor.server.htmx/StringMapDelegate { // io.ktor.server.htmx/HxAttributes|null[0]
+    constructor <init>(kotlinx.html.impl/DelegatingMap) // io.ktor.server.htmx/HxAttributes.<init>|<init>(kotlinx.html.impl.DelegatingMap){}[0]
+
+    final val map // io.ktor.server.htmx/HxAttributes.map|{}map[0]
+        final fun <get-map>(): kotlinx.html.impl/DelegatingMap // io.ktor.server.htmx/HxAttributes.map.<get-map>|<get-map>(){}[0]
+    final val on // io.ktor.server.htmx/HxAttributes.on|{}on[0]
+        final fun <get-on>(): io.ktor.server.htmx/HxAttributes.On // io.ktor.server.htmx/HxAttributes.on.<get-on>|<get-on>(){}[0]
+
+    final var get // io.ktor.server.htmx/HxAttributes.get|{}get[0]
+        final fun <get-get>(): kotlin/String? // io.ktor.server.htmx/HxAttributes.get.<get-get>|<get-get>(){}[0]
+        final fun <set-get>(kotlin/String?) // io.ktor.server.htmx/HxAttributes.get.<set-get>|<set-get>(kotlin.String?){}[0]
+    final var post // io.ktor.server.htmx/HxAttributes.post|{}post[0]
+        final fun <get-post>(): kotlin/String? // io.ktor.server.htmx/HxAttributes.post.<get-post>|<get-post>(){}[0]
+        final fun <set-post>(kotlin/String?) // io.ktor.server.htmx/HxAttributes.post.<set-post>|<set-post>(kotlin.String?){}[0]
+    final var pushUrl // io.ktor.server.htmx/HxAttributes.pushUrl|{}pushUrl[0]
+        final fun <get-pushUrl>(): kotlin/String? // io.ktor.server.htmx/HxAttributes.pushUrl.<get-pushUrl>|<get-pushUrl>(){}[0]
+        final fun <set-pushUrl>(kotlin/String?) // io.ktor.server.htmx/HxAttributes.pushUrl.<set-pushUrl>|<set-pushUrl>(kotlin.String?){}[0]
+    final var select // io.ktor.server.htmx/HxAttributes.select|{}select[0]
+        final fun <get-select>(): kotlin/String? // io.ktor.server.htmx/HxAttributes.select.<get-select>|<get-select>(){}[0]
+        final fun <set-select>(kotlin/String?) // io.ktor.server.htmx/HxAttributes.select.<set-select>|<set-select>(kotlin.String?){}[0]
+    final var selectOob // io.ktor.server.htmx/HxAttributes.selectOob|{}selectOob[0]
+        final fun <get-selectOob>(): kotlin/String? // io.ktor.server.htmx/HxAttributes.selectOob.<get-selectOob>|<get-selectOob>(){}[0]
+        final fun <set-selectOob>(kotlin/String?) // io.ktor.server.htmx/HxAttributes.selectOob.<set-selectOob>|<set-selectOob>(kotlin.String?){}[0]
+    final var swap // io.ktor.server.htmx/HxAttributes.swap|{}swap[0]
+        final fun <get-swap>(): kotlin/String? // io.ktor.server.htmx/HxAttributes.swap.<get-swap>|<get-swap>(){}[0]
+        final fun <set-swap>(kotlin/String?) // io.ktor.server.htmx/HxAttributes.swap.<set-swap>|<set-swap>(kotlin.String?){}[0]
+    final var swapOob // io.ktor.server.htmx/HxAttributes.swapOob|{}swapOob[0]
+        final fun <get-swapOob>(): kotlin/String? // io.ktor.server.htmx/HxAttributes.swapOob.<get-swapOob>|<get-swapOob>(){}[0]
+        final fun <set-swapOob>(kotlin/String?) // io.ktor.server.htmx/HxAttributes.swapOob.<set-swapOob>|<set-swapOob>(kotlin.String?){}[0]
+    final var target // io.ktor.server.htmx/HxAttributes.target|{}target[0]
+        final fun <get-target>(): kotlin/String? // io.ktor.server.htmx/HxAttributes.target.<get-target>|<get-target>(){}[0]
+        final fun <set-target>(kotlin/String?) // io.ktor.server.htmx/HxAttributes.target.<set-target>|<set-target>(kotlin.String?){}[0]
+    final var trigger // io.ktor.server.htmx/HxAttributes.trigger|{}trigger[0]
+        final fun <get-trigger>(): kotlin/String? // io.ktor.server.htmx/HxAttributes.trigger.<get-trigger>|<get-trigger>(){}[0]
+        final fun <set-trigger>(kotlin/String?) // io.ktor.server.htmx/HxAttributes.trigger.<set-trigger>|<set-trigger>(kotlin.String?){}[0]
+    final var vals // io.ktor.server.htmx/HxAttributes.vals|{}vals[0]
+        final fun <get-vals>(): kotlin/String? // io.ktor.server.htmx/HxAttributes.vals.<get-vals>|<get-vals>(){}[0]
+        final fun <set-vals>(kotlin/String?) // io.ktor.server.htmx/HxAttributes.vals.<set-vals>|<set-vals>(kotlin.String?){}[0]
+
+    final fun on(kotlin/String, kotlin/String) // io.ktor.server.htmx/HxAttributes.on|on(kotlin.String;kotlin.String){}[0]
+
+    final value class On { // io.ktor.server.htmx/HxAttributes.On|null[0]
+        constructor <init>(kotlin.collections/MutableMap<kotlin/String, kotlin/String>) // io.ktor.server.htmx/HxAttributes.On.<init>|<init>(kotlin.collections.MutableMap<kotlin.String,kotlin.String>){}[0]
+
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.htmx/HxAttributes.On.equals|equals(kotlin.Any?){}[0]
+        final fun get(kotlin/String): kotlin/String? // io.ktor.server.htmx/HxAttributes.On.get|get(kotlin.String){}[0]
+        final fun hashCode(): kotlin/Int // io.ktor.server.htmx/HxAttributes.On.hashCode|hashCode(){}[0]
+        final fun set(kotlin/String, kotlin/String?) // io.ktor.server.htmx/HxAttributes.On.set|set(kotlin.String;kotlin.String?){}[0]
+        final fun toString(): kotlin/String // io.ktor.server.htmx/HxAttributes.On.toString|toString(){}[0]
+    }
+}
+
+final value class io.ktor.server.htmx/HXRequestHeaders { // io.ktor.server.htmx/HXRequestHeaders|null[0]
+    constructor <init>(io.ktor.http/Headers) // io.ktor.server.htmx/HXRequestHeaders.<init>|<init>(io.ktor.http.Headers){}[0]
+
+    final val currentUrl // io.ktor.server.htmx/HXRequestHeaders.currentUrl|{}currentUrl[0]
+        final fun <get-currentUrl>(): io.ktor.http/Url? // io.ktor.server.htmx/HXRequestHeaders.currentUrl.<get-currentUrl>|<get-currentUrl>(){}[0]
+    final val isBoosted // io.ktor.server.htmx/HXRequestHeaders.isBoosted|{}isBoosted[0]
+        final fun <get-isBoosted>(): kotlin/Boolean // io.ktor.server.htmx/HXRequestHeaders.isBoosted.<get-isBoosted>|<get-isBoosted>(){}[0]
+    final val isHistoryRestore // io.ktor.server.htmx/HXRequestHeaders.isHistoryRestore|{}isHistoryRestore[0]
+        final fun <get-isHistoryRestore>(): kotlin/Boolean // io.ktor.server.htmx/HXRequestHeaders.isHistoryRestore.<get-isHistoryRestore>|<get-isHistoryRestore>(){}[0]
+    final val prompt // io.ktor.server.htmx/HXRequestHeaders.prompt|{}prompt[0]
+        final fun <get-prompt>(): kotlin/String? // io.ktor.server.htmx/HXRequestHeaders.prompt.<get-prompt>|<get-prompt>(){}[0]
+    final val targetId // io.ktor.server.htmx/HXRequestHeaders.targetId|{}targetId[0]
+        final fun <get-targetId>(): kotlin/String? // io.ktor.server.htmx/HXRequestHeaders.targetId.<get-targetId>|<get-targetId>(){}[0]
+    final val triggerId // io.ktor.server.htmx/HXRequestHeaders.triggerId|{}triggerId[0]
+        final fun <get-triggerId>(): kotlin/String? // io.ktor.server.htmx/HXRequestHeaders.triggerId.<get-triggerId>|<get-triggerId>(){}[0]
+    final val triggerName // io.ktor.server.htmx/HXRequestHeaders.triggerName|{}triggerName[0]
+        final fun <get-triggerName>(): kotlin/String? // io.ktor.server.htmx/HXRequestHeaders.triggerName.<get-triggerName>|<get-triggerName>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.htmx/HXRequestHeaders.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.server.htmx/HXRequestHeaders.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.htmx/HXRequestHeaders.toString|toString(){}[0]
+}
+
+final value class io.ktor.server.htmx/HXRoute : io.ktor.server.routing/Route { // io.ktor.server.htmx/HXRoute|null[0]
+    constructor <init>(io.ktor.server.routing/Route) // io.ktor.server.htmx/HXRoute.<init>|<init>(io.ktor.server.routing.Route){}[0]
+
+    final val attributes // io.ktor.server.htmx/HXRoute.attributes|{}attributes[0]
+        final fun <get-attributes>(): io.ktor.util/Attributes // io.ktor.server.htmx/HXRoute.attributes.<get-attributes>|<get-attributes>(){}[0]
+    final val environment // io.ktor.server.htmx/HXRoute.environment|{}environment[0]
+        final fun <get-environment>(): io.ktor.server.application/ApplicationEnvironment // io.ktor.server.htmx/HXRoute.environment.<get-environment>|<get-environment>(){}[0]
+    final val parent // io.ktor.server.htmx/HXRoute.parent|{}parent[0]
+        final fun <get-parent>(): io.ktor.server.routing/Route? // io.ktor.server.htmx/HXRoute.parent.<get-parent>|<get-parent>(){}[0]
+
+    final fun <#A1: kotlin/Any, #B1: kotlin/Any> install(io.ktor.server.application/Plugin<io.ktor.server.application/ApplicationCallPipeline, #A1, #B1>, kotlin/Function1<#A1, kotlin/Unit>): #B1 // io.ktor.server.htmx/HXRoute.install|install(io.ktor.server.application.Plugin<io.ktor.server.application.ApplicationCallPipeline,0:0,0:1>;kotlin.Function1<0:0,kotlin.Unit>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+    final fun <#A1: kotlin/Any> plugin(io.ktor.server.application/Plugin<*, *, #A1>): #A1 // io.ktor.server.htmx/HXRoute.plugin|plugin(io.ktor.server.application.Plugin<*,*,0:0>){0§<kotlin.Any>}[0]
+    final fun createChild(io.ktor.server.routing/RouteSelector): io.ktor.server.routing/Route // io.ktor.server.htmx/HXRoute.createChild|createChild(io.ktor.server.routing.RouteSelector){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.ktor.server.htmx/HXRoute.equals|equals(kotlin.Any?){}[0]
+    final fun handle(kotlin.coroutines/SuspendFunction1<io.ktor.server.routing/RoutingContext, kotlin/Unit>) // io.ktor.server.htmx/HXRoute.handle|handle(kotlin.coroutines.SuspendFunction1<io.ktor.server.routing.RoutingContext,kotlin.Unit>){}[0]
+    final fun hashCode(): kotlin/Int // io.ktor.server.htmx/HXRoute.hashCode|hashCode(){}[0]
+    final fun target(kotlin/String, kotlin/Function1<io.ktor.server.routing/Route, kotlin/Unit>): io.ktor.server.routing/Route // io.ktor.server.htmx/HXRoute.target|target(kotlin.String;kotlin.Function1<io.ktor.server.routing.Route,kotlin.Unit>){}[0]
+    final fun toString(): kotlin/String // io.ktor.server.htmx/HXRoute.toString|toString(){}[0]
+    final fun trigger(kotlin/String, kotlin/Function1<io.ktor.server.routing/Route, kotlin/Unit>): io.ktor.server.routing/Route // io.ktor.server.htmx/HXRoute.trigger|trigger(kotlin.String;kotlin.Function1<io.ktor.server.routing.Route,kotlin.Unit>){}[0]
+}
+
+final val io.ktor.server.htmx/hx // io.ktor.server.htmx/hx|@io.ktor.server.routing.Route{}hx[0]
+    final fun (io.ktor.server.routing/Route).<get-hx>(): io.ktor.server.htmx/HXRoute // io.ktor.server.htmx/hx.<get-hx>|<get-hx>@io.ktor.server.routing.Route(){}[0]
+final val io.ktor.server.htmx/hx // io.ktor.server.htmx/hx|@io.ktor.server.routing.RoutingRequest{}hx[0]
+    final fun (io.ktor.server.routing/RoutingRequest).<get-hx>(): io.ktor.server.htmx/HXRequestHeaders // io.ktor.server.htmx/hx.<get-hx>|<get-hx>@io.ktor.server.routing.RoutingRequest(){}[0]
+final val io.ktor.server.htmx/hx // io.ktor.server.htmx/hx|@io.ktor.server.routing.RoutingResponse{}hx[0]
+    final fun (io.ktor.server.routing/RoutingResponse).<get-hx>(): io.ktor.server.htmx/HXResponseHeaders // io.ktor.server.htmx/hx.<get-hx>|<get-hx>@io.ktor.server.routing.RoutingResponse(){}[0]
+final val io.ktor.server.htmx/hx // io.ktor.server.htmx/hx|@kotlinx.html.impl.DelegatingMap{}hx[0]
+    final fun (kotlinx.html.impl/DelegatingMap).<get-hx>(): io.ktor.server.htmx/HxAttributes // io.ktor.server.htmx/hx.<get-hx>|<get-hx>@kotlinx.html.impl.DelegatingMap(){}[0]
+final val io.ktor.server.htmx/isHtmx // io.ktor.server.htmx/isHtmx|@io.ktor.server.routing.RoutingRequest{}isHtmx[0]
+    final fun (io.ktor.server.routing/RoutingRequest).<get-isHtmx>(): kotlin/Boolean // io.ktor.server.htmx/isHtmx.<get-isHtmx>|<get-isHtmx>@io.ktor.server.routing.RoutingRequest(){}[0]
+
+final fun (io.ktor.server.routing/Route).io.ktor.server.htmx/hx(kotlin/Function1<io.ktor.server.htmx/HXRoute, kotlin/Unit>): io.ktor.server.routing/Route // io.ktor.server.htmx/hx|hx@io.ktor.server.routing.Route(kotlin.Function1<io.ktor.server.htmx.HXRoute,kotlin.Unit>){}[0]
+final inline fun (kotlinx.html.impl/DelegatingMap).io.ktor.server.htmx/hx(kotlin/Function1<io.ktor.server.htmx/HxAttributes, kotlin/Unit>) // io.ktor.server.htmx/hx|hx@kotlinx.html.impl.DelegatingMap(kotlin.Function1<io.ktor.server.htmx.HxAttributes,kotlin.Unit>){}[0]
