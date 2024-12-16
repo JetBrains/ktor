@@ -309,7 +309,7 @@ class ServerSentEventsTest {
                     event = ServerSentEvent("heartbeat")
                 }
 
-                repeat (4) {
+                repeat(4) {
                     send("Hello")
                     delay(10.milliseconds)
                 }

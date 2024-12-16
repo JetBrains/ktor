@@ -1,0 +1,134 @@
+public final class io/ktor/htmx/HxAttributeKeys {
+	public static final field Boost Ljava/lang/String;
+	public static final field Confirm Ljava/lang/String;
+	public static final field Delete Ljava/lang/String;
+	public static final field Disable Ljava/lang/String;
+	public static final field DisabledElt Ljava/lang/String;
+	public static final field Disinherit Ljava/lang/String;
+	public static final field Encoding Ljava/lang/String;
+	public static final field Ext Ljava/lang/String;
+	public static final field Get Ljava/lang/String;
+	public static final field Headers Ljava/lang/String;
+	public static final field History Ljava/lang/String;
+	public static final field HistoryElt Ljava/lang/String;
+	public static final field INSTANCE Lio/ktor/htmx/HxAttributeKeys;
+	public static final field Include Ljava/lang/String;
+	public static final field Indicator Ljava/lang/String;
+	public static final field Inherit Ljava/lang/String;
+	public static final field On Ljava/lang/String;
+	public static final field Params Ljava/lang/String;
+	public static final field Patch Ljava/lang/String;
+	public static final field Post Ljava/lang/String;
+	public static final field Preserve Ljava/lang/String;
+	public static final field Prompt Ljava/lang/String;
+	public static final field PushUrl Ljava/lang/String;
+	public static final field Put Ljava/lang/String;
+	public static final field ReplaceUrl Ljava/lang/String;
+	public static final field Request Ljava/lang/String;
+	public static final field Select Ljava/lang/String;
+	public static final field SelectOob Ljava/lang/String;
+	public static final field Swap Ljava/lang/String;
+	public static final field SwapOob Ljava/lang/String;
+	public static final field Sync Ljava/lang/String;
+	public static final field Target Ljava/lang/String;
+	public static final field Trigger Ljava/lang/String;
+	public static final field Validate Ljava/lang/String;
+	public static final field Vals Ljava/lang/String;
+	public static final field Vars Ljava/lang/String;
+}
+
+public final class io/ktor/htmx/HxCss {
+	public static final field Added Ljava/lang/String;
+	public static final field INSTANCE Lio/ktor/htmx/HxCss;
+	public static final field Indicator Ljava/lang/String;
+	public static final field Request Ljava/lang/String;
+	public static final field Settling Ljava/lang/String;
+	public static final field Swapping Ljava/lang/String;
+}
+
+public final class io/ktor/htmx/HxEvents {
+	public static final field Abort Ljava/lang/String;
+	public static final field AfterOnLoad Ljava/lang/String;
+	public static final field AfterProcessNode Ljava/lang/String;
+	public static final field AfterRequest Ljava/lang/String;
+	public static final field AfterSettle Ljava/lang/String;
+	public static final field AfterSwap Ljava/lang/String;
+	public static final field BeforeCleanupElement Ljava/lang/String;
+	public static final field BeforeHistorySave Ljava/lang/String;
+	public static final field BeforeOnLoad Ljava/lang/String;
+	public static final field BeforeProcessNode Ljava/lang/String;
+	public static final field BeforeRequest Ljava/lang/String;
+	public static final field BeforeSend Ljava/lang/String;
+	public static final field BeforeSwap Ljava/lang/String;
+	public static final field ConfigRequest Ljava/lang/String;
+	public static final field Confirm Ljava/lang/String;
+	public static final field HistoryCacheError Ljava/lang/String;
+	public static final field HistoryCacheMiss Ljava/lang/String;
+	public static final field HistoryCacheMissError Ljava/lang/String;
+	public static final field HistoryCacheMissLoad Ljava/lang/String;
+	public static final field HistoryRestore Ljava/lang/String;
+	public static final field INSTANCE Lio/ktor/htmx/HxEvents;
+	public static final field Load Ljava/lang/String;
+	public static final field NoSSESourceError Ljava/lang/String;
+	public static final field OnLoadError Ljava/lang/String;
+	public static final field OobAfterSwap Ljava/lang/String;
+	public static final field OobBeforeSwap Ljava/lang/String;
+	public static final field OobErrorNoTarget Ljava/lang/String;
+	public static final field Prompt Ljava/lang/String;
+	public static final field PushedIntoHistory Ljava/lang/String;
+	public static final field ResponseError Ljava/lang/String;
+	public static final field SSEError Ljava/lang/String;
+	public static final field SSEOpen Ljava/lang/String;
+	public static final field SendError Ljava/lang/String;
+	public static final field SwapError Ljava/lang/String;
+	public static final field TargetError Ljava/lang/String;
+	public static final field Timeout Ljava/lang/String;
+	public static final field ValidationFailed Ljava/lang/String;
+	public static final field ValidationHalted Ljava/lang/String;
+	public static final field ValidationValidate Ljava/lang/String;
+	public static final field XhrAbort Ljava/lang/String;
+	public static final field XhrLoadend Ljava/lang/String;
+	public static final field XhrLoadstart Ljava/lang/String;
+	public static final field XhrProgress Ljava/lang/String;
+}
+
+public final class io/ktor/htmx/HxRequestHeaders {
+	public static final field Boosted Ljava/lang/String;
+	public static final field CurrentURL Ljava/lang/String;
+	public static final field HistoryRestoreRequest Ljava/lang/String;
+	public static final field INSTANCE Lio/ktor/htmx/HxRequestHeaders;
+	public static final field Prompt Ljava/lang/String;
+	public static final field Request Ljava/lang/String;
+	public static final field Target Ljava/lang/String;
+	public static final field Trigger Ljava/lang/String;
+	public static final field TriggerName Ljava/lang/String;
+}
+
+public final class io/ktor/htmx/HxResponseHeaders {
+	public static final field INSTANCE Lio/ktor/htmx/HxResponseHeaders;
+	public static final field Location Ljava/lang/String;
+	public static final field PushUrl Ljava/lang/String;
+	public static final field Redirect Ljava/lang/String;
+	public static final field Refresh Ljava/lang/String;
+	public static final field ReplaceUrl Ljava/lang/String;
+	public static final field Reselect Ljava/lang/String;
+	public static final field Reswap Ljava/lang/String;
+	public static final field Retarget Ljava/lang/String;
+	public static final field Trigger Ljava/lang/String;
+	public static final field TriggerAfterSettle Ljava/lang/String;
+	public static final field TriggerAfterSwap Ljava/lang/String;
+}
+
+public final class io/ktor/htmx/HxSwap {
+	public static final field INSTANCE Lio/ktor/htmx/HxSwap;
+	public static final field afterBegin Ljava/lang/String;
+	public static final field afterEnd Ljava/lang/String;
+	public static final field beforeBegin Ljava/lang/String;
+	public static final field beforeEnd Ljava/lang/String;
+	public static final field delete Ljava/lang/String;
+	public static final field innerHTML Ljava/lang/String;
+	public static final field none Ljava/lang/String;
+	public static final field outerHTML Ljava/lang/String;
+	public static final field textContent Ljava/lang/String;
+}
+
