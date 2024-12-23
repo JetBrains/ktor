@@ -2,7 +2,7 @@
  * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
-import java.time.*
+import java.time.Year
 
 description = ""
 
@@ -16,10 +16,8 @@ kotlin {
     }
 }
 
-val configuredVersion: String by rootProject.extra
-
 val generateKtorVersionFile by tasks.registering {
-    val ktorVersion = configuredVersion
+    val ktorVersion = project.version
     inputs.property("ktor_version", ktorVersion)
 
     val year = Year.now().toString()

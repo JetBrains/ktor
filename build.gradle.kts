@@ -7,22 +7,8 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import org.jetbrains.kotlin.konan.target.HostManager
 
-val releaseVersion: String? by extra
-val eapVersion: String? by extra
-val version = (project.version as String).let { if (it.endsWith("-SNAPSHOT")) it.dropLast("-SNAPSHOT".length) else it }
-
-extra["configuredVersion"] = when {
-    releaseVersion != null -> releaseVersion
-    eapVersion != null -> "$version-eap-$eapVersion"
-    else -> project.version
-}
-
-println("The build version is ${extra["configuredVersion"]}")
-
 extra["globalM2"] = "${project.file("build")}/m2"
 extra["publishLocal"] = project.hasProperty("publishLocal")
-
-val configuredVersion: String by extra
 
 apply(from = "gradle/verifier.gradle")
 
@@ -60,9 +46,12 @@ plugins {
     conventions.gradleDoctor
 }
 
+println("Build version: ${project.version}")
+
 subprojects {
+    apply(plugin = "ktorbuild.base")
+
     group = "io.ktor"
-    version = configuredVersion
     extra["hostManager"] = HostManager()
 
     setupTrainForSubproject()

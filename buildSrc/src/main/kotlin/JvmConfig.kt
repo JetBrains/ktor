@@ -71,12 +71,11 @@ fun Project.configureJvm() {
         configureJavaToolchain(compileJdk, testJdk)
     }
 
-    val configuredVersion: String by rootProject.extra
     tasks.named<Jar>("jvmJar") {
         manifest {
             attributes(
                 "Implementation-Title" to name,
-                "Implementation-Version" to configuredVersion
+                "Implementation-Version" to project.version,
             )
             val name = project.javaModuleName()
             attributes("Automatic-Module-Name" to name)
