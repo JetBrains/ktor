@@ -13,6 +13,7 @@ import io.ktor.server.testing.suites.*
 import jakarta.servlet.http.*
 import org.eclipse.jetty.server.*
 import org.eclipse.jetty.server.handler.*
+import org.eclipse.jetty.util.Callback
 import org.eclipse.jetty.util.component.*
 import kotlin.test.*
 
@@ -63,13 +64,12 @@ class JettyHttpServerJvmTest : HttpServerJvmTestSuite<JettyApplicationEngine, Je
                     val delegate = handler
                     handler = object : DefaultHandler() {
                         override fun handle(
-                            target: String?,
-                            baseRequest: Request?,
-                            request: HttpServletRequest?,
-                            response: HttpServletResponse?
-                        ) {
+                            request: Request?,
+                            response: Response?,
+                            callback: Callback?
+                        ): Boolean {
                             request?.setAttribute("ktor.test.attribute", "135")
-                            delegate?.handle(target, baseRequest, request, response)
+                            return delegate?.handle(request, response, callback) == true
                         }
                     }
                 }

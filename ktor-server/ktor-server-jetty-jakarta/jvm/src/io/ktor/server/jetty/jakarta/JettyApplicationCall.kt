@@ -1,45 +1,27 @@
 /*
- * Copyright 2014-2023 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
 package io.ktor.server.jetty.jakarta
 
 import io.ktor.server.application.*
-import io.ktor.server.jetty.jakarta.internal.*
-import io.ktor.server.servlet.jakarta.*
+import io.ktor.server.engine.*
 import io.ktor.utils.io.*
-import jakarta.servlet.http.*
-import org.eclipse.jetty.server.*
-import kotlin.coroutines.*
+import org.eclipse.jetty.server.Request
+import org.eclipse.jetty.server.Response
+import kotlin.coroutines.CoroutineContext
 
 @InternalAPI
 public class JettyApplicationCall(
     application: Application,
     request: Request,
-    servletRequest: HttpServletRequest,
-    servletResponse: HttpServletResponse,
-    engineContext: CoroutineContext,
-    userContext: CoroutineContext,
-    coroutineContext: CoroutineContext
-) : AsyncServletApplicationCall(
-    application,
-    servletRequest,
-    servletResponse,
-    engineContext,
-    userContext,
-    JettyUpgradeImpl,
-    coroutineContext
-) {
+    response: Response,
+    override val coroutineContext: CoroutineContext
+) : BaseApplicationCall(application) {
 
-    override val response: JettyApplicationResponse = JettyApplicationResponse(
-        this,
-        servletRequest,
-        servletResponse,
-        engineContext,
-        userContext,
-        request,
-        coroutineContext
-    )
+    override val request: JettyApplicationRequest = JettyApplicationRequest(this, request)
+    override val response: JettyApplicationResponse =
+        JettyApplicationResponse(this, request, response, coroutineContext)
 
     init {
         putResponseAttribute()

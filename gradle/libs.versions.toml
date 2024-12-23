@@ -20,7 +20,7 @@ netty = "4.1.116.Final"
 netty-tcnative = "2.0.69.Final"
 
 jetty = "9.4.57.v20241219"
-jetty-jakarta = "11.0.24"
+jetty-jakarta = "12.0.16"
 jetty-alpn-api = "1.1.3.v20160715"
 jetty-alpn-boot = "8.1.13.v20181017"
 jetty-alpn-openjdk8 = "9.4.57.v20241219"
@@ -160,12 +160,12 @@ jetty-alpn-openjdk8-server = { module = "org.eclipse.jetty:jetty-alpn-openjdk8-s
 jetty-alpn-openjdk8-client = { module = "org.eclipse.jetty:jetty-alpn-openjdk8-client", version.ref = "jetty-alpn-openjdk8" }
 
 jetty-client-jakarta = { module = "org.eclipse.jetty:jetty-client", version.ref = "jetty-jakarta" }
-jetty-http2-server-jakarta = { module = "org.eclipse.jetty.http2:http2-server", version.ref = "jetty-jakarta" }
-jetty-http2-client-jakarta = { module = "org.eclipse.jetty.http2:http2-client", version.ref = "jetty-jakarta" }
+jetty-http2-server-jakarta = { module = "org.eclipse.jetty.http2:jetty-http2-server", version.ref = "jetty-jakarta" }
+jetty-http2-client-jakarta = { module = "org.eclipse.jetty.http2:jetty-http2-client", version.ref = "jetty-jakarta" }
 jetty-http2-client-transport-jakarta = { module = "org.eclipse.jetty.http2:http2-http-client-transport", version.ref = "jetty-jakarta" }
 jetty-server-jakarta = { module = "org.eclipse.jetty:jetty-server", version.ref = "jetty-jakarta" }
-jetty-servlets-jakarta = { module = "org.eclipse.jetty:jetty-servlets", version.ref = "jetty-jakarta" }
-jetty-servlet-jakarta = { module = "org.eclipse.jetty:jetty-servlet", version.ref = "jetty-jakarta" }
+jetty-servlets-jakarta = { module = "org.eclipse.jetty.ee10:jetty-ee10-servlets", version.ref = "jetty-jakarta" }
+jetty-servlet-jakarta = { module = "org.eclipse.jetty.ee10:jetty-ee10-servlet", version.ref = "jetty-jakarta" }
 jetty-alpn-server-jakarta = { module = "org.eclipse.jetty:jetty-alpn-server", version.ref = "jetty-jakarta" }
 jetty-alpn-java-server-jakarta = { module = "org.eclipse.jetty:jetty-alpn-java-server", version.ref = "jetty-jakarta" }
 jetty-alpn-java-client-jakarta = { module = "org.eclipse.jetty:jetty-alpn-java-client", version.ref = "jetty-jakarta" }

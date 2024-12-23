@@ -5,8 +5,8 @@
 package io.ktor.client.engine.jetty.jakarta
 
 import io.ktor.client.engine.*
-import org.eclipse.jetty.http2.client.*
-import org.eclipse.jetty.util.ssl.*
+import org.eclipse.jetty.http2.client.HTTP2Client
+import org.eclipse.jetty.util.ssl.SslContextFactory
 
 /**
  * A configuration for the [Jetty] client engine.
@@ -17,7 +17,7 @@ public class JettyEngineConfig : HttpClientEngineConfig() {
     /**
      * Allows you to configure [SSL](https://ktor.io/docs/client-ssl.html) settings for this engine.
      */
-    public var sslContextFactory: SslContextFactory = SslContextFactory.Client()
+    public var sslContextFactory: SslContextFactory.Client = SslContextFactory.Client()
 
     /**
      * Specifies the size of cache that keeps recently used [JettyHttp2Engine] instances.

@@ -18,7 +18,9 @@ import kotlinx.coroutines.*
 import org.eclipse.jetty.http.*
 import org.eclipse.jetty.http2.api.*
 import org.eclipse.jetty.http2.client.*
+import org.eclipse.jetty.http2.client.internal.HTTP2ClientSession
 import org.eclipse.jetty.http2.frames.*
+import org.eclipse.jetty.io.Transport
 import org.eclipse.jetty.util.*
 import java.net.*
 import java.nio.*
@@ -58,12 +60,20 @@ internal suspend fun HttpRequestData.executeRequest(
     )
 }
 
+private val NoopListener = object : Session.Listener {}
+
 internal suspend fun HTTP2Client.connect(
     url: Url,
     config: JettyEngineConfig
-): Session = withPromise { promise ->
-    val factory = if (url.protocol.isSecure()) config.sslContextFactory else null
-    connect(factory, InetSocketAddress(url.host, url.port), Session.Listener.Adapter(), promise)
+): Session = withPromise { promise: Promise<Session> ->
+    connect(
+        Transport.TCP_IP,
+        config.sslContextFactory,
+        InetSocketAddress(url.host, url.port),
+        NoopListener,
+        promise,
+        mutableMapOf<String, Object>() as Map<String, Object>
+    )
 }
 
 @OptIn(InternalAPI::class)

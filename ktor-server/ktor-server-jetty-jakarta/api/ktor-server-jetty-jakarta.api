@@ -11,13 +11,17 @@ public final class io/ktor/server/jetty/jakarta/Jetty : io/ktor/server/engine/Ap
 	public fun create (Lio/ktor/server/application/ApplicationEnvironment;Lio/ktor/events/Events;ZLio/ktor/server/jetty/jakarta/JettyApplicationEngineBase$Configuration;Lkotlin/jvm/functions/Function0;)Lio/ktor/server/jetty/jakarta/JettyApplicationEngine;
 }
 
-public final class io/ktor/server/jetty/jakarta/JettyApplicationCall : io/ktor/server/servlet/jakarta/AsyncServletApplicationCall {
-	public fun <init> (Lio/ktor/server/application/Application;Lorg/eclipse/jetty/server/Request;Ljakarta/servlet/http/HttpServletRequest;Ljakarta/servlet/http/HttpServletResponse;Lkotlin/coroutines/CoroutineContext;Lkotlin/coroutines/CoroutineContext;Lkotlin/coroutines/CoroutineContext;)V
+public final class io/ktor/server/jetty/jakarta/JettyApplicationCall : io/ktor/server/engine/BaseApplicationCall {
+	public fun <init> (Lio/ktor/server/application/Application;Lorg/eclipse/jetty/server/Request;Lorg/eclipse/jetty/server/Response;Lkotlin/coroutines/CoroutineContext;)V
+	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
+	public synthetic fun getRequest ()Lio/ktor/server/engine/BaseApplicationRequest;
+	public fun getRequest ()Lio/ktor/server/jetty/jakarta/JettyApplicationRequest;
+	public synthetic fun getRequest ()Lio/ktor/server/request/ApplicationRequest;
+	public synthetic fun getRequest ()Lio/ktor/server/request/PipelineRequest;
 	public synthetic fun getResponse ()Lio/ktor/server/engine/BaseApplicationResponse;
 	public fun getResponse ()Lio/ktor/server/jetty/jakarta/JettyApplicationResponse;
 	public synthetic fun getResponse ()Lio/ktor/server/response/ApplicationResponse;
 	public synthetic fun getResponse ()Lio/ktor/server/response/PipelineResponse;
-	public synthetic fun getResponse ()Lio/ktor/server/servlet/jakarta/ServletApplicationResponse;
 }
 
 public final class io/ktor/server/jetty/jakarta/JettyApplicationEngine : io/ktor/server/jetty/jakarta/JettyApplicationEngineBase {
@@ -45,13 +49,61 @@ public final class io/ktor/server/jetty/jakarta/JettyApplicationEngineBase$Confi
 	public final fun setIdleTimeout-LRDsOJo (J)V
 }
 
-public final class io/ktor/server/jetty/jakarta/JettyApplicationResponse : io/ktor/server/servlet/jakarta/AsyncServletApplicationResponse {
-	public fun <init> (Lio/ktor/server/servlet/jakarta/AsyncServletApplicationCall;Ljakarta/servlet/http/HttpServletRequest;Ljakarta/servlet/http/HttpServletResponse;Lkotlin/coroutines/CoroutineContext;Lkotlin/coroutines/CoroutineContext;Lorg/eclipse/jetty/server/Request;Lkotlin/coroutines/CoroutineContext;)V
-	public fun push (Lio/ktor/server/response/ResponsePushBuilder;)V
+public final class io/ktor/server/jetty/jakarta/JettyApplicationRequest : io/ktor/server/engine/BaseApplicationRequest {
+	public fun <init> (Lio/ktor/server/application/PipelineCall;Lorg/eclipse/jetty/server/Request;)V
+	public fun getCookies ()Lio/ktor/server/request/RequestCookies;
+	public fun getLocal ()Lio/ktor/http/RequestConnectionPoint;
+	public fun getQueryParameters ()Lio/ktor/http/Parameters;
+	public fun getRawQueryParameters ()Lio/ktor/http/Parameters;
 }
 
-public final class io/ktor/server/jetty/jakarta/internal/JettyUpgradeImpl : io/ktor/server/servlet/jakarta/ServletUpgrade {
-	public static final field INSTANCE Lio/ktor/server/jetty/jakarta/internal/JettyUpgradeImpl;
-	public fun performUpgrade (Lio/ktor/http/content/OutgoingContent$ProtocolUpgrade;Ljakarta/servlet/http/HttpServletRequest;Ljakarta/servlet/http/HttpServletResponse;Lkotlin/coroutines/CoroutineContext;Lkotlin/coroutines/CoroutineContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public final class io/ktor/server/jetty/jakarta/JettyApplicationResponse : io/ktor/server/engine/BaseApplicationResponse, kotlinx/coroutines/CoroutineScope {
+	public fun <init> (Lio/ktor/server/application/PipelineCall;Lorg/eclipse/jetty/server/Request;Lorg/eclipse/jetty/server/Response;Lkotlin/coroutines/CoroutineContext;)V
+	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
+	public fun getHeaders ()Lio/ktor/server/response/ResponseHeaders;
+}
+
+public final class io/ktor/server/jetty/jakarta/JettyConnectionPoint : io/ktor/http/RequestConnectionPoint {
+	public fun <init> (Lorg/eclipse/jetty/server/Request;)V
+	public fun getHost ()Ljava/lang/String;
+	public fun getLocalAddress ()Ljava/lang/String;
+	public fun getLocalHost ()Ljava/lang/String;
+	public fun getLocalPort ()I
+	public fun getMethod ()Lio/ktor/http/HttpMethod;
+	public fun getPort ()I
+	public fun getRemoteAddress ()Ljava/lang/String;
+	public fun getRemoteHost ()Ljava/lang/String;
+	public fun getRemotePort ()I
+	public fun getScheme ()Ljava/lang/String;
+	public fun getServerHost ()Ljava/lang/String;
+	public fun getServerPort ()I
+	public fun getUri ()Ljava/lang/String;
+	public fun getVersion ()Ljava/lang/String;
+}
+
+public final class io/ktor/server/jetty/jakarta/JettyHeaders : io/ktor/http/Headers {
+	public fun <init> (Lorg/eclipse/jetty/server/Request;)V
+	public fun contains (Ljava/lang/String;)Z
+	public fun contains (Ljava/lang/String;Ljava/lang/String;)Z
+	public fun entries ()Ljava/util/Set;
+	public fun forEach (Lkotlin/jvm/functions/Function2;)V
+	public fun get (Ljava/lang/String;)Ljava/lang/String;
+	public fun getAll (Ljava/lang/String;)Ljava/util/List;
+	public fun getCaseInsensitiveName ()Z
+	public fun isEmpty ()Z
+	public fun names ()Ljava/util/Set;
+}
+
+public final class io/ktor/server/jetty/jakarta/JettyRequestCookies : io/ktor/server/request/RequestCookies {
+	public fun <init> (Lio/ktor/server/jetty/jakarta/JettyApplicationRequest;Lorg/eclipse/jetty/server/Request;)V
+}
+
+public final class io/ktor/server/jetty/jakarta/JettyWebsocketConnection : org/eclipse/jetty/io/AbstractConnection, kotlinx/coroutines/CoroutineScope, org/eclipse/jetty/io/Connection$UpgradeTo {
+	public fun <init> (Lorg/eclipse/jetty/io/EndPoint;Lkotlin/coroutines/CoroutineContext;)V
+	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
+	public final fun getInputChannel ()Lio/ktor/utils/io/ByteChannel;
+	public final fun getOutputChannel ()Lio/ktor/utils/io/ByteChannel;
+	public fun onFillable ()V
+	public fun onUpgradeTo (Ljava/nio/ByteBuffer;)V
 }
 

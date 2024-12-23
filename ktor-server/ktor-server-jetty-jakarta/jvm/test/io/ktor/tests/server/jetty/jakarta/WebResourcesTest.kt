@@ -10,7 +10,7 @@ import io.ktor.http.*
 import io.ktor.server.routing.*
 import io.ktor.server.servlet.jakarta.*
 import io.ktor.server.testing.*
-import org.eclipse.jetty.server.handler.*
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler
 import org.junit.jupiter.api.io.*
 import java.net.*
 import java.nio.file.*
@@ -46,7 +46,7 @@ class WebResourcesTest {
     @Test
     fun testServeWebResources() = testApplication {
         application {
-            attributes.put(ServletContextAttribute, TestContext())
+            attributes.put(ServletContextAttribute, testContext())
             routing {
                 route("webapp") {
                     webResources("pages") {
@@ -70,14 +70,19 @@ class WebResourcesTest {
         }
     }
 
-    private inner class TestContext : ContextHandler.StaticContext() {
-        override fun getResource(path: String?): URL? {
-            return when (path) {
-                "/pages/index.txt" -> textFile
-                "/pages/password.txt" -> textFile
-                "/pages/index.html" -> htmlFile
-                else -> null
-            }?.toUri()?.toURL()
+    private inner class TestContextHandler : ServletContextHandler() {
+        inner class TestContext : ServletContextApi() {
+            override fun getResource(path: String?): URL? {
+                return when (path) {
+                    "/pages/index.txt" -> textFile
+                    "/pages/password.txt" -> textFile
+                    "/pages/index.html" -> htmlFile
+                    else -> null
+                }?.toUri()?.toURL()
+            }
         }
     }
+
+    fun testContext(): ServletContextHandler.ServletContextApi =
+        TestContextHandler().TestContext()
 }

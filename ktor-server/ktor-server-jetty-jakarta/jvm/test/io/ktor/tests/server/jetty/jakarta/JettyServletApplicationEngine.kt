@@ -9,8 +9,11 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.jetty.jakarta.*
 import io.ktor.server.servlet.jakarta.*
-import jakarta.servlet.*
-import org.eclipse.jetty.servlet.*
+import jakarta.servlet.MultipartConfigElement
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler
+import org.eclipse.jetty.ee10.servlet.ServletHandler
+import org.eclipse.jetty.ee10.servlet.ServletHolder
+import org.eclipse.jetty.ee10.servlet.ServletMapping
 
 /**
  * The factory and engine are only suitable for testing. You shouldn't use it for production code.
