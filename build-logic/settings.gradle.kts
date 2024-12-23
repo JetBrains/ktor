@@ -10,4 +10,12 @@ plugins {
     id("conventions-dependency-resolution-management")
 }
 
-rootProject.name = "ktor-test-server"
+dependencyResolutionManagement {
+    // Additional repositories for build-logic
+    @Suppress("UnstableApiUsage")
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = "build-logic"

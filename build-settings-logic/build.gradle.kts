@@ -15,3 +15,8 @@ dependencies {
     implementation(libs.develocity)
     implementation(libs.develocity.commonCustomUserData)
 }
+
+// Should be synced with gradle/gradle-daemon-jvm.properties
+kotlin {
+    jvmToolchain(21)
+}

@@ -10,4 +10,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "gradle-settings-conventions"
+rootProject.name = "build-settings-logic"

@@ -54,6 +54,7 @@ val disabledExplicitApiModeProjects = listOf(
 apply(from = "gradle/compatibility.gradle")
 
 plugins {
+    id("ktorbuild.base")
     alias(libs.plugins.dokka) apply false
     alias(libs.plugins.binaryCompatibilityValidator)
     conventions.gradleDoctor
