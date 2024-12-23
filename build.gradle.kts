@@ -57,7 +57,7 @@ subprojects {
     val nonDefaultProjectStructure: List<String> by rootProject.extra
     if (nonDefaultProjectStructure.contains(project.name)) return@subprojects
 
-    apply(plugin = "kotlin-multiplatform")
+    apply(plugin = "ktorbuild.kmp")
     apply(plugin = "atomicfu-conventions")
 
     configureTargets()
@@ -71,7 +71,6 @@ subprojects {
         if (!disabledExplicitApiModeProjects.contains(project.name)) explicitApi()
 
         configureSourceSets()
-        setupJvmToolchain()
 
         compilerOptions {
             languageVersion = getKotlinLanguageVersion()
@@ -101,12 +100,6 @@ fun configureDokka() {
 }
 
 configureDokka()
-
-fun Project.setupJvmToolchain() {
-    kotlin {
-        jvmToolchain(project.requiredJdkVersion)
-    }
-}
 
 subprojects {
     tasks.withType<KotlinCompilationTask<*>>().configureEach {

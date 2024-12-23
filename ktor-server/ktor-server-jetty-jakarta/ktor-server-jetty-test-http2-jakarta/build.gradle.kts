@@ -4,6 +4,11 @@
 
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
+ktorBuild {
+    // The minimal JVM version required for Jetty 10+
+    jvmToolchain(11)
+}
+
 kotlin.sourceSets {
     jvmTest {
         dependencies {
