@@ -2,7 +2,6 @@
  * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
-import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import org.jetbrains.kotlin.konan.target.HostManager
@@ -41,7 +40,6 @@ apply(from = "gradle/compatibility.gradle")
 
 plugins {
     id("ktorbuild.base")
-    alias(libs.plugins.dokka) apply false
     alias(libs.plugins.binaryCompatibilityValidator)
     conventions.gradleDoctor
 }
@@ -94,23 +92,7 @@ filterSnapshotTests()
 
 fun configureDokka() {
     allprojects {
-        plugins.apply("org.jetbrains.dokka")
-
-        val dokkaPlugin by configurations
-        dependencies {
-            dokkaPlugin(rootProject.libs.dokka.plugin.versioning)
-        }
-    }
-
-    val dokkaOutputDir = "../versions"
-
-    tasks.withType<DokkaMultiModuleTask>().configureEach {
-        val id = "org.jetbrains.dokka.versioning.VersioningPlugin"
-        val config = """{ "version": "$configuredVersion", "olderVersionsDir":"$dokkaOutputDir" }"""
-        val mapOf = mapOf(id to config)
-
-        outputDirectory.set(file(projectDir.toPath().resolve(dokkaOutputDir).resolve(configuredVersion)))
-        pluginsMapConfiguration.set(mapOf)
+        plugins.apply("ktorbuild.dokka")
     }
 
     rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin> {
