@@ -4,13 +4,9 @@
 
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
-import org.gradle.api.*
-import org.gradle.kotlin.dsl.*
-import org.jetbrains.kotlin.gradle.*
-import org.jetbrains.kotlin.gradle.plugin.*
-import org.jetbrains.kotlin.gradle.plugin.mpp.*
-import org.jetbrains.kotlin.konan.target.*
-import java.io.*
+import org.gradle.api.Project
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import java.io.File
 
 private val Project.files: Array<File> get() = project.projectDir.listFiles() ?: emptyArray()
 val Project.hasCommon: Boolean get() = files.any { it.name == "common" }
@@ -41,19 +37,8 @@ fun Project.configureTargets() {
 
         if (hasJs) configureJs()
         if (hasWasmJs) configureWasm()
-
-        if (hasPosix) posixTargets()
-        if (hasNix) nixTargets()
-        if (hasDarwin) darwinTargets()
-        if (hasLinux) linuxTargets()
-        if (hasAndroidNative) androidNativeTargets()
-        if (hasDesktop) desktopTargets()
-        if (hasWindows) windowsTargets()
-
-        applyHierarchyTemplate(hierarchyTemplate)
     }
 
-    if (hasExplicitNative) extra["hasNative"] = true
     if (hasNative) {
         tasks.maybeNamed("linkDebugTestLinuxX64") { onlyIf { HOST_NAME == "linux" } }
         tasks.maybeNamed("linkDebugTestLinuxArm64") { onlyIf { HOST_NAME == "linux" } }
@@ -67,82 +52,4 @@ fun Project.configureTargets() {
             }
         }
     }
-}
-
-private val hierarchyTemplate = KotlinHierarchyTemplate {
-    withSourceSetTree(KotlinSourceSetTree.main, KotlinSourceSetTree.test)
-
-    common {
-        group("posix") {
-            group("windows") { withMingw() }
-
-            group("nix") {
-                group("linux") { withLinux() }
-
-                group("darwin") {
-                    group("ios") { withIos() }
-                    group("tvos") { withTvos() }
-                    group("watchos") { withWatchos() }
-                    group("macos") { withMacos() }
-                }
-
-                group("androidNative") {
-                    group("androidNative64") {
-                        withAndroidNativeX64()
-                        withAndroidNativeArm64()
-                    }
-
-                    group("androidNative32") {
-                        withAndroidNativeX86()
-                        withAndroidNativeArm32Fixed()
-                    }
-                }
-            }
-        }
-
-        group("jsAndWasmShared") {
-            withJs()
-            withWasmJs()
-        }
-
-        group("jvmAndPosix") {
-            withJvm()
-            group("posix")
-        }
-
-        group("desktop") {
-            group("linux")
-            group("windows")
-            group("macos")
-        }
-
-        group("nonJvm") {
-            group("posix")
-            group("jsAndWasmShared")
-        }
-    }
-}
-
-/**
- * By default, all targets are enabled. To disable specific target,
- * disable the corresponding flag in `gradle.properties` of the target project.
- *
- * Targets that could be disabled:
- * - `target.js.nodeJs`
- * - `target.js.browser`
- * - `target.wasmJs.browser`
- * - `target.androidNative`
- */
-internal fun Project.targetIsEnabled(target: String): Boolean {
-    return findProperty("target.$target") != "false"
-}
-
-/**
- * Original `withAndroidNativeArm32` has a bug and matches to `X86` actually.
- * TODO: Remove after the bug is fixed
- *  https://youtrack.jetbrains.com/issue/KT-71866/
- */
-private fun KotlinHierarchyBuilder.withAndroidNativeArm32Fixed() = withCompilations {
-    val target = it.target
-    target is KotlinNativeTarget && target.konanTarget == KonanTarget.ANDROID_ARM32
 }

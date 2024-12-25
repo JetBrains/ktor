@@ -5,15 +5,21 @@
 package ktorbuild
 
 import ktorbuild.internal.gradle.finalizedOnRead
+import ktorbuild.targets.KtorTargets
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.kotlin.dsl.newInstance
 import org.gradle.kotlin.dsl.property
 import javax.inject.Inject
 
-abstract class KtorBuildExtension @Inject constructor(
+abstract class KtorBuildExtension(
     objects: ObjectFactory,
+    val targets: KtorTargets
 ) {
+
+    @Inject
+    constructor(objects: ObjectFactory) : this(objects, objects.newInstance())
 
     /**
      * The JDK version to be used to build the project.

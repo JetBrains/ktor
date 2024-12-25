@@ -15,8 +15,6 @@ fun Project.configureJvm() {
     val compileJdk = project.requiredJdkVersion
 
     kotlin {
-        jvm()
-
         sourceSets {
             jvmMain {
                 dependencies {

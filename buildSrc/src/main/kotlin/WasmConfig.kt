@@ -2,21 +2,12 @@
  * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
-import internal.*
-import org.gradle.api.*
-import org.gradle.kotlin.dsl.*
-import org.jetbrains.kotlin.gradle.*
-import org.jetbrains.kotlin.gradle.targets.js.ir.*
-import java.io.*
+import internal.libs
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.invoke
 
 fun Project.configureWasm() {
     kotlin {
-        @OptIn(ExperimentalWasmDsl::class)
-        wasmJs {
-            nodejs { useMochaForTests() }
-            if (project.targetIsEnabled("wasmJs.browser")) browser { useKarmaForTests() }
-        }
-
         sourceSets {
             wasmJsMain {
                 dependencies {

@@ -2,19 +2,19 @@
  * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
-import org.gradle.api.*
+import org.gradle.api.Project
 
 fun Project.posixTargets(): List<String> = nixTargets() + windowsTargets()
 
 fun Project.nixTargets(): List<String> = darwinTargets() + linuxTargets() + androidNativeTargets()
 
 fun Project.androidNativeTargets(): List<String> = with(kotlin) {
-    if (project.targetIsEnabled("androidNative")) listOf(
+    listOf(
         androidNativeArm32(),
         androidNativeArm64(),
         androidNativeX86(),
         androidNativeX64(),
-    ) else emptyList()
+    )
 }.map { it.name }
 
 fun Project.linuxTargets(): List<String> = with(kotlin) {
@@ -47,12 +47,7 @@ fun Project.watchosTargets(): List<String> = with(kotlin) {
         watchosArm32(),
         watchosArm64(),
         watchosSimulatorArm64(),
-        // ktor-server-config-yaml: because of dependency on YAML library: https://github.com/Him188/yamlkt/issues/67
-        if (project.name != "ktor-server-config-yaml") {
-            watchosDeviceArm64()
-        } else {
-            null
-        },
+        watchosDeviceArm64(),
     ).map { it.name }
 }
 

@@ -3,6 +3,8 @@
  */
 
 import ktorbuild.internal.ktorBuild
+import ktorbuild.targets.*
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     id("ktorbuild.base")
@@ -10,6 +12,10 @@ plugins {
 }
 
 kotlin {
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    applyHierarchyTemplate(KtorTargets.hierarchyTemplate)
+    addTargets(ktorBuild.targets)
+
     // Specify JVM toolchain later to prevent it from being evaluated before it was configured.
     // TODO: Remove `afterEvaluate` when the BCV issue triggering JVM toolchain evaluation is fixed
     //   https://github.com/Kotlin/binary-compatibility-validator/issues/286
