@@ -44,8 +44,6 @@ fun Project.configureJvm() {
         val testOutput by creating {
             extendsFrom(testCompile)
         }
-        val boot by creating {
-        }
     }
 
     val testJdk = project.testJdk

@@ -22,7 +22,6 @@ netty-tcnative = "2.0.69.Final"
 jetty = "9.4.57.v20241219"
 jetty-jakarta = "11.0.24"
 jetty-alpn-api = "1.1.3.v20160715"
-jetty-alpn-boot = "8.1.13.v20181017"
 jetty-alpn-openjdk8 = "9.4.57.v20241219"
 
 tomcat = "9.0.98"
@@ -156,7 +155,6 @@ jetty-alpn-java-server = { module = "org.eclipse.jetty:jetty-alpn-java-server", 
 jetty-alpn-java-client = { module = "org.eclipse.jetty:jetty-alpn-java-client", version.ref = "jetty" }
 
 jetty-alpn-api = { module = "org.eclipse.jetty.alpn:alpn-api", version.ref = "jetty-alpn-api" }
-jetty-alpn-boot = { module = "org.mortbay.jetty.alpn:alpn-boot", version.ref = "jetty-alpn-boot" }
 jetty-alpn-openjdk8-server = { module = "org.eclipse.jetty:jetty-alpn-openjdk8-server", version.ref = "jetty-alpn-openjdk8" }
 jetty-alpn-openjdk8-client = { module = "org.eclipse.jetty:jetty-alpn-openjdk8-client", version.ref = "jetty-alpn-openjdk8" }
 

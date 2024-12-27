@@ -6,8 +6,6 @@ import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
 description = ""
 
-val jetty_alpn_api_version: String by extra
-
 val enableAlpnProp = project.hasProperty("enableAlpn")
 val osName = System.getProperty("os.name").lowercase()
 val nativeClassifier: String? = if (enableAlpnProp) {

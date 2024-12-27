@@ -4,8 +4,6 @@
 
 description = ""
 
-val jetty_alpn_boot_version: String? by extra
-
 kotlin.sourceSets {
     commonMain {
         dependencies {
@@ -21,10 +19,6 @@ kotlin.sourceSets {
             api(project(":ktor-client:ktor-client-apache"))
             api(project(":ktor-network:ktor-network-tls:ktor-network-tls-certificates"))
             api(project(":ktor-server:ktor-server-plugins:ktor-server-call-logging"))
-
-            if (jetty_alpn_boot_version != null) {
-                api(libs.jetty.alpn.boot)
-            }
         }
     }
 }

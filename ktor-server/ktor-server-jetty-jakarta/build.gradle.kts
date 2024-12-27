@@ -37,11 +37,3 @@ kotlin {
         }
     }
 }
-
-val jetty_alpn_boot_version: String? by extra
-
-dependencies {
-    if (jetty_alpn_boot_version != null) {
-        add("boot", libs.jetty.alpn.boot)
-    }
-}
