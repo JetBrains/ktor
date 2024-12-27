@@ -49,16 +49,13 @@ subprojects {
     val nonDefaultProjectStructure: List<String> by rootProject.extra
     if (nonDefaultProjectStructure.contains(project.name)) return@subprojects
 
-    apply(plugin = "ktorbuild.kmp")
-    apply(plugin = "atomicfu-conventions")
-
-    kotlin {
-        if (!internalProjects.contains(project.name)) explicitApi()
-    }
-
-    if (!internalProjects.contains(project.name)) {
+    if (project.name !in internalProjects) {
+        apply(plugin = "ktorbuild.kmp")
         configurePublication()
+    } else {
+        apply(plugin = "ktorbuild.project.internal")
     }
+    apply(plugin = "atomicfu-conventions")
 
     configureCodestyle()
 }
