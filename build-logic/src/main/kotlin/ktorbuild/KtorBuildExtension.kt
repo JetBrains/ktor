@@ -14,19 +14,24 @@ import org.gradle.api.provider.ProviderFactory
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.newInstance
 import org.gradle.kotlin.dsl.property
+import org.gradle.platform.BuildPlatform
+import org.gradle.platform.OperatingSystem
 import javax.inject.Inject
 
+@Suppress("UnstableApiUsage")
 abstract class KtorBuildExtension(
     objects: ObjectFactory,
     providers: ProviderFactory,
-    val targets: KtorTargets
+    buildPlatform: BuildPlatform,
+    val targets: KtorTargets,
 ) {
 
     @Inject
     constructor(
         objects: ObjectFactory,
         providers: ProviderFactory,
-    ) : this(objects, providers, targets = objects.newInstance())
+        buildPlatform: BuildPlatform,
+    ) : this(objects, providers, buildPlatform, targets = objects.newInstance())
 
     /**
      * The JDK version to be used to build the project.
@@ -54,6 +59,9 @@ abstract class KtorBuildExtension(
         providers.gradleProperty("test.jdk")
             .orElse(providers.provider { JavaVersion.current().majorVersion })
             .map(JavaLanguageVersion::of)
+
+    /** Host operating system. */
+    val os: Provider<OperatingSystem> = providers.provider { buildPlatform.operatingSystem }
 
     companion object {
         const val NAME = "ktorBuild"

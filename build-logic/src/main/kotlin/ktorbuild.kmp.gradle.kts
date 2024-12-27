@@ -2,7 +2,9 @@
  * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
+import ktorbuild.internal.gradle.*
 import ktorbuild.internal.ktorBuild
+import ktorbuild.maybeNamed
 import ktorbuild.targets.*
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
@@ -26,12 +28,30 @@ kotlin {
     }
 }
 
-if (ktorBuild.targets.hasJvm) configureJvm()
-if (ktorBuild.targets.hasJs) configureJs()
-if (ktorBuild.targets.hasWasmJs) configureWasmJs()
+val targets = ktorBuild.targets
 
-if (ktorBuild.targets.hasJsOrWasmJs) {
+configureCommon()
+if (targets.hasJvm) configureJvm()
+if (targets.hasJs) configureJs()
+if (targets.hasWasmJs) configureWasmJs()
+
+if (targets.hasJsOrWasmJs) {
     tasks.configureEach {
         if (name == "compileJsAndWasmSharedMainKotlinMetadata") enabled = false
+    }
+}
+
+// Run native tests only on matching host.
+// There is no need to configure `onlyIf` for Darwin targets as they're configured by KGP.
+@Suppress("UnstableApiUsage")
+if (targets.hasNative) {
+    tasks.maybeNamed("linkDebugTestLinuxX64") {
+        onlyIf("run only on Linux") { ktorBuild.os.get().isLinux() }
+    }
+    tasks.maybeNamed("linkDebugTestLinuxArm64") {
+        onlyIf("run only on Linux") { ktorBuild.os.get().isLinux() }
+    }
+    tasks.maybeNamed("linkDebugTestMingwX64") {
+        onlyIf("run only on Windows") { ktorBuild.os.get().isWindows() }
     }
 }
