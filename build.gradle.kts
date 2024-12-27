@@ -62,10 +62,6 @@ subprojects {
     configureTargets()
     if (CI) configureTestTasksOnCi()
 
-    configurations {
-        maybeCreate("testOutput")
-    }
-
     kotlin {
         if (!disabledExplicitApiModeProjects.contains(project.name)) explicitApi()
 

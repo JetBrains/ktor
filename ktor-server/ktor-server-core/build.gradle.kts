@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
 import ktorbuild.createCInterop
@@ -41,14 +41,9 @@ kotlin {
                 implementation(project(":ktor-server:ktor-server-config-yaml"))
                 implementation(project(":ktor-server:ktor-server-test-base"))
                 implementation(project(":ktor-server:ktor-server-test-suites"))
-                
-                api(libs.logback.classic)
+
                 implementation(libs.mockk)
             }
         }
     }
-}
-
-artifacts {
-    add("testOutput", tasks.named("jarTest"))
 }

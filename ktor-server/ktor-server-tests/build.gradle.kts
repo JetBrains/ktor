@@ -1,3 +1,7 @@
+/*
+ * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ */
+
 description = ""
 
 plugins {
@@ -16,8 +20,6 @@ kotlin.sourceSets {
         dependencies {
             implementation(libs.jansi)
             implementation(project(":ktor-client:ktor-client-plugins:ktor-client-encoding"))
-            api(project(":ktor-server:ktor-server-core", configuration = "testOutput"))
-            api(libs.logback.classic)
             api(project(":ktor-server:ktor-server-plugins:ktor-server-sse"))
         }
     }
