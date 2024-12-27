@@ -21,7 +21,7 @@ doctor {
 
 // Always monitor tasks on CI, but disable it locally by default with providing an option to opt-in.
 // See 'doctor.enableTaskMonitoring' in gradle.properties for details.
-val enableTasksMonitoring = CI ||
+val enableTasksMonitoring = System.getenv("TEAMCITY_VERSION") != null ||
     properties.getOrDefault("doctor.enableTaskMonitoring", "false").toString().toBoolean()
 
 if (!enableTasksMonitoring) {

@@ -11,7 +11,6 @@ dependencies {
     implementation(libs.kotlin.serialization)
 
     implementation(libs.kotlinter)
-    implementation(libs.develocity)
     implementation(libs.gradleDoctor)
     implementation(libs.kotlinx.atomicfu.gradlePlugin)
 

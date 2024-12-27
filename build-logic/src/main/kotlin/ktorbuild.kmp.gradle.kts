@@ -55,3 +55,5 @@ if (targets.hasNative) {
         onlyIf("run only on Windows") { ktorBuild.os.get().isWindows() }
     }
 }
+
+if (ktorBuild.isCI.get()) configureTestTasksOnCi()

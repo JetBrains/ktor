@@ -53,8 +53,6 @@ subprojects {
     apply(plugin = "ktorbuild.kmp")
     apply(plugin = "atomicfu-conventions")
 
-    if (CI) configureTestTasksOnCi()
-
     kotlin {
         if (!internalProjects.contains(project.name)) explicitApi()
 
