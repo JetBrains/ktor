@@ -2,7 +2,7 @@
  * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
-import org.jetbrains.kotlin.gradle.plugin.mpp.*
+import ktorbuild.createCInterop
 
 plugins {
     id("kotlinx-serialization")
@@ -10,14 +10,9 @@ plugins {
 }
 
 kotlin {
-    targets.withType<KotlinNativeTarget>().configureEach {
-        compilations.named("main") {
-            cinterops.create("libcurl") {
-                definitionFile = file("desktop/interop/libcurl.def")
-                includeDirs(file("desktop/interop/include"))
-                extraOpts("-libraryPath", file("desktop/interop/lib/${target.name}"))
-            }
-        }
+    createCInterop("libcurl", sourceSet = "desktop") { target ->
+        includeDirs(file("desktop/interop/include"))
+        extraOpts("-libraryPath", file("desktop/interop/lib/$target"))
     }
 
     sourceSets {

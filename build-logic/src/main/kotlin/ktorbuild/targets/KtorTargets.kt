@@ -96,9 +96,7 @@ abstract class KtorTargets internal constructor(
         val defaults = mutableMapOf<String, Boolean>()
         for ((key, rawValue) in properties.byNamePrefix("target.")) {
             val value = rawValue.toBoolean()
-
-            val targets = hierarchyTracker.groups[key] ?: listOf(key)
-            for (target in targets) defaults[target] = value
+            for (target in resolveTargets(key)) defaults[target] = value
         }
         return defaults
     }
@@ -160,6 +158,9 @@ abstract class KtorTargets internal constructor(
                 }
             }
         }
+
+        /** Returns targets corresponding to the provided [sourceSet]. */
+        fun resolveTargets(sourceSet: String): Set<String> = hierarchyTracker.groups[sourceSet] ?: setOf(sourceSet)
     }
 }
 

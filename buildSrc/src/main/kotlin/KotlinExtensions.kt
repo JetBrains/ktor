@@ -1,12 +1,14 @@
 /*
  * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
-import org.gradle.api.*
-import org.gradle.kotlin.dsl.*
-import org.jetbrains.kotlin.gradle.dsl.*
-import org.jetbrains.kotlin.gradle.plugin.*
-import org.jetbrains.kotlin.gradle.plugin.mpp.*
-import org.jmailen.gradle.kotlinter.*
+
+import org.gradle.api.NamedDomainObjectContainer
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.the
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import org.jmailen.gradle.kotlinter.KotlinterExtension
 
 fun Project.kotlin(block: KotlinMultiplatformExtension.() -> Unit) {
     configure(block)
@@ -15,17 +17,6 @@ fun Project.kotlin(block: KotlinMultiplatformExtension.() -> Unit) {
 val Project.kotlin: KotlinMultiplatformExtension get() = the()
 
 val Project.kotlinter: KotlinterExtension get() = the()
-
-fun KotlinMultiplatformExtension.createCInterop(
-    name: String,
-    cinteropTargets: List<String>,
-    block: DefaultCInteropSettings.() -> Unit
-) {
-    cinteropTargets.mapNotNull { targets.findByName(it) }.filterIsInstance<KotlinNativeTarget>().forEach {
-        val main by it.compilations
-        main.cinterops.create(name, block)
-    }
-}
 
 fun NamedDomainObjectContainer<KotlinSourceSet>.commonMain(block: KotlinSourceSet.() -> Unit) {
     val sourceSet = getByName("commonMain")
