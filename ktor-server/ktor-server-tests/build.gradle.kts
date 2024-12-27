@@ -5,6 +5,7 @@
 description = ""
 
 plugins {
+    id("ktorbuild.project.internal")
     id("kotlinx-serialization")
 }
 

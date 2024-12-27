@@ -4,6 +4,10 @@
 
 description = ""
 
+plugins {
+    id("ktorbuild.project.internal")
+}
+
 kotlin.sourceSets {
     commonMain {
         dependencies {

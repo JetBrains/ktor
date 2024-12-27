@@ -25,15 +25,6 @@ extra["nonDefaultProjectStructure"] = mutableListOf(
     "ktor-java-modules-test",
 )
 
-val disabledExplicitApiModeProjects = listOf(
-    "ktor-client-tests",
-    "ktor-server-test-base",
-    "ktor-server-test-suites",
-    "ktor-server-tests",
-    "ktor-client-content-negotiation-tests",
-    "ktor-test-base"
-)
-
 apply(from = "gradle/compatibility.gradle")
 
 plugins {
@@ -57,10 +48,6 @@ subprojects {
 
     apply(plugin = "ktorbuild.kmp")
     apply(plugin = "atomicfu-conventions")
-
-    kotlin {
-        if (!disabledExplicitApiModeProjects.contains(project.name)) explicitApi()
-    }
 
     val skipPublish: List<String> by rootProject.extra
     if (!skipPublish.contains(project.name)) {

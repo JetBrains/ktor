@@ -5,6 +5,7 @@
 description = "Common tests for client"
 
 plugins {
+    id("ktorbuild.project.internal")
     id("kotlinx-serialization")
     id("test-server")
 }

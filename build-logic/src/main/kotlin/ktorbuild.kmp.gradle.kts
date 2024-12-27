@@ -16,6 +16,8 @@ plugins {
 }
 
 kotlin {
+    explicitApi()
+
     compilerOptions {
         progressiveMode = true
         apiVersion = ktorBuild.kotlinApiVersion
