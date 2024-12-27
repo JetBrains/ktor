@@ -2,7 +2,6 @@
  * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import org.jetbrains.kotlin.konan.target.HostManager
 
 extra["globalM2"] = "${project.file("build")}/m2"
@@ -55,12 +54,6 @@ subprojects {
 
     kotlin {
         if (!internalProjects.contains(project.name)) explicitApi()
-
-        compilerOptions {
-            languageVersion = getKotlinLanguageVersion()
-            apiVersion = getKotlinApiVersion()
-            progressiveMode = true
-        }
     }
 
     if (!internalProjects.contains(project.name)) {
@@ -84,9 +77,3 @@ fun configureDokka() {
 }
 
 configureDokka()
-
-subprojects {
-    tasks.withType<KotlinCompilationTask<*>>().configureEach {
-        configureCompilerOptions()
-    }
-}

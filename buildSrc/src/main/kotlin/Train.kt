@@ -6,7 +6,6 @@ import org.gradle.api.Project
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 fun Project.filterSnapshotTests() {
     if (!buildSnapshotTrain) return
@@ -66,32 +65,4 @@ private fun check(version: Any, libVersionProvider: Provider<String>, libName: S
     check(version == libVersion) {
         "Current deploy version is $version, but $libName version is not overridden ($libVersion)"
     }
-}
-
-private var resolvedKotlinApiVersion: KotlinVersion? = null
-
-fun Project.getKotlinApiVersion(): KotlinVersion =
-    resolvedKotlinApiVersion ?: resolveKotlinApiVersion().also { resolvedKotlinApiVersion = it }
-
-private fun Project.resolveKotlinApiVersion(): KotlinVersion {
-    val apiVersion = rootProject.findProperty("kotlin_api_version")
-        ?.let { KotlinVersion.fromVersion(it.toString()) }
-        ?: KotlinVersion.KOTLIN_2_0
-    logger.info("Kotlin API version: $apiVersion")
-
-    return apiVersion
-}
-
-private var resolvedKotlinLanguageVersion: KotlinVersion? = null
-
-fun Project.getKotlinLanguageVersion(): KotlinVersion =
-    resolvedKotlinLanguageVersion ?: resolveKotlinLanguageVersion().also { resolvedKotlinLanguageVersion = it }
-
-private fun Project.resolveKotlinLanguageVersion(): KotlinVersion {
-    val languageVersion = rootProject.findProperty("kotlin_language_version")
-        ?.let { KotlinVersion.fromVersion(it.toString()) }
-        ?: KotlinVersion.KOTLIN_2_1
-    logger.info("Kotlin language version: $languageVersion")
-
-    return languageVersion
 }

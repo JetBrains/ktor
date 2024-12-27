@@ -2,6 +2,8 @@
  * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+
 import ktorbuild.internal.gradle.*
 import ktorbuild.internal.ktorBuild
 import ktorbuild.maybeNamed
@@ -14,7 +16,13 @@ plugins {
 }
 
 kotlin {
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        progressiveMode = true
+        apiVersion = ktorBuild.kotlinApiVersion
+        languageVersion = ktorBuild.kotlinLanguageVersion
+        freeCompilerArgs.addAll("-Xexpect-actual-classes")
+    }
+
     applyHierarchyTemplate(KtorTargets.hierarchyTemplate)
     addTargets(ktorBuild.targets)
 
