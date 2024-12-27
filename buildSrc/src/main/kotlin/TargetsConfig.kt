@@ -32,22 +32,11 @@ val Project.hasNative: Boolean
 fun Project.configureTargets() {
     kotlin {
         configureCommon()
-
-        if (hasJs) configureJs()
-        if (hasWasmJs) configureWasm()
     }
 
     if (hasNative) {
         tasks.maybeNamed("linkDebugTestLinuxX64") { onlyIf { HOST_NAME == "linux" } }
         tasks.maybeNamed("linkDebugTestLinuxArm64") { onlyIf { HOST_NAME == "linux" } }
         tasks.maybeNamed("linkDebugTestMingwX64") { onlyIf { HOST_NAME == "windows" } }
-    }
-
-    if (hasJsAndWasmShared) {
-        tasks.configureEach {
-            if (name == "compileJsAndWasmSharedMainKotlinMetadata") {
-                enabled = false
-            }
-        }
     }
 }

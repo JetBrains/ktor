@@ -4,6 +4,12 @@
 
 package ktorbuild.targets
 
+import ktorbuild.internal.capitalized
+import ktorbuild.internal.kotlin
+import ktorbuild.internal.libs
+import ktorbuild.maybeNamed
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinJsSubTargetDsl
 import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinJsTargetDsl
 
@@ -28,4 +34,43 @@ private fun KotlinJsSubTargetDsl.useKarmaForTests() {
             useConfigDirectory(project.rootProject.file("karma"))
         }
     }
+}
+
+internal fun Project.configureJs() {
+    kotlin {
+        js { binaries.library() }
+
+        sourceSets {
+            jsTest.dependencies {
+                implementation(npm("puppeteer", libs.versions.puppeteer.get()))
+            }
+        }
+    }
+
+    configureJsTestTasks(target = "js")
+}
+
+
+internal fun Project.configureWasmJs() {
+    kotlin {
+        sourceSets {
+            wasmJsMain.dependencies {
+                implementation(libs.kotlinx.browser)
+            }
+            wasmJsTest.dependencies {
+                implementation(npm("puppeteer", libs.versions.puppeteer.get()))
+            }
+        }
+    }
+
+    configureJsTestTasks(target = "wasmJs")
+}
+
+
+internal fun Project.configureJsTestTasks(target: String) {
+    val shouldRunJsBrowserTest = !hasProperty("teamcity") || hasProperty("enable-js-tests")
+    if (shouldRunJsBrowserTest) return
+
+    tasks.maybeNamed("clean${target.capitalized()}BrowserTest") { onlyIf { false } }
+    tasks.maybeNamed("${target}BrowserTest") { onlyIf { false } }
 }

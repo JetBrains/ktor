@@ -27,3 +27,11 @@ kotlin {
 }
 
 if (ktorBuild.targets.hasJvm) configureJvm()
+if (ktorBuild.targets.hasJs) configureJs()
+if (ktorBuild.targets.hasWasmJs) configureWasmJs()
+
+if (ktorBuild.targets.hasJsOrWasmJs) {
+    tasks.configureEach {
+        if (name == "compileJsAndWasmSharedMainKotlinMetadata") enabled = false
+    }
+}
