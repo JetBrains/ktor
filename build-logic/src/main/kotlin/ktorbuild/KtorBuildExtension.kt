@@ -33,6 +33,15 @@ abstract class KtorBuildExtension(
         buildPlatform: BuildPlatform,
     ) : this(objects, providers, buildPlatform, targets = objects.newInstance())
 
+    private val buildingOnTeamCity: Provider<Boolean> =
+        providers.environmentVariable("TEAMCITY_VERSION").map(String::isNotBlank)
+
+    val isCI: Provider<Boolean> =
+        providers.environmentVariable("CI")
+            .map(String::isNotBlank)
+            .orElse(buildingOnTeamCity)
+            .orElse(false)
+
     /**
      * The JDK version to be used to build the project.
      * By default, the minimal supported JDK version is used.

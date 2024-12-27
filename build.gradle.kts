@@ -59,8 +59,6 @@ subprojects {
     apply(plugin = "ktorbuild.kmp")
     apply(plugin = "atomicfu-conventions")
 
-    if (CI) configureTestTasksOnCi()
-
     kotlin {
         if (!disabledExplicitApiModeProjects.contains(project.name)) explicitApi()
 
