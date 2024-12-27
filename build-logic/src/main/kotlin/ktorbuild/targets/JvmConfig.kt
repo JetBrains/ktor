@@ -2,8 +2,13 @@
  * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
-import internal.libs
+package ktorbuild.targets
+
+import ktorbuild.internal.kotlin
+import ktorbuild.internal.ktorBuild
+import ktorbuild.internal.libs
 import org.gradle.api.Project
+import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.testing.Test
 import org.gradle.jvm.tasks.Jar
 import org.gradle.jvm.toolchain.JavaLanguageVersion
@@ -11,38 +16,36 @@ import org.gradle.jvm.toolchain.JavaToolchainService
 import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
-fun Project.configureJvm() {
-    val compileJdk = project.requiredJdkVersion
-
+internal fun Project.configureJvm() {
     kotlin {
         sourceSets {
-            jvmMain {
-                dependencies {
-                    api(libs.slf4j.api)
-                }
+            jvmMain.dependencies {
+                api(libs.slf4j.api)
             }
 
-            jvmTest {
-                dependencies {
-                    implementation(libs.kotlin.test.junit5)
-                    implementation(libs.junit)
-                    implementation(libs.kotlinx.coroutines.debug)
-                }
+            jvmTest.dependencies {
+                implementation(libs.kotlin.test.junit5)
+                implementation(libs.junit)
+                implementation(libs.kotlinx.coroutines.debug)
             }
         }
     }
 
-    val testJdk = project.testJdk
+    configureTests()
+    configureJarManifest()
+}
+
+private fun Project.configureTests() {
     val jvmTest = tasks.named<KotlinJvmTest>("jvmTest") {
         maxHeapSize = "2g"
         exclude("**/*StressTest*")
         useJUnitPlatform()
-        configureJavaToolchain(compileJdk, testJdk)
+        configureJavaToolchain(ktorBuild.jvmToolchain, ktorBuild.jvmTestToolchain)
     }
 
     tasks.register<Test>("stressTest") {
-        classpath = files(jvmTest.get().classpath)
-        testClassesDirs = files(jvmTest.get().testClassesDirs)
+        classpath = files(jvmTest.map { it.classpath })
+        testClassesDirs = files(jvmTest.map { it.testClassesDirs })
 
         maxHeapSize = "2g"
         jvmArgs("-XX:+HeapDumpOnOutOfMemoryError")
@@ -50,34 +53,36 @@ fun Project.configureJvm() {
         systemProperty("enable.stress.tests", "true")
         include("**/*StressTest*")
         useJUnitPlatform()
-        configureJavaToolchain(compileJdk, testJdk)
+        configureJavaToolchain(ktorBuild.jvmToolchain, ktorBuild.jvmTestToolchain)
     }
+}
 
+private fun Project.configureJarManifest() {
     tasks.named<Jar>("jvmJar") {
         manifest {
             attributes(
-                "Implementation-Title" to name,
+                "Implementation-Title" to project.name,
                 "Implementation-Version" to project.version,
+                "Automatic-Module-Name" to project.javaModuleName(),
             )
-            val name = project.javaModuleName()
-            attributes("Automatic-Module-Name" to name)
         }
     }
 }
 
 /** Configure tests against different JDK versions. */
-private fun Test.configureJavaToolchain(compileJdk: Int, testJdk: Int) {
-    if (testJdk < compileJdk) {
-        enabled = false
-        return
-    }
+private fun Test.configureJavaToolchain(
+    compileJdk: Provider<JavaLanguageVersion>,
+    testJdk: Provider<JavaLanguageVersion>,
+) {
+    val testJdkVersion = testJdk.get().asInt()
+    onlyIf("only if testJdk is not lower than compileJdk") { testJdkVersion >= compileJdk.get().asInt() }
 
     val javaToolchains = project.the<JavaToolchainService>()
     javaLauncher = javaToolchains.launcherFor {
-        languageVersion = JavaLanguageVersion.of(testJdk)
+        languageVersion = testJdk
     }
 
-    if (testJdk >= 16) {
+    if (testJdkVersion >= 16) {
         // Allow reflective access from tests
         jvmArgs(
             "--add-opens=java.base/java.net=ALL-UNNAMED",
@@ -86,7 +91,7 @@ private fun Test.configureJavaToolchain(compileJdk: Int, testJdk: Int) {
         )
     }
 
-    if (testJdk >= 21) {
+    if (testJdkVersion >= 21) {
         // coroutines-debug use dynamic agent loading under the hood.
         // Remove as soon as the issue is fixed: https://youtrack.jetbrains.com/issue/KT-62096/
         jvmArgs("-XX:+EnableDynamicAgentLoading")

@@ -25,3 +25,5 @@ kotlin {
         }
     }
 }
+
+if (ktorBuild.targets.hasJvm) configureJvm()

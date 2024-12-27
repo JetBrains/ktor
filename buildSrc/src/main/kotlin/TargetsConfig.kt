@@ -33,8 +33,6 @@ fun Project.configureTargets() {
     kotlin {
         configureCommon()
 
-        if (hasJvm) configureJvm()
-
         if (hasJs) configureJs()
         if (hasWasmJs) configureWasm()
     }
