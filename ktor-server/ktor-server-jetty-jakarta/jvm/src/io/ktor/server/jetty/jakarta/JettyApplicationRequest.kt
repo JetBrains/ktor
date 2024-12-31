@@ -60,9 +60,9 @@ public class JettyHeaders(
         }.toSet()
     }
 
-    override fun getAll(name: String): List<String>? = jettyRequest.headers.getValuesList(name)
+    override fun getAll(name: String): List<String>? = jettyRequest.headers.getValuesList(name).takeIf { it.isNotEmpty() }
 
-    override fun get(name: String): String? = jettyRequest.headers.get(name)
+    override fun get(name: String): String? = jettyRequest.headers.get(name).takeIf { it.isNotEmpty() }
 
     override fun isEmpty(): Boolean = jettyRequest.headers.size() == 0
 

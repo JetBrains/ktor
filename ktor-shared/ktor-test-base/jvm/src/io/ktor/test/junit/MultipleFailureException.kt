@@ -5,5 +5,6 @@
 package io.ktor.test.junit
 
 class MultipleFailureException(children: List<Throwable>) : RuntimeException(
-    "Exceptions thrown: ${children.joinToString { it::class.simpleName ?: "<no name>" }}"
+    "Exceptions thrown: ${children.joinToString { it::class.simpleName ?: "<no name>" }}",
+    children.firstOrNull()
 )

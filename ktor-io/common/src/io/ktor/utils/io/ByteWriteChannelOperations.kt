@@ -87,6 +87,12 @@ public suspend fun ByteWriteChannel.writeBuffer(value: RawSource) {
 }
 
 @OptIn(InternalAPI::class)
+public suspend fun ByteWriteChannel.writeBuffer(value: RawSource, length: Long) {
+    writeBuffer.write(value, length)
+    flushIfNeeded()
+}
+
+@OptIn(InternalAPI::class)
 public suspend fun ByteWriteChannel.writeStringUtf8(value: String) {
     writeBuffer.writeText(value)
     flushIfNeeded()

@@ -165,7 +165,11 @@ public suspend fun ApplicationCall.respondSource(
     status: HttpStatusCode? = null,
     contentLength: Long? = null,
 ) {
-    respond(ChannelWriterContent({ writeBuffer(source) }, contentType, status, contentLength))
+    val write: suspend ByteWriteChannel.() -> Unit =
+        contentLength?.let { length ->
+            { writeBuffer(source, length) }
+        } ?: { writeBuffer(source) }
+    respond(ChannelWriterContent(write, contentType, status, contentLength))
 }
 
 /**

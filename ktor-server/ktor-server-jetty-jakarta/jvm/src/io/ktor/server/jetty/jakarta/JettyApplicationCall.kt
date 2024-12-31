@@ -19,7 +19,8 @@ public class JettyApplicationCall(
     override val coroutineContext: CoroutineContext
 ) : BaseApplicationCall(application) {
 
-    override val request: JettyApplicationRequest = JettyApplicationRequest(this, request)
+    override val request: JettyApplicationRequest =
+        JettyApplicationRequest(this, request)
     override val response: JettyApplicationResponse =
         JettyApplicationResponse(this, request, response, coroutineContext)
 

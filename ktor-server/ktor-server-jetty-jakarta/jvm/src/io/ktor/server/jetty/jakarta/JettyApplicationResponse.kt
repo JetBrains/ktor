@@ -12,6 +12,7 @@ import io.ktor.server.response.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.pool.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import org.eclipse.jetty.server.Request
 import org.eclipse.jetty.server.Response
 import org.eclipse.jetty.util.Callback
@@ -32,7 +33,9 @@ public class JettyApplicationResponse(
         pipeline.intercept(ApplicationSendPipeline.Engine) {
             if (responseJob.isInitialized()) {
                 responseJob.value.apply {
-                    channel.flushAndClose()
+                    runCatching {
+                        channel.flushAndClose()
+                    }
                     join()
                 }
             }
@@ -72,18 +75,18 @@ public class JettyApplicationResponse(
     }
 
     private val responseJob: Lazy<ReaderJob> = lazy {
-        reader {
+        reader(Dispatchers.IO) {
             val buffer = bufferPool.borrow()
 
-            while (channel.readAvailable(buffer) > -1) {
-                response.write(false, buffer.flip(), Callback.from { buffer.rewind() })
+            try {
+                while (channel.readAvailable(buffer) > -1) {
+                    response.write(false, buffer.flip(), Callback.from { buffer.rewind() })
+                }
+            } finally {
+                response.write(true, emptyBuffer, Callback.from { bufferPool.recycle(buffer) })
             }
-
-            response.write(true, emptyBuffer, Callback.from { bufferPool.recycle(buffer) })
         }
     }
-
-    private val responseChannel = lazy { responseJob.value.channel }
 
     override suspend fun respondFromBytes(bytes: ByteArray) {
         val buffer = bufferPool.borrow()
@@ -101,7 +104,8 @@ public class JettyApplicationResponse(
         response.write(true, emptyBuffer, Callback.NOOP)
     }
 
-    override suspend fun responseChannel(): ByteWriteChannel = responseChannel.value
+    override suspend fun responseChannel(): ByteWriteChannel =
+        responseJob.value.channel
 
     override fun setStatus(statusCode: HttpStatusCode) {
         response.status = statusCode.value

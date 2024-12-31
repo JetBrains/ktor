@@ -30,7 +30,7 @@ abstract class CompressionTestSuite<TEngine : ApplicationEngine, TConfiguration 
     @Test
     fun testLocalFileContentWithCompression() = runTest {
         val file = loadTestFile()
-        testLog.trace("test file is $file")
+        testLog.trace("test file is {}", file)
 
         createAndStartServer {
             install(Compression)

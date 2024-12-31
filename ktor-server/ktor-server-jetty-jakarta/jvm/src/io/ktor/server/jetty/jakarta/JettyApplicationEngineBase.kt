@@ -10,6 +10,7 @@ import io.ktor.server.engine.*
 import kotlinx.coroutines.CompletableJob
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.ServerConnector
+import org.eclipse.jetty.util.thread.QueuedThreadPool
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -48,10 +49,14 @@ public open class JettyApplicationEngineBase(
     /**
      * Jetty server instance being configuring and starting
      */
-    protected val server: Server = Server().apply {
-        configuration.configureServer(this)
-        initializeServer(configuration)
-    }
+    protected val server: Server =
+        Server(QueuedThreadPool(
+            configuration.connectionGroupSize,
+            configuration.workerGroupSize,
+            configuration.idleTimeout.inWholeMilliseconds.toInt(),
+        )).apply {
+            initializeServer(configuration)
+        }
 
     override fun start(wait: Boolean): JettyApplicationEngineBase {
         server.start()
