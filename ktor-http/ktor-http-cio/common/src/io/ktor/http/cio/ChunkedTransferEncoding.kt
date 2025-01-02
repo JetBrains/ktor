@@ -7,6 +7,7 @@ package io.ktor.http.cio
 import io.ktor.http.cio.internals.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.bits.*
+import io.ktor.utils.io.charsets.TooLongLineException
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.pool.*
 import kotlinx.coroutines.*
@@ -77,8 +78,12 @@ public suspend fun decodeChunked(input: ByteReadChannel, out: ByteWriteChannel) 
             }
 
             chunkSizeBuffer.clear()
-            if (!input.readUTF8LineTo(chunkSizeBuffer, 2)) {
-                throw EOFException("Invalid chunk: content block of size $chunkSize ended unexpectedly")
+            try {
+                if (!input.readUTF8LineTo(chunkSizeBuffer, 2)) {
+                    throw EOFException("Invalid chunk: content block of size $chunkSize ended unexpectedly")
+                }
+            } catch (e: TooLongLineException) {
+                throw IOException("Expected CR+LF line ending but there was more content", e)
             }
             if (chunkSizeBuffer.isNotEmpty()) {
                 throw EOFException("Invalid chunk: content block should end with CR+LF")

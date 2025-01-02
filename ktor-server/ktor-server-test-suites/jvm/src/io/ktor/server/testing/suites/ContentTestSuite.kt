@@ -782,6 +782,7 @@ abstract class ContentTestSuite<TEngine : ApplicationEngine, TConfiguration : Ap
         }
 
         withUrl("/?auto") {
+            assertEquals(200, status.value)
             assertEquals("", bodyAsText())
         }
     }

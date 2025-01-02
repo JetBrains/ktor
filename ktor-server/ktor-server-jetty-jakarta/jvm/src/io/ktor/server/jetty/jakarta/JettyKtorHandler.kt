@@ -69,7 +69,7 @@ internal class JettyKtorHandler(
                     )
                     callback.failed(channelFailed)
                 } catch (error: Throwable) {
-                    logError(call, error)
+                    // logError(call, error)
                     // FIXME if client ws disconnects, the error is logged here
                     Response.writeError(
                         request,

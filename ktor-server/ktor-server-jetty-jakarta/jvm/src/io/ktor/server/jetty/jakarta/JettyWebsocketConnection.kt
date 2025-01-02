@@ -30,8 +30,8 @@ public class JettyWebsocketConnection(
     Connection.UpgradeTo,
     CoroutineScope {
 
-    private val inputBuffer = bufferPool.borrow().flip()
-    private val outputBuffer = bufferPool.borrow()
+    private val inputBuffer by lazy { ByteBuffer.allocate(8192) }
+    private val outputBuffer by lazy { ByteBuffer.allocate(8192) }
 
     public val inputChannel: ByteChannel = ByteChannel(true)
     public val outputChannel: ByteChannel = ByteChannel(false)
@@ -86,7 +86,7 @@ public class JettyWebsocketConnection(
                     }
                 } else {
                     outputChannel.close()
-                    bufferPool.recycle(outputBuffer)
+                    // bufferPool.recycle(outputBuffer)
                     return@launch
                 }
             }

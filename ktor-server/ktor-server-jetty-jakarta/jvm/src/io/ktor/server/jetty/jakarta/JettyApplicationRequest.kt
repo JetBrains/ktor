@@ -27,11 +27,13 @@ public class JettyApplicationRequest(
 
     override val local: RequestConnectionPoint = JettyConnectionPoint(request)
 
-    override val queryParameters: Parameters by lazy { encodeParameters(rawQueryParameters) }
+    override val queryParameters: Parameters by lazy {
+        encodeParameters(rawQueryParameters)
+    }
 
     override val rawQueryParameters: Parameters by lazy(LazyThreadSafetyMode.NONE) {
-        val uri = request.httpURI.query ?: return@lazy Parameters.Empty
-        parseQueryString(uri, decode = false)
+        val queryString = request.httpURI.query ?: return@lazy Parameters.Empty
+        parseQueryString(queryString, decode = false)
     }
 }
 

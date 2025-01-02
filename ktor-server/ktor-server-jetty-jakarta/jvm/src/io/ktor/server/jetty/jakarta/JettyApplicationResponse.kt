@@ -10,17 +10,14 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.response.*
 import io.ktor.utils.io.*
-import io.ktor.utils.io.pool.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.eclipse.jetty.server.Request
 import org.eclipse.jetty.server.Response
 import org.eclipse.jetty.util.Callback
 import java.nio.ByteBuffer
+import java.nio.ByteBuffer.allocate
 import kotlin.coroutines.CoroutineContext
-
-internal val bufferPool = ByteBufferPool(bufferSize = 8096)
-internal val emptyBuffer = ByteBuffer.allocate(0)
 
 @InternalAPI
 public class JettyApplicationResponse(
@@ -57,7 +54,7 @@ public class JettyApplicationResponse(
         endpoint.idleTimeout = 6000 * 1000
 
         val websocketConnection = JettyWebsocketConnection(endpoint, coroutineContext)
-        response.write(true, emptyBuffer, Callback.from { endpoint.upgrade(websocketConnection) })
+        response.write(true, allocate(0), Callback.from { endpoint.upgrade(websocketConnection) })
 
         val upgradeJob = upgrade.upgrade(
             websocketConnection.inputChannel,
@@ -76,32 +73,27 @@ public class JettyApplicationResponse(
 
     private val responseJob: Lazy<ReaderJob> = lazy {
         reader(Dispatchers.IO) {
-            val buffer = bufferPool.borrow()
-
+            val buffer = allocate(8096)
             try {
                 while (channel.readAvailable(buffer) > -1) {
-                    response.write(false, buffer.flip(), Callback.from { buffer.rewind() })
+                    response.write(channel.isClosedForRead, buffer.flip(), Callback.from { buffer.clear() })
                 }
             } finally {
-                response.write(true, emptyBuffer, Callback.from { bufferPool.recycle(buffer) })
+                runCatching {
+                    if (!response.isCommitted)
+                        response.write(true, allocate(0), Callback.NOOP)
+                }
+                // bufferPool.recycle(buffer)
             }
         }
     }
 
     override suspend fun respondFromBytes(bytes: ByteArray) {
-        val buffer = bufferPool.borrow()
-
-        response.write(
-            true,
-            buffer.put(bytes).flip(),
-            Callback.from {
-                bufferPool.recycle(buffer)
-            }
-        )
+        response.write(true, ByteBuffer.wrap(bytes), Callback.NOOP)
     }
 
     override suspend fun respondNoContent(content: OutgoingContent.NoContent) {
-        response.write(true, emptyBuffer, Callback.NOOP)
+        response.write(true, allocate(0), Callback.NOOP)
     }
 
     override suspend fun responseChannel(): ByteWriteChannel =
