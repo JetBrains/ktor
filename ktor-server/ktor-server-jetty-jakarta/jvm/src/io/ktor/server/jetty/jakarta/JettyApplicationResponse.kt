@@ -10,14 +10,20 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.response.*
 import io.ktor.utils.io.*
+import io.ktor.utils.io.pool.ByteBufferPool
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.suspendCancellableCoroutine
 import org.eclipse.jetty.server.Request
 import org.eclipse.jetty.server.Response
 import org.eclipse.jetty.util.Callback
 import java.nio.ByteBuffer
 import java.nio.ByteBuffer.allocate
 import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 @InternalAPI
 public class JettyApplicationResponse(
@@ -26,6 +32,10 @@ public class JettyApplicationResponse(
     private val response: Response,
     override val coroutineContext: CoroutineContext
 ) : BaseApplicationResponse(call), CoroutineScope {
+    private companion object {
+        private val bufferPool = ByteBufferPool(bufferSize = 8192)
+        private val emptyBuffer = ByteBuffer.allocate(0)
+    }
     init {
         pipeline.intercept(ApplicationSendPipeline.Engine) {
             if (responseJob.isInitialized()) {
@@ -71,19 +81,40 @@ public class JettyApplicationResponse(
         upgradeJob.join()
     }
 
+    @OptIn(InternalCoroutinesApi::class)
     private val responseJob: Lazy<ReaderJob> = lazy {
         reader(Dispatchers.IO) {
-            val buffer = allocate(8096)
+            var count = 0
+            val buffer = bufferPool.borrow()
             try {
-                while (channel.readAvailable(buffer) > -1) {
-                    response.write(channel.isClosedForRead, buffer.flip(), Callback.from { buffer.clear() })
+                while(true) {
+                    when(val current = channel.readAvailable(buffer)) {
+                        -1 -> break
+                        0 -> continue
+                        else -> count += current
+                    }
+
+                    suspendCoroutine<Unit> { continuation ->
+                        try {
+                            response.write(
+                                channel.isClosedForRead,
+                                buffer.flip(),
+                                Callback.from {
+                                    buffer.flip()
+                                    continuation.resume(Unit)
+                                }
+                            )
+                        } catch (cause: Throwable) {
+                            continuation.resumeWithException(cause)
+                        }
+                    }
                 }
             } finally {
+                bufferPool.recycle(buffer)
                 runCatching {
                     if (!response.isCommitted)
                         response.write(true, allocate(0), Callback.NOOP)
                 }
-                // bufferPool.recycle(buffer)
             }
         }
     }

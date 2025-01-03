@@ -48,13 +48,10 @@ public open class JettyApplicationEngineBase(
 
     /**
      * Jetty server instance being configuring and starting
+     * TODO thread pool config
      */
     protected val server: Server =
-        Server(QueuedThreadPool(
-            configuration.connectionGroupSize,
-            configuration.workerGroupSize,
-            configuration.idleTimeout.inWholeMilliseconds.toInt(),
-        )).apply {
+        Server(QueuedThreadPool()).apply {
             initializeServer(configuration)
         }
 

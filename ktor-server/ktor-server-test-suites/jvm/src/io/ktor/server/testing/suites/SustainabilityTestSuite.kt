@@ -403,7 +403,7 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
             }
         }
 
-        val originalSha1WithSize = file.inputStream().use { it.crcWithSize() }
+        val (fileChecksum, fileCount) = file.inputStream().use { it.crcWithSize() }
 
         createAndStartServer {
             get("/file") {
@@ -412,7 +412,9 @@ abstract class SustainabilityTestSuite<TEngine : ApplicationEngine, TConfigurati
         }
 
         withUrl("/file") {
-            assertEquals(originalSha1WithSize, rawContent.toInputStream().crcWithSize())
+            val (actualChecksum, actualCount) = body<InputStream>().crcWithSize()
+            assertEquals(fileCount, actualCount, "Response size differs from file")
+            assertEquals(fileChecksum, actualChecksum, "Response checksum differs from file")
         }
     }
 
