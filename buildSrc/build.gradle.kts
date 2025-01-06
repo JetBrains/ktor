@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
 plugins {
@@ -12,7 +12,6 @@ dependencies {
 
     implementation(libs.kotlinter)
     implementation(libs.gradleDoctor)
-    implementation(libs.kotlinx.atomicfu.gradlePlugin)
 
     // A hack to make version catalogs accessible from buildSrc sources
     // https://github.com/gradle/gradle/issues/15383#issuecomment-779893192

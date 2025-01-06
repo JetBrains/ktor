@@ -47,7 +47,6 @@ subprojects {
     if (nonDefaultProjectStructure.contains(project.name)) return@subprojects
 
     apply(plugin = "ktorbuild.kmp")
-    apply(plugin = "atomicfu-conventions")
 
     val skipPublish: List<String> by rootProject.extra
     if (!skipPublish.contains(project.name)) {

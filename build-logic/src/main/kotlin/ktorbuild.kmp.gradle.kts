@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 plugins {
     id("ktorbuild.base")
     kotlin("multiplatform")
+    id("org.jetbrains.kotlinx.atomicfu")
 }
 
 kotlin {
