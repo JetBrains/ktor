@@ -55,7 +55,6 @@ subprojects {
     } else {
         apply(plugin = "ktorbuild.project.internal")
     }
-    apply(plugin = "atomicfu-conventions")
 
     configureCodestyle()
 }

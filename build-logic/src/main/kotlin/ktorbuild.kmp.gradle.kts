@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 plugins {
     id("ktorbuild.base")
     kotlin("multiplatform")
+    id("org.jetbrains.kotlinx.atomicfu")
 }
 
 kotlin {
