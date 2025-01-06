@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.kotlin.gradlePlugin)
     implementation(libs.dokka.gradlePlugin)
     implementation(libs.develocity)
+    implementation(libs.gradleDoctor)
 
     // A hack to make version catalogs accessible from buildSrc sources
     // https://github.com/gradle/gradle/issues/15383#issuecomment-779893192

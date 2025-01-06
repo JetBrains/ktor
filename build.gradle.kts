@@ -32,9 +32,8 @@ extra["nonDefaultProjectStructure"] = mutableListOf(
 apply(from = "gradle/compatibility.gradle")
 
 plugins {
-    id("ktorbuild.base")
+    id("ktorbuild.doctor")
     alias(libs.plugins.binaryCompatibilityValidator)
-    conventions.gradleDoctor
 }
 
 println("Build version: ${project.version}")
