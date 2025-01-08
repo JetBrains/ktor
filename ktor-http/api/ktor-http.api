@@ -154,6 +154,9 @@ public final class io/ktor/http/ContentType : io/ktor/http/HeaderValueWithParame
 
 public final class io/ktor/http/ContentType$Application {
 	public static final field INSTANCE Lio/ktor/http/ContentType$Application;
+	public static final field TYPE Ljava/lang/String;
+	public final fun contains (Lio/ktor/http/ContentType;)Z
+	public final fun contains (Ljava/lang/CharSequence;)Z
 	public final fun getAny ()Lio/ktor/http/ContentType;
 	public final fun getAtom ()Lio/ktor/http/ContentType;
 	public final fun getCbor ()Lio/ktor/http/ContentType;
@@ -180,6 +183,9 @@ public final class io/ktor/http/ContentType$Application {
 
 public final class io/ktor/http/ContentType$Audio {
 	public static final field INSTANCE Lio/ktor/http/ContentType$Audio;
+	public static final field TYPE Ljava/lang/String;
+	public final fun contains (Lio/ktor/http/ContentType;)Z
+	public final fun contains (Ljava/lang/CharSequence;)Z
 	public final fun getAny ()Lio/ktor/http/ContentType;
 	public final fun getMP4 ()Lio/ktor/http/ContentType;
 	public final fun getMPEG ()Lio/ktor/http/ContentType;
@@ -193,6 +199,9 @@ public final class io/ktor/http/ContentType$Companion {
 
 public final class io/ktor/http/ContentType$Font {
 	public static final field INSTANCE Lio/ktor/http/ContentType$Font;
+	public static final field TYPE Ljava/lang/String;
+	public final fun contains (Lio/ktor/http/ContentType;)Z
+	public final fun contains (Ljava/lang/CharSequence;)Z
 	public final fun getAny ()Lio/ktor/http/ContentType;
 	public final fun getCollection ()Lio/ktor/http/ContentType;
 	public final fun getOtf ()Lio/ktor/http/ContentType;
@@ -204,6 +213,9 @@ public final class io/ktor/http/ContentType$Font {
 
 public final class io/ktor/http/ContentType$Image {
 	public static final field INSTANCE Lio/ktor/http/ContentType$Image;
+	public static final field TYPE Ljava/lang/String;
+	public final fun contains (Lio/ktor/http/ContentType;)Z
+	public final fun contains (Ljava/lang/String;)Z
 	public final fun getAny ()Lio/ktor/http/ContentType;
 	public final fun getGIF ()Lio/ktor/http/ContentType;
 	public final fun getJPEG ()Lio/ktor/http/ContentType;
@@ -214,12 +226,18 @@ public final class io/ktor/http/ContentType$Image {
 
 public final class io/ktor/http/ContentType$Message {
 	public static final field INSTANCE Lio/ktor/http/ContentType$Message;
+	public static final field TYPE Ljava/lang/String;
+	public final fun contains (Lio/ktor/http/ContentType;)Z
+	public final fun contains (Ljava/lang/String;)Z
 	public final fun getAny ()Lio/ktor/http/ContentType;
 	public final fun getHttp ()Lio/ktor/http/ContentType;
 }
 
 public final class io/ktor/http/ContentType$MultiPart {
 	public static final field INSTANCE Lio/ktor/http/ContentType$MultiPart;
+	public static final field TYPE Ljava/lang/String;
+	public final fun contains (Lio/ktor/http/ContentType;)Z
+	public final fun contains (Ljava/lang/CharSequence;)Z
 	public final fun getAlternative ()Lio/ktor/http/ContentType;
 	public final fun getAny ()Lio/ktor/http/ContentType;
 	public final fun getByteRanges ()Lio/ktor/http/ContentType;
@@ -232,6 +250,9 @@ public final class io/ktor/http/ContentType$MultiPart {
 
 public final class io/ktor/http/ContentType$Text {
 	public static final field INSTANCE Lio/ktor/http/ContentType$Text;
+	public static final field TYPE Ljava/lang/String;
+	public final fun contains (Lio/ktor/http/ContentType;)Z
+	public final fun contains (Ljava/lang/CharSequence;)Z
 	public final fun getAny ()Lio/ktor/http/ContentType;
 	public final fun getCSS ()Lio/ktor/http/ContentType;
 	public final fun getCSV ()Lio/ktor/http/ContentType;
@@ -245,6 +266,9 @@ public final class io/ktor/http/ContentType$Text {
 
 public final class io/ktor/http/ContentType$Video {
 	public static final field INSTANCE Lio/ktor/http/ContentType$Video;
+	public static final field TYPE Ljava/lang/String;
+	public final fun contains (Lio/ktor/http/ContentType;)Z
+	public final fun contains (Ljava/lang/CharSequence;)Z
 	public final fun getAny ()Lio/ktor/http/ContentType;
 	public final fun getMP4 ()Lio/ktor/http/ContentType;
 	public final fun getMPEG ()Lio/ktor/http/ContentType;

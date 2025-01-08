@@ -416,6 +416,9 @@ final class io.ktor.http/ContentType : io.ktor.http/HeaderValueWithParameters { 
     final fun withoutParameters(): io.ktor.http/ContentType // io.ktor.http/ContentType.withoutParameters|withoutParameters(){}[0]
 
     final object Application { // io.ktor.http/ContentType.Application|null[0]
+        final const val TYPE // io.ktor.http/ContentType.Application.TYPE|{}TYPE[0]
+            final fun <get-TYPE>(): kotlin/String // io.ktor.http/ContentType.Application.TYPE.<get-TYPE>|<get-TYPE>(){}[0]
+
         final val Any // io.ktor.http/ContentType.Application.Any|{}Any[0]
             final fun <get-Any>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Application.Any.<get-Any>|<get-Any>(){}[0]
         final val Atom // io.ktor.http/ContentType.Application.Atom|{}Atom[0]
@@ -460,9 +463,15 @@ final class io.ktor.http/ContentType : io.ktor.http/HeaderValueWithParameters { 
             final fun <get-Xml_Dtd>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Application.Xml_Dtd.<get-Xml_Dtd>|<get-Xml_Dtd>(){}[0]
         final val Zip // io.ktor.http/ContentType.Application.Zip|{}Zip[0]
             final fun <get-Zip>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Application.Zip.<get-Zip>|<get-Zip>(){}[0]
+
+        final fun contains(io.ktor.http/ContentType): kotlin/Boolean // io.ktor.http/ContentType.Application.contains|contains(io.ktor.http.ContentType){}[0]
+        final fun contains(kotlin/CharSequence): kotlin/Boolean // io.ktor.http/ContentType.Application.contains|contains(kotlin.CharSequence){}[0]
     }
 
     final object Audio { // io.ktor.http/ContentType.Audio|null[0]
+        final const val TYPE // io.ktor.http/ContentType.Audio.TYPE|{}TYPE[0]
+            final fun <get-TYPE>(): kotlin/String // io.ktor.http/ContentType.Audio.TYPE.<get-TYPE>|<get-TYPE>(){}[0]
+
         final val Any // io.ktor.http/ContentType.Audio.Any|{}Any[0]
             final fun <get-Any>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Audio.Any.<get-Any>|<get-Any>(){}[0]
         final val MP4 // io.ktor.http/ContentType.Audio.MP4|{}MP4[0]
@@ -471,6 +480,9 @@ final class io.ktor.http/ContentType : io.ktor.http/HeaderValueWithParameters { 
             final fun <get-MPEG>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Audio.MPEG.<get-MPEG>|<get-MPEG>(){}[0]
         final val OGG // io.ktor.http/ContentType.Audio.OGG|{}OGG[0]
             final fun <get-OGG>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Audio.OGG.<get-OGG>|<get-OGG>(){}[0]
+
+        final fun contains(io.ktor.http/ContentType): kotlin/Boolean // io.ktor.http/ContentType.Audio.contains|contains(io.ktor.http.ContentType){}[0]
+        final fun contains(kotlin/CharSequence): kotlin/Boolean // io.ktor.http/ContentType.Audio.contains|contains(kotlin.CharSequence){}[0]
     }
 
     final object Companion { // io.ktor.http/ContentType.Companion|null[0]
@@ -481,6 +493,9 @@ final class io.ktor.http/ContentType : io.ktor.http/HeaderValueWithParameters { 
     }
 
     final object Font { // io.ktor.http/ContentType.Font|null[0]
+        final const val TYPE // io.ktor.http/ContentType.Font.TYPE|{}TYPE[0]
+            final fun <get-TYPE>(): kotlin/String // io.ktor.http/ContentType.Font.TYPE.<get-TYPE>|<get-TYPE>(){}[0]
+
         final val Any // io.ktor.http/ContentType.Font.Any|{}Any[0]
             final fun <get-Any>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Font.Any.<get-Any>|<get-Any>(){}[0]
         final val Collection // io.ktor.http/ContentType.Font.Collection|{}Collection[0]
@@ -495,9 +510,15 @@ final class io.ktor.http/ContentType : io.ktor.http/HeaderValueWithParameters { 
             final fun <get-Woff>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Font.Woff.<get-Woff>|<get-Woff>(){}[0]
         final val Woff2 // io.ktor.http/ContentType.Font.Woff2|{}Woff2[0]
             final fun <get-Woff2>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Font.Woff2.<get-Woff2>|<get-Woff2>(){}[0]
+
+        final fun contains(io.ktor.http/ContentType): kotlin/Boolean // io.ktor.http/ContentType.Font.contains|contains(io.ktor.http.ContentType){}[0]
+        final fun contains(kotlin/CharSequence): kotlin/Boolean // io.ktor.http/ContentType.Font.contains|contains(kotlin.CharSequence){}[0]
     }
 
     final object Image { // io.ktor.http/ContentType.Image|null[0]
+        final const val TYPE // io.ktor.http/ContentType.Image.TYPE|{}TYPE[0]
+            final fun <get-TYPE>(): kotlin/String // io.ktor.http/ContentType.Image.TYPE.<get-TYPE>|<get-TYPE>(){}[0]
+
         final val Any // io.ktor.http/ContentType.Image.Any|{}Any[0]
             final fun <get-Any>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Image.Any.<get-Any>|<get-Any>(){}[0]
         final val GIF // io.ktor.http/ContentType.Image.GIF|{}GIF[0]
@@ -510,16 +531,28 @@ final class io.ktor.http/ContentType : io.ktor.http/HeaderValueWithParameters { 
             final fun <get-SVG>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Image.SVG.<get-SVG>|<get-SVG>(){}[0]
         final val XIcon // io.ktor.http/ContentType.Image.XIcon|{}XIcon[0]
             final fun <get-XIcon>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Image.XIcon.<get-XIcon>|<get-XIcon>(){}[0]
+
+        final fun contains(io.ktor.http/ContentType): kotlin/Boolean // io.ktor.http/ContentType.Image.contains|contains(io.ktor.http.ContentType){}[0]
+        final fun contains(kotlin/String): kotlin/Boolean // io.ktor.http/ContentType.Image.contains|contains(kotlin.String){}[0]
     }
 
     final object Message { // io.ktor.http/ContentType.Message|null[0]
+        final const val TYPE // io.ktor.http/ContentType.Message.TYPE|{}TYPE[0]
+            final fun <get-TYPE>(): kotlin/String // io.ktor.http/ContentType.Message.TYPE.<get-TYPE>|<get-TYPE>(){}[0]
+
         final val Any // io.ktor.http/ContentType.Message.Any|{}Any[0]
             final fun <get-Any>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Message.Any.<get-Any>|<get-Any>(){}[0]
         final val Http // io.ktor.http/ContentType.Message.Http|{}Http[0]
             final fun <get-Http>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Message.Http.<get-Http>|<get-Http>(){}[0]
+
+        final fun contains(io.ktor.http/ContentType): kotlin/Boolean // io.ktor.http/ContentType.Message.contains|contains(io.ktor.http.ContentType){}[0]
+        final fun contains(kotlin/String): kotlin/Boolean // io.ktor.http/ContentType.Message.contains|contains(kotlin.String){}[0]
     }
 
     final object MultiPart { // io.ktor.http/ContentType.MultiPart|null[0]
+        final const val TYPE // io.ktor.http/ContentType.MultiPart.TYPE|{}TYPE[0]
+            final fun <get-TYPE>(): kotlin/String // io.ktor.http/ContentType.MultiPart.TYPE.<get-TYPE>|<get-TYPE>(){}[0]
+
         final val Alternative // io.ktor.http/ContentType.MultiPart.Alternative|{}Alternative[0]
             final fun <get-Alternative>(): io.ktor.http/ContentType // io.ktor.http/ContentType.MultiPart.Alternative.<get-Alternative>|<get-Alternative>(){}[0]
         final val Any // io.ktor.http/ContentType.MultiPart.Any|{}Any[0]
@@ -536,9 +569,15 @@ final class io.ktor.http/ContentType : io.ktor.http/HeaderValueWithParameters { 
             final fun <get-Related>(): io.ktor.http/ContentType // io.ktor.http/ContentType.MultiPart.Related.<get-Related>|<get-Related>(){}[0]
         final val Signed // io.ktor.http/ContentType.MultiPart.Signed|{}Signed[0]
             final fun <get-Signed>(): io.ktor.http/ContentType // io.ktor.http/ContentType.MultiPart.Signed.<get-Signed>|<get-Signed>(){}[0]
+
+        final fun contains(io.ktor.http/ContentType): kotlin/Boolean // io.ktor.http/ContentType.MultiPart.contains|contains(io.ktor.http.ContentType){}[0]
+        final fun contains(kotlin/CharSequence): kotlin/Boolean // io.ktor.http/ContentType.MultiPart.contains|contains(kotlin.CharSequence){}[0]
     }
 
     final object Text { // io.ktor.http/ContentType.Text|null[0]
+        final const val TYPE // io.ktor.http/ContentType.Text.TYPE|{}TYPE[0]
+            final fun <get-TYPE>(): kotlin/String // io.ktor.http/ContentType.Text.TYPE.<get-TYPE>|<get-TYPE>(){}[0]
+
         final val Any // io.ktor.http/ContentType.Text.Any|{}Any[0]
             final fun <get-Any>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Text.Any.<get-Any>|<get-Any>(){}[0]
         final val CSS // io.ktor.http/ContentType.Text.CSS|{}CSS[0]
@@ -557,9 +596,15 @@ final class io.ktor.http/ContentType : io.ktor.http/HeaderValueWithParameters { 
             final fun <get-VCard>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Text.VCard.<get-VCard>|<get-VCard>(){}[0]
         final val Xml // io.ktor.http/ContentType.Text.Xml|{}Xml[0]
             final fun <get-Xml>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Text.Xml.<get-Xml>|<get-Xml>(){}[0]
+
+        final fun contains(io.ktor.http/ContentType): kotlin/Boolean // io.ktor.http/ContentType.Text.contains|contains(io.ktor.http.ContentType){}[0]
+        final fun contains(kotlin/CharSequence): kotlin/Boolean // io.ktor.http/ContentType.Text.contains|contains(kotlin.CharSequence){}[0]
     }
 
     final object Video { // io.ktor.http/ContentType.Video|null[0]
+        final const val TYPE // io.ktor.http/ContentType.Video.TYPE|{}TYPE[0]
+            final fun <get-TYPE>(): kotlin/String // io.ktor.http/ContentType.Video.TYPE.<get-TYPE>|<get-TYPE>(){}[0]
+
         final val Any // io.ktor.http/ContentType.Video.Any|{}Any[0]
             final fun <get-Any>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Video.Any.<get-Any>|<get-Any>(){}[0]
         final val MP4 // io.ktor.http/ContentType.Video.MP4|{}MP4[0]
@@ -570,6 +615,9 @@ final class io.ktor.http/ContentType : io.ktor.http/HeaderValueWithParameters { 
             final fun <get-OGG>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Video.OGG.<get-OGG>|<get-OGG>(){}[0]
         final val QuickTime // io.ktor.http/ContentType.Video.QuickTime|{}QuickTime[0]
             final fun <get-QuickTime>(): io.ktor.http/ContentType // io.ktor.http/ContentType.Video.QuickTime.<get-QuickTime>|<get-QuickTime>(){}[0]
+
+        final fun contains(io.ktor.http/ContentType): kotlin/Boolean // io.ktor.http/ContentType.Video.contains|contains(io.ktor.http.ContentType){}[0]
+        final fun contains(kotlin/CharSequence): kotlin/Boolean // io.ktor.http/ContentType.Video.contains|contains(kotlin.CharSequence){}[0]
     }
 }
 

@@ -4,6 +4,7 @@
 
 package io.ktor.http.cio
 
+import io.ktor.http.*
 import io.ktor.http.cio.internals.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
@@ -154,7 +155,7 @@ public fun CoroutineScope.parseMultipart(
     contentLength: Long?,
     maxPartSize: Long = Long.MAX_VALUE,
 ): ReceiveChannel<MultipartEvent> {
-    if (!contentType.startsWith("multipart/", ignoreCase = true)) {
+    if (contentType !in ContentType.MultiPart) {
         throw IOException("Failed to parse multipart: Content-Type should be multipart/* but it is $contentType")
     }
     val boundaryByteBuffer = parseBoundaryInternal(contentType)

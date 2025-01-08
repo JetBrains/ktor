@@ -71,7 +71,7 @@ internal class JettyKtorHandler(
     ) {
         try {
             val contentType = request.contentType
-            if (contentType != null && contentType.startsWith("multipart/", ignoreCase = true)) {
+            if (contentType != null && contentType in ContentType.MultiPart) {
                 baseRequest.setAttribute(Request.MULTIPART_CONFIG_ELEMENT, multipartConfig)
                 // TODO someone reported auto-cleanup issues so we have to check it
             }

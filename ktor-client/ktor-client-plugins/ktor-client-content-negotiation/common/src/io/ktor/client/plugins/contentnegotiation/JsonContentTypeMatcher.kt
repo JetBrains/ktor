@@ -16,6 +16,6 @@ public object JsonContentTypeMatcher : ContentTypeMatcher {
         }
 
         val value = contentType.withoutParameters().toString()
-        return value.startsWith("application/", ignoreCase = true) && value.endsWith("+json", ignoreCase = true)
+        return value in ContentType.Application && value.endsWith("+json", ignoreCase = true)
     }
 }
