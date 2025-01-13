@@ -10,6 +10,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.servlet.jakarta.*
 import io.ktor.server.testing.suites.*
+import io.ktor.utils.io.*
 import jakarta.servlet.http.*
 import org.eclipse.jetty.server.*
 import org.eclipse.jetty.server.handler.*
@@ -52,6 +53,23 @@ class JettyHttpServerJvmTest : HttpServerJvmTestSuite<JettyApplicationEngine, Je
 
         withUrl("/tomcat/attributes", {}) {
             assertEquals("135", call.response.bodyAsText())
+        }
+    }
+
+    @Test
+    fun testWriteNonASCIIChars() = runTest {
+        val input = (1..6000).map { if (it % 2 == 0) 'å' else (64 + it % 10).toChar() }.joinToString("")
+
+        createAndStartServer {
+            get {
+                call.respondBytesWriter {
+                    writeStringUtf8(input)
+                }
+            }
+        }
+
+        withUrl("/", {}) {
+            assertEquals(input, call.response.bodyAsText())
         }
     }
 
