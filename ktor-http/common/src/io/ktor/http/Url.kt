@@ -20,6 +20,7 @@ import kotlinx.serialization.encoding.*
  * @property specifiedPort port number that was specified to override protocol's default
  * @property encodedPath encoded path without query string
  * @property parameters URL query parameters
+ * @property rawEncodedParameters encoded URL query parameters which can't be decoded as strings
  * @property fragment URL fragment (anchor name)
  * @property user username part of URL
  * @property password password part of URL
@@ -32,6 +33,7 @@ public class Url internal constructor(
     public val specifiedPort: Int,
     pathSegments: List<String>,
     public val parameters: Parameters,
+    public val rawEncodedParameters: Parameters,
     public val fragment: String,
     public val user: String?,
     public val password: String?,

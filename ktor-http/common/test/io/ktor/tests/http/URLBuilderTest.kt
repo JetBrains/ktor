@@ -335,6 +335,9 @@ internal class URLBuilderTest {
 
         urlBuilder.parameters.append("as%df", "as df")
         assertEquals("as+df", urlBuilder.encodedParameters["as%25df"])
+
+        urlBuilder.encodedParameters.append("as%D0df", "as%83df")
+        assertEquals("as%83df", urlBuilder.encodedParameters["as%D0df"])
     }
 
     @Test
