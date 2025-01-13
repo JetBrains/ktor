@@ -171,6 +171,54 @@ public class HttpRequestBuilder : HttpMessageBuilder {
         return attributes.getOrNull(ENGINE_CAPABILITIES_KEY)?.get(key) as T?
     }
 
+    /**
+     * Substitute URI path and/or query parameters with provided values
+     *
+     * Example:
+     * ```
+     * client.get("https://blog.jetbrains.com/kotlin/{year}/{month}/{name}/") {
+     *     pathParameters(
+     *          "year" to 2023,
+     *          "month" to "11",
+     *          "name" to "kotlin-1-9-20-released",
+     *     )
+     * }.bodyAsText()
+     * ```
+     *
+     * @param parameters pairs of parameter name and value to substitute
+     * @see pathParameter
+     */
+    public fun pathParameters(parameters: Iterable<Pair<String, Any>>) {
+        val currentUrl = url.build()
+        // save original URI pattern
+        attributes.computeIfAbsent(UriPatternAttributeKey) { "$currentUrl" }
+
+        // replace path/query parameter in the URI pattern
+        url(
+            currentUrl.substitutePathParameters(parameters),
+        )
+    }
+
+    /**
+     * Substitute URI path and/or query parameter with provided value
+     *
+     * Example:
+     * ```
+     * client.get("https://blog.jetbrains.com/kotlin/{year}/{month}/{name}/") {
+     *     pathParameter("year", 2023)
+     *     pathParameter("month", "11")
+     *     pathParameter("name", "kotlin-1-9-20-released")
+     * }.bodyAsText()
+     * ```
+     *
+     * @param key parameter name
+     * @param value parameter value
+     * @see pathParameters
+     */
+    public fun pathParameter(key: String, value: Any) {
+        pathParameters(listOf(key to value))
+    }
+
     public companion object
 }
 
@@ -350,3 +398,33 @@ public class SSEClientResponseAdapter : ResponseAdapter {
         }
     }
 }
+
+/**
+ * Attribute key for URI pattern
+ */
+public val UriPatternAttributeKey: AttributeKey<String> = AttributeKey("UriPatternAttributeKey")
+
+private fun Url.substitutePathParameters(substitutions: Iterable<Pair<String, Any>>) =
+    URLBuilder().also { builder ->
+        val substitutionsMap = substitutions.associate { (key, value) -> "{$key}" to "$value" }
+
+        builder.host = host
+        builder.protocol = protocol
+        builder.port = port
+        builder.pathSegments =
+            pathSegments.map { pathSegment ->
+                substitutionsMap[pathSegment] ?: pathSegment
+            }
+        parameters.forEach { parameterName, parameterValues ->
+            parameterValues.forEach { parameterValue ->
+                builder.parameters.append(
+                    name = parameterName,
+                    value = substitutionsMap[parameterValue] ?: parameterValue,
+                )
+            }
+        }
+        builder.user = user
+        builder.password = password
+        builder.fragment = fragment
+        builder.trailingQuery = trailingQuery
+    }.build()
