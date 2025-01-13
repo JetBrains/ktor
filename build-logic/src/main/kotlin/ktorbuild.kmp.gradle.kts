@@ -4,8 +4,8 @@
 
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
+import ktorbuild.internal.*
 import ktorbuild.internal.gradle.*
-import ktorbuild.internal.ktorBuild
 import ktorbuild.maybeNamed
 import ktorbuild.targets.*
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
@@ -67,4 +67,5 @@ if (targets.hasNative) {
     }
 }
 
+setupTrain()
 if (ktorBuild.isCI.get()) configureTestTasksOnCi()
