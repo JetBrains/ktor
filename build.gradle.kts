@@ -43,8 +43,6 @@ subprojects {
 
     extra["hostManager"] = HostManager()
 
-    setupTrainForSubproject()
-
     val nonDefaultProjectStructure: List<String> by rootProject.extra
     if (nonDefaultProjectStructure.contains(project.name)) return@subprojects
 
@@ -59,7 +57,6 @@ subprojects {
 }
 
 println("Using Kotlin compiler version: ${libs.versions.kotlin.get()}")
-filterSnapshotTests()
 
 fun configureDokka() {
     allprojects {
