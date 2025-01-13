@@ -9,6 +9,10 @@
 // - Show declarations: true
 
 // Library unique name: <io.ktor:ktor-client-darwin>
+final class io.ktor.client.engine.darwin.certificates/CertificatePinnerException : kotlinx.io/IOException { // io.ktor.client.engine.darwin.certificates/CertificatePinnerException|null[0]
+    constructor <init>(kotlin/String) // io.ktor.client.engine.darwin.certificates/CertificatePinnerException.<init>|<init>(kotlin.String){}[0]
+}
+
 final class io.ktor.client.engine.darwin.certificates/PinnedCertificate { // io.ktor.client.engine.darwin.certificates/PinnedCertificate|null[0]
     constructor <init>(kotlin/String, kotlin/String, kotlin/String) // io.ktor.client.engine.darwin.certificates/PinnedCertificate.<init>|<init>(kotlin.String;kotlin.String;kotlin.String){}[0]
 

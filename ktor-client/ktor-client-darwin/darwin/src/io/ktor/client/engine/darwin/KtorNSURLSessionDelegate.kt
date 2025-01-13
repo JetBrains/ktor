@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2022 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
 package io.ktor.client.engine.darwin
@@ -131,11 +131,16 @@ public class KtorNSURLSessionDelegate(
         didReceiveChallenge: NSURLAuthenticationChallenge,
         completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Unit
     ) {
-        val handler = challengeHandler
-        if (handler != null) {
-            handler(session, task, didReceiveChallenge, completionHandler)
-        } else {
+        val handler = challengeHandler ?: run {
             completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, didReceiveChallenge.proposedCredential)
+            return
+        }
+
+        try {
+            handler(session, task, didReceiveChallenge, completionHandler)
+        } catch (cause: Throwable) {
+            taskHandlers[task]?.saveFailure(cause)
+            completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, null)
         }
     }
 }

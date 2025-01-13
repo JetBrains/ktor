@@ -272,6 +272,20 @@ class DarwinEngineTest {
         }
     }
 
+    @Test
+    fun testRethrowExceptionThrownDuringCustomChallenge() = runBlocking {
+        val challengeException = Exception("Challenge failed")
+
+        val client = HttpClient(Darwin) {
+            engine {
+                handleChallenge { _, _, _, _ -> throw challengeException }
+            }
+        }
+
+        val thrownException = assertFails { client.get(TEST_SERVER_TLS) }
+        assertTrue(thrownException === challengeException, "Expected exception to be rethrown")
+    }
+
     private fun stringToNSUrlString(value: String): String {
         return Url(value).toNSUrl().absoluteString!!
     }
