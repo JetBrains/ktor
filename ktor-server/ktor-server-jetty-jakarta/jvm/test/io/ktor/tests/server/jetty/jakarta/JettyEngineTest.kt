@@ -43,14 +43,14 @@ class JettyHttpServerJvmTest : HttpServerJvmTestSuite<JettyApplicationEngine, Je
     @Test
     fun testServletAttributes() = runTest {
         createAndStartServer {
-            get("/tomcat/attributes") {
+            get("/jetty/attributes") {
                 call.respondText(
                     call.request.servletRequestAttributes["ktor.test.attribute"]?.toString() ?: "Not found"
                 )
             }
         }
 
-        withUrl("/tomcat/attributes", {}) {
+        withUrl("/jetty/attributes", {}) {
             assertEquals("135", call.response.bodyAsText())
         }
     }
