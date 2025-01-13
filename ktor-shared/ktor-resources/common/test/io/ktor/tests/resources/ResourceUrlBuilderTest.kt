@@ -24,6 +24,13 @@ class ResourceUrlBuilderTest {
         assertEquals("/resource/123/", url)
     }
 
+    @Test
+    fun testSimpleResourceDefaultUrl() {
+        val resource = SimpleResource(123)
+        val url = href(resourcesFormat, resource)
+        assertEquals("/resource/123/", url)
+    }
+
     @Resource("resource/{id}")
     data class SimpleResourceWithQuery(
         val id: Int,
@@ -64,6 +71,24 @@ class ResourceUrlBuilderTest {
         val resource2 = SimpleResourceWithWildcard(emptyList())
         val url2 = href(resourcesFormat, resource2)
         assertEquals("/resource", url2)
+    }
+
+    @Resource("foo/{fooIds...}")
+    data class SimpleResourceWithWildcardAndNested(
+        val fooIds: List<String>,
+        val parent: SimpleResourceWithWildcard
+    )
+
+    @Test
+    fun testSimpleResourceWithWildcardAndNested() {
+        val resource1 =
+            SimpleResourceWithWildcardAndNested(listOf("123"), SimpleResourceWithWildcard(listOf("456", "789")))
+        val url1 = href(resourcesFormat, resource1)
+        assertEquals("/resource/456/789/foo/123", url1)
+
+        val resource2 = SimpleResourceWithWildcardAndNested(emptyList(), SimpleResourceWithWildcard(emptyList()))
+        val url2 = href(resourcesFormat, resource2)
+        assertEquals("/resource/foo", url2)
     }
 
     @Resource("resource/{id?}")
@@ -136,5 +161,24 @@ class ResourceUrlBuilderTest {
         }.let {
             assertEquals("Expect zero or one parameter with name: id, but found 2", it.message)
         }
+    }
+
+    @Resource(
+        path = "Foo('{Id}')/Bar(Id='{ArtifactId2}',Version='{ArtifactVersion}')/\$value",
+    )
+    data class ResourceWithParameterInPath(
+        val Id: String,
+        val ArtifactId2: String,
+        val ArtifactVersion: String,
+    )
+
+    @Test
+    fun testResourceWithParameterInPath() {
+        val resource = ResourceWithParameterInPath("foo", "bar", "latest")
+        val url = href(resourcesFormat, resource)
+        assertEquals(
+            expected = """/Foo('foo')/Bar(Id='bar',Version='latest')/${'$'}value""",
+            actual = url,
+        )
     }
 }

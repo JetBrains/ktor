@@ -43,46 +43,63 @@ public fun <T> href(
     resource: T,
     urlBuilder: URLBuilder
 ) {
-    val parameters = resourcesFormat.encodeToParameters(serializer, resource)
-    val pathPattern = resourcesFormat.encodeToPathPattern(serializer)
+    val actualParameterValues = resourcesFormat.encodeToParameters(serializer, resource)
+    val path = resourcesFormat.encodeToPathPattern(serializer)
 
-    val usedForPathParameterNames = mutableSetOf<String>()
-    val pathParts = pathPattern.split("/")
+    val parameterNamesFoundInPath = mutableSetOf<String>()
 
-    val updatedParts = pathParts.flatMap {
-        if (!it.startsWith('{') || !it.endsWith('}')) return@flatMap listOf(it)
+    val newPath = path.replace(parameterRegex) { matchResult ->
+        val foundParameterResult = matchResult.groups[1]!!
+        val foundParameterName = foundParameterResult.value
 
-        val part = it.substring(1, it.lastIndex)
+        val isOptional = matchResult.groups[3] != null
+        val isWildcard = matchResult.groups[4] != null
+
         when {
-            part.endsWith('?') -> {
-                val values = parameters.getAll(part.dropLast(1)) ?: return@flatMap emptyList()
-                if (values.size > 1) {
+            isOptional -> {
+                val foundParameterValues = actualParameterValues.getAll(foundParameterName)
+                if (foundParameterValues != null && foundParameterValues.size > 1) {
                     throw ResourceSerializationException(
-                        "Expect zero or one parameter with name: ${part.dropLast(1)}, but found ${values.size}"
+                        "Expect zero or one parameter with name: $foundParameterName, " +
+                            "but found ${foundParameterValues.size}"
                     )
                 }
-                usedForPathParameterNames += part.dropLast(1)
-                values
+                parameterNamesFoundInPath += foundParameterName
+                foundParameterValues?.get(0) ?: NO_PARAMETER_FOUND
             }
-            part.endsWith("...") -> {
-                usedForPathParameterNames += part.dropLast(3)
-                parameters.getAll(part.dropLast(3)) ?: emptyList()
+
+            isWildcard -> {
+                parameterNamesFoundInPath += foundParameterName
+                val foundParameterValues = actualParameterValues.getAll(foundParameterName)
+                if (foundParameterValues != null) {
+                    foundParameterValues.joinToString("/")
+                } else {
+                    val emptyGroup = path.substring(matchResult.range.first - 1, matchResult.range.last + 1)
+                    if (emptyGroup.startsWith("/")) {
+                        NO_PARAMETER_FOUND
+                    } else {
+                        ""
+                    }
+                }
             }
+
             else -> {
-                val values = parameters.getAll(part)
+                val values = actualParameterValues.getAll(foundParameterName)
                 if (values == null || values.size != 1) {
                     throw ResourceSerializationException(
-                        "Expect exactly one parameter with name: $part, but found ${values?.size ?: 0}"
+                        "Expect exactly one parameter with name: $foundParameterName, but found ${values?.size ?: 0}"
                     )
                 }
-                usedForPathParameterNames += part
-                values
+                parameterNamesFoundInPath += foundParameterName
+                values.joinToString("/")
             }
         }
     }
 
-    urlBuilder.pathSegments = updatedParts
-
-    val queryArgs = parameters.filter { key, _ -> !usedForPathParameterNames.contains(key) }
+    urlBuilder.path(newPath.replace("/$NO_PARAMETER_FOUND", ""))
+    val queryArgs = actualParameterValues.filter { key, _ -> key !in parameterNamesFoundInPath }
     urlBuilder.parameters.appendAll(queryArgs)
 }
+
+private val parameterRegex = """\{([^}]\w*)((\?)|(\.\.\.))?\}""".toRegex()
+private const val NO_PARAMETER_FOUND = "<NO-PARAMETER-FOUND>"

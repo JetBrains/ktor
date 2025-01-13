@@ -3,6 +3,7 @@
  */
 
 import io.ktor.client.engine.mock.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.client.plugins.resources.Resources
 import io.ktor.client.request.*
@@ -123,6 +124,29 @@ class ResourcesTest {
 
         test { client ->
             val response = client.get(PathWithDefault(query1 = null))
+            assertEquals(HttpStatusCode.OK, response.status)
+        }
+    }
+
+    @Test
+    fun testRequestWithDefaultUrl() = testWithEngine(MockEngine) {
+        config {
+            engine {
+                addHandler { request ->
+                    val uri = request.url.fullPath
+                    assertEquals("/foo/path/true?query2=5", uri)
+                    respondOk(uri)
+                }
+            }
+            install(Resources)
+        }
+
+        test { client ->
+            val response = client.config {
+                defaultRequest {
+                    url("https://example.com/foo/")
+                }
+            }.get(PathWithDefault(query1 = null))
             assertEquals(HttpStatusCode.OK, response.status)
         }
     }
