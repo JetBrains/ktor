@@ -1,0 +1,4 @@
+public final class io/ktor/client/plugins/platform/PlatformingKt {
+	public static final fun getPlatforming ()Lio/ktor/client/plugins/api/ClientPlugin;
+}
+

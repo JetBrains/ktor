@@ -9,3 +9,5 @@ public typealias IOException = kotlinx.io.IOException
 
 @Deprecated("Use kotlinx.io.EOFException instead", ReplaceWith("kotlinx.io.EOFException"))
 public typealias EOFException = kotlinx.io.EOFException
+
+public expect open class UnknownServiceException(message: String) : kotlinx.io.IOException
