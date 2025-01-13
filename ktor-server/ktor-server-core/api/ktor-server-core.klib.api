@@ -1557,8 +1557,8 @@ final object io.ktor.server.application.hooks/ResponseBodyReadyForSend : io.ktor
     }
 }
 
-final object io.ktor.server.application.hooks/ResponseSent : io.ktor.server.application/Hook<kotlin/Function1<io.ktor.server.application/ApplicationCall, kotlin/Unit>> { // io.ktor.server.application.hooks/ResponseSent|null[0]
-    final fun install(io.ktor.server.application/ApplicationCallPipeline, kotlin/Function1<io.ktor.server.application/ApplicationCall, kotlin/Unit>) // io.ktor.server.application.hooks/ResponseSent.install|install(io.ktor.server.application.ApplicationCallPipeline;kotlin.Function1<io.ktor.server.application.ApplicationCall,kotlin.Unit>){}[0]
+final object io.ktor.server.application.hooks/ResponseSent : io.ktor.server.application/Hook<kotlin.coroutines/SuspendFunction1<io.ktor.server.application/ApplicationCall, kotlin/Unit>> { // io.ktor.server.application.hooks/ResponseSent|null[0]
+    final fun install(io.ktor.server.application/ApplicationCallPipeline, kotlin.coroutines/SuspendFunction1<io.ktor.server.application/ApplicationCall, kotlin/Unit>) // io.ktor.server.application.hooks/ResponseSent.install|install(io.ktor.server.application.ApplicationCallPipeline;kotlin.coroutines.SuspendFunction1<io.ktor.server.application.ApplicationCall,kotlin.Unit>){}[0]
 }
 
 final object io.ktor.server.engine/ConfigKeys { // io.ktor.server.engine/ConfigKeys|null[0]
