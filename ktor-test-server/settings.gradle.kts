@@ -3,7 +3,7 @@
  */
 
 pluginManagement {
-    includeBuild("../gradle-settings-conventions")
+    includeBuild("../build-settings-logic")
 }
 
 plugins {

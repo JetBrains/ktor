@@ -5,6 +5,7 @@
 description = "Common tests for client content negotiation"
 
 plugins {
+    id("ktorbuild.project.internal")
     id("kotlinx-serialization")
 }
 

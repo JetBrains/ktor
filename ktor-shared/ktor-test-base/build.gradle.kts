@@ -4,6 +4,10 @@
 
 description = "Common extensions for testing Ktor"
 
+plugins {
+    id("ktorbuild.project.internal")
+}
+
 kotlin.sourceSets {
     commonMain {
         dependencies {

@@ -3,7 +3,7 @@
  */
 
 pluginManagement {
-    includeBuild("gradle-settings-conventions")
+    includeBuild("build-settings-logic")
 }
 
 plugins {
@@ -14,6 +14,7 @@ plugins {
 
 rootProject.name = "ktor"
 
+includeBuild("build-logic")
 includeBuild("ktor-test-server")
 
 include(":ktor-server")

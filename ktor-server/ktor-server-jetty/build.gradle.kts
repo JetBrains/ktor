@@ -1,3 +1,7 @@
+/*
+ * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ */
+
 description = ""
 
 kotlin {
@@ -21,17 +25,7 @@ kotlin {
                 api(project(":ktor-server:ktor-server-test-suites"))
 
                 api(libs.jetty.servlet)
-                api(project(":ktor-server:ktor-server-core", configuration = "testOutput"))
-                api(libs.logback.classic)
             }
         }
-    }
-}
-
-val jetty_alpn_boot_version: String? by extra
-
-dependencies {
-    if (jetty_alpn_boot_version != null) {
-        add("boot", libs.jetty.alpn.boot)
     }
 }
