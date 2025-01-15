@@ -4,6 +4,7 @@
 
 package io.ktor.client.engine.android
 
+import android.net.http.*
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.*
@@ -96,6 +97,46 @@ class AndroidSpecificHttpsTest : TestWithKtor() {
             Android.config {
                 sslManager = { conn ->
                     conn.sslSocketFactory = sslContext.socketFactory
+                }
+            }
+        ).use { client ->
+            val actual = client.get("https://127.0.0.1:$serverPort/").body<String>()
+            assertEquals("Hello, world", actual)
+        }
+    }
+
+    @Test
+    fun withAndroid14Customisations(): Unit = runBlocking {
+        HttpClient(
+            Android.config {
+//                this.context = context
+                httpEngineConfig = {
+//                    val cacheDir =
+//                        context.cacheDir.resolve("httpEngine").also {
+//                            it.mkdirs()
+//                        }
+
+                    setEnableBrotli(true)
+//                    setStoragePath(cacheDir.path)
+                    setConnectionMigrationOptions(
+                        ConnectionMigrationOptions.Builder()
+                            .setDefaultNetworkMigration(ConnectionMigrationOptions.MIGRATION_OPTION_ENABLED)
+                            .setPathDegradationMigration(ConnectionMigrationOptions.MIGRATION_OPTION_ENABLED)
+                            .setAllowNonDefaultNetworkUsage(ConnectionMigrationOptions.MIGRATION_OPTION_ENABLED)
+                            .build(),
+                    )
+                    setDnsOptions(
+                        DnsOptions.Builder()
+                            .setUseHttpStackDnsResolver(DnsOptions.DNS_OPTION_ENABLED)
+                            .setStaleDns(DnsOptions.DNS_OPTION_ENABLED)
+                            .setPersistHostCache(DnsOptions.DNS_OPTION_ENABLED)
+                            .build(),
+                    )
+                    setQuicOptions(
+                        QuicOptions.Builder()
+                            .build(),
+                    )
+                    addQuicHint("www.google.com", 443, 443)
                 }
             }
         ).use { client ->

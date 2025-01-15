@@ -17,10 +17,14 @@ public final class io/ktor/client/engine/android/AndroidClientEngine : io/ktor/c
 public final class io/ktor/client/engine/android/AndroidEngineConfig : io/ktor/client/engine/HttpClientEngineConfig {
 	public fun <init> ()V
 	public final fun getConnectTimeout ()I
+	public final fun getContext ()Landroid/content/Context;
+	public final fun getHttpEngineConfig ()Lkotlin/jvm/functions/Function1;
 	public final fun getRequestConfig ()Lkotlin/jvm/functions/Function1;
 	public final fun getSocketTimeout ()I
 	public final fun getSslManager ()Lkotlin/jvm/functions/Function1;
 	public final fun setConnectTimeout (I)V
+	public final fun setContext (Landroid/content/Context;)V
+	public final fun setHttpEngineConfig (Lkotlin/jvm/functions/Function1;)V
 	public final fun setRequestConfig (Lkotlin/jvm/functions/Function1;)V
 	public final fun setSocketTimeout (I)V
 	public final fun setSslManager (Lkotlin/jvm/functions/Function1;)V
