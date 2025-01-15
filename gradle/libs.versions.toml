@@ -29,7 +29,7 @@ tomcat = "9.0.98"
 tomcat-jakarta = "10.1.31"
 
 apache = "4.1.5"
-apache5 = "5.3.1"
+apache5 = "5.4.1"
 apacheds = "2.0.0.AM27"
 okhttp = "4.12.0"
 okio = "3.10.2"
