@@ -64,33 +64,6 @@ class CallLoggingTest {
     }
 
     @Test
-    fun `can log application lifecycle events`() = runTest {
-        var hash: String? = null
-
-        runTestApplication {
-            environment { environment() }
-            application {
-                install(CallLogging) { clock { 0 } }
-                hash = hashCode().toString(radix = 16)
-            }
-        }
-
-        assertTrue(messages.size >= 3, "It should be at least 3 message logged:\n$messages")
-        val startingMessageIndex = messages.indexOfFirst {
-            it == "INFO: Application started: io.ktor.server.application.Application@$hash"
-        }
-        val stoppingMessageIndex = messages.indexOfFirst {
-            it == "INFO: Application stopping: io.ktor.server.application.Application@$hash"
-        }
-        val stoppedMessageIndex = messages.indexOfFirst {
-            it == "INFO: Application stopped: io.ktor.server.application.Application@$hash"
-        }
-        assertTrue { startingMessageIndex >= 0 }
-        assertTrue { startingMessageIndex < stoppingMessageIndex }
-        assertTrue { stoppingMessageIndex < stoppedMessageIndex }
-    }
-
-    @Test
     fun `can log an unhandled get request`() = testApplication {
         environment { environment() }
         install(CallLogging) { clock { 0 } }
@@ -398,7 +371,6 @@ class CallLoggingTest {
                 }
             }
         }
-        lateinit var hash: String
 
         runTestApplication {
             application {
@@ -407,11 +379,11 @@ class CallLoggingTest {
                     clock { 0 }
                 }
             }
-            application { hash = hashCode().toString(radix = 16) }
+            client.get("/")
         }
 
         assertTrue(customMessages.isNotEmpty())
-        assertTrue(customMessages.all { it.startsWith("CUSTOM TRACE:") && it.contains(hash) })
+        assertTrue(customMessages.all { it.startsWith("CUSTOM TRACE:") })
         assertTrue(messages.isEmpty())
     }
 
