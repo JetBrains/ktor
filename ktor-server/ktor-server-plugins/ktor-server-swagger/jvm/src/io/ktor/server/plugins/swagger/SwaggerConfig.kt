@@ -30,6 +30,13 @@ public class SwaggerConfig {
     public var packageLocation: String = "https://unpkg.com/swagger-ui-dist"
 
     /**
+     * Whether to allow deep linking in Swagger UI, as described here: https://swagger.io/docs/open-source-tools/swagger-ui/usage/deep-linking/
+     *
+     * Defaults to `false`.
+     */
+    public var deepLinking: Boolean = false
+
+    /*
      * Swagger favicon location
      */
     public var faviconLocation: String = "https://unpkg.com/swagger-ui-dist@$version/favicon-32x32.png"

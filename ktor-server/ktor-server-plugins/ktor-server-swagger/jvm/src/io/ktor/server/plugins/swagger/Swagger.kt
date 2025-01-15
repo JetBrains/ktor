@@ -110,6 +110,7 @@ window.onload = function() {
     window.ui = SwaggerUIBundle({
         url: '$fullPath/$apiUrl',
         dom_id: '#swagger-ui',
+        deepLinking: ${config.deepLinking},
         presets: [
             SwaggerUIBundle.presets.apis,
             SwaggerUIStandalonePreset
