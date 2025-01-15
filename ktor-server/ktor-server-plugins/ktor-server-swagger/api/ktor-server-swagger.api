@@ -1,9 +1,11 @@
 public final class io/ktor/server/plugins/swagger/SwaggerConfig {
 	public fun <init> ()V
 	public final fun customStyle (Ljava/lang/String;)V
+	public final fun getDeepLinking ()Z
 	public final fun getFaviconLocation ()Ljava/lang/String;
 	public final fun getPackageLocation ()Ljava/lang/String;
 	public final fun getVersion ()Ljava/lang/String;
+	public final fun setDeepLinking (Z)V
 	public final fun setFaviconLocation (Ljava/lang/String;)V
 	public final fun setPackageLocation (Ljava/lang/String;)V
 	public final fun setVersion (Ljava/lang/String;)V
