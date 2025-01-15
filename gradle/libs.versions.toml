@@ -1,7 +1,7 @@
 [versions]
 
 kotlin = "2.1.0"
-kotlinx-html = "0.11.0"
+kotlinx-html = "0.12.0"
 kotlinx-datetime = "0.6.1"
 kotlinx-io = "0.6.0"
 coroutines = "1.10.1"
