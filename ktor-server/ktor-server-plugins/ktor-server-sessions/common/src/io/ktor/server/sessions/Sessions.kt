@@ -6,7 +6,6 @@ package io.ktor.server.sessions
 
 import io.ktor.server.application.*
 import io.ktor.server.request.*
-import io.ktor.server.response.*
 import io.ktor.util.*
 import io.ktor.util.logging.*
 
@@ -27,24 +26,23 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.server.sessions.Sessions")
  */
 public val Sessions: RouteScopedPlugin<SessionsConfig> = createRouteScopedPlugin("Sessions", ::SessionsConfig) {
     val providers = pluginConfig.providers.toList()
+    val sessionSupplier: suspend (ApplicationCall, List<SessionProvider<*>>) -> StatefulSession =
+        if (pluginConfig.deferred) {
+            ::createDeferredSession
+        } else {
+            ::createSession
+        }
 
     application.attributes.put(SessionProvidersKey, providers)
 
     onCall { call ->
-        // For each call, call each provider and retrieve session data if needed.
-        // Capture data in the attribute's value
-        val providerData = providers.associateBy({ it.name }) {
-            it.receiveSessionData(call)
-        }
-
-        if (providerData.isEmpty()) {
-            LOGGER.trace("No sessions found for ${call.request.uri}")
+        if (providers.isEmpty()) {
+            LOGGER.trace { "No sessions found for ${call.request.uri}" }
         } else {
-            val sessions = providerData.keys.joinToString()
-            LOGGER.trace("Sessions found for ${call.request.uri}: $sessions")
+            val sessions = providers.joinToString { it.name }
+            LOGGER.trace { "Sessions found for ${call.request.uri}: $sessions" }
         }
-        val sessionData = SessionData(providerData)
-        call.attributes.put(SessionDataKey, sessionData)
+        call.attributes.put(SessionDataKey, sessionSupplier(call, providers))
     }
 
     // When response is being sent, call each provider to update/remove session data
@@ -58,11 +56,18 @@ public val Sessions: RouteScopedPlugin<SessionsConfig> = createRouteScopedPlugin
          */
         val sessionData = call.attributes.getOrNull(SessionDataKey) ?: return@on
 
-        sessionData.providerData.values.forEach { data ->
-            LOGGER.trace("Sending session data for ${call.request.uri}: ${data.provider.name}")
-            data.sendSessionData(call)
+        sessionData.sendSessionData(call) { provider ->
+            LOGGER.trace { "Sending session data for ${call.request.uri}: $provider" }
         }
-
-        sessionData.commit()
     }
+}
+
+private suspend fun createSession(call: ApplicationCall, providers: List<SessionProvider<*>>): StatefulSession {
+    // For each call, call each provider and retrieve session data if needed.
+    // Capture data in the attribute's value
+    val providerData = providers.associateBy({ it.name }) {
+        it.receiveSessionData(call)
+    }
+
+    return SessionData(providerData)
 }

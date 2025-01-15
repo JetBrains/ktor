@@ -268,8 +268,10 @@ public final class io/ktor/server/sessions/SessionsBuilderKt {
 
 public final class io/ktor/server/sessions/SessionsConfig {
 	public fun <init> ()V
+	public final fun getDeferred ()Z
 	public final fun getProviders ()Ljava/util/List;
 	public final fun register (Lio/ktor/server/sessions/SessionProvider;)V
+	public final fun setDeferred (Z)V
 }
 
 public final class io/ktor/server/sessions/SessionsKt {

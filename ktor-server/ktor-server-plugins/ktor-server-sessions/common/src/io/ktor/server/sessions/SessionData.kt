@@ -45,6 +45,19 @@ public interface CurrentSession {
 }
 
 /**
+ * Extends [CurrentSession] with a call to include session data in the server response.
+ */
+internal interface StatefulSession : CurrentSession {
+
+    /**
+     * Iterates over session data items and writes them to the application call.
+     * The session cannot be modified after this is called.
+     * This is called after the session data is sent to the response.
+     */
+    suspend fun sendSessionData(call: ApplicationCall, onEach: (String) -> Unit = {})
+}
+
+/**
  * Sets a session instance with the type [T].
  * @throws IllegalStateException if no session provider is registered for the type [T]
  */
@@ -99,11 +112,15 @@ public inline fun <reified T : Any> CurrentSession.getOrSet(name: String = findN
 
 internal data class SessionData(
     val providerData: Map<String, SessionProviderData<*>>
-) : CurrentSession {
+) : StatefulSession {
 
     private var committed = false
 
-    internal fun commit() {
+    override suspend fun sendSessionData(call: ApplicationCall, onEach: (String) -> Unit) {
+        providerData.values.forEach { data ->
+            onEach(data.provider.name)
+            data.sendSessionData(call)
+        }
         committed = true
     }
 
@@ -175,7 +192,7 @@ internal data class SessionProviderData<S : Any>(
     val provider: SessionProvider<S>
 )
 
-internal val SessionDataKey = AttributeKey<SessionData>("SessionKey")
+internal val SessionDataKey = AttributeKey<StatefulSession>("SessionKey")
 
 private fun ApplicationCall.reportMissingSession(): Nothing {
     application.plugin(Sessions) // ensure the plugin is installed

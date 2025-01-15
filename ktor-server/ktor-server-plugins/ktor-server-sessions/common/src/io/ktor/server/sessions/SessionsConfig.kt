@@ -19,6 +19,13 @@ public class SessionsConfig {
     public val providers: List<SessionProvider<*>> get() = registered.toList()
 
     /**
+     * When set to true, sessions will be lazily retrieved from storage.
+     *
+     * Note: this is only available for JVM in Ktor 3.0
+     */
+    public var deferred: Boolean = false
+
+    /**
      * Registers a session [provider].
      */
     public fun register(provider: SessionProvider<*>) {
