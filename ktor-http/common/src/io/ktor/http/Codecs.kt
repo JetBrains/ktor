@@ -42,6 +42,7 @@ internal val ATTRIBUTE_CHARACTERS: Set<Char> = URL_ALPHABET_CHARS + setOf(
  * Characters allowed in url according to https://tools.ietf.org/html/rfc3986#section-2.3
  */
 private val SPECIAL_SYMBOLS = listOf('-', '.', '_', '~').map { it.code.toByte() }
+private val SPECIAL_SYMBOLS_CHARS = listOf('-', '.', '_', '~')
 
 /**
  * Encode url part as specified in
@@ -135,6 +136,131 @@ public fun String.encodeURLParameter(
     }
 }
 
+private enum class Decodability {
+    UNDECODABLE,
+    UTF8_STRING,
+    BINARY
+}
+
+private fun String.isDecodable(plusIsSpace: Boolean = false): Decodability {
+    var remainingPercentChars = 0
+    var expectedUtf8Bytes = 0
+    var remainingUtf8Bytes = 0
+    var percentByte = 0
+    var unicodeCharCode = 0
+
+    var decodability = Decodability.UTF8_STRING
+
+    for (char in this) {
+        if (char == '%') {
+            if (remainingPercentChars != 0) {
+                decodability = Decodability.UNDECODABLE // "%0%"-like pattern
+                break
+            }
+            remainingPercentChars = 2
+            percentByte = 0
+        } else if (char in URL_ALPHABET_CHARS) {
+            if (char in HEX_ALPHABET && remainingPercentChars > 0) {
+                percentByte = percentByte shl 4
+                percentByte = percentByte or charToHexDigit(char)
+                remainingPercentChars--
+                if (remainingPercentChars == 0) {
+                    if (remainingUtf8Bytes == 0) {
+                        // Start of UTF-8 sequence
+                        remainingUtf8Bytes = when {
+                            percentByte and 0x80 == 0x00 -> 0
+                            percentByte and 0xe0 == 0xc0 -> 1
+                            percentByte and 0xe0 == 0xe0 -> 2
+                            percentByte and 0xf8 == 0xf0 -> 3
+                            else -> {
+                                decodability = Decodability.BINARY // invalid UTF-8 sequence
+                                0
+                            }
+                        }
+                        expectedUtf8Bytes = remainingUtf8Bytes
+
+                        unicodeCharCode = when (remainingUtf8Bytes) {
+                            0 -> percentByte
+                            1 -> percentByte and 0x1f
+                            2 -> percentByte and 0x0f
+                            3 -> percentByte and 0x07
+                            else -> {
+                                decodability = Decodability.UNDECODABLE // unreachable
+                                break
+                            }
+                        }
+                    } else if (percentByte and 0xc0 == 0x80) {
+                        // Continuation of UTF-8 sequence
+                        remainingUtf8Bytes--
+                        unicodeCharCode = unicodeCharCode shl 6
+                        unicodeCharCode = unicodeCharCode or (percentByte and 0x3f)
+                        if (remainingUtf8Bytes == 0) {
+                            // Check forbidden code points
+                            if (unicodeCharCode in 0xd800..0xdfff) return Decodability.BINARY // invalid UTF-8 sequence
+                            if (unicodeCharCode >= 0x110000) return Decodability.BINARY // invalid UTF-8 sequence
+
+                            // Check overlong encoding
+                            when {
+                                expectedUtf8Bytes == 0 && unicodeCharCode in 0x00..0x7f -> Unit
+                                expectedUtf8Bytes == 1 && unicodeCharCode in 0x80..0x07ff -> Unit
+                                expectedUtf8Bytes == 2 && unicodeCharCode in 0x0800..0xffff -> Unit
+                                expectedUtf8Bytes == 3 && unicodeCharCode in 0x010000..0x10ffff -> Unit
+                                else -> decodability = Decodability.BINARY // invalid UTF-8 sequence
+                            }
+                        }
+                    } else {
+                        // Unexpected byte in the middle of UTF-8 sequence
+                        decodability = Decodability.BINARY // invalid UTF-8 sequence
+                    }
+                }
+            } else if (remainingUtf8Bytes != 0) {
+                decodability = Decodability.BINARY // invalid UTF-8 sequence
+            } else if (remainingPercentChars != 0) {
+                decodability = Decodability.UNDECODABLE // "%0x"-like pattern
+                break
+            }
+        } else if (char in SPECIAL_SYMBOLS_CHARS) {
+            if (remainingUtf8Bytes != 0) {
+                decodability = Decodability.BINARY // invalid UTF-8 sequence
+            } else if (remainingPercentChars != 0) {
+                decodability = Decodability.UNDECODABLE // "%0~"-like pattern
+                break
+            }
+        } else if (char == '+') {
+            if (!plusIsSpace || remainingPercentChars != 0) {
+                decodability = Decodability.UNDECODABLE // plus is threatened as invalid input symbol here or "%0+"-like pattern
+                break
+            } else if (remainingUtf8Bytes != 0) {
+                decodability = Decodability.BINARY // invalid UTF-8 sequence
+            }
+        } else {
+            decodability = Decodability.UNDECODABLE // invalid input symbol
+            break
+        }
+    }
+
+    if (decodability == Decodability.UTF8_STRING && remainingUtf8Bytes != 0) {
+        decodability = Decodability.BINARY // incomplete UTF-8 sequence
+    }
+    return if (remainingPercentChars != 0) {
+        Decodability.UNDECODABLE // "%0"-like pattern
+    } else {
+        decodability
+    }
+}
+
+internal fun String.isDecodableToUTF8String(plusIsSpace: Boolean = false): Boolean {
+    return isDecodable(plusIsSpace) == Decodability.UTF8_STRING
+}
+
+internal fun String.checkDecodableToUTF8String(plusIsSpace: Boolean = false): Boolean {
+    return when (isDecodable(plusIsSpace)) {
+        Decodability.UTF8_STRING -> true
+        Decodability.BINARY -> false
+        Decodability.UNDECODABLE -> throw URLDecodeException("Invalid percent-encoding sequence")
+    }
+}
+
 internal fun String.percentEncode(allowedSet: Set<Char>): String {
     val encodedCount = count { it !in allowedSet }
     if (encodedCount == 0) return this
@@ -188,6 +314,18 @@ public fun String.decodeURLPart(
     end: Int = length,
     charset: Charset = Charsets.UTF_8
 ): String = decodeScan(start, end, false, charset)
+
+/**
+ * Decode [this] as query parameter key.
+ */
+public fun String.decodeURLParameter(
+    plusIsSpace: Boolean = false
+): String = decodeScan(0, length, plusIsSpace, Charsets.UTF_8)
+
+/**
+ * Decode [this] as query parameter value. Plus character will be decoded to space.
+ */
+internal fun String.decodeURLParameterValue(): String = decodeURLParameter(plusIsSpace = true)
 
 private fun String.decodeScan(start: Int, end: Int, plusIsSpace: Boolean, charset: Charset): String {
     for (index in start until end) {

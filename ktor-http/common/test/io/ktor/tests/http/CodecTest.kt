@@ -153,6 +153,31 @@ class CodecTest {
         assertEquals("/path/%F0%9F%90%95", surrogateSymbolUrlPath.encodeURLPath())
     }
 
+    @Test
+    fun testIsDecodableToUTF8String() {
+        assertTrue("".isDecodableToUTF8String())
+        assertTrue("Simple".isDecodableToUTF8String())
+        assertTrue("%D0%92%D1%81%D0%B5%D0%BC_%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82".isDecodableToUTF8String())
+        assertTrue("Gr%C3%BCezi_z%C3%A4m%C3%A4".isDecodableToUTF8String())
+
+        assertFalse("+".isDecodableToUTF8String())
+        assertTrue("+".isDecodableToUTF8String(plusIsSpace = true))
+        assertFalse("%XX".isDecodableToUTF8String())
+        assertFalse("%D+a".isDecodableToUTF8String())
+        assertFalse("%D+a".isDecodableToUTF8String(plusIsSpace = true))
+
+        assertFalse("%D0".isDecodableToUTF8String()) // incomplete utf-8 sequence
+        assertFalse("%D0%D0%92".isDecodableToUTF8String()) // incomplete utf-8 sequence
+        assertFalse("%D0a".isDecodableToUTF8String()) // incomplete utf-8 sequence
+        assertFalse("%D0%92%92".isDecodableToUTF8String()) // extra utf-8 trailing byte
+        assertFalse("%D0+%92".isDecodableToUTF8String()) // split utf-8 sequence
+        assertFalse("%D0+%92".isDecodableToUTF8String(plusIsSpace = true)) // split utf-8 sequence
+        assertFalse("%92".isDecodableToUTF8String()) // utf-8 trailing byte without a header
+        assertFalse("%ED%A0%80".isDecodableToUTF8String()) // forbidden (U+D800 - U+DFFF)
+        assertFalse("%F4%90%80%80".isDecodableToUTF8String()) // forbidden (U+110000 and above)
+        assertFalse("%C0%BF".isDecodableToUTF8String()) // overlong encoding for %3F
+    }
+
     private fun encodeAndDecodeTest(text: String) {
         val encode1 = text.encodeURLQueryComponent()
         val decode1 = encode1.decodeURLQueryComponent()
