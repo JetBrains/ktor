@@ -46,6 +46,7 @@ public abstract class BaseApplicationEngine(
         val pipeline = pipeline
 
         BaseApplicationResponse.setupSendPipeline(pipeline.sendPipeline)
+        BaseApplicationResponse.setupFallbackResponse(pipeline)
 
         monitor.subscribe(ApplicationStarting) {
             if (!info.isFirstLoading) {
@@ -58,6 +59,7 @@ public abstract class BaseApplicationEngine(
             it.installDefaultInterceptors()
             it.installDefaultTransformationChecker()
         }
+
         monitor.subscribe(ApplicationStarted) {
             val finishedAt = getTimeMillis()
             val elapsedTimeInSeconds = (finishedAt - info.initializedStartAt) / 1_000.0
@@ -110,7 +112,7 @@ private fun Application.installDefaultTransformationChecker() {
     intercept(ApplicationCallPipeline.Plugins) {
         try {
             proceed()
-        } catch (e: CannotTransformContentToTypeException) {
+        } catch (_: CannotTransformContentToTypeException) {
             call.respond(HttpStatusCode.UnsupportedMediaType)
         }
     }
