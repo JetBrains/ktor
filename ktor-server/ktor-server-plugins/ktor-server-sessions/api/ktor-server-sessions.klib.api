@@ -202,10 +202,6 @@ final class io.ktor.server.sessions/SessionsConfig { // io.ktor.server.sessions/
     final val providers // io.ktor.server.sessions/SessionsConfig.providers|{}providers[0]
         final fun <get-providers>(): kotlin.collections/List<io.ktor.server.sessions/SessionProvider<*>> // io.ktor.server.sessions/SessionsConfig.providers.<get-providers>|<get-providers>(){}[0]
 
-    final var deferred // io.ktor.server.sessions/SessionsConfig.deferred|{}deferred[0]
-        final fun <get-deferred>(): kotlin/Boolean // io.ktor.server.sessions/SessionsConfig.deferred.<get-deferred>|<get-deferred>(){}[0]
-        final fun <set-deferred>(kotlin/Boolean) // io.ktor.server.sessions/SessionsConfig.deferred.<set-deferred>|<set-deferred>(kotlin.Boolean){}[0]
-
     final fun register(io.ktor.server.sessions/SessionProvider<*>) // io.ktor.server.sessions/SessionsConfig.register|register(io.ktor.server.sessions.SessionProvider<*>){}[0]
 }
 

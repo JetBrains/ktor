@@ -4,34 +4,30 @@
 
 package io.ktor.tests.auth
 
-import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.request.get
-import io.ktor.client.request.header
-import io.ktor.client.request.post
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.install
-import io.ktor.server.auth.Authentication
-import io.ktor.server.auth.authenticate
-import io.ktor.server.auth.session
-import io.ktor.server.response.respondText
-import io.ktor.server.routing.get
-import io.ktor.server.routing.post
-import io.ktor.server.routing.routing
-import io.ktor.server.sessions.SessionStorage
-import io.ktor.server.sessions.Sessions
-import io.ktor.server.sessions.cookie
-import io.ktor.server.sessions.defaultSessionSerializer
-import io.ktor.server.sessions.serialization.KotlinxSessionSerializer
-import io.ktor.server.sessions.sessions
-import io.ktor.server.sessions.set
-import io.ktor.server.testing.testApplication
+import io.ktor.client.request.*
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import io.ktor.server.sessions.*
+import io.ktor.server.sessions.serialization.*
+import io.ktor.server.testing.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
+import kotlin.test.*
 
-class SessionAuthJvmTest {
+class SessionAuthDeferredTest : SessionAuthTest() {
+
+    @BeforeTest
+    fun setProperty() {
+        System.setProperty("io.ktor.server.sessions.deferred", "true")
+    }
+
+    @AfterTest
+    fun clearProperty() {
+        System.clearProperty("io.ktor.server.sessions.deferred")
+    }
 
     @Test
     fun sessionIgnoredForNonPublicEndpoints() = testApplication {
@@ -45,7 +41,6 @@ class SessionAuthJvmTest {
                 cookie<MySession>("S", storage = brokenStorage) {
                     serializer = KotlinxSessionSerializer(Json.Default)
                 }
-                deferred = true
             }
             install(Authentication.Companion) {
                 session<MySession> {

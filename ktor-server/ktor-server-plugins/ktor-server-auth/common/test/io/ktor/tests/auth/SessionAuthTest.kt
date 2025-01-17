@@ -18,7 +18,7 @@ import kotlinx.serialization.Serializable
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class SessionAuthTest {
+open class SessionAuthTest {
     @Test
     fun testSessionOnly() = testApplication {
         install(Sessions) {

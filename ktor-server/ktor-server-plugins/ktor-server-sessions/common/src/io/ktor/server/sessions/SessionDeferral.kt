@@ -6,6 +6,10 @@ package io.ktor.server.sessions
 
 import io.ktor.server.application.ApplicationCall
 
+internal const val SESSIONS_DEFERRED_FLAG = "io.ktor.server.sessions.deferred"
+
+internal expect fun isDeferredSessionsEnabled(): Boolean
+
 /**
  * Creates a lazy loading session from the given providers.
  */

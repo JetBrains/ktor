@@ -27,7 +27,7 @@ internal val LOGGER = KtorSimpleLogger("io.ktor.server.sessions.Sessions")
 public val Sessions: RouteScopedPlugin<SessionsConfig> = createRouteScopedPlugin("Sessions", ::SessionsConfig) {
     val providers = pluginConfig.providers.toList()
     val sessionSupplier: suspend (ApplicationCall, List<SessionProvider<*>>) -> StatefulSession =
-        if (pluginConfig.deferred) {
+        if (isDeferredSessionsEnabled()) {
             ::createDeferredSession
         } else {
             ::createSession
