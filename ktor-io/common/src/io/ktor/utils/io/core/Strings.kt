@@ -89,7 +89,7 @@ public fun Source.readTextExactCharacters(charactersCount: Int, charset: Charset
 }
 
 /**
- * Writes [text] characters in range \[[fromIndex] .. [toIndex]) with the specified [charset]
+ * Writes [text] characters in range [fromIndex] .. [toIndex]) with the specified [charset]
  */
 public fun Sink.writeText(
     text: CharSequence,
@@ -97,10 +97,6 @@ public fun Sink.writeText(
     toIndex: Int = text.length,
     charset: Charset = Charsets.UTF_8
 ) {
-    if (charset === Charsets.UTF_8) {
-        return writeString(text.toString(), fromIndex, toIndex)
-    }
-
     charset.newEncoder().encodeToImpl(this, text, fromIndex, toIndex)
 }
 
