@@ -126,10 +126,20 @@ public abstract class BaseApplicationResponse(
 
             // WriteChannelContent is more efficient than ReadChannelContent
             is OutgoingContent.WriteChannelContent -> {
+                val ch = ByteChannel()
+                try {
+                    // need to be in external function to keep tail suspend call
+                    respondWriteChannelContent(ch, content)
+                } catch (cause: Throwable) {
+                    status(HttpStatusCode.InternalServerError)
+                    throw cause
+                }
+
                 // First set headers
                 commitHeaders(content)
-                // need to be in external function to keep tail suspend call
-                respondWriteChannelContent(content)
+                responseChannel().use {
+                    ch.copyTo(this)
+                }
             }
 
             // Pipe is the least efficient
@@ -166,9 +176,9 @@ public abstract class BaseApplicationResponse(
     /**
      * Process response [content] using [OutgoingContent.WriteChannelContent.writeTo].
      */
-    protected open suspend fun respondWriteChannelContent(content: OutgoingContent.WriteChannelContent) {
+    protected open suspend fun respondWriteChannelContent(ch: ByteWriteChannel, content: OutgoingContent.WriteChannelContent) {
         // Retrieve response channel, that might send out headers, so it should go after commitHeaders
-        responseChannel().use {
+        ch.use {
             // Call user code to send data
 //            val before = totalBytesWritten
             try {
@@ -177,6 +187,11 @@ public abstract class BaseApplicationResponse(
                 }
             } catch (closed: ClosedWriteChannelException) {
                 throw ChannelWriteException(exception = closed)
+            } catch (cause: Exception) {
+                status(HttpStatusCode.InternalServerError)
+                println("EXCEPTION")
+                throw cause
+
             }
 
             // TODO currently we can't ensure length like that

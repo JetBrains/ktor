@@ -7,17 +7,21 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
+import io.ktor.server.config.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.*
-import java.io.*
-import java.lang.reflect.*
-import java.util.concurrent.*
-import kotlin.coroutines.*
-import kotlin.test.*
+import java.io.Closeable
+import java.lang.reflect.Method
+import java.time.ZonedDateTime
+import java.util.concurrent.Executors
+import kotlin.coroutines.CoroutineContext
+import kotlin.test.AfterTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ServerJacksonBlockingTest {
     private val dispatcher = UnsafeDispatcher()
@@ -59,6 +63,29 @@ class ServerJacksonBlockingTest {
             )
         }
     }
+
+    @Test
+    fun testJacksonModuleNotRegistered() = testApplication {
+        environment {
+            config = MapApplicationConfig("ktor.test.throwOnException" to "false")
+        }
+        install(ContentNegotiation) {
+            jackson()
+        }
+        routing {
+            get("/") {
+                call.respond(Message(msg = "Hi", time = ZonedDateTime.now()))
+            }
+        }
+
+        runBlocking {
+            client.get("/").apply {
+                assertEquals(HttpStatusCode.InternalServerError, status)
+            }
+        }
+    }
+
+    data class Message(val msg: String, val time: ZonedDateTime)
 
     data class K(var i: Int)
 
