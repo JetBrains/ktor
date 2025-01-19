@@ -110,8 +110,8 @@ public object ResponseBodyReadyForSend :
  * A hook that is invoked when response was successfully sent to a client.
  * Useful for cleaning up opened resources or finishing measurements.
  */
-public object ResponseSent : Hook<(ApplicationCall) -> Unit> {
-    override fun install(pipeline: ApplicationCallPipeline, handler: (ApplicationCall) -> Unit) {
+public object ResponseSent : Hook<suspend (ApplicationCall) -> Unit> {
+    override fun install(pipeline: ApplicationCallPipeline, handler: suspend (ApplicationCall) -> Unit) {
         pipeline.sendPipeline.intercept(ApplicationSendPipeline.Engine) {
             proceed()
             handler(call)

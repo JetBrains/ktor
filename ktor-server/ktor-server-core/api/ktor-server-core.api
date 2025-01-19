@@ -267,7 +267,7 @@ public final class io/ktor/server/application/hooks/ResponseBodyReadyForSend$Con
 public final class io/ktor/server/application/hooks/ResponseSent : io/ktor/server/application/Hook {
 	public static final field INSTANCE Lio/ktor/server/application/hooks/ResponseSent;
 	public synthetic fun install (Lio/ktor/server/application/ApplicationCallPipeline;Ljava/lang/Object;)V
-	public fun install (Lio/ktor/server/application/ApplicationCallPipeline;Lkotlin/jvm/functions/Function1;)V
+	public fun install (Lio/ktor/server/application/ApplicationCallPipeline;Lkotlin/jvm/functions/Function2;)V
 }
 
 public abstract interface class io/ktor/server/config/ApplicationConfig {
