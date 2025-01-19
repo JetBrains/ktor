@@ -1185,6 +1185,8 @@ public final class io/ktor/client/request/HttpRequestBuilder : io/ktor/http/Http
 	public fun getHeaders ()Lio/ktor/http/HeadersBuilder;
 	public final fun getMethod ()Lio/ktor/http/HttpMethod;
 	public final fun getUrl ()Lio/ktor/http/URLBuilder;
+	public final fun pathParameter (Ljava/lang/String;Ljava/lang/Object;)V
+	public final fun pathParameters (Ljava/lang/Iterable;)V
 	public final fun setAttributes (Lkotlin/jvm/functions/Function1;)V
 	public final fun setBody (Ljava/lang/Object;)V
 	public final fun setBodyType (Lio/ktor/util/reflect/TypeInfo;)V
@@ -1217,6 +1219,7 @@ public final class io/ktor/client/request/HttpRequestJvmKt {
 
 public final class io/ktor/client/request/HttpRequestKt {
 	public static final fun getResponseAdapterAttributeKey ()Lio/ktor/util/AttributeKey;
+	public static final fun getUriPatternAttributeKey ()Lio/ktor/util/AttributeKey;
 	public static final fun headers (Lio/ktor/http/HttpMessageBuilder;Lkotlin/jvm/functions/Function1;)Lio/ktor/http/HeadersBuilder;
 	public static final fun invoke (Lio/ktor/client/request/HttpRequestBuilder$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lio/ktor/client/request/HttpRequestBuilder;
 	public static final fun invoke (Lio/ktor/client/request/HttpRequestBuilder$Companion;Lkotlin/jvm/functions/Function1;)Lio/ktor/client/request/HttpRequestBuilder;
