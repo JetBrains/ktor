@@ -1,10 +1,12 @@
 /*
- * Copyright 2014-2024 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
+import ktorbuild.internal.ktorBuild
 import org.gradle.api.services.internal.RegisteredBuildServiceProvider
 
 plugins {
+    id("ktorbuild.base")
     id("com.osacky.doctor")
 }
 
@@ -21,8 +23,8 @@ doctor {
 
 // Always monitor tasks on CI, but disable it locally by default with providing an option to opt-in.
 // See 'doctor.enableTaskMonitoring' in gradle.properties for details.
-val enableTasksMonitoring = CI ||
-    properties.getOrDefault("doctor.enableTaskMonitoring", "false").toString().toBoolean()
+val enableTasksMonitoring = ktorBuild.isCI.get() ||
+    findProperty("doctor.enableTaskMonitoring")?.toString().toBoolean()
 
 if (!enableTasksMonitoring) {
     logger.info("Gradle Doctor task monitoring is disabled.")

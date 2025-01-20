@@ -2,7 +2,6 @@
  * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import org.jetbrains.kotlin.konan.target.HostManager
 
 extra["globalM2"] = "${project.file("build")}/m2"
@@ -33,9 +32,8 @@ extra["nonDefaultProjectStructure"] = mutableListOf(
 apply(from = "gradle/compatibility.gradle")
 
 plugins {
-    id("ktorbuild.base")
+    id("ktorbuild.doctor")
     alias(libs.plugins.binaryCompatibilityValidator)
-    conventions.gradleDoctor
 }
 
 println("Build version: ${project.version}")
@@ -45,35 +43,18 @@ subprojects {
 
     extra["hostManager"] = HostManager()
 
-    setupTrainForSubproject()
-
     val nonDefaultProjectStructure: List<String> by rootProject.extra
     if (nonDefaultProjectStructure.contains(project.name)) return@subprojects
 
-    apply(plugin = "ktorbuild.kmp")
-    apply(plugin = "atomicfu-conventions")
-
-    if (CI) configureTestTasksOnCi()
-
-    kotlin {
-        if (!internalProjects.contains(project.name)) explicitApi()
-
-        compilerOptions {
-            languageVersion = getKotlinLanguageVersion()
-            apiVersion = getKotlinApiVersion()
-            progressiveMode = true
-        }
-    }
-
-    if (!internalProjects.contains(project.name)) {
+    if (project.name !in internalProjects) {
+        apply(plugin = "ktorbuild.kmp")
         configurePublication()
+    } else {
+        apply(plugin = "ktorbuild.project.internal")
     }
-
-    configureCodestyle()
 }
 
 println("Using Kotlin compiler version: ${libs.versions.kotlin.get()}")
-filterSnapshotTests()
 
 fun configureDokka() {
     allprojects {
@@ -86,9 +67,3 @@ fun configureDokka() {
 }
 
 configureDokka()
-
-subprojects {
-    tasks.withType<KotlinCompilationTask<*>>().configureEach {
-        configureCompilerOptions()
-    }
-}

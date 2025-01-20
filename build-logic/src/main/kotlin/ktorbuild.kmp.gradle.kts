@@ -2,8 +2,10 @@
  * Copyright 2014-2025 JetBrains s.r.o and contributors. Use of this source code is governed by the Apache 2.0 license.
  */
 
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+
+import ktorbuild.internal.*
 import ktorbuild.internal.gradle.*
-import ktorbuild.internal.ktorBuild
 import ktorbuild.maybeNamed
 import ktorbuild.targets.*
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
@@ -11,10 +13,20 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 plugins {
     id("ktorbuild.base")
     kotlin("multiplatform")
+    id("org.jetbrains.kotlinx.atomicfu")
+    id("ktorbuild.codestyle")
 }
 
 kotlin {
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    explicitApi()
+
+    compilerOptions {
+        progressiveMode = true
+        apiVersion = ktorBuild.kotlinApiVersion
+        languageVersion = ktorBuild.kotlinLanguageVersion
+        freeCompilerArgs.addAll("-Xexpect-actual-classes")
+    }
+
     applyHierarchyTemplate(KtorTargets.hierarchyTemplate)
     addTargets(ktorBuild.targets)
 
@@ -55,3 +67,6 @@ if (targets.hasNative) {
         onlyIf("run only on Windows") { ktorBuild.os.get().isWindows() }
     }
 }
+
+setupTrain()
+if (ktorBuild.isCI.get()) configureTestTasksOnCi()
