@@ -47,7 +47,7 @@ internal class NettyApplicationCallHandler(
                 else ->
                     try {
                         enginePipeline.execute(call)
-                    } catch (error: Exception) {
+                    } catch (error: Throwable) {
                         handleFailure(call, error)
                     }
             }
