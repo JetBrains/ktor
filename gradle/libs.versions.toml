@@ -71,7 +71,7 @@ yamlkt = "0.13.0"
 
 swagger-codegen = "3.0.66"
 swagger-codegen-generators = "1.0.55"
-swagger-parser = "2.1.24"
+swagger-parser = "2.1.25"
 
 puppeteer = "21.5.0"
 tomlj = "1.1.1"
