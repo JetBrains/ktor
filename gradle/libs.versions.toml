@@ -41,7 +41,7 @@ junit = "5.11.4"
 slf4j = "2.0.16"
 logback = "1.5.16"
 
-dropwizard = "4.2.29"
+dropwizard = "4.2.30"
 micrometer = "1.14.3"
 
 jansi = "2.4.1"
