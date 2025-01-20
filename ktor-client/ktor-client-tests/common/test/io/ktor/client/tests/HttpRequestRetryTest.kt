@@ -4,6 +4,7 @@
 
 package io.ktor.client.tests
 
+import io.ktor.client.call.body
 import io.ktor.client.engine.mock.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
@@ -454,6 +455,31 @@ class HttpRequestRetryTest {
         test { client ->
             val response = client.get {}
             assertEquals(HttpStatusCode.OK, response.status)
+        }
+    }
+
+    @Test
+    fun testResponseBodyCheckIgnoresEmpty() = testWithEngine(MockEngine) {
+        config {
+            engine {
+                addHandler { respondError(HttpStatusCode.Unauthorized, "") }
+            }
+            install(HttpRequestRetry) {
+                retryOnExceptionIf(1) { _, e ->
+                    e.printStackTrace()
+                    true
+                }
+            }
+        }
+
+        test { client ->
+            try {
+                val response = client.get { }
+                assertEquals(HttpStatusCode.Unauthorized, response.status)
+                assertEquals("", response.body())
+            } catch (cause: Throwable) {
+                fail("No exception should be thrown", cause)
+            }
         }
     }
 }

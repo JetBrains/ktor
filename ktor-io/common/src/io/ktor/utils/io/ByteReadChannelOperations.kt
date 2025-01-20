@@ -460,12 +460,9 @@ public val ByteReadChannel.availableForRead: Int
  */
 @OptIn(InternalAPI::class)
 public suspend fun ByteReadChannel.readFully(out: ByteArray, start: Int = 0, end: Int = out.size) {
-    if (isClosedForRead) throw EOFException("Channel is already closed")
-
     var offset = start
     while (offset < end) {
         if (readBuffer.exhausted()) awaitContent()
-        if (isClosedForRead) throw EOFException("Channel is already closed")
 
         val count = min(end - offset, readBuffer.remaining.toInt())
         readBuffer.readTo(out, offset, offset + count)
