@@ -1602,9 +1602,6 @@ final object io.ktor.server.routing/TrailingSlashRouteSelector : io.ktor.server.
     final suspend fun evaluate(io.ktor.server.routing/RoutingResolveContext, kotlin/Int): io.ktor.server.routing/RouteSelectorEvaluation // io.ktor.server.routing/TrailingSlashRouteSelector.evaluate|evaluate(io.ktor.server.routing.RoutingResolveContext;kotlin.Int){}[0]
 }
 
-final const val io.ktor.server.request/DEFAULT_FORM_FIELD_MAX_SIZE // io.ktor.server.request/DEFAULT_FORM_FIELD_MAX_SIZE|{}DEFAULT_FORM_FIELD_MAX_SIZE[0]
-    final fun <get-DEFAULT_FORM_FIELD_MAX_SIZE>(): kotlin/Long // io.ktor.server.request/DEFAULT_FORM_FIELD_MAX_SIZE.<get-DEFAULT_FORM_FIELD_MAX_SIZE>|<get-DEFAULT_FORM_FIELD_MAX_SIZE>(){}[0]
-
 final val io.ktor.server.application/ApplicationStarted // io.ktor.server.application/ApplicationStarted|{}ApplicationStarted[0]
     final fun <get-ApplicationStarted>(): io.ktor.events/EventDefinition<io.ktor.server.application/Application> // io.ktor.server.application/ApplicationStarted.<get-ApplicationStarted>|<get-ApplicationStarted>(){}[0]
 final val io.ktor.server.application/ApplicationStarting // io.ktor.server.application/ApplicationStarting|{}ApplicationStarting[0]
@@ -1649,6 +1646,8 @@ final val io.ktor.server.plugins/mutableOriginConnectionPoint // io.ktor.server.
     final fun (io.ktor.server.application/ApplicationCall).<get-mutableOriginConnectionPoint>(): io.ktor.server.plugins/MutableOriginConnectionPoint // io.ktor.server.plugins/mutableOriginConnectionPoint.<get-mutableOriginConnectionPoint>|<get-mutableOriginConnectionPoint>@io.ktor.server.application.ApplicationCall(){}[0]
 final val io.ktor.server.plugins/origin // io.ktor.server.plugins/origin|@io.ktor.server.request.ApplicationRequest{}origin[0]
     final fun (io.ktor.server.request/ApplicationRequest).<get-origin>(): io.ktor.http/RequestConnectionPoint // io.ktor.server.plugins/origin.<get-origin>|<get-origin>@io.ktor.server.request.ApplicationRequest(){}[0]
+final val io.ktor.server.request/DEFAULT_FORM_FIELD_LIMIT // io.ktor.server.request/DEFAULT_FORM_FIELD_LIMIT|{}DEFAULT_FORM_FIELD_LIMIT[0]
+    final fun <get-DEFAULT_FORM_FIELD_LIMIT>(): kotlin/Long // io.ktor.server.request/DEFAULT_FORM_FIELD_LIMIT.<get-DEFAULT_FORM_FIELD_LIMIT>|<get-DEFAULT_FORM_FIELD_LIMIT>(){}[0]
 final val io.ktor.server.request/httpMethod // io.ktor.server.request/httpMethod|@io.ktor.server.request.ApplicationRequest{}httpMethod[0]
     final fun (io.ktor.server.request/ApplicationRequest).<get-httpMethod>(): io.ktor.http/HttpMethod // io.ktor.server.request/httpMethod.<get-httpMethod>|<get-httpMethod>@io.ktor.server.request.ApplicationRequest(){}[0]
 final val io.ktor.server.request/httpVersion // io.ktor.server.request/httpVersion|@io.ktor.server.request.ApplicationRequest{}httpVersion[0]

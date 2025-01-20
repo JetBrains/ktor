@@ -1004,7 +1004,6 @@ public final class io/ktor/server/request/ApplicationReceiveFunctionsJvmKt {
 }
 
 public final class io/ktor/server/request/ApplicationReceiveFunctionsKt {
-	public static final field DEFAULT_FORM_FIELD_MAX_SIZE J
 	public static final fun getFormFieldLimit (Lio/ktor/server/application/ApplicationCall;)J
 	public static final fun receive (Lio/ktor/server/application/ApplicationCall;Lio/ktor/util/reflect/TypeInfo;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun receive (Lio/ktor/server/application/ApplicationCall;Lkotlin/reflect/KClass;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1016,6 +1015,10 @@ public final class io/ktor/server/request/ApplicationReceiveFunctionsKt {
 	public static final fun receiveParameters (Lio/ktor/server/application/ApplicationCall;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun receiveText (Lio/ktor/server/application/ApplicationCall;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun setFormFieldLimit (Lio/ktor/server/application/ApplicationCall;J)V
+}
+
+public final class io/ktor/server/request/ApplicationReceiveFunctions_jvmKt {
+	public static final fun getDEFAULT_FORM_FIELD_LIMIT ()J
 }
 
 public class io/ktor/server/request/ApplicationReceivePipeline : io/ktor/util/pipeline/Pipeline {
