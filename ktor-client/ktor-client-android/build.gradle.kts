@@ -12,6 +12,7 @@ kotlin.sourceSets {
     jvmMain {
         dependencies {
             api(project(":ktor-client:ktor-client-core"))
+            compileOnly("org.robolectric:android-all:14-robolectric-10818077")
         }
     }
     jvmTest {
@@ -19,6 +20,7 @@ kotlin.sourceSets {
             api(project(":ktor-client:ktor-client-tests"))
             api(project(":ktor-network:ktor-network-tls"))
             api(project(":ktor-network:ktor-network-tls:ktor-network-tls-certificates"))
+            implementation("org.robolectric:android-all:14-robolectric-10818077")
         }
     }
 }
