@@ -14,10 +14,11 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import io.ktor.server.testing.*
-import kotlinx.serialization.*
-import kotlin.test.*
+import kotlinx.serialization.Serializable
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-class SessionAuthTest {
+open class SessionAuthTest {
     @Test
     fun testSessionOnly() = testApplication {
         install(Sessions) {
