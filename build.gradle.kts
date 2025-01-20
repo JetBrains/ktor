@@ -52,8 +52,6 @@ subprojects {
     } else {
         apply(plugin = "ktorbuild.project.internal")
     }
-
-    configureCodestyle()
 }
 
 println("Using Kotlin compiler version: ${libs.versions.kotlin.get()}")

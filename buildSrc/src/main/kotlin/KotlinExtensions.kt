@@ -7,15 +7,12 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.the
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-import org.jmailen.gradle.kotlinter.KotlinterExtension
 
 fun Project.kotlin(block: KotlinMultiplatformExtension.() -> Unit) {
     configure(block)
 }
 
 val Project.kotlin: KotlinMultiplatformExtension get() = the()
-
-val Project.kotlinter: KotlinterExtension get() = the()
 
 fun NamedDomainObjectContainer<KotlinSourceSet>.commonMain(block: KotlinSourceSet.() -> Unit) {
     val sourceSet = getByName("commonMain")
